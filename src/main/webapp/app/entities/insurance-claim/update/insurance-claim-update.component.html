@@ -1,0 +1,189 @@
+<jhi-header
+  [headerName]="'Insurance Claim Entry'"
+  [midHeaderName01]="'Insurance Claim'"
+  [midRouterLinkText01]="'/insurance-claim'"
+  [shouldHaveHr]="false">
+</jhi-header>
+
+
+<div class="row justify-content-center">
+
+  <div class="col-12">
+    <jhi-alert-error></jhi-alert-error>
+    <form class="card card-body" name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+
+      <div class="row">
+
+        <div class="form-group col-md-4" >
+          <label class="form-control-label required" for="field_settlementDate">Insurance Card Id</label>
+          <input type="text" class="form-control"
+                 [readOnly]="editForm.get(['id'])!.value"
+                 name="insuranceCardId"
+                 (keyup)="onChangeInsuranceId()"
+                 formControlName="insuranceCardId"/>
+          <div>
+            <small *ngIf="isInsuranceCardIdInvalid" class="form-text text-danger">
+              Invalid Insurance Card ID
+            </small>
+
+            <small *ngIf="isInsuranceCardStatusInvalid" class="form-text text-danger">
+              Only Approved Registrations Are Open To Claim.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group col-md-4" *ngIf="editForm.get(['id'])!.value">
+          <label class="form-control-label">Policy Holder PIN</label>
+          <input type="text" class="form-control" readonly name="policyHolderPin"
+                 formControlName="policyHolderPin"/>
+        </div>
+
+        <div class="form-group col-md-4" *ngIf="editForm.get(['id'])!.value">
+          <label class="form-control-label">Policy Holder Name</label>
+          <input type="text" class="form-control" readonly name="policyHolderName"
+                 formControlName="policyHolderName"/>
+        </div>
+
+        <div class="form-group col-md-4" *ngIf="editForm.get(['id'])!.value">
+          <label class="form-control-label">Registration Name</label>
+          <input type="text" class="form-control" readonly name="registrationName"
+                 formControlName="registrationName"/>
+        </div>
+
+        <div class="form-group col-md-4" *ngIf="editForm.get(['id'])!.value">
+          <label class="form-control-label">Relation</label>
+          <input type="text" class="form-control" readonly name="relation"
+                 formControlName="relation"/>
+        </div>
+
+        <div class="form-group col-md-4">
+          <label class="form-control-label required" jhiTranslate="bitsHrPayrollApp.insuranceClaim.claimStatus" for="field_claimStatus">Claim Status</label>
+          <select class="form-control" (change)="onChangeClaimStatus()" name="claimStatus" formControlName="claimStatus" id="field_claimStatus">
+            <option selected disabled value="null"> -- Select Claim Status -- </option>
+            <option value="SETTLED">{{ 'bitsHrPayrollApp.ClaimStatus.SETTLED' | translate }}</option>
+            <option value="REGRETTED">{{ 'bitsHrPayrollApp.ClaimStatus.REGRETTED' | translate }}</option>
+          </select>
+          <div *ngIf="editForm.get('claimStatus')!.invalid && (editForm.get('claimStatus')!.dirty || editForm.get('claimStatus')!.touched)">
+            <small class="form-text text-danger"
+                   *ngIf="editForm.get('claimStatus')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group col-md-4" *ngIf="editForm.get(['claimStatus'])!.value === 'SETTLED'">
+          <label class="form-control-label"
+                 [ngClass]="editForm.get('claimStatus')!.value === 'SETTLED' ? 'required' : ''"
+                 jhiTranslate="bitsHrPayrollApp.insuranceClaim.settlementDate" for="field_settlementDate">Settlement Date</label>
+          <div class="input-group">
+            <input id="field_settlementDate" type="text" class="form-control" name="settlementDate" ngbDatepicker #settlementDateDp="ngbDatepicker" formControlName="settlementDate"/>
+            <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="settlementDateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+                        </span>
+          </div>
+          <div *ngIf="editForm.get('settlementDate')!.invalid && (editForm.get('settlementDate')!.dirty || editForm.get('settlementDate')!.touched)">
+            <small class="form-text text-danger"
+                   *ngIf="editForm.get('settlementDate')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group col-md-4" *ngIf="editForm.get(['claimStatus'])!.value === 'SETTLED'">
+          <label class="form-control-label"
+                 [ngClass]="editForm.get('claimStatus')!.value === 'SETTLED' ? 'required' : ''"
+                 jhiTranslate="bitsHrPayrollApp.insuranceClaim.paymentDate" for="field_paymentDate">Payment Date</label>
+          <div class="input-group">
+            <input id="field_paymentDate" type="text" class="form-control" name="paymentDate" ngbDatepicker #paymentDateDp="ngbDatepicker" formControlName="paymentDate"/>
+            <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="paymentDateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+                        </span>
+          </div>
+          <div *ngIf="editForm.get('paymentDate')!.invalid && (editForm.get('paymentDate')!.dirty || editForm.get('paymentDate')!.touched)">
+            <small class="form-text text-danger"
+                   *ngIf="editForm.get('paymentDate')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group col-md-4" *ngIf="editForm.get(['claimStatus'])!.value === 'REGRETTED'">
+          <label class="form-control-label"
+                 [ngClass]="editForm.get('claimStatus')!.value === 'REGRETTED' ? 'required' : ''"
+                 jhiTranslate="bitsHrPayrollApp.insuranceClaim.regretDate" for="field_regretDate">Regret Date</label>
+          <div class="input-group">
+            <input id="field_regretDate" type="text" class="form-control" name="regretDate" ngbDatepicker #regretDateDp="ngbDatepicker" formControlName="regretDate"/>
+            <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="regretDateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+                        </span>
+          </div>
+          <div *ngIf="editForm.get('regretDate')!.invalid && (editForm.get('regretDate')!.dirty || editForm.get('regretDate')!.touched)">
+            <small class="form-text text-danger"
+                   *ngIf="editForm.get('regretDate')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group col-md-4" *ngIf="editForm.get(['claimStatus'])!.value === 'REGRETTED'">
+          <label class="form-control-label"
+                 [ngClass]="editForm.get('claimStatus')!.value === 'REGRETTED' ? 'required' : ''"
+                 jhiTranslate="bitsHrPayrollApp.insuranceClaim.regretReason" for="field_regretReason">Regret Reason</label>
+          <input type="text" class="form-control" name="regretReason" id="field_regretReason"
+                 formControlName="regretReason"/>
+          <div *ngIf="editForm.get('regretReason')!.invalid && (editForm.get('regretReason')!.dirty || editForm.get('regretReason')!.touched)">
+            <small class="form-text text-danger"
+                   *ngIf="editForm.get('regretReason')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group col-md-4">
+          <label class="form-control-label required" jhiTranslate="bitsHrPayrollApp.insuranceClaim.claimedAmount" for="field_claimedAmount">Claimed Amount</label>
+          <input type="number" class="form-control" name="claimedAmount" id="field_claimedAmount"
+                 formControlName="claimedAmount"/>
+          <div *ngIf="editForm.get('claimedAmount')!.invalid && (editForm.get('claimedAmount')!.dirty || editForm.get('claimedAmount')!.touched)">
+            <small class="form-text text-danger"
+                   *ngIf="editForm.get('claimedAmount')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group col-md-4" *ngIf="editForm.get(['claimStatus'])!.value === 'SETTLED'">
+          <label class="form-control-label"
+                 [ngClass]="editForm.get('claimStatus')!.value === 'SETTLED' ? 'required' : ''"
+                 jhiTranslate="bitsHrPayrollApp.insuranceClaim.settledAmount" for="field_settledAmount">Settled Amount</label>
+          <input type="number" class="form-control" name="settledAmount" id="field_settledAmount"
+                 (input)="onChangeSettledAmount()"
+                 formControlName="settledAmount"/>
+          <div *ngIf="editForm.get('settledAmount')!.invalid && (editForm.get('settledAmount')!.dirty || editForm.get('settledAmount')!.touched)">
+            <small class="form-text text-danger"
+                   *ngIf="editForm.get('settledAmount')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+          <div *ngIf="isSettledAmountInvalid">
+            <small class="form-text text-danger">
+              Settled amount can not be greater than claimed amount.
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button type="submit" id="save-entity"
+                [disabled]="editForm.invalid || isSaving || isInsuranceCardStatusInvalid || isInsuranceCardIdInvalid || isSettledAmountInvalid"
+                class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

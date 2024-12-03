@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+    <title>release-notes</title>
+  </head>
+
+  <body>
+    <main role="main" class="container">
+      <div class="mb-3">
+        <div th:utext="${releaseNotes}"></div>
+      </div>
+    </main>
+  </body>
+</html>

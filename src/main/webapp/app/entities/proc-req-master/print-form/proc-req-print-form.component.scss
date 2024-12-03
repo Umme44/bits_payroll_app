@@ -1,0 +1,73 @@
+.prf-report-table {
+  width: 100%;
+  border: none;
+}
+
+.requester-table > tr {
+  height: 40px;
+}
+
+//code of item table
+
+.item-table {
+  width: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.88);
+  border-collapse: collapse;
+}
+
+.item-table > thead > tr,
+.item-table > tbody > tr {
+  height: 40px;
+}
+
+.item-table > thead > tr {
+  background-color: rgba(0, 0, 0, 0.075);
+  vertical-align: center;
+}
+
+.item-table > tbody > tr {
+  vertical-align: baseline;
+}
+
+.item-table > thead > tr > th,
+.item-table > tbody > tr > td {
+  padding-left: 7px;
+  border: 1px solid rgba(0, 0, 0, 0.88);
+}
+
+.print-btn-container {
+  width: 970px;
+}
+
+.print-doc-container {
+  width: 970px;
+  min-height: 1360px;
+  padding: 110px 70px 0 163px;
+  border: 1px solid black;
+  font-size: 11px;
+}
+
+.row {
+  margin: 0;
+}
+
+#item-description {
+  min-height: 743px;
+}
+
+#approval-section > .row {
+  line-height: 1.65;
+}
+
+@media print {
+  .print-btn-container {
+    display: none;
+  }
+  .print-doc-container {
+    border: none;
+  }
+
+  .mx-auto {
+    margin: 0 !important;
+  }
+}

@@ -1,0 +1,49 @@
+<jhi-header
+  [headerName]="'Tax Statement'"
+  [midHeaderName01]="'My Stuff'"
+  [midRouterLinkText01]="'/'"
+  [midHeader01hasSessionStorage]="true"
+  [midHeader01SessionStorageKey]="'keepMyStuffModalOpen'"
+  [midHeader01SessionStorageValue]="'yes'"
+  [midHeaderName02]="'Statement'"
+  [midRouterLinkText02]="'/'"
+  [midHeader02hasSessionStorage]="true"
+  [midHeader02SessionStorageKey]="'keepTaxStatementModalOpen'"
+  [midHeader02SessionStorageValue]="'yes'"
+  [shouldHaveHr]="false"
+>
+</jhi-header>
+
+<div>
+  <div class="hide-in-print pb-2">
+    <form [formGroup]="editForm" class="" name="editForm" role="form">
+      <div class="row">
+        <div class="col-md-5"></div>
+        <div class="col-md-2">
+          <select (change)="onYearSelect($event)" class="form-control" formControlName="year" id="year" name="year">
+            <option [ngValue]="null" disabled>Select Year</option>
+            <option *ngFor="let year of dropDownMenus" value="{{ year.id }}">
+              {{ year.range }}
+            </option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <button
+            [disabled]="taxStatementModel === null || taxStatementModel === undefined || !isIncomeTaxStatementVisibilityOn"
+            (click)="downloadAsPDF()"
+            class="btn btn-primary btn-md"
+          >
+            <fa-icon icon="print"></fa-icon>
+            Print
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div *ngIf="taxStatementModel">
+    <jhi-report-new *ngIf="taxStatementModel.hasConsolidatedExemption" [taxStatementModel]="taxStatementModel"></jhi-report-new>
+
+    <jhi-report-old *ngIf="!taxStatementModel.hasConsolidatedExemption" [taxStatementModel]="taxStatementModel"></jhi-report-old>
+  </div>
+</div>

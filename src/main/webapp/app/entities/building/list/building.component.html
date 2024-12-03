@@ -1,0 +1,139 @@
+<div>
+  <h2 id="page-heading" data-cy="BuildingHeading">
+    <span jhiTranslate="bitsHrPayrollApp.building.home.title">Buildings</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="bitsHrPayrollApp.building.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-building"
+        [routerLink]="['/building/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="bitsHrPayrollApp.building.home.createLabel"> Create a new Building </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="buildings?.length === 0">
+    <span jhiTranslate="bitsHrPayrollApp.building.home.notFound">No Buildings found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="buildings && buildings.length > 0">
+    <table class="table table-hover list-text-color" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">ID</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="buildingName">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.building.buildingName">Building Name</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="buildingLocation">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.building.buildingLocation">Building Location</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="remarks">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.building.remarks">Remarks</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="createdAt">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.building.createdAt">Created At</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="updatedAt">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.building.updatedAt">Updated At</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="createdBy.login">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.building.createdBy">Created By</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="updatedBy.login">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.building.updatedBy">Updated By</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody
+        infinite-scroll
+        (scrolled)="loadPage(page + 1)"
+        [infiniteScrollDisabled]="page - 1 >= links['last']"
+        [infiniteScrollDistance]="0"
+      >
+        <tr *ngFor="let building of buildings; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/building', building.id, 'view']">{{ building.id }}</a>
+          </td>
+          <td>{{ building.buildingName }}</td>
+          <td>{{ building.buildingLocation }}</td>
+          <td>{{ building.remarks }}</td>
+          <td>{{ building.createdAt | formatMediumDatetime }}</td>
+          <td>{{ building.updatedAt | formatMediumDatetime }}</td>
+          <td>
+            {{ building.createdBy?.login }}
+          </td>
+          <td>
+            {{ building.updatedBy?.login }}
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/building', building.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/building', building.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(building)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

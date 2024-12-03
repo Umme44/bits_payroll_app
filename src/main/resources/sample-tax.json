@@ -1,0 +1,129 @@
+{
+  "pin": "1748",
+  "name": "Abdul Ahad",
+  "designation": "Software Engineer",
+  "department": "Enterprise Technologies",
+  "dateOfJoining": "2021-05-02",
+  "dateOfConfirmation": "2021-11-02",
+  "contactPeriodEndDate": null,
+  "tinNumber": "898989898989",
+  "incomeYearStart": 2021,
+  "incomeYearEnd": 2022,
+  "assessmentYearStart": 2022,
+  "assessmentYearEnd": 2023,
+  "grandTotalSalary": 3606131.0,
+  "grandTotalExemption": 450000.0,
+  "grandTotalTaxableIncome": 3156131.0,
+  "totalTaxLiabilities": 584033.0,
+  "taxLiabilities": [
+    {
+      "head": "ON FIRST  300,000",
+      "subHead": "",
+      "slab": 300000.0,
+      "rate": 0.0,
+      "tax": 0.0
+    },
+    {
+      "head": "ON NEXT UP TO  100,000",
+      "subHead": "",
+      "slab": 100000.0,
+      "rate": 0.05,
+      "tax": 5000.0
+    },
+    {
+      "head": "ON NEXT UP TO  300,000",
+      "subHead": "",
+      "slab": 300000.0,
+      "rate": 0.1,
+      "tax": 30000.0
+    },
+    {
+      "head": "ON NEXT UP TO  400,000",
+      "subHead": "",
+      "slab": 400000.0,
+      "rate": 0.15,
+      "tax": 60000.0
+    },
+    {
+      "head": "ON NEXT UP TO  500,000",
+      "subHead": "",
+      "slab": 500000.0,
+      "rate": 0.2,
+      "tax": 100000.0
+    },
+    {
+      "head": "ON BALANCE AMOUNT",
+      "subHead": "",
+      "slab": 1556131.0,
+      "rate": 0.25,
+      "tax": 389032.75
+    }
+  ],
+  "summationOfIncomeSlabs": 3156131.0,
+  "salaryIncomes": [
+    {
+      "head": "BASIC SALARY",
+      "subHead": "(100% taxable)",
+      "salary": 1946923.0,
+      "exemption": 0.0,
+      "taxableIncome": 1946923.0
+    },
+    {
+      "head": "HOUSE RENT",
+      "subHead": "(MAX EXEMPT TK 25,000 PM OR 50% OF BS-LOWER ONE)",
+      "salary": 973461.0,
+      "exemption": 300000.0,
+      "taxableIncome": 673461.0
+    },
+    {
+      "head": "MEDICAL",
+      "subHead": "(MAX EXEMPT TK 10,000 PM OR 10% OF BS-LOWER ONE)",
+      "salary": 194692.0,
+      "exemption": 120000.0,
+      "taxableIncome": 74692.0
+    },
+    {
+      "head": "CONVEYANCE ALLOWANCE",
+      "subHead": "(MAX EXEMPT TK 2500 PM)",
+      "salary": 129795.0,
+      "exemption": 30000.0,
+      "taxableIncome": 99795.0
+    },
+    {
+      "head": "FESTIVAL BONUS",
+      "subHead": "",
+      "salary": 150000.0,
+      "exemption": 0.0,
+      "taxableIncome": 150000.0
+    },
+    {
+      "head": "PERFORMANCE BONUS",
+      "subHead": "",
+      "salary": 0.0,
+      "exemption": 0.0,
+      "taxableIncome": 0.0
+    },
+    {
+      "head": "INCENTIVE",
+      "subHead": "",
+      "salary": 0.0,
+      "exemption": 0.0,
+      "taxableIncome": 0.0
+    },
+    {
+      "head": "EMPLOYER'S CONTRIBUTION TO P.F",
+      "subHead": "",
+      "salary": 211260.0,
+      "exemption": 0.0,
+      "taxableIncome": 211260.0
+    }
+  ],
+  "maxAllowedInvestment": 631226.0,
+  "rebate": 94684.0,
+  "netTaxLiability": 489349,
+  "lastYearAdjustment": 0,
+  "deductedAmount": 598650,
+  "refundable": -109301,
+  "incomeTaxChallanList": [],
+  "fixedTermContact": false
+}

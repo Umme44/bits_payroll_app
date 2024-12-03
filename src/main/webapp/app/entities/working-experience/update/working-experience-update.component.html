@@ -1,0 +1,181 @@
+<div>
+  <jhi-header [headerName]="!editForm.get('id')!.value ? 'Add New Working Experiences' : 'Edit Working Experiences'" [shouldHaveHr]="false">
+  </jhi-header>
+
+  <form (ngSubmit)="save()" [formGroup]="editForm" name="editForm" novalidate role="form">
+    <div class="card card-body font-sm">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label class="form-control-label required" for="field_employee" jhiTranslate="bitsHrPayrollApp.workingExperience.employee"
+              >Employee</label
+            >
+
+            <jhi-simple-select-employee-form
+              (onChangeEmployee)="changeEmployee($event)"
+              [selectedFieldValue]="editForm.get('employeeId')!.value"
+            >
+            </jhi-simple-select-employee-form>
+
+            <div *ngIf="editForm.get('employeeId')!.invalid && (editForm.get('employeeId')!.dirty || editForm.get('employeeId')!.touched)">
+              <small
+                *ngIf="editForm.get('employeeId')?.errors?.required"
+                class="form-text text-danger"
+                jhiTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label
+              class="form-control-label required"
+              for="field_dojOfLastOrganization"
+              jhiTranslate="bitsHrPayrollApp.workingExperience.dojOfLastOrganization"
+              >Date of Joining</label
+            >
+            <div class="input-group">
+              <input
+                #dojOfLastOrganizationDp="ngbDatepicker"
+                (ngModelChange)="checkDate()"
+                class="form-control"
+                formControlName="dojOfLastOrganization"
+                id="field_dojOfLastOrganization"
+                name="dojOfLastOrganization"
+                ngbDatepicker
+                type="text"
+              />
+              <span class="input-group-append">
+                <button
+                  (click)="dojOfLastOrganizationDp.toggle()"
+                  class="btn btn-secondary btn"
+                  type="button">
+                  <fa-icon icon="calendar-alt"></fa-icon>
+                </button>
+              </span>
+            </div>
+            <div *ngIf="editForm.get('dojOfLastOrganization')!.invalid &&
+                (editForm.get('dojOfLastOrganization')!.dirty || editForm.get('dojOfLastOrganization')!.touched)">
+              <small
+                *ngIf="editForm.get('dojOfLastOrganization')?.errors?.required"
+                class="form-text text-danger"
+                jhiTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label
+              class="form-control-label"
+              for="field_dorOfLastOrganization"
+              jhiTranslate="bitsHrPayrollApp.workingExperience.dorOfLastOrganization"
+              >Date of Resignation</label
+            >
+            <div class="input-group">
+              <input
+                #dorOfLastOrganizationDp="ngbDatepicker"
+                (ngModelChange)="checkDate()"
+                class="form-control"
+                formControlName="dorOfLastOrganization"
+                id="field_dorOfLastOrganization"
+                name="dorOfLastOrganization"
+                ngbDatepicker
+                type="text"
+              />
+              <span class="input-group-append">
+                <button
+                  (click)="dorOfLastOrganizationDp.toggle()"
+                  class="btn btn-secondary btn"
+                  type="button">
+                  <fa-icon icon="calendar-alt"></fa-icon>
+                </button>
+              </span>
+            </div>
+            <div *ngIf="editForm.get('dorOfLastOrganization')!.valid &&
+                (editForm.get('dorOfLastOrganization')!.dirty || editForm.get('dorOfLastOrganization')!.touched)">
+              <small *ngIf="isInvalid" class="form-text text-danger"> Start Date can not be greater than end date. </small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label
+          class="form-control-label required"
+          for="field_lastDesignation"
+          jhiTranslate="bitsHrPayrollApp.workingExperience.lastDesignation"
+          >Last Designation</label
+        >
+        <input class="form-control" formControlName="lastDesignation" id="field_lastDesignation" name="lastDesignation" type="text" />
+        <div
+          *ngIf="
+            editForm.get('lastDesignation')!.invalid && (editForm.get('lastDesignation')!.dirty || editForm.get('lastDesignation')!.touched)
+          "
+        >
+          <div
+            *ngIf="editForm.get('lastDesignation')?.errors?.required || editForm.get('lastDesignation')?.errors?.notOnlyWhitespace"
+            class="form-text text-danger"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </div>
+          <div
+            *ngIf="editForm.get('lastDesignation')?.errors?.pattern"
+            class="form-text text-danger"
+          >
+            This text is invalid
+          </div>
+          <div *ngIf="editForm.get('lastDesignation')?.errors?.maxlength" class="form-text text-danger">
+            This field cannot be longer than 255 characters.
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label
+          class="form-control-label required"
+          for="field_organizationName"
+          jhiTranslate="bitsHrPayrollApp.workingExperience.organizationName"
+          >Organization Name</label
+        >
+        <input class="form-control" formControlName="organizationName" id="field_organizationName" name="organizationName" type="text" />
+        <div
+          *ngIf="
+            editForm.get('organizationName')!.invalid &&
+            (editForm.get('organizationName')!.dirty || editForm.get('organizationName')!.touched)
+          "
+        >
+          <div
+            *ngIf="editForm.get('organizationName')?.errors?.required || editForm.get('organizationName')?.errors?.notOnlyWhitespace"
+            class="form-text text-danger"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </div>
+          <div *ngIf="editForm.get('organizationName')?.errors?.maxlength" class="form-text text-danger">
+            This field cannot be longer than 255 characters.
+          </div>
+          <div *ngIf="editForm.get('organizationName')?.errors?.pattern" class="form-text text-danger">
+            This text is invalid
+          </div>
+        </div>
+      </div>
+      <div>
+        <button (click)="previousState()" class="btn btn-secondary" id="cancel-save" type="button">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button [disabled]="editForm.invalid || isSaving || isInvalid" class="btn btn-primary" id="save-entity" type="submit">
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </div>
+    <jhi-alert-error></jhi-alert-error>
+  </form>
+</div>

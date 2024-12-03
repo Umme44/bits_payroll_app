@@ -1,0 +1,191 @@
+<div>
+  <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+    <jhi-header
+      [headerName]="!editForm.get('id')!.value ? 'Add New Time Slot' : 'Edit Time Slot'"
+      [shouldHaveHr]="false"
+      [midHeaderName01]="'Time Slots'"
+      [midRouterLinkText01]="'/time-slot'"
+    >
+    </jhi-header>
+
+    <div>
+      <jhi-alert-error></jhi-alert-error>
+      <div class="container-fluid card py-3">
+        <div class="row my-2">
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.timeSlot.title" for="field_title">Title</label>
+              <input
+                type="text"
+                class="form-control"
+                name="title"
+                id="field_title"
+                formControlName="title"
+                (change)="checkDuplicateTitle($event)"
+                (input)="checkDuplicateBuildingNameOnInput($event)"
+              />
+              <div *ngIf="isDuplicateTitle == true">
+                <small *ngIf="isDuplicateTitle" class="form-text text-danger"> Same title name exists! </small>
+              </div>
+              <div *ngIf="editForm.get('title')!.invalid && (editForm.get('title')!.dirty || editForm.get('title')!.touched)">
+                <small
+                  class="form-text text-danger"
+                  *ngIf="editForm.get('title')?.errors?.required"
+                  jhiTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+                <small
+                  class="form-text text-danger"
+                  *ngIf="editForm.get('title')?.errors?.minlength"
+                  jhiTranslate="entity.validation.minlength"
+                  [translateValues]="{ min: 0 }"
+                >
+                  This field is required to be at least 0 characters.
+                </small>
+                <small
+                  class="form-text text-danger"
+                  *ngIf="editForm.get('title')?.errors?.maxlength"
+                  jhiTranslate="entity.validation.maxlength"
+                  [translateValues]="{ max: 250 }"
+                >
+                  This field cannot be longer than 250 characters.
+                </small>
+                <small class="form-text text-danger" *ngIf="editForm.get('title')?.errors?.pattern"> This text is invalid </small>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label class="form-control-label required" for="field_inTime" jhiTranslate="bitsHrPayrollApp.timeSlot.inTime">In Time</label>
+              <div class="d-flex">
+                <input
+                  class="form-control"
+                  formControlName="inTime"
+                  (ngModelChange)="checkTime()"
+                  id="field_inTime"
+                  name="inTime"
+                  placeholder="YYYY-MM-DD HH:mm"
+                  type="time"
+                />
+              </div>
+              <div *ngIf="editForm.get('inTime')!.invalid && (editForm.get('inTime')!.dirty || editForm.get('inTime')!.touched)">
+                <small
+                  *ngIf="editForm.get('inTime')?.errors?.required"
+                  class="form-text text-danger"
+                  jhiTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label class="form-control-label required" for="field_outTime" jhiTranslate="bitsHrPayrollApp.timeSlot.outTime"
+                >Out Time</label
+              >
+              <div class="d-flex">
+                <input
+                  class="form-control"
+                  formControlName="outTime"
+                  (ngModelChange)="checkTime()"
+                  id="field_outTime"
+                  name="outTime"
+                  placeholder="YYYY-MM-DD HH:mm"
+                  type="time"
+                />
+              </div>
+              <div *ngIf="editForm.get('outTime')!.invalid && (editForm.get('outTime')!.dirty || editForm.get('outTime')!.touched)">
+                <small
+                  *ngIf="editForm.get('outTime')?.errors?.required"
+                  class="form-text text-danger"
+                  jhiTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+              </div>
+              <div>
+                <small class="form-text text-danger" *ngIf="isInvalid === true"> In time can not be greater than out time. </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="mb-3">
+              <div class="form-check">
+                <input
+                  type="checkbox"
+                  class="form-check-input mt-2"
+                  name="isDefaultShift"
+                  id="field_isDefaultShift"
+                  formControlName="isDefaultShift"
+                />
+                <label class="form-check-label" jhiTranslate="bitsHrPayrollApp.timeSlot.isDefaultShift" for="field_isDefaultShift"
+                  >Is Default Shift</label
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input mt-2"
+                name="isApplicableByEmployee"
+                id="field_isApplicableByEmployee"
+                formControlName="isApplicableByEmployee"
+              />
+              <label
+                class="form-check-label"
+                jhiTranslate="bitsHrPayrollApp.timeSlot.isApplicableByEmployee"
+                for="field_isApplicableByEmployee"
+                >Is Applicable By Employee</label
+              >
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="mb-3 font-sm">
+              <label class="form-control-label required">Weekends</label>
+              <ng-select
+                [items]="weekDays"
+                bindLabel="fullName"
+                bindValue="id"
+                appearance="outline"
+                [searchable]="true"
+                [clearable]="true"
+                labelForId="employeeId"
+                placeholder="select day"
+                id="field_employee"
+                name="weekEndList"
+                [multiple]="true"
+                formControlName="weekEndList"
+                (change)="checkParticipantList($event)"
+              >
+              </ng-select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row my-2">
+          <div>
+            <button (click)="previousState()" class="btn btn-secondary" id="cancel-save" type="button">
+              <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+            </button>
+
+            <button
+              [disabled]="editForm.invalid || isSaving || isInvalid || isDuplicateTitle"
+              class="btn btn-primary"
+              id="save-entity"
+              type="submit"
+            >
+              <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

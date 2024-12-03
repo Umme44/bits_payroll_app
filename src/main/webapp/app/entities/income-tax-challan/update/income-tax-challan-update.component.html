@@ -1,0 +1,400 @@
+<jhi-header
+  [headerName]="!editForm.get('id')!.value ? 'Add New Income Tax Challan' : 'Edit Income Tax Challan'"
+  [shouldHaveHr]="false"
+  [midHeaderName01]="'Income Tax Challans'"
+  [midRouterLinkText01]="'/income-tax-challan'"
+>
+</jhi-header>
+
+<div>
+  <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+    <div class="card card-body">
+      <jhi-alert-error></jhi-alert-error>
+      <div class="flex-column">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="mb-3">
+              <label class="form-control-label required" jhiTranslate="bitsHrPayrollApp.incomeTaxChallan.challanNo" for="field_challanNo"
+                >Challan No</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                name="challanNo"
+                id="field_challanNo"
+                formControlName="challanNo"
+                (change)="checkDuplicateChallanNo()"
+              />
+              <div *ngIf="isDuplicateTitle == true">
+                <small *ngIf="isDuplicateTitle" class="form-text text-danger"> The same title exists! </small>
+              </div>
+              <div *ngIf="editForm.get('challanNo')!.invalid && (editForm.get('challanNo')!.dirty || editForm.get('challanNo')!.touched)">
+                <small
+                  class="form-text text-danger"
+                  *ngIf="editForm.get('challanNo')?.errors?.required"
+                  jhiTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+                 <small
+                  class="form-text text-danger"
+                  *ngIf="editForm.get('challanNo')?.errors?.pattern"
+                >
+                   This text is invalid
+                </small>
+                <small
+                  class="form-text text-danger"
+                  *ngIf="editForm.get('challanNo')?.errors?.maxlength"
+                  jhiTranslate="entity.validation.maxlength"
+                  [translateValues]="{ max: 200 }"
+                >
+                  This field cannot be longer than 200 characters.
+                </small>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="mb-3">
+              <label
+                class="form-control-label required"
+                jhiTranslate="bitsHrPayrollApp.incomeTaxChallan.challanDate"
+                for="field_challanDate"
+                >Challan Date</label
+              >
+              <div class="input-group">
+                <input
+                  id="field_challanDate"
+                  data-cy="challanDate"
+                  type="text"
+                  class="form-control"
+                  name="challanDate"
+                  ngbDatepicker
+                  #challanDateDp="ngbDatepicker"
+                  formControlName="challanDate"
+                />
+                <button type="button" class="btn btn-secondary" (click)="challanDateDp.toggle()">
+                  <fa-icon icon="calendar-alt"></fa-icon>
+                </button>
+              </div>
+              <div
+                *ngIf="editForm.get('challanDate')!.invalid && (editForm.get('challanDate')!.dirty || editForm.get('challanDate')!.touched)"
+              >
+                <small
+                  class="form-text text-danger"
+                  *ngIf="editForm.get('challanDate')?.errors?.required"
+                  jhiTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="mb-3">
+              <label class="form-control-label required" jhiTranslate="bitsHrPayrollApp.incomeTaxChallan.amount" for="field_amount"
+                >Amount</label
+              >
+              <input type="number" class="form-control" name="amount" id="field_amount" formControlName="amount" />
+              <div *ngIf="editForm.get('amount')!.invalid && (editForm.get('amount')!.dirty || editForm.get('amount')!.touched)">
+                <small
+                  class="form-text text-danger"
+                  *ngIf="editForm.get('amount')?.errors?.required"
+                  jhiTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+                <small
+                  class="form-text text-danger"
+                  [hidden]="!editForm.get('amount')?.errors?.number"
+                  jhiTranslate="entity.validation.number"
+                >
+                  This field should be a number.
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="mb-3">
+              <label class="form-control-label required">Year</label><span class="text-danger"></span>
+              <select class="form-control" name="year" formControlName="year">
+                <option [ngValue]="selectYear" *ngFor="let selectYear of years">{{ selectYear }}</option>
+              </select>
+              <div *ngIf="editForm.get('year')!.invalid && (editForm.get('year')!.dirty || editForm.get('year')!.touched)">
+                <small
+                  class="form-text text-danger"
+                  *ngIf="editForm.get('year')?.errors?.required"
+                  jhiTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="mb-3">
+              <label class="form-control-label required" jhiTranslate="bitsHrPayrollApp.incomeTaxChallan.month" for="field_month"
+                >Month</label
+              >
+              <select class="form-control" name="month" formControlName="month" id="field_month">
+                <option value="JANUARY">{{ 'bitsHrPayrollApp.Month.JANUARY' | translate }}</option>
+                <option value="FEBRUARY">{{ 'bitsHrPayrollApp.Month.FEBRUARY' | translate }}</option>
+                <option value="MARCH">{{ 'bitsHrPayrollApp.Month.MARCH' | translate }}</option>
+                <option value="APRIL">{{ 'bitsHrPayrollApp.Month.APRIL' | translate }}</option>
+                <option value="MAY">{{ 'bitsHrPayrollApp.Month.MAY' | translate }}</option>
+                <option value="JUNE">{{ 'bitsHrPayrollApp.Month.JUNE' | translate }}</option>
+                <option value="JULY">{{ 'bitsHrPayrollApp.Month.JULY' | translate }}</option>
+                <option value="AUGUST">{{ 'bitsHrPayrollApp.Month.AUGUST' | translate }}</option>
+                <option value="SEPTEMBER">{{ 'bitsHrPayrollApp.Month.SEPTEMBER' | translate }}</option>
+                <option value="OCTOBER">{{ 'bitsHrPayrollApp.Month.OCTOBER' | translate }}</option>
+                <option value="NOVEMBER">{{ 'bitsHrPayrollApp.Month.NOVEMBER' | translate }}</option>
+                <option value="DECEMBER">{{ 'bitsHrPayrollApp.Month.DECEMBER' | translate }}</option>
+              </select>
+              <div *ngIf="editForm.get('month')!.invalid && (editForm.get('month')!.dirty || editForm.get('month')!.touched)">
+                <small
+                  class="form-text text-danger"
+                  *ngIf="editForm.get('month')?.errors?.required"
+                  jhiTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="mb-3">
+              <label class="form-control-label required">Fiscal Year</label>
+              <select
+                class="form-control"
+                id="field_aitConfigId"
+                data-cy="aitConfigId"
+                name="aitConfigId"
+                formControlName="aitConfigId"
+                [compareWith]="compareAitConfig"
+              >
+                <option [ngValue]="aitConfigOption.id" *ngFor="let aitConfigOption of aitConfigsSharedCollection">
+                  {{ aitConfigOption.startYear }} - {{ aitConfigOption.endYear }}
+                </option>
+              </select>
+
+              <!--              <div *ngIf="editForm.get('aitConfig.id')!.invalid && (editForm.get('aitConfig.id')!.dirty || editForm.get('aitConfig.id')!.touched)">-->
+              <!--                <small class="form-text text-danger"-->
+              <!--                       *ngIf="editForm.get('aitConfig.id')?.errors?.required" jhiTranslate="entity.validation.required">-->
+              <!--                  This field is required.-->
+              <!--                </small>-->
+              <!--              </div>-->
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="mb-3">
+              <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.incomeTaxChallan.remarks" for="field_remarks">Remarks</label>
+              <input type="text" class="form-control" name="remarks" id="field_remarks" formControlName="remarks" />
+              <div *ngIf="editForm.get('remarks')!.invalid && (editForm.get('remarks')!.dirty || editForm.get('remarks')!.touched)">
+                <small
+                  class="form-text text-danger"
+                  *ngIf="editForm.get('remarks')?.errors?.minlength"
+                  jhiTranslate="entity.validation.minlength"
+                  [translateValues]="{ min: 0 }"
+                >
+                  This field is required to be at least 0 characters.
+                </small>
+                <small
+                  class="form-text text-danger"
+                  *ngIf="editForm.get('remarks')?.errors?.maxlength"
+                  jhiTranslate="entity.validation.maxlength"
+                  [translateValues]="{ max: 250 }"
+                >
+                  This field cannot be longer than 250 characters.
+                </small>
+                <small
+                  class="form-text text-danger"
+                  *ngIf="editForm.get('remarks')?.errors?.pattern"
+                >
+                  This text is invalid
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!--<div>-->
+<!--  <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">-->
+
+<!--    <div>-->
+<!--      <jhi-alert-error></jhi-alert-error>-->
+<!--      <div class="row mb-3">-->
+<!--        <label class="form-label" jhiTranslate="bitsHrPayrollApp.incomeTaxChallan.challanNo" for="field_challanNo">Challan No</label>-->
+<!--        <input type="text" class="form-control" name="challanNo" id="field_challanNo" data-cy="challanNo" formControlName="challanNo" />-->
+<!--        <div *ngIf="editForm.get('challanNo')!.invalid && (editForm.get('challanNo')!.dirty || editForm.get('challanNo')!.touched)">-->
+<!--          <small-->
+<!--            class="form-text text-danger"-->
+<!--            *ngIf="editForm.get('challanNo')?.errors?.required"-->
+<!--            jhiTranslate="entity.validation.required"-->
+<!--          >-->
+<!--            This field is required.-->
+<!--          </small>-->
+<!--          <small-->
+<!--            class="form-text text-danger"-->
+<!--            *ngIf="editForm.get('challanNo')?.errors?.maxlength"-->
+<!--            jhiTranslate="entity.validation.maxlength"-->
+<!--            [translateValues]="{ max: 200 }"-->
+<!--          >-->
+<!--            This field cannot be longer than 200 characters.-->
+<!--          </small>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="row mb-3">-->
+<!--        <label class="form-label" jhiTranslate="bitsHrPayrollApp.incomeTaxChallan.challanDate" for="field_challanDate">Challan Date</label>-->
+<!--        <div class="input-group">-->
+<!--          <input-->
+<!--            id="field_challanDate"-->
+<!--            data-cy="challanDate"-->
+<!--            type="text"-->
+<!--            class="form-control"-->
+<!--            name="challanDate"-->
+<!--            ngbDatepicker-->
+<!--            #challanDateDp="ngbDatepicker"-->
+<!--            formControlName="challanDate"-->
+<!--          />-->
+<!--          <button type="button" class="btn btn-secondary" (click)="challanDateDp.toggle()">-->
+<!--            <fa-icon icon="calendar-alt"></fa-icon>-->
+<!--          </button>-->
+<!--        </div>-->
+<!--        <div *ngIf="editForm.get('challanDate')!.invalid && (editForm.get('challanDate')!.dirty || editForm.get('challanDate')!.touched)">-->
+<!--          <small-->
+<!--            class="form-text text-danger"-->
+<!--            *ngIf="editForm.get('challanDate')?.errors?.required"-->
+<!--            jhiTranslate="entity.validation.required">-->
+<!--            This field is required.-->
+<!--          </small>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="row mb-3">-->
+<!--        <label class="form-label" jhiTranslate="bitsHrPayrollApp.incomeTaxChallan.amount" for="field_amount">Amount</label>-->
+<!--        <input type="number" class="form-control" name="amount" id="field_amount" data-cy="amount" formControlName="amount" />-->
+<!--        <div *ngIf="editForm.get('amount')!.invalid && (editForm.get('amount')!.dirty || editForm.get('amount')!.touched)">-->
+<!--          <small class="form-text text-danger" *ngIf="editForm.get('amount')?.errors?.required" jhiTranslate="entity.validation.required">-->
+<!--            This field is required.-->
+<!--          </small>-->
+<!--          <small class="form-text text-danger" [hidden]="!editForm.get('amount')?.errors?.number" jhiTranslate="entity.validation.number">-->
+<!--            This field should be a number.-->
+<!--          </small>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="row mb-3">-->
+<!--        <label class="form-label" jhiTranslate="bitsHrPayrollApp.incomeTaxChallan.month" for="field_month">Month</label>-->
+<!--        <select class="form-control" name="month" formControlName="month" id="field_month" data-cy="month">-->
+<!--          <option [ngValue]="null">{{ 'bitsHrPayrollApp.Month.null' | translate }}</option>-->
+<!--          <option *ngFor="let month of monthValues" [value]="month">{{ 'bitsHrPayrollApp.Month.' + month | translate }}</option>-->
+<!--        </select>-->
+<!--        <div *ngIf="editForm.get('month')!.invalid && (editForm.get('month')!.dirty || editForm.get('month')!.touched)">-->
+<!--          <small class="form-text text-danger" *ngIf="editForm.get('month')?.errors?.required" jhiTranslate="entity.validation.required">-->
+<!--            This field is required.-->
+<!--          </small>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="row mb-3">-->
+<!--        <label class="form-label" jhiTranslate="bitsHrPayrollApp.incomeTaxChallan.year" for="field_year">Year</label>-->
+<!--        <input type="number" class="form-control" name="year" id="field_year" data-cy="year" formControlName="year" />-->
+<!--        <div *ngIf="editForm.get('year')!.invalid && (editForm.get('year')!.dirty || editForm.get('year')!.touched)">-->
+<!--          <small class="form-text text-danger" *ngIf="editForm.get('year')?.errors?.required" jhiTranslate="entity.validation.required">-->
+<!--            This field is required.-->
+<!--          </small>-->
+<!--          <small-->
+<!--            class="form-text text-danger"-->
+<!--            *ngIf="editForm.get('year')?.errors?.min"-->
+<!--            jhiTranslate="entity.validation.min"-->
+<!--            [translateValues]="{ min: 1990 }"-->
+<!--          >-->
+<!--            This field should be at least 1990.-->
+<!--          </small>-->
+<!--          <small-->
+<!--            class="form-text text-danger"-->
+<!--            *ngIf="editForm.get('year')?.errors?.max"-->
+<!--            jhiTranslate="entity.validation.max"-->
+<!--            [translateValues]="{ max: 2199 }"-->
+<!--          >-->
+<!--            This field cannot be more than 2199.-->
+<!--          </small>-->
+<!--          <small class="form-text text-danger" [hidden]="!editForm.get('year')?.errors?.number" jhiTranslate="entity.validation.number">-->
+<!--            This field should be a number.-->
+<!--          </small>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="row mb-3">-->
+<!--        <label class="form-label" jhiTranslate="bitsHrPayrollApp.incomeTaxChallan.remarks" for="field_remarks">Remarks</label>-->
+<!--        <input type="text" class="form-control" name="remarks" id="field_remarks" data-cy="remarks" formControlName="remarks" />-->
+<!--        <div *ngIf="editForm.get('remarks')!.invalid && (editForm.get('remarks')!.dirty || editForm.get('remarks')!.touched)">-->
+<!--          <small-->
+<!--            class="form-text text-danger"-->
+<!--            *ngIf="editForm.get('remarks')?.errors?.minlength"-->
+<!--            jhiTranslate="entity.validation.minlength"-->
+<!--            [translateValues]="{ min: 0 }"-->
+<!--          >-->
+<!--            This field is required to be at least 0 characters.-->
+<!--          </small>-->
+<!--          <small-->
+<!--            class="form-text text-danger"-->
+<!--            *ngIf="editForm.get('remarks')?.errors?.maxlength"-->
+<!--            jhiTranslate="entity.validation.maxlength"-->
+<!--            [translateValues]="{ max: 250 }"-->
+<!--          >-->
+<!--            This field cannot be longer than 250 characters.-->
+<!--          </small>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="row mb-3">-->
+<!--        <label class="form-label" jhiTranslate="bitsHrPayrollApp.incomeTaxChallan.aitConfig" for="field_aitConfig">Ait Config</label>-->
+<!--        <select-->
+<!--          class="form-control"-->
+<!--          id="field_aitConfig"-->
+<!--          data-cy="aitConfig"-->
+<!--          name="aitConfig"-->
+<!--          formControlName="aitConfig"-->
+<!--          [compareWith]="compareAitConfig"-->
+<!--        >-->
+<!--          <option [ngValue]="null"></option>-->
+<!--          <option [ngValue]="aitConfigOption" *ngFor="let aitConfigOption of aitConfigsSharedCollection">{{ aitConfigOption.id }}</option>-->
+<!--        </select>-->
+<!--      </div>-->
+<!--    </div>-->
+
+<!--    <div>-->
+<!--      <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">-->
+<!--        <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>-->
+<!--      </button>-->
+
+<!--      <button-->
+<!--        type="submit"-->
+<!--        id="save-entity"-->
+<!--        data-cy="entityCreateSaveButton"-->
+<!--        [disabled]="editForm.invalid || isSaving"-->
+<!--        class="btn btn-primary"-->
+<!--      >-->
+<!--        <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>-->
+<!--      </button>-->
+<!--    </div>-->
+<!--  </form>-->
+
+<!--</div>-->

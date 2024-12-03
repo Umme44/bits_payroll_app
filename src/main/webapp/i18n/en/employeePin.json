@@ -1,0 +1,35 @@
+{
+  "bitsHrPayrollApp": {
+    "employeePin": {
+      "home": {
+        "title": "Employee Pins",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Employee Pin",
+        "createOrEditLabel": "Create or edit a Employee Pin",
+        "notFound": "No Employee Pins found"
+      },
+      "created": "A new Employee Pin is created with identifier {{ param }}",
+      "updated": "A Employee Pin is updated with identifier {{ param }}",
+      "deleted": "A Employee Pin is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Employee Pin {{ id }}?"
+      },
+      "detail": {
+        "title": "Employee Pin"
+      },
+      "id": "ID",
+      "pin": "Pin",
+      "fullName": "Full Name",
+      "employeeCategory": "Employee Category",
+      "employeePinStatus": "Employee Pin Status",
+      "createdAt": "Created At",
+      "updatedAt": "Updated At",
+      "department": "Department",
+      "designation": "Designation",
+      "unit": "Unit",
+      "updatedBy": "Updated By",
+      "createdBy": "Created By",
+      "recruitmentRequisitionForm": "Recruitment Requisition Form"
+    }
+  }
+}

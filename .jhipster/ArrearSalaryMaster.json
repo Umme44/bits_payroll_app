@@ -1,0 +1,34 @@
+{
+  "changelogDate": "20220307092609",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "arrear_salary_master",
+  "fields": [
+    {
+      "fieldName": "title",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "250",
+      "fieldValidateRulesMinlength": "3"
+    },
+    {
+      "fieldName": "isLocked",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "isDeleted",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "ArrearSalaryMaster",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

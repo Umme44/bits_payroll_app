@@ -1,0 +1,285 @@
+<div>
+  <h2 id="page-heading">
+    <span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.home.title">Recruitment Requisition Forms</span>
+
+    <button
+      id="jh-create-entity"
+      class="btn btn-primary float-end jh-create-entity create-recruitment-requisition-form"
+      [routerLink]="['/recruitment-requisition-form/new']"
+    >
+      <fa-icon icon="plus"></fa-icon>
+      <span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.home.createLabel"> Create a new Recruitment Requisition Form </span>
+    </button>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="recruitmentRequisitionForms?.length === 0">
+    <span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.home.notFound">No recruitmentRequisitionForms found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="recruitmentRequisitionForms && recruitmentRequisitionForms.length > 0">
+    <table class="table table-hover list-text-color" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="expectedJoiningDate">
+            <span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.expectedJoiningDate">Expected Joining Date</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="project">
+            <span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.project">Project</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="numberOfVacancies">
+            <span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.numberOfVacancies">Number Of Vacancies</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="employmentType">
+            <span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.employmentType">Employment Type</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="resourceType">
+            <span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.resourceType">Resource Type</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="rrfNumber">
+            <span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.rrfNumber">Rrf Number</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="preferredEducationType">
+            <span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.preferredEducationType">Preferred Education Type</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="dateOfRequisition">
+            <span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.dateOfRequisition">Date Of Requisition</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="requestedDate">
+            <span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.requestedDate">Requested Date</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="recommendationDate01">
+            <span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.recommendationDate01">Recommendation Date 01</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="recommendationDate02">
+            <span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.recommendationDate02">Recommendation Date 02</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="recommendationDate03">
+            <span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.recommendationDate03">Recommendation Date 03</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="recommendationDate04">
+            <span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.recommendationDate04">Recommendation Date 04</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="requisitionStatus">
+            <span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.requisitionStatus">Requisition Status</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="rejectedAt">
+            <span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.rejectedAt">Rejected At</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="createdAt">
+            <span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.createdAt">Created At</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="updatedAt">
+            <span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.updatedAt">Updated At</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="functionalDesignationId">
+            <span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.functionalDesignation">Functional Designation</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="bandId">
+            <span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.band">Band</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="departmentId">
+            <span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.department">Department</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="unitId">
+            <span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.unit">Unit</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="recommendedBy01Id">
+            <span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.recommendedBy01">Recommended By 01</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="recommendedBy02Id">
+            <span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.recommendedBy02">Recommended By 02</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="recommendedBy03Id">
+            <span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.recommendedBy03">Recommended By 03</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="recommendedBy04Id">
+            <span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.recommendedBy04">Recommended By 04</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="requesterId">
+            <span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.requester">Requester</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="rejectedById">
+            <span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.rejectedBy">Rejected By</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="createdByLogin">
+            <span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.createdBy">Created By</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="updatedByLogin">
+            <span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.updatedBy">Updated By</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let recruitmentRequisitionForm of recruitmentRequisitionForms; trackBy: trackId">
+          <td>
+            <a [routerLink]="['/recruitment-requisition-form', recruitmentRequisitionForm.id, 'view']">{{
+              recruitmentRequisitionForm.id
+            }}</a>
+          </td>
+          <td>{{ recruitmentRequisitionForm.expectedJoiningDate | date: 'mediumDate' }}</td>
+          <td>{{ recruitmentRequisitionForm.project }}</td>
+          <td>{{ recruitmentRequisitionForm.numberOfVacancies }}</td>
+          <td jhiTranslate="{{ 'bitsHrPayrollApp.EmployeeCategory.' + recruitmentRequisitionForm.employmentType }}">
+            {{ recruitmentRequisitionForm.employmentType }}
+          </td>
+          <td jhiTranslate="{{ 'bitsHrPayrollApp.RequisitionResourceType.' + recruitmentRequisitionForm.resourceType }}">
+            {{ recruitmentRequisitionForm.resourceType }}
+          </td>
+          <td>{{ recruitmentRequisitionForm.rrfNumber }}</td>
+          <td>{{ recruitmentRequisitionForm.preferredEducationType }}</td>
+          <td>{{ recruitmentRequisitionForm.dateOfRequisition | date: 'mediumDate' }}</td>
+          <td>{{ recruitmentRequisitionForm.requestedDate | date: 'mediumDate' }}</td>
+          <td>{{ recruitmentRequisitionForm.recommendationDate01 | date: 'mediumDate' }}</td>
+          <td>{{ recruitmentRequisitionForm.recommendationDate02 | date: 'mediumDate' }}</td>
+          <td>{{ recruitmentRequisitionForm.recommendationDate03 | date: 'mediumDate' }}</td>
+          <td>{{ recruitmentRequisitionForm.recommendationDate04 | date: 'mediumDate' }}</td>
+          <td jhiTranslate="{{ 'bitsHrPayrollApp.RequisitionStatus.' + recruitmentRequisitionForm.requisitionStatus }}">
+            {{ recruitmentRequisitionForm.requisitionStatus }}
+          </td>
+          <td>{{ recruitmentRequisitionForm.rejectedAt | date: 'mediumDate' }}</td>
+          <td>{{ recruitmentRequisitionForm.createdAt | date: 'medium' }}</td>
+          <td>{{ recruitmentRequisitionForm.updatedAt | date: 'medium' }}</td>
+          <td>
+            <div *ngIf="recruitmentRequisitionForm.functionalDesignationId">
+              <a [routerLink]="['/designation', recruitmentRequisitionForm.functionalDesignationId, 'view']">{{
+                recruitmentRequisitionForm.functionalDesignationId
+              }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="recruitmentRequisitionForm.bandId">
+              <a [routerLink]="['/band', recruitmentRequisitionForm.bandId, 'view']">{{ recruitmentRequisitionForm.bandId }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="recruitmentRequisitionForm.departmentId">
+              <a [routerLink]="['/department', recruitmentRequisitionForm.departmentId, 'view']">{{
+                recruitmentRequisitionForm.departmentId
+              }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="recruitmentRequisitionForm.unitId">
+              <a [routerLink]="['/unit', recruitmentRequisitionForm.unitId, 'view']">{{ recruitmentRequisitionForm.unitId }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="recruitmentRequisitionForm.recommendedBy01Id">
+              <a [routerLink]="['/employee', recruitmentRequisitionForm.recommendedBy01Id, 'view']">{{
+                recruitmentRequisitionForm.recommendedBy01Id
+              }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="recruitmentRequisitionForm.recommendedBy02Id">
+              <a [routerLink]="['/employee', recruitmentRequisitionForm.recommendedBy02Id, 'view']">{{
+                recruitmentRequisitionForm.recommendedBy02Id
+              }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="recruitmentRequisitionForm.recommendedBy03Id">
+              <a [routerLink]="['/employee', recruitmentRequisitionForm.recommendedBy03Id, 'view']">{{
+                recruitmentRequisitionForm.recommendedBy03Id
+              }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="recruitmentRequisitionForm.recommendedBy04Id">
+              <a [routerLink]="['/employee', recruitmentRequisitionForm.recommendedBy04Id, 'view']">{{
+                recruitmentRequisitionForm.recommendedBy04Id
+              }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="recruitmentRequisitionForm.requesterId">
+              <a [routerLink]="['/employee', recruitmentRequisitionForm.requesterId, 'view']">{{
+                recruitmentRequisitionForm.requesterId
+              }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="recruitmentRequisitionForm.rejectedById">
+              <a [routerLink]="['/employee', recruitmentRequisitionForm.rejectedById, 'view']">{{
+                recruitmentRequisitionForm.rejectedById
+              }}</a>
+            </div>
+          </td>
+          <td>
+            {{ recruitmentRequisitionForm.createdByLogin }}
+          </td>
+          <td>
+            {{ recruitmentRequisitionForm.updatedByLogin }}
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/recruitment-requisition-form', recruitmentRequisitionForm.id, 'view']"
+                class="btn btn-info btn-sm"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/recruitment-requisition-form', recruitmentRequisitionForm.id, 'edit']"
+                class="btn btn-primary btn-sm"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(recruitmentRequisitionForm)" class="btn btn-danger btn-sm">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="recruitmentRequisitionForms && recruitmentRequisitionForms.length > 0">
+    <div class="row justify-content-center">
+      <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+    </div>
+
+    <div class="row justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

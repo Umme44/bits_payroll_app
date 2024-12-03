@@ -1,0 +1,224 @@
+<jhi-header [headerName]="'Apply for Employee NOC'" [midHeaderName01]="'Employee Docs'" [midRouterLinkText01]="'/employee-docs'">
+</jhi-header>
+
+<div class="row justify-content-center">
+  <div class="col-12">
+    <jhi-alert-error></jhi-alert-error>
+    <form class="card card-body" name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <div class="row">
+        <div class="col-md-3 mb-3">
+          <label class="form-control-label required" jhiTranslate="bitsHrPayrollApp.employeeNOC.passportNumber" for="field_passportNumber"
+            >Passport Number</label
+          >
+          <input type="text" class="form-control" name="passportNumber" id="field_passportNumber" formControlName="passportNumber" />
+          <div
+            *ngIf="
+              editForm.get('passportNumber')!.invalid && (editForm.get('passportNumber')!.dirty || editForm.get('passportNumber')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('passportNumber')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+
+            <small *ngIf="editForm.get('passportNumber')?.errors?.maxlength" class="form-text text-danger">
+              Maximum length of passport number should be 11.
+            </small>
+            <small *ngIf="editForm.get('passportNumber')?.errors?.minlength" class="form-text text-danger">
+              Minimum length of passport number should be 9.
+            </small>
+            <small *ngIf="editForm.get('passportNumber')?.errors?.pattern" class="form-text text-danger">
+              Special characters are not allowed in passport number.
+            </small>
+          </div>
+        </div>
+
+        <div class="col-md-3 mb-3 d-flex" style="margin-top: 35px">
+          <input
+            type="checkbox"
+            style="width: auto; height: auto; margin-top: -7px; margin-end: 15px; appearance: auto"
+            class="form-control shadow-none"
+            name="isRequiredForVisa"
+            id="field_isRequiredForVisa"
+            (change)="onChangeIsRequiredForVisaApproval()"
+            formControlName="isRequiredForVisa"
+          />
+
+          <label class="form-control-label px-2" for="field_isRequiredForVisa"> Required for Visa </label>
+        </div>
+
+        <div class="col-md-3 mb-3">
+          <label class="form-control-label required" for="field_leaveStartDate">
+            <span *ngIf="this.editForm.get('isRequiredForVisa')!.value === true"> Tentative Leave Start Date </span>
+
+            <span *ngIf="this.editForm.get('isRequiredForVisa')!.value === false"> Leave Start Date </span>
+          </label>
+          <div class="input-group">
+            <input
+              (dateSelect)="onChangeDate()"
+              id="field_leaveStartDate"
+              type="text"
+              class="form-control"
+              name="leaveStartDate"
+              ngbDatepicker
+              #leaveStartDateDp="ngbDatepicker"
+              formControlName="leaveStartDate"
+            />
+            <span class="input-group-append">
+              <button type="button" class="btn btn-secondary" (click)="leaveStartDateDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </span>
+          </div>
+          <div
+            *ngIf="
+              editForm.get('leaveStartDate')!.invalid && (editForm.get('leaveStartDate')!.dirty || editForm.get('leaveStartDate')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('leaveStartDate')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+
+          <div *ngIf="isInvalidDateRange">
+            <small class="form-text text-danger"> Start date can not be greater than end date. </small>
+          </div>
+          <div *ngIf="!hasApprovedLeaveApplication">
+            <small class="form-text text-danger"> Approved leave application is required within this date range. </small>
+          </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+          <label class="form-control-label required" for="field_leaveEndDate">
+            <span *ngIf="this.editForm.get('isRequiredForVisa')!.value === true"> Tentative Leave End Date </span>
+
+            <span *ngIf="this.editForm.get('isRequiredForVisa')!.value === false"> Leave End Date </span>
+          </label>
+          <div class="input-group">
+            <input
+              (dateSelect)="onChangeDate()"
+              id="field_leaveEndDate"
+              type="text"
+              class="form-control"
+              name="leaveEndDate"
+              ngbDatepicker
+              #leaveEndDateDp="ngbDatepicker"
+              formControlName="leaveEndDate"
+            />
+            <span class="input-group-append">
+              <button type="button" class="btn btn-secondary" (click)="leaveEndDateDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </span>
+          </div>
+          <div
+            *ngIf="editForm.get('leaveEndDate')!.invalid && (editForm.get('leaveEndDate')!.dirty || editForm.get('leaveEndDate')!.touched)"
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('leaveEndDate')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="mb-3 col-md-3">
+          <label class="form-control-label required" for="field_leaveDuration">Leave Duration</label>
+          <input
+            class="form-control"
+            readonly
+            formControlName="leaveDuration"
+            id="field_leaveDuration"
+            name="leaveDuration"
+            type="number"
+          />
+        </div>
+
+        <div class="col-md-3 mb-3">
+          <label class="form-control-label required" jhiTranslate="bitsHrPayrollApp.employeeNOC.purposeOfNOC" for="field_purposeOfNOC"
+            >Purpose Of NOC</label
+          >
+          <select
+            class="form-control"
+            (change)="onChangePurpose()"
+            name="purposeOfNOC"
+            formControlName="purposeOfNOC"
+            id="field_purposeOfNOC"
+          >
+            <option value="ACADEMIC">{{ 'bitsHrPayrollApp.PurposeOfNOC.ACADEMIC' | translate }}</option>
+            <option value="MEDICAL">{{ 'bitsHrPayrollApp.PurposeOfNOC.MEDICAL' | translate }}</option>
+            <option value="OFFICIAL">{{ 'bitsHrPayrollApp.PurposeOfNOC.OFFICIAL' | translate }}</option>
+            <option value="TOURISM">{{ 'bitsHrPayrollApp.PurposeOfNOC.TOURISM' | translate }}</option>
+          </select>
+          <div
+            *ngIf="editForm.get('purposeOfNOC')!.invalid && (editForm.get('purposeOfNOC')!.dirty || editForm.get('purposeOfNOC')!.touched)"
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('purposeOfNOC')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label class="form-control-label required" jhiTranslate="bitsHrPayrollApp.employeeNOC.countryToVisit">Country To Visit</label>
+          <ng-select
+            [items]="countries"
+            bindLabel="name"
+            bindValue="name"
+            appearance="outline"
+            [searchable]="true"
+            [clearable]="true"
+            [multiple]="true"
+            formControlName="countryToVisit"
+            placeholder="Select Country"
+            id="field_countryToVisit"
+            name="countryToVisit"
+            class="font-sm"
+          >
+          </ng-select>
+          <div
+            *ngIf="
+              editForm.get('countryToVisit')!.invalid && (editForm.get('countryToVisit')!.dirty || editForm.get('countryToVisit')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('countryToVisit')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          [disabled]="editForm.invalid || isSaving || isInvalidDateRange || !hasApprovedLeaveApplication || isDisabled"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

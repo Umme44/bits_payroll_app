@@ -1,0 +1,75 @@
+{
+  "applications": "*",
+  "changelogDate": "20210215123730",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "band",
+  "fields": [
+    {
+      "fieldName": "bandName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength", "unique"],
+      "fieldValidateRulesMaxlength": "250",
+      "fieldValidateRulesMinlength": "1"
+    },
+    {
+      "fieldName": "minSalary",
+      "fieldType": "Double",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "maxSalary",
+      "fieldType": "Double",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "welfareFund",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMax": "100000",
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "mobileCelling",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMax": "100000",
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "createdAt",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "updatedAt",
+      "fieldType": "LocalDate"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Band",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "band",
+      "ownerSide": true,
+      "relationshipName": "createdBy",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "band",
+      "ownerSide": true,
+      "relationshipName": "updatedBy",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

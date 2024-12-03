@@ -1,0 +1,77 @@
+/* attendance-time-sheet.component.scss */
+
+[data-name='my-team-table'] .td-th-employee-name {
+  width: 20%;
+}
+
+[data-name='my-team-table'] .td-th-employee-name {
+  width: 20%;
+}
+
+.legend-text {
+  width: 7%;
+  text-align: left;
+}
+
+.w-7 {
+  width: 7%;
+}
+
+.w-30 {
+  width: 30%;
+}
+
+.w-4-point-5 {
+  width: 4.5%;
+}
+
+.btn-primary-no-border {
+  border: none;
+  border-radius: 5px;
+}
+
+.table-attendance-time-sheet {
+  color: rgba(0, 0, 0, 0.65);
+
+  td {
+    //border-top: none;
+  }
+}
+
+.emp-name-text-size {
+  max-width: 10.625rem;
+}
+
+.table-attendance-info {
+  background-color: rgba(185, 227, 234, 0.18);
+}
+
+.table-attendance-danger {
+  background-color: rgba(244, 204, 204, 0.3);
+}
+
+.table-attendance-warning {
+  background-color: rgba(255, 193, 7, 0.13);
+}
+
+.table-attendance-active {
+  background-color: rgba(217, 217, 217, 0.2);
+}
+
+.table-attendance-success {
+  background-color: rgba(116, 198, 135, 0.3);
+}
+
+.text-success-lite {
+  color: rgba(116, 198, 135, 0.3);
+}
+
+.hyper-link:hover {
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: #799d9d;
+}
+
+/*.empty-team-list{
+  background-image: url("../../../content/images/svg/team_collaboration.svg");
+}*/

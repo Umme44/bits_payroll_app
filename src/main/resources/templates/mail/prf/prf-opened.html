@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="en">
+<head>
+    <title> Procurement Requisition Final Approval </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="icon" th:href="@{|${baseUrl}/favicon.ico|}"/>
+    <style th:fragment="approval_btn">
+        body, .bg-light {
+            background-color: #f8f9fa !important
+        }
+
+        /* CSS */
+        .button-59 {
+            align-items: center;
+            background-color: #fff;
+            border: 2px solid #000;
+            box-sizing: border-box;
+            color: #000;
+            cursor: pointer;
+            display: inline-flex;
+            fill: #000;
+            font-family: Inter, sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            height: 48px;
+            justify-content: center;
+            letter-spacing: -0.8px;
+            line-height: 24px;
+            min-width: 140px;
+            outline: 0;
+            padding: 0 17px;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.3s;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+        }
+
+        .button-59:focus {
+            color: #171e29;
+        }
+
+        .button-59:hover {
+            border-color: #06f;
+            color: #06f;
+            fill: #06f;
+        }
+
+        .button-59:active {
+            border-color: #06f;
+            color: #06f;
+            fill: #06f;
+        }
+
+        @media (min-width: 768px) {
+            .button-59 {
+                min-width: 170px;
+            }
+        }
+
+        .approval-link {
+            margin: 10px;
+        }
+
+    </style>
+</head>
+<body>
+<span>
+    Dear [[${procurementOfficerName}]],
+</span>
+<p>
+    [[${requesterName}]], [[${requesterPIN}]], has submitted a procurement requisition request.
+    Please find the details and take necessary action by following the link below:
+</p>
+
+<div class="approval-link">
+    <a th:href="@{${actionLink}}" class="button-59">Action</a> <br/>
+</div>
+
+</body>
+
+<footer th:insert="fragments/_common_footer.html :: system_generated_email"></footer>
+
+</html>

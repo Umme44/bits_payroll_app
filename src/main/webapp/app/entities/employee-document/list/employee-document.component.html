@@ -1,0 +1,156 @@
+<div>
+  <h2 id="page-heading" data-cy="EmployeeDocumentHeading">
+    <span jhiTranslate="bitsHrPayrollApp.employeeDocument.home.title">Employee Documents</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="bitsHrPayrollApp.employeeDocument.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-employee-document"
+        [routerLink]="['/employee-document/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="bitsHrPayrollApp.employeeDocument.home.createLabel"> Create a new Employee Document </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="employeeDocuments?.length === 0">
+    <span jhiTranslate="bitsHrPayrollApp.employeeDocument.home.notFound">No Employee Documents found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="employeeDocuments && employeeDocuments.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="pin">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeDocument.pin">Pin</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="fileName">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeDocument.fileName">File Name</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="filePath">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeDocument.filePath">File Path</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="hasEmployeeVisibility">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeDocument.hasEmployeeVisibility">Has Employee Visibility</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="remarks">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeDocument.remarks">Remarks</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="createdBy">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeDocument.createdBy">Created By</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="createdAt">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeDocument.createdAt">Created At</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="updatedBy">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeDocument.updatedBy">Updated By</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="updatedAt">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeDocument.updatedAt">Updated At</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="fileExtension">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeDocument.fileExtension">File Extension</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody
+        infinite-scroll
+        (scrolled)="loadPage(page + 1)"
+        [infiniteScrollDisabled]="page - 1 >= links['last']"
+        [infiniteScrollDistance]="0"
+      >
+        <tr *ngFor="let employeeDocument of employeeDocuments; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/employee-document', employeeDocument.id, 'view']">{{ employeeDocument.id }}</a>
+          </td>
+          <td>{{ employeeDocument.pin }}</td>
+          <td>{{ employeeDocument.fileName }}</td>
+          <td>{{ employeeDocument.filePath }}</td>
+          <td>{{ employeeDocument.hasEmployeeVisibility }}</td>
+          <td>{{ employeeDocument.remarks }}</td>
+          <td>{{ employeeDocument.createdBy }}</td>
+          <td>{{ employeeDocument.createdAt | formatMediumDatetime }}</td>
+          <td>{{ employeeDocument.updatedBy }}</td>
+          <td>{{ employeeDocument.updatedAt | formatMediumDatetime }}</td>
+          <td>{{ employeeDocument.fileExtension }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/employee-document', employeeDocument.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/employee-document', employeeDocument.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(employeeDocument)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

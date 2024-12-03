@@ -1,0 +1,39 @@
+{
+  "applications": "*",
+  "changelogDate": "20210217112113",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "mobile_bill",
+  "fields": [
+    {
+      "fieldName": "month",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "amount",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "year",
+      "fieldType": "Integer"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "MobileBill",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "mobileBill",
+      "relationshipName": "employee",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

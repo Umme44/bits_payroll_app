@@ -1,0 +1,101 @@
+@media print {
+  .printDiv {
+    width: 80%;
+    margin-left: 100px;
+    margin-top: 65px;
+  }
+
+  .hide-in-print {
+    display: none;
+    alignment: center;
+    min-width: 400px;
+  }
+  jhi-header {
+    display: none;
+  }
+  #page-control {
+    width: 100%;
+    min-width: 400px;
+  }
+
+  .card {
+    margin-left: 10px;
+    border: none;
+  }
+
+  .document-border {
+    border: 0;
+  }
+}
+
+table.XX.table-striped > tbody > tr > td,
+table.XX {
+  color: black;
+  font-weight: bold;
+  font-size: larger;
+}
+
+table.XX.table-striped > tbody > tr:nth-child(odd) > td,
+.table-striped > tbody > tr:nth-child(odd) > th,
+body.YY {
+  background-color: #d3e6cb;
+}
+
+/* table zz*/
+table.zz > tbody > tr > td,
+tbody.aa {
+  color: blue;
+  font-weight: bold;
+}
+
+table.zz.table,
+table.zz.table-bordered > thead > tr > th {
+  border: 2px solid #000000;
+}
+
+table.zz.table-bordered > tbody > tr > th,
+table.zz.table-bordered > tfoot > tr > th,
+table.zz.table-bordered > thead > tr > td,
+table.zz.table-bordered > tbody > tr > td,
+table.zz.table-bordered > tfoot > tr > td {
+  border: 1px solid #000000;
+}
+
+/* tax challan table styles*/
+.left-heading-td {
+  font-size: 11pt;
+  font-family: Calibri, sans-serif;
+  margin: 0;
+  padding-left: 4px;
+}
+
+.table-tbody-td-p {
+  font-size: 11pt;
+  font-family: Calibri, sans-serif;
+  text-align: center;
+  margin: 0;
+}
+
+.table-data-span {
+  color: black;
+  font-size: 7.2pt;
+  font-family: Segoe UI Light, sans-serif;
+}
+
+.tax-challan-table-tbody-td {
+  height: 8.7pt;
+  padding: 0 0;
+  border-style: none solid solid none;
+  border-right-width: 0.75pt;
+  border-bottom-width: 0.75pt;
+  border-right-color: black;
+  border-bottom-color: black;
+}
+
+.tax-challan-table-tbody-td-month {
+  height: 8.7pt;
+  padding: 0 0;
+  border-width: 0.75pt;
+  border-style: solid solid solid none;
+  border-color: black;
+}

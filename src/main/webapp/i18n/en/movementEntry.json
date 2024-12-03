@@ -1,0 +1,40 @@
+{
+  "bitsHrPayrollApp": {
+    "movementEntry": {
+      "home": {
+        "title": "Movement Entries",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Movement Entry",
+        "createOrEditLabel": "Create or edit a Movement Entry",
+        "notFound": "No Movement Entries found"
+      },
+      "created": "A new Movement Entry is created with identifier {{ param }}",
+      "updated": "A Movement Entry is updated with identifier {{ param }}",
+      "deleted": "A Movement Entry is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Movement Entry {{ id }}?"
+      },
+      "detail": {
+        "title": "Movement Entry"
+      },
+      "pin": "PIN",
+      "designation": "Designation",
+      "startDate": "Start Date",
+      "startTime": "Start Time",
+      "startNote": "Start Note",
+      "endDate": "End Date",
+      "endTime": "End Time",
+      "endNote": "End Note",
+      "type": "Type",
+      "status": "Status",
+      "createdAt": "Created At",
+      "updatedAt": "Updated At",
+      "sanctionAt": "Sanction At",
+      "note": "Note",
+      "employee": "Employee",
+      "createdBy": "Created By",
+      "updatedBy": "Updated By",
+      "sanctionBy": "Sanction By"
+    }
+  }
+}

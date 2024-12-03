@@ -1,0 +1,53 @@
+{
+  "changelogDate": "20220419081141",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "event_log",
+  "fields": [
+    {
+      "fieldName": "title",
+      "fieldType": "String",
+      "fieldValidateRules": ["minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "255",
+      "fieldValidateRulesMinlength": "0"
+    },
+    {
+      "fieldName": "requestMethod",
+      "fieldType": "RequestMethod",
+      "fieldValues": "GET,POST,PUT,PATCH,DELETE"
+    },
+    {
+      "fieldName": "performedAt",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "data",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "entityName",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "EventLog",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "eventLog",
+      "ownerSide": true,
+      "relationshipName": "performedBy",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    }
+  ],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

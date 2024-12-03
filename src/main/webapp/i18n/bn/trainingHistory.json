@@ -1,0 +1,27 @@
+{
+  "bitsHrPayrollApp": {
+    "trainingHistory": {
+      "home": {
+        "title": "Training Histories",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Training History",
+        "createOrEditLabel": "Create or edit a Training History",
+        "notFound": "No Training Histories found"
+      },
+      "created": "A new Training History is created with identifier {{ param }}",
+      "updated": "A Training History is updated with identifier {{ param }}",
+      "deleted": "A Training History is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Training History {{ id }}?"
+      },
+      "detail": {
+        "title": "Training History"
+      },
+      "id": "ID",
+      "trainingName": "Training Name",
+      "coordinatedBy": "Coordinated By",
+      "dateOfCompletion": "Date Of Completion",
+      "employee": "Employee"
+    }
+  }
+}

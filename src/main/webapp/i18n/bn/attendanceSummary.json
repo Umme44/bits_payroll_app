@@ -1,0 +1,32 @@
+{
+  "bitsHrPayrollApp": {
+    "attendanceSummary": {
+      "home": {
+        "title": "Attendance Summaries",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Attendance Summary",
+        "createOrEditLabel": "Create or edit a Attendance Summary",
+        "notFound": "No Attendance Summaries found"
+      },
+      "created": "A new Attendance Summary is created with identifier {{ param }}",
+      "updated": "A Attendance Summary is updated with identifier {{ param }}",
+      "deleted": "A Attendance Summary is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Attendance Summary {{ id }}?"
+      },
+      "detail": {
+        "title": "Attendance Summary"
+      },
+      "id": "ID",
+      "month": "Month",
+      "year": "Year",
+      "totalWorkingDays": "Total Working Days",
+      "totalLeaveDays": "Total Leave Days",
+      "totalAbsentDays": "Total Absent Days",
+      "totalFractionDays": "Total Fraction Days",
+      "attendanceRegularisationStartDate": "Attendance Regularisation Start Date",
+      "attendanceRegularisationEndDate": "Attendance Regularisation End Date",
+      "employee": "Employee"
+    }
+  }
+}

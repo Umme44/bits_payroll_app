@@ -1,0 +1,55 @@
+{
+  "changelogDate": "20211228062949",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "salary_deduction",
+  "fields": [
+    {
+      "fieldName": "deductionAmount",
+      "fieldType": "Double",
+      "fieldValidateRules": ["required", "min", "max"],
+      "fieldValidateRulesMax": "1000000",
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "deductionYear",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required", "min", "max"],
+      "fieldValidateRulesMax": "2100",
+      "fieldValidateRulesMin": "1990"
+    },
+    {
+      "fieldName": "deductionMonth",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required", "min", "max"],
+      "fieldValidateRulesMax": "12",
+      "fieldValidateRulesMin": "1"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "SalaryDeduction",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "deductionType",
+      "otherEntityRelationshipName": "salaryDeduction",
+      "relationshipName": "deductionType",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "salaryDeduction",
+      "relationshipName": "employee",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    }
+  ],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

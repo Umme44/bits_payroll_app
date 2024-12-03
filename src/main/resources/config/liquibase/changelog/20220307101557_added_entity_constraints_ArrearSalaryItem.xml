@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity ArrearSalaryItem.
+    -->
+    <changeSet id="20220307101557-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="arrear_salary_master_id"
+                                 baseTableName="arrear_salary_item"
+                                 constraintName="fk_arrear_salary_item__arrear_salary_master_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="arrear_salary_master"/>
+
+        <addForeignKeyConstraint baseColumnNames="employee_id"
+                                 baseTableName="arrear_salary_item"
+                                 constraintName="fk_arrear_salary_item__employee_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+    </changeSet>
+</databaseChangeLog>

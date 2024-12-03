@@ -1,0 +1,61 @@
+sudo netstat -tulpn | grep 8585
+kill 17256
+
+
+nohup java -DLOG_PATH=app_8585 -Dserver.port=8585 -Dspring.profiles.active=prod,no-liquibase  -jar bits-hr-payroll-0.0.1-SNAPSHOT.jar > loggers/nohup_out.log 2>&1 &
+
+
+
+-Dspring.datasourcedbcUrl='jdbc:postgresql://10.42.65.172:5432/app_8585'
+
+
+
+--------------------------------- ADMIN USER ------------------------------------
+
+INSERT INTO public.jhi_user (id,
+                             login,
+                             password_hash,
+                             first_name,
+                             last_name,
+                             email,
+                             image_url,
+                             activated,
+                             lang_key,
+                             activation_key,
+                             reset_key,
+                             created_by,
+                             created_date,
+                             reset_date,
+                             last_modified_by,
+                             last_modified_date)
+VALUES (:id,
+        :adminName,
+        '$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC',
+        'Administrator2',
+        'Administrator2',
+        :adminEmail,
+        '',
+        true,
+        'en',
+        null,
+        null,
+        'system',
+        null,
+        null,
+        'system',
+        null);
+
+INSERT INTO public.jhi_user_authority (user_id, authority_name)
+VALUES (:id, 'ROLE_HR_ADMIN');
+INSERT INTO public.jhi_user_authority (user_id, authority_name)
+VALUES (:id, 'ROLE_USER');
+INSERT INTO public.jhi_user_authority (user_id, authority_name)
+VALUES (:id, 'ROLE_ADMIN');
+INSERT INTO public.jhi_user_authority (user_id, authority_name)
+VALUES (:id, 'ROLE_PROCUREMENT_OFFICER');
+INSERT INTO public.jhi_user_authority (user_id, authority_name)
+VALUES (:id, 'ROLE_EMPLOYEE');
+--------------------------------- ADMIN USER ------------------------------------
+
+
+

@@ -1,0 +1,98 @@
+<jhi-header
+  [addButtonText]="'New PIN Configuration'"
+  [headerName]="'PIN Configurations'"
+  [routerLinkText]="'/employee-pin-configuration/new'"
+  [shouldHaveHr]="false"
+>
+</jhi-header>
+
+<div>
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="employeePinConfigurations?.length === 0">
+    <span jhiTranslate="bitsHrPayrollApp.employeePinConfiguration.home.notFound">No employeePinConfigurations found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="employeePinConfigurations && employeePinConfigurations.length > 0">
+    <table class="table table-hover list-text-color" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.employeePinConfiguration.employeeCategory">Employee Category</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.employeePinConfiguration.sequenceStart">Sequence Start</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.employeePinConfiguration.sequenceEnd">Sequence End</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.employeePinConfiguration.lastCreatedPin">Recently Created PIN</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.employeePinConfiguration.lastSequence">Last Sequence</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.employeePinConfiguration.hasFullFilled">Has Full Filled</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+        <tr *ngFor="let employeePinConfiguration of employeePinConfigurations; trackBy: trackId">
+          <td>{{ getEmployeeCategory(employeePinConfiguration.employeeCategory!) }}</td>
+          <td>{{ employeePinConfiguration.sequenceStart }}</td>
+          <td>{{ employeePinConfiguration.sequenceEnd }}</td>
+          <td>
+            {{
+              employeePinConfiguration.lastCreatedPin !== undefined && employeePinConfiguration.lastCreatedPin !== null
+                ? employeePinConfiguration.lastCreatedPin
+                : '-'
+            }}
+          </td>
+          <td>
+            {{
+              employeePinConfiguration.lastSequence !== undefined && employeePinConfiguration.lastSequence !== null
+                ? employeePinConfiguration.lastSequence
+                : '-'
+            }}
+          </td>
+          <td>{{ employeePinConfiguration.hasFullFilled === true ? 'Yes' : 'No' }}</td>
+
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/employee-pin-configuration', employeePinConfiguration.id, 'view']"
+                class="btn btn-info btn-sm"
+              >
+                <fa-icon icon="eye"></fa-icon>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/employee-pin-configuration', employeePinConfiguration.id, 'edit']"
+                class="btn btn-primary btn-sm"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+              </button>
+
+              <button type="submit" (click)="delete(employeePinConfiguration)" class="btn btn-danger btn-sm">
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="employeePinConfigurations && employeePinConfigurations.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+
+</div>

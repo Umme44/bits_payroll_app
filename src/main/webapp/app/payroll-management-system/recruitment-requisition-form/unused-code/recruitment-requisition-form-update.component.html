@@ -1,0 +1,647 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-recruitment-requisition-form-heading" jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.home.createOrEditLabel">
+        Create or edit a Recruitment Requisition Form
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="mb-3" [hidden]="!editForm.get('id')!.value">
+          <label for="id" jhiTranslate="global.field.id">ID</label>
+          <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-control-label"
+            jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.expectedJoiningDate"
+            for="field_expectedJoiningDate"
+            >Expected Joining Date</label
+          >
+          <div class="input-group">
+            <input
+              id="field_expectedJoiningDate"
+              type="text"
+              class="form-control"
+              name="expectedJoiningDate"
+              ngbDatepicker
+              #expectedJoiningDateDp="ngbDatepicker"
+              formControlName="expectedJoiningDate"
+            />
+            <span class="input-group-append">
+              <button type="button" class="btn btn-secondary" (click)="expectedJoiningDateDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </span>
+          </div>
+          <div
+            *ngIf="
+              editForm.get('expectedJoiningDate')!.invalid &&
+              (editForm.get('expectedJoiningDate')!.dirty || editForm.get('expectedJoiningDate')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('expectedJoiningDate')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.project" for="field_project"
+            >Project</label
+          >
+          <input type="text" class="form-control" name="project" id="field_project" formControlName="project" />
+          <div *ngIf="editForm.get('project')!.invalid && (editForm.get('project')!.dirty || editForm.get('project')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('project')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 0 }"
+            >
+              This field is required to be at least 0 characters.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('project')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 250 }"
+            >
+              This field cannot be longer than 250 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-control-label"
+            jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.numberOfVacancies"
+            for="field_numberOfVacancies"
+            >Number Of Vacancies</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="numberOfVacancies"
+            id="field_numberOfVacancies"
+            formControlName="numberOfVacancies"
+          />
+          <div
+            *ngIf="
+              editForm.get('numberOfVacancies')!.invalid &&
+              (editForm.get('numberOfVacancies')!.dirty || editForm.get('numberOfVacancies')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('numberOfVacancies')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('numberOfVacancies')?.errors?.min"
+              jhiTranslate="entity.validation.min"
+              [translateValues]="{ min: 1 }"
+            >
+              This field should be at least 1.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('numberOfVacancies')?.errors?.max"
+              jhiTranslate="entity.validation.max"
+              [translateValues]="{ max: 1000 }"
+            >
+              This field cannot be more than 1000.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('numberOfVacancies')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-control-label"
+            jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.employmentType"
+            for="field_employmentType"
+            >Employment Type</label
+          >
+          <select class="form-control" name="employmentType" formControlName="employmentType" id="field_employmentType">
+            <option value="REGULAR_CONFIRMED_EMPLOYEE">
+              {{ 'bitsHrPayrollApp.EmployeeCategory.REGULAR_CONFIRMED_EMPLOYEE' | translate }}
+            </option>
+            <option value="REGULAR_PROVISIONAL_EMPLOYEE">
+              {{ 'bitsHrPayrollApp.EmployeeCategory.REGULAR_PROVISIONAL_EMPLOYEE' | translate }}
+            </option>
+            <option value="CONTRACTUAL_EMPLOYEE">{{ 'bitsHrPayrollApp.EmployeeCategory.CONTRACTUAL_EMPLOYEE' | translate }}</option>
+            <option value="INTERN">{{ 'bitsHrPayrollApp.EmployeeCategory.INTERN' | translate }}</option>
+          </select>
+          <div
+            *ngIf="
+              editForm.get('employmentType')!.invalid && (editForm.get('employmentType')!.dirty || editForm.get('employmentType')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('employmentType')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.resourceType" for="field_resourceType"
+            >Resource Type</label
+          >
+          <select class="form-control" name="resourceType" formControlName="resourceType" id="field_resourceType">
+            <option value="BUDGET">{{ 'bitsHrPayrollApp.RequisitionResourceType.BUDGET' | translate }}</option>
+            <option value="NON_BUDGET">{{ 'bitsHrPayrollApp.RequisitionResourceType.NON_BUDGET' | translate }}</option>
+          </select>
+          <div
+            *ngIf="editForm.get('resourceType')!.invalid && (editForm.get('resourceType')!.dirty || editForm.get('resourceType')!.touched)"
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('resourceType')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.rrfNumber" for="field_rrfNumber"
+            >Rrf Number</label
+          >
+          <input type="text" class="form-control" name="rrfNumber" id="field_rrfNumber" formControlName="rrfNumber" />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-control-label"
+            jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.preferredEducationType"
+            for="field_preferredEducationType"
+            >Preferred Education Type</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="preferredEducationType"
+            id="field_preferredEducationType"
+            formControlName="preferredEducationType"
+          />
+          <div
+            *ngIf="
+              editForm.get('preferredEducationType')!.invalid &&
+              (editForm.get('preferredEducationType')!.dirty || editForm.get('preferredEducationType')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('preferredEducationType')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 2 }"
+            >
+              This field is required to be at least 2 characters.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('preferredEducationType')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 250 }"
+            >
+              This field cannot be longer than 250 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-control-label"
+            jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.dateOfRequisition"
+            for="field_dateOfRequisition"
+            >Date Of Requisition</label
+          >
+          <div class="input-group">
+            <input
+              id="field_dateOfRequisition"
+              type="text"
+              class="form-control"
+              name="dateOfRequisition"
+              ngbDatepicker
+              #dateOfRequisitionDp="ngbDatepicker"
+              formControlName="dateOfRequisition"
+            />
+            <span class="input-group-append">
+              <button type="button" class="btn btn-secondary" (click)="dateOfRequisitionDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </span>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-control-label"
+            jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.requestedDate"
+            for="field_requestedDate"
+            >Requested Date</label
+          >
+          <div class="input-group">
+            <input
+              id="field_requestedDate"
+              type="text"
+              class="form-control"
+              name="requestedDate"
+              ngbDatepicker
+              #requestedDateDp="ngbDatepicker"
+              formControlName="requestedDate"
+            />
+            <span class="input-group-append">
+              <button type="button" class="btn btn-secondary" (click)="requestedDateDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </span>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-control-label"
+            jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.recommendationDate01"
+            for="field_recommendationDate01"
+            >Recommendation Date 01</label
+          >
+          <div class="input-group">
+            <input
+              id="field_recommendationDate01"
+              type="text"
+              class="form-control"
+              name="recommendationDate01"
+              ngbDatepicker
+              #recommendationDate01Dp="ngbDatepicker"
+              formControlName="recommendationDate01"
+            />
+            <span class="input-group-append">
+              <button type="button" class="btn btn-secondary" (click)="recommendationDate01Dp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </span>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-control-label"
+            jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.recommendationDate02"
+            for="field_recommendationDate02"
+            >Recommendation Date 02</label
+          >
+          <div class="input-group">
+            <input
+              id="field_recommendationDate02"
+              type="text"
+              class="form-control"
+              name="recommendationDate02"
+              ngbDatepicker
+              #recommendationDate02Dp="ngbDatepicker"
+              formControlName="recommendationDate02"
+            />
+            <span class="input-group-append">
+              <button type="button" class="btn btn-secondary" (click)="recommendationDate02Dp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </span>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-control-label"
+            jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.recommendationDate03"
+            for="field_recommendationDate03"
+            >Recommendation Date 03</label
+          >
+          <div class="input-group">
+            <input
+              id="field_recommendationDate03"
+              type="text"
+              class="form-control"
+              name="recommendationDate03"
+              ngbDatepicker
+              #recommendationDate03Dp="ngbDatepicker"
+              formControlName="recommendationDate03"
+            />
+            <span class="input-group-append">
+              <button type="button" class="btn btn-secondary" (click)="recommendationDate03Dp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </span>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-control-label"
+            jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.recommendationDate04"
+            for="field_recommendationDate04"
+            >Recommendation Date 04</label
+          >
+          <div class="input-group">
+            <input
+              id="field_recommendationDate04"
+              type="text"
+              class="form-control"
+              name="recommendationDate04"
+              ngbDatepicker
+              #recommendationDate04Dp="ngbDatepicker"
+              formControlName="recommendationDate04"
+            />
+            <span class="input-group-append">
+              <button type="button" class="btn btn-secondary" (click)="recommendationDate04Dp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </span>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-control-label"
+            jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.requisitionStatus"
+            for="field_requisitionStatus"
+            >Requisition Status</label
+          >
+          <select class="form-control" name="requisitionStatus" formControlName="requisitionStatus" id="field_requisitionStatus">
+            <option value="PENDIND">{{ 'bitsHrPayrollApp.RequisitionStatus.PENDIND' | translate }}</option>
+            <option value="CLOSED">{{ 'bitsHrPayrollApp.RequisitionStatus.CLOSED' | translate }}</option>
+            <option value="NOT_APPROVED">{{ 'bitsHrPayrollApp.RequisitionStatus.NOT_APPROVED' | translate }}</option>
+          </select>
+          <div
+            *ngIf="
+              editForm.get('requisitionStatus')!.invalid &&
+              (editForm.get('requisitionStatus')!.dirty || editForm.get('requisitionStatus')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('requisitionStatus')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.rejectedAt" for="field_rejectedAt"
+            >Rejected At</label
+          >
+          <div class="input-group">
+            <input
+              id="field_rejectedAt"
+              type="text"
+              class="form-control"
+              name="rejectedAt"
+              ngbDatepicker
+              #rejectedAtDp="ngbDatepicker"
+              formControlName="rejectedAt"
+            />
+            <span class="input-group-append">
+              <button type="button" class="btn btn-secondary" (click)="rejectedAtDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </span>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.createdAt" for="field_createdAt"
+            >Created At</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_createdAt"
+              type="datetime-local"
+              class="form-control"
+              name="createdAt"
+              formControlName="createdAt"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.updatedAt" for="field_updatedAt"
+            >Updated At</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_updatedAt"
+              type="datetime-local"
+              class="form-control"
+              name="updatedAt"
+              formControlName="updatedAt"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-control-label"
+            jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.functionalDesignation"
+            for="field_functionalDesignation"
+            >Functional Designation</label
+          >
+          <select
+            class="form-control"
+            id="field_functionalDesignation"
+            name="functionalDesignation"
+            formControlName="functionalDesignationId"
+          >
+            <option *ngIf="!editForm.get('functionalDesignationId')!.value" [ngValue]="null" selected></option>
+            <option [ngValue]="designationOption.id" *ngFor="let designationOption of designations; trackBy: trackById">
+              {{ designationOption.id }}
+            </option>
+          </select>
+        </div>
+        <div
+          *ngIf="
+            editForm.get('functionalDesignationId')!.invalid &&
+            (editForm.get('functionalDesignationId')!.dirty || editForm.get('functionalDesignationId')!.touched)
+          "
+        >
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get('functionalDesignationId')?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.band" for="field_band">Band</label>
+          <select class="form-control" id="field_band" name="band" formControlName="bandId">
+            <option *ngIf="!editForm.get('bandId')!.value" [ngValue]="null" selected></option>
+            <option [ngValue]="bandOption.id" *ngFor="let bandOption of bands; trackBy: trackById">{{ bandOption.id }}</option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get('bandId')!.invalid && (editForm.get('bandId')!.dirty || editForm.get('bandId')!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get('bandId')?.errors?.required" jhiTranslate="entity.validation.required">
+            This field is required.
+          </small>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.department" for="field_department"
+            >Department</label
+          >
+          <select class="form-control" id="field_department" name="department" formControlName="departmentId">
+            <option [ngValue]="null"></option>
+            <option [ngValue]="departmentOption.id" *ngFor="let departmentOption of departments; trackBy: trackById">
+              {{ departmentOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.unit" for="field_unit">Unit</label>
+          <select class="form-control" id="field_unit" name="unit" formControlName="unitId">
+            <option [ngValue]="null"></option>
+            <option [ngValue]="unitOption.id" *ngFor="let unitOption of units; trackBy: trackById">{{ unitOption.id }}</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-control-label"
+            jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.recommendedBy01"
+            for="field_recommendedBy01"
+            >Recommended By 01</label
+          >
+          <select class="form-control" id="field_recommendedBy01" name="recommendedBy01" formControlName="recommendedBy01Id">
+            <option [ngValue]="null"></option>
+            <option [ngValue]="employeeOption.id" *ngFor="let employeeOption of employees; trackBy: trackById">
+              {{ employeeOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-control-label"
+            jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.recommendedBy02"
+            for="field_recommendedBy02"
+            >Recommended By 02</label
+          >
+          <select class="form-control" id="field_recommendedBy02" name="recommendedBy02" formControlName="recommendedBy02Id">
+            <option [ngValue]="null"></option>
+            <option [ngValue]="employeeOption.id" *ngFor="let employeeOption of employees; trackBy: trackById">
+              {{ employeeOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-control-label"
+            jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.recommendedBy03"
+            for="field_recommendedBy03"
+            >Recommended By 03</label
+          >
+          <select class="form-control" id="field_recommendedBy03" name="recommendedBy03" formControlName="recommendedBy03Id">
+            <option [ngValue]="null"></option>
+            <option [ngValue]="employeeOption.id" *ngFor="let employeeOption of employees; trackBy: trackById">
+              {{ employeeOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-control-label"
+            jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.recommendedBy04"
+            for="field_recommendedBy04"
+            >Recommended By 04</label
+          >
+          <select class="form-control" id="field_recommendedBy04" name="recommendedBy04" formControlName="recommendedBy04Id">
+            <option [ngValue]="null"></option>
+            <option [ngValue]="employeeOption.id" *ngFor="let employeeOption of employees; trackBy: trackById">
+              {{ employeeOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.requester" for="field_requester"
+            >Requester</label
+          >
+          <select class="form-control" id="field_requester" name="requester" formControlName="requesterId">
+            <option [ngValue]="null"></option>
+            <option [ngValue]="employeeOption.id" *ngFor="let employeeOption of employees; trackBy: trackById">
+              {{ employeeOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.rejectedBy" for="field_rejectedBy"
+            >Rejected By</label
+          >
+          <select class="form-control" id="field_rejectedBy" name="rejectedBy" formControlName="rejectedById">
+            <option [ngValue]="null"></option>
+            <option [ngValue]="employeeOption.id" *ngFor="let employeeOption of employees; trackBy: trackById">
+              {{ employeeOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.createdBy" for="field_createdBy"
+            >Created By</label
+          >
+          <select class="form-control" id="field_createdBy" name="createdBy" formControlName="createdById">
+            <option [ngValue]="null"></option>
+            <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackById">{{ userOption.login }}</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.updatedBy" for="field_updatedBy"
+            >Updated By</label
+          >
+          <select class="form-control" id="field_updatedBy" name="updatedBy" formControlName="updatedById">
+            <option [ngValue]="null"></option>
+            <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackById">{{ userOption.login }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

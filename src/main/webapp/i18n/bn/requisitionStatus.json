@@ -1,0 +1,13 @@
+{
+  "bitsHrPayrollApp": {
+    "RequisitionStatus": {
+      "null": "",
+      "PENDING": "PENDING",
+      "IN_PROGRESS": "IN_PROGRESS",
+      "OPEN": "OPEN",
+      "CLOSED": "CLOSED",
+      "PARTIALLY_CLOSED": "PARTIALLY_CLOSED",
+      "NOT_APPROVED": "NOT_APPROVED"
+    }
+  }
+}

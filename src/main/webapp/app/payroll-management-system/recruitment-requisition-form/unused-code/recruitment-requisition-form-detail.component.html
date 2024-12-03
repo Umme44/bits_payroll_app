@@ -1,0 +1,181 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="recruitmentRequisitionForm">
+      <h2>
+        <span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.detail.title">Recruitment Requisition Form</span>
+        {{ recruitmentRequisitionForm.id }}
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.expectedJoiningDate">Expected Joining Date</span></dt>
+        <dd>
+          <span>{{ recruitmentRequisitionForm.expectedJoiningDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.project">Project</span></dt>
+        <dd>
+          <span>{{ recruitmentRequisitionForm.project }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.numberOfVacancies">Number Of Vacancies</span></dt>
+        <dd>
+          <span>{{ recruitmentRequisitionForm.numberOfVacancies }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.employmentType">Employment Type</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.EmployeeCategory.' + recruitmentRequisitionForm.employmentType }}">{{
+            recruitmentRequisitionForm.employmentType
+          }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.resourceType">Resource Type</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.RequisitionResourceType.' + recruitmentRequisitionForm.resourceType }}">{{
+            recruitmentRequisitionForm.resourceType
+          }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.rrfNumber">Rrf Number</span></dt>
+        <dd>
+          <span>{{ recruitmentRequisitionForm.rrfNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.preferredEducationType">Preferred Education Type</span></dt>
+        <dd>
+          <span>{{ recruitmentRequisitionForm.preferredEducationType }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.dateOfRequisition">Date Of Requisition</span></dt>
+        <dd>
+          <span>{{ recruitmentRequisitionForm.dateOfRequisition }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.requestedDate">Requested Date</span></dt>
+        <dd>
+          <span>{{ recruitmentRequisitionForm.requestedDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.recommendationDate01">Recommendation Date 01</span></dt>
+        <dd>
+          <span>{{ recruitmentRequisitionForm.recommendationDate01 }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.recommendationDate02">Recommendation Date 02</span></dt>
+        <dd>
+          <span>{{ recruitmentRequisitionForm.recommendationDate02 }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.recommendationDate03">Recommendation Date 03</span></dt>
+        <dd>
+          <span>{{ recruitmentRequisitionForm.recommendationDate03 }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.recommendationDate04">Recommendation Date 04</span></dt>
+        <dd>
+          <span>{{ recruitmentRequisitionForm.recommendationDate04 }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.requisitionStatus">Requisition Status</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.RequisitionStatus.' + recruitmentRequisitionForm.requisitionStatus }}">{{
+            recruitmentRequisitionForm.requisitionStatus
+          }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.rejectedAt">Rejected At</span></dt>
+        <dd>
+          <span>{{ recruitmentRequisitionForm.rejectedAt }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.createdAt">Created At</span></dt>
+        <dd>
+          <span>{{ recruitmentRequisitionForm.createdAt }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.updatedAt">Updated At</span></dt>
+        <dd>
+          <span>{{ recruitmentRequisitionForm.updatedAt }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.functionalDesignation">Functional Designation</span></dt>
+        <dd>
+          <div *ngIf="recruitmentRequisitionForm.functionalDesignationId">
+            <a [routerLink]="['/designation', recruitmentRequisitionForm.functionalDesignationId, 'view']">{{
+              recruitmentRequisitionForm.functionalDesignationId
+            }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.band">Band</span></dt>
+        <dd>
+          <div *ngIf="recruitmentRequisitionForm.bandId">
+            <a [routerLink]="['/band', recruitmentRequisitionForm.bandId, 'view']">{{ recruitmentRequisitionForm.bandId }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.department">Department</span></dt>
+        <dd>
+          <div *ngIf="recruitmentRequisitionForm.departmentId">
+            <a [routerLink]="['/department', recruitmentRequisitionForm.departmentId, 'view']">{{
+              recruitmentRequisitionForm.departmentId
+            }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.unit">Unit</span></dt>
+        <dd>
+          <div *ngIf="recruitmentRequisitionForm.unitId">
+            <a [routerLink]="['/unit', recruitmentRequisitionForm.unitId, 'view']">{{ recruitmentRequisitionForm.unitId }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.recommendedBy01">Recommended By 01</span></dt>
+        <dd>
+          <div *ngIf="recruitmentRequisitionForm.recommendedBy01Id">
+            <a [routerLink]="['/employee', recruitmentRequisitionForm.recommendedBy01Id, 'view']">{{
+              recruitmentRequisitionForm.recommendedBy01Id
+            }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.recommendedBy02">Recommended By 02</span></dt>
+        <dd>
+          <div *ngIf="recruitmentRequisitionForm.recommendedBy02Id">
+            <a [routerLink]="['/employee', recruitmentRequisitionForm.recommendedBy02Id, 'view']">{{
+              recruitmentRequisitionForm.recommendedBy02Id
+            }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.recommendedBy03">Recommended By 03</span></dt>
+        <dd>
+          <div *ngIf="recruitmentRequisitionForm.recommendedBy03Id">
+            <a [routerLink]="['/employee', recruitmentRequisitionForm.recommendedBy03Id, 'view']">{{
+              recruitmentRequisitionForm.recommendedBy03Id
+            }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.recommendedBy04">Recommended By 04</span></dt>
+        <dd>
+          <div *ngIf="recruitmentRequisitionForm.recommendedBy04Id">
+            <a [routerLink]="['/employee', recruitmentRequisitionForm.recommendedBy04Id, 'view']">{{
+              recruitmentRequisitionForm.recommendedBy04Id
+            }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.requester">Requester</span></dt>
+        <dd>
+          <div *ngIf="recruitmentRequisitionForm.requesterId">
+            <a [routerLink]="['/employee', recruitmentRequisitionForm.requesterId, 'view']">{{ recruitmentRequisitionForm.requesterId }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.rejectedBy">Rejected By</span></dt>
+        <dd>
+          <div *ngIf="recruitmentRequisitionForm.rejectedById">
+            <a [routerLink]="['/employee', recruitmentRequisitionForm.rejectedById, 'view']">{{
+              recruitmentRequisitionForm.rejectedById
+            }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.createdBy">Created By</span></dt>
+        <dd>
+          {{ recruitmentRequisitionForm.createdByLogin }}
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.updatedBy">Updated By</span></dt>
+        <dd>
+          {{ recruitmentRequisitionForm.updatedByLogin }}
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/recruitment-requisition-form', recruitmentRequisitionForm.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

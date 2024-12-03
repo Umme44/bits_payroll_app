@@ -1,0 +1,11 @@
+{
+  "bitsHrPayrollApp": {
+    "PfRepaymentStatus": {
+      "null": "",
+      "SUBMITTED": "SUBMITTED",
+      "PROVISIONED": "PROVISIONED",
+      "CHECKED": "CHECKED",
+      "APPROVED": "APPROVED"
+    }
+  }
+}

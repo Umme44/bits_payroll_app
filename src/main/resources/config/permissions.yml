@@ -1,0 +1,86 @@
+# url:                    write the regex of the path you want to match with,
+#                         it's matched with antMatchers
+# authorities(Optional):  it takes arrays of authorities as parameter,
+#                         if not specified, it will allow all authenticated users
+# method(Optional)     :  it takes the http request method as parameter,
+#                         if not specified, it will match for all http request methods
+
+#  All other urls apart from the ones specified here, will be denied for all users
+permissions:
+  - url: '/api/account'
+    authorities:
+      - COMMON
+
+  - url: '/api/employee-mgt/departments'
+    method: GET
+    authorities:
+      - EMPLOYEE_MANAGEMENT_READ
+
+  - url: '/api/employee-mgt/designations'
+    method: GET
+    authorities:
+      - EMPLOYEE_MANAGEMENT_READ
+
+  - url: '/api/employee-mgt/units'
+    method: GET
+    authorities:
+      - EMPLOYEE_MANAGEMENT_READ
+
+  - url: '/api/employee-mgt/nationalities'
+    method: GET
+    authorities:
+      - EMPLOYEE_MANAGEMENT_READ
+
+  - url: '/api/employee-mgt/bank-branches'
+    method: GET
+    authorities:
+      - EMPLOYEE_MANAGEMENT_READ
+
+  - url: '/api/employee-mgt/bands'
+    method: GET
+    authorities:
+      - EMPLOYEE_MANAGEMENT_READ
+
+  - url: '/api/employee-mgt/**'
+    authorities:
+      - EMPLOYEE_MANAGEMENT
+
+  - url: '/api/payroll-mgt/**'
+    authorities:
+      - PAYROLL_MANAGEMENT
+
+  - url: '/api/attendance-mgt/**'
+    authorities:
+      - ATTENDANCE_MANAGEMENT
+
+  - url: '/api/pf-mgt/**'
+    authorities:
+      - PF_MANAGEMENT
+
+  - url: '/api/ait/**'
+    authorities:
+      - AIT_MANAGEMENT
+
+  - url: '/api/common/**'
+    authorities:
+      - COMMON
+
+  - url: '/api/attendance-user/**'
+    authorities:
+      - COMMON
+
+  - url: '/api/user-attendance-entry/**'
+    authorities:
+      - COMMON
+
+  - url: '/api/users'
+    authorities:
+      - USER_MANAGEMENT
+
+  - url: '/api/users/**'
+    authorities:
+      - USER_MANAGEMENT
+
+  - url: '/api/procurement-mgt/**'
+    authorities:
+      - PROCUREMENT_MANAGEMENT

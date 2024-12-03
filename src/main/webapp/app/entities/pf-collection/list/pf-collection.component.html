@@ -1,0 +1,226 @@
+<div>
+  <jhi-header
+    [headerName]="'PF Collection'"
+    [routerLinkText]="'/pf-collection/new'"
+    [addButtonText]="'Add New PF Collection'"
+    [shouldHaveHr]="false"
+  >
+  </jhi-header>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="card card-body mb-2">
+    <!--        filter by pf account-->
+    <div class="row my-2">
+      <div class="col-md-6">
+        <label class="form-control-label">PF Account</label>
+        <ng-select
+          [(ngModel)]="id"
+          (ngModelChange)="changePfAccount($event)"
+          [items]="pfAccountsNgSelect"
+          bindLabel="accHolderName"
+          bindValue="id"
+          appearance="outline"
+          [searchable]="true"
+          [clearable]="true"
+          labelForId="id"
+          class="font-sm"
+          name="id"
+        >
+        </ng-select>
+      </div>
+      <!--        filter by year-->
+      <div class="col-md-3">
+        <label class="form-control-label">Select Year</label>
+        <jhi-select-year
+          [showWithPlaceHolder]="true"
+          [startFromCurrentYear]="true"
+          [countOfLastYears]="10"
+          (selectYearEventEmitter)="loadAllOfAYear($event)"
+        >
+        </jhi-select-year>
+      </div>
+
+      <!--        filter by month -->
+      <div class="col-md-3">
+        <label class="form-control-label">Select Month</label>
+
+        <select (change)="loadAllByAMonth($event)" class="form-control form-select" id="month" name="month">
+          <option [ngValue]="null">All</option>
+          <option *ngFor="let month of months" value="{{ month.Value }}">
+            {{ month.Text }}
+          </option>
+        </select>
+      </div>
+      <!--        filter by collection type-->
+      <div class="col-md-12 pt-3">
+        <div class="form-check form-check-inline mx-md-5 mx-2">
+          <input
+            class="form-check-input mt-2"
+            checked="checked"
+            (change)="filterByCollectionTypes('all')"
+            id="all"
+            type="radio"
+            name="pfCollectionType"
+          />
+          <label class="form-check-label" for="all">All</label>
+        </div>
+        <div class="form-check form-check-inline mx-md-5 mx-2">
+          <input
+            class="form-check-input mt-2"
+            (change)="filterByCollectionTypes('MONTHLY')"
+            id="monthly_select"
+            type="radio"
+            name="pfCollectionType"
+          />
+          <label class="form-check-label" for="monthly_select" jhiTranslate="bitsHrPayrollApp.PfCollectionType.MONTHLY">Monthly</label>
+        </div>
+        <div class="form-check form-check-inline mx-md-5 mx-2">
+          <input
+            id="opening_balance_select"
+            class="form-check-input mt-2"
+            (change)="filterByCollectionTypes('OPENING_BALANCE')"
+            type="radio"
+            name="pfCollectionType"
+          />
+          <label class="form-check-label" for="opening_balance_select" jhiTranslate="bitsHrPayrollApp.PfCollectionType.OPENING_BALANCE"
+            >Opening Balance</label
+          >
+        </div>
+        <div class="form-check form-check-inline mx-md-5 mx-2">
+          <input
+            class="form-check-input mt-2"
+            (change)="filterByCollectionTypes('ARREAR')"
+            id="formSelect"
+            name="pfCollectionType"
+            type="radio"
+          />
+          <label class="form-check-label" for="formSelect" jhiTranslate="bitsHrPayrollApp.PfCollectionType.ARREAR">Arrear</label>
+        </div>
+        <div class="form-check form-check-inline mx-md-5 mx-2">
+          <input
+            class="form-check-input mt-2"
+            (change)="filterByCollectionTypes('ADVANCE')"
+            id="advance_select"
+            type="radio"
+            name="pfCollectionType"
+          />
+          <label class="form-check-label" for="advance_select" jhiTranslate="bitsHrPayrollApp.PfCollectionType.ADVANCE">ADVANCE</label>
+        </div>
+        <div class="form-check form-check-inline mx-md-5 mx-2">
+          <input
+            class="form-check-input mt-2"
+            (change)="filterByCollectionTypes('CASH')"
+            id="cash_select"
+            type="radio"
+            name="pfCollectionType"
+          />
+          <label class="form-check-label" for="cash_select" jhiTranslate="bitsHrPayrollApp.PfCollectionType.CASH">CASH</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="" id="no-result" *ngIf="pfCollections?.length === 0">
+    <div class="empty-list-vector-image mt-5 pt-5">
+      <img style="width: 50vh" src="../../../content/images/svg/no_data_placeholder.svg" alt="No Data Placeholder" />
+    </div>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="pfCollections && pfCollections.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th class="text-nowrap" scope="col"><span jhiTranslate="bitsHrPayrollApp.pfCollection.pfCode">Pf Account</span></th>
+          <th class="text-nowrap" scope="col"><span jhiTranslate="bitsHrPayrollApp.pfCollection.accHolderName">Acc Holder Name </span></th>
+          <th class="text-nowrap" scope="col"><span jhiTranslate="bitsHrPayrollApp.pfAccount.designationName">Designation</span></th>
+          <th class="text-nowrap" scope="col" jhiSortBy="year"><span jhiTranslate="bitsHrPayrollApp.pfCollection.year">Year</span></th>
+          <th class="text-nowrap" scope="col" jhiSortBy="month"><span jhiTranslate="bitsHrPayrollApp.pfCollection.month">Month</span></th>
+          <th class="text-nowrap text-end" scope="col" jhiSortBy="employeeContribution">
+            <span jhiTranslate="bitsHrPayrollApp.pfCollection.employeeContribution">Employee Contribution</span>
+          </th>
+          <th class="text-nowrap text-end" scope="col" jhiSortBy="employerContribution">
+            <span jhiTranslate="bitsHrPayrollApp.pfCollection.employerContribution">Employer Contribution</span>
+          </th>
+          <th class="text-nowrap text-end" scope="col" jhiSortBy="employeeInterest">
+            <span jhiTranslate="bitsHrPayrollApp.pfCollection.employeeInterest">Employee Interest</span>
+          </th>
+          <th class="text-nowrap text-end" scope="col" jhiSortBy="employerInterest">
+            <span jhiTranslate="bitsHrPayrollApp.pfCollection.employerInterest">Employer Interest</span>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pfCollection of pfCollections; trackBy: trackId">
+          <td>{{ pfCollection.pfCode }}</td>
+          <td>{{ pfCollection.accHolderName }}</td>
+          <td>{{ pfCollection.designationName }}</td>
+          <td>{{ pfCollection.year }}</td>
+          <td>{{ toMonth(pfCollection.month) }}</td>
+          <td class="text-end">{{ pfCollection.employeeContribution }}</td>
+          <td class="text-end">{{ pfCollection.employerContribution }}</td>
+          <td class="text-end">{{ pfCollection.employeeInterest }}</td>
+          <td class="text-end">{{ pfCollection.employerInterest }}</td>
+
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/pf-collection', pfCollection.id, 'view']"
+                class="btn btn-info btn-sm px-md-3"
+                data-placement="top"
+                data-toggle="tooltip"
+                title="View"
+              >
+                <fa-icon icon="eye"></fa-icon>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/pf-collection', pfCollection.id, 'edit']"
+                class="btn btn-primary btn-sm px-md-3"
+                data-placement="top"
+                data-toggle="tooltip"
+                title="Edit"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+              </button>
+
+              <button
+                type="submit"
+                (click)="delete(pfCollection)"
+                class="btn btn-danger btn-sm px-md-3"
+                data-placement="top"
+                data-toggle="tooltip"
+                title="Delete"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="pfCollections && pfCollections.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

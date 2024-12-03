@@ -1,0 +1,8 @@
+<label class="form-control-label">Month</label>
+
+<select (change)="onChangeMonth($event)" class="form-control" id="month" name="month" [formControl]="selectMonthFormControl">
+  <option [value]="-1">All</option>
+  <option *ngFor="let month of months" value="{{ month.key }}">
+    {{ month.value }}
+  </option>
+</select>

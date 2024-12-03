@@ -1,0 +1,3075 @@
+<div>
+  <form (ngSubmit)="save()" [formGroup]="editForm" name="editForm" novalidate role="form">
+    <jhi-header
+      [headerName]="!editForm.get('id')!.value ? 'Employee Onboarding' : 'Edit Employee Information'"
+      [midHeaderName01]="'Employees'"
+      [midRouterLinkText01]="'/employee-custom'"
+      [shouldHaveHr]="false"
+    >
+    </jhi-header>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <ul #nav="ngbNav" [(activeId)]="active" [destroyOnHide]="false" class="nav-tabs" ngbNav>
+      <li [ngbNavItem]="1">
+        <a class="fw-bold required" ngbNavLink>Essential</a>
+        <ng-template ngbNavContent>
+          <!--            card 1 -->
+          <div class="card">
+            <div class="card-body">
+              <div class="row align-items-center">
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label class="form-control-label required" for="field_pin">PIN</label>
+                    <input class="form-control" formControlName="pin" id="field_pin" name="pin" type="text" />
+                    <div *ngIf="editForm.get('pin')!.invalid && (editForm.get('pin')!.dirty || editForm.get('pin')!.touched)">
+                      <div
+                        *ngIf="editForm.get('pin')?.errors?.required"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.required"
+                      >
+                        This field is required.
+                      </div>
+                      <div *ngIf="editForm.get('pin')?.errors?.maxlength" class="form-text text-danger">
+                        This field cannot be longer than 4 characters.
+                      </div>
+                      <div *ngIf="editForm.get('pin')?.errors?.pattern" class="form-text text-danger">This field must be numeric</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label class="form-control-label" for="field_rrfNumber">RRF Number</label>
+                    <input class="form-control" formControlName="rrfNumber" id="field_rrfNumber" name="rrfNumber" type="text" />
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label class="form-control-label required" for="field_fullName">Full Name</label>
+                    <input class="form-control" formControlName="fullName" id="field_fullName" name="fullName" type="text" />
+                    <div
+                      *ngIf="editForm.get('fullName')!.invalid && (editForm.get('fullName')!.dirty || editForm.get('fullName')!.touched)"
+                    >
+                      <div *ngIf="editForm.get('fullName')?.errors?.pattern" class="form-text text-danger">This text is invalid</div>
+                      <div
+                        *ngIf="editForm.get('fullName')?.errors?.required"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.required"
+                      >
+                        This field is required.
+                      </div>
+                      <div
+                        *ngIf="editForm.get('fullName')?.errors?.minlength"
+                        [translateValues]="{ min: 3 }"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.minlength"
+                      >
+                        This field is required to be at least 3 characters.
+                      </div>
+                      <div
+                        *ngIf="editForm.get('fullName')?.errors?.maxlength"
+                        [translateValues]="{ max: 250 }"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.maxlength"
+                      >
+                        This field cannot be longer than 250 characters.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label class="form-control-label required" for="field_religion">Religion</label>
+                    <select class="form-control" formControlName="religion" id="field_religion" name="religion">
+                      <option value="ISLAM">{{ 'bitsHrPayrollApp.Religion.ISLAM' | translate }}</option>
+                      <option value="HINDU">{{ 'bitsHrPayrollApp.Religion.HINDU' | translate }}</option>
+                      <option value="BUDDHA">{{ 'bitsHrPayrollApp.Religion.BUDDHA' | translate }}</option>
+                      <option value="CHRISTIAN">{{ 'bitsHrPayrollApp.Religion.CHRISTIAN' | translate }}</option>
+                      <option value="OTHER">{{ 'bitsHrPayrollApp.Religion.OTHER' | translate }}</option>
+                    </select>
+                    <div
+                      *ngIf="editForm.get('religion')!.invalid && (editForm.get('religion')!.dirty || editForm.get('religion')!.touched)"
+                    >
+                      <small
+                        *ngIf="editForm.get('religion')?.errors?.required"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.required"
+                      >
+                        This field is required.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label class="form-control-label required" for="field_gender">Gender</label>
+                    <select class="form-control" formControlName="gender" id="field_gender" name="gender">
+                      <option value="MALE">{{ 'bitsHrPayrollApp.Gender.MALE' | translate }}</option>
+                      <option value="FEMALE">{{ 'bitsHrPayrollApp.Gender.FEMALE' | translate }}</option>
+                      <option value="OTHER">{{ 'bitsHrPayrollApp.Gender.OTHER' | translate }}</option>
+                    </select>
+
+                    <div *ngIf="editForm.get('gender')!.invalid && (editForm.get('gender')!.dirty || editForm.get('gender')!.touched)">
+                      <small
+                        *ngIf="editForm.get('gender')?.errors?.required"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.required"
+                      >
+                        This field is required.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row align-items-center">
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label class="form-control-label required" for="field_employeeCategory">Employee Category</label>
+                    <select
+                      class="form-control"
+                      (change)="employeeCategoryWiseDateValidation()"
+                      formControlName="employeeCategory"
+                      id="field_employeeCategory"
+                      name="employeeCategory"
+                    >
+                      <option value="REGULAR_CONFIRMED_EMPLOYEE">
+                        {{ 'bitsHrPayrollApp.EmployeeCategory.REGULAR_CONFIRMED_EMPLOYEE' | translate }}
+                      </option>
+                      <option value="CONTRACTUAL_EMPLOYEE">
+                        {{ 'bitsHrPayrollApp.EmployeeCategory.CONTRACTUAL_EMPLOYEE' | translate }}
+                      </option>
+                      <option value="INTERN">{{ 'bitsHrPayrollApp.EmployeeCategory.INTERN' | translate }}</option>
+                    </select>
+                    <div
+                      *ngIf="
+                        editForm.get('employeeCategory')!.invalid &&
+                        (editForm.get('employeeCategory')!.dirty || editForm.get('employeeCategory')!.touched)
+                      "
+                    >
+                      <small *ngIf="editForm.get('employeeCategory')?.errors?.required" class="form-text text-danger">
+                        This field is required.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label class="form-control-label required" for="field_mainGrossSalary">Gross Salary</label>
+                    <input
+                      class="form-control"
+                      formControlName="mainGrossSalary"
+                      id="field_mainGrossSalary"
+                      name="mainGrossSalary"
+                      type="number"
+                    />
+                    <div
+                      *ngIf="
+                        editForm.get('mainGrossSalary')!.invalid &&
+                        (editForm.get('mainGrossSalary')!.dirty || editForm.get('mainGrossSalary')!.touched)
+                      "
+                    >
+                      <small
+                        *ngIf="editForm.get('mainGrossSalary')?.errors?.min"
+                        [translateValues]="{ min: 0 }"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.min"
+                      >
+                        This field should be at least 0.
+                      </small>
+                      <small
+                        [hidden]="!editForm.get('mainGrossSalary')?.errors?.number"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.number"
+                      >
+                        This field should be a number.
+                      </small>
+                      <small *ngIf="editForm.get('mainGrossSalary')?.errors?.max" class="form-text text-danger">
+                        This field can be max 9999999.
+                      </small>
+                      <small *ngIf="editForm.get('mainGrossSalary')?.errors?.required" class="form-text text-danger">
+                        This field is required.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label class="form-control-label" for="field_mobileCelling" jhiTranslate="bitsHrPayrollApp.employee.mobileCelling"
+                      >Mobile Celling</label
+                    >
+                    <input
+                      class="form-control"
+                      formControlName="mobileCelling"
+                      id="field_mobileCelling"
+                      name="mobileCelling"
+                      type="number"
+                    />
+                    <div
+                      *ngIf="
+                        editForm.get('mobileCelling')!.invalid &&
+                        (editForm.get('mobileCelling')!.dirty || editForm.get('mobileCelling')!.touched)
+                      "
+                    >
+                      <small
+                        *ngIf="editForm.get('mobileCelling')?.errors?.min"
+                        [translateValues]="{ min: 0 }"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.min"
+                      >
+                        This field should be at least 0.
+                      </small>
+                      <small
+                        [hidden]="!editForm.get('mobileCelling')?.errors?.number"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.number"
+                      >
+                        This field should be a number.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <!--                  <div class="mb-3">-->
+                  <div>
+                    <label class="form-control-label" for="field_welfareFundDeduction">Welfare Fund </label>
+                    <input
+                      class="form-control"
+                      formControlName="welfareFundDeduction"
+                      id="field_welfareFundDeduction"
+                      name="welfareFundDeduction"
+                      type="number"
+                    />
+                    <div
+                      *ngIf="
+                        editForm.get('welfareFundDeduction')!.invalid &&
+                        (editForm.get('welfareFundDeduction')!.dirty || editForm.get('welfareFundDeduction')!.touched)
+                      "
+                    >
+                      <small
+                        *ngIf="editForm.get('welfareFundDeduction')?.errors?.min"
+                        [translateValues]="{ min: 0 }"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.min"
+                      >
+                        This field should be at least 0.
+                      </small>
+                      <small
+                        [hidden]="!editForm.get('welfareFundDeduction')?.errors?.number"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.number"
+                      >
+                        This field should be a number.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row align-items-center">
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label class="form-control-label required" for="field_unit" jhiTranslate="bitsHrPayrollApp.employee.unit">Unit</label>
+                    <select class="form-control" formControlName="unitId" id="field_unit" name="unit">
+                      <option [ngValue]="null"></option>
+                      <option *ngFor="let unitOption of units; trackBy: trackById" [ngValue]="unitOption.id">
+                        {{ unitOption.unitName }}
+                      </option>
+                    </select>
+                    <div *ngIf="editForm.get('unitId')!.invalid && (editForm.get('unitId')!.dirty || editForm.get('unitId')!.touched)">
+                      <small
+                        *ngIf="editForm.get('unitId')?.errors?.required"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.required"
+                      >
+                        This field is required.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <!--                  <div class="mb-3">-->
+                  <div>
+                    <label class="form-control-label required" for="field_department" jhiTranslate="bitsHrPayrollApp.employee.department"
+                      >Department</label
+                    >
+                    <select class="form-control" formControlName="departmentId" id="field_department" name="department">
+                      <option [ngValue]="null"></option>
+                      <option *ngFor="let departmentOption of departments; trackBy: trackById" [ngValue]="departmentOption.id">
+                        {{ departmentOption.departmentName }}
+                      </option>
+                    </select>
+                    <div
+                      *ngIf="
+                        editForm.get('departmentId')!.invalid &&
+                        (editForm.get('departmentId')!.dirty || editForm.get('departmentId')!.touched)
+                      "
+                    >
+                      <small
+                        *ngIf="editForm.get('departmentId')?.errors?.required"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.required"
+                      >
+                        This field is required.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label class="form-control-label required" for="field_designation" jhiTranslate="bitsHrPayrollApp.employee.designation"
+                      >Designation</label
+                    >
+                    <select class="form-control" formControlName="designationId" id="field_designation" name="designation">
+                      <option [ngValue]="null"></option>
+                      <option *ngFor="let designationOption of designations; trackBy: trackById" [ngValue]="designationOption.id">
+                        {{ designationOption.designationName }}
+                      </option>
+                    </select>
+                    <div
+                      *ngIf="
+                        editForm.get('designationId')!.invalid &&
+                        (editForm.get('designationId')!.dirty || editForm.get('designationId')!.touched)
+                      "
+                    >
+                      <small
+                        *ngIf="editForm.get('designationId')?.errors?.required"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.required"
+                      >
+                        This field is required.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <!--                  <div class="mb-3">-->
+                  <div>
+                    <label class="form-control-label required" for="field_band" jhiTranslate="bitsHrPayrollApp.employee.band">Band</label>
+                    <select class="form-control" formControlName="bandId" id="field_band" name="band">
+                      <option [ngValue]="null"></option>
+                      <option *ngFor="let bandOption of bands; trackBy: trackById" [ngValue]="bandOption.id">
+                        {{ bandOption.bandName }}
+                      </option>
+                    </select>
+                    <div *ngIf="editForm.get('bandId')!.invalid && (editForm.get('bandId')!.dirty || editForm.get('bandId')!.touched)">
+                      <small
+                        *ngIf="editForm.get('bandId')?.errors?.required"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.required"
+                      >
+                        This field is required.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row align-items-center">
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label
+                      class="form-control-label required"
+                      for="field_dateOfJoining"
+                      jhiTranslate="bitsHrPayrollApp.employee.dateOfJoining"
+                      >Date of Joining</label
+                    >
+                    <div class="input-group align-items-center">
+                      <input
+                        #dateOfJoiningDp="ngbDatepicker"
+                        class="form-control"
+                        formControlName="dateOfJoining"
+                        id="field_dateOfJoining"
+                        name="dateOfJoining"
+                        ngbDatepicker
+                        type="text"
+                      />
+                      <span class="input-group-append">
+                        <button (click)="dateOfJoiningDp.toggle()" class="btn btn-secondary" type="button">
+                          <fa-icon icon="calendar-alt"></fa-icon>
+                        </button>
+                      </span>
+                    </div>
+                    <div
+                      *ngIf="
+                        editForm.get('dateOfJoining')!.invalid &&
+                        (editForm.get('dateOfJoining')!.dirty || editForm.get('dateOfJoining')!.touched)
+                      "
+                    >
+                      <small
+                        *ngIf="editForm.get('dateOfJoining')?.errors?.required"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.required"
+                      >
+                        This field is required.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label class="form-control-label required" for="field_payType"> Pay Type</label>
+                    <select class="form-control" formControlName="payType" id="field_payType" name="payType">
+                      <option value="UNPAID">{{ 'bitsHrPayrollApp.PayType.UNPAID' | translate }}</option>
+                      <option [selected]="true" value="MONTHLY">{{ 'bitsHrPayrollApp.PayType.MONTHLY' | translate }}</option>
+                      <option value="HOURLY">{{ 'bitsHrPayrollApp.PayType.HOURLY' | translate }}</option>
+                    </select>
+                    <div *ngIf="editForm.get('payType')!.invalid && (editForm.get('payType')!.dirty || editForm.get('payType')!.touched)">
+                      <small
+                        *ngIf="editForm.get('payType')?.errors?.required"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.required"
+                      >
+                        This field is required.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <!--                  <div class="mb-3">-->
+                  <div>
+                    <label class="form-control-label" for="field_reportingTo" jhiTranslate="bitsHrPayrollApp.employee.reportingTo"
+                      >Reporting To</label
+                    >
+
+                    <ng-select
+                      [items]="employees"
+                      bindLabel="fullName"
+                      bindValue="id"
+                      appearance="outline"
+                      [searchable]="true"
+                      [clearable]="true"
+                      labelForId="field_reportingTo"
+                      formControlName="reportingToId"
+                      placeholder="Select Employee"
+                      id="field_reportingTo"
+                      name="reportingTo"
+                      class="font-sm"
+                    >
+                    </ng-select>
+
+                    <!--<select class="form-control" formControlName="reportingToId"
+                                                id="field_reportingTo" name="reportingTo">
+                                            <option [ngValue]="null"></option>
+                                            <option *ngFor="let employeeOption of employees; trackBy: trackById"
+                                                    [ngValue]="employeeOption.id">{{ employeeOption.pin }}
+                                                - {{employeeOption.fullName}}</option>
+                                        </select>-->
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label class="form-control-label" for="field_employmentStatus" jhiTranslate="bitsHrPayrollApp.employee.employmentStatus"
+                      >Employment Status</label
+                    >
+                    <select class="form-control" formControlName="employmentStatus" id="field_employmentStatus" name="employmentStatus">
+                      <option [defaultSelected]="!isEditForm" value="ACTIVE">
+                        {{ 'bitsHrPayrollApp.EmploymentStatus.ACTIVE' | translate }}
+                      </option>
+                      <option value="HOLD">{{ 'bitsHrPayrollApp.EmploymentStatus.HOLD' | translate }}</option>
+                      <option value="RESIGNED">{{ 'bitsHrPayrollApp.EmploymentStatus.RESIGNED' | translate }}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </li>
+
+      <li [ngbNavItem]="2">
+        <a ngbNavLink>Employment Information</a>
+        <ng-template ngbNavContent>
+          <div class="card">
+            <div class="card-body">
+              <div class="row align-items-center">
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label class="form-control-label" for="field_dateOfConfirmation">Probable Date of Confirmation</label>
+                    <span
+                      class="text-danger"
+                      *ngIf="
+                        selectedEmployeeCategory === 'REGULAR_CONFIRMED_EMPLOYEE' ||
+                        selectedEmployeeCategory === 'REGULAR_PROVISIONAL_EMPLOYEE'
+                      "
+                      >*
+                    </span>
+                    <div class="input-group">
+                      <input
+                        #dateOfConfirmationDp="ngbDatepicker"
+                        class="form-control"
+                        formControlName="dateOfConfirmation"
+                        id="field_dateOfConfirmation"
+                        name="dateOfConfirmation"
+                        ngbDatepicker
+                        type="text"
+                      />
+                      <span class="input-group-append">
+                        <button (click)="dateOfConfirmationDp.toggle()" class="btn btn-secondary" type="button">
+                          <fa-icon icon="calendar-alt"></fa-icon>
+                        </button>
+                      </span>
+                    </div>
+                    <div
+                      *ngIf="
+                        editForm.get('dateOfConfirmation')!.invalid &&
+                        (editForm.get('dateOfConfirmation')!.dirty || editForm.get('dateOfConfirmation')!.touched)
+                      "
+                    >
+                      <small
+                        *ngIf="editForm.get('dateOfConfirmation')?.errors?.required"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.required"
+                      >
+                        This field is required.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <!-- *ngIf="editForm.get(['isProbationaryPeriodExtended'])!.value===true"-->
+                  <div class="mb-3">
+                    <label class="form-control-label" for="field_probationPeriodEndDate">Probable Probation Period End Date</label>
+                    <span class="text-danger" *ngIf="selectedEmployeeCategory === 'REGULAR_PROVISIONAL_EMPLOYEE'">* </span>
+                    <div class="input-group">
+                      <input
+                        #probationPeriodEndDateDp="ngbDatepicker"
+                        [disabled]="editForm.get(['employeeCategory'])!.value !== 'REGULAR_PROVISIONAL_EMPLOYEE'"
+                        class="form-control"
+                        formControlName="probationPeriodEndDate"
+                        id="field_probationPeriodEndDate"
+                        name="probationPeriodEndDate"
+                        ngbDatepicker
+                        type="text"
+                      />
+                      <span class="input-group-append">
+                        <button (click)="probationPeriodEndDateDp.toggle()" class="btn btn-secondary" type="button">
+                          <fa-icon icon="calendar-alt"></fa-icon>
+                        </button>
+                      </span>
+                    </div>
+                    <div
+                      *ngIf="
+                        editForm.get('probationPeriodEndDate')!.invalid &&
+                        (editForm.get('probationPeriodEndDate')!.dirty || editForm.get('probationPeriodEndDate')!.touched)
+                      "
+                    >
+                      <small
+                        *ngIf="editForm.get('probationPeriodEndDate')?.errors?.required"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.required"
+                      >
+                        This field is required.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-check">
+                    <input
+                      [attr.disabled]="editForm.get(['employeeCategory'])!.value !== 'REGULAR_PROVISIONAL_EMPLOYEE' ? true : null"
+                      class="form-check-input mt-2"
+                      formControlName="isProbationaryPeriodExtended"
+                      id="field_isProbationaryPeriodExtended"
+                      name="isProbationaryPeriodExtended"
+                      type="checkbox"
+                      value=""
+                    />
+                    <label
+                      class="form-check-label"
+                      for="field_isProbationaryPeriodExtended"
+                      jhiTranslate="bitsHrPayrollApp.employee.isProbationaryPeriodExtended"
+                    >
+                      Is Probationary Period Extended</label
+                    >
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label
+                      class="form-control-label"
+                      for="field_probationPeriodExtendedTo"
+                      jhiTranslate="bitsHrPayrollApp.employee.probationPeriodExtendedTo"
+                      >Probation Period Extended To</label
+                    >
+                    <div class="input-group">
+                      <input
+                        #probationPeriodExtendedToDp="ngbDatepicker"
+                        [disabled]="editForm.get(['employeeCategory'])!.value !== 'REGULAR_PROVISIONAL_EMPLOYEE'"
+                        class="form-control"
+                        formControlName="probationPeriodExtendedTo"
+                        id="field_probationPeriodExtendedTo"
+                        name="probationPeriodExtendedTo"
+                        ngbDatepicker
+                        type="text"
+                      />
+                      <span class="input-group-append">
+                        <button (click)="probationPeriodExtendedToDp.toggle()" class="btn btn-secondary" type="button">
+                          <fa-icon icon="calendar-alt"></fa-icon>
+                        </button>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row align-items-center"></div>
+              <div class="row align-items-center">
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label
+                      class="form-control-label"
+                      for="field_contractPeriodEndDate"
+                      jhiTranslate="bitsHrPayrollApp.employee.contractPeriodEndDate"
+                      >Contract Period End Date</label
+                    >
+                    <span
+                      class="text-danger"
+                      *ngIf="selectedEmployeeCategory === 'CONTRACTUAL_EMPLOYEE' || selectedEmployeeCategory === 'INTERN'"
+                      >*
+                    </span>
+                    <div class="input-group">
+                      <input
+                        #contractPeriodEndDateDp="ngbDatepicker"
+                        (click)="contractPeriodEndDateDp.toggle()"
+                        [disabled]="
+                          editForm.get(['employeeCategory'])!.value !== 'CONTRACTUAL_EMPLOYEE' &&
+                          editForm.get(['employeeCategory'])!.value !== 'INTERN'
+                        "
+                        class="form-control"
+                        formControlName="contractPeriodEndDate"
+                        id="field_contractPeriodEndDate"
+                        name="contractPeriodEndDate"
+                        ngbDatepicker
+                        type="text"
+                      />
+                      <span class="input-group-append">
+                        <button (click)="contractPeriodEndDateDp.toggle()" class="btn btn-secondary" type="button">
+                          <fa-icon icon="calendar-alt"></fa-icon>
+                        </button>
+                      </span>
+                    </div>
+                    <div
+                      *ngIf="
+                        editForm.get('contractPeriodEndDate')!.invalid &&
+                        (editForm.get('contractPeriodEndDate')!.dirty || editForm.get('contractPeriodEndDate')!.touched)
+                      "
+                    >
+                      <small
+                        *ngIf="editForm.get('contractPeriodEndDate')?.errors?.required"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.required"
+                      >
+                        This field is required.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-check">
+                    <input
+                      [attr.disabled]="
+                        editForm.get(['employeeCategory'])!.value !== 'CONTRACTUAL_EMPLOYEE' &&
+                        editForm.get(['employeeCategory'])!.value !== 'INTERN'
+                          ? true
+                          : null
+                      "
+                      class="form-check-input mt-2"
+                      data-cy="isContructualPeriodExtended"
+                      formControlName="isContructualPeriodExtended"
+                      id="field_isContructualPeriodExtended"
+                      name="isContructualPeriodExtended"
+                      type="checkbox"
+                    />
+                    <label class="form-check-label" for="field_isContructualPeriodExtended"> Is Contractual Period Extended</label>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label
+                      class="form-control-label"
+                      for="field_contractPeriodExtendedTo"
+                      jhiTranslate="bitsHrPayrollApp.employee.contractPeriodExtendedTo"
+                      >Contract Period Extended To</label
+                    >
+                    <div class="input-group">
+                      <input
+                        #contractPeriodExtendedToDp="ngbDatepicker"
+                        [disabled]="
+                          editForm.get(['employeeCategory'])!.value !== 'CONTRACTUAL_EMPLOYEE' &&
+                          editForm.get(['employeeCategory'])!.value !== 'INTERN'
+                        "
+                        class="form-control"
+                        formControlName="contractPeriodExtendedTo"
+                        id="field_contractPeriodExtendedTo"
+                        name="contractPeriodExtendedTo"
+                        ngbDatepicker
+                        type="text"
+                      />
+                      <span class="input-group-append">
+                        <button (click)="contractPeriodExtendedToDp.toggle()" class="btn btn-secondary" type="button">
+                          <fa-icon icon="calendar-alt"></fa-icon>
+                        </button>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label
+                      class="form-control-label"
+                      jhiTranslate="bitsHrPayrollApp.employee.noticePeriodInDays"
+                      for="field_noticePeriodInDays"
+                      >Notice Period In Days</label
+                    >
+                    <input
+                      type="number"
+                      class="form-control"
+                      name="noticePeriodInDays"
+                      id="field_noticePeriodInDays"
+                      formControlName="noticePeriodInDays"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="row align-items-center">
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label class="form-control-label" for="field_lastWorkingDay">Last Working Day</label>
+                    <input
+                      id="field_lastWorkingDay"
+                      type="text"
+                      class="form-control"
+                      name="lastWorkingDay"
+                      formControlName="lastWorkingDay"
+                      [disabled]="true"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="row align-items-center">
+                <div class="col-md-1 text-nowrap">
+                  <div class="form-check">
+                    <input
+                      class="form-check-input mt-2"
+                      formControlName="isSalaryHold"
+                      id="field_isSalaryHold"
+                      name="isSalaryHold"
+                      type="checkbox"
+                    />
+                    <label class="form-check-label" for="field_isSalaryHold" jhiTranslate="bitsHrPayrollApp.employee.isSalaryHold"
+                      >Is Salary Hold</label
+                    >
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      class="form-check-input mt-2"
+                      name="isFixedTermContract"
+                      id="field_isFixedTermContract"
+                      formControlName="isFixedTermContract"
+                    />
+                    <label class="form-check-label" for="field_isFixedTermContract"> Is Fixed Term Contract </label>
+                  </div>
+                </div>
+
+                <div class="col-md-2">
+                  <div class="form-check">
+                    <input
+                      class="form-check-input mt-2"
+                      formControlName="isFestivalBonusDisabled"
+                      id="field_isFestivalBonusDisabled"
+                      name="isFestivalBonusDisabled"
+                      type="checkbox"
+                    />
+                    <label
+                      class="form-check-label"
+                      for="field_isFestivalBonusDisabled"
+                      jhiTranslate="bitsHrPayrollApp.employee.isFestivalBonusDisabled"
+                      >Is Festival Bonus Disabled</label
+                    >
+                  </div>
+                </div>
+
+                <div class="col-md-2">
+                  <div class="form-check">
+                    <input
+                      class="form-check-input mt-2"
+                      formControlName="isFestivalBonusHold"
+                      id="field_isFestivalBonusHold"
+                      name="isFestivalBonusHold"
+                      type="checkbox"
+                    />
+                    <label
+                      class="form-check-label"
+                      for="field_isFestivalBonusHold"
+                      jhiTranslate="bitsHrPayrollApp.employee.isFestivalBonusHold"
+                      >Is Festival Bonus Hold</label
+                    >
+                  </div>
+                </div>
+
+                <!--                <div class="col-md-2">-->
+                <!--                  <div class="mb-3">-->
+                <!--                    <label class="form-control-label" for="field_floor">Floor</label>-->
+                <!--                    <input class="form-control" formControlName="floor" id="field_floor" name="floor" type="text" />-->
+                <!--                    <div-->
+                <!--                      *ngIf="editForm.get('floor')!.invalid && (editForm.get('floor')!.dirty || editForm.get('floor')!.touched)"-->
+                <!--                    >-->
+                <!--                      <div *ngIf="editForm.get('floor')?.errors?.pattern" class="form-text text-danger">This text is invalid</div>-->
+                <!--                    </div>-->
+                <!--                  </div>-->
+                <!--                </div>-->
+
+                <!--<div class="col-md-3">
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      class="form-check-input mt-2"
+                      name="isAllowedToGiveOnlineAttendance"
+                      id="field_isAllowedToGiveOnlineAttendance"
+                      formControlName="isAllowedToGiveOnlineAttendance"
+                    />
+                    <label
+                      class="form-check-label"
+                      jhiTranslate="bitsHrPayrollApp.employee.isAllowedToGiveOnlineAttendance"
+                      for="field_isAllowedToGiveOnlineAttendance"
+                      >Is Allowed To Give Online Attendance</label
+                    >
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      class="form-check-input mt-2"
+                      name="canRaiseRrfOnBehalf"
+                      id="field_canRaiseRrfOnBehalf"
+                      formControlName="canRaiseRrfOnBehalf"
+                    />
+                    <label
+                      class="form-check-label"
+                      jhiTranslate="bitsHrPayrollApp.employee.canRaiseRrfOnBehalf"
+                      for="field_canRaiseRrfOnBehalf"
+                      >Can Raise RRF on Behalf</label
+                    >
+                  </div>
+                </div>-->
+              </div>
+
+              <div class="row align-items-center">
+                <div class="col-md-4">
+                  <div class="mb-3">
+                    <label class="form-control-label" for="field_location">Location</label>
+                    <input class="form-control" formControlName="location" id="field_location" name="location" type="text" />
+                    <div
+                      *ngIf="editForm.get('location')!.invalid && (editForm.get('location')!.dirty || editForm.get('location')!.touched)"
+                    >
+                      <div *ngIf="editForm.get('location')?.errors?.pattern" class="form-text text-danger">This text is invalid</div>
+                      <div
+                        *ngIf="editForm.get('location')?.errors?.minlength"
+                        [translateValues]="{ min: 3 }"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.minlength"
+                      >
+                        This field is required to be at least 3 characters.
+                      </div>
+                      <div
+                        *ngIf="editForm.get('location')?.errors?.maxlength"
+                        [translateValues]="{ max: 250 }"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.maxlength"
+                      >
+                        This field cannot be longer than 250 characters.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="mb-3">
+                    <label class="form-control-label" for="field_floor">Floor</label>
+                    <input class="form-control" formControlName="floor" id="field_floor" name="floor" type="text" />
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="mb-3">
+                    <label class="form-control-label" for="field_location">Desk</label>
+                    <input class="form-control" formControlName="location" id="field_deskLocation" name="deskLocation" type="text" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <!--<div class="col-md-3">
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      class="form-check-input mt-2"
+                      name="isAllowedToGiveOnlineAttendance"
+                      id="field_isEligibleForAutomatedAttendance"
+                      formControlName="isEligibleForAutomatedAttendance"
+                    />
+                    <label
+                      class="form-check-label"
+                      jhiTranslate="bitsHrPayrollApp.employee.isEligibleForAutomatedAttendance"
+                      for="field_isEligibleForAutomatedAttendance"
+                      >Is Eligible For Automated Attendance</label
+                    >
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      class="form-check-input mt-2"
+                      name="canManageTaxAcknowledgementReceipt"
+                      id="field_canManageTaxAcknowledgementReceipt"
+                      formControlName="canManageTaxAcknowledgementReceipt"
+                    />
+                    <label
+                      class="form-check-label"
+                      jhiTranslate="bitsHrPayrollApp.employee.canManageTaxAcknowledgementReceipt"
+                      for="field_canManageTaxAcknowledgementReceipt"
+                      >Can Manage Tax Acknowledgement Receipt
+                    </label>
+                  </div>
+                </div>-->
+              </div>
+
+              <div class="row align-items-center">
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label class="form-control-label" for="field_referenceId" jhiTranslate="bitsHrPayrollApp.employee.referenceId"
+                      >Reference ID</label
+                    >
+                    <input class="form-control" formControlName="referenceId" id="field_referenceId" name="referenceId" type="text" />
+                    <div
+                      *ngIf="
+                        editForm.get('referenceId')!.invalid && (editForm.get('referenceId')!.dirty || editForm.get('referenceId')!.touched)
+                      "
+                    >
+                      <div
+                        *ngIf="editForm.get('referenceId')?.errors?.maxlength"
+                        [translateValues]="{ max: 250 }"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.maxlength"
+                      >
+                        This field cannot be longer than 250 characters.
+                      </div>
+                      <div *ngIf="editForm.get('referenceId')?.errors?.pattern" class="form-text text-danger">
+                        This field must be numeric
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label class="form-control-label" for="field_maritalStatus">Marital Status</label>
+                    <select class="form-control" formControlName="maritalStatus" id="field_maritalStatus" name="maritalStatus">
+                      <option value="SINGLE">{{ 'bitsHrPayrollApp.MaritalStatus.SINGLE' | translate }}</option>
+                      <option value="MARRIED">{{ 'bitsHrPayrollApp.MaritalStatus.MARRIED' | translate }}</option>
+                    </select>
+                    <div
+                      *ngIf="
+                        editForm.get('maritalStatus')!.invalid &&
+                        (editForm.get('maritalStatus')!.dirty || editForm.get('maritalStatus')!.touched)
+                      "
+                    >
+                      <small
+                        *ngIf="editForm.get('maritalStatus')?.errors?.required"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.required"
+                      >
+                        This field is required.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="editForm.get(['maritalStatus'])!.value === 'MARRIED'" class="col-md-3">
+                  <div class="mb-3">
+                    <label class="form-control-label" for="field_dateOfMarriage" jhiTranslate="bitsHrPayrollApp.employee.dateOfMarriage"
+                      >Date of Marriage</label
+                    >
+                    <div class="input-group align-items-center">
+                      <input
+                        #dateOfMarriageDp="ngbDatepicker"
+                        (click)="dateOfMarriageDp.toggle()"
+                        class="form-control"
+                        formControlName="dateOfMarriage"
+                        id="field_dateOfMarriage"
+                        name="dateOfMarriage"
+                        ngbDatepicker
+                        type="text"
+                      />
+                      <span class="input-group-append">
+                        <button (click)="dateOfMarriageDp.toggle()" class="btn btn-secondary btn-sm" type="button">
+                          <fa-icon icon="calendar-alt"></fa-icon>
+                        </button>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="editForm.get(['maritalStatus'])!.value === 'MARRIED'" class="col-md-3">
+                  <div class="mb-3">
+                    <label class="form-control-label" for="field_spouseName" jhiTranslate="bitsHrPayrollApp.employee.spouseName"
+                      >Spouse Name</label
+                    >
+                    <input class="form-control" formControlName="spouseName" id="field_spouseName" name="spouseName" type="text" />
+                    <div
+                      *ngIf="
+                        editForm.get('spouseName')!.invalid && (editForm.get('spouseName')!.dirty || editForm.get('spouseName')!.touched)
+                      "
+                    >
+                      <small
+                        *ngIf="editForm.get('spouseName')?.errors?.maxlength"
+                        [translateValues]="{ max: 250 }"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.maxlength"
+                      >
+                        This field cannot be longer than 250 characters.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </li>
+
+      <li [ngbNavItem]="3">
+        <a ngbNavLink>Personal</a>
+        <ng-template ngbNavContent>
+          <div class="card">
+            <div class="card-body">
+              <div class="row align-items-center">
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label class="form-control-label required" for="field_surName">Surname</label>
+                    <input class="form-control" formControlName="surName" id="field_surName" name="surName" type="text" />
+                    <div *ngIf="editForm.get('surName')!.invalid && (editForm.get('surName')!.dirty || editForm.get('surName')!.touched)">
+                      <div *ngIf="editForm.get('surName')?.errors?.pattern" class="form-text text-danger">This text is invalid</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <label class="form-control-label" for="field_fatherName">Father's Name</label>
+                  <input class="form-control" formControlName="fatherName" id="field_fatherName" name="fatherName" type="text" />
+                  <div
+                    *ngIf="
+                      editForm.get('fatherName')!.invalid && (editForm.get('fatherName')!.dirty || editForm.get('fatherName')!.touched)
+                    "
+                  >
+                    <div *ngIf="editForm.get('fatherName')?.errors?.pattern" class="form-text text-danger">This text is invalid</div>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <label class="form-control-label" for="field_motherName">Mother's Name</label>
+                  <input class="form-control" formControlName="motherName" id="field_motherName" name="motherName" type="text" />
+                  <div
+                    *ngIf="
+                      editForm.get('motherName')!.invalid && (editForm.get('motherName')!.dirty || editForm.get('motherName')!.touched)
+                    "
+                  >
+                    <small *ngIf="editForm.get('motherName')?.errors?.pattern" class="form-text text-danger"> This text is invalid </small>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <!--                  <div class="mb-3">-->
+                  <div>
+                    <label class="form-control-label" for="field_nationality" jhiTranslate="bitsHrPayrollApp.employee.nationality"
+                      >Nationality</label
+                    >
+                    <select class="form-control" formControlName="nationalityId" id="field_nationality" name="nationality">
+                      <option *ngFor="let nationalityOption of nationalities; trackBy: trackById" [ngValue]="nationalityOption.id">
+                        {{ nationalityOption.nationalityName }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row align-items-center">
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label class="form-control-label" for="field_bloodGroup" jhiTranslate="bitsHrPayrollApp.employee.bloodGroup"
+                      >Blood Group</label
+                    >
+                    <select class="form-control" formControlName="bloodGroup" id="field_bloodGroup" name="bloodGroup">
+                      <option [ngValue]="null">{{ 'bitsHrPayrollApp.BloodGroup.null' | translate }}</option>
+                      <option value="A_POSITIVE">{{ 'bitsHrPayrollApp.BloodGroup.A_POSITIVE' | translate }}</option>
+                      <option value="A_NEGATIVE">{{ 'bitsHrPayrollApp.BloodGroup.A_NEGATIVE' | translate }}</option>
+                      <option value="B_POSITIVE">{{ 'bitsHrPayrollApp.BloodGroup.B_POSITIVE' | translate }}</option>
+                      <option value="B_NEGATIVE">{{ 'bitsHrPayrollApp.BloodGroup.B_NEGATIVE' | translate }}</option>
+                      <option value="AB_POSITIVE">{{ 'bitsHrPayrollApp.BloodGroup.AB_POSITIVE' | translate }}</option>
+                      <option value="AB_NEGATIVE">{{ 'bitsHrPayrollApp.BloodGroup.AB_NEGATIVE' | translate }}</option>
+                      <option value="O_POSITIVE">{{ 'bitsHrPayrollApp.BloodGroup.O_POSITIVE' | translate }}</option>
+                      <option value="O_NEGATIVE">{{ 'bitsHrPayrollApp.BloodGroup.O_NEGATIVE' | translate }}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label class="form-control-label" for="field_dateOfBirth">Date of Birth</label>
+                    <div class="input-group align-items-center">
+                      <input
+                        #dateOfBirthDp="ngbDatepicker"
+                        class="form-control"
+                        formControlName="dateOfBirth"
+                        id="field_dateOfBirth"
+                        name="dateOfBirth"
+                        ngbDatepicker
+                        type="text"
+                      />
+                      <span class="input-group-append">
+                        <button (click)="dateOfBirthDp.toggle()" class="btn btn-secondary btn-sm" type="button">
+                          <fa-icon icon="calendar-alt"></fa-icon>
+                        </button>
+                      </span>
+                    </div>
+                    <div
+                      *ngIf="
+                        editForm.get('dateOfBirth')!.invalid && (editForm.get('dateOfBirth')!.dirty || editForm.get('dateOfBirth')!.touched)
+                      "
+                    >
+                      <small
+                        *ngIf="editForm.get('dateOfBirth')?.errors?.required"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.required"
+                      >
+                        This field is required.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label class="form-control-label" for="field_placeOfBirth">Place of Birth</label>
+                    <input class="form-control" formControlName="placeOfBirth" id="field_placeOfBirth" name="placeOfBirth" type="text" />
+                    <div
+                      *ngIf="
+                        editForm.get('placeOfBirth')!.invalid &&
+                        (editForm.get('placeOfBirth')!.dirty || editForm.get('placeOfBirth')!.touched)
+                      "
+                    >
+                      <small
+                        *ngIf="editForm.get('placeOfBirth')?.errors?.maxlength"
+                        [translateValues]="{ max: 250 }"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.maxlength"
+                      >
+                        This field cannot be longer than 250 characters.
+                      </small>
+
+                      <small *ngIf="editForm.get('placeOfBirth')?.errors?.pattern" class="form-text text-danger">
+                        This text is invalid
+                      </small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label class="form-control-label" for="field_nationalIdNo" jhiTranslate="bitsHrPayrollApp.employee.nationalIdNo"
+                      >National Id No</label
+                    >
+                    <input
+                      (input)="simpleNidValidation()"
+                      class="form-control"
+                      formControlName="nationalIdNo"
+                      id="field_nationalIdNo"
+                      name="nationalIdNo"
+                      type="text"
+                    />
+                    <div
+                      *ngIf="
+                        editForm.get('nationalIdNo')!.invalid &&
+                        (editForm.get('nationalIdNo')!.dirty || editForm.get('nationalIdNo')!.touched)
+                      "
+                    >
+                      <small *ngIf="isNidInvalid" class="form-text text-danger">
+                        NID format invalid (allowed 10, 13 or 17 characters long)
+                      </small>
+                      <small
+                        *ngIf="editForm.get('nationalIdNo')?.errors?.pattern"
+                        [translateValues]="{ pattern: 'NID (only number)' }"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.pattern"
+                      >
+                        Please input valid NID
+                      </small>
+                    </div>
+
+                    <div *ngIf="!nationalIDNumberValidation.isValid">
+                      <small class="form-text text-danger">
+                        {{ nationalIDNumberValidation.validationMsg }}
+                      </small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row align-items-center">
+                <div class="col-md-12">
+                  <div class="mb-3">
+                    <label class="form-control-label" for="field_presentAddress">Present Address</label>
+                    <input
+                      class="form-control"
+                      formControlName="presentAddress"
+                      id="field_presentAddress"
+                      name="presentAddress"
+                      type="text"
+                    />
+                    <div
+                      *ngIf="
+                        editForm.get('presentAddress')!.invalid &&
+                        (editForm.get('presentAddress')!.dirty || editForm.get('presentAddress')!.touched)
+                      "
+                    >
+                      <div *ngIf="editForm.get('presentAddress')?.errors?.pattern" class="form-text text-danger">This text is invalid</div>
+                      <div
+                        *ngIf="editForm.get('presentAddress')?.errors?.maxlength"
+                        [translateValues]="{ max: 250 }"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.maxlength"
+                      >
+                        This field cannot be longer than 250 characters.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row align-items-center">
+                <div class="col-md-12">
+                  <div class="mb-3">
+                    <label class="form-control-label" for="field_permanentAddress">Permanent Address</label>
+                    <input
+                      class="form-control"
+                      formControlName="permanentAddress"
+                      id="field_permanentAddress"
+                      name="permanentAddress"
+                      type="text"
+                    />
+                    <div
+                      *ngIf="
+                        editForm.get('permanentAddress')!.invalid &&
+                        (editForm.get('permanentAddress')!.dirty || editForm.get('permanentAddress')!.touched)
+                      "
+                    >
+                      <div *ngIf="editForm.get('permanentAddress')?.errors?.pattern" class="form-text text-danger">
+                        This text is invalid
+                      </div>
+                      <div
+                        *ngIf="editForm.get('permanentAddress')?.errors?.maxlength"
+                        [translateValues]="{ max: 250 }"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.maxlength"
+                      >
+                        This field cannot be longer than 250 characters.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </li>
+
+      <li [ngbNavItem]="4">
+        <a ngbNavLink>Contact</a>
+        <ng-template ngbNavContent>
+          <div class="card">
+            <div class="card-body">
+              <div class="row align-items-center">
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label
+                      class="form-control-label"
+                      for="field_officialContactNo"
+                      jhiTranslate="bitsHrPayrollApp.employee.officialContactNo"
+                      >Official Contact No</label
+                    >
+                    <input
+                      class="form-control"
+                      formControlName="officialContactNo"
+                      id="field_officialContactNo"
+                      name="officialContactNo"
+                      type="text"
+                    />
+                    <div
+                      *ngIf="
+                        editForm.get('officialContactNo')!.invalid &&
+                        (editForm.get('officialContactNo')!.dirty || editForm.get('officialContactNo')!.touched)
+                      "
+                    >
+                      <small
+                        *ngIf="editForm.get('officialContactNo')?.errors?.pattern"
+                        [translateValues]="{ pattern: 'cell phone Number' }"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.pattern"
+                      >
+                        please input valid phone number
+                      </small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label class="form-control-label" for="field_officialEmail" jhiTranslate="bitsHrPayrollApp.employee.officialEmail"
+                      >Official Email</label
+                    >
+                    <input class="form-control" formControlName="officialEmail" id="field_officialEmail" name="officialEmail" type="text" />
+                    <div
+                      *ngIf="
+                        editForm.get('officialEmail')!.invalid &&
+                        (editForm.get('officialEmail')!.dirty || editForm.get('officialEmail')!.touched)
+                      "
+                    >
+                      <small *ngIf="editForm.get('officialEmail')?.errors?.email" class="form-text text-danger">
+                        Please input valid email address.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label
+                      class="form-control-label"
+                      for="field_officePhoneExtension"
+                      jhiTranslate="bitsHrPayrollApp.employee.officePhoneExtension"
+                      >Office Phone Extension</label
+                    >
+                    <input
+                      class="form-control"
+                      formControlName="officePhoneExtension"
+                      id="field_officePhoneExtension"
+                      name="officePhoneExtension"
+                      type="text"
+                    />
+                    <div
+                      *ngIf="
+                        editForm.get('officePhoneExtension')!.invalid &&
+                        (editForm.get('officePhoneExtension')!.dirty || editForm.get('officePhoneExtension')!.touched)
+                      "
+                    >
+                      <small *ngIf="editForm.get('officePhoneExtension')?.errors?.pattern" class="form-text text-danger">
+                        This text is invalid
+                      </small>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3"></div>
+              </div>
+
+              <div class="row align-items-center">
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label class="form-control-label" for="field_personalContactNo">Personal Contact Number</label>
+                    <input
+                      class="form-control"
+                      formControlName="personalContactNo"
+                      id="field_personalContactNo"
+                      name="personalContactNo"
+                      type="text"
+                    />
+
+                    <div
+                      *ngIf="
+                        editForm.get('personalContactNo')!.invalid &&
+                        (editForm.get('personalContactNo')!.dirty || editForm.get('personalContactNo')!.touched)
+                      "
+                    >
+                      <small
+                        *ngIf="editForm.get('personalContactNo')?.errors?.pattern"
+                        [translateValues]="{ pattern: 'cell Phone Number' }"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.pattern"
+                      >
+                        please input valid phone number
+                      </small>
+                      <small
+                        *ngIf="editForm.get('personalContactNo')?.errors?.required"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.required"
+                      >
+                        This field is required.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label class="form-control-label" for="field_personalEmail">Personal Email</label>
+                    <input class="form-control" formControlName="personalEmail" id="field_personalEmail" name="personalEmail" type="text" />
+                    <div
+                      *ngIf="
+                        editForm.get('personalEmail')!.invalid &&
+                        (editForm.get('personalEmail')!.dirty || editForm.get('personalEmail')!.touched)
+                      "
+                    >
+                      <small
+                        *ngIf="editForm.get('personalEmail')?.errors?.pattern"
+                        [translateValues]="{ pattern: 'e-mail address' }"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.pattern"
+                      >
+                        Please input a valid email address
+                      </small>
+                      <small *ngIf="editForm.get('personalEmail')?.errors?.email" class="form-text text-danger">
+                        Please input a valid email address
+                      </small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label class="form-control-label" for="field_skypeId" jhiTranslate="bitsHrPayrollApp.employee.skypeId">Skype ID</label>
+                    <input class="form-control" formControlName="skypeId" id="field_skypeId" name="skypeId" type="text" />
+                    <div *ngIf="editForm.get('skypeId')!.invalid && (editForm.get('skypeId')!.dirty || editForm.get('skypeId')!.touched)">
+                      <small *ngIf="editForm.get('skypeId')?.errors?.pattern" class="form-text text-danger"> This text is invalid </small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label class="form-control-label" for="field_whatsappId" jhiTranslate="bitsHrPayrollApp.employee.whatsappId"
+                      >Whatsapp Id</label
+                    >
+                    <input class="form-control" formControlName="whatsappId" id="field_whatsappId" name="whatsappId" type="text" />
+                    <div
+                      *ngIf="
+                        editForm.get('whatsappId')!.invalid && (editForm.get('whatsappId')!.dirty || editForm.get('whatsappId')!.touched)
+                      "
+                    >
+                      <small *ngIf="editForm.get('whatsappId')?.errors?.pattern" class="form-text text-danger">
+                        This text is invalid
+                      </small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row align-items-center">
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label class="form-control-label" for="field_emergencyContactPersonContactNumber"> Emergency Contact Number</label>
+                    <input
+                      class="form-control"
+                      formControlName="emergencyContactPersonContactNumber"
+                      id="field_emergencyContactPersonContactNumber"
+                      name="emergencyContactPersonContactNumber"
+                      type="text"
+                    />
+                    <div
+                      *ngIf="
+                        editForm.get('emergencyContactPersonContactNumber')!.invalid &&
+                        (editForm.get('emergencyContactPersonContactNumber')!.dirty ||
+                          editForm.get('emergencyContactPersonContactNumber')!.touched)
+                      "
+                    >
+                      <small
+                        *ngIf="editForm.get('emergencyContactPersonContactNumber')?.errors?.pattern"
+                        [translateValues]="{ pattern: 'cell Phone Number' }"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.pattern"
+                      >
+                        please input valid phone number
+                      </small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label class="form-control-label" for="field_emergencyContactPersonName"> Person Name</label>
+                    <input
+                      class="form-control"
+                      formControlName="emergencyContactPersonName"
+                      id="field_emergencyContactPersonName"
+                      name="emergencyContactPersonName"
+                      type="text"
+                    />
+
+                    <div
+                      *ngIf="
+                        editForm.get('emergencyContactPersonName')!.invalid &&
+                        (editForm.get('emergencyContactPersonName')!.dirty || editForm.get('emergencyContactPersonName')!.touched)
+                      "
+                    >
+                      <small *ngIf="editForm.get('emergencyContactPersonName')?.errors?.pattern" class="form-text text-danger">
+                        This text is invalid
+                      </small>
+                      <small
+                        *ngIf="editForm.get('emergencyContactPersonName')?.errors?.minlength"
+                        [translateValues]="{ min: 3 }"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.minlength"
+                      >
+                        This field is required to be at least 3 characters.
+                      </small>
+                      <small
+                        *ngIf="editForm.get('emergencyContactPersonName')?.errors?.maxlength"
+                        [translateValues]="{ max: 250 }"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.maxlength"
+                      >
+                        This field cannot be longer than 250 characters.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <!--                            Emergency Contact Person Relationship With Employee-->
+                    <label class="form-control-label" for="field_emergencyContactPersonRelationshipWithEmployee">
+                      Relationship With Employee</label
+                    >
+                    <input
+                      class="form-control"
+                      formControlName="emergencyContactPersonRelationshipWithEmployee"
+                      id="field_emergencyContactPersonRelationshipWithEmployee"
+                      name="emergencyContactPersonRelationshipWithEmployee"
+                      type="text"
+                    />
+                    <div
+                      *ngIf="
+                        editForm.get('emergencyContactPersonRelationshipWithEmployee')!.invalid &&
+                        (editForm.get('emergencyContactPersonRelationshipWithEmployee')!.dirty ||
+                          editForm.get('emergencyContactPersonRelationshipWithEmployee')!.touched)
+                      "
+                    >
+                      <small
+                        *ngIf="editForm.get('emergencyContactPersonRelationshipWithEmployee')?.errors?.minlength"
+                        class="form-text text-danger"
+                      >
+                        This text is invalid
+                      </small>
+                      <small
+                        *ngIf="editForm.get('emergencyContactPersonRelationshipWithEmployee')?.errors?.pattern"
+                        [translateValues]="{ min: 3 }"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.minlength"
+                      >
+                        This field is required to be at least 3 characters.
+                      </small>
+                      <small
+                        *ngIf="editForm.get('emergencyContactPersonRelationshipWithEmployee')?.errors?.maxlength"
+                        [translateValues]="{ max: 250 }"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.maxlength"
+                      >
+                        This field cannot be longer than 250 characters.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3"></div>
+              </div>
+
+              <div class="row align-items-center">
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label class="form-control-label" for="field_passportNo" jhiTranslate="bitsHrPayrollApp.employee.passportNo"
+                      >Passport No</label
+                    >
+                    <input class="form-control" formControlName="passportNo" id="field_passportNo" name="passportNo" type="text" />
+                    <div
+                      *ngIf="
+                        editForm.get('passportNo')!.invalid && (editForm.get('passportNo')!.dirty || editForm.get('passportNo')!.touched)
+                      "
+                    >
+                      <small *ngIf="editForm.get('passportNo')?.errors?.maxlength" class="form-text text-danger">
+                        passport number should not be more then 9 digits long
+                      </small>
+                      <small *ngIf="editForm.get('passportNo')?.errors?.minlength" class="form-text text-danger">
+                        passport number should be 9 digits long
+                      </small>
+                      <small *ngIf="editForm.get('passportNo')?.errors?.pattern" class="form-text text-danger">
+                        special characters are not aloud in passport number.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label
+                      class="form-control-label"
+                      for="field_passportPlaceOfIssue"
+                      jhiTranslate="bitsHrPayrollApp.employee.passportPlaceOfIssue"
+                    >
+                      Passport Place of Issue</label
+                    >
+                    <input
+                      class="form-control"
+                      formControlName="passportPlaceOfIssue"
+                      id="field_passportPlaceOfIssue"
+                      name="passportPlaceOfIssue"
+                      type="text"
+                    />
+
+                    <div
+                      *ngIf="
+                        editForm.get('passportPlaceOfIssue')!.invalid &&
+                        (editForm.get('passportPlaceOfIssue')!.dirty || editForm.get('passportPlaceOfIssue')!.touched)
+                      "
+                    >
+                      <div
+                        *ngIf="editForm.get('passportPlaceOfIssue')?.errors?.maxlength"
+                        [translateValues]="{ max: 250 }"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.maxlength"
+                      >
+                        This field cannot be longer than 250 characters.
+                      </div>
+                      <div *ngIf="editForm.get('passportPlaceOfIssue')?.errors?.pattern" class="form-text text-danger">
+                        This text is invalid
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label
+                      class="form-control-label"
+                      for="field_passportIssuedDate"
+                      jhiTranslate="bitsHrPayrollApp.employee.passportIssuedDate"
+                    >
+                      Passport Issued Date
+                    </label>
+                    <div class="input-group align-items-center">
+                      <input
+                        #passportIssuedDateDp="ngbDatepicker"
+                        (click)="passportIssuedDateDp.toggle()"
+                        class="form-control"
+                        formControlName="passportIssuedDate"
+                        id="field_passportIssuedDate"
+                        name="passportIssuedDate"
+                        ngbDatepicker
+                        type="text"
+                      />
+                      <span class="input-group-append">
+                        <button (click)="passportIssuedDateDp.toggle()" class="btn btn-secondary btn-sm" type="button">
+                          <fa-icon icon="calendar-alt"></fa-icon>
+                        </button>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label
+                      class="form-control-label"
+                      for="field_passportExpiryDate"
+                      jhiTranslate="bitsHrPayrollApp.employee.passportExpiryDate"
+                      >Passport Expiry Date</label
+                    >
+                    <div class="input-group align-items-center">
+                      <input
+                        #passportExpiryDateDp="ngbDatepicker"
+                        (click)="passportExpiryDateDp.toggle()"
+                        class="form-control"
+                        formControlName="passportExpiryDate"
+                        id="field_passportExpiryDate"
+                        name="passportExpiryDate"
+                        ngbDatepicker
+                        type="text"
+                      />
+                      <span class="input-group-append">
+                        <button (click)="passportExpiryDateDp.toggle()" class="btn btn-secondary btn-sm" type="button">
+                          <fa-icon icon="calendar-alt"></fa-icon>
+                        </button>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </li>
+
+      <li [ngbNavItem]="5">
+        <a ngbNavLink>Bank Details</a>
+        <ng-template ngbNavContent>
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label
+                      class="form-control-label"
+                      for="field_disbursementMethod"
+                      jhiTranslate="bitsHrPayrollApp.employee.disbursementMethod"
+                      >Disbursement Method</label
+                    >
+                    <select
+                      class="form-control"
+                      formControlName="disbursementMethod"
+                      id="field_disbursementMethod"
+                      name="disbursementMethod"
+                    >
+                      <option value="BANK">{{ 'bitsHrPayrollApp.DisbursementMethod.BANK' | translate }}</option>
+                      <option value="CASH">{{ 'bitsHrPayrollApp.DisbursementMethod.CASH' | translate }}</option>
+                      <option value="MOBILE_BANKING">{{ 'bitsHrPayrollApp.DisbursementMethod.MOBILE_BANKING' | translate }}</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label class="form-control-label" for="field_bankName" jhiTranslate="bitsHrPayrollApp.employee.bankName"
+                      >Bank Name</label
+                    >
+                    <input class="form-control" formControlName="bankName" id="field_bankName" name="bankName" type="text" />
+                    <div
+                      *ngIf="editForm.get('bankName')!.invalid && (editForm.get('bankName')!.dirty || editForm.get('bankName')!.touched)"
+                    >
+                      <small class="form-text text-danger" *ngIf="editForm.get('bankName')?.errors?.pattern"> This text is invalid </small>
+                      <small *ngIf="editForm.get('bankName')?.errors?.required" class="form-text text-danger">
+                        This field is required.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label class="form-control-label" for="field_bankAccountNo" jhiTranslate="bitsHrPayrollApp.employee.bankAccountNo"
+                      >Bank Account No</label
+                    >
+                    <input class="form-control" formControlName="bankAccountNo" id="field_bankAccountNo" name="bankAccountNo" type="text" />
+                    <div
+                      *ngIf="
+                        editForm.get('bankAccountNo')!.invalid &&
+                        (editForm.get('bankAccountNo')!.dirty || editForm.get('bankAccountNo')!.touched)
+                      "
+                    >
+                      <small class="form-text text-danger" *ngIf="editForm.get('bankAccountNo')?.errors?.pattern">
+                        This field must be numeric
+                      </small>
+                      <small
+                        *ngIf="editForm.get('bankAccountNo')?.errors?.maxlength"
+                        [translateValues]="{ max: 250 }"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.maxlength"
+                      >
+                        This field cannot be longer than 250 characters.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label class="form-control-label" for="field_bankBranch" jhiTranslate="bitsHrPayrollApp.employee.bankBranch"
+                      >Bank Branch</label
+                    >
+                    <select class="form-control" formControlName="bankBranchId" id="field_bankBranch" name="bankBranch">
+                      <option [ngValue]="null"></option>
+                      <option *ngFor="let bankBranchOption of bankbranches; trackBy: trackById" [ngValue]="bankBranchOption.id">
+                        {{ bankBranchOption.branchName }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row align-items-center">
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label class="form-control-label" for="field_cardType" jhiTranslate="bitsHrPayrollApp.employee.cardType"
+                      >Card Type</label
+                    >
+                    <select class="form-control" formControlName="cardType" id="field_cardType" name="cardType">
+                      <option [ngValue]="null">{{ 'bitsHrPayrollApp.CardType.null' | translate }}</option>
+                      <option value="DEBIT_CARD">{{ 'bitsHrPayrollApp.CardType.DEBIT_CARD' | translate }}</option>
+                      <option value="CREDIT_CARD">{{ 'bitsHrPayrollApp.CardType.CREDIT_CARD' | translate }}</option>
+                      <option value="PREPAID_CARD">{{ 'bitsHrPayrollApp.CardType.PREPAID_CARD' | translate }}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label class="form-control-label" for="field_cardNumber" jhiTranslate="bitsHrPayrollApp.employee.cardNumber"
+                      >Card Number</label
+                    >
+                    <input class="form-control" formControlName="cardNumber" id="field_cardNumber" name="cardNumber" type="text" />
+                    <div
+                      *ngIf="
+                        editForm.get('cardNumber')!.invalid && (editForm.get('cardNumber')!.dirty || editForm.get('cardNumber')!.touched)
+                      "
+                    >
+                      <small class="form-text text-danger" *ngIf="editForm.get('cardNumber')?.errors?.pattern">
+                        This field must be numeric!
+                      </small>
+                      <small
+                        *ngIf="editForm.get('cardNumber')?.errors?.maxlength"
+                        [translateValues]="{ max: 250 }"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.maxlength"
+                      >
+                        This field cannot be longer than 250 characters.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label class="form-control-label" for="field_bkashNumber" jhiTranslate="bitsHrPayrollApp.employee.bkashNumber"
+                      >Bkash Number</label
+                    >
+                    <input class="form-control" formControlName="bkashNumber" id="field_bkashNumber" name="bkashNumber" type="text" />
+                    <div
+                      *ngIf="
+                        editForm.get('bkashNumber')!.invalid && (editForm.get('bkashNumber')!.dirty || editForm.get('bkashNumber')!.touched)
+                      "
+                    >
+                      <small class="form-text text-danger" *ngIf="editForm.get('bkashNumber')?.errors?.pattern">
+                        This field must be numeric!
+                      </small>
+                      <small
+                        *ngIf="editForm.get('bkashNumber')?.errors?.maxlength"
+                        [translateValues]="{ max: 250 }"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.maxlength"
+                      >
+                        This field cannot be longer than 250 characters.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-check">
+                    <input
+                      class="form-check-input mt-2"
+                      data-cy="hasOverTime"
+                      formControlName="hasOverTime"
+                      id="field_hasOverTime"
+                      name="hasOverTime"
+                      type="checkbox"
+                    />
+                    <label class="form-check-label" for="field_hasOverTime">Has Over Time</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row align-content-center">
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.employee.cardType02" for="field_cardType02"
+                      >Card Type 02</label
+                    >
+                    <select class="form-control" name="cardType02" formControlName="cardType02" id="field_cardType02">
+                      <option value="DEBIT_CARD">{{ 'bitsHrPayrollApp.CardType.DEBIT_CARD' | translate }}</option>
+                      <option value="CREDIT_CARD">{{ 'bitsHrPayrollApp.CardType.CREDIT_CARD' | translate }}</option>
+                      <option value="PREPAID_CARD">{{ 'bitsHrPayrollApp.CardType.PREPAID_CARD' | translate }}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.employee.cardNumber02" for="field_cardNumber02"
+                      >Card Number 02</label
+                    >
+                    <input type="text" class="form-control" name="cardNumber02" id="field_cardNumber02" formControlName="cardNumber02" />
+                    <div
+                      *ngIf="
+                        editForm.get('cardNumber02')!.invalid &&
+                        (editForm.get('cardNumber02')!.dirty || editForm.get('cardNumber02')!.touched)
+                      "
+                    >
+                      <small class="form-text text-danger" *ngIf="editForm.get('cardNumber02')?.errors?.pattern">
+                        This field must be numeric!
+                      </small>
+                      <small
+                        *ngIf="editForm.get('cardNumber02')?.errors?.maxlength"
+                        [translateValues]="{ max: 250 }"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.maxlength"
+                      >
+                        This field cannot be longer than 250 characters.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.employee.cardType03" for="field_cardType03"
+                      >Card Type 03</label
+                    >
+                    <select class="form-control" name="cardType03" formControlName="cardType03" id="field_cardType03">
+                      <option value="DEBIT_CARD">{{ 'bitsHrPayrollApp.CardType.DEBIT_CARD' | translate }}</option>
+                      <option value="CREDIT_CARD">{{ 'bitsHrPayrollApp.CardType.CREDIT_CARD' | translate }}</option>
+                      <option value="PREPAID_CARD">{{ 'bitsHrPayrollApp.CardType.PREPAID_CARD' | translate }}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.employee.cardNumber03" for="field_cardNumber03"
+                      >Card Number 03</label
+                    >
+                    <input type="text" class="form-control" name="cardNumber03" id="field_cardNumber03" formControlName="cardNumber03" />
+                    <div
+                      *ngIf="
+                        editForm.get('cardNumber03')!.invalid &&
+                        (editForm.get('cardNumber03')!.dirty || editForm.get('cardNumber03')!.touched)
+                      "
+                    >
+                      <small class="form-text text-danger" *ngIf="editForm.get('cardNumber03')?.errors?.pattern">
+                        This field must be numeric!
+                      </small>
+                      <small
+                        *ngIf="editForm.get('cardNumber03')?.errors?.maxlength"
+                        [translateValues]="{ max: 250 }"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.maxlength"
+                      >
+                        This field cannot be longer than 250 characters.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </li>
+
+      <li [ngbNavItem]="6">
+        <a ngbNavLink>TAX and others</a>
+        <ng-template ngbNavContent>
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="row pt-2">
+                    <div class="col-md-12">
+                      <div class="form-check">
+                        <input
+                          class="form-check-input mt-2"
+                          data-cy="isPhysicallyDisabled"
+                          formControlName="isPhysicallyDisabled"
+                          id="field_isPhysicallyDisabled"
+                          name="isPhysicallyDisabled"
+                          type="checkbox"
+                        />
+                        <label class="form-check-label" for="field_isPhysicallyDisabled"> Tick if employee is physically disabled</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row pt-2">
+                    <div class="col-md-12">
+                      <div class="form-check">
+                        <input
+                          class="form-check-input mt-2"
+                          data-cy="hasDisabledChild"
+                          formControlName="hasDisabledChild"
+                          id="field_hasDisabledChild"
+                          name="hasDisabledChild"
+                          type="checkbox"
+                        />
+                        <label class="form-check-label" for="field_hasDisabledChild"> Tick if employee has disabled child</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row pt-2">
+                    <div class="col-md-12">
+                      <div class="form-check">
+                        <input
+                          class="form-check-input mt-2"
+                          data-cy="isFreedomFighter"
+                          formControlName="isFreedomFighter"
+                          id="field_isFreedomFighter"
+                          name="isFreedomFighter"
+                          type="checkbox"
+                        />
+                        <label class="form-check-label" for="field_isFreedomFighter"> Tick if employee is freedom fighter</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row pt-2">
+                    <div class="col-md-12">
+                      <div class="form-check">
+                        <input
+                          class="form-check-input mt-2"
+                          data-cy="isFirstTimeAitGiver"
+                          formControlName="isFirstTimeAitGiver"
+                          id="field_isFirstTimeAitGiver"
+                          name="isFirstTimeAitGiver"
+                          type="checkbox"
+                        />
+                        <label class="form-check-label" for="field_isFirstTimeAitGiver">
+                          Tick if employee is giving income tax for the first time</label
+                        >
+                      </div>
+                    </div>
+                  </div>
+
+                  <hr style="margin-bottom: 5px" />
+
+                  <div class="row pt-2">
+                    <div class="col-md-12">
+                      <div class="form-check">
+                        <input
+                          type="checkbox"
+                          class="form-check-input mt-2"
+                          name="isAllowedToGiveOnlineAttendance"
+                          id="field_isAllowedToGiveOnlineAttendance"
+                          formControlName="isAllowedToGiveOnlineAttendance"
+                        />
+                        <label
+                          class="form-check-label"
+                          jhiTranslate="bitsHrPayrollApp.employee.isAllowedToGiveOnlineAttendance"
+                          for="field_isAllowedToGiveOnlineAttendance"
+                          >Is Allowed To Give Online Attendance</label
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row pt-2">
+                    <div class="col-md-12">
+                      <div class="form-check">
+                        <input
+                          type="checkbox"
+                          class="form-check-input mt-2"
+                          name="canRaiseRrfOnBehalf"
+                          id="field_canRaiseRrfOnBehalf"
+                          formControlName="canRaiseRrfOnBehalf"
+                        />
+                        <label
+                          class="form-check-label"
+                          jhiTranslate="bitsHrPayrollApp.employee.canRaiseRrfOnBehalf"
+                          for="field_canRaiseRrfOnBehalf"
+                          >Can Raise RRF on Behalf</label
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row pt-2">
+                    <div class="col-md-12">
+                      <div class="form-check">
+                        <input
+                          type="checkbox"
+                          class="form-check-input mt-2"
+                          name="isAllowedToGiveOnlineAttendance"
+                          id="field_isEligibleForAutomatedAttendance"
+                          formControlName="isEligibleForAutomatedAttendance"
+                        />
+                        <label
+                          class="form-check-label"
+                          jhiTranslate="bitsHrPayrollApp.employee.isEligibleForAutomatedAttendance"
+                          for="field_isEligibleForAutomatedAttendance"
+                          >Is Eligible For Automated Attendance</label
+                        >
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row pt-2">
+                    <div class="col-md-12">
+                      <div class="form-check">
+                        <input
+                          type="checkbox"
+                          class="form-check-input mt-2"
+                          name="isBillableResource"
+                          id="field_isBillableResource"
+                          formControlName="isBillableResource"
+                        />
+                        <label class="form-check-label" for="field_isBillableResource">Is Billable Resource</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row pt-2">
+                    <div class="col-md-12">
+                      <div class="form-check">
+                        <input
+                          type="checkbox"
+                          class="form-check-input mt-2"
+                          name="isAugmentedResource"
+                          id="field_isAugmentedResource"
+                          formControlName="isAugmentedResource"
+                        />
+                        <label class="form-check-label" for="field_isAugmentedResource">Is Augmented Resource</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label class="form-control-label" for="field_tinNumber">TIN Number</label>
+                    <input
+                      class="form-control"
+                      formControlName="tinNumber"
+                      id="field_tinNumber"
+                      placeholder="Ex: 26555234999"
+                      name="tinNumber"
+                      type="text"
+                    />
+                    <div
+                      *ngIf="editForm.get('tinNumber')!.invalid && (editForm.get('tinNumber')!.dirty || editForm.get('tinNumber')!.touched)"
+                    >
+                      <small
+                        *ngIf="editForm.get('tinNumber')?.errors?.minlength"
+                        [translateValues]="{ min: 12 }"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.minlength"
+                      >
+                        This field is required to be at least 12 characters.
+                      </small>
+                      <small
+                        *ngIf="editForm.get('tinNumber')?.errors?.maxlength"
+                        [translateValues]="{ max: 12 }"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.maxlength"
+                      >
+                        This field cannot be longer than 12 characters.
+                      </small>
+                      <small
+                        *ngIf="editForm.get('tinNumber')?.errors?.pattern"
+                        [translateValues]="{ pattern: 'e-tin should consist alpha numeric characters only' }"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.pattern"
+                      >
+                        e-tin should consist alpha numeric characters only
+                      </small>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-control-label" for="field_taxesCircle">Tax Circle</label>
+                    <input
+                      class="form-control"
+                      formControlName="taxesCircle"
+                      id="field_taxesCircle"
+                      placeholder="Ex: Circle-054 (Salary)"
+                      name="taxesCircle"
+                      type="text"
+                    />
+                    <div
+                      *ngIf="
+                        editForm.get('taxesCircle')!.invalid && (editForm.get('taxesCircle')!.dirty || editForm.get('taxesCircle')!.touched)
+                      "
+                    >
+                      <small
+                        *ngIf="editForm.get('taxesCircle')?.errors?.maxlength"
+                        [translateValues]="{ max: 250 }"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.maxlength"
+                      >
+                        This field cannot be longer than 250 characters.
+                      </small>
+                      <small *ngIf="editForm.get('taxesCircle')?.errors?.pattern" class="form-text text-danger">
+                        This text is invalid
+                      </small>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-control-label" for="field_taxesZone">Tax Zone</label>
+                    <input
+                      class="form-control"
+                      formControlName="taxesZone"
+                      id="field_taxesZone"
+                      placeholder="Ex: Tax Zone-03, Dhaka."
+                      name="taxesZone"
+                      type="text"
+                    />
+                    <div
+                      *ngIf="editForm.get('taxesZone')!.invalid && (editForm.get('taxesZone')!.dirty || editForm.get('taxesZone')!.touched)"
+                    >
+                      <small
+                        *ngIf="editForm.get('taxesZone')?.errors?.maxlength"
+                        [translateValues]="{ max: 250 }"
+                        class="form-text text-danger"
+                        jhiTranslate="entity.validation.maxlength"
+                      >
+                        This field cannot be longer than 250 characters.
+                      </small>
+                      <small *ngIf="editForm.get('taxesZone')?.errors?.pattern" class="form-text text-danger"> This text is invalid </small>
+                    </div>
+                  </div>
+                  <div class="form-check px-3">
+                    <input
+                      type="checkbox"
+                      class="form-check-input mt-2"
+                      name="isTaxPaidByOrganisation"
+                      id="field_isTaxPaidByOrganisation"
+                      formControlName="isTaxPaidByOrganisation"
+                    />
+                    <label
+                      class="form-check-label"
+                      jhiTranslate="bitsHrPayrollApp.employee.isTaxPaidByOrganisation"
+                      for="field_isTaxPaidByOrganisation"
+                      >Is Tax Paid By Organisation</label
+                    >
+                  </div>
+
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      name="canManageTaxAcknowledgementReceipt"
+                      id="field_canManageTaxAcknowledgementReceipt"
+                      formControlName="canManageTaxAcknowledgementReceipt"
+                    />
+                    <label
+                      class="form-check-label"
+                      jhiTranslate="bitsHrPayrollApp.employee.canManageTaxAcknowledgementReceipt"
+                      for="field_canManageTaxAcknowledgementReceipt"
+                      >Can Manage Tax Acknowledgement Receipt
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card mt-2">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-2">
+                    <div class="mb-3">
+                      <label class="form-control-label text-nowrap" for="field_allowance01">{{ allowanceName?.allowance01Name }}</label>
+                      <input type="number" class="form-control" name="allowance01" id="field_allowance01" formControlName="allowance01" />
+                      <div
+                        *ngIf="
+                          editForm.get('allowance01')!.invalid &&
+                          (editForm.get('allowance01')!.dirty || editForm.get('allowance01')!.touched)
+                        "
+                      >
+                        <small
+                          class="form-text text-danger"
+                          *ngIf="editForm.get('allowance01')?.errors?.min"
+                          jhiTranslate="entity.validation.min"
+                          [translateValues]="{ min: 0 }"
+                        >
+                          This field should be at least 0.
+                        </small>
+                        <small
+                          class="form-text text-danger"
+                          *ngIf="editForm.get('allowance01')?.errors?.max"
+                          jhiTranslate="entity.validation.max"
+                          [translateValues]="{ max: 10000000 }"
+                        >
+                          This field cannot be more than 10000000.
+                        </small>
+                        <small
+                          class="form-text text-danger"
+                          [hidden]="!editForm.get('allowance01')?.errors?.number"
+                          jhiTranslate="entity.validation.number"
+                        >
+                          This field should be a number.
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="mb-3">
+                      <label
+                        class="form-control-label"
+                        jhiTranslate="bitsHrPayrollApp.employee.allowance01EffectiveFrom"
+                        for="field_allowance01EffectiveFrom"
+                        >Effective From</label
+                      >
+                      <div class="input-group">
+                        <input
+                          id="field_allowance01EffectiveFrom"
+                          type="text"
+                          class="form-control"
+                          name="allowance01EffectiveFrom"
+                          ngbDatepicker
+                          #allowance01EffectiveFromDp="ngbDatepicker"
+                          formControlName="allowance01EffectiveFrom"
+                        />
+                        <span class="input-group-append">
+                          <button type="button" class="btn btn-secondary" (click)="allowance01EffectiveFromDp.toggle()">
+                            <fa-icon icon="calendar-alt"></fa-icon>
+                          </button>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="mb-3">
+                      <label
+                        class="form-control-label"
+                        jhiTranslate="bitsHrPayrollApp.employee.allowance01EffectiveTo"
+                        for="field_allowance01EffectiveTo"
+                        >Effective To</label
+                      >
+                      <div class="input-group">
+                        <input
+                          id="field_allowance01EffectiveTo"
+                          type="text"
+                          class="form-control"
+                          name="allowance01EffectiveTo"
+                          ngbDatepicker
+                          #allowance01EffectiveToDp="ngbDatepicker"
+                          formControlName="allowance01EffectiveTo"
+                        />
+                        <span class="input-group-append">
+                          <button type="button" class="btn btn-secondary" (click)="allowance01EffectiveToDp.toggle()">
+                            <fa-icon icon="calendar-alt"></fa-icon>
+                          </button>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="mb-3">
+                      <label class="form-control-label text-nowrap" for="field_allowance02"> {{ allowanceName?.allowance02Name }}</label>
+                      <input type="number" class="form-control" name="allowance02" id="field_allowance02" formControlName="allowance02" />
+                      <div
+                        *ngIf="
+                          editForm.get('allowance02')!.invalid &&
+                          (editForm.get('allowance02')!.dirty || editForm.get('allowance02')!.touched)
+                        "
+                      >
+                        <small
+                          class="form-text text-danger"
+                          *ngIf="editForm.get('allowance02')?.errors?.min"
+                          jhiTranslate="entity.validation.min"
+                          [translateValues]="{ min: 0 }"
+                        >
+                          This field should be at least 0.
+                        </small>
+                        <small
+                          class="form-text text-danger"
+                          *ngIf="editForm.get('allowance02')?.errors?.max"
+                          jhiTranslate="entity.validation.max"
+                          [translateValues]="{ max: 10000000 }"
+                        >
+                          This field cannot be more than 10000000.
+                        </small>
+                        <small
+                          class="form-text text-danger"
+                          [hidden]="!editForm.get('allowance02')?.errors?.number"
+                          jhiTranslate="entity.validation.number"
+                        >
+                          This field should be a number.
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="mb-3">
+                      <label
+                        class="form-control-label"
+                        jhiTranslate="bitsHrPayrollApp.employee.allowance02EffectiveFrom"
+                        for="field_allowance02EffectiveFrom"
+                      >
+                        Effective From</label
+                      >
+                      <div class="input-group">
+                        <input
+                          id="field_allowance02EffectiveFrom"
+                          type="text"
+                          class="form-control"
+                          name="allowance02EffectiveFrom"
+                          ngbDatepicker
+                          #allowance02EffectiveFromDp="ngbDatepicker"
+                          formControlName="allowance02EffectiveFrom"
+                        />
+                        <span class="input-group-append">
+                          <button type="button" class="btn btn-secondary" (click)="allowance02EffectiveFromDp.toggle()">
+                            <fa-icon icon="calendar-alt"></fa-icon>
+                          </button>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="mb-3">
+                      <label
+                        class="form-control-label"
+                        jhiTranslate="bitsHrPayrollApp.employee.allowance02EffectiveTo"
+                        for="field_allowance02EffectiveTo"
+                      >
+                        Effective To</label
+                      >
+                      <div class="input-group">
+                        <input
+                          id="field_allowance02EffectiveTo"
+                          type="text"
+                          class="form-control"
+                          name="allowance02EffectiveTo"
+                          ngbDatepicker
+                          #allowance02EffectiveToDp="ngbDatepicker"
+                          formControlName="allowance02EffectiveTo"
+                        />
+                        <span class="input-group-append">
+                          <button type="button" class="btn btn-secondary" (click)="allowance02EffectiveToDp.toggle()">
+                            <fa-icon icon="calendar-alt"></fa-icon>
+                          </button>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-2">
+                    <div class="mb-3">
+                      <label class="form-control-label text-nowrap" for="field_allowance03">{{ allowanceName?.allowance03Name }}</label>
+                      <input type="number" class="form-control" name="allowance03" id="field_allowance03" formControlName="allowance03" />
+                      <div
+                        *ngIf="
+                          editForm.get('allowance03')!.invalid &&
+                          (editForm.get('allowance03')!.dirty || editForm.get('allowance03')!.touched)
+                        "
+                      >
+                        <small
+                          class="form-text text-danger"
+                          *ngIf="editForm.get('allowance03')?.errors?.min"
+                          jhiTranslate="entity.validation.min"
+                          [translateValues]="{ min: 0 }"
+                        >
+                          This field should be at least 0.
+                        </small>
+                        <small
+                          class="form-text text-danger"
+                          *ngIf="editForm.get('allowance03')?.errors?.max"
+                          jhiTranslate="entity.validation.max"
+                          [translateValues]="{ max: 10000000 }"
+                        >
+                          This field cannot be more than 10000000.
+                        </small>
+                        <small
+                          class="form-text text-danger"
+                          [hidden]="!editForm.get('allowance03')?.errors?.number"
+                          jhiTranslate="entity.validation.number"
+                        >
+                          This field should be a number.
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="mb-3">
+                      <label
+                        class="form-control-label"
+                        jhiTranslate="bitsHrPayrollApp.employee.allowance03EffectiveFrom"
+                        for="field_allowance03EffectiveFrom"
+                      >
+                        Effective From</label
+                      >
+                      <div class="input-group">
+                        <input
+                          id="field_allowance03EffectiveFrom"
+                          type="text"
+                          class="form-control"
+                          name="allowance03EffectiveFrom"
+                          ngbDatepicker
+                          #allowance03EffectiveFromDp="ngbDatepicker"
+                          formControlName="allowance03EffectiveFrom"
+                        />
+                        <span class="input-group-append">
+                          <button type="button" class="btn btn-secondary" (click)="allowance03EffectiveFromDp.toggle()">
+                            <fa-icon icon="calendar-alt"></fa-icon>
+                          </button>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="mb-3">
+                      <label
+                        class="form-control-label"
+                        jhiTranslate="bitsHrPayrollApp.employee.allowance03EffectiveTo"
+                        for="field_allowance03EffectiveTo"
+                      >
+                        Effective To</label
+                      >
+                      <div class="input-group">
+                        <input
+                          id="field_allowance03EffectiveTo"
+                          type="text"
+                          class="form-control"
+                          name="allowance03EffectiveTo"
+                          ngbDatepicker
+                          #allowance03EffectiveToDp="ngbDatepicker"
+                          formControlName="allowance03EffectiveTo"
+                        />
+                        <span class="input-group-append">
+                          <button type="button" class="btn btn-secondary" (click)="allowance03EffectiveToDp.toggle()">
+                            <fa-icon icon="calendar-alt"></fa-icon>
+                          </button>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="mb-3">
+                      <label class="form-control-label text-nowrap" for="field_allowance04"> {{ allowanceName?.allowance04Name }}</label>
+                      <input type="number" class="form-control" name="allowance04" id="field_allowance04" formControlName="allowance04" />
+                      <div
+                        *ngIf="
+                          editForm.get('allowance04')!.invalid &&
+                          (editForm.get('allowance04')!.dirty || editForm.get('allowance04')!.touched)
+                        "
+                      >
+                        <small
+                          class="form-text text-danger"
+                          *ngIf="editForm.get('allowance04')?.errors?.min"
+                          jhiTranslate="entity.validation.min"
+                          [translateValues]="{ min: 0 }"
+                        >
+                          This field should be at least 0.
+                        </small>
+                        <small
+                          class="form-text text-danger"
+                          *ngIf="editForm.get('allowance04')?.errors?.max"
+                          jhiTranslate="entity.validation.max"
+                          [translateValues]="{ max: 10000000 }"
+                        >
+                          This field cannot be more than 10000000.
+                        </small>
+                        <small
+                          class="form-text text-danger"
+                          [hidden]="!editForm.get('allowance04')?.errors?.number"
+                          jhiTranslate="entity.validation.number"
+                        >
+                          This field should be a number.
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="mb-3">
+                      <label
+                        class="form-control-label"
+                        jhiTranslate="bitsHrPayrollApp.employee.allowance04EffectiveFrom"
+                        for="field_allowance04EffectiveFrom"
+                      >
+                        Effective From</label
+                      >
+                      <div class="input-group">
+                        <input
+                          id="field_allowance04EffectiveFrom"
+                          type="text"
+                          class="form-control"
+                          name="allowance04EffectiveFrom"
+                          ngbDatepicker
+                          #allowance04EffectiveFromDp="ngbDatepicker"
+                          formControlName="allowance04EffectiveFrom"
+                        />
+                        <span class="input-group-append">
+                          <button type="button" class="btn btn-secondary" (click)="allowance04EffectiveFromDp.toggle()">
+                            <fa-icon icon="calendar-alt"></fa-icon>
+                          </button>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="mb-3">
+                      <label
+                        class="form-control-label"
+                        jhiTranslate="bitsHrPayrollApp.employee.allowance04EffectiveTo"
+                        for="field_allowance04EffectiveTo"
+                      >
+                        Effective To</label
+                      >
+                      <div class="input-group">
+                        <input
+                          id="field_allowance04EffectiveTo"
+                          type="text"
+                          class="form-control"
+                          name="allowance04EffectiveTo"
+                          ngbDatepicker
+                          #allowance04EffectiveToDp="ngbDatepicker"
+                          formControlName="allowance04EffectiveTo"
+                        />
+                        <span class="input-group-append">
+                          <button type="button" class="btn btn-secondary" (click)="allowance04EffectiveToDp.toggle()">
+                            <fa-icon icon="calendar-alt"></fa-icon>
+                          </button>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div *ngIf="allowanceName?.allowance05Name?.length !== 0">
+                    <div class="col-md-2">
+                      <div class="mb-3">
+                        <label class="form-control-label text-nowrap" for="field_allowance05">{{ allowanceName?.allowance05Name }}</label>
+                        <input type="number" class="form-control" name="allowance05" id="field_allowance05" formControlName="allowance05" />
+                        <div
+                          *ngIf="
+                            editForm.get('allowance05')!.invalid &&
+                            (editForm.get('allowance05')!.dirty || editForm.get('allowance05')!.touched)
+                          "
+                        >
+                          <small
+                            class="form-text text-danger"
+                            *ngIf="editForm.get('allowance05')?.errors?.min"
+                            jhiTranslate="entity.validation.min"
+                            [translateValues]="{ min: 0 }"
+                          >
+                            This field should be at least 0.
+                          </small>
+                          <small
+                            class="form-text text-danger"
+                            *ngIf="editForm.get('allowance05')?.errors?.max"
+                            jhiTranslate="entity.validation.max"
+                            [translateValues]="{ max: 10000000 }"
+                          >
+                            This field cannot be more than 10000000.
+                          </small>
+                          <small
+                            class="form-text text-danger"
+                            [hidden]="!editForm.get('allowance05')?.errors?.number"
+                            jhiTranslate="entity.validation.number"
+                          >
+                            This field should be a number.
+                          </small>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="mb-3">
+                        <label
+                          class="form-control-label"
+                          jhiTranslate="bitsHrPayrollApp.employee.allowance05EffectiveFrom"
+                          for="field_allowance05EffectiveFrom"
+                        >
+                          Effective From</label
+                        >
+                        <div class="input-group">
+                          <input
+                            id="field_allowance05EffectiveFrom"
+                            type="text"
+                            class="form-control"
+                            name="allowance05EffectiveFrom"
+                            ngbDatepicker
+                            #allowance05EffectiveFromDp="ngbDatepicker"
+                            formControlName="allowance05EffectiveFrom"
+                          />
+                          <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="allowance05EffectiveFromDp.toggle()">
+                              <fa-icon icon="calendar-alt"></fa-icon>
+                            </button>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="mb-3">
+                        <label
+                          class="form-control-label"
+                          jhiTranslate="bitsHrPayrollApp.employee.allowance05EffectiveTo"
+                          for="field_allowance05EffectiveTo"
+                        >
+                          Effective To</label
+                        >
+                        <div class="input-group">
+                          <input
+                            id="field_allowance05EffectiveTo"
+                            type="text"
+                            class="form-control"
+                            name="allowance05EffectiveTo"
+                            ngbDatepicker
+                            #allowance05EffectiveToDp="ngbDatepicker"
+                            formControlName="allowance05EffectiveTo"
+                          />
+                          <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="allowance05EffectiveToDp.toggle()">
+                              <fa-icon icon="calendar-alt"></fa-icon>
+                            </button>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngIf="allowanceName?.allowance06Name?.length !== 0">
+                    <div class="col-md-2">
+                      <div class="mb-3">
+                        <label class="form-control-label text-nowrap" for="field_allowance06"> {{ allowanceName?.allowance06Name }}</label>
+                        <input type="number" class="form-control" name="allowance06" id="field_allowance06" formControlName="allowance06" />
+                        <div
+                          *ngIf="
+                            editForm.get('allowance06')!.invalid &&
+                            (editForm.get('allowance06')!.dirty || editForm.get('allowance06')!.touched)
+                          "
+                        >
+                          <small
+                            class="form-text text-danger"
+                            *ngIf="editForm.get('allowance06')?.errors?.min"
+                            jhiTranslate="entity.validation.min"
+                            [translateValues]="{ min: 0 }"
+                          >
+                            This field should be at least 0.
+                          </small>
+                          <small
+                            class="form-text text-danger"
+                            *ngIf="editForm.get('allowance06')?.errors?.max"
+                            jhiTranslate="entity.validation.max"
+                            [translateValues]="{ max: 10000000 }"
+                          >
+                            This field cannot be more than 10000000.
+                          </small>
+                          <small
+                            class="form-text text-danger"
+                            [hidden]="!editForm.get('allowance06')?.errors?.number"
+                            jhiTranslate="entity.validation.number"
+                          >
+                            This field should be a number.
+                          </small>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="mb-3">
+                        <label
+                          class="form-control-label"
+                          jhiTranslate="bitsHrPayrollApp.employee.allowance06EffectiveFrom"
+                          for="field_allowance06EffectiveFrom"
+                        >
+                          Effective From</label
+                        >
+                        <div class="input-group">
+                          <input
+                            id="field_allowance06EffectiveFrom"
+                            type="text"
+                            class="form-control"
+                            name="allowance06EffectiveFrom"
+                            ngbDatepicker
+                            #allowance06EffectiveFromDp="ngbDatepicker"
+                            formControlName="allowance06EffectiveFrom"
+                          />
+                          <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="allowance06EffectiveFromDp.toggle()">
+                              <fa-icon icon="calendar-alt"></fa-icon>
+                            </button>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="mb-3">
+                        <label
+                          class="form-control-label"
+                          jhiTranslate="bitsHrPayrollApp.employee.allowance06EffectiveTo"
+                          for="field_allowance06EffectiveTo"
+                        >
+                          Effective To</label
+                        >
+                        <div class="input-group">
+                          <input
+                            id="field_allowance06EffectiveTo"
+                            type="text"
+                            class="form-control"
+                            name="allowance06EffectiveTo"
+                            ngbDatepicker
+                            #allowance06EffectiveToDp="ngbDatepicker"
+                            formControlName="allowance06EffectiveTo"
+                          />
+                          <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="allowance06EffectiveToDp.toggle()">
+                              <fa-icon icon="calendar-alt"></fa-icon>
+                            </button>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </li>
+
+      <li [ngbNavItem]="7" [hidden]="totalTab < 7">
+        <a ngbNavLink>Employee Documents</a>
+        <ng-template ngbNavContent>
+          <div class="card mb-3">
+            <div class="card-body">
+              <form name="editDocumentsForm" role="form" novalidate (ngSubmit)="uploadDocument()" [formGroup]="editDocumentsForm">
+                <div class="row mb-3">
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label class="form-label required" jhiTranslate="bitsHrPayrollApp.employeeDocument.fileName" for="field_fileName"
+                        >File Name</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="fileName"
+                        id="field_fileName"
+                        data-cy="fileName"
+                        formControlName="fileName"
+                        required="required"
+                      />
+                      <div
+                        *ngIf="
+                          editDocumentsForm.get('fileName')!.invalid &&
+                          (editDocumentsForm.get('fileName')!.dirty || editDocumentsForm.get('fileName')!.touched)
+                        "
+                      >
+                        <div
+                          class="font-sm text-danger"
+                          *ngIf="editDocumentsForm.get('fileName')?.errors?.required"
+                          jhiTranslate="entity.validation.required"
+                        >
+                          This field is required.
+                        </div>
+                        <div class="font-sm text-danger" *ngIf="editDocumentsForm.get('fileName')?.errors?.pattern">
+                          This text is invalid
+                        </div>
+                        <div
+                          class="font-sm text-danger"
+                          *ngIf="editDocumentsForm.get('fileName')?.errors?.minlength"
+                          jhiTranslate="entity.validation.min"
+                          [translateValues]="{ min: 4 }"
+                        >
+                          This field is required to be at least 4 characters.
+                        </div>
+                        <div
+                          class="font-sm text-danger"
+                          *ngIf="editDocumentsForm.get('fileName')?.errors?.maxlength"
+                          jhiTranslate="entity.validation.max"
+                          [translateValues]="{ max: 100 }"
+                        >
+                          File name cannot exceed 100 characters
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label class="form-label required" jhiTranslate="bitsHrPayrollApp.employeeDocument.remarks" for="field_remarks"
+                        >Remarks</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="remarks"
+                        id="field_remarks"
+                        data-cy="remarks"
+                        formControlName="remarks"
+                        required="required"
+                      />
+                      <div
+                        *ngIf="
+                          editDocumentsForm.get('remarks')!.invalid &&
+                          (editDocumentsForm.get('remarks')!.dirty || editDocumentsForm.get('remarks')!.touched)
+                        "
+                      >
+                        <div
+                          class="font-sm text-danger"
+                          *ngIf="editDocumentsForm.get('remarks')?.errors?.required"
+                          jhiTranslate="entity.validation.required"
+                        >
+                          This field is required.
+                        </div>
+                        <div class="font-sm text-danger" *ngIf="editDocumentsForm.get('remarks')?.errors?.pattern">
+                          This text is invalid
+                        </div>
+                        <div
+                          class="font-sm text-danger"
+                          *ngIf="editDocumentsForm.get('remarks')?.errors?.minlength"
+                          jhiTranslate="entity.validation.min"
+                          [translateValues]="{ min: 1 }"
+                        >
+                          This field cannot be longer than 1 characters.
+                        </div>
+                        <div
+                          class="font-sm text-danger"
+                          *ngIf="editDocumentsForm.get('remarks')?.errors?.maxlength"
+                          jhiTranslate="entity.validation.max"
+                          [translateValues]="{ max: 250 }"
+                        >
+                          This field cannot be longer than 250 characters.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label class="form-label required" for="field_file">File</label>
+                      <div>
+                        <input #takeInput type="file" id="file_file" class="form-control" (change)="setFileData($event, 'file', false)" />
+                        <div
+                          *ngIf="
+                            editDocumentsForm.get('file')!.invalid &&
+                            (editDocumentsForm.get('file')!.dirty || editDocumentsForm.get('file')!.touched)
+                          "
+                        >
+                          <small
+                            class="form-text text-danger"
+                            *ngIf="editDocumentsForm.get('file')?.errors?.required"
+                            jhiTranslate="entity.validation.required"
+                          >
+                            This field is required.
+                          </small>
+                        </div>
+                        <div *ngIf="inValidFile">
+                          <small class="form-text text-danger">
+                            {{ inValidFileErrorMsg }}
+                          </small>
+                        </div>
+                      </div>
+
+                      <input type="hidden" class="form-control" name="file" id="field_file" formControlName="file" />
+                      <input
+                        type="hidden"
+                        class="form-control"
+                        name="id"
+                        id="field_id"
+                        data-cy="id"
+                        formControlName="id"
+                        [readonly]="true"
+                      />
+                      <input type="hidden" class="form-control" name="field_pin" data-cy="pin" formControlName="pin" [readonly]="true" />
+                    </div>
+                  </div>
+                  <div class="col-md-3 d-flex align-items-end">
+                    <div class="form-group d-flex">
+                      <div class="form-check form-switch">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          role="switch"
+                          id="field_hasEmployeeVisibility"
+                          formControlName="hasEmployeeVisibility"
+                          checked
+                        />
+                      </div>
+                      <label
+                        class="form-label"
+                        jhiTranslate="bitsHrPayrollApp.employeeDocument.hasEmployeeVisibility"
+                        for="field_hasEmployeeVisibility"
+                        >Has Employee Visibility</label
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <button class="btn btn-primary" type="submit" [disabled]="editDocumentsForm.invalid || isSaving_editDocumentForm">
+                      <span *ngIf="editDocumentsForm.get(['id']).value !== null">Update</span>
+                      <span *ngIf="editDocumentsForm.get(['id']).value === null">Save</span>
+                    </button>
+                    <button class="btn btn-secondary" type="button" (click)="clearForm()">Clear</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="card" *ngIf="employeeDocument && employeeDocument.length > 0">
+            <div class="card-body">
+              <div class="table-responsive table-entities" id="entities">
+                <table class="table table-striped" aria-describedby="page-heading">
+                  <thead>
+                    <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending">
+                      <th scope="col" jhiSortBy="id">
+                        <div class="d-flex"></div>
+                      </th>
+                      <th scope="col" jhiSortBy="fileName">
+                        <div class="d-flex">
+                          <span jhiTranslate="bitsHrPayrollApp.employeeDocument.fileName">File Name</span>
+                        </div>
+                      </th>
+                      <th scope="col" jhiSortBy="remarks">
+                        <div class="d-flex">
+                          <span jhiTranslate="bitsHrPayrollApp.employeeDocument.remarks">Remarks</span>
+                        </div>
+                      </th>
+                      <th scope="col" jhiSortBy="hasEmployeeVisibility">
+                        <div class="d-flex">
+                          <span jhiTranslate="bitsHrPayrollApp.employeeDocument.hasEmployeeVisibility">Has Employee Visibility</span>
+                        </div>
+                      </th>
+                      <th scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody
+                    infinite-scroll
+                    (scrolled)="loadPage(page + 1)"
+                    [infiniteScrollDisabled]="page - 1 >= links['last']"
+                    [infiniteScrollDistance]="0"
+                  >
+                    <tr *ngFor="let employeeDocument of employeeDocument; trackBy: trackId" data-cy="entityTable">
+                      <td class="w-5" width="50">
+                        <span container="body" [ngbTooltip]="ClickToDownload">
+                          <button ngbtooltip="clickToDownload" class="btn btn-outline-primary" (click)="export(employeeDocument.id!)">
+                            <fa-icon class="font-size-1-rem" [icon]="getFontAwesomeIcon(employeeDocument.fileExtension)"></fa-icon>
+                          </button>
+                        </span>
+                        <ng-template #ClickToDownload> Click To Download </ng-template>
+                      </td>
+                      <td>{{ employeeDocument.fileName }}</td>
+                      <td>{{ employeeDocument.remarks }}</td>
+                      <td>{{ employeeDocument.hasEmployeeVisibility ? 'Yes' : 'No' }}</td>
+                      <td class="text-end">
+                        <div class="btn-group">
+                          <button
+                            type="button"
+                            (click)="export(employeeDocument.id!)"
+                            class="btn btn-info btn-sm"
+                            data-cy="entityDetailsButton"
+                          >
+                            <fa-icon icon="download"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Download</span>
+                          </button>
+
+                          <button type="button" (click)="edit(employeeDocument)" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                            <fa-icon icon="pencil-alt"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                          </button>
+
+                          <button
+                            type="button"
+                            (click)="deleteDocument(employeeDocument)"
+                            class="btn btn-danger btn-sm"
+                            data-cy="entityDeleteButton"
+                          >
+                            <fa-icon icon="times"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </li>
+    </ul>
+
+    <div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+    <div class="my-3">
+      <button (click)="previousState()" class="btn btn-secondary" id="cancel-save" type="button">
+        <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+      </button>
+
+      <a (click)="previousTab()" class="btn btn-success text-white"><span>Previous</span> </a>
+
+      <a (click)="nextTab()" class="btn btn-success text-white"><span>Next</span> </a>
+      <button [disabled]="editForm.invalid || isSaving || !nationalIDNumberValidation.isValid" class="btn btn-primary" type="submit">
+        <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,10 @@
+{
+  "bitsHrPayrollApp": {
+    "PayType": {
+      "null": "",
+      "UNPAID": "UNPAID",
+      "MONTHLY": "MONTHLY",
+      "HOURLY": "HOURLY"
+    }
+  }
+}

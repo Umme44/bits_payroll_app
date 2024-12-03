@@ -1,0 +1,120 @@
+<jhi-header headerName="Procurement Requisition" routerLinkText="new" [addButtonText]="'New Requisition'" [shouldHaveHr]="false">
+</jhi-header>
+
+<div>
+  <div *ngIf="prfTeamContactNumber !== undefined" class="mb-2">
+    <mark class="font-sm"
+      >** For any Query, Please call
+      <fa-icon icon="phone-alt" class="px-1"></fa-icon>
+      <a [href]="'tel:' + prfTeamContactNumber">{{ prfTeamContactNumber }}</a>
+    </mark>
+  </div>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <!--  Filter Part Starts -->
+  <div id="filter-area" class="card card-body mb-2">
+    <div class="row">
+      <div class="col-md-4">
+        <label jhiTranslate="bitsHrPayrollApp.procReqMaster.department" for="field_department">Department</label>
+        <select class="form-control" id="field_department" [formControl]="departmentFormControl" (change)="reset()">
+          <option [ngValue]="null" disabled>Select Department</option>
+          <option [ngValue]="null">All</option>
+          <option [ngValue]="departmentOption.id" *ngFor="let departmentOption of departments">
+            {{ departmentOption.departmentName }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <!--  Filter Part Ends -->
+
+  <div class="d-flex justify-content-center" id="no-result" *ngIf="procReqMasters?.length === 0">
+    <img src="../../../../content/images/requisition.svg" width="400px" height="400px" />
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="procReqMasters && procReqMasters.length > 0">
+    <table class="table table-hover list-text-color" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span>PRF Number</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.procReqMaster.requestedDate">Requested Date</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.procReqMaster.expectedReceivedDate">Expected Receive Date</span></th>
+          <th scope="col" class="text-end"><span>Total Approx. Price (BDT)</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.procReqMaster.department">Department</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.procReqMaster.requisitionStatus">Requisition Status</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.procReqMaster.reasoning">Reasoning</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+        <tr *ngFor="let procReqMaster of procReqMasters; trackBy: trackId">
+          <td>
+            <a class="text-decoration-underline" (click)="navigatePrintView(procReqMaster.id!)">{{ procReqMaster.requisitionNo }}</a>
+          </td>
+
+          <td>{{ procReqMaster.requestedDate | formatMediumDate }}</td>
+          <td>{{ procReqMaster.expectedReceivedDate | formatMediumDate }}</td>
+
+          <td class="text-end">
+            {{ procReqMaster.totalApproximatePrice | number }}
+          </td>
+
+          <td>
+            {{ procReqMaster.departmentName }}
+          </td>
+
+          <td jhiTranslate="{{ 'bitsHrPayrollApp.RequisitionStatus.' + procReqMaster.requisitionStatus }}">
+            {{ procReqMaster.requisitionStatus }}
+          </td>
+
+          <td>
+            <span container="body" [ngbTooltip]="procReqMaster.reasoning && procReqMaster.reasoning.length > 30 ? procReqMaster.reasoning : ''">
+              {{
+                procReqMaster.reasoning && procReqMaster.reasoning.length > 30
+                  ? (procReqMaster.reasoning | slice: 0:30) + '...'
+                  : procReqMaster.reasoning
+              }}
+            </span>
+          </td>
+
+          <td class="text-end">
+            <div class="">
+              <button
+                type="submit"
+                (click)="navigatePrintView(procReqMaster.id!)"
+                class="btn btn-secondary btn-sm border-radius-minimal me-1"
+              >
+                <fa-icon icon="print"></fa-icon>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/procurement-requisition-user', procReqMaster.id, 'view']"
+                class="btn btn-info btn-sm border-radius-minimal me-1"
+              >
+                <fa-icon icon="eye"></fa-icon>
+              </button>
+
+              <ng-container *ngIf="procReqMaster.requisitionStatus === 'PENDING'">
+                <button
+                  type="submit"
+                  [routerLink]="['/procurement-requisition-user', procReqMaster.id, 'edit']"
+                  class="btn btn-primary btn-sm border-radius-minimal me-1"
+                >
+                  <fa-icon icon="pencil-alt"></fa-icon>
+                </button>
+
+                <button type="submit" (click)="delete(procReqMaster)" class="btn btn-danger btn-sm border-radius-minimal">
+                  <fa-icon icon="trash"></fa-icon>
+                </button>
+              </ng-container>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

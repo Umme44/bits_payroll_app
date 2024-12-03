@@ -1,0 +1,28 @@
+<form *ngIf="arrearSalaryItem" name="deleteForm" (ngSubmit)="confirmDelete(arrearSalaryItem.id!)">
+  <div class="modal-header">
+    <h4 class="modal-title" data-cy="arrearSalaryItemDeleteDialogHeading" jhiTranslate="entity.delete.title">Confirm delete operation</h4>
+
+    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" (click)="cancel()"></button>
+  </div>
+
+  <div class="modal-body">
+    <jhi-alert-error></jhi-alert-error>
+    <p
+      id="jhi-delete-arrearSalaryItem-heading"
+      jhiTranslate="bitsHrPayrollApp.arrearSalaryItem.delete.question"
+      [translateValues]="{ id: arrearSalaryItem.id }"
+    >
+      Are you sure you want to delete Arrear Salary Item {{ arrearSalaryItem.id }}?
+    </p>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
+      <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+    </button>
+
+    <button id="jhi-confirm-delete-arrearSalaryItem" data-cy="entityConfirmDeleteButton" type="submit" class="btn btn-danger">
+      <fa-icon icon="times"></fa-icon>&nbsp;<span jhiTranslate="entity.action.delete">Delete</span>
+    </button>
+  </div>
+</form>

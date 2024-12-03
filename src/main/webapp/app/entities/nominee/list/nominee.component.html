@@ -1,0 +1,326 @@
+<div>
+  <h2 id="page-heading" data-cy="NomineeHeading">
+    <span jhiTranslate="bitsHrPayrollApp.nominee.home.title">Nominees</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="bitsHrPayrollApp.nominee.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-nominee"
+        [routerLink]="['/nominee/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="bitsHrPayrollApp.nominee.home.createLabel"> Create a new Nominee </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="nominees?.length === 0">
+    <span jhiTranslate="bitsHrPayrollApp.nominee.home.notFound">No Nominees found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="nominees && nominees.length > 0">
+    <table class="table table-hover list-text-color" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">ID</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="nomineeName">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.nominee.nomineeName">Nominee Name</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="presentAddress">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.nominee.presentAddress">Present Address</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="relationshipWithEmployee">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.nominee.relationshipWithEmployee">Relationship With Employee</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="dateOfBirth">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.nominee.dateOfBirth">Date Of Birth</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="age">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.nominee.age">Age</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="sharePercentage">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.nominee.sharePercentage">Share Percentage</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="imagePath">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.nominee.imagePath">Image Path</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="status">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.nominee.status">Status</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="guardianName">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.nominee.guardianName">Guardian Name</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="guardianFatherName">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.nominee.guardianFatherName">Guardian Father Name</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="guardianSpouseName">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.nominee.guardianSpouseName">Guardian Spouse Name</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="guardianDateOfBirth">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.nominee.guardianDateOfBirth">Guardian Date Of Birth</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="guardianPresentAddress">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.nominee.guardianPresentAddress">Guardian Present Address</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="guardianDocumentName">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.nominee.guardianDocumentName">Guardian Document Name</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="guardianRelationshipWith">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.nominee.guardianRelationshipWith">Guardian Relationship With</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="guardianImagePath">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.nominee.guardianImagePath">Guardian Image Path</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="isLocked">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.nominee.isLocked">Is Locked</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="nominationDate">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.nominee.nominationDate">Nomination Date</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="permanentAddress">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.nominee.permanentAddress">Permanent Address</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="guardianPermanentAddress">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.nominee.guardianPermanentAddress">Guardian Permanent Address</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="nomineeType">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.nominee.nomineeType">Nominee Type</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="identityType">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.nominee.identityType">Identity Type</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="documentName">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.nominee.documentName">Document Name</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="idNumber">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.nominee.idNumber">Id Number</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="isNidVerified">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.nominee.isNidVerified">Is Nid Verified</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="guardianIdentityType">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.nominee.guardianIdentityType">Guardian Identity Type</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="guardianIdNumber">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.nominee.guardianIdNumber">Guardian Id Number</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="isGuardianNidVerified">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.nominee.isGuardianNidVerified">Is Guardian Nid Verified</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="employee.id">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.nominee.employee">Employee</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="approvedBy.id">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.nominee.approvedBy">Approved By</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="witness.id">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.nominee.witness">Witness</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="member.id">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.nominee.member">Member</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody
+        infinite-scroll
+        (scrolled)="loadPage(page + 1)"
+        [infiniteScrollDisabled]="page - 1 >= links['last']"
+        [infiniteScrollDistance]="0"
+      >
+        <tr *ngFor="let nominee of nominees; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/nominee', nominee.id, 'view']">{{ nominee.id }}</a>
+          </td>
+          <td>{{ nominee.nomineeName }}</td>
+          <td>{{ nominee.presentAddress }}</td>
+          <td>{{ nominee.relationshipWithEmployee }}</td>
+          <td>{{ nominee.dateOfBirth | formatMediumDate }}</td>
+          <td>{{ nominee.age }}</td>
+          <td>{{ nominee.sharePercentage }}</td>
+          <td>{{ nominee.imagePath }}</td>
+          <td jhiTranslate="{{ 'bitsHrPayrollApp.Status.' + nominee.status }}">{{ nominee.status }}</td>
+          <td>{{ nominee.guardianName }}</td>
+          <td>{{ nominee.guardianFatherName }}</td>
+          <td>{{ nominee.guardianSpouseName }}</td>
+          <td>{{ nominee.guardianDateOfBirth | formatMediumDate }}</td>
+          <td>{{ nominee.guardianPresentAddress }}</td>
+          <td>{{ nominee.guardianDocumentName }}</td>
+          <td>{{ nominee.guardianRelationshipWith }}</td>
+          <td>{{ nominee.guardianImagePath }}</td>
+          <td>{{ nominee.isLocked }}</td>
+          <td>{{ nominee.nominationDate | formatMediumDate }}</td>
+          <td>{{ nominee.permanentAddress }}</td>
+          <td>{{ nominee.guardianPermanentAddress }}</td>
+          <td jhiTranslate="{{ 'bitsHrPayrollApp.NomineeType.' + nominee.nomineeType }}">{{ nominee.nomineeType }}</td>
+          <td jhiTranslate="{{ 'bitsHrPayrollApp.IdentityType.' + nominee.identityType }}">{{ nominee.identityType }}</td>
+          <td>{{ nominee.documentName }}</td>
+          <td>{{ nominee.idNumber }}</td>
+          <td>{{ nominee.isNidVerified }}</td>
+          <td jhiTranslate="{{ 'bitsHrPayrollApp.IdentityType.' + nominee.guardianIdentityType }}">{{ nominee.guardianIdentityType }}</td>
+          <td>{{ nominee.guardianIdNumber }}</td>
+          <td>{{ nominee.isGuardianNidVerified }}</td>
+          <td>
+            <div *ngIf="nominee.employee">
+              <a [routerLink]="['/employee', nominee.employee.id, 'view']">{{ nominee.employee.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="nominee.approvedBy">
+              <a [routerLink]="['/employee', nominee.approvedBy.id, 'view']">{{ nominee.approvedBy.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="nominee.witness">
+              <a [routerLink]="['/employee', nominee.witness.id, 'view']">{{ nominee.witness.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="nominee.member">
+              <a [routerLink]="['/employee', nominee.member.id, 'view']">{{ nominee.member.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/nominee', nominee.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/nominee', nominee.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(nominee)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

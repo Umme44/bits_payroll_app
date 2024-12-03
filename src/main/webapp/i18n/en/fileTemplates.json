@@ -1,0 +1,28 @@
+{
+  "bitsHrPayrollApp": {
+    "fileTemplates": {
+      "home": {
+        "title": "File Templates",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new File Templates",
+        "createOrEditLabel": "Create or edit a File Templates",
+        "notFound": "No File Templates found"
+      },
+      "created": "A new File Templates is created with identifier {{ param }}",
+      "updated": "A File Templates is updated with identifier {{ param }}",
+      "deleted": "A File Templates is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete File Templates {{ id }}?"
+      },
+      "detail": {
+        "title": "File Templates"
+      },
+      "id": "ID",
+      "title": "Title",
+      "filePath": "File Path",
+      "type": "Type",
+      "accessPrivilege": "Access Privilege",
+      "isActive": "Is Active"
+    }
+  }
+}

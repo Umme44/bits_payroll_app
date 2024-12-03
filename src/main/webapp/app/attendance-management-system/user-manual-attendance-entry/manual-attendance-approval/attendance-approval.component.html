@@ -1,0 +1,116 @@
+<div>
+  <jhi-header *ngIf="pageType === 'hr'" [headerName]="'Attendance Approvals - Admin'" [shouldHaveHr]="false"> </jhi-header>
+
+  <jhi-header
+    *ngIf="pageType === 'lm'"
+    [headerName]="'Attendance Approvals'"
+    [midHeaderName01]="'Approvals'"
+    [midRouterLinkText01]="'/'"
+    [midHeader01hasSessionStorage]="true"
+    [midHeader01SessionStorageKey]="'keepApprovalModalOpen'"
+    [midHeader01SessionStorageValue]="'yes'"
+    [shouldHaveHr]="false"
+  >
+  </jhi-header>
+
+  <div class="">
+    <div class="row mb-2">
+      <div class="col-md-12">
+        <jhi-search-text-box (searchEvent)="onSearchTextChangeV2($event)" [placeHolderText]="'Search'" [searchBoxSize]="'20rem'">
+        </jhi-search-text-box>
+        <small *ngIf="isSearchTextInvalid" class="text-danger">Invalid text detected!</small>
+      </div>
+    </div>
+  </div>
+
+  <jhi-alert-error></jhi-alert-error>
+  <jhi-alert></jhi-alert>
+</div>
+
+<div class="" *ngIf="manualAttendanceEntriesFiltered && manualAttendanceEntriesFiltered.length > 0">
+  <table class="table table-hover list-text-color" aria-describedby="page-heading">
+    <thead>
+      <tr>
+        <th scope="col">
+          <span>
+            <input class="form-check-input" type="checkbox" [value]="-1" [(ngModel)]="allSelector" (change)="onChange($event)" />
+          </span>
+        </th>
+        <th scope="col"><span>PIN</span></th>
+        <th scope="col"><span>Name</span></th>
+        <th scope="col"><span>Designation</span></th>
+        <th scope="col"><span>Date</span></th>
+        <th scope="col"><span>In Time</span></th>
+        <th scope="col"><span>Out Time</span></th>
+        <th scope="col"><span>Remarks</span></th>
+        <th scope="col" class="text-end">
+          <div
+            class="d-flex align-items-center justify-content-end"
+            *ngIf="manualAttendanceEntriesFiltered && manualAttendanceEntriesFiltered.length > 0"
+          >
+            <div class="" ngbTooltip="Approve">
+              <button class="btn btn-success btn-sm" [disabled]="approvalDTO!.listOfIds!.length < 1" (click)="approveSelected()">
+                <fa-icon [icon]="['fas', 'check']"></fa-icon>
+              </button>
+            </div>
+
+            <div class="ps-1" ngbTooltip="Reject">
+              <button class="btn btn-danger btn-sm" [disabled]="approvalDTO!.listOfIds!.length < 1" (click)="denySelected()">
+                <fa-icon [icon]="['fas', 'times']"></fa-icon>
+              </button>
+            </div>
+          </div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let manualAttendanceEntry of manualAttendanceEntriesFiltered; trackBy: trackId">
+        <td>
+          <input
+            class="form-check-input"
+            type="checkbox"
+            [value]="manualAttendanceEntry.id"
+            [checked]="manualAttendanceEntry.isChecked"
+            (change)="onChange($event)"
+          />
+        </td>
+        <td>
+          {{ manualAttendanceEntry.pin }}
+        </td>
+
+        <td>
+          {{ manualAttendanceEntry.fullName }}
+        </td>
+
+        <td>
+          {{ manualAttendanceEntry.designationName }}
+        </td>
+        <td>{{ manualAttendanceEntry.date | formatMediumDate }}</td>
+        <td>{{ manualAttendanceEntry.inTime | formatTime }}</td>
+        <td>{{ manualAttendanceEntry.outTime | formatTime }}</td>
+        <td>
+          <span
+            *ngIf="manualAttendanceEntry.note && manualAttendanceEntry.note!.length > 30; else noteElse"
+            [ngbTooltip]="manualAttendanceEntry.note"
+          >
+            {{ textSlicing(manualAttendanceEntry.note) }}
+          </span>
+          <ng-template #noteElse>
+            <span>
+              {{ manualAttendanceEntry.note }}
+            </span>
+          </ng-template>
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div
+  *ngIf="!manualAttendanceEntriesFiltered || manualAttendanceEntriesFiltered.length === 0"
+  style="height: 75vh"
+  class="text-center d-flex align-items-center justify-content-center"
+>
+  <img src="../../../../content/images/approval.svg" width="400px" height="400px" />
+</div>

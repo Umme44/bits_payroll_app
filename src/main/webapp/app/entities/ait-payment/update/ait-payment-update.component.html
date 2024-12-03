@@ -1,0 +1,221 @@
+<div class="card card-body">
+  <div class="d-flex justify-content-center">
+    <div class="col-12">
+      <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+        <!--      <h2-->
+        <!--        id="jhi-ait-payment-heading"-->
+        <!--        data-cy="AitPaymentCreateUpdateHeading"-->
+        <!--        jhiTranslate="bitsHrPayrollApp.aitPayment.home.createOrEditLabel"-->
+        <!--      >-->
+        <!--        Create or edit a Ait Payment-->
+        <!--      </h2>-->
+
+        <jhi-header
+          [headerName]="!editForm.get('id')!.value ? 'Add New Advance Income Tax Payment' : 'Edit Advance Income Tax Payment'"
+          [shouldHaveHr]="false"
+        >
+        </jhi-header>
+
+        <div>
+          <jhi-alert-error></jhi-alert-error>
+
+          <!--        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">-->
+          <!--          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>-->
+          <!--          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />-->
+          <!--        </div>-->
+
+          <!--        <div class="row mb-3">-->
+          <!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.aitPayment.date" for="field_date">Date</label>-->
+          <!--          <div class="input-group">-->
+          <!--            <input-->
+          <!--              id="field_date"-->
+          <!--              data-cy="date"-->
+          <!--              type="text"-->
+          <!--              class="form-control"-->
+          <!--              name="date"-->
+          <!--              ngbDatepicker-->
+          <!--              #dateDp="ngbDatepicker"-->
+          <!--              formControlName="date"-->
+          <!--            />-->
+          <!--            <button type="button" class="btn btn-secondary" (click)="dateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>-->
+          <!--          </div>-->
+          <!--        </div>-->
+
+          <!--        <div class="row mb-3">-->
+          <!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.aitPayment.amount" for="field_amount">Amount</label>-->
+          <!--          <input type="number" class="form-control" name="amount" id="field_amount" data-cy="amount" formControlName="amount" />-->
+          <!--        </div>-->
+
+          <!--        <div class="row mb-3">-->
+          <!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.aitPayment.description" for="field_description">Description</label>-->
+          <!--          <input-->
+          <!--            type="text"-->
+          <!--            class="form-control"-->
+          <!--            name="description"-->
+          <!--            id="field_description"-->
+          <!--            data-cy="description"-->
+          <!--            formControlName="description"-->
+          <!--          />-->
+          <!--        </div>-->
+
+          <!--        <div class="row mb-3">-->
+          <!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.aitPayment.employee" for="field_employee">Employee</label>-->
+          <!--          <select-->
+          <!--            class="form-control"-->
+          <!--            id="field_employee"-->
+          <!--            data-cy="employee"-->
+          <!--            name="employee"-->
+          <!--            formControlName="employee"-->
+          <!--            [compareWith]="compareEmployee"-->
+          <!--          >-->
+          <!--            <option [ngValue]="null"></option>-->
+          <!--            <option [ngValue]="employeeOption" *ngFor="let employeeOption of employeesSharedCollection">{{ employeeOption.id }}</option>-->
+          <!--          </select>-->
+          <!--        </div>-->
+
+          <div class="flex-column">
+            <div class="row">
+              <div class="col-6">
+                <div class="form-group">
+                  <label class="form-control-label required" for="field_employee">Employee</label>
+                  <jhi-select-employee-form [employeeIdForm]="employeeIdForm!" [selectedId]="selectedEmployeeId"></jhi-select-employee-form>
+                  <!--                <select-->
+
+                  <!--                  class="form-control"-->
+                  <!--                  id="field_employee"-->
+                  <!--                  data-cy="employee"-->
+                  <!--                  name="employee"-->
+                  <!--                  formControlName="employee"-->
+                  <!--                  [compareWith]="compareEmployee"-->
+                  <!--                >-->
+                  <!--                  <option *ngIf="!editForm.get('employee')!.value" [ngValue]="null" selected></option>-->
+                  <!--                  <option [ngValue]="employeeOption" *ngFor="let employeeOption of employeesSharedCollection">{{ employeeOption.id }}</option>-->
+                  <!--                </select>-->
+
+                  <div
+                    *ngIf="
+                      editForm.get('employeeId')!.invalid && (editForm.get('employeeId')!.dirty || editForm.get('employeeId')!.touched)
+                    "
+                  >
+                    <small
+                      *ngIf="editForm.get('employeeId')?.errors?.required"
+                      class="form-text text-danger"
+                      jhiTranslate="entity.validation.required"
+                    >
+                      This field is required.
+                    </small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-3">
+                <div class="form-group">
+                  <label class="form-control-label required" jhiTranslate="bitsHrPayrollApp.aitPayment.date" for="field_date">Date</label>
+                  <div class="input-group">
+                    <!-- <input id="field_date" type="date" class="form-control" name="date" ngbDatepicker #dateDp="ngbDatepicker" formControlName="date"/>-->
+                    <input
+                      #dateDp="ngbDatepicker"
+                      class="form-control"
+                      formControlName="date"
+                      id="field_date"
+                      name="date"
+                      ngbDatepicker
+                      type="text"
+                    />
+                    <span class="input-group-append">
+                      <button (click)="dateDp.toggle()" class="btn btn-secondary" type="button">
+                        <fa-icon icon="calendar-alt"></fa-icon>
+                      </button>
+                    </span>
+                  </div>
+                  <div *ngIf="editForm.get('date')!.invalid && (editForm.get('date')!.dirty || editForm.get('date')!.touched)">
+                    <small
+                      *ngIf="editForm.get('date')?.errors?.required"
+                      class="form-text text-danger"
+                      jhiTranslate="entity.validation.required"
+                    >
+                      This field is required.
+                    </small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-3">
+                <div class="form-group">
+                  <label class="form-control-label required" jhiTranslate="bitsHrPayrollApp.aitPayment.amount" for="field_amount"
+                    >Amount</label
+                  >
+                  <input type="number" class="form-control" name="amount" id="field_amount" formControlName="amount" />
+
+                  <div *ngIf="editForm.get('amount')!.invalid && (editForm.get('amount')!.dirty || editForm.get('amount')!.touched)">
+                    <small
+                      *ngIf="editForm.get('amount')?.errors?.required"
+                      class="form-text text-danger"
+                      jhiTranslate="entity.validation.required"
+                    >
+                      This field is required.
+                    </small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label required" jhiTranslate="bitsHrPayrollApp.aitPayment.description" for="field_description"
+                    >Description</label
+                  >
+                  <textarea
+                    type="text"
+                    class="form-control"
+                    name="description"
+                    id="field_description"
+                    formControlName="description"
+                  ></textarea>
+                  <div
+                    *ngIf="
+                      editForm.get('description')!.invalid && (editForm.get('description')!.dirty || editForm.get('description')!.touched)
+                    "
+                  >
+                    <small
+                      *ngIf="editForm.get('description')?.errors?.required"
+                      class="form-text text-danger"
+                      jhiTranslate="entity.validation.required"
+                    >
+                      This field is required.
+                    </small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="my-3">
+            <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+              <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+            </button>
+
+            <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+              <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+            </button>
+          </div>
+        </div>
+
+        <!--      <div>-->
+        <!--        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">-->
+        <!--          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>-->
+        <!--        </button>-->
+
+        <!--        <button-->
+        <!--          type="submit"-->
+        <!--          id="save-entity"-->
+        <!--          data-cy="entityCreateSaveButton"-->
+        <!--          [disabled]="editForm.invalid || isSaving"-->
+        <!--          class="btn btn-primary"-->
+        <!--        >-->
+        <!--          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>-->
+        <!--        </button>-->
+        <!--      </div>-->
+      </form>
+    </div>
+  </div>
+</div>

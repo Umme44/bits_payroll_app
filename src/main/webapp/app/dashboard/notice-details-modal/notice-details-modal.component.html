@@ -1,0 +1,24 @@
+<div class="modal-header border-none">
+  <h4 class="modal-title"></h4>
+  <button
+    type="button"
+    class="btn-close py-1 outline-none"
+    data-dismiss="modal"
+    aria-hidden="true"
+    (click)="commonService.dismiss()"
+  ></button>
+</div>
+
+<div class="modal-body dashboard-modal">
+  <div class="container">
+    <div class="font-sm custom-card col-active card card-body card-size ps-4 pt-3 pe-3 cursor-default">
+      <span class="side-stick ms-3"></span>
+      <h6 class="note-title mb-0">{{ notice.title }}</h6>
+      <p class="note-date font-12 py-1 mb-1">{{ notice.createdAt | formatMediumDate }}</p>
+      <div class="note-content">
+        <p class="mb-2 text-justify note-inner-content text-muted">{{ notice.description }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer p-3 border-none"></div>

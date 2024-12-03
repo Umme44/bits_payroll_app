@@ -1,0 +1,167 @@
+<div>
+  <jhi-header [headerName]="!editForm.get('id')!.value ? 'Add New References' : 'Edit References'" [shouldHaveHr]="false"> </jhi-header>
+
+  <form (ngSubmit)="save()" [formGroup]="editForm" name="editForm" novalidate role="form">
+    <div>
+      <div class="card card-body">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="">
+              <label class="form-control-label" for="field_employee" jhiTranslate="bitsHrPayrollApp.trainingHistory.employee"
+                >Employee</label
+              >
+
+              <jhi-simple-select-employee-form
+                (onChangeEmployee)="changeEmployee($event)"
+                [selectedFieldValue]="editForm.get('employeeId')!.value"
+              >
+              </jhi-simple-select-employee-form>
+
+              <div
+                *ngIf="editForm.get('employeeId')!.invalid && (editForm.get('employeeId')!.dirty || editForm.get('employeeId')!.touched)"
+              >
+                <small
+                  *ngIf="editForm.get('employeeId')?.errors?.required"
+                  class="form-text text-danger"
+                  jhiTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="">
+              <label class="form-control-label required" for="field_name" jhiTranslate="bitsHrPayrollApp.references.name">Name</label>
+              <input
+                class="form-control"
+                formControlName="name"
+                id="field_name"
+                name="name"
+                onkeypress="return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode == 32))"
+                type="text"
+              />
+              <div *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
+                <small
+                  *ngIf="editForm.get('name')?.errors?.required"
+                  class="form-text text-danger"
+                  jhiTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+                <small
+                  *ngIf="editForm.get('name')?.errors?.pattern"
+                  class="form-text text-danger"
+                >
+                  This text is invalid
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="">
+              <label class="form-control-label" for="field_institute" jhiTranslate="bitsHrPayrollApp.references.institute">Institute</label>
+              <input class="form-control" formControlName="institute" id="field_institute" name="institute" type="text" />
+              <div *ngIf="editForm.get('institute')!.invalid && (editForm.get('institute')!.dirty || editForm.get('institute')!.touched)">
+                <small
+                  *ngIf="editForm.get('institute')?.errors?.pattern"
+                  class="form-text text-danger"
+                >
+                  This text is invalid
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="">
+              <label class="form-control-label" for="field_designation" jhiTranslate="bitsHrPayrollApp.references.designation"
+                >Designation</label
+              >
+              <input class="form-control" formControlName="designation" id="field_designation" name="designation" type="text" />
+              <div *ngIf="editForm.get('designation')!.invalid && (editForm.get('designation')!.dirty || editForm.get('designation')!.touched)">
+                <small
+                  *ngIf="editForm.get('designation')?.errors?.pattern"
+                  class="form-text text-danger"
+                >
+                  This text is invalid
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="">
+              <label
+                class="form-control-label"
+                for="field_relationshipWithEmployee"
+                jhiTranslate="bitsHrPayrollApp.references.relationshipWithEmployee"
+                >Relationship With Employee</label
+              >
+              <select
+                class="form-control"
+                formControlName="relationshipWithEmployee"
+                id="field_relationshipWithEmployee"
+                name="relationshipWithEmployee"
+              >
+                <option value="PERSONAL">{{ 'bitsHrPayrollApp.RelationshipWithEmployee.PERSONAL' | translate }}</option>
+                <option value="PROFESSIONAL">{{ 'bitsHrPayrollApp.RelationshipWithEmployee.PROFESSIONAL' | translate }}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="">
+              <label class="form-control-label" for="field_email" jhiTranslate="bitsHrPayrollApp.references.email">Email</label>
+              <input class="form-control" formControlName="email" id="field_email" name="email" type="text" />
+              <div *ngIf="editForm.get('email')!.invalid && (editForm.get('email')!.dirty || editForm.get('email')!.touched)">
+                <small *ngIf="editForm.get('email')?.errors?.pattern" class="form-text text-danger">
+                  This field should be a valid email address
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="">
+              <label class="form-control-label required" for="field_contactNumber" jhiTranslate="bitsHrPayrollApp.references.contactNumber"
+                >Contact Number</label
+              >
+              <input class="form-control" formControlName="contactNumber" id="field_contactNumber" name="contactNumber" type="text" />
+              <div
+                *ngIf="
+                  editForm.get('contactNumber')!.invalid && (editForm.get('contactNumber')!.dirty || editForm.get('contactNumber')!.touched)
+                "
+              >
+                <small
+                  *ngIf="editForm.get('contactNumber')?.errors?.required"
+                  class="form-text text-danger"
+                  jhiTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+
+                <small *ngIf="editForm.get('contactNumber')?.errors?.pattern" class="form-text text-danger">
+                  This field should be a valid Mobile Number
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-2">
+          <button (click)="previousState()" class="btn btn-secondary" id="cancel-save" type="button">
+            <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+          </button>
+
+          <button [disabled]="editForm.invalid || isSaving" class="btn btn-primary" id="save-entity" type="submit">
+            <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <jhi-alert-error></jhi-alert-error>
+  </form>
+</div>

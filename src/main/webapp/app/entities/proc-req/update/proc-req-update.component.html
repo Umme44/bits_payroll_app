@@ -1,0 +1,221 @@
+<jhi-header
+  [headerName]="editForm.get('id')!.value ? 'Update Procurement Requisition' : 'New Procurement Requisition'"
+  midHeaderName01="Procurement Requisitions"
+  midRouterLinkText01="/procurement-requisition-user"
+>
+</jhi-header>
+
+<form name="editForm" class="card card-body" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+  <div class="row">
+    <div class="col mb-3">
+      <label class="form-control-label required" title="bitsHrPayrollApp.procReqMaster.department" for="field_department">Department</label>
+      <ng-select
+        [items]="departmentItems"
+        id="field_department"
+        bindValue="departmentId"
+        bindLabel="departmentName"
+        placeholder="Select Department"
+        labelForId="field_department"
+        formControlName="departmentId"
+        appearance="outline"
+        class="font-sm"
+        id="field_department"
+        dropdownPosition="bottom"
+        (change)="changeDepartment()"
+      >
+        <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+          {{ item.departmentName }} - ({{ item.totalItems }})
+        </ng-template>
+      </ng-select>
+
+      <div *ngIf="editForm.get('departmentId')!.invalid && (editForm.get('departmentId')!.dirty || editForm.get('departmentId')!.touched)">
+        <small class="form-text text-danger" *ngIf="editForm.get('departmentId')?.errors?.required" title="entity.validation.required">
+          This field is required.
+        </small>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-2">
+    <div class="col">
+      <button
+        type="button"
+        [disabled]="!editForm.get('departmentId')!.valid"
+        class="btn btn-sm btn-dark border-radius-minimal"
+        (click)="addNewProcReq()"
+      >
+        Add Item
+      </button>
+    </div>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="procReqList && procReqList.length > 0">
+    <table class="table table-hover list-text-color" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span>Sl.</span></th>
+          <th scope="col"><span>Item Code</span></th>
+          <th scope="col"><span>Item Name</span></th>
+          <th scope="col"><span title="bitsHrPayrollApp.procReq.quantity">Quantity</span></th>
+          <th scope="col"><span title="bitsHrPayrollApp.procReq.referenceFilePath">Reference File</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let procReq of procReqList; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ procReq.itemInformationCode }}</td>
+          <td>{{ procReq.itemInformationName }}</td>
+          <td>{{ procReq.quantity }} {{ procReq.unitOfMeasurementName }}</td>
+          <td>
+            <div *ngIf="procReq.referenceFileData">
+              <fa-icon icon="file" container="body" ngbTooltip="File Attached"></fa-icon>
+            </div>
+            <div *ngIf="procReq.referenceFilePath">
+              <button type="button" class="btn btn-sm btn-outline-success border-radius-minimal" (click)="downloadFile(procReq.id!)">
+                <fa-icon icon="download" container="body" ngbTooltip="Download"></fa-icon>
+              </button>
+            </div>
+            <div *ngIf="!procReq.referenceFileData && !procReq.referenceFilePath">-</div>
+          </td>
+
+          <td class="text-end">
+            <div class="">
+              <!--            <button type="submit"-->
+              <!--                    [routerLink]="['/proc-req', procReq.id, 'view']"-->
+              <!--                    class="btn btn-info btn-sm">-->
+              <!--              <fa-icon icon="eye"></fa-icon>-->
+              <!--              <span class="d-none d-md-inline" title="entity.action.view">View</span>-->
+              <!--            </button>-->
+
+              <button type="button" (click)="editProcReqList(procReq)" class="btn btn-primary btn-sm me-1 border-radius-minimal">
+                <fa-icon icon="pencil-alt"></fa-icon>
+              </button>
+
+              <button type="button" (click)="removeFromProcReqList(i)" class="btn btn-danger btn-sm border-radius-minimal">
+                <fa-icon icon="trash"></fa-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+
+      <!--            <tfoot>-->
+      <!--            <tr>-->
+      <!--                <th scope="col" colspan="4"><span>Total Approximate Price (BDT)  </span></th>-->
+      <!--                <th scope="col" class="text-end"><span>= {{getTotalAmount() | number}}</span> </th>-->
+      <!--                <th scope="col"></th>-->
+      <!--            </tr>-->
+      <!--            </tfoot>-->
+    </table>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4 mb-3">
+      <label class="form-label required" for="field_totalApproximatePrice"
+        >Total Approximate Price (BDT)
+        <fa-icon container="body"
+          [ngbTooltip]="'Maximum ' + maxTotalPrice + 'BDT, Otherwise Top Management approval is required.'"
+          icon="info-circle"
+        ></fa-icon>
+      </label>
+      <input
+        type="number"
+        class="form-control"
+        name="totalApproximatePrice"
+        id="field_totalApproximatePrice"
+        formControlName="totalApproximatePrice"
+      />
+      <div
+        *ngIf="
+          editForm.get('totalApproximatePrice')!.invalid &&
+          (editForm.get('totalApproximatePrice')!.dirty || editForm.get('totalApproximatePrice')!.touched)
+        "
+      >
+        <small
+          class="form-text text-danger"
+          *ngIf="editForm.get('totalApproximatePrice')?.errors?.required"
+          title="entity.validation.required"
+        >
+          This field is required.
+        </small>
+
+        <small
+          class="form-text text-danger"
+          *ngIf="editForm.get('totalApproximatePrice')?.errors?.min"
+          jhiTranslate="entity.validation.min"
+          [translateValues]="{ min: 1 }"
+        >
+          This field should be at least 1.
+        </small>
+        <small
+          class="form-text text-danger"
+          [hidden]="!editForm.get('totalApproximatePrice')?.errors?.number"
+          jhiTranslate="entity.validation.number"
+        >
+          This field should be a number.
+        </small>
+
+        <small
+          class="form-text text-danger"
+          *ngIf="editForm.get('totalApproximatePrice')?.errors?.max"
+          jhiTranslate="entity.validation.max"
+          [translateValues]="{ max: maxTotalPrice }"
+        >
+          This field cannot be more than {{ maxTotalPrice }}.
+        </small>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-3">
+      <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.procReqMaster.expectedReceivedDate" for="field_expectedReceivedDate"
+        >Expected Received Date</label
+      >
+      <div class="input-group">
+        <input
+          id="field_expectedReceivedDate"
+          type="text"
+          [minDate]="minimumExpectedReceiveDate"
+          class="form-control"
+          name="expectedReceivedDate"
+          ngbDatepicker
+          #expectedReceivedDateDp="ngbDatepicker"
+          formControlName="expectedReceivedDate"
+        />
+        <span class="input-group-append">
+          <button type="button" class="btn btn-secondary" (click)="expectedReceivedDateDp.toggle()">
+            <fa-icon icon="calendar-alt"></fa-icon>
+          </button>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 mb-3">
+      <label class="form-label required" jhiTranslate="bitsHrPayrollApp.procReqMaster.reasoning" for="field_reasoning">Reasoning</label>
+      <textarea class="form-control" name="reasoning" id="field_reasoning" formControlName="reasoning"> </textarea>
+      <div *ngIf="editForm.get('reasoning')!.invalid && (editForm.get('reasoning')!.dirty || editForm.get('reasoning')!.touched)">
+        <small class="form-text text-danger" *ngIf="editForm.get('reasoning')?.errors?.required" jhiTranslate="entity.validation.required">
+          This field is required.
+        </small>
+        <small
+          class="form-text text-danger"
+          *ngIf="editForm.get('reasoning')?.errors?.maxlength"
+          jhiTranslate="entity.validation.maxlength"
+          [translateValues]="{ max: 255 }"
+        >
+          This field cannot be longer than 255 characters.
+        </small>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-2">
+    <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving || procReqList?.length === 0" class="btn btn-primary">
+      <fa-icon icon="save"></fa-icon>
+      <span *ngIf="!editForm.get(['id'])!.value">Save</span>
+      <span *ngIf="editForm.get(['id'])!.value">Update</span>
+    </button>
+  </div>
+</form>

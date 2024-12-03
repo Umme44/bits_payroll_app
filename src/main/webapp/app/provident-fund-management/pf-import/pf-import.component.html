@@ -1,0 +1,499 @@
+<div class="container">
+  <div class="">
+    <!--    PF Accounts   -->
+    <div class="row">
+      <div class="card mb-3" style="width: 100%">
+        <div class="card-body mt-2">
+          <div class="card-text align-baseline">
+            <div class="row align-items-center">
+              <div class="col ms-3">PF Account Import</div>
+              <div class="col">
+                <a class="btn btn-outline-success" href="api-open/pf-import/pf-account-sample-file-xlsx/" target="_blank">
+                  Download file format</a
+                >
+              </div>
+              <div class="col">
+                <input (change)="handlePfAccountFileInput($event)" class="form-control-file" id="file_pf_account_import" type="file" />
+              </div>
+              <div class="col">
+                <button (click)="importXlsx('pf_account')" [disabled]="!pfAccountUploadReady" class="btn btn-primary float-end ms-2">
+                  {{ pfAccountImportBtnTxt }}
+                </button>
+                <button [hidden]="!pfAccountImportSuccess" [routerLink]="['/pf-account']" class="btn btn-success float-end ms-2">
+                  View
+                </button>
+                <span [hidden]="!errorOnPfAccountImport" class="badge bg-danger float-end ms-2">Bad Data Format</span>
+                <span [hidden]="!pfAccountImportSuccess" class="badge bg-success float-end ms-2"> Success </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--    PF Collections   -->
+    <div class="row">
+      <div class="card mb-3" style="width: 100%">
+        <div class="card-body mt-2">
+          <div class="card-text align-baseline">
+            <div class="row align-items-center">
+              <div class="col ms-3">PF Collections</div>
+              <div class="col">
+                <a class="btn btn-outline-success" href="api-open/pf-import/pf-collection-sample-file-xlsx/" target="_blank">
+                  Download file format</a
+                >
+              </div>
+              <div class="col">
+                <input
+                  (change)="handlePfCollectionFileInput($event)"
+                  class="form-control-file"
+                  id="file_pf_collection_import"
+                  type="file"
+                />
+              </div>
+              <div class="col">
+                <button (click)="importXlsx('pf_collection')" [disabled]="!pfCollectionUploadReady" class="btn btn-primary float-end ms-2">
+                  {{ pfCollectionImportBtnTxt }}
+                </button>
+                <button [hidden]="!pfCollectionImportSuccess" [routerLink]="['/pf-collection']" class="btn btn-success float-end ms-2">
+                  View
+                </button>
+                <span [hidden]="!errorOnPfCollectionImport" class="badge bg-danger float-end ms-2">Bad Data Format</span>
+                <span [hidden]="!pfCollectionImportSuccess" class="badge bg-success float-end ms-2"> Success </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--    PF Collections monthly   -->
+    <div class="row">
+      <div class="card mb-3" style="width: 100%">
+        <div class="card-body mt-2">
+          <div class="card-text align-baseline">
+            <div class="row align-items-center">
+              <div class="col ms-3">Monthly PF Collections</div>
+              <div class="col">
+                <a
+                  class="btn btn-outline-success"
+                  href="api-open/pf-import/pf-collection-monthly-collection-sample-file-xlsx/"
+                  target="_blank"
+                >
+                  Download file format</a
+                >
+              </div>
+              <div class="col">
+                <input
+                  (change)="handlePfCollectionMonthlyFileInput($event)"
+                  class="form-control-file"
+                  id="file_pf_collection_monthly_collection_import"
+                  type="file"
+                />
+              </div>
+              <div class="col">
+                <button
+                  (click)="importXlsx('pf_collection_monthly_collection')"
+                  [disabled]="!pfCollectionMonthlyUploadReady"
+                  class="btn btn-primary float-end ms-2"
+                >
+                  {{ pfCollectionMonthlyImportBtnTxt }}
+                </button>
+                <button
+                  [hidden]="!pfCollectionMonthlyImportSuccess"
+                  [routerLink]="['/pf-collection']"
+                  class="btn btn-success float-end ms-2"
+                >
+                  View
+                </button>
+                <span [hidden]="!errorOnPfCollectionMonthlyImport" class="badge bg-danger float-end ms-2">Bad Data Format</span>
+                <span [hidden]="!pfCollectionMonthlyImportSuccess" class="badge bg-success float-end ms-2"> Success </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--    PF Collections Interests   -->
+    <div class="row">
+      <div class="card mb-3" style="width: 100%">
+        <div class="card-body mt-2">
+          <div class="card-text align-baseline">
+            <div class="row align-items-center">
+              <div class="col ms-3">PF Collection Interests</div>
+              <div class="col">
+                <a class="btn btn-outline-success" href="api-open/pf-import/pf-collection-interest-sample-file-xlsx/" target="_blank">
+                  Download file format</a
+                >
+              </div>
+              <div class="col">
+                <input
+                  (change)="handlePfCollectionInterestFileInput($event)"
+                  class="form-control-file"
+                  id="file_pf_collection_monthly_interest_import"
+                  type="file"
+                />
+              </div>
+              <div class="col">
+                <button
+                  (click)="importXlsx('pf_collection_monthly_interest')"
+                  [disabled]="!pfCollectionInterestUploadReady"
+                  class="btn btn-primary float-end ms-2"
+                >
+                  {{ pfCollectionInterestsImportBtnTxt }}
+                </button>
+                <button
+                  [hidden]="!pfCollectionInterestsImportSuccess"
+                  [routerLink]="['/pf-collection']"
+                  class="btn btn-success float-end ms-2"
+                >
+                  View
+                </button>
+                <span [hidden]="!errorOnPfCollectionInterestsImport" class="badge bg-danger float-end ms-2">Bad Data Format</span>
+                <span [hidden]="!pfCollectionInterestsImportSuccess" class="badge bg-success float-end ms-2"> Success </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--    PF Collections opening balance   -->
+    <div class="row">
+      <div class="card mb-3" style="width: 100%">
+        <div class="card-body mt-2">
+          <div class="card-text align-baseline">
+            <div class="row align-items-center">
+              <div class="col ms-3">PF Opening Balance</div>
+              <div class="col">
+                <a
+                  class="btn btn-outline-success"
+                  href="api-open/pf-import/pf-collection-opening-balance-sample-file-xlsx/"
+                  target="_blank"
+                >
+                  Download file format</a
+                >
+              </div>
+              <div class="col">
+                <input
+                  (change)="handlePfOpeningBalanceFileInput($event)"
+                  class="form-control-file"
+                  id="file_pf_collection_opening_balance_import"
+                  type="file"
+                />
+              </div>
+              <div class="col">
+                <button
+                  (click)="importXlsx('pf_collection_opening_balance')"
+                  [disabled]="!pfCollectionOpeningBalanceUploadReady"
+                  class="btn btn-primary float-end ms-2"
+                >
+                  {{ pfCollectionOpeningBalanceImportBtnTxt }}
+                </button>
+                <button
+                  [hidden]="!pfCollectionOpeningBalanceImportSuccess"
+                  [routerLink]="['/pf-collection']"
+                  class="btn btn-success float-end ms-2"
+                >
+                  View
+                </button>
+                <span [hidden]="!errorOnPfCollectionOpeningBalanceImport" class="badge bg-danger float-end ms-2">Bad Data Format</span>
+                <span [hidden]="!pfCollectionOpeningBalanceImportSuccess" class="badge bg-success float-end ms-2"> Success </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--    PF loan   -->
+    <div class="row">
+      <div class="card mb-3" style="width: 100%">
+        <div class="card-body mt-2">
+          <div class="card-text align-baseline">
+            <div class="row align-items-center">
+              <div class="col ms-3">PF Loan</div>
+              <div class="col">
+                <a class="btn btn-outline-success" href="api-open/pf-import/pf-loan-sample-file-xlsx/" target="_blank">
+                  Download file format</a
+                >
+              </div>
+              <div class="col">
+                <input (change)="handlePfLoanFileInput($event)" class="form-control-file" id="file_pf_loan_import" type="file" />
+              </div>
+              <div class="col">
+                <button (click)="importXlsx('pf_loan')" [disabled]="!pfLoanUploadReady" class="btn btn-primary float-end ms-2">
+                  {{ pfLoanImportBtnTxt }}
+                </button>
+                <button [hidden]="!pfLoanImportSuccess" [routerLink]="['/pf-loan']" class="btn btn-success float-end ms-2">View</button>
+                <span [hidden]="!errorOnPfLoanImport" class="badge bg-danger float-end ms-2">Bad Data Format</span>
+                <span [hidden]="!pfLoanImportSuccess" class="badge bg-success float-end ms-2"> Success </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="">
+    <div class="row mb-4" style="border-bottom: 2px solid rgba(25, 35, 54, 0.44)">
+      <h6 class="pt-3 theme-color-font">
+        Previous Employees &nbsp;
+        <span ngbTooltip="Please import PF Account before importing Opening Balance, Contribution and Interest.">
+          <fa-icon class="fa-xs" icon="info-circle"></fa-icon>
+        </span>
+      </h6>
+    </div>
+
+    <!-- Previous Employee PF Accounts   -->
+    <div class="row">
+      <div class="card mb-3" style="width: 100%">
+        <div class="card-body mt-2">
+          <div class="card-text align-baseline">
+            <div class="row align-items-center">
+              <div class="col ms-3">PF Account Import</div>
+              <div class="col">
+                <a class="btn btn-outline-primary" href="api-open/pf-import/previous-employee-pf-account-sample-file-xlsx/" target="_blank">
+                  Download file format</a
+                >
+              </div>
+              <div class="col">
+                <input
+                  (change)="handlePreviousPfAccountFileInput($event)"
+                  class="form-control-file"
+                  id="file_prev_pf_account_import"
+                  type="file"
+                />
+              </div>
+              <div class="col">
+                <button
+                  (click)="importXlsx('previous_pf_account')"
+                  [disabled]="!previousPfAccountUploadReady"
+                  class="btn btn-info float-end ms-2"
+                >
+                  {{ previousPfAccountImportBtnTxt }}
+                </button>
+                <button [hidden]="!previousPfAccountImportSuccess" [routerLink]="['/pf-account']" class="btn btn-success float-end ms-2">
+                  View
+                </button>
+                <span [hidden]="!errorOnPreviousPfAccountImport" class="badge bg-danger float-end ms-2">Bad Data Format</span>
+                <span [hidden]="!previousPfAccountImportSuccess" class="badge bg-success float-end ms-2"> Success </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Previous Employee PF Collections monthly   -->
+    <div class="row">
+      <div class="card mb-3" style="width: 100%">
+        <div class="card-body mt-2">
+          <div class="card-text align-baseline">
+            <div class="row align-items-center">
+              <div class="col ms-3">Monthly PF Collections</div>
+              <div class="col">
+                <a
+                  class="btn btn-outline-primary"
+                  href="api-open/pf-import/previous-employee-pf-monthly-collection-sample-file-xlsx/"
+                  target="_blank"
+                >
+                  Download file format</a
+                >
+              </div>
+              <div class="col">
+                <input
+                  (change)="handlePreviousPfCollectionMonthlyFileInput($event)"
+                  class="form-control-file"
+                  id="file_prev_pf_collection_monthly_collection_import"
+                  type="file"
+                />
+              </div>
+              <div class="col">
+                <button
+                  (click)="importXlsx('previous_pf_collection_monthly_collection')"
+                  [disabled]="!previousPfCollectionMonthlyUploadReady"
+                  class="btn btn-info float-end ms-2"
+                >
+                  {{ previousPfCollectionMonthlyImportBtnTxt }}
+                </button>
+                <button
+                  [hidden]="!previousPfCollectionMonthlyImportSuccess"
+                  [routerLink]="['/pf-collection']"
+                  class="btn btn-success float-end ms-2"
+                >
+                  View
+                </button>
+                <span [hidden]="!errorOnPreviousPfCollectionMonthlyImport" class="badge bg-danger float-end ms-2">Bad Data Format</span>
+                <span [hidden]="!previousPfCollectionMonthlyImportSuccess" class="badge bg-success float-end ms-2"> Success </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Previous Employee PF Collections Interests   -->
+    <div class="row">
+      <div class="card mb-3" style="width: 100%">
+        <div class="card-body mt-2">
+          <div class="card-text align-baseline">
+            <div class="row align-items-center">
+              <div class="col ms-3">PF Collection Interests</div>
+              <div class="col">
+                <a
+                  class="btn btn-outline-primary"
+                  href="api-open/pf-import/previous-employee-pf-collection-interest-sample-file-xlsx/"
+                  target="_blank"
+                >
+                  Download file format</a
+                >
+              </div>
+              <div class="col">
+                <input
+                  (change)="handlePreviousPfCollectionInterestFileInput($event)"
+                  class="form-control-file"
+                  id="file_prev_pf_collection_monthly_interest_import"
+                  type="file"
+                />
+              </div>
+              <div class="col">
+                <button
+                  (click)="importXlsx('previous_pf_collection_monthly_interest')"
+                  [disabled]="!previousPfCollectionInterestUploadReady"
+                  class="btn btn-info float-end ms-2"
+                >
+                  {{ previousPfCollectionInterestsImportBtnTxt }}
+                </button>
+                <button
+                  [hidden]="!previousPfCollectionInterestsImportSuccess"
+                  [routerLink]="['/pf-collection']"
+                  class="btn btn-success float-end ms-2"
+                >
+                  View
+                </button>
+                <span [hidden]="!errorOnPreviousPfCollectionInterestsImport" class="badge bg-danger float-end ms-2">Bad Data Format</span>
+                <span [hidden]="!previousPfCollectionInterestsImportSuccess" class="badge bg-success float-end ms-2"> Success </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Previous Employee PF Collections opening balance   -->
+    <div class="row">
+      <div class="card mb-3" style="width: 100%">
+        <div class="card-body mt-2">
+          <div class="card-text align-baseline">
+            <div class="row align-items-center">
+              <div class="col ms-3">PF Opening Balance</div>
+              <div class="col">
+                <a
+                  class="btn btn-outline-primary"
+                  href="api-open/pf-import/previous-employee-pf-opening-balance-sample-file-xlsx/"
+                  target="_blank"
+                >
+                  Download file format</a
+                >
+              </div>
+              <div class="col">
+                <input
+                  (change)="handlePreviousPfOpeningBalanceFileInput($event)"
+                  class="form-control-file"
+                  id="file_prev_pf_collection_opening_balance_import"
+                  type="file"
+                />
+              </div>
+              <div class="col">
+                <button
+                  (click)="importXlsx('previous_pf_collection_opening_balance')"
+                  [disabled]="!previousPfCollectionOpeningBalanceUploadReady"
+                  class="btn btn-info float-end ms-2"
+                >
+                  {{ previousPfCollectionOpeningBalanceImportBtnTxt }}
+                </button>
+                <button
+                  [hidden]="!previousPfCollectionOpeningBalanceImportSuccess"
+                  [routerLink]="['/pf-collection']"
+                  class="btn btn-success float-end ms-2"
+                >
+                  View
+                </button>
+                <span [hidden]="!errorOnPreviousPfCollectionOpeningBalanceImport" class="badge bg-danger float-end ms-2"
+                  >Bad Data Format</span
+                >
+                <span [hidden]="!previousPfCollectionOpeningBalanceImportSuccess" class="badge bg-success float-end ms-2"> Success </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="row mb-4" style="border-bottom: 2px solid rgba(25, 35, 54, 0.44)">
+      <h6 class="pt-3 theme-color-font">Other Functionalities</h6>
+    </div>
+
+    <!--Set gross and basic to pf collection [ from july 2021 to present ]-->
+
+    <div class="row">
+      <div class="card mb-3" style="width: 100%">
+        <div class="card-body mt-2">
+          <div class="card-text align-baseline">
+            <div class="row align-items-center">
+              <div class="col ms-3">Set gross and basic to all PF Collections</div>
+
+              <div class="col">
+                <button (click)="setGrossAndBasicToAllPfCollection()" class="btn btn-info float-end ms-2">Populate</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Import gross and basic to pf collections -->
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body mt-2">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Import gross and basic</div>
+            <div class="col">
+              <a
+                class="btn btn-outline-primary"
+                href="api-open/pf-import/import-gross-basic-to-pf-collection-sample-file-xlsx/"
+                target="_blank"
+              >
+                Download file format</a
+              >
+            </div>
+            <div class="col">
+              <input (change)="handleGrossAndBasicFileInput($event)" class="form-control-file" id="file_gross_basic_import" type="file" />
+            </div>
+            <div class="col">
+              <button
+                (click)="importXlsx('import-gross-and-basic')"
+                [disabled]="!grossAndBasicUploadReady"
+                class="btn btn-info float-end ms-2"
+              >
+                {{ grossAndBasicImportButtonText }}
+              </button>
+              <button [hidden]="!grossAndBasicImportSuccess" [routerLink]="['/pf-collection']" class="btn btn-success float-end ms-2">
+                View
+              </button>
+              <span [hidden]="!errorOnImportingGrossAndBasic" class="badge bg-danger float-end ms-2">Bad Data Format</span>
+              <span [hidden]="!grossAndBasicImportSuccess" class="badge bg-success float-end ms-2"> Success </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

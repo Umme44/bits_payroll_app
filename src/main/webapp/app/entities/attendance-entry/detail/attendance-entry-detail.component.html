@@ -1,0 +1,209 @@
+<jhi-header [headerName]="'Attendance Entry Details'" [shouldHaveHr]="false"> </jhi-header>
+
+<div class="d-flex justify-content-center">
+  <div class="col-12">
+    <div *ngIf="attendanceEntry">
+      <!--   <h2 data-cy="attendanceEntryDetailsHeading">
+        <span jhiTranslate="bitsHrPayrollApp.attendanceEntry.detail.title">Attendance Entry</span>
+      </h2>
+
+      <hr />-->
+      <jhi-alert-error></jhi-alert-error>
+      <jhi-alert></jhi-alert>
+
+      <div class="card p-5 text-sm">
+        <div class="row">
+          <div class="col-md-2 fw-bold">
+            <dt><span jhiTranslate="bitsHrPayrollApp.attendanceEntry.employee">Employee</span></dt>
+          </div>
+          <div class="col-md-4">
+            <dd>
+              <!--<div *ngIf="attendanceEntry.employee">
+                <a [routerLink]="['/employee', attendanceEntry.employee.id, 'view']">{{attendanceEntry.fullName}}</a>
+              </div>-->
+              <span>{{ attendanceEntry.pin }} - {{ attendanceEntry.fullName }}</span>
+            </dd>
+          </div>
+          <div class="col-md-2 fw-bold">
+            <dt><span jhiTranslate="bitsHrPayrollApp.attendanceEntry.status">Status</span></dt>
+          </div>
+          <div class="col-md-4">
+            <dd>
+              <span jhiTranslate="{{ 'bitsHrPayrollApp.Status.' + attendanceEntry.status }}">{{ attendanceEntry.status }}</span>
+            </dd>
+          </div>
+        </div>
+
+        <!--   <div class="row my-2">
+          <div class="col-md-2 fw-bold">
+            <dt><span jhiTranslate="bitsHrPayrollApp.attendanceEntry.id">ID</span></dt>
+          </div>
+          <div class="col-md-4">
+            <dd><span>{{ attendanceEntry.id}}</span></dd>
+          </div>
+          <div class="col-md-2 fw-bold">
+            <dt><span jhiTranslate="bitsHrPayrollApp.attendanceEntry.date">Date</span></dt>
+          </div>
+          <div class="col-md-4">
+            <dd><span>{{ attendanceEntry.date | formatMediumDate }}</span></dd>
+          </div>
+        </div>-->
+
+        <div class="row">
+          <div class="col-md-2 fw-bold">
+            <dt><span jhiTranslate="bitsHrPayrollApp.attendanceEntry.inNote">In Note</span></dt>
+          </div>
+          <div class="col-md-4">
+            <dd>
+              <span>{{ attendanceEntry.inNote }}</span>
+            </dd>
+          </div>
+          <div class="col-md-2 fw-bold">
+            <dt><span jhiTranslate="bitsHrPayrollApp.attendanceEntry.outNote">Out Note</span></dt>
+          </div>
+          <div class="col-md-4">
+            <dd>
+              <span>{{ attendanceEntry.outNote }}</span>
+            </dd>
+          </div>
+        </div>
+
+        <div class="row my-2">
+          <div class="col-md-2 fw-bold">
+            <dt><span jhiTranslate="bitsHrPayrollApp.attendanceEntry.date">Date</span></dt>
+          </div>
+          <div class="col-md-4">
+            <dd>
+              <span>{{ attendanceEntry.date | formatMediumDate }}</span>
+            </dd>
+          </div>
+          <div class="col-md-2 fw-bold"></div>
+          <div class="col-md-4"></div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-2 fw-bold">
+            <dt><span jhiTranslate="bitsHrPayrollApp.attendanceEntry.inTime">In Time</span></dt>
+          </div>
+          <div class="col-md-4">
+            <dd>
+              <span>{{ attendanceEntry.inTime | formatTime }}</span>
+            </dd>
+          </div>
+
+          <div class="col-md-2 fw-bold">
+            <dt><span jhiTranslate="bitsHrPayrollApp.attendanceEntry.outTime">Out Time</span></dt>
+          </div>
+          <div class="col-md-4">
+            <dd>
+              <span>{{ attendanceEntry.outTime | formatTime }}</span>
+            </dd>
+          </div>
+        </div>
+
+        <!--    <div class="row my-2">
+            <div class="col-md-2 fw-bold">
+              <dt><span jhiTranslate="bitsHrPayrollApp.attendanceEntry.status">Status</span></dt>
+            </div>
+            <div class="col-md-4">
+              <dd>
+                <span jhiTranslate="{{ 'bitsHrPayrollApp.Status.' + attendanceEntry.status }}">{{ attendanceEntry.status }}</span>
+              </dd>
+            </div>
+            <div class="col-md-2 fw-bold">
+              <dt><span jhiTranslate="bitsHrPayrollApp.attendanceEntry.note">Note</span></dt>
+            </div>
+            <div class="col-md-4">
+              <dd>
+                <span>{{ attendanceEntry.note }}</span>
+              </dd>
+            </div>
+          </div>-->
+
+        <!-- <div class="row my-2">
+            <div class="col-md-2 fw-bold">
+              <dt><span jhiTranslate="bitsHrPayrollApp.attendanceEntry.employee">Employee</span></dt>
+            </div>
+            <div class="col-md-4">
+              <dd>
+                <div *ngIf="attendanceEntry.employee">
+                  <a [routerLink]="['/employee', attendanceEntry.employee.id, 'view']">{{ attendanceEntry.employee.id }}</a>
+                </div>
+              </dd>
+            </div>
+            <div class="col-md-2 fw-bold">
+            </div>
+            <div class="col-md-4">
+            </div>
+          </div>-->
+
+        <div class="mt-3">
+          <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+            <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+          </button>
+
+          <button type="button" [routerLink]="['/attendance-entry', attendanceEntry.id, 'edit']" class="btn btn-primary">
+            <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/attendance-entry', attendanceEntry.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>-->
+    </div>
+
+    <!--      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ attendanceEntry.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.attendanceEntry.date">Date</span></dt>
+        <dd>
+          <span>{{ attendanceEntry.date | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.attendanceEntry.inTime">In Time</span></dt>
+        <dd>
+          <span>{{ attendanceEntry.inTime | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.attendanceEntry.inNote">In Note</span></dt>
+        <dd>
+          <span>{{ attendanceEntry.inNote }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.attendanceEntry.outTime">Out Time</span></dt>
+        <dd>
+          <span>{{ attendanceEntry.outTime | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.attendanceEntry.outNote">Out Note</span></dt>
+        <dd>
+          <span>{{ attendanceEntry.outNote }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.attendanceEntry.status">Status</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.Status.' + attendanceEntry.status }}">{{ attendanceEntry.status }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.attendanceEntry.note">Note</span></dt>
+        <dd>
+          <span>{{ attendanceEntry.note }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.attendanceEntry.employee">Employee</span></dt>
+        <dd>
+          <div *ngIf="attendanceEntry.employee">
+            <a [routerLink]="['/employee', attendanceEntry.employee.id, 'view']">{{ attendanceEntry.employee.id }}</a>
+          </div>
+        </dd>
+      </dl>-->
+
+    <!--   <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/attendance-entry', attendanceEntry.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>-->
+  </div>
+</div>

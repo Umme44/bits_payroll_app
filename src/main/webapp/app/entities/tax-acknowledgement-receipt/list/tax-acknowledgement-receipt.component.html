@@ -1,0 +1,114 @@
+<jhi-header
+  [headerName]="'Tax Acknowledgement Receipt Receive'"
+  [addButtonText]="'Add New Tax Acknowledgement Receipt'"
+  [routerLinkText]="'/tax-acknowledgement-receipt-finance/admin-new'"
+  [shouldHaveHr]="false">
+</jhi-header>
+
+<div>
+
+  <form name="editForm" role="form" novalidate  [formGroup]="searchForm">
+    <div class="row mb-2">
+      <div class="col-md-4">
+
+        <jhi-simple-select-employee-form
+          [selectedFieldValue]="searchForm.get('employeeId')!.value !== undefined ? searchForm.get('employeeId')!.value : ''"
+          (onChangeEmployee)="onSearchTextChange($event)"
+          (keydown.backspace)="onKeydown($event)"
+          formControlName="employeeId"
+          (keydown.esc)="onKeydown($event)">
+        </jhi-simple-select-employee-form>
+      </div >
+
+      <div class="col-md-4">
+        <div class="form-group">
+          <select class="form-control" id="field_fiscalYear" name="fiscalYear"
+                  formControlName="fiscalYearId" (change)="changeFiscalYear()">
+            <option *ngIf="!searchForm.get('fiscalYearId')!.value" [ngValue]="null" disabled>Select fiscal year</option>
+            <option value="{{aitConfigOption.id}}" *ngFor="let aitConfigOption of aitConfigsYear;">{{aitConfigOption.range}}</option>
+          </select>
+        </div>
+        <div *ngIf="searchForm.get('fiscalYearId')!.invalid && (searchForm.get('fiscalYearId')!.dirty || searchForm.get('fiscalYearId')!.touched)">
+          <small class="form-text text-danger"
+                 *ngIf="searchForm.get('fiscalYearId')?.errors?.required" jhiTranslate="entity.validation.required">
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div class="col-md-4 text-right">
+        <button type="button" class="btn btn-outline-primary mr-2" routerLink="/tax-acknowledgement-receipt-finance/pending">
+          Pending Request <span *ngIf="totalPendingRequests>0" style="font-weight: bold">({{totalPendingRequests}})</span>
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <div *ngIf="taxAcknowledgementReceipts?.length === 0" class="alert alert-warning" id="no-result">
+    <span>No Tax Acknowledgement Receipt found</span>
+  </div>
+  <div class="table-responsive" id="entities" *ngIf="taxAcknowledgementReceipts && taxAcknowledgementReceipts.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+      <tr class="text-nowrap">
+        <th scope="col"><span>SL</span></th>
+        <th scope="col"><span>PIN</span></th>
+        <th scope="col"><span>Name</span></th>
+        <th scope="col"><span>Designation</span></th>
+        <th scope="col" ><span jhiTranslate="bitsHrPayrollApp.taxAcknowledgementReceipt.tinNumber">TIN No.</span></th>
+        <th scope="col"  ><span>Acknowledgement Receipt Number</span></th>
+        <th scope="col"  ><span jhiTranslate="bitsHrPayrollApp.taxAcknowledgementReceipt.taxesCircle">Taxes Circle</span></th>
+        <th scope="col"  ><span jhiTranslate="bitsHrPayrollApp.taxAcknowledgementReceipt.taxesZone">Taxes Zone</span></th>
+        <th scope="col"  ><span>Date Of Submission</span></th>
+        <th scope="col"  ><span jhiTranslate="bitsHrPayrollApp.taxAcknowledgementReceipt.fiscalYear">Fiscal Year</span></th>
+        <th scope="col"  ><span>Status</span></th>
+        <th scope="col" class="text-right">
+
+          <div class="text-right">
+            <button class="btn btn-outline-success btn-sm mr-4" container="body" ngbTooltip="Export Tax Acknowledgement Receipt" (click)="taxAcknowledgementExportDownload()">
+              <fa-icon icon="download"></fa-icon> Excel
+            </button>
+          </div>
+
+
+        </th>
+      </tr>
+      </thead>
+      <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+      <tr *ngFor="let taxAcknowledgementReceipt of taxAcknowledgementReceipts ;trackBy: trackId,let i = index" class="text-nowrap">
+        <td>{{i+1}}</td>
+        <td class="text-nowrap">{{ taxAcknowledgementReceipt.pin }}</td>
+        <td class="text-nowrap">{{  taxAcknowledgementReceipt.name }}</td>
+        <td class="text-nowrap">{{ taxAcknowledgementReceipt.designation }}</td>
+        <td class="text-nowrap">{{ taxAcknowledgementReceipt.tinNumber }}</td>
+        <td class="text-nowrap">{{ taxAcknowledgementReceipt.receiptNumber }}</td>
+        <td class="text-nowrap">{{ taxAcknowledgementReceipt.taxesCircle }}</td>
+        <td class="text-nowrap">{{ taxAcknowledgementReceipt.taxesZone }}</td>
+        <td class="text-nowrap">{{ taxAcknowledgementReceipt.dateOfSubmission | formatMediumDate }}</td>
+        <td class="text-nowrap">
+          <div *ngIf="taxAcknowledgementReceipt.fiscalYearId">
+            {{ taxAcknowledgementReceipt.startYear }}-{{taxAcknowledgementReceipt.endYear}}
+          </div>
+        </td>
+        <td class="text-nowrap">{{ getUserFriendlyUi(taxAcknowledgementReceipt) }}</td>
+        <td class="text-right">
+          <div class="btn-group">
+            <button class="btn btn-secondary btn-sm mr-4" container="body" ngbTooltip="Download"
+                    (click)="export(taxAcknowledgementReceipt.id!)">
+              <fa-icon icon="print"></fa-icon> PDF
+            </button>
+
+            <button type="submit"
+                    [routerLink]="['/tax-acknowledgement-receipt-finance',taxAcknowledgementReceipt.id,'admin-new',taxAcknowledgementReceipt.employeeId]"
+                    class="btn btn-primary btn-sm btn-sm px-md-3">
+              <fa-icon icon="pencil-alt"></fa-icon>
+            </button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

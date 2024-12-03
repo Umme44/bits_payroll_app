@@ -1,0 +1,87 @@
+<jhi-header [headerName]="'View'" [midHeaderName01]="'PIN Configuration'" [midRouterLinkText01]="'/employee-pin-configuration'">
+</jhi-header>
+
+<div class="d-flex justify-content-center">
+  <div class="col-12">
+    <div *ngIf="employeePinConfiguration" class="card card-body" style="font-size: 11px">
+      <!-- <h2 data-cy="employeePinConfigurationDetailsHeading">
+        <span jhiTranslate="bitsHrPayrollApp.employeePinConfiguration.detail.title">Employee Pin Configuration</span>
+      </h2>-->
+      <!-- <hr />-->
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <!--      <dl class="row-md jh-entity-details">-->
+      <dl class="row">
+        <dt class="col-md-3"><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd class="col-md-3">
+          <span>{{ employeePinConfiguration.id }}</span>
+        </dd>
+
+        <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.employeePinConfiguration.employeeCategory">Employee Category</span></dt>
+        <dd class="col-md-3">
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.EmployeeCategory.' + employeePinConfiguration.employeeCategory }}">{{
+            employeePinConfiguration.employeeCategory
+          }}</span>
+        </dd>
+
+        <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.employeePinConfiguration.sequenceStart">Sequence Start</span></dt>
+        <dd class="col-md-3">
+          <span>{{ employeePinConfiguration.sequenceStart }}</span>
+        </dd>
+
+        <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.employeePinConfiguration.sequenceEnd">Sequence End</span></dt>
+        <dd class="col-md-3">
+          <span>{{ employeePinConfiguration.sequenceEnd }}</span>
+        </dd>
+
+        <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.employeePinConfiguration.lastSequence">Last Sequence</span></dt>
+        <dd class="col-md-3">
+          <span>{{ employeePinConfiguration.lastSequence }}</span>
+        </dd>
+
+        <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.employeePinConfiguration.hasFullFilled">Has Full Filled</span></dt>
+        <dd class="col-md-3">
+          <span>{{ employeePinConfiguration.hasFullFilled }}</span>
+        </dd>
+
+        <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.employeePinConfiguration.createdAt">Created At</span></dt>
+        <dd class="col-md-3">
+          <span>{{ employeePinConfiguration.createdAt | formatMediumDatetime }}</span>
+        </dd>
+
+        <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.employeePinConfiguration.updatedAt">Updated At</span></dt>
+        <dd class="col-md-3">
+          <span>{{ employeePinConfiguration.updatedAt | formatMediumDatetime }}</span>
+        </dd>
+
+        <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.employeePinConfiguration.lastCreatedPin">Last Created Pin</span></dt>
+        <dd class="col-md-3">
+          <span>{{ employeePinConfiguration.lastCreatedPin }}</span>
+        </dd>
+
+        <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.employeePinConfiguration.createdBy">Created By</span></dt>
+        <dd class="col-md-3">
+          <span>{{ employeePinConfiguration.createdByLogin }}</span>
+        </dd>
+
+        <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.employeePinConfiguration.updatedBy">Updated By</span></dt>
+        <dd class="col-md-3">
+          <span>{{ employeePinConfiguration.updatedByLogin }}</span>
+        </dd>
+      </dl>
+
+      <div>
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/employee-pin-configuration', employeePinConfiguration.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,2169 @@
+<div *ngIf="employee">
+  <jhi-header
+    [headerName]="'Details of Employee'"
+    [midHeaderName01]="'Employees'"
+    [midRouterLinkText01]="'/employee-custom'"
+    [shouldHaveHr]="false"
+  >
+  </jhi-header>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <div class="card card-body row font-sm">
+    <div class="">
+      <ul ngbNav #nav="ngbNav" [(activeId)]="selectedNav" (navChange)="navChange($event)" class="nav-tabs">
+        <li [ngbNavItem]="'basic'" class="nav-item">
+          <a ngbNavLink>Basic Information</a>
+          <ng-template ngbNavContent>
+            <br />
+            <div class="row">
+              <div class="col-md-6 me-2 mb-2 card card-body">
+                <div class="container h-100">
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.fullName">Full Name</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.fullName }}</span>
+                    </div>
+                    <div></div>
+                  </div>
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.surName">Surname</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.surName }}</span>
+                    </div>
+                    <div></div>
+                  </div>
+
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.nationalIdNo">National Id Number</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.nationalIdNo }}</span>
+                    </div>
+                    <div></div>
+                  </div>
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.dateOfBirth">Date Of Birth</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.dateOfBirth | formatMediumDate }}</span>
+                    </div>
+                    <div></div>
+                  </div>
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.placeOfBirth">Place Of Birth</span>
+                    </div>
+
+                    <div class="col-md-6">
+                      <span>{{ employee.placeOfBirth }}</span>
+                    </div>
+                  </div>
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.bloodGroup">Blood Group</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span jhiTranslate="{{ 'bitsHrPayrollApp.BloodGroup.' + employee.bloodGroup }}">{{ employee.bloodGroup }}</span>
+                    </div>
+                    <div></div>
+                  </div>
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.gender">Gender</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span jhiTranslate="{{ 'bitsHrPayrollApp.Gender.' + employee.gender }}">{{ employee.gender }}</span>
+                    </div>
+                    <div></div>
+                  </div>
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.religion">Religion</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span jhiTranslate="{{ 'bitsHrPayrollApp.Religion.' + employee.religion }}">{{ employee.religion }}</span>
+                    </div>
+                    <div></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-5 mb-2 card card-body">
+                <div class="container h-100">
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.nationality">Nationality</span>
+                    </div>
+                    <div class="col-md-6">
+                      <div *ngIf="employee.nationalityId">
+                        <a [routerLink]="['/nationality', employee.nationalityId, 'view']">{{ employee.nationalityNationalityName }}</a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.passportPlaceOfIssue">Passport Place Of Issue</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.passportPlaceOfIssue }}</span>
+                    </div>
+                  </div>
+
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.passportIssuedDate">Passport Issued Date</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.passportIssuedDate | formatMediumDate }}</span>
+                    </div>
+                  </div>
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.passportNo">Passport No</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.passportNo }}</span>
+                    </div>
+                  </div>
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.passportExpiryDate">Passport Expiry Date</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.passportExpiryDate | formatMediumDate }}</span>
+                    </div>
+                  </div>
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.tinNumber">E-TIN Number</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.tinNumber }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 me-2 card card-body">
+                <div class="container h-100">
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.fatherName">Father's Name</span>
+                    </div>
+
+                    <div class="col-md-6">
+                      <span>{{ employee.fatherName }}</span>
+                    </div>
+                  </div>
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.motherName">Mother's Name</span>
+                    </div>
+
+                    <div class="col-md-6">
+                      <span>{{ employee.motherName }}</span>
+                    </div>
+                  </div>
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.maritalStatus">Marital Status</span>
+                    </div>
+
+                    <div class="col-md-6">
+                      <span jhiTranslate="{{ 'bitsHrPayrollApp.MaritalStatus.' + employee.maritalStatus }}">{{
+                        employee.maritalStatus
+                      }}</span>
+                    </div>
+                  </div>
+
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.dateOfMarriage">Date Of Marriage</span>
+                    </div>
+
+                    <div class="col-md-6">
+                      <span>{{ employee.dateOfMarriage | formatMediumDate }}</span>
+                    </div>
+                  </div>
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.spouseName">Spouse Name</span>
+                    </div>
+
+                    <div class="col-md-6">
+                      <span>{{ employee.spouseName }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-5 card card-body">
+                <div class="container h-100">
+                  <!--<h6 class="card-title">Bank Information</h6>-->
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.bankBranch">Bank Branch</span>
+                    </div>
+                    <div class="col-md-6">
+                      <div *ngIf="employee.bankBranchId">
+                        <a [routerLink]="['/bank-branch', employee.bankBranchId, 'view']">{{ employee.bankBranchName }}</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.bankName">Bank Name</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.bankName }}</span>
+                    </div>
+                  </div>
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.bankAccountNo">Bank Account No</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.bankAccountNo }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </li>
+
+        <li [ngbNavItem]="'contact'">
+          <a ngbNavLink>Contact Information</a>
+          <ng-template ngbNavContent>
+            <br />
+            <div class="row mb-3">
+              <div class="col-md-6 me-2 mb-2 card card-body">
+                <div class="container h-100">
+                  <h6 class="card-title">Official Contact Information</h6>
+
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.officialEmail">Official Email</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.officialEmail }}</span>
+                    </div>
+                  </div>
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.officialContactNo">Official Contact No</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.officialContactNo }}</span>
+                    </div>
+                  </div>
+                  <!-- <div class="row my-1">
+                                        <div class="col-md-6 fw-bold">
+                                            <span jhiTranslate="bitsHrPayrollApp.employee.officePhoneExtension">Office Phone Extension</span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span>{{ employee.officePhoneExtension }}</span>
+                                        </div>
+
+                                    </div>-->
+                </div>
+              </div>
+              <div class="col-md-5 card mb-2 card-body">
+                <div class="container h-100">
+                  <h6 class="card-title">Emergency Contact Information</h6>
+
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.emergencyContactPersonName">Emergency Contact with</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.emergencyContactPersonName }}</span>
+                    </div>
+                  </div>
+
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.emergencyContactPersonRelationshipWithEmployee"
+                        >Emergency Contact Person Relationship With Employee</span
+                      >
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.emergencyContactPersonRelationshipWithEmployee }}</span>
+                    </div>
+                  </div>
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.emergencyContactPersonContactNumber"
+                        >Emergency Contact Person Contact Number</span
+                      >
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.emergencyContactPersonContactNumber }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 me-2 mb-2 card card-body">
+                <div class="container h-100">
+                  <h6 class="card-title">Employee Contact Information</h6>
+                  <div class="row my-1">
+                    <div class="col-md-4 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.presentAddress">Present Address</span>
+                    </div>
+
+                    <div class="col-md-8">
+                      <span>{{ employee.presentAddress }}</span>
+                    </div>
+                  </div>
+                  <div class="row my-1">
+                    <div class="col-md-4 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.permanentAddress">Permanent Address</span>
+                    </div>
+
+                    <div class="col-md-8">
+                      <span>{{ employee.permanentAddress }}</span>
+                    </div>
+                  </div>
+                  <div class="row my-1">
+                    <div class="col-md-4 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.personalContactNo">Personal Contact No</span>
+                    </div>
+                    <div class="col-md-8">
+                      <span>{{ employee.personalContactNo }}</span>
+                    </div>
+                  </div>
+                  <div class="row my-1">
+                    <div class="col-md-4 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.personalEmail">Personal Email</span>
+                    </div>
+                    <div class="col-md-8">
+                      <span>{{ employee.personalEmail }}</span>
+                    </div>
+                  </div>
+
+                  <div class="row my-1">
+                    <div class="col-md-4 fw-bold">
+                      <span>Whatsapp ID</span>
+                    </div>
+                    <div class="col-md-8">
+                      <span>{{ employee.whatsappId }}</span>
+                    </div>
+                  </div>
+                  <div class="row my-1">
+                    <div class="col-md-4 fw-bold">
+                      <span>Skype ID</span>
+                    </div>
+                    <div class="col-md-8">
+                      <span>{{ employee.skypeId }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-5 me-2 mb-2 card card-body">
+                <div class="container h-100">
+                  <h6 class="card-title">Card Information</h6>
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.payType">Pay Type</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span jhiTranslate="{{ 'bitsHrPayrollApp.PayType.' + employee.payType }}">{{ employee.payType }}</span>
+                    </div>
+                  </div>
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.disbursementMethod">Disbursement Method</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span jhiTranslate="{{ 'bitsHrPayrollApp.DisbursementMethod.' + employee.disbursementMethod }}">{{
+                        employee.disbursementMethod
+                      }}</span>
+                    </div>
+                  </div>
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.bkashNumber">Bkash Number</span>
+                    </div>
+
+                    <div class="col-md-6">
+                      <span>{{ employee.bkashNumber }}</span>
+                    </div>
+                  </div>
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.cardType">Card Type</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span jhiTranslate="{{ 'bitsHrPayrollApp.CardType.' + employee.cardType }}">{{ employee.cardType }}</span>
+                    </div>
+                  </div>
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.cardNumber">Card Number</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.cardNumber }}</span>
+                    </div>
+                  </div>
+
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span>Card Type 02</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.cardType02 }}</span>
+                    </div>
+                  </div>
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span>Card Number 02</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.cardNumber02 }}</span>
+                    </div>
+                  </div>
+
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span>Card Type 03</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.cardType03 }}</span>
+                    </div>
+                  </div>
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span>Card Number 03</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.cardNumber03 }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </li>
+
+        <li [ngbNavItem]="'employmentInformation'">
+          <a ngbNavLink>Employment Information</a>
+          <ng-template ngbNavContent>
+            <br />
+            <div class="row">
+              <div class="col-md-6 me-2 card card-body">
+                <div class="container h-100">
+                  <!--<div class="row my-1">
+                                        <div class="col-md-6 fw-bold">
+                                            <span jhiTranslate="bitsHrPayrollApp.employee.referenceId">Reference Id</span>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <span>{{ employee.referenceId }}</span>
+                                        </div>
+                                    </div>-->
+
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.pin">Pin</span>
+                    </div>
+
+                    <div class="col-md-6">
+                      <span>{{ employee.pin }}</span>
+                    </div>
+                  </div>
+
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.designation">Designation</span>
+                    </div>
+                    <div class="col-md-6">
+                      <div *ngIf="employee.designationId">
+                        <a [routerLink]="['/designation', employee.designationId, 'view']">{{ employee.designationName }}</a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.department">Department</span>
+                    </div>
+                    <div class="col-md-6">
+                      <div *ngIf="employee.departmentId">
+                        <a [routerLink]="['/department', employee.departmentId, 'view']">{{ employee.departmentName }}</a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.unit">Unit</span>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div *ngIf="employee.unitId">
+                        <a [routerLink]="['/unit', employee.unitId, 'view']">{{ employee.unitName }}</a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span>Gross Salary</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.mainGrossSalary | number }}</span>
+                    </div>
+                  </div>
+
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span>Mobile Celling</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.mobileCelling | number }}</span>
+                    </div>
+                  </div>
+
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.welfareFundDeduction">Welfare Fund Deduction</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.welfareFundDeduction | number }}</span>
+                    </div>
+                  </div>
+
+                  <ng-container *ngIf="allowanceName">
+                    <div class="row my-1">
+                      <div class="col-md-6 fw-bold">
+                        <span>{{ allowanceName.allowance01Name }}</span>
+                      </div>
+                      <div class="col-md-6">
+                        <span>{{ employee.allowance01 | number }}</span>
+                      </div>
+                    </div>
+
+                    <!--<div class="row my-1">
+                                        <div class="col-md-6 fw-bold">
+                                            <span>Effective From</span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span>{{ employee.allowance01EffectiveFrom | date: 'd MMM, y'}}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="row my-1">
+                                        <div class="col-md-6 fw-bold">
+                                            <span>Effective To</span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span>{{ employee.allowance01EffectiveTo | date: 'd MMM, y' }}</span>
+                                        </div>
+                                    </div>-->
+
+                    <div class="row my-1">
+                      <div class="col-md-6 fw-bold">
+                        <span>{{ allowanceName.allowance02Name }}</span>
+                      </div>
+                      <div class="col-md-6">
+                        <span>{{ employee.allowance02 | number }}</span>
+                      </div>
+                    </div>
+
+                    <!--<div class="row my-1">
+                                        <div class="col-md-6 fw-bold">
+                                            <span>Effective From</span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span>{{ employee.allowance02EffectiveFrom | date: 'd MMM, y' }}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="row my-1">
+                                        <div class="col-md-6 fw-bold">
+                                            <span>Effective To</span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span>{{ employee.allowance01EffectiveTo | date: 'd MMM, y' }}</span>
+                                        </div>
+                                    </div>-->
+
+                    <div class="row my-1">
+                      <div class="col-md-6 fw-bold">
+                        <span>{{ allowanceName.allowance03Name }}</span>
+                      </div>
+
+                      <div class="col-md-6">
+                        <span>{{ employee.allowance03 | number }}</span>
+                      </div>
+                    </div>
+
+                    <!-- <div class="row my-1">
+                                         <div class="col-md-6 fw-bold">
+                                             <span>Effective From</span>
+                                         </div>
+                                         <div class="col-md-6">
+                                             <span>{{ employee.allowance03EffectiveFrom | date: 'd MMM, y' }}</span>
+                                         </div>
+                                     </div>-->
+
+                    <!-- <div class="row my-1">
+                                         <div class="col-md-6 fw-bold">
+                                             <span>Effective To</span>
+                                         </div>
+                                         <div class="col-md-6">
+                                             <span>{{ employee.allowance03EffectiveTo | date: 'd MMM, y' }}</span>
+                                         </div>
+                                     </div>-->
+
+                    <div class="row my-1">
+                      <div class="col-md-6 fw-bold">
+                        <span>{{ allowanceName.allowance04Name }}</span>
+                      </div>
+                      <div class="col-md-6">
+                        <span>{{ employee.allowance04 | number }}</span>
+                      </div>
+                    </div>
+
+                    <!--<div class="row my-1">
+                                        <div class="col-md-6 fw-bold">
+                                            <span>Effective From</span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span>{{ employee.allowance04EffectiveFrom | date: 'd MMM, y' }}</span>
+                                        </div>
+                                    </div>-->
+
+                    <!--<div class="row my-1">
+                                        <div class="col-md-6 fw-bold">
+                                            <span>Effective To</span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span>{{ employee.allowance04EffectiveTo | date: 'd MMM, y' }}</span>
+                                        </div>
+                                    </div>-->
+
+                    <div class="row my-1">
+                      <div class="col-md-6 fw-bold">
+                        <span>{{ allowanceName.allowance05Name }}</span>
+                      </div>
+                      <div class="col-md-6">
+                        <span>{{ employee.allowance05 | number }}</span>
+                      </div>
+                    </div>
+
+                    <!--<div class="row my-1">
+                                        <div class="col-md-6 fw-bold">
+                                            <span>Effective From</span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span>{{ employee.allowance05EffectiveFrom | date: 'd MMM, y' }}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="row my-1">
+                                        <div class="col-md-6 fw-bold">
+                                            <span>Effective To</span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span>{{ employee.allowance05EffectiveTo | date: 'd MMM, y' }}</span>
+                                        </div>
+                                    </div>-->
+
+                    <div class="row my-1">
+                      <div class="col-md-6 fw-bold">
+                        <span>{{ allowanceName.allowance06Name }}</span>
+                      </div>
+                      <div class="col-md-6">
+                        <span>{{ employee.allowance06 | number }}</span>
+                      </div>
+                    </div>
+
+                    <!--<div class="row my-1">
+                                        <div class="col-md-6 fw-bold">
+                                            <span>Effective From</span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span>{{ employee.allowance06EffectiveFrom | date: 'd MMM, y' }}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="row my-1">
+                                        <div class="col-md-6 fw-bold">
+                                            <span>Effective To</span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span>{{ employee.allowance06EffectiveTo | date: 'd MMM, y' }}</span>
+                                        </div>
+                                    </div>-->
+                  </ng-container>
+
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.band">Band</span>
+                    </div>
+                    <div class="col-md-6">
+                      <div *ngIf="employee.bandId">
+                        <a [routerLink]="['/band', employee.bandId, 'view']">{{ employee.bandName }}</a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.location">Desk Location</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.location }}</span>
+                    </div>
+                  </div>
+
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span>Is Online Punch Enabled</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.isAllowedToGiveOnlineAttendance ? 'Yes' : 'No' }}</span>
+                    </div>
+                  </div>
+
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.canRaiseRrfOnBehalf">Can Raise RRF on behalf</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.canRaiseRrfOnBehalf ? 'Yes' : 'No' }}</span>
+                    </div>
+                  </div>
+
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.employeeCategory">Employee Category</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span jhiTranslate="{{ 'bitsHrPayrollApp.EmployeeCategory.' + employee.employeeCategory }}">{{
+                        employee.employeeCategory
+                      }}</span>
+                    </div>
+                  </div>
+
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.reportingTo">Reporting To</span>
+                    </div>
+                    <div class="col-md-6">
+                      <div *ngIf="employee.reportingToId">
+                        <a [routerLink]="['/employee-custom', employee.reportingToId, 'view']">{{ employee.reportingToName }}</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-5 card card-body">
+                <div class="container h-100">
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span>Contract Period Extended to</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.contractPeriodExtendedTo | formatMediumDate }}</span>
+                    </div>
+                  </div>
+
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span>Contract Period End Date</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.contractPeriodEndDate | formatMediumDate }}</span>
+                    </div>
+                  </div>
+
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span>Notice Period In Days</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.noticePeriodInDays }}</span>
+                    </div>
+                  </div>
+
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.dateOfJoining">Date Of Joining</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.dateOfJoining | formatMediumDate }}</span>
+                    </div>
+                  </div>
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span>Probable Date of Confirmation</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.dateOfConfirmation | formatMediumDate }}</span>
+                    </div>
+                  </div>
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.isProbationaryPeriodExtended">Is Probationary Period Extended</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.isProbationaryPeriodExtended ? 'Yes' : 'No' }}</span>
+                    </div>
+                  </div>
+
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span>Probable Probation Period End Date</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.probationPeriodEndDate | formatMediumDate }}</span>
+                    </div>
+                  </div>
+
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.probationPeriodExtendedTo">Probation Period Extended To</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.probationPeriodExtendedTo | formatMediumDate }}</span>
+                    </div>
+                  </div>
+
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.isPhysicallyDisabled">Is Physically Disabled</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.isPhysicallyDisabled ? 'Yes' : 'No' }}</span>
+                    </div>
+                  </div>
+
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.hasDisabledChild">Has Disabled Child</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.hasDisabledChild ? 'Yes' : 'No' }}</span>
+                    </div>
+                  </div>
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.isFirstTimeAitGiver">Is First Time Ait Giver</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.isFirstTimeAitGiver ? 'Yes' : 'No' }}</span>
+                    </div>
+                  </div>
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.isFreedomFighter">Is Freedom Fighter</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.isFreedomFighter ? 'Yes' : 'No' }}</span>
+                    </div>
+                  </div>
+
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.isSalaryHold">Is Salary Hold</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.isSalaryHold ? 'Yes' : 'No' }}</span>
+                    </div>
+                  </div>
+
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span>Is Fixed Term Contract</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.isFixedTermContract ? 'Yes' : 'No' }}</span>
+                    </div>
+                  </div>
+
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.hasOverTime">Has Over Time</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.hasOverTime ? 'Yes' : 'No' }}</span>
+                    </div>
+                  </div>
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.isFestivalBonusHold">Is Festival Bonus Hold</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.isFestivalBonusHold ? 'Yes' : 'No' }}</span>
+                    </div>
+                  </div>
+
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span jhiTranslate="bitsHrPayrollApp.employee.employmentStatus">Employee Status</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span jhiTranslate="{{ 'bitsHrPayrollApp.EmploymentStatus.' + employee.employmentStatus }}">{{
+                        employee.employmentStatus
+                      }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </li>
+
+        <li [ngbNavItem]="educationDetails">
+          <a ngbNavLink>Education Details</a>
+          <ng-template ngbNavContent>
+            <button
+              (click)="openEducationDetails('active')"
+              class="btn btn-outline-primary btn-sm float-end camel-case btn-pos btn-add mb-2"
+            >
+              <span>
+                <fa-icon icon="plus"></fa-icon>
+              </span>
+            </button>
+
+            <div *ngIf="educationDetails && educationDetails.length > 0" class="table-responsive">
+              <table aria-describedby="page-heading" class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col"><span jhiTranslate="bitsHrPayrollApp.educationDetails.nameOfDegree">Name Of Degree</span></th>
+                    <th scope="col"><span jhiTranslate="bitsHrPayrollApp.educationDetails.subject">Subject</span></th>
+                    <th scope="col"><span jhiTranslate="bitsHrPayrollApp.educationDetails.institute">Institute</span></th>
+                    <th scope="col">
+                      <span jhiTranslate="bitsHrPayrollApp.educationDetails.yearOfDegreeCompletion">Year Of Degree Completion</span>
+                    </th>
+
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let educationDetails of educationDetails; trackBy: trackId">
+                    <td>{{ educationDetails.nameOfDegree }}</td>
+                    <td>{{ educationDetails.subject }}</td>
+                    <td>{{ educationDetails.institute }}</td>
+                    <td>{{ educationDetails.yearOfDegreeCompletion }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </ng-template>
+        </li>
+
+        <li [ngbNavItem]="'workExperience'">
+          <a ngbNavLink>Work Experiences</a>
+          <ng-template ngbNavContent>
+            <button
+              (click)="openWorkExperiences('active')"
+              class="btn btn-outline-primary btn-sm float-end camel-case btn-pos btn-add mb-2"
+            >
+              <span>
+                <fa-icon icon="plus"></fa-icon>
+              </span>
+            </button>
+
+            <div *ngIf="workingExperiences && workingExperiences.length > 0" class="table-responsive">
+              <table aria-describedby="page-heading" class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col"><span jhiTranslate="bitsHrPayrollApp.workingExperience.lastDesignation">Last Designation</span></th>
+                    <th scope="col"><span jhiTranslate="bitsHrPayrollApp.workingExperience.organizationName">Organization Name</span></th>
+                    <th scope="col">
+                      <span jhiTranslate="bitsHrPayrollApp.workingExperience.dojOfLastOrganization">Doj Of Last Organization</span>
+                    </th>
+                    <th scope="col">
+                      <span jhiTranslate="bitsHrPayrollApp.workingExperience.dorOfLastOrganization">Dor Of Last Organization</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let workingExperience of workingExperiences">
+                    <td>{{ workingExperience.lastDesignation }}</td>
+                    <td>{{ workingExperience.organizationName }}</td>
+                    <td>{{ workingExperience.dojOfLastOrganization | formatMediumDate }}</td>
+                    <td>{{ workingExperience.dorOfLastOrganization | formatMediumDate }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </ng-template>
+        </li>
+
+        <li [ngbNavItem]="trainingHistories">
+          <a ngbNavLink>Training Histories</a>
+          <ng-template ngbNavContent>
+            <button
+              (click)="openTrainingHistories('active')"
+              class="btn btn-outline-primary btn-sm float-end camel-case btn-pos btn-add mb-2"
+            >
+              <span>
+                <fa-icon icon="plus"></fa-icon>
+              </span>
+            </button>
+
+            <div *ngIf="trainingHistories && trainingHistories.length > 0" class="table-responsive">
+              <table aria-describedby="page-heading" class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">
+                      <span jhiTranslate="bitsHrPayrollApp.trainingHistory.trainingName">Training Name</span>
+                      <fa-icon icon="sort"></fa-icon>
+                    </th>
+                    <th scope="col">
+                      <span jhiTranslate="bitsHrPayrollApp.trainingHistory.coordinatedBy">Coordinated By</span>
+                      <fa-icon icon="sort"></fa-icon>
+                    </th>
+                    <th scope="col">
+                      <span jhiTranslate="bitsHrPayrollApp.trainingHistory.dateOfCompletion">Date Of Completion</span>
+                      <fa-icon icon="sort"></fa-icon>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let trainingHistory of trainingHistories">
+                    <td>{{ trainingHistory.trainingName }}</td>
+                    <td>{{ trainingHistory.coordinatedBy }}</td>
+                    <td>{{ trainingHistory.dateOfCompletion | formatMediumDate }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </ng-template>
+        </li>
+
+        <li [ngbNavItem]="references">
+          <a ngbNavLink>References</a>
+          <ng-template ngbNavContent>
+            <button (click)="openReferences('active')" class="btn btn-outline-primary btn-sm float-end camel-case btn-pos btn-add mb-2">
+              <span>
+                <fa-icon icon="plus"></fa-icon>
+              </span>
+            </button>
+
+            <div *ngIf="references && references.length > 0" class="table-responsive" id="entities">
+              <table aria-describedby="page-heading" class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col"><span jhiTranslate="bitsHrPayrollApp.references.name">Name</span></th>
+                    <th scope="col"><span jhiTranslate="bitsHrPayrollApp.references.institute">Institute</span></th>
+                    <th scope="col"><span jhiTranslate="bitsHrPayrollApp.references.designation">Designation</span></th>
+                    <th scope="col">
+                      <span jhiTranslate="bitsHrPayrollApp.references.relationshipWithEmployee">Relationship With Employee</span>
+                    </th>
+                    <th scope="col"><span jhiTranslate="bitsHrPayrollApp.references.email">Email</span></th>
+                    <th scope="col"><span jhiTranslate="bitsHrPayrollApp.references.contactNumber">Contact Number</span></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let references of references">
+                    <td>{{ references.name }}</td>
+                    <td>{{ references.institute }}</td>
+                    <td>{{ references.designation }}</td>
+                    <td jhiTranslate="{{ 'bitsHrPayrollApp.RelationshipWithEmployee.' + references.relationshipWithEmployee }}">
+                      {{ references.relationshipWithEmployee }}
+                    </td>
+                    <td>{{ references.email }}</td>
+                    <td>{{ references.contactNumber }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </ng-template>
+        </li>
+      </ul>
+
+      <div [ngbNavOutlet]="nav" class="mt-2"></div>
+    </div>
+  </div>
+
+  <div class="container-fluid" *ngIf="employee">
+    <ngb-tabset [destroyOnHide]="false" (tabChange)="tabChange($event)" class="md-pills pills-info pb-2 mb-0 font-sm">
+      <ngb-tab title="Basic Information" [id]="'basic'">
+        <ng-template ngbNavContent>
+          <br />
+          <div class="row">
+            <div class="col-md-6 me-2 mb-2 card card-body">
+              <div class="container h-100">
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.fullName">Full Name</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span>{{ employee.fullName }}</span>
+                  </div>
+                  <div></div>
+                </div>
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.surName">Surname</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span>{{ employee.surName }}</span>
+                  </div>
+                  <div></div>
+                </div>
+
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.nationalIdNo">National Id Number</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span>{{ employee.nationalIdNo }}</span>
+                  </div>
+                  <div></div>
+                </div>
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.dateOfBirth">Date Of Birth</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span>{{ employee.dateOfBirth | formatMediumDate }}</span>
+                  </div>
+                  <div></div>
+                </div>
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.placeOfBirth">Place Of Birth</span>
+                  </div>
+
+                  <div class="col-md-6">
+                    <span>{{ employee.placeOfBirth }}</span>
+                  </div>
+                </div>
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.bloodGroup">Blood Group</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span jhiTranslate="{{ 'bitsHrPayrollApp.BloodGroup.' + employee.bloodGroup }}">{{ employee.bloodGroup }}</span>
+                  </div>
+                  <div></div>
+                </div>
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.gender">Gender</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span jhiTranslate="{{ 'bitsHrPayrollApp.Gender.' + employee.gender }}">{{ employee.gender }}</span>
+                  </div>
+                  <div></div>
+                </div>
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.religion">Religion</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span jhiTranslate="{{ 'bitsHrPayrollApp.Religion.' + employee.religion }}">{{ employee.religion }}</span>
+                  </div>
+                  <div></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-5 mb-2 card card-body">
+              <div class="container h-100">
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.nationality">Nationality</span>
+                  </div>
+                  <div class="col-md-6">
+                    <div *ngIf="employee.nationalityId">
+                      <a [routerLink]="['/nationality', employee.nationalityId, 'view']">{{ employee.nationalityNationalityName }}</a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.passportPlaceOfIssue">Passport Place Of Issue</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span>{{ employee.passportPlaceOfIssue }}</span>
+                  </div>
+                </div>
+
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.passportIssuedDate">Passport Issued Date</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span>{{ employee.passportIssuedDate | formatMediumDate }}</span>
+                  </div>
+                </div>
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.passportNo">Passport No</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span>{{ employee.passportNo }}</span>
+                  </div>
+                </div>
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.passportExpiryDate">Passport Expiry Date</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span>{{ employee.passportExpiryDate | formatMediumDate }}</span>
+                  </div>
+                </div>
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.tinNumber">E-TIN Number</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span>{{ employee.tinNumber }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 me-2 card card-body">
+              <div class="container h-100">
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.fatherName">Father's Name</span>
+                  </div>
+
+                  <div class="col-md-6">
+                    <span>{{ employee.fatherName }}</span>
+                  </div>
+                </div>
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.motherName">Mother's Name</span>
+                  </div>
+
+                  <div class="col-md-6">
+                    <span>{{ employee.motherName }}</span>
+                  </div>
+                </div>
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.maritalStatus">Marital Status</span>
+                  </div>
+
+                  <div class="col-md-6">
+                    <span jhiTranslate="{{ 'bitsHrPayrollApp.MaritalStatus.' + employee.maritalStatus }}">{{
+                      employee.maritalStatus
+                    }}</span>
+                  </div>
+                </div>
+
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.dateOfMarriage">Date Of Marriage</span>
+                  </div>
+
+                  <div class="col-md-6">
+                    <span>{{ employee.dateOfMarriage | formatMediumDate }}</span>
+                  </div>
+                </div>
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.spouseName">Spouse Name</span>
+                  </div>
+
+                  <div class="col-md-6">
+                    <span>{{ employee.spouseName }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-5 card card-body">
+              <div class="container h-100">
+                <!--<h6 class="card-title">Bank Information</h6>-->
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.bankBranch">Bank Branch</span>
+                  </div>
+                  <div class="col-md-6">
+                    <div *ngIf="employee.bankBranchId">
+                      <a [routerLink]="['/bank-branch', employee.bankBranchId, 'view']">{{ employee.bankBranchName }}</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.bankName">Bank Name</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span>{{ employee.bankName }}</span>
+                  </div>
+                </div>
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.bankAccountNo">Bank Account No</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span>{{ employee.bankAccountNo }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </ngb-tab>
+
+      <!--        contact info    -->
+      <ngb-tab [id]="'contact'">
+        <ng-template ngbTabTitle>Contact Information</ng-template>
+        <ng-template ngbNavContent>
+          <br />
+          <div class="row mb-3">
+            <div class="col-md-6 me-2 mb-2 card card-body">
+              <div class="container h-100">
+                <h6 class="card-title">Official Contact Information</h6>
+
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.officialEmail">Official Email</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span>{{ employee.officialEmail }}</span>
+                  </div>
+                </div>
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.officialContactNo">Official Contact No</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span>{{ employee.officialContactNo }}</span>
+                  </div>
+                </div>
+                <!-- <div class="row my-1">
+                                    <div class="col-md-6 fw-bold">
+                                        <span jhiTranslate="bitsHrPayrollApp.employee.officePhoneExtension">Office Phone Extension</span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span>{{ employee.officePhoneExtension }}</span>
+                                    </div>
+
+                                </div>-->
+              </div>
+            </div>
+            <div class="col-md-5 card mb-2 card-body">
+              <div class="container h-100">
+                <h6 class="card-title">Emergency Contact Information</h6>
+
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.emergencyContactPersonName">Emergency Contact with</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span>{{ employee.emergencyContactPersonName }}</span>
+                  </div>
+                </div>
+
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.emergencyContactPersonRelationshipWithEmployee"
+                      >Emergency Contact Person Relationship With Employee</span
+                    >
+                  </div>
+                  <div class="col-md-6">
+                    <span>{{ employee.emergencyContactPersonRelationshipWithEmployee }}</span>
+                  </div>
+                </div>
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.emergencyContactPersonContactNumber"
+                      >Emergency Contact Person Contact Number</span
+                    >
+                  </div>
+                  <div class="col-md-6">
+                    <span>{{ employee.emergencyContactPersonContactNumber }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 me-2 mb-2 card card-body">
+              <div class="container h-100">
+                <h6 class="card-title">Employee Contact Information</h6>
+                <div class="row my-1">
+                  <div class="col-md-4 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.presentAddress">Present Address</span>
+                  </div>
+
+                  <div class="col-md-8">
+                    <span>{{ employee.presentAddress }}</span>
+                  </div>
+                </div>
+                <div class="row my-1">
+                  <div class="col-md-4 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.permanentAddress">Permanent Address</span>
+                  </div>
+
+                  <div class="col-md-8">
+                    <span>{{ employee.permanentAddress }}</span>
+                  </div>
+                </div>
+                <div class="row my-1">
+                  <div class="col-md-4 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.personalContactNo">Personal Contact No</span>
+                  </div>
+                  <div class="col-md-8">
+                    <span>{{ employee.personalContactNo }}</span>
+                  </div>
+                </div>
+                <div class="row my-1">
+                  <div class="col-md-4 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.personalEmail">Personal Email</span>
+                  </div>
+                  <div class="col-md-8">
+                    <span>{{ employee.personalEmail }}</span>
+                  </div>
+                </div>
+
+                <div class="row my-1">
+                  <div class="col-md-4 fw-bold">
+                    <span>Whatsapp ID</span>
+                  </div>
+                  <div class="col-md-8">
+                    <span>{{ employee.whatsappId }}</span>
+                  </div>
+                </div>
+                <div class="row my-1">
+                  <div class="col-md-4 fw-bold">
+                    <span>Skype ID</span>
+                  </div>
+                  <div class="col-md-8">
+                    <span>{{ employee.skypeId }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-5 me-2 mb-2 card card-body">
+              <div class="container h-100">
+                <h6 class="card-title">Card Information</h6>
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.payType">Pay Type</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span jhiTranslate="{{ 'bitsHrPayrollApp.PayType.' + employee.payType }}">{{ employee.payType }}</span>
+                  </div>
+                </div>
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.disbursementMethod">Disbursement Method</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span jhiTranslate="{{ 'bitsHrPayrollApp.DisbursementMethod.' + employee.disbursementMethod }}">{{
+                      employee.disbursementMethod
+                    }}</span>
+                  </div>
+                </div>
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.bkashNumber">Bkash Number</span>
+                  </div>
+
+                  <div class="col-md-6">
+                    <span>{{ employee.bkashNumber }}</span>
+                  </div>
+                </div>
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.cardType">Card Type</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span jhiTranslate="{{ 'bitsHrPayrollApp.CardType.' + employee.cardType }}">{{ employee.cardType }}</span>
+                  </div>
+                </div>
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.cardNumber">Card Number</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span>{{ employee.cardNumber }}</span>
+                  </div>
+                </div>
+
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span>Card Type 02</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span>{{ employee.cardType02 }}</span>
+                  </div>
+                </div>
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span>Card Number 02</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span>{{ employee.cardNumber02 }}</span>
+                  </div>
+                </div>
+
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span>Card Type 03</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span>{{ employee.cardType03 }}</span>
+                  </div>
+                </div>
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span>Card Number 03</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span>{{ employee.cardNumber03 }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </ngb-tab>
+
+      <!--        additional Info-->
+
+      <ngb-tab [id]="'employment'">
+        <ng-template ngbTabTitle>Employment Information</ng-template>
+
+        <ng-template ngbNavContent>
+          <br />
+          <div class="row">
+            <div class="col-md-6 me-2 card card-body">
+              <div class="container h-100">
+                <!--<div class="row my-1">
+                                    <div class="col-md-6 fw-bold">
+                                        <span jhiTranslate="bitsHrPayrollApp.employee.referenceId">Reference Id</span>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <span>{{ employee.referenceId }}</span>
+                                    </div>
+                                </div>-->
+
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.pin">Pin</span>
+                  </div>
+
+                  <div class="col-md-6">
+                    <span>{{ employee.pin }}</span>
+                  </div>
+                </div>
+
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.designation">Designation</span>
+                  </div>
+                  <div class="col-md-6">
+                    <div *ngIf="employee.designationId">
+                      <a [routerLink]="['/designation', employee.designationId, 'view']">{{ employee.designationName }}</a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.department">Department</span>
+                  </div>
+                  <div class="col-md-6">
+                    <div *ngIf="employee.departmentId">
+                      <a [routerLink]="['/department', employee.departmentId, 'view']">{{ employee.departmentName }}</a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.unit">Unit</span>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div *ngIf="employee.unitId">
+                      <a [routerLink]="['/unit', employee.unitId, 'view']">{{ employee.unitName }}</a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span>Gross Salary</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span>{{ employee.mainGrossSalary | number }}</span>
+                  </div>
+                </div>
+
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span>Mobile Celling</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span>{{ employee.mobileCelling | number }}</span>
+                  </div>
+                </div>
+
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.welfareFundDeduction">Welfare Fund Deduction</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span>{{ employee.welfareFundDeduction | number }}</span>
+                  </div>
+                </div>
+
+                <ng-container *ngIf="allowanceName">
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span>{{ allowanceName.allowance01Name }}</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.allowance01 | number }}</span>
+                    </div>
+                  </div>
+
+                  <!--<div class="row my-1">
+                                    <div class="col-md-6 fw-bold">
+                                        <span>Effective From</span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span>{{ employee.allowance01EffectiveFrom | date: 'd MMM, y'}}</span>
+                                    </div>
+                                </div>
+
+                                <div class="row my-1">
+                                    <div class="col-md-6 fw-bold">
+                                        <span>Effective To</span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span>{{ employee.allowance01EffectiveTo | date: 'd MMM, y' }}</span>
+                                    </div>
+                                </div>-->
+
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span>{{ allowanceName.allowance02Name }}</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.allowance02 | number }}</span>
+                    </div>
+                  </div>
+
+                  <!--<div class="row my-1">
+                                    <div class="col-md-6 fw-bold">
+                                        <span>Effective From</span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span>{{ employee.allowance02EffectiveFrom | date: 'd MMM, y' }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="row my-1">
+                                    <div class="col-md-6 fw-bold">
+                                        <span>Effective To</span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span>{{ employee.allowance01EffectiveTo | date: 'd MMM, y' }}</span>
+                                    </div>
+                                </div>-->
+
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span>{{ allowanceName.allowance03Name }}</span>
+                    </div>
+
+                    <div class="col-md-6">
+                      <span>{{ employee.allowance03 | number }}</span>
+                    </div>
+                  </div>
+
+                  <!-- <div class="row my-1">
+                                     <div class="col-md-6 fw-bold">
+                                         <span>Effective From</span>
+                                     </div>
+                                     <div class="col-md-6">
+                                         <span>{{ employee.allowance03EffectiveFrom | date: 'd MMM, y' }}</span>
+                                     </div>
+                                 </div>-->
+
+                  <!-- <div class="row my-1">
+                                     <div class="col-md-6 fw-bold">
+                                         <span>Effective To</span>
+                                     </div>
+                                     <div class="col-md-6">
+                                         <span>{{ employee.allowance03EffectiveTo | date: 'd MMM, y' }}</span>
+                                     </div>
+                                 </div>-->
+
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span>{{ allowanceName.allowance04Name }}</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.allowance04 | number }}</span>
+                    </div>
+                  </div>
+
+                  <!--<div class="row my-1">
+                                    <div class="col-md-6 fw-bold">
+                                        <span>Effective From</span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span>{{ employee.allowance04EffectiveFrom | date: 'd MMM, y' }}</span>
+                                    </div>
+                                </div>-->
+
+                  <!--<div class="row my-1">
+                                    <div class="col-md-6 fw-bold">
+                                        <span>Effective To</span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span>{{ employee.allowance04EffectiveTo | date: 'd MMM, y' }}</span>
+                                    </div>
+                                </div>-->
+
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span>{{ allowanceName.allowance05Name }}</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.allowance05 | number }}</span>
+                    </div>
+                  </div>
+
+                  <!--<div class="row my-1">
+                                    <div class="col-md-6 fw-bold">
+                                        <span>Effective From</span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span>{{ employee.allowance05EffectiveFrom | date: 'd MMM, y' }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="row my-1">
+                                    <div class="col-md-6 fw-bold">
+                                        <span>Effective To</span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span>{{ employee.allowance05EffectiveTo | date: 'd MMM, y' }}</span>
+                                    </div>
+                                </div>-->
+
+                  <div class="row my-1">
+                    <div class="col-md-6 fw-bold">
+                      <span>{{ allowanceName.allowance06Name }}</span>
+                    </div>
+                    <div class="col-md-6">
+                      <span>{{ employee.allowance06 | number }}</span>
+                    </div>
+                  </div>
+
+                  <!--<div class="row my-1">
+                                    <div class="col-md-6 fw-bold">
+                                        <span>Effective From</span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span>{{ employee.allowance06EffectiveFrom | date: 'd MMM, y' }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="row my-1">
+                                    <div class="col-md-6 fw-bold">
+                                        <span>Effective To</span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span>{{ employee.allowance06EffectiveTo | date: 'd MMM, y' }}</span>
+                                    </div>
+                                </div>-->
+                </ng-container>
+
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.band">Band</span>
+                  </div>
+                  <div class="col-md-6">
+                    <div *ngIf="employee.bandId">
+                      <a [routerLink]="['/band', employee.bandId, 'view']">{{ employee.bandName }}</a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.location">Desk Location</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span>{{ employee.location }}</span>
+                  </div>
+                </div>
+
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span>Is Online Punch Enabled</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span>{{ employee.isAllowedToGiveOnlineAttendance ? 'Yes' : 'No' }}</span>
+                  </div>
+                </div>
+
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.canRaiseRrfOnBehalf">Can Raise RRF on behalf</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span>{{ employee.canRaiseRrfOnBehalf ? 'Yes' : 'No' }}</span>
+                  </div>
+                </div>
+
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.employeeCategory">Employee Category</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span jhiTranslate="{{ 'bitsHrPayrollApp.EmployeeCategory.' + employee.employeeCategory }}">{{
+                      employee.employeeCategory
+                    }}</span>
+                  </div>
+                </div>
+
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.reportingTo">Reporting To</span>
+                  </div>
+                  <div class="col-md-6">
+                    <div *ngIf="employee.reportingToId">
+                      <a [routerLink]="['/employee-custom', employee.reportingToId, 'view']">{{ employee.reportingToName }}</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-5 card card-body">
+              <div class="container h-100">
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span>Contract Period Extended to</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span>{{ employee.contractPeriodExtendedTo | formatMediumDate }}</span>
+                  </div>
+                </div>
+
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span>Contract Period End Date</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span>{{ employee.contractPeriodEndDate | formatMediumDate }}</span>
+                  </div>
+                </div>
+
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span>Notice Period In Days</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span>{{ employee.noticePeriodInDays }}</span>
+                  </div>
+                </div>
+
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.dateOfJoining">Date Of Joining</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span>{{ employee.dateOfJoining | formatMediumDate }}</span>
+                  </div>
+                </div>
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span>Probable Date of Confirmation</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span>{{ employee.dateOfConfirmation | formatMediumDate }}</span>
+                  </div>
+                </div>
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.isProbationaryPeriodExtended">Is Probationary Period Extended</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span>{{ employee.isProbationaryPeriodExtended ? 'Yes' : 'No' }}</span>
+                  </div>
+                </div>
+
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span>Probable Probation Period End Date</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span>{{ employee.probationPeriodEndDate | formatMediumDate }}</span>
+                  </div>
+                </div>
+
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.probationPeriodExtendedTo">Probation Period Extended To</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span>{{ employee.probationPeriodExtendedTo | formatMediumDate }}</span>
+                  </div>
+                </div>
+
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.isPhysicallyDisabled">Is Physically Disabled</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span>{{ employee.isPhysicallyDisabled ? 'Yes' : 'No' }}</span>
+                  </div>
+                </div>
+
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.hasDisabledChild">Has Disabled Child</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span>{{ employee.hasDisabledChild ? 'Yes' : 'No' }}</span>
+                  </div>
+                </div>
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.isFirstTimeAitGiver">Is First Time Ait Giver</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span>{{ employee.isFirstTimeAitGiver ? 'Yes' : 'No' }}</span>
+                  </div>
+                </div>
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.isFreedomFighter">Is Freedom Fighter</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span>{{ employee.isFreedomFighter ? 'Yes' : 'No' }}</span>
+                  </div>
+                </div>
+
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.isSalaryHold">Is Salary Hold</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span>{{ employee.isSalaryHold ? 'Yes' : 'No' }}</span>
+                  </div>
+                </div>
+
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span>Is Fixed Term Contract</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span>{{ employee.isFixedTermContract ? 'Yes' : 'No' }}</span>
+                  </div>
+                </div>
+
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.hasOverTime">Has Over Time</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span>{{ employee.hasOverTime ? 'Yes' : 'No' }}</span>
+                  </div>
+                </div>
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.isFestivalBonusHold">Is Festival Bonus Hold</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span>{{ employee.isFestivalBonusHold ? 'Yes' : 'No' }}</span>
+                  </div>
+                </div>
+
+                <div class="row my-1">
+                  <div class="col-md-6 fw-bold">
+                    <span jhiTranslate="bitsHrPayrollApp.employee.employmentStatus">Employee Status</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span jhiTranslate="{{ 'bitsHrPayrollApp.EmploymentStatus.' + employee.employmentStatus }}">{{
+                      employee.employmentStatus
+                    }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </ngb-tab>
+
+      <ngb-tab [id]="'educationDetails'" title="Education Details">
+        <ng-template ngbNavContent>
+          <button (click)="openEducationDetails('active')" class="btn btn-outline-primary btn-sm float-end camel-case btn-pos btn-add mb-2">
+            <span>
+              <fa-icon icon="plus"></fa-icon>
+            </span>
+          </button>
+
+          <div *ngIf="educationDetails && educationDetails.length > 0" class="table-responsive">
+            <table aria-describedby="page-heading" class="table table-hover">
+              <thead>
+                <tr>
+                  <th scope="col"><span jhiTranslate="bitsHrPayrollApp.educationDetails.nameOfDegree">Name Of Degree</span></th>
+                  <th scope="col"><span jhiTranslate="bitsHrPayrollApp.educationDetails.subject">Subject</span></th>
+                  <th scope="col"><span jhiTranslate="bitsHrPayrollApp.educationDetails.institute">Institute</span></th>
+                  <th scope="col">
+                    <span jhiTranslate="bitsHrPayrollApp.educationDetails.yearOfDegreeCompletion">Year Of Degree Completion</span>
+                  </th>
+
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let educationDetails of educationDetails; trackBy: trackId">
+                  <td>{{ educationDetails.nameOfDegree }}</td>
+                  <td>{{ educationDetails.subject }}</td>
+                  <td>{{ educationDetails.institute }}</td>
+                  <td>{{ educationDetails.yearOfDegreeCompletion }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </ng-template>
+      </ngb-tab>
+
+      <ngb-tab [id]="'workExperience'" title="Work Experiences">
+        <ng-template ngbNavContent>
+          <button (click)="openWorkExperiences('active')" class="btn btn-outline-primary btn-sm float-end camel-case btn-pos btn-add mb-2">
+            <span>
+              <fa-icon icon="plus"></fa-icon>
+            </span>
+          </button>
+
+          <div *ngIf="workingExperiences && workingExperiences.length > 0" class="table-responsive">
+            <table aria-describedby="page-heading" class="table table-hover">
+              <thead>
+                <tr>
+                  <th scope="col"><span jhiTranslate="bitsHrPayrollApp.workingExperience.lastDesignation">Last Designation</span></th>
+                  <th scope="col"><span jhiTranslate="bitsHrPayrollApp.workingExperience.organizationName">Organization Name</span></th>
+                  <th scope="col">
+                    <span jhiTranslate="bitsHrPayrollApp.workingExperience.dojOfLastOrganization">Doj Of Last Organization</span>
+                  </th>
+                  <th scope="col">
+                    <span jhiTranslate="bitsHrPayrollApp.workingExperience.dorOfLastOrganization">Dor Of Last Organization</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let workingExperience of workingExperiences">
+                  <td>{{ workingExperience.lastDesignation }}</td>
+                  <td>{{ workingExperience.organizationName }}</td>
+                  <td>{{ workingExperience.dojOfLastOrganization | formatMediumDate }}</td>
+                  <td>{{ workingExperience.dorOfLastOrganization | formatMediumDate }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </ng-template>
+      </ngb-tab>
+
+      <ngb-tab [id]="'trainingHistories'" title="Training Histories">
+        <ng-template ngbNavContent>
+          <button
+            (click)="openTrainingHistories('active')"
+            class="btn btn-outline-primary btn-sm float-end camel-case btn-pos btn-add mb-2"
+          >
+            <span>
+              <fa-icon icon="plus"></fa-icon>
+            </span>
+          </button>
+
+          <div *ngIf="trainingHistories && trainingHistories.length > 0" class="table-responsive">
+            <table aria-describedby="page-heading" class="table table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">
+                    <span jhiTranslate="bitsHrPayrollApp.trainingHistory.trainingName">Training Name</span>
+                    <fa-icon icon="sort"></fa-icon>
+                  </th>
+                  <th scope="col">
+                    <span jhiTranslate="bitsHrPayrollApp.trainingHistory.coordinatedBy">Coordinated By</span>
+                    <fa-icon icon="sort"></fa-icon>
+                  </th>
+                  <th scope="col">
+                    <span jhiTranslate="bitsHrPayrollApp.trainingHistory.dateOfCompletion">Date Of Completion</span>
+                    <fa-icon icon="sort"></fa-icon>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let trainingHistory of trainingHistories">
+                  <td>{{ trainingHistory.trainingName }}</td>
+                  <td>{{ trainingHistory.coordinatedBy }}</td>
+                  <td>{{ trainingHistory.dateOfCompletion | formatMediumDate }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </ng-template>
+      </ngb-tab>
+
+      <ngb-tab [id]="'references'" [title]="'References'">
+        <ng-template ngbNavContent>
+          <button (click)="openReferences('active')" class="btn btn-outline-primary btn-sm float-end camel-case btn-pos btn-add mb-2">
+            <span>
+              <fa-icon icon="plus"></fa-icon>
+            </span>
+          </button>
+
+          <div *ngIf="references && references.length > 0" class="table-responsive" id="entities">
+            <table aria-describedby="page-heading" class="table table-hover">
+              <thead>
+                <tr>
+                  <th scope="col"><span jhiTranslate="bitsHrPayrollApp.references.name">Name</span></th>
+                  <th scope="col"><span jhiTranslate="bitsHrPayrollApp.references.institute">Institute</span></th>
+                  <th scope="col"><span jhiTranslate="bitsHrPayrollApp.references.designation">Designation</span></th>
+                  <th scope="col">
+                    <span jhiTranslate="bitsHrPayrollApp.references.relationshipWithEmployee">Relationship With Employee</span>
+                  </th>
+                  <th scope="col"><span jhiTranslate="bitsHrPayrollApp.references.email">Email</span></th>
+                  <th scope="col"><span jhiTranslate="bitsHrPayrollApp.references.contactNumber">Contact Number</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let references of references">
+                  <td>{{ references.name }}</td>
+                  <td>{{ references.institute }}</td>
+                  <td>{{ references.designation }}</td>
+                  <td jhiTranslate="{{ 'bitsHrPayrollApp.RelationshipWithEmployee.' + references.relationshipWithEmployee }}">
+                    {{ references.relationshipWithEmployee }}
+                  </td>
+                  <td>{{ references.email }}</td>
+                  <td>{{ references.contactNumber }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </ng-template>
+      </ngb-tab>
+    </ngb-tabset>
+
+    <div
+      class="mt-3"
+      *ngIf="nextId !== 'educationDetails' && nextId !== 'workExperience' && nextId !== 'trainingHistories' && nextId !== 'references'"
+    >
+      <button (click)="previousState()" class="btn btn-info" type="submit">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button [routerLink]="['/employee-custom', employee.id, 'edit']" class="btn btn-primary" type="button">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

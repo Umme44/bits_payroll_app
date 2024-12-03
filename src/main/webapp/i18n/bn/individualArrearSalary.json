@@ -1,0 +1,39 @@
+{
+  "bitsHrPayrollApp": {
+    "individualArrearSalary": {
+      "home": {
+        "title": "Individual Arrear Salaries",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Individual Arrear Salary",
+        "createOrEditLabel": "Create or edit a Individual Arrear Salary",
+        "notFound": "No Individual Arrear Salaries found"
+      },
+      "created": "A new Individual Arrear Salary is created with identifier {{ param }}",
+      "updated": "A Individual Arrear Salary is updated with identifier {{ param }}",
+      "deleted": "A Individual Arrear Salary is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Individual Arrear Salary {{ id }}?"
+      },
+      "detail": {
+        "title": "Individual Arrear Salary"
+      },
+      "id": "ID",
+      "effectiveDate": "Effective Date",
+      "existingBand": "Existing Band",
+      "newBand": "New Band",
+      "existingGross": "Existing Gross",
+      "newGross": "New Gross",
+      "increment": "Increment",
+      "arrearSalary": "Arrear Salary",
+      "arrearPfDeduction": "Arrear Pf Deduction",
+      "taxDeduction": "Tax Deduction",
+      "netPay": "Net Pay",
+      "pfContribution": "Pf Contribution",
+      "title": "Title",
+      "titleEffectiveFrom": "Title Effective From",
+      "arrearRemarks": "Arrear Remarks",
+      "festivalBonus": "Festival Bonus",
+      "employee": "Employee"
+    }
+  }
+}

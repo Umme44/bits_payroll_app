@@ -1,0 +1,107 @@
+{
+  "changelogDate": "20220124094733",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "salary_certificate",
+  "fields": [
+    {
+      "fieldName": "purpose",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "250",
+      "fieldValidateRulesMinlength": "3"
+    },
+    {
+      "fieldName": "remarks",
+      "fieldType": "String",
+      "fieldValidateRules": ["minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "250",
+      "fieldValidateRulesMinlength": "3"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "Status",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "PENDING,APPROVED,NOT_APPROVED"
+    },
+    {
+      "fieldName": "createdAt",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": []
+    },
+    {
+      "fieldName": "updatedAt",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "sanctionAt",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "month",
+      "fieldType": "Month",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "JANUARY,FEBRUARY,MARCH,APRIL,MAY,JUNE,JULY,AUGUST,SEPTEMBER,OCTOBER,NOVEMBER,DECEMBER"
+    },
+    {
+      "fieldName": "year",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "referenceNumber",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "SalaryCertificate",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "salaryCertificate",
+      "ownerSide": true,
+      "relationshipName": "createdBy",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    },
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "salaryCertificate",
+      "ownerSide": true,
+      "relationshipName": "updatedBy",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "salaryCertificate",
+      "ownerSide": true,
+      "relationshipName": "sanctionBy",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "salaryCertificate",
+      "relationshipName": "employee",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "salaryCertificate",
+      "relationshipName": "signatoryPerson",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

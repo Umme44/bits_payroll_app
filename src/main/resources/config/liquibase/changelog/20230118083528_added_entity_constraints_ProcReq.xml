@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity ProcReq.
+    -->
+    <changeSet id="20230118083528-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="item_information_id"
+                                 baseTableName="proc_req"
+                                 constraintName="fk_proc_req__item_information_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="item_information"/>
+
+        <addForeignKeyConstraint baseColumnNames="proc_req_master_id"
+                                 baseTableName="proc_req"
+                                 constraintName="fk_proc_req__proc_req_master_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="proc_req_master"/>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,27 @@
+{
+  "bitsHrPayrollApp": {
+    "proRataFestivalBonus": {
+      "home": {
+        "title": "Pro Rata Festival Bonuses",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Pro Rata Festival Bonus",
+        "createOrEditLabel": "Create or edit a Pro Rata Festival Bonus",
+        "notFound": "No Pro Rata Festival Bonuses found"
+      },
+      "created": "A new Pro Rata Festival Bonus is created with identifier {{ param }}",
+      "updated": "A Pro Rata Festival Bonus is updated with identifier {{ param }}",
+      "deleted": "A Pro Rata Festival Bonus is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Pro Rata Festival Bonus {{ id }}?"
+      },
+      "detail": {
+        "title": "Pro Rata Festival Bonus"
+      },
+      "id": "ID",
+      "date": "Date",
+      "amount": "Amount",
+      "description": "Description",
+      "employee": "Employee"
+    }
+  }
+}

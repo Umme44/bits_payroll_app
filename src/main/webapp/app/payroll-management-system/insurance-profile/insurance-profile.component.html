@@ -1,0 +1,268 @@
+<jhi-header
+  [addButtonText]="'Register'"
+  [headerName]="'Insurance'"
+  [routerLinkText]="'/insurance-profile/registration'"
+  [midHeaderName01]="'My Stuff'"
+  [midRouterLinkText01]="'/'"
+  [midHeader01hasSessionStorage]="true"
+  [midHeader01SessionStorageKey]="'keepMyStuffModalOpen'"
+  [midHeader01SessionStorageValue]="'yes'"
+  [shouldHaveHr]="false"
+>
+</jhi-header>
+
+<div class="row">
+  <div class="col-12">
+    <!--       Insurance Registration-->
+    <div class="custom-card mb-4" *ngIf="insuranceRegistrations && insuranceRegistrations.length > 0">
+      <h6>Insurance Registrations</h6>
+
+      <div class="table-responsive" id="entity">
+        <table aria-describedby="page-heading" class="table m-0 table-striped">
+          <thead class="text-nowrap">
+            <tr>
+              <th scope="col"><span jhiTranslate="bitsHrPayrollApp.insuranceRegistration.insuranceStatus">Status</span></th>
+
+              <th scope="col" class="text-center">
+                <span jhiTranslate="bitsHrPayrollApp.insuranceRegistration.photo">Photo</span>
+              </th>
+
+              <th scope="col"><span jhiTranslate="bitsHrPayrollApp.insuranceRegistration.name">Name</span></th>
+
+              <th scope="col"><span jhiTranslate="bitsHrPayrollApp.insuranceRegistration.dateOfBirth">Date of Birth</span></th>
+
+              <th scope="col">
+                <span jhiTranslate="bitsHrPayrollApp.insuranceRegistration.insuranceRelation">Relation</span>
+              </th>
+
+              <th scope="col">
+                <span>Insurance Card ID</span>
+              </th>
+
+              <th class="text-end" scope="col">
+                <span>Available Balance</span>
+              </th>
+
+              <th scope="col"></th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let insuranceRegistration of insuranceRegistrations; trackBy: trackId">
+              <td>
+                <span
+                  class="px-md-2"
+                  *ngIf="insuranceRegistration.insuranceStatus === 'PENDING'"
+                  data-placement="top"
+                  data-toggle="tooltip"
+                  title="Pending"
+                >
+                  Pending
+                </span>
+                <span
+                  class="text-success px-md-2"
+                  *ngIf="insuranceRegistration.insuranceStatus === 'APPROVED'"
+                  data-placement="top"
+                  data-toggle="tooltip"
+                  title="Approved"
+                >
+                  <fa-icon icon="check"></fa-icon>
+                </span>
+                <span
+                  class="text-danger px-md-2"
+                  *ngIf="insuranceRegistration.insuranceStatus === 'NOT_APPROVED'"
+                  data-placement="top"
+                  data-toggle="tooltip"
+                  title="Not Approved"
+                >
+                  <fa-icon icon="times"></fa-icon>
+                </span>
+                <span
+                  class="text-danger px-md-2"
+                  *ngIf="insuranceRegistration.insuranceStatus === 'SEPARATED'"
+                  data-placement="top"
+                  data-toggle="tooltip"
+                  title="Seperated"
+                >
+                  <fa-icon icon="file-signature"></fa-icon>
+                </span>
+                <span
+                  class="text-danger px-md-2"
+                  *ngIf="insuranceRegistration.insuranceStatus === 'CANCELED'"
+                  data-placement="top"
+                  data-toggle="tooltip"
+                  title="Cancelled"
+                >
+                  <fa-icon icon="minus-circle"></fa-icon>
+                </span>
+              </td>
+
+              <td>
+                <img
+                  style="width: 40px; height: 40px; margin: 2px; background-color: #0c5460; border-radius: 50%"
+                  [src]="getRegistrationAccountImageImage(insuranceRegistration.id!)"
+                />
+              </td>
+              <td>
+                <span>{{ insuranceRegistration.name }}</span>
+              </td>
+              <td>
+                <span>{{ insuranceRegistration.dateOfBirth | formatMediumDate }}</span>
+              </td>
+
+              <td>
+                <span>{{ getInsuranceRelation(insuranceRegistration.insuranceRelation!) }}</span>
+              </td>
+
+              <td>
+                <span>{{ insuranceRegistration.insuranceId }}</span>
+              </td>
+
+              <td class="text-end">
+                <span>{{ insuranceRegistration.availableBalance | number }}</span>
+              </td>
+
+              <td style="text-align: right">
+                <button
+                  class="insurance-claim-button btn"
+                  data-placement="top"
+                  data-toggle="tooltip"
+                  [disabled]="insuranceRegistration.insuranceStatus !== 'APPROVED'"
+                  (click)="redirectToClaimUrl()"
+                  title="Claim"
+                  type="submit"
+                >
+                  Claim
+                </button>
+              </td>
+
+              <td style="text-align: right">
+                <div class="">
+                  <button
+                    class="btn p-0 insurance-registration-view-button"
+                    [routerLink]="['/insurance-profile/registration', insuranceRegistration.id, 'view']"
+                    data-placement="top"
+                    data-toggle="tooltip"
+                    title="View"
+                    type="submit"
+                  >
+                    <fa-icon icon="eye"></fa-icon>
+                  </button>
+
+                  <button
+                    *ngIf="insuranceRegistration.insuranceStatus === 'PENDING' && insuranceRegistration.insuranceRelation !== 'SELF'"
+                    class="btn p-0 insurance-registration-edit-button"
+                    [routerLink]="['/insurance-profile/registration', insuranceRegistration.id, 'edit']"
+                    data-placement="top"
+                    data-toggle="tooltip"
+                    title="Edit"
+                    type="submit"
+                  >
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                  </button>
+
+                  <button
+                    *ngIf="insuranceRegistration.insuranceStatus === 'PENDING'"
+                    class="btn p-0 insurance-registration-delete-button"
+                    data-placement="top"
+                    data-toggle="tooltip"
+                    title="Delete"
+                    (click)="deleteRegisteredPerson(insuranceRegistration.id!)"
+                    type="submit"
+                  >
+                    <fa-icon icon="trash-alt"></fa-icon>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!--      Insurance Claim  Entries-->
+    <div class="custom-card" *ngIf="insuranceClaims && insuranceClaims.length > 0">
+      <h6>Insurance Claims</h6>
+
+      <div class="table-responsive" id="entities">
+        <table aria-describedby="page-heading" class="table m-0 table-striped">
+          <thead class="text-nowrap">
+            <tr>
+              <th scope="col">
+                <span>Status</span>
+              </th>
+              <th scope="col">
+                <span>Name of Patient</span>
+              </th>
+              <th scope="col">
+                <span>Relation</span>
+              </th>
+              <th *ngIf="insuranceClaims[0].claimStatus === 'SETTLED'" class="text-end" scope="col">
+                <span>Claimed Amount</span>
+              </th>
+              <th *ngIf="insuranceClaims[0].claimStatus === 'SETTLED'" class="text-end" scope="col">
+                <span>Settled Amount</span>
+              </th>
+              <th *ngIf="insuranceClaims[0].claimStatus === 'REGRETTED'" scope="col">
+                <span>Regret date</span>
+              </th>
+              <th *ngIf="insuranceClaims[0].claimStatus === 'REGRETTED'" class="text-end" scope="col">
+                <span>Regret Reason</span>
+              </th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let insuranceClaim of insuranceClaims">
+              <td>
+                <span class="text-success px-md-2" *ngIf="insuranceClaim.claimStatus === 'SETTLED'">
+                  <fa-icon icon="check"></fa-icon>
+                </span>
+                <span class="text-danger px-md-2" *ngIf="insuranceClaim.claimStatus === 'REGRETTED'">
+                  <fa-icon icon="times"></fa-icon>
+                </span>
+              </td>
+              <td>
+                <span>{{ insuranceClaim.registrationName }}</span>
+              </td>
+              <td>
+                {{ getInsuranceRelation(insuranceClaim.relation!) }}
+              </td>
+
+              <td *ngIf="insuranceClaims[0].claimStatus === 'SETTLED'" class="text-end">
+                <span>{{ insuranceClaim.claimedAmount | number }}</span>
+              </td>
+              <td *ngIf="insuranceClaims[0].claimStatus === 'SETTLED'" class="text-end">
+                <span>{{ insuranceClaim.settledAmount | number }}</span>
+              </td>
+
+              <td *ngIf="insuranceClaims[0].claimStatus === 'REGRETTED'" class="text-end">
+                <span>{{ insuranceClaim.regretDate | formatMediumDate }}</span>
+              </td>
+              <td *ngIf="insuranceClaims[0].claimStatus === 'REGRETTED'" class="text-end">
+                <span>{{ insuranceClaim.regretReason }}</span>
+              </td>
+
+              <td class="text-end">
+                <div>
+                  <button
+                    class="btn p-0 insurance-registration-view-button"
+                    data-toggle="tooltip"
+                    [routerLink]="['/insurance-profile/claim-entry', insuranceClaim.id, 'view']"
+                    data-placement="top"
+                    data-toggle="tooltip"
+                    title="View Insurance Claim"
+                    type="submit"
+                  >
+                    <fa-icon icon="eye"></fa-icon>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

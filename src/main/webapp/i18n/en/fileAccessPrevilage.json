@@ -1,0 +1,9 @@
+{
+  "bitsHrPayrollApp": {
+    "FileAccessPrevilage": {
+      "null": "",
+      "GENERAL": "GENERAL",
+      "MANAGEMENT": "MANAGEMENT"
+    }
+  }
+}

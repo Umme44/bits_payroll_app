@@ -1,0 +1,165 @@
+<div>
+  <jhi-header [headerName]="'Transfer Details'" [shouldHaveHr]="false"> </jhi-header>
+  <div *ngIf="employmentHistory">
+    <div *ngIf="selectedEmployee !== null" class="container-fluid card py-2 mt-5">
+      <div class="card-body">
+        <div class="card-title">
+          <h2>Employee</h2>
+        </div>
+        <div class="card-text">
+          <div class="row py-2">
+            <div class="col-md-2 fw-bold">Name</div>
+            <div [textContent]="selectedEmployee?.fullName" class="col-md-4"></div>
+            <div class="col-md-2 fw-bold">Department</div>
+            <div class="col-md-4">
+              {{ selectedEmployee?.departmentName }}
+            </div>
+          </div>
+
+          <div class="row py-2">
+            <div class="col-md-2 fw-bold">Designation</div>
+            <div class="col-md-4">
+              {{ selectedEmployee?.designationName }}
+            </div>
+            <div class="col-md-2 fw-bold">Unit</div>
+            <div class="col-md-4">
+              {{ selectedEmployee?.unitName }}
+            </div>
+          </div>
+
+          <div class="row py-2">
+            <div class="col-md-2 fw-bold">Category</div>
+            <div class="col-md-4">
+              <span jhiTranslate="{{ 'bitsHrPayrollApp.EmployeeCategory.' + selectedEmployee.employeeCategory }}">{{
+                selectedEmployee.employeeCategory
+              }}</span>
+            </div>
+            <div class="col-md-2 fw-bold">Desk Location</div>
+            <div class="col-md-4">
+              {{ selectedEmployee?.location }}
+            </div>
+          </div>
+
+          <div class="row py-2">
+            <div class="col-md-2 fw-bold">DOJ</div>
+            <div class="col-md-4">
+              {{ selectedEmployee?.dateOfJoining | formatMediumDate }}
+            </div>
+            <div class="col-md-2 fw-bold">DOC</div>
+            <div class="col-md-4">
+              {{ selectedEmployee?.dateOfConfirmation | formatMediumDate }}
+            </div>
+          </div>
+
+          <div class="row py-2">
+            <div class="col-md-2 fw-bold">Reporting to</div>
+            <div class="col-md-4">
+              {{ selectedEmployee?.reportingToName }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <div *ngIf="selectedEmployee !== null" class="container-fluid card py-2 mt-5">
+      <div class="card-body">
+        <div class="card-title">
+          <h2>Transfer details</h2>
+        </div>
+        <div class="card-text">
+          <div class="row py-2">
+            <div class="col-md-3 fw-bold">Effective Date</div>
+            <div class="col-md-3">
+              <span>{{ employmentHistory.effectiveDate | formatMediumDate }}</span>
+            </div>
+          </div>
+
+          <div class="row py-2">
+            <div class="col-md-3 fw-bold">Previous reporting to</div>
+            <div class="col-md-3">
+              <div *ngIf="employmentHistory.previousReportingToId">
+                <a [routerLink]="['/employee-custom', employmentHistory.previousReportingToId, 'view']">{{
+                  employmentHistory.previousReportingToName
+                }}</a>
+              </div>
+            </div>
+
+            <div class="col-md-3 fw-bold">changed reporting to</div>
+            <div class="col-md-3">
+              <div *ngIf="employmentHistory.changedReportingToId">
+                <a [routerLink]="['/employee-custom', employmentHistory.changedReportingToId, 'view']">{{
+                  employmentHistory.changedReportingToName
+                }}</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="row py-2">
+            <div class="col-md-3 fw-bold">Previous department</div>
+            <div class="col-md-3">
+              <div *ngIf="employmentHistory.previousDepartmentId">
+                <a [routerLink]="['/department', employmentHistory.previousDepartmentId, 'view']">{{
+                  employmentHistory.previousDepartmentName
+                }}</a>
+              </div>
+            </div>
+            <div class="col-md-3 fw-bold">Changed department</div>
+            <div class="col-md-3">
+              <div *ngIf="employmentHistory.changedDepartmentId">
+                <a [routerLink]="['/department', employmentHistory.changedDepartmentId, 'view']">{{
+                  employmentHistory.changedDepartmentName
+                }}</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="row py-2">
+            <div class="col-md-3 fw-bold">Previous Unit</div>
+            <div class="col-md-3">
+              <div *ngIf="employmentHistory.previousUnitId">
+                <a [routerLink]="['/unit', employmentHistory.previousUnitId, 'view']">{{ employmentHistory.previousUnitName }}</a>
+              </div>
+            </div>
+            <div class="col-md-3 fw-bold">changed Unit</div>
+            <div class="col-md-3">
+              <div *ngIf="employmentHistory.changedUnitId">
+                <a [routerLink]="['/unit', employmentHistory.changedUnitId, 'view']">{{ employmentHistory.changedUnitName }}</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="row py-2">
+            <div class="col-md-3 fw-bold">Previous Designation</div>
+            <div class="col-md-3">
+              <div *ngIf="employmentHistory.previousDesignationId">
+                <a [routerLink]="['/designation', employmentHistory.previousDesignationId, 'view']">{{
+                  employmentHistory.previousDesignationName
+                }}</a>
+              </div>
+            </div>
+            <div class="col-md-3 fw-bold">changed Designation</div>
+            <div class="col-md-3">
+              <div *ngIf="employmentHistory.changedDesignationId">
+                <a [routerLink]="['/designation', employmentHistory.changedDesignationId, 'view']">{{
+                  employmentHistory.changedDesignationName
+                }}</a>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <button (click)="previousState()" class="btn btn-info" type="submit">
+              <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button [routerLink]="['/employment-actions/transfer', employmentHistory.id, 'edit']" class="btn btn-primary" type="button">
+              <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

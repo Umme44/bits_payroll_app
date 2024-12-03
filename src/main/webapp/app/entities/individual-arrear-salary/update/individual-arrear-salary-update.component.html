@@ -1,0 +1,409 @@
+<div class="">
+  <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+    <jhi-header
+      [headerName]="!editForm.get('id')!.value ? 'New Individual Arrear Salary' : 'Edit Individual Arrear Salary'"
+      [midHeaderName01]="editForm.get('title')!.value ? 'Salaries' : ''"
+      [midRouterLinkText01]="
+        editForm.get('title')!.value ? '/individual-arrear-salary/title/' + editForm.get('title')!.value + '/view' : ''
+      "
+      [shouldHaveHr]="false"
+    >
+    </jhi-header>
+
+    <div class="card card-body">
+      <div class="row">
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="col-md-3 font-sm">
+          <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.individualArrearSalary.employee">Employee</label>
+
+          <ng-select
+            [items]="employeesSharedCollection"
+            bindLabel="fullName"
+            bindValue="id"
+            appearance="outline"
+            [searchable]="true"
+            [clearable]="true"
+            labelForId="employeeId"
+            placeholder="Select Employee"
+            formControlName="employeeId"
+            id="field_employeeId"
+            name="employeeId"
+          >
+          </ng-select>
+
+          <!--                        <select class="form-control" id="field_employee" name="employee" formControlName="employeeId">-->
+          <!--                            <option [ngValue]="null"></option>-->
+          <!--                            <option [ngValue]="employeeOption.id"-->
+          <!--                                    *ngFor="let employeeOption of employees; trackBy: trackById">{{employeeOption.pin}} - {{ employeeOption.fullName }}</option>-->
+          <!--                        </select>-->
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.individualArrearSalary.title" for="field_title">Title</label>
+          <input type="text" class="form-control" name="title" id="field_title" formControlName="title" />
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.individualArrearSalary.effectiveDate" for="field_effectiveDate"
+            >Effective Date</label
+          >
+          <div class="input-group">
+            <input
+              id="field_effectiveDate"
+              type="date"
+              class="form-control"
+              name="effectiveDate"
+              ngbDatepicker
+              #effectiveDateDp="ngbDatepicker"
+              formControlName="effectiveDate"
+            />
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <label
+            class="form-control-label"
+            jhiTranslate="bitsHrPayrollApp.individualArrearSalary.titleEffectiveFrom"
+            for="field_titleEffectiveFrom"
+            >Title Effective From</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="titleEffectiveFrom"
+            id="field_titleEffectiveFrom"
+            formControlName="titleEffectiveFrom"
+          />
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.individualArrearSalary.existingBand" for="field_existingBand"
+            >Existing Band</label
+          >
+          <input type="text" class="form-control" name="existingBand" id="field_existingBand" formControlName="existingBand" />
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.individualArrearSalary.newBand" for="field_newBand"
+            >New Band</label
+          >
+          <input type="text" class="form-control" name="newBand" id="field_newBand" formControlName="newBand" />
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.individualArrearSalary.existingGross" for="field_existingGross"
+            >Existing Gross</label
+          >
+          <input type="number" class="form-control" name="existingGross" id="field_existingGross" formControlName="existingGross" />
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.individualArrearSalary.newGross" for="field_newGross"
+            >New Gross</label
+          >
+          <input type="number" class="form-control" name="newGross" id="field_newGross" formControlName="newGross" />
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.individualArrearSalary.increment" for="field_increment"
+            >Increment</label
+          >
+          <input type="number" class="form-control" name="increment" id="field_increment" formControlName="increment" />
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.individualArrearSalary.arrearSalary" for="field_arrearSalary"
+            >Arrear Salary</label
+          >
+          <input type="number" class="form-control" name="arrearSalary" id="field_arrearSalary" formControlName="arrearSalary" />
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.individualArrearSalary.festivalBonus" for="field_festivalBonus"
+            >Festival Bonus</label
+          >
+          <input type="number" class="form-control" name="festivalBonus" id="field_festivalBonus" formControlName="festivalBonus" />
+        </div>
+
+        <div class="col-md-3">
+          <label
+            class="form-control-label"
+            jhiTranslate="bitsHrPayrollApp.individualArrearSalary.arrearPfDeduction"
+            for="field_arrearPfDeduction"
+            >Arrear Pf Deduction</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="arrearPfDeduction"
+            id="field_arrearPfDeduction"
+            formControlName="arrearPfDeduction"
+          />
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.individualArrearSalary.taxDeduction" for="field_taxDeduction"
+            >Tax Deduction</label
+          >
+          <input type="number" class="form-control" name="taxDeduction" id="field_taxDeduction" formControlName="taxDeduction" />
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.individualArrearSalary.netPay" for="field_netPay">Net Pay</label>
+          <input type="number" class="form-control" name="netPay" id="field_netPay" formControlName="netPay" />
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.individualArrearSalary.pfContribution" for="field_pfContribution"
+            >Pf Contribution</label
+          >
+          <input type="number" class="form-control" name="pfContribution" id="field_pfContribution" formControlName="pfContribution" />
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.individualArrearSalary.arrearRemarks" for="field_arrearRemarks"
+            >Arrear Remarks</label
+          >
+          <input type="text" class="form-control" name="arrearRemarks" id="field_arrearRemarks" formControlName="arrearRemarks" />
+        </div>
+      </div>
+
+      <div class="mt-2">
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!--<div class="d-flex justify-content-center">-->
+<!--  <div class="col-8">-->
+<!--    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">-->
+<!--      <h2-->
+<!--        id="jhi-individual-arrear-salary-heading"-->
+<!--        data-cy="IndividualArrearSalaryCreateUpdateHeading"-->
+<!--        jhiTranslate="bitsHrPayrollApp.individualArrearSalary.home.createOrEditLabel"-->
+<!--      >-->
+<!--        Create or edit a Individual Arrear Salary-->
+<!--      </h2>-->
+
+<!--      <div>-->
+<!--        <jhi-alert-error></jhi-alert-error>-->
+
+<!--        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">-->
+<!--          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>-->
+<!--          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.individualArrearSalary.effectiveDate" for="field_effectiveDate"-->
+<!--            >Effective Date</label-->
+<!--          >-->
+<!--          <div class="input-group">-->
+<!--            <input-->
+<!--              id="field_effectiveDate"-->
+<!--              data-cy="effectiveDate"-->
+<!--              type="text"-->
+<!--              class="form-control"-->
+<!--              name="effectiveDate"-->
+<!--              ngbDatepicker-->
+<!--              #effectiveDateDp="ngbDatepicker"-->
+<!--              formControlName="effectiveDate"-->
+<!--            />-->
+<!--            <button type="button" class="btn btn-secondary" (click)="effectiveDateDp.toggle()">-->
+<!--              <fa-icon icon="calendar-alt"></fa-icon>-->
+<!--            </button>-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.individualArrearSalary.existingBand" for="field_existingBand"-->
+<!--            >Existing Band</label-->
+<!--          >-->
+<!--          <input-->
+<!--            type="text"-->
+<!--            class="form-control"-->
+<!--            name="existingBand"-->
+<!--            id="field_existingBand"-->
+<!--            data-cy="existingBand"-->
+<!--            formControlName="existingBand"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.individualArrearSalary.newBand" for="field_newBand">New Band</label>-->
+<!--          <input type="text" class="form-control" name="newBand" id="field_newBand" data-cy="newBand" formControlName="newBand" />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.individualArrearSalary.existingGross" for="field_existingGross"-->
+<!--            >Existing Gross</label-->
+<!--          >-->
+<!--          <input-->
+<!--            type="number"-->
+<!--            class="form-control"-->
+<!--            name="existingGross"-->
+<!--            id="field_existingGross"-->
+<!--            data-cy="existingGross"-->
+<!--            formControlName="existingGross"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.individualArrearSalary.newGross" for="field_newGross">New Gross</label>-->
+<!--          <input type="number" class="form-control" name="newGross" id="field_newGross" data-cy="newGross" formControlName="newGross" />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.individualArrearSalary.increment" for="field_increment">Increment</label>-->
+<!--          <input type="number" class="form-control" name="increment" id="field_increment" data-cy="increment" formControlName="increment" />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.individualArrearSalary.arrearSalary" for="field_arrearSalary"-->
+<!--            >Arrear Salary</label-->
+<!--          >-->
+<!--          <input-->
+<!--            type="number"-->
+<!--            class="form-control"-->
+<!--            name="arrearSalary"-->
+<!--            id="field_arrearSalary"-->
+<!--            data-cy="arrearSalary"-->
+<!--            formControlName="arrearSalary"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.individualArrearSalary.arrearPfDeduction" for="field_arrearPfDeduction"-->
+<!--            >Arrear Pf Deduction</label-->
+<!--          >-->
+<!--          <input-->
+<!--            type="number"-->
+<!--            class="form-control"-->
+<!--            name="arrearPfDeduction"-->
+<!--            id="field_arrearPfDeduction"-->
+<!--            data-cy="arrearPfDeduction"-->
+<!--            formControlName="arrearPfDeduction"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.individualArrearSalary.taxDeduction" for="field_taxDeduction"-->
+<!--            >Tax Deduction</label-->
+<!--          >-->
+<!--          <input-->
+<!--            type="number"-->
+<!--            class="form-control"-->
+<!--            name="taxDeduction"-->
+<!--            id="field_taxDeduction"-->
+<!--            data-cy="taxDeduction"-->
+<!--            formControlName="taxDeduction"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.individualArrearSalary.netPay" for="field_netPay">Net Pay</label>-->
+<!--          <input type="number" class="form-control" name="netPay" id="field_netPay" data-cy="netPay" formControlName="netPay" />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.individualArrearSalary.pfContribution" for="field_pfContribution"-->
+<!--            >Pf Contribution</label-->
+<!--          >-->
+<!--          <input-->
+<!--            type="number"-->
+<!--            class="form-control"-->
+<!--            name="pfContribution"-->
+<!--            id="field_pfContribution"-->
+<!--            data-cy="pfContribution"-->
+<!--            formControlName="pfContribution"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.individualArrearSalary.title" for="field_title">Title</label>-->
+<!--          <input type="text" class="form-control" name="title" id="field_title" data-cy="title" formControlName="title" />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.individualArrearSalary.titleEffectiveFrom" for="field_titleEffectiveFrom"-->
+<!--            >Title Effective From</label-->
+<!--          >-->
+<!--          <input-->
+<!--            type="text"-->
+<!--            class="form-control"-->
+<!--            name="titleEffectiveFrom"-->
+<!--            id="field_titleEffectiveFrom"-->
+<!--            data-cy="titleEffectiveFrom"-->
+<!--            formControlName="titleEffectiveFrom"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.individualArrearSalary.arrearRemarks" for="field_arrearRemarks"-->
+<!--            >Arrear Remarks</label-->
+<!--          >-->
+<!--          <input-->
+<!--            type="text"-->
+<!--            class="form-control"-->
+<!--            name="arrearRemarks"-->
+<!--            id="field_arrearRemarks"-->
+<!--            data-cy="arrearRemarks"-->
+<!--            formControlName="arrearRemarks"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.individualArrearSalary.festivalBonus" for="field_festivalBonus"-->
+<!--            >Festival Bonus</label-->
+<!--          >-->
+<!--          <input-->
+<!--            type="number"-->
+<!--            class="form-control"-->
+<!--            name="festivalBonus"-->
+<!--            id="field_festivalBonus"-->
+<!--            data-cy="festivalBonus"-->
+<!--            formControlName="festivalBonus"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.individualArrearSalary.employee" for="field_employee">Employee</label>-->
+<!--          <select-->
+<!--            class="form-control"-->
+<!--            id="field_employee"-->
+<!--            data-cy="employee"-->
+<!--            name="employee"-->
+<!--            formControlName="employee"-->
+<!--            [compareWith]="compareEmployee"-->
+<!--          >-->
+<!--            <option [ngValue]="null"></option>-->
+<!--            <option [ngValue]="employeeOption" *ngFor="let employeeOption of employeesSharedCollection">{{ employeeOption.id }}</option>-->
+<!--          </select>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div>-->
+<!--        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">-->
+<!--          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>-->
+<!--        </button>-->
+
+<!--        <button-->
+<!--          type="submit"-->
+<!--          id="save-entity"-->
+<!--          data-cy="entityCreateSaveButton"-->
+<!--          [disabled]="editForm.invalid || isSaving"-->
+<!--          class="btn btn-primary"-->
+<!--        >-->
+<!--          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>-->
+<!--        </button>-->
+<!--      </div>-->
+<!--    </form>-->
+<!--  </div>-->
+<!--</div>-->

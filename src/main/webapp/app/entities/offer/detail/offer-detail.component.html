@@ -1,0 +1,51 @@
+<jhi-header
+  [headerName]="'Details'"
+  midHeaderName01="Offers"
+  [midRouterLinkText01]="'/offer'"
+  [shouldHaveHr]="false">
+</jhi-header>
+
+<div class="font-sm">
+  <div class="">
+    <div *ngIf="offer">
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <dl class="row">
+
+        <div class="col-md-12">
+          <img [src]="getOfferImage(offer.id!)" width="150"/>
+        </div>
+
+        <dt class="col-md-2"><span jhiTranslate="bitsHrPayrollApp.offer.title">Title</span></dt>
+        <dd class="col-md-10">
+          <span>{{ offer.title }}</span>
+        </dd>
+        <dt class="col-md-2"><span jhiTranslate="bitsHrPayrollApp.offer.description">Description</span></dt>
+        <dd class="col-md-10">
+          <span>{{ offer.description }}</span>
+        </dd>
+
+        <dt class="col-md-2"><span jhiTranslate="bitsHrPayrollApp.offer.createdAt">Created At</span></dt>
+        <dd class="col-md-3">
+          <span>{{ offer.createdAt | formatMediumDate }}</span>
+        </dd>
+        <div class="col-md-6"></div>
+
+      </dl>
+
+
+      <button type="submit"
+              (click)="previousState()"
+              class="btn btn-info">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button"
+              [routerLink]="['/offer', offer.id, 'edit']"
+              class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

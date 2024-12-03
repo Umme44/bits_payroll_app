@@ -1,0 +1,57 @@
+<div>
+  <jhi-header
+    headerName="Unit of Measurement"
+    [addButtonText]="'New Unit of Measurement'"
+    [routerLinkText]="'/unit-of-measurement/new'"
+    [shouldHaveHr]="false"
+  >
+  </jhi-header>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div id="no-result" *ngIf="unitOfMeasurements?.length === 0">
+    <div class="d-flex justify-content-center">
+      <img style="width: 40rem" src="../../../content/images/no-data-found.png" alt="No Data Found" />
+    </div>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="unitOfMeasurements && unitOfMeasurements.length > 0">
+    <table class="table table-hover list-text-color" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.unitOfMeasurement.name">Name</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.unitOfMeasurement.remarks">Remarks</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+        <tr *ngFor="let unitOfMeasurement of unitOfMeasurements; trackBy: trackId">
+          <td>{{ unitOfMeasurement.name }}</td>
+          <td>{{ unitOfMeasurement.remarks }}</td>
+
+          <td class="text-end">
+            <div class="">
+              <button type="submit" (click)="openView(unitOfMeasurement)" class="btn btn-info btn-sm border-radius-minimal me-1">
+                <fa-icon icon="eye"></fa-icon>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/unit-of-measurement', unitOfMeasurement.id, 'edit']"
+                class="btn btn-primary btn-sm border-radius-minimal me-1"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+              </button>
+
+              <button type="submit" (click)="delete(unitOfMeasurement)" class="btn btn-danger btn-sm border-radius-minimal me-1">
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

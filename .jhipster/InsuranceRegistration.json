@@ -1,0 +1,107 @@
+{
+  "changelogDate": "20220525092857",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "insurance_registration",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "250",
+      "fieldValidateRulesMinlength": "0"
+    },
+    {
+      "fieldName": "dateOfBirth",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "photo",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "insuranceRelation",
+      "fieldType": "InsuranceRelation",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "SELF,SPOUSE,CHILD_1,CHILD_2,CHILD_3"
+    },
+    {
+      "fieldName": "insuranceStatus",
+      "fieldType": "InsuranceStatus",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "PENDING,APPROVED,NOT_APPROVED,CANCELED,SEPARATED"
+    },
+    {
+      "fieldName": "unapprovalReason",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "availableBalance",
+      "fieldType": "Double",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "updatedAt",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "approvedAt",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "insuranceId",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique"]
+    },
+    {
+      "fieldName": "createdAt",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "InsuranceRegistration",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "insuranceRegistration",
+      "relationshipName": "employee",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    },
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "insuranceRegistration",
+      "ownerSide": true,
+      "relationshipName": "approvedBy",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "insuranceRegistration",
+      "ownerSide": true,
+      "relationshipName": "updatedBy",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "insuranceRegistration",
+      "ownerSide": true,
+      "relationshipName": "createdBy",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    }
+  ],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

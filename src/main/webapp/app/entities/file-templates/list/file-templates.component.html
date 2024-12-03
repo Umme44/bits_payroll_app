@@ -1,0 +1,148 @@
+<div>
+  <jhi-header [headerName]="'Docs'" [routerLinkText]="'/file-templates/new'" [addButtonText]="'Upload New Docs'"> </jhi-header>
+
+  <div class="">
+    <div class="row mb-2" [formGroup]="searchForm">
+      <div class="input-group col-md">
+        <jhi-search-text-box
+          (searchEvent)="onSearchTextChangeV2($event)"
+          [placeHolderText]="'Search'"
+          [searchBoxSize]="'18rem'"
+          [inputMaxlength]="50"
+          [suggestionList]="titles"
+        >
+        </jhi-search-text-box>
+      </div>
+
+      <div class="col-md mt-md-1 mt-3">
+        <div class="form-check form-check-inline mx-md-5 mx-2">
+          <input
+            class="form-check-input"
+            (change)="filterByFileTypes()"
+            id="all"
+            [value]="''"
+            checked="checked"
+            formControlName="fileType"
+            name="fileType"
+            type="radio"
+            value="option1"
+          />
+          <label class="form-check-label" for="all">All</label>
+        </div>
+        <div class="form-check form-check-inline mx-md-5 mx-2">
+          <input
+            class="form-check-input"
+            (change)="filterByFileTypes()"
+            id="formSelect"
+            value="FORMS"
+            formControlName="fileType"
+            name="fileType"
+            type="radio"
+          />
+          <label class="form-check-label" for="formSelect" jhiTranslate="bitsHrPayrollApp.FileTemplatesType.FORMS">Form</label>
+        </div>
+        <div class="form-check form-check-inline mx-md-5 mx-2">
+          <input
+            class="form-check-input"
+            (change)="filterByFileTypes()"
+            id="policySelect"
+            value="POLICIES"
+            formControlName="fileType"
+            name="fileType"
+            type="radio"
+          />
+          <label class="form-check-label" for="policySelect" jhiTranslate="bitsHrPayrollApp.FileTemplatesType.POLICIES">Policy</label>
+        </div>
+
+        <div class="form-check form-check-inline mx-md-5 mx-2">
+          <input
+            class="form-check-input"
+            (change)="filterByFileTypes()"
+            id="templateSelect"
+            value="TEMPLATES"
+            formControlName="fileType"
+            name="fileType"
+            type="radio"
+          />
+          <label class="form-check-label" for="templateSelect" jhiTranslate="bitsHrPayrollApp.FileTemplatesType.TEMPLATES">Template</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pt-2">
+    <jhi-alert-error></jhi-alert-error>
+    <jhi-alert></jhi-alert>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="fileTemplates && fileTemplates.length > 0">
+    <table class="table table-striped list-text-color" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">
+            <span>Type</span>
+          </th>
+          <th scope="col">
+            <span>Title</span>
+          </th>
+
+          <th scope="col">
+            <span jhiTranslate="bitsHrPayrollApp.fileTemplates.accessPrivilege">Access Privilege</span>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody
+        infinite-scroll
+        (scrolled)="loadPage(page + 1)"
+        [infiniteScrollDisabled]="page >= links['last']"
+        [infiniteScrollDistance]="0"
+        class="list-text-color"
+      >
+        <tr *ngFor="let fileTemplates of fileTemplates; trackBy: trackId">
+          <td class="w-5">
+            <span container="body" [ngbTooltip]="ClickToDownload">
+              <button container="body" ngbtooltip="clickToDownload" class="btn btn-outline-primary" (click)="export(fileTemplates.id!)">
+                <fa-icon class="font-size-1-rem" [icon]="getFontAwesomeIcon(fileTemplates.fileContentType!)"></fa-icon>
+              </button>
+            </span>
+            <ng-template #ClickToDownload> Click To Download </ng-template>
+          </td>
+
+          <td jhiTranslate="bitsHrPayrollApp.FileTemplatesType.{{ fileTemplates.type }}" class="w-5">{{ fileTemplates.type }}</td>
+
+          <td>{{ fileTemplates.title }}</td>
+
+          <td>{{ convertToNaturalText(fileTemplates.accessPrivilege) }}</td>
+
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/file-templates', fileTemplates.id, 'edit']"
+                data-placement="top"
+                data-toggle="tooltip"
+                title="Edit"
+                class="file-edit-button btn p-0 m-1"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+              </button>
+
+              <button
+                type="submit"
+                (click)="delete(fileTemplates)"
+                data-placement="top"
+                data-toggle="tooltip"
+                title="Delete"
+                class="file-delete-button btn p-0 m-1"
+              >
+                <fa-icon icon="trash-alt"></fa-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

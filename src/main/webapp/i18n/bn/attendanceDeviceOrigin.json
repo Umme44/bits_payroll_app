@@ -1,0 +1,9 @@
+{
+  "bitsHrPayrollApp": {
+    "AttendanceDeviceOrigin": {
+      "null": "",
+      "WEB": "WEB",
+      "DEVICE": "DEVICE"
+    }
+  }
+}

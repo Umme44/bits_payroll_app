@@ -1,0 +1,676 @@
+<jhi-header [headerName]="'Employee Docs'" [shouldHaveHr]="false"> </jhi-header>
+
+<div [formGroup]="searchForm" name="searchForm">
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="card card-body mb-3 d-flex flex-row align-items-center justify-content-between">
+    <div class="d-flex align-items-center justify-content-start">
+      <div class="form-group form-check d-flex align-items-center justify-content-start">
+        <input
+          [checked]="searchForm.get('selectedCertificateType')!.value === 'NOC'"
+          (change)="onChangeCertificateType('NOC')"
+          class="form-check-input m-1"
+          type="radio"
+          name="employeeNoc"
+          id="employeeNoc"
+        />
+        <label class="form-check-label pl-2" for="employeeNoc"> Employee NOC </label>
+      </div>
+      <div class="form-group form-check d-flex align-items-center justify-content-start">
+        <input
+          [checked]="searchForm.get('selectedCertificateType')!.value === 'EC'"
+          (change)="onChangeCertificateType('EC')"
+          class="form-check-input m-1"
+          type="radio"
+          name="employmentCertificate"
+          id="employmentCertificate"
+        />
+        <label class="form-check-label pl-2" for="employmentCertificate"> Employment Certificate </label>
+      </div>
+      <div class="form-group form-check d-flex align-items-center justify-content-start">
+        <input
+          [checked]="searchForm.get('selectedCertificateType')!.value === 'ESC'"
+          (change)="onChangeCertificateType('ESC')"
+          class="form-check-input m-1"
+          type="radio"
+          name="employmentCertificate"
+          id="employeeSalaryCertificate"
+        />
+        <label class="form-check-label pl-2" for="employeeSalaryCertificate"> Employee Salary Certificate </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-3 d-flex align-items-center">
+    <div class="form-group col-md-3">
+      <input
+        class="form-control"
+        formControlName="searchText"
+        placeholder="Name or PIN"
+        (change)="onSearchTextChange($event)"
+        name="searchText"
+        type="text"
+      />
+      <div *ngIf="searchForm.get('searchText')!.invalid && (searchForm.get('searchText')!.dirty || searchForm.get('searchText')!.touched)">
+        <small class="form-text text-danger" *ngIf="searchForm.get('searchText')?.errors?.pattern"> This text is invalid </small>
+      </div>
+    </div>
+
+    <div class="col-6">
+      <div class="row d-flex align-items-center">
+        <div class="form-group form-check col-4 d-flex align-items-center">
+          <input
+            (change)="onStatusChange('ALL')"
+            [checked]="searchForm.get('selectedStatus')!.value === 'ALL'"
+            style="vertical-align: middle"
+            class="form-check-input m-1"
+            type="radio"
+            name="flexRadioDefault0"
+            id="flexRadioDefault0"
+          />
+          <label class="form-check-label ml-2" for="flexRadioDefault0"> ALL </label>
+        </div>
+
+        <div class="form-group form-check col-4 d-flex align-items-center">
+          <input
+            (change)="onStatusChange('SENT_FOR_GENERATION')"
+            [checked]="searchForm.get('selectedStatus')!.value === 'SENT_FOR_GENERATION'"
+            style="vertical-align: middle"
+            class="form-check-input m-1"
+            type="radio"
+            name="flexRadioDefault1"
+            id="flexRadioDefault1"
+          />
+          <label class="form-check-label ml-2" for="flexRadioDefault1"> Pending </label>
+        </div>
+
+        <!--                <div class="form-check col-2 d-flex align-items-center">-->
+        <!--                    <input (change)="onStatusChange('REJECTED')"-->
+        <!--                           [checked]="selectedStatus === 'REJECTED'"-->
+        <!--                           style="vertical-align: middle"-->
+        <!--                           class="form-check-input m-0 "-->
+        <!--                           type="radio"-->
+        <!--                           name="flexRadioDefault3"-->
+        <!--                           id="flexRadioDefault3">-->
+        <!--                    <label  class="form-check-label ml-2" for="flexRadioDefault3">-->
+        <!--                        Rejected-->
+        <!--                    </label>-->
+        <!--                </div>-->
+
+        <div class="form-group form-check col-4 d-flex align-items-center">
+          <input
+            (change)="onStatusChange('GENERATED')"
+            [checked]="searchForm.get('selectedStatus')!.value === 'GENERATED'"
+            style="vertical-align: middle"
+            class="form-check-input m-1"
+            type="radio"
+            name="flexRadioDefault4"
+            id="flexRadioDefault4"
+          />
+          <label class="form-check-label ml-2" for="flexRadioDefault4"> Generated </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group col-md-3">
+      <select (change)="onChangeYear($event)" class="form-control w-100" formControlName="selectedYear" id="year" name="year">
+        <option disabled>-- Select Year --</option>
+        <option selected [value]="0">ALL</option>
+        <option *ngFor="let year of years" [value]="year">
+          {{ year }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <!--employee Noc table-->
+  <div *ngIf="this.searchForm.get('selectedCertificateType')!.value === 'NOC'">
+    <div class="alert alert-warning" id="no-result" *ngIf="employeeNOCS?.length === 0">
+      <span jhiTranslate="bitsHrPayrollApp.employeeNOC.home.notFound">No Employee NOC Found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="employeeNOCS && employeeNOCS.length > 0">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr>
+            <th scope="col"><span jhiTranslate="bitsHrPayrollApp.employeeNOC.certificateStatus">Certificate Status</span></th>
+            <th scope="col" class="text-center">
+              <span jhiTranslate="bitsHrPayrollApp.employeeNOC.isRequiredForVisa">Required for Visa</span>
+            </th>
+            <th scope="col"><span>PIN</span></th>
+            <th scope="col"><span>Name</span></th>
+            <th scope="col"><span jhiTranslate="bitsHrPayrollApp.employeeNOC.passportNumber">Passport Number</span></th>
+            <th scope="col"><span jhiTranslate="bitsHrPayrollApp.employeeNOC.leaveStartDate">Leave Start</span></th>
+            <th scope="col"><span jhiTranslate="bitsHrPayrollApp.employeeNOC.leaveEndDate">Leave End</span></th>
+            <th scope="col"><span jhiTranslate="bitsHrPayrollApp.employeeNOC.purposeOfNOC">Purpose</span></th>
+            <th scope="col"><span jhiTranslate="bitsHrPayrollApp.employeeNOC.countryToVisit">Country to visit</span></th>
+            <th scope="col" *ngIf="this.searchForm.get('selectedStatus')!.value === 'GENERATED'">
+              <span jhiTranslate="bitsHrPayrollApp.employeeNOC.referenceNumber">Reference Number</span>
+            </th>
+            <th scope="col"><span jhiTranslate="bitsHrPayrollApp.employeeNOC.createdAt">Applied at</span></th>
+            <th scope="col" *ngIf="this.searchForm.get('selectedStatus')!.value === 'SENT_FOR_GENERATION'"></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+
+        <tbody
+          infinite-scroll
+          (scrolled)="loadPage(page + 1)"
+          [infiniteScrollDisabled]="page >= links['last']"
+          [infiniteScrollDistance]="0"
+        >
+          <tr *ngFor="let employeeNOC of employeeNOCS; trackBy: trackId">
+            <td jhiTranslate="{{ 'bitsHrPayrollApp.CertificateStatus.' + employeeNOC!.certificateStatus }}">
+              {{ employeeNOC!.certificateStatus }}
+            </td>
+            <td class="text-center">
+              <span *ngIf="employeeNOC.isRequiredForVisa === true">
+                <fa-icon icon="check-circle" class="text-success" style="font-size: 0.9rem"></fa-icon>
+              </span>
+            </td>
+            <td>{{ employeeNOC!.employeePin }}</td>
+            <td>{{ employeeNOC!.employeeName }}</td>
+            <td>{{ employeeNOC!.passportNumber }}</td>
+            <td>{{ employeeNOC!.leaveStartDate | formatMediumDate }}</td>
+            <td>{{ employeeNOC!.leaveEndDate | formatMediumDate }}</td>
+            <td jhiTranslate="{{ 'bitsHrPayrollApp.PurposeOfNOC.' + employeeNOC!.purposeOfNOC }}">{{ employeeNOC!.purposeOfNOC }}</td>
+            <td>{{ employeeNOC!.countryToVisit }}</td>
+            <td *ngIf="this.searchForm.get('selectedStatus')!.value === 'GENERATED'">{{ employeeNOC!.referenceNumber }}</td>
+            <td>{{ employeeNOC!.createdAt | formatMediumDate }}</td>
+
+            <td *ngIf="this.searchForm.get('selectedStatus')!.value === 'SENT_FOR_GENERATION'">
+              <button
+                class="btn btn-success btn-sm cursor-pointer"
+                style="border-radius: 4px"
+                (click)="approve(employeeNocApprovalModal, employeeNOC!, undefined)"
+                data-placement="top"
+                data-toggle="tooltip"
+                title="Generate"
+                type="submit"
+              >
+                Generate
+              </button>
+
+              <!--                        <button class=" btn btn-danger btn-sm"-->
+              <!--                                (click)="reject(employeeNocRejectionModal, employeeNOC!, undefined)"-->
+              <!--                                data-placement="top"-->
+              <!--                                data-toggle="tooltip"-->
+              <!--                                title="Reject"-->
+              <!--                                type="submit">-->
+              <!--                            <fa-icon [icon]="['fas', 'times']"></fa-icon>-->
+              <!--                        </button>-->
+            </td>
+
+            <td class="text-right">
+              <div class="btn-group">
+                <button
+                  *ngIf="this.searchForm.get('selectedStatus')!.value === 'GENERATED'"
+                  class="btn btn-success btn-sm"
+                  [routerLink]="['/employee-docs-admin/employee-noc', employeeNOC!.id, 'print-format']"
+                  data-placement="top"
+                  data-toggle="tooltip"
+                  title="Print Format"
+                >
+                  <fa-icon icon="print"></fa-icon>
+                  print
+                </button>
+
+                <button
+                  type="submit"
+                  [routerLink]="['/employee-docs-admin/employee-noc', employeeNOC!.id, 'view']"
+                  class="btn btn-info btn-sm"
+                >
+                  <fa-icon icon="eye"></fa-icon>
+                </button>
+
+                <button type="submit" (click)="deleteNOC(employeeNOC!)" class="btn btn-danger btn-sm">
+                  <fa-icon icon="times"></fa-icon>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!--Employment Certificate Table-->
+  <div *ngIf="this.searchForm.get('selectedCertificateType')!.value === 'EC'">
+    <div class="alert alert-warning" *ngIf="employmentCertificates?.length === 0">
+      <span jhiTranslate="bitsHrPayrollApp.employmentCertificate.home.notFound">No employmentCertificates found</span>
+    </div>
+
+    <div class="table-responsive" *ngIf="employmentCertificates && employmentCertificates.length > 0">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr>
+            <th scope="col"><span jhiTranslate="bitsHrPayrollApp.employmentCertificate.certificateStatus">Certificate Status</span></th>
+            <th scope="col"><span>Employee</span></th>
+            <th scope="col"><span>Department</span></th>
+            <th scope="col"><span>Designation</span></th>
+            <th scope="col"><span jhiTranslate="bitsHrPayrollApp.employmentCertificate.referenceNumber">Reference Number</span></th>
+            <th scope="col"><span jhiTranslate="bitsHrPayrollApp.employmentCertificate.createdAt">Applied at</span></th>
+            <th scope="col" *ngIf="this.searchForm.get('selectedStatus')!.value === 'SENT_FOR_GENERATION'"></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody
+          infinite-scroll
+          (scrolled)="loadPage(page + 1)"
+          [infiniteScrollDisabled]="page >= links['last']"
+          [infiniteScrollDistance]="0"
+        >
+          <tr *ngFor="let employmentCertificate of employmentCertificates; trackBy: trackId">
+            <td jhiTranslate="{{ 'bitsHrPayrollApp.CertificateStatus.' + employmentCertificate!.certificateStatus }}">
+              {{ employmentCertificate!.certificateStatus }}
+            </td>
+            <td>{{ employmentCertificate!.employeePin }} - {{ employmentCertificate!.employeeName }}</td>
+            <td>{{ employmentCertificate!.departmentName }}</td>
+            <td>{{ employmentCertificate!.designationName }}</td>
+            <td>{{ employmentCertificate!.referenceNumber }}</td>
+            <td>{{ employmentCertificate!.createdAt | formatMediumDate }}</td>
+
+            <td *ngIf="this.searchForm.get('selectedStatus')!.value === 'SENT_FOR_GENERATION'">
+              <button
+                class="btn btn-success btn-sm cursor-pointer"
+                style="border-radius: 4px"
+                (click)="approve(employmentCertificateApprovalModal, undefined, employmentCertificate!)"
+                data-placement="top"
+                data-toggle="tooltip"
+                title="Generate"
+                type="submit"
+              >
+                Generate
+              </button>
+
+              <!--                        <button class=" btn btn-danger btn-sm"-->
+              <!--                                (click)="reject(employmentCertificateRejectionModal, undefined, employmentCertificate!)"-->
+              <!--                                data-placement="top"-->
+              <!--                                data-toggle="tooltip"-->
+              <!--                                title="Reject"-->
+              <!--                                type="submit">-->
+              <!--                            <fa-icon [icon]="['fas', 'times']"></fa-icon>-->
+              <!--                        </button>-->
+            </td>
+
+            <td class="text-right">
+              <div class="btn-group">
+                <button
+                  *ngIf="this.searchForm.get('selectedStatus')!.value === 'GENERATED'"
+                  class="btn btn-success btn-sm"
+                  [routerLink]="['/employee-docs-admin/employment-certificate', employmentCertificate!.id, 'print-format']"
+                  data-placement="top"
+                  data-toggle="tooltip"
+                  title="Print Format"
+                >
+                  <fa-icon icon="print"></fa-icon>
+                  print
+                </button>
+
+                <button
+                  type="submit"
+                  [routerLink]="['/employee-docs-admin/employment-certificate', employmentCertificate!.id, 'view']"
+                  class="btn btn-info btn-sm"
+                >
+                  <fa-icon icon="eye"></fa-icon>
+                </button>
+
+                <button type="submit" (click)="deleteEmploymentCertificate(employmentCertificate!)" class="btn btn-danger btn-sm">
+                  <fa-icon icon="times"></fa-icon>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!--Employee Salary Certificate table-->
+  <div *ngIf="this.searchForm.get('selectedCertificateType')!.value === 'ESC'">
+    <div class="alert alert-warning" *ngIf="salaryCertificates?.length === 0">
+      <span>No Employee Salary Certificate Found</span>
+    </div>
+
+    <div class="table-responsive" *ngIf="salaryCertificates && salaryCertificates.length > 0">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr>
+            <th scope="col"><span>Certificate Status</span></th>
+            <th scope="col"><span>Employee</span></th>
+            <th scope="col"><span>Designation</span></th>
+            <th scope="col"><span>Purpose</span></th>
+            <th scope="col"><span>Application Date</span></th>
+            <th scope="col"><span>Salary Month</span></th>
+            <th scope="col"><span>Reference number</span></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+
+        <tbody
+          infinite-scroll
+          (scrolled)="loadPage(page + 1)"
+          [infiniteScrollDisabled]="page >= links['last']"
+          [infiniteScrollDistance]="0"
+        >
+          <tr *ngFor="let salaryCertificate of salaryCertificates; trackBy: trackSalaryCertificateId">
+            <td>{{ salaryCertificate.status }}</td>
+            <td>{{ salaryCertificate.pin }} - {{ salaryCertificate.employeeName }}</td>
+            <td>{{ salaryCertificate.designationName }}</td>
+            <td>{{ salaryCertificate.purpose }}</td>
+            <td>{{ salaryCertificate.createdAt | formatMediumDate }}</td>
+            <td>{{ monthNameNormaCapitalize(salaryCertificate.month) }}, {{ salaryCertificate.year }}</td>
+            <td>{{ salaryCertificate.referenceNumber }}</td>
+
+            <td *ngIf="this.searchForm.get('selectedStatus')!.value === 'SENT_FOR_GENERATION'">
+              <button
+                class="btn btn-success btn-sm cursor-pointer"
+                style="border-radius: 4px"
+                (click)="approveSalaryCertificate(employeeSalaryCertificateApprovalModal, salaryCertificate)"
+                data-placement="top"
+                data-toggle="tooltip"
+                title="Generate"
+                type="submit"
+              >
+                Generate
+              </button>
+            </td>
+
+            <td class="text-right">
+              <div class="btn-group">
+                <button
+                  *ngIf="this.searchForm.get('selectedStatus')!.value === 'GENERATED'"
+                  class="btn btn-success btn-sm"
+                  [routerLink]="['/employee-docs-admin/employee-salary-certificate', salaryCertificate!.id, 'print-format']"
+                  data-placement="top"
+                  data-toggle="tooltip"
+                  title="Print Format"
+                >
+                  <fa-icon icon="print"></fa-icon>
+                  print
+                </button>
+
+                <button
+                  type="submit"
+                  [routerLink]="['/employee-docs-admin/employee-salary-certificate', salaryCertificate!.id, 'view']"
+                  class="btn btn-info btn-sm"
+                >
+                  <fa-icon icon="eye"></fa-icon>
+                </button>
+
+                <button type="submit" (click)="deleteSalaryCertificate(salaryCertificate!)" class="btn btn-danger btn-sm">
+                  <fa-icon icon="times"></fa-icon>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!--Approve Employee NOC-->
+<ng-template #employeeNocApprovalModal let-modal>
+  <div class="modal-header border-0">
+    <h6 class="modal-title" id="modal-basic-title">Generate Employee NOC</h6>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="font-sm row mb-3">
+      <div class="col-6">Employee PIN</div>
+      <div class="col-6">{{ selectedEmployeeNoc!.employeePin }}</div>
+      <div class="col-6">Employee Name</div>
+      <div class="col-6">{{ selectedEmployeeNoc!.employeeName }}</div>
+      <div class="col-6">Department</div>
+      <div class="col-6">{{ selectedEmployeeNoc!.departmentName }}</div>
+      <div class="col-6">Designation</div>
+      <div class="col-6">{{ selectedEmployeeNoc!.designationName }}</div>
+      <div class="col-6">Unit</div>
+      <div class="col-6">{{ selectedEmployeeNoc!.unitName }}</div>
+
+      <div class="col-6">Passport Number</div>
+      <div class="col-6">{{ selectedEmployeeNoc!.passportNumber }}</div>
+      <div class="col-6">Leave Start date</div>
+      <div class="col-6">{{ selectedEmployeeNoc!.leaveStartDate | formatMediumDate }}</div>
+      <div class="col-6">Leave End Date</div>
+      <div class="col-6">{{ selectedEmployeeNoc!.leaveEndDate | formatMediumDate }}</div>
+      <div class="col-6">Purpose</div>
+      <div class="col-6">{{ selectedEmployeeNoc!.purposeOfNOC }}</div>
+      <div class="col-6">Is Required for Visa</div>
+      <div class="col-6">{{ selectedEmployeeNoc!.isRequiredForVisa === true ? 'Yes' : 'No' }}</div>
+      <div class="col-6">Country to Visit</div>
+      <div class="col-6">{{ selectedEmployeeNoc!.countryToVisit }}</div>
+    </div>
+
+    <div [formGroup]="editForm" name="editForm">
+      <!--            <div class="form-group ">-->
+      <!--                <label class="font-sm font-weight-bold required">Reference Number</label>-->
+      <!--                <input class="form-control" formControlName="referenceId" placeholder="Ex. 2022/123" (keyup)="onChangeReferenceNumber('NOC')" type="text">-->
+      <!--                <div *ngIf="isInvalidRefId">-->
+      <!--                    <span class="text-danger font-sm">This reference number is already in use. Please use a unique one.</span>-->
+      <!--                </div>-->
+      <!--            </div>-->
+
+      <div class="form-group">
+        <label class="font-sm font-weight-bold required">Signatory Person</label>
+        <div class="font-sm">
+          <ng-select
+            [items]="employees"
+            bindLabel="fullName"
+            bindValue="id"
+            [searchable]="true"
+            [clearable]="true"
+            appearance="outline"
+            id="field_signatoryPersonId"
+            formControlName="signatoryPersonId"
+            (keyup)="onChangeSignatoryPerson()"
+            placeholder="Select Signatory Person"
+          >
+          </ng-select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="font-sm font-weight-bold required">Issue Date</label>
+        <div class="input-group">
+          <input
+            id="field_issueDate3"
+            (keyup)="onChangeIssueDate()"
+            type="text"
+            class="form-control"
+            name="issueDate"
+            ngbDatepicker
+            #issueDateDp="ngbDatepicker"
+            formControlName="issueDate"
+          />
+          <span class="input-group-append">
+            <button type="button" class="btn btn-secondary" (click)="issueDateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-6">
+        <button
+          [disabled]="shouldDisableApproveButton() || isInvalidRefId"
+          (click)="modal.close('Save click')"
+          class="btn btn-success btn-md w-100"
+        >
+          Generate
+        </button>
+      </div>
+
+      <div class="col-6">
+        <button type="button" class="btn btn-danger btn-md w-100" (click)="modal.dismiss()">Cancel</button>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer border-0 justify-content-start"></div>
+</ng-template>
+
+<!--Approve Employment Certificate-->
+<ng-template #employmentCertificateApprovalModal let-modal>
+  <div class="modal-header border-0">
+    <h6 class="modal-title" id="modal-basic-title2">Generate Employment Certificate</h6>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="font-sm row mb-3">
+      <div class="col-6">Employee PIN</div>
+      <div class="col-6">{{ selectedEmploymentCertificate!.employeePin }}</div>
+      <div class="col-6">Employee Name</div>
+      <div class="col-6">{{ selectedEmploymentCertificate!.employeeName }}</div>
+      <div class="col-6">Department</div>
+      <div class="col-6">{{ selectedEmploymentCertificate!.departmentName }}</div>
+      <div class="col-6">Designation</div>
+      <div class="col-6">{{ selectedEmploymentCertificate!.designationName }}</div>
+      <div class="col-6">Unit</div>
+      <div class="col-6">{{ selectedEmploymentCertificate!.unitName }}</div>
+    </div>
+
+    <div [formGroup]="editForm" name="editForm">
+      <!--            <div class="form-group ">-->
+      <!--                <label class="font-sm font-weight-bold required">Reference Number</label>-->
+      <!--                <input class="form-control" formControlName="referenceId" placeholder="Ex. 2022/123" (keyup)="onChangeReferenceNumber('EC')" type="text">-->
+      <!--                <div *ngIf="isInvalidRefId">-->
+      <!--                    <span class="text-danger font-sm">This reference number is already in use. Please use a unique one.</span>-->
+      <!--                </div>-->
+      <!--            </div>-->
+
+      <div class="form-group">
+        <label class="font-sm font-weight-bold required">Signatory Person</label>
+        <div class="font-sm">
+          <ng-select
+            [items]="employees"
+            bindLabel="fullName"
+            bindValue="id"
+            [searchable]="true"
+            [clearable]="true"
+            appearance="outline"
+            id="field_signatoryPersonId2"
+            formControlName="signatoryPersonId"
+            (keyup)="onChangeSignatoryPerson()"
+            placeholder="Select Signatory Person"
+          >
+          </ng-select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="font-sm font-weight-bold required">Issue Date</label>
+        <div class="input-group">
+          <input
+            id="field_issueDate"
+            (keyup)="onChangeIssueDate()"
+            type="text"
+            class="form-control"
+            name="issueDate"
+            ngbDatepicker
+            #issueDateDp="ngbDatepicker"
+            formControlName="issueDate"
+          />
+          <span class="input-group-append">
+            <button type="button" class="btn btn-secondary" (click)="issueDateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-6">
+        <button
+          [disabled]="shouldDisableApproveButton() || isInvalidRefId"
+          (click)="modal.close('Save click')"
+          class="btn btn-success btn-md w-100"
+        >
+          Generate
+        </button>
+      </div>
+
+      <div class="col-6">
+        <button type="button" class="btn btn-danger btn-md w-100" (click)="modal.dismiss()">Cancel</button>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer border-0 justify-content-start"></div>
+</ng-template>
+
+<!--Approve Employee Salary Certificate-->
+<ng-template #employeeSalaryCertificateApprovalModal let-modal>
+  <div class="modal-header border-0">
+    <h6 class="modal-title">Generate Employee Salary Certificate</h6>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="font-sm row mb-3">
+      <div class="col-6">Employee PIN</div>
+      <div class="col-6">{{ selectedSalaryCertificate!.pin }}</div>
+      <div class="col-6">Employee Name</div>
+      <div class="col-6">{{ selectedSalaryCertificate!.employeeName }}</div>
+      <div class="col-6">Designation</div>
+      <div class="col-6">{{ selectedSalaryCertificate!.designationName }}</div>
+      <div class="col-6">Purpose</div>
+      <div class="col-6">{{ selectedSalaryCertificate!.purpose }}</div>
+      <div class="col-6">Salary Month</div>
+      <div class="col-6">{{ selectedSalaryCertificate!.month }}, {{ selectedSalaryCertificate!.year }}</div>
+      <div class="col-6">Application Date</div>
+      <div class="col-6">{{ selectedSalaryCertificate!.createdAt | formatMediumDate }}</div>
+    </div>
+
+    <div [formGroup]="editForm" name="editForm">
+      <!--            <div class="form-group ">-->
+      <!--                <label class="font-sm font-weight-bold required">Reference Number</label>-->
+      <!--                <input class="form-control" formControlName="referenceId" placeholder="Ex. 2022/123" (keyup)="onChangeReferenceNumber('ESC')" type="text">-->
+      <!--                <div *ngIf="isInvalidRefId">-->
+      <!--                    <span class="text-danger font-sm">This reference number is already in use. Please use a unique one.</span>-->
+      <!--                </div>-->
+      <!--            </div>-->
+
+      <div class="form-group">
+        <label class="font-sm font-weight-bold required">Signatory Person</label>
+        <div class="font-sm">
+          <ng-select
+            [items]="employees"
+            bindLabel="fullName"
+            bindValue="id"
+            [searchable]="true"
+            [clearable]="true"
+            appearance="outline"
+            id="field_signatoryPersonId"
+            formControlName="signatoryPersonId"
+            (keyup)="onChangeSignatoryPerson()"
+            placeholder="Select Signatory Person"
+          >
+          </ng-select>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-6">
+        <button
+          [disabled]="shouldDisableApproveButton() || isInvalidRefId"
+          (click)="modal.close('Save click')"
+          class="btn btn-success btn-md w-100"
+        >
+          Generate
+        </button>
+      </div>
+
+      <div class="col-6">
+        <button type="button" class="btn btn-danger btn-md w-100" (click)="modal.dismiss()">Cancel</button>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer border-0 justify-content-start"></div>
+</ng-template>

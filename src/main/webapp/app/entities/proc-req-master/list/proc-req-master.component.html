@@ -1,0 +1,164 @@
+<div>
+  <jhi-header headerName="Procurement Requisitions Manage"> </jhi-header>
+
+  <!--    Filter start -->
+
+  <div class="card card-body mb-2">
+    <form name="searchForm" role="form" novalidate [formGroup]="searchForm">
+      <div class="row">
+        <div class="col-md-4">
+          <label>Employee</label>
+          <jhi-simple-select-employee-form (onChangeEmployee)="changeEmployee($event)"></jhi-simple-select-employee-form>
+        </div>
+
+        <div class="col-md-4">
+          <label jhiTranslate="bitsHrPayrollApp.procReqMaster.department" for="field_department">Department</label>
+          <select
+            class="form-control"
+            id="field_department"
+            name="department"
+            formControlName="departmentId"
+            (change)="changeDepartment($event)"
+          >
+            <option [value]="null">All</option>
+            <option [ngValue]="departmentOption.id" *ngFor="let departmentOption of departments">
+              {{ departmentOption.departmentName }}
+            </option>
+          </select>
+        </div>
+
+        <div class="col-md-4">
+          <label jhiTranslate="bitsHrPayrollApp.procReqMaster.requisitionStatus" for="field_requisitionStatus">Requisition Status</label>
+          <select
+            class="form-control"
+            name="requisitionStatus"
+            formControlName="requisitionStatus"
+            id="field_requisitionStatus"
+            (change)="changeRequisitionStatus($event)"
+          >
+            <option [value]="null">All</option>
+            <option value="PENDING">{{ 'bitsHrPayrollApp.RequisitionStatus.PENDING' | translate }}</option>
+            <option value="IN_PROGRESS">{{ 'bitsHrPayrollApp.RequisitionStatus.IN_PROGRESS' | translate }}</option>
+            <option value="OPEN">{{ 'bitsHrPayrollApp.RequisitionStatus.OPEN' | translate }}</option>
+            <option value="CLOSED">{{ 'bitsHrPayrollApp.RequisitionStatus.CLOSED' | translate }}</option>
+            <option value="NOT_APPROVED">{{ 'bitsHrPayrollApp.RequisitionStatus.NOT_APPROVED' | translate }}</option>
+          </select>
+        </div>
+
+        <div class="col-md-4">
+          <label>Year</label>
+          <jhi-select-year
+            [showWithPlaceHolder]="true"
+            [startFromCurrentYear]="true"
+            [countOfLastYears]="10"
+            (selectYearEventEmitter)="selectYear($event)"
+          >
+          </jhi-select-year>
+        </div>
+
+        <div class="col-md-4">
+          <jhi-select-month (selectMonthEventEmitter)="selectMonth($event)"></jhi-select-month>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!--    Filter end -->
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="" id="no-result" *ngIf="procReqMasters?.length === 0">
+    <div class="d-flex justify-content-center">
+      <img style="width: 40rem" src="../../../content/images/no-data-found.png" alt="No Data Found" />
+    </div>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="procReqMasters && procReqMasters.length > 0">
+    <table class="table table-hover list-text-color" aria-describedby="page-heading">
+      <thead>
+        <tr class="text-nowrap">
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.procReqMaster.requisitionNo">Requisition No</span></th>
+
+          <th scope="col"><span>Requester PIN</span></th>
+          <th scope="col"><span>Requester Name</span></th>
+          <th scope="col"><span>Designation</span></th>
+          <th scope="col"><span>Department</span></th>
+
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.procReqMaster.requestedDate">Requested Date</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.procReqMaster.expectedReceivedDate">Expected Received Date</span></th>
+          <!--                    <th scope="col"  jhiSortBy="reasoning"><span jhiTranslate="bitsHrPayrollApp.procReqMaster.reasoning">Reasoning</span> </th>-->
+          <th scope="col">
+            <span class="d-block text-end" jhiTranslate="bitsHrPayrollApp.procReqMaster.totalApproximatePrice"
+              >Total Approximate Price</span
+            >
+          </th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.procReqMaster.requisitionStatus">Requisition Status</span></th>
+
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+        <tr class="text-nowrap" *ngFor="let procReqMaster of procReqMasters; trackBy: trackId">
+          <td>
+            <a class="text-decoration-underline" (click)="navigatePrintView(procReqMaster.id!)">{{ procReqMaster.requisitionNo }}</a>
+          </td>
+          <td>{{ procReqMaster.requestedByPIN }}</td>
+          <td>{{ procReqMaster.requestedByFullName }}</td>
+          <td>{{ procReqMaster.requestedByDesignationName }}</td>
+          <td>{{ procReqMaster.requestedByDepartmentName }}</td>
+
+          <td>{{ procReqMaster.requestedDate | formatMediumDate }}</td>
+
+          <td>{{ procReqMaster.expectedReceivedDate | formatMediumDate }}</td>
+          <!--                    <td>{{ procReqMaster.reasoning }}</td>-->
+          <td>
+            <span class="d-block text-end">
+              {{ procReqMaster.totalApproximatePrice }}
+            </span>
+          </td>
+          <td jhiTranslate="{{ 'bitsHrPayrollApp.RequisitionStatus.' + procReqMaster.requisitionStatus }}">
+            {{ procReqMaster.requisitionStatus }}
+          </td>
+          <!--                    <td>-->
+          <!--                        <div *ngIf="procReqMaster.departmentId">-->
+          <!--                            <a [routerLink]="['/department', procReqMaster.departmentId , 'view']" >{{ procReqMaster.departmentName }}</a>-->
+          <!--                        </div>-->
+          <!--                    </td>-->
+
+          <td class="text-end">
+            <div class="">
+              <button
+                *ngIf="procReqMaster.requisitionStatus === 'OPEN'"
+                (click)="closePRF(procReqMaster.id!)"
+                type="submit"
+                class="btn btn-dark btn-sm border-radius-minimal me-1"
+              >
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.close">Close</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/procurement-requisition-manage', procReqMaster.id, 'view']"
+                class="btn btn-info btn-sm border-radius-minimal me-1"
+              >
+                <fa-icon icon="eye"></fa-icon>
+              </button>
+
+              <!--                            <button type="submit"-->
+              <!--                                    [routerLink]="['/procurement-requisition/manage', procReqMaster.id, 'edit']"-->
+              <!--                                    class="btn btn-primary btn-sm border-radius-minimal me-1">-->
+              <!--                                <fa-icon icon="pencil-alt"></fa-icon>-->
+              <!--                            </button>-->
+
+              <button type="submit" (click)="delete(procReqMaster)" class="btn btn-danger btn-sm border-radius-minimal">
+                <fa-icon icon="trash"></fa-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

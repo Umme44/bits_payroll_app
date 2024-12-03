@@ -1,0 +1,59 @@
+<jhi-header
+  [headerName]="!editForm.get('id')!.value ? 'Add New Units' : 'Edit Units'"
+  [midHeaderName01]="'Units'"
+  [midRouterLinkText01]="'/unit'"
+  [shouldHaveHr]="false"
+>
+</jhi-header>
+
+<div>
+  <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+    <div>
+      <jhi-alert-error></jhi-alert-error>
+
+      <div class="card card-body px-3 py-3">
+        <div class="row">
+          <div class="col-md-12">
+            <label class="form-label" jhiTranslate="bitsHrPayrollApp.unit.unitName" for="field_unitName">Unit Name</label>
+            <input type="text" class="form-control" name="unitName" id="field_unitName" data-cy="unitName" formControlName="unitName" />
+            <div *ngIf="editForm.get('unitName')!.invalid && (editForm.get('unitName')!.dirty || editForm.get('unitName')!.touched)">
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('unitName')?.errors?.required"
+                jhiTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+            </div>
+            <div *ngIf="editForm.get('unitName')!.invalid && (editForm.get('unitName')!.dirty || editForm.get('unitName')!.touched)">
+              <small class="form-text text-danger" *ngIf="editForm.get('unitName')?.errors?.pattern">
+                This field must be a natural text.
+              </small>
+            </div>
+          </div>
+        </div>
+        <div>
+          <button
+            type="button"
+            id="cancel-save"
+            data-cy="entityCreateCancelButton"
+            class="btn btn-secondary mt-2"
+            (click)="previousState()"
+          >
+            <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+          </button>
+
+          <button
+            type="submit"
+            id="save-entity"
+            data-cy="entityCreateSaveButton"
+            [disabled]="editForm.invalid || isSaving"
+            class="btn btn-primary mt-2"
+          >
+            <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

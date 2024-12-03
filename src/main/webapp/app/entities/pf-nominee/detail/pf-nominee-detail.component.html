@@ -1,0 +1,172 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="pfNominee">
+      <h2 data-cy="pfNomineeDetailsHeading"><span jhiTranslate="bitsHrPayrollApp.pfNominee.detail.title">Pf Nominee</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ pfNominee.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfNominee.nominationDate">Nomination Date</span></dt>
+        <dd>
+          <span>{{ pfNominee.nominationDate | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfNominee.fullName">Full Name</span></dt>
+        <dd>
+          <span>{{ pfNominee.fullName }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfNominee.presentAddress">Present Address</span></dt>
+        <dd>
+          <span>{{ pfNominee.presentAddress }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfNominee.permanentAddress">Permanent Address</span></dt>
+        <dd>
+          <span>{{ pfNominee.permanentAddress }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfNominee.relationship">Relationship</span></dt>
+        <dd>
+          <span>{{ pfNominee.relationship }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfNominee.dateOfBirth">Date Of Birth</span></dt>
+        <dd>
+          <span>{{ pfNominee.dateOfBirth | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfNominee.age">Age</span></dt>
+        <dd>
+          <span>{{ pfNominee.age }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfNominee.sharePercentage">Share Percentage</span></dt>
+        <dd>
+          <span>{{ pfNominee.sharePercentage }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfNominee.nidNumber">Nid Number</span></dt>
+        <dd>
+          <span>{{ pfNominee.nidNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfNominee.isNidVerified">Is Nid Verified</span></dt>
+        <dd>
+          <span>{{ pfNominee.isNidVerified }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfNominee.passportNumber">Passport Number</span></dt>
+        <dd>
+          <span>{{ pfNominee.passportNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfNominee.brnNumber">Brn Number</span></dt>
+        <dd>
+          <span>{{ pfNominee.brnNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfNominee.photo">Photo</span></dt>
+        <dd>
+          <span>{{ pfNominee.photo }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfNominee.guardianName">Guardian Name</span></dt>
+        <dd>
+          <span>{{ pfNominee.guardianName }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfNominee.guardianFatherOrSpouseName">Guardian Father Or Spouse Name</span></dt>
+        <dd>
+          <span>{{ pfNominee.guardianFatherOrSpouseName }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfNominee.guardianDateOfBirth">Guardian Date Of Birth</span></dt>
+        <dd>
+          <span>{{ pfNominee.guardianDateOfBirth | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfNominee.guardianPresentAddress">Guardian Present Address</span></dt>
+        <dd>
+          <span>{{ pfNominee.guardianPresentAddress }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfNominee.guardianPermanentAddress">Guardian Permanent Address</span></dt>
+        <dd>
+          <span>{{ pfNominee.guardianPermanentAddress }}</span>
+        </dd>
+        <dt>
+          <span jhiTranslate="bitsHrPayrollApp.pfNominee.guardianProofOfIdentityOfLegalGuardian"
+            >Guardian Proof Of Identity Of Legal Guardian</span
+          >
+        </dt>
+        <dd>
+          <span>{{ pfNominee.guardianProofOfIdentityOfLegalGuardian }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfNominee.guardianRelationshipWithNominee">Guardian Relationship With Nominee</span></dt>
+        <dd>
+          <span>{{ pfNominee.guardianRelationshipWithNominee }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfNominee.guardianNidNumber">Guardian Nid Number</span></dt>
+        <dd>
+          <span>{{ pfNominee.guardianNidNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfNominee.guardianBrnNumber">Guardian Brn Number</span></dt>
+        <dd>
+          <span>{{ pfNominee.guardianBrnNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfNominee.guardianIdNumber">Guardian Id Number</span></dt>
+        <dd>
+          <span>{{ pfNominee.guardianIdNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfNominee.isGuardianNidVerified">Is Guardian Nid Verified</span></dt>
+        <dd>
+          <span>{{ pfNominee.isGuardianNidVerified }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfNominee.isApproved">Is Approved</span></dt>
+        <dd>
+          <span>{{ pfNominee.isApproved }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfNominee.identityType">Identity Type</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.IdentityType.' + pfNominee.identityType }}">{{ pfNominee.identityType }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfNominee.idNumber">Id Number</span></dt>
+        <dd>
+          <span>{{ pfNominee.idNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfNominee.documentName">Document Name</span></dt>
+        <dd>
+          <span>{{ pfNominee.documentName }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfNominee.guardianIdentityType">Guardian Identity Type</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.IdentityType.' + pfNominee.guardianIdentityType }}">{{
+            pfNominee.guardianIdentityType
+          }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfNominee.guardianDocumentName">Guardian Document Name</span></dt>
+        <dd>
+          <span>{{ pfNominee.guardianDocumentName }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfNominee.pfAccount">Pf Account</span></dt>
+        <dd>
+          <div *ngIf="pfNominee.pfAccount">
+            <a [routerLink]="['/pf-account', pfNominee.pfAccount.id, 'view']">{{ pfNominee.pfAccount.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfNominee.pfWitness">Pf Witness</span></dt>
+        <dd>
+          <div *ngIf="pfNominee.pfWitness">
+            <a [routerLink]="['/employee', pfNominee.pfWitness.id, 'view']">{{ pfNominee.pfWitness.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfNominee.approvedBy">Approved By</span></dt>
+        <dd>
+          <div *ngIf="pfNominee.approvedBy">
+            <a [routerLink]="['/employee', pfNominee.approvedBy.id, 'view']">{{ pfNominee.approvedBy.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/pf-nominee', pfNominee.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

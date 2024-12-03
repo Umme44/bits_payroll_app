@@ -1,0 +1,128 @@
+{
+  "changelogDate": "20220613045714",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "vehicle_requisition",
+  "fields": [
+    {
+      "fieldName": "purpose",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "otherPassengersName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "totalNumberOfPassengers",
+      "fieldType": "Long",
+      "fieldValidateRules": ["required", "min", "max"],
+      "fieldValidateRulesMax": "500",
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "Status",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "PENDING,APPROVED,NOT_APPROVED"
+    },
+    {
+      "fieldName": "remarks",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "createdAt",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "updatedAt",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "sanctionAt",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "transactionNumber",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "startDate",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "endDate",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "startTime",
+      "fieldType": "Double",
+      "fieldValidateRules": ["required", "min", "max"],
+      "fieldValidateRulesMax": "24",
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "endTime",
+      "fieldType": "Double",
+      "fieldValidateRules": ["required", "min", "max"],
+      "fieldValidateRulesMax": "24",
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "area",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "VehicleRequisition",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "vehicleRequisition",
+      "ownerSide": true,
+      "relationshipName": "createdBy",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": []
+    },
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "vehicleRequisition",
+      "ownerSide": true,
+      "relationshipName": "updatedBy",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "vehicleRequisition",
+      "ownerSide": true,
+      "relationshipName": "approvedBy",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "vehicleRequisition",
+      "relationshipName": "requester",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "vehicle",
+      "otherEntityRelationshipName": "vehicleRequisition",
+      "relationshipName": "vehicle",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

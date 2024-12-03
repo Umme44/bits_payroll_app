@@ -1,0 +1,26 @@
+{
+  "bitsHrPayrollApp": {
+    "userFeedback": {
+      "home": {
+        "title": "User Feedbacks",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new User Feedback",
+        "createOrEditLabel": "Create or edit a User Feedback",
+        "notFound": "No User Feedbacks found"
+      },
+      "created": "A new User Feedback is created with identifier {{ param }}",
+      "updated": "A User Feedback is updated with identifier {{ param }}",
+      "deleted": "A User Feedback is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete User Feedback {{ id }}?"
+      },
+      "detail": {
+        "title": "User Feedback"
+      },
+      "id": "ID",
+      "rating": "Rating",
+      "suggestion": "Suggestion",
+      "user": "User"
+    }
+  }
+}

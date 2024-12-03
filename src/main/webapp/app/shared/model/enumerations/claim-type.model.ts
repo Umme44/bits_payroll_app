@@ -1,0 +1,5 @@
+export const enum ClaimType {
+  HOSPITALIZATION = 'HOSPITALIZATION',
+
+  MATERNITY = 'MATERNITY',
+}

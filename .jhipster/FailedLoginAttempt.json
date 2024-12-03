@@ -1,0 +1,27 @@
+{
+  "changelogDate": "20231126103818",
+  "dto": "no",
+  "fields": [
+    {
+      "fieldName": "userName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "continuousFailedAttempts",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "lastFailedAttempt",
+      "fieldType": "Instant",
+      "fieldValidateRules": []
+    }
+  ],
+  "jpaMetamodelFiltering": false,
+  "name": "FailedLoginAttempt",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceImpl"
+}

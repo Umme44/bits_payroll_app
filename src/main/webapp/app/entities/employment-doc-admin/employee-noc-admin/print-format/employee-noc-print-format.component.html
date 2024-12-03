@@ -1,0 +1,74 @@
+<jhi-header
+  class="jhi-header"
+  [headerName]="'Employee NOC Print Format'"
+  [midHeaderName01]="'Employee Docs'"
+  [midRouterLinkText01]="'/employee-docs-admin'"
+>
+</jhi-header>
+
+<div class="print-btn-container container pe-0">
+  <div class="print-btn mb-2 text-end">
+    <button type="button" *ngIf="employeeNOC" (click)="print()" class="btn btn-primary">
+      <fa-icon icon="print"></fa-icon>
+      Print
+    </button>
+  </div>
+</div>
+
+<div class="employeeNocPrintDiv report-default-font" *ngIf="employeeNOC">
+  <div class="letter-head"></div>
+  <div class="report-border print-doc-area">
+    <div class="document-body">
+      <div class="text-start">
+        <p class="report-default-font text-start">{{ employeeNOC.issueDate | formatMediumDate }}</p>
+        <p class="report-default-font text-start">Ref. No. BRACIT/HR/{{ employeeNOC.referenceNumber }}</p>
+        <br />
+        <br />
+        <p class="report-default-font text-center fw-bold m-0">To Whom It May Concern</p>
+        <br />
+        <br />
+        <p class="report-default-font fw-normal text-justify">
+          BRAC IT Services Limited is a proud member of the eminent BRAC family and is one of the leading IT solutions & service providers
+          in Bangladesh specializing in providing a wide range of software solutions & end to end technology service management.
+        </p>
+        <p class="report-default-font fw-normal text-justify">
+          This is to certify that <span class="fw-bold text-uppercase">{{ employeeNOC.employeeName }}</span> bearing passport number
+          <span class="fw-bold">{{ employeeNOC.passportNumber }}</span> has been working at BRAC IT under
+          {{ employeeNOC.departmentName }} Department since {{ employeeNOC.dateOfJoining | formatMediumDate }} to date.
+          {{ employeeNOC.employeeGender === 'MALE' ? 'His' : 'Her' }} last designation is {{ employeeNOC.designationName }}.
+        </p>
+        <p class="report-default-font fw-normal text-justify">
+          <span class="fw-bold text-uppercase"
+            >{{ employeeNOC.employeeGender === 'MALE' ? 'Mr.' : 'Ms.' }} {{ employeeNOC.employeeSurName }}</span
+          >
+          is planning to visit {{ employeeNOC.countryToVisit }} during {{ employeeNOC.employeeGender === 'MALE' ? 'his' : 'her' }} approved
+          paid leave from {{ employeeNOC.leaveStartDate | formatMediumDate }} to {{ employeeNOC.leaveEndDate | formatMediumDate }}.
+          <span class="fw-bold text-uppercase"
+            >{{ employeeNOC.employeeGender === 'MALE' ? 'Mr.' : 'Ms.' }} {{ employeeNOC.employeeSurName }}</span
+          >
+          is under obligation to join BRAC IT after {{ employeeNOC.employeeGender === 'MALE' ? 'his' : 'her' }} vacation.
+        </p>
+        <p class="report-default-font fw-normal text-justify">
+          Any assistance extended to {{ employeeNOC.employeeGender === 'MALE' ? 'him' : 'her' }} for
+          {{ employeeNOC.employeeGender === 'MALE' ? 'his' : 'her' }} travel will be highly appreciated.
+        </p>
+        <p class="report-default-font fw-normal text-justify">
+          Should further information be required about
+          <span class="fw-bold text-uppercase"
+            >{{ employeeNOC.employeeGender === 'MALE' ? 'Mr.' : 'Ms.' }} {{ employeeNOC.employeeSurName }}</span
+          >
+          please feel free to contact us.
+        </p>
+        <p class="report-default-font fw-normal">Yours Sincerely,</p>
+        <br />
+        <br />
+        <br />
+        <br />
+        <p class="report-default-font text-start fw-bold m-0 text-uppercase">{{ employeeNOC.signatoryPersonName }}</p>
+        <p class="report-default-font text-start m-0">{{ employeeNOC.signatoryPersonDesignation }}</p>
+        <p class="report-default-font text-start m-0">Email: {{ employeeNOC.signatoryPersonEmail }}</p>
+        <p class="report-default-font text-start m-0">Cell: {{ employeeNOC.signatoryPersonCell }}</p>
+      </div>
+    </div>
+  </div>
+</div>

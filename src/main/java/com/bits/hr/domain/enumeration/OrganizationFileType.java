@@ -1,0 +1,17 @@
+package com.bits.hr.domain.enumeration;
+
+/**
+ * The OrganizationFileType Enumeration
+ */
+public enum OrganizationFileType {
+    FINANCE_MANAGER_SIGNATURE,
+    LOGO,
+    DOCUMENT_LETTER_HEAD,
+    ORGANIZATION_STAMP,
+    PF_STATEMENT_LETTER_HEAD,
+    TAX_STATEMENT_LETTER_HEAD,
+    NOMINEE_LETTER_HEAD,
+    SALARY_PAYSLIP_LETTER_HEAD,
+    FESTIVAL_BONUS_PAYSLIP_LETTER_HEAD,
+    RECRUITMENT_REQUISITION_LETTER_HEAD,
+}

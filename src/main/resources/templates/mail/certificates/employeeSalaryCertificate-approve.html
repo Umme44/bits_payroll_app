@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="en">
+  <head>
+    <!--    done    -->
+    <title>Application for Salary Certificate</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="icon" th:href="@{|${baseUrl}/favicon.ico|}" />
+  </head>
+  <body>
+    <span> Dear [[${recipientName}]], </span>
+    <p>Your Salary Certificate has been processed. Please collect your certificate from the HR department.</p>
+  </body>
+
+  <footer>
+    <h4 style="text-align: center">This is system generated email. Please do not reply.</h4>
+  </footer>
+</html>

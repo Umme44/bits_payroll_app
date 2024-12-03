@@ -1,0 +1,9 @@
+{
+  "bitsHrPayrollApp": {
+    "RequisitionResourceType": {
+      "null": "",
+      "BUDGET": "BUDGET",
+      "NON_BUDGET": "NON_BUDGET"
+    }
+  }
+}

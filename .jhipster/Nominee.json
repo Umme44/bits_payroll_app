@@ -1,0 +1,192 @@
+{
+  "changelogDate": "20220424054602",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "nominee",
+  "fields": [
+    {
+      "fieldName": "nomineeName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "255",
+      "fieldValidateRulesMinlength": "0"
+    },
+    {
+      "fieldName": "presentAddress",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "255",
+      "fieldValidateRulesMinlength": 0
+    },
+    {
+      "fieldName": "relationshipWithEmployee",
+      "fieldType": "String",
+      "fieldValidateRules": []
+    },
+    {
+      "fieldName": "dateOfBirth",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": []
+    },
+    {
+      "fieldName": "age",
+      "fieldType": "Integer",
+      "fieldValidateRules": []
+    },
+    {
+      "fieldName": "sharePercentage",
+      "fieldType": "Double",
+      "fieldValidateRules": ["required", "min", "max"],
+      "fieldValidateRulesMax": "100",
+      "fieldValidateRulesMin": "1"
+    },
+    {
+      "fieldName": "imagePath",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "Status",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "PENDING,APPROVED,NOT_APPROVED"
+    },
+    {
+      "fieldName": "guardianName",
+      "fieldType": "String",
+      "fieldValidateRules": ["minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "255",
+      "fieldValidateRulesMinlength": "0"
+    },
+    {
+      "fieldName": "guardianFatherName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "guardianSpouseName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "guardianDateOfBirth",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": []
+    },
+    {
+      "fieldName": "guardianPresentAddress",
+      "fieldType": "String",
+      "fieldValidateRules": ["minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "255",
+      "fieldValidateRulesMinlength": "0"
+    },
+    {
+      "fieldName": "guardianDocumentName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "guardianRelationshipWith",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "guardianImagePath",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "isLocked",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "nominationDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "permanentAddress",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "255",
+      "fieldValidateRulesMinlength": "0"
+    },
+    {
+      "fieldName": "guardianPermanentAddress",
+      "fieldType": "String",
+      "fieldValidateRules": ["minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "255",
+      "fieldValidateRulesMinlength": 0
+    },
+    {
+      "fieldName": "nomineeType",
+      "fieldType": "NomineeType",
+      "fieldValidateRules": [],
+      "fieldValues": "GRATUITY_FUND,GENERAL"
+    },
+    {
+      "fieldName": "identityType",
+      "fieldType": "IdentityType",
+      "fieldValidateRules": [],
+      "fieldValues": "NID,PASSPORT,BIRTH_REGISTRATION,OTHERS"
+    },
+    {
+      "fieldName": "documentName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "idNumber",
+      "fieldType": "String",
+      "fieldValidateRules": []
+    },
+    {
+      "fieldName": "isNidVerified",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "guardianIdentityType",
+      "fieldType": "IdentityType",
+      "fieldValues": "NID,PASSPORT,BIRTH_REGISTRATION,OTHER"
+    },
+    {
+      "fieldName": "guardianIdNumber",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "isGuardianNidVerified",
+      "fieldType": "Boolean"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Nominee",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "nominee",
+      "relationshipName": "employee",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": []
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "nominee",
+      "relationshipName": "approvedBy",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "nominee",
+      "relationshipName": "witness",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "nominee",
+      "relationshipName": "member",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

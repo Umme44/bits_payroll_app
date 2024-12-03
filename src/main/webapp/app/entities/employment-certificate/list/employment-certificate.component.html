@@ -1,0 +1,188 @@
+<div>
+  <h2 id="page-heading" data-cy="EmploymentCertificateHeading">
+    <span jhiTranslate="bitsHrPayrollApp.employmentCertificate.home.title">Employment Certificates</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="bitsHrPayrollApp.employmentCertificate.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-employment-certificate"
+        [routerLink]="['/employment-certificate/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="bitsHrPayrollApp.employmentCertificate.home.createLabel"> Create a new Employment Certificate </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="employmentCertificates?.length === 0">
+    <span jhiTranslate="bitsHrPayrollApp.employmentCertificate.home.notFound">No Employment Certificates found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="employmentCertificates && employmentCertificates.length > 0">
+    <table class="table table-hover list-text-color" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">ID</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="certificateStatus">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employmentCertificate.certificateStatus">Certificate Status</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="referenceNumber">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employmentCertificate.referenceNumber">Reference Number</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="issueDate">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employmentCertificate.issueDate">Issue Date</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="reason">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employmentCertificate.reason">Reason</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="createdAt">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employmentCertificate.createdAt">Created At</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="updatedAt">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employmentCertificate.updatedAt">Updated At</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="generatedAt">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employmentCertificate.generatedAt">Generated At</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="employee.id">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employmentCertificate.employee">Employee</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="signatoryPerson.id">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employmentCertificate.signatoryPerson">Signatory Person</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="createdBy.login">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employmentCertificate.createdBy">Created By</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="updatedBy.login">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employmentCertificate.updatedBy">Updated By</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="generatedBy.login">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employmentCertificate.generatedBy">Generated By</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody
+        infinite-scroll
+        (scrolled)="loadPage(page + 1)"
+        [infiniteScrollDisabled]="page - 1 >= links['last']"
+        [infiniteScrollDistance]="0"
+      >
+        <tr *ngFor="let employmentCertificate of employmentCertificates; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/employment-certificate', employmentCertificate.id, 'view']">{{ employmentCertificate.id }}</a>
+          </td>
+          <td jhiTranslate="{{ 'bitsHrPayrollApp.CertificateStatus.' + employmentCertificate.certificateStatus }}">
+            {{ employmentCertificate.certificateStatus }}
+          </td>
+          <td>{{ employmentCertificate.referenceNumber }}</td>
+          <td>{{ employmentCertificate.issueDate | formatMediumDate }}</td>
+          <td>{{ employmentCertificate.reason }}</td>
+          <td>{{ employmentCertificate.createdAt | formatMediumDatetime }}</td>
+          <td>{{ employmentCertificate.updatedAt | formatMediumDatetime }}</td>
+          <td>{{ employmentCertificate.generatedAt | formatMediumDatetime }}</td>
+          <td>
+            <div *ngIf="employmentCertificate.employee">
+              <a [routerLink]="['/employee', employmentCertificate.employee.id, 'view']">{{ employmentCertificate.employee.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="employmentCertificate.signatoryPerson">
+              <a [routerLink]="['/employee', employmentCertificate.signatoryPerson.id, 'view']">{{
+                employmentCertificate.signatoryPerson.id
+              }}</a>
+            </div>
+          </td>
+          <td>
+            {{ employmentCertificate.createdBy?.login }}
+          </td>
+          <td>
+            {{ employmentCertificate.updatedBy?.login }}
+          </td>
+          <td>
+            {{ employmentCertificate.generatedBy?.login }}
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/employment-certificate', employmentCertificate.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/employment-certificate', employmentCertificate.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(employmentCertificate)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

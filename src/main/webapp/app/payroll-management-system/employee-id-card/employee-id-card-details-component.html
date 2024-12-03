@@ -1,0 +1,22 @@
+<jhi-header
+  [headerName]="'My ID Card'"
+  [midHeaderName01]="'My Stuff'"
+  [midRouterLinkText01]="'/'"
+  [midHeader01hasSessionStorage]="true"
+  [midHeader01SessionStorageKey]="'keepMyStuffModalOpen'"
+  [midHeader01SessionStorageValue]="'yes'"
+  [shouldHaveHr]="false"
+>
+</jhi-header>
+
+<div class="container">
+  <div class="print-btn mb-2 text-end mx-auto">
+    <button class="btn btn-primary text-end" (click)="printIdCard()"><fa-icon icon="print"></fa-icon> Print</button>
+  </div>
+
+  <div class="custom-card text-center mx-auto id-card-positioning">
+    <div *ngIf="employeeStaticFile">
+      <img src="data:image/jpg;base64,{{employeeStaticFile.getByteStreamFromFilePath}}" class="id-card-img-size" alt="Employee Photo" />
+    </div>
+  </div>
+</div>

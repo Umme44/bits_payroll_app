@@ -1,0 +1,43 @@
+-- pf_nominee table alter
+Alter Table Pf_Nominee
+    ADD COLUMN IDENTITY_TYPE          VARCHAR(255) not null default '',
+    ADD COLUMN ID_NUMBER              VARCHAR(50)  not null default '',
+    ADD COLUMN DOCUMENT_NAME          VARCHAR(200),
+    ADD COLUMN GUARDIAN_IDENTITY_TYPE VARCHAR(255),
+    ADD COLUMN GUARDIAN_DOCUMENT_NAME VARCHAR(200);
+
+
+-- income_tax_challan table-creation
+create table if not exists INCOME_TAX_CHALLAN
+(
+    ID            BIGINT           not null,
+    CHALLAN_NO    VARCHAR(200)     not null,
+    CHALLAN_DATE  DATE             not null,
+    AMOUNT        DOUBLE PRECISION not null,
+    MONTH         VARCHAR(255)     not null,
+    REMARKS       VARCHAR(250),
+    AIT_CONFIG_ID BIGINT,
+    constraint PK_INCOME_TAX_CHALLAN
+        primary key (ID),
+    constraint FK_INCOME_TAX_CHALLAN_AIT_CONFIG_ID
+        foreign key (AIT_CONFIG_ID) references AIT_CONFIG (ID)
+);
+
+
+-- leave_application table alter
+
+ALTER TABLE LEAVE_APPLICATION
+    ADD COLUMN SANCTIONED_AT    TIMESTAMP default NULL,
+    ADD COLUMN SANCTIONED_BY_ID BIGINT,
+    ADD CONSTRAINT FK_LEAVE_APPLICATION_SANCTIONED_BY_ID
+        FOREIGN KEY (SANCTIONED_BY_ID) REFERENCES JHI_USER (ID);
+
+
+-- rrf table alter
+
+ALTER TABLE RECRUITMENT_REQUISITION_FORM
+    ADD COLUMN REQUISITION_STATUS VARCHAR(255) not null default 'PENDING',
+    ADD COLUMN REJECTED_AT        DATE,
+    ADD COLUMN REJECTED_BY_ID     BIGINT,
+    ADD CONSTRAINT FK_LEAVE_APPLICATION_SANCTIONED_BY_ID
+        FOREIGN KEY (REJECTED_BY_ID) REFERENCES EMPLOYEE (ID);

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="en">
+<head>
+    <!--    done    -->
+    <!--    team member = Please be informed that Your work from home period: -->
+    <!--    from date to date has been assigned by your line manager. Your web -->
+    <!--    punch in/ out option has been enabled. Requesting to ensure your -->
+    <!--    daily attendance. (CC = Linre manager, HR)-->
+
+    <title> Flex Schedule </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="icon" th:href="@{|${baseUrl}/favicon.ico|}"/>
+</head>
+<body>
+<span>
+    Dear [[${name}]],
+</span>
+<p>
+    Please be informed that "work from home" or "web punch in/out"
+    from [[${date}]] has been disabled for you.
+    Requesting to ensure your daily attendance.
+</p>
+</body>
+
+<footer>
+    <h4 style="text-align: center">This is system generated email. Please do not reply.</h4>
+</footer>
+</html>
+

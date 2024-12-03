@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity SalaryCertificate.
+    -->
+    <changeSet id="20220124094733-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="created_by_id"
+                                 baseTableName="salary_certificate"
+                                 constraintName="fk_salary_certificate__created_by_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="updated_by_id"
+                                 baseTableName="salary_certificate"
+                                 constraintName="fk_salary_certificate__updated_by_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="sanction_by_id"
+                                 baseTableName="salary_certificate"
+                                 constraintName="fk_salary_certificate__sanction_by_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="employee_id"
+                                 baseTableName="salary_certificate"
+                                 constraintName="fk_salary_certificate__employee_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+
+        <addForeignKeyConstraint baseColumnNames="signatory_person_id"
+                                 baseTableName="salary_certificate"
+                                 constraintName="fk_salary_certificate__signatory_person_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+    </changeSet>
+</databaseChangeLog>

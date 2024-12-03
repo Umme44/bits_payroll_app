@@ -1,0 +1,114 @@
+.idcardwrap {
+  display: inline-block;
+  margin: 20px;
+  border: 1px dotted #444142;
+  text-align: left;
+  /*background: url(/da/html/images/bitsidf.png) no-repeat left top;*/
+  width: 208px;
+  height: 330px;
+  position: relative;
+  font: normal 11px/13px Arial, Verdana, Helvetica, sans-serif;
+  color: #231f20;
+  word-spacing: -1px;
+}
+
+.idcstdphoto {
+  position: absolute;
+  left: 0.5px;
+  top: 0.5px;
+  width: 206px;
+  height: 257px;
+  overflow: hidden;
+  border: 0px solid #444142;
+}
+
+.idcstdbanner,
+.bottom-logo {
+  position: absolute;
+  left: 0px;
+  top: 213px;
+  width: 208px;
+  height: 45px;
+  overflow: hidden;
+  border: 0px solid #444142;
+  background-color: #533c53;
+}
+
+.bottom-logo {
+  top: 250px;
+  background-color: white;
+}
+
+.idcname {
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  left: 0px;
+  top: 217px;
+  font-size: 12px;
+  text-transform: uppercase;
+  color: white;
+  font-weight: bold;
+  height: 14px;
+  overflow: hidden;
+  font-family: Segoe UI;
+}
+
+.empcode {
+  position: absolute;
+  left: 0px;
+  top: 230px;
+  font-size: 9px;
+  text-align: center;
+  width: 100%;
+  color: white;
+  font-weight: bold;
+  font-family: Segoe UI;
+}
+
+.empdept {
+  position: absolute;
+  left: 0px;
+  top: 242px;
+  font-size: 9px;
+  text-align: center;
+  width: 100%;
+  color: white;
+  font-weight: bold;
+  font-family: Segoe UI;
+}
+
+.idcstdbg {
+  width: 208px;
+  height: 330px;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+}
+
+.id-card-positioning {
+  width: 780px;
+  height: 68vh;
+  padding-top: 5%;
+  box-sizing: border-box;
+}
+
+.print-btn {
+  width: 780px;
+}
+
+.id-card-img-size {
+  width: 50%;
+}
+
+@media print {
+  .print-btn,
+  jhi-header {
+    display: none;
+  }
+
+  .id-card-positioning {
+    height: 1100px;
+    padding-top: 55.5%;
+  }
+}

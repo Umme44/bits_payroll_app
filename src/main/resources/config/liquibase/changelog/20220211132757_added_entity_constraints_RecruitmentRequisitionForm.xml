@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity RecruitmentRequisitionForm.
+    -->
+    <changeSet id="20220211132757-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="functional_designation_id"
+                                 baseTableName="recruitment_requisition_form"
+                                 constraintName="fk_recruitment_requisition_form__functional_designation_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="designation"/>
+
+        <addForeignKeyConstraint baseColumnNames="band_id"
+                                 baseTableName="recruitment_requisition_form"
+                                 constraintName="fk_recruitment_requisition_form__band_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="band"/>
+
+        <addForeignKeyConstraint baseColumnNames="department_id"
+                                 baseTableName="recruitment_requisition_form"
+                                 constraintName="fk_recruitment_requisition_form__department_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="department"/>
+
+        <addForeignKeyConstraint baseColumnNames="unit_id"
+                                 baseTableName="recruitment_requisition_form"
+                                 constraintName="fk_recruitment_requisition_form__unit_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="unit"/>
+
+        <addForeignKeyConstraint baseColumnNames="recommended_by01_id"
+                                 baseTableName="recruitment_requisition_form"
+                                 constraintName="fk_recruitment_requisition_form__recommended_by01_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+
+        <addForeignKeyConstraint baseColumnNames="recommended_by02_id"
+                                 baseTableName="recruitment_requisition_form"
+                                 constraintName="fk_recruitment_requisition_form__recommended_by02_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+
+        <addForeignKeyConstraint baseColumnNames="recommended_by03_id"
+                                 baseTableName="recruitment_requisition_form"
+                                 constraintName="fk_recruitment_requisition_form__recommended_by03_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+
+        <addForeignKeyConstraint baseColumnNames="recommended_by04_id"
+                                 baseTableName="recruitment_requisition_form"
+                                 constraintName="fk_recruitment_requisition_form__recommended_by04_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+
+        <addForeignKeyConstraint baseColumnNames="requester_id"
+                                 baseTableName="recruitment_requisition_form"
+                                 constraintName="fk_recruitment_requisition_form__requester_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+
+        <addForeignKeyConstraint baseColumnNames="rejected_by_id"
+                                 baseTableName="recruitment_requisition_form"
+                                 constraintName="fk_recruitment_requisition_form__rejected_by_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+
+        <addForeignKeyConstraint baseColumnNames="created_by_id"
+                                 baseTableName="recruitment_requisition_form"
+                                 constraintName="fk_recruitment_requisition_form__created_by_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="updated_by_id"
+                                 baseTableName="recruitment_requisition_form"
+                                 constraintName="fk_recruitment_requisition_form__updated_by_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="deleted_by_id"
+                                 baseTableName="recruitment_requisition_form"
+                                 constraintName="fk_recruitment_requisition_form__deleted_by_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="recommended_by05_id"
+                                 baseTableName="recruitment_requisition_form"
+                                 constraintName="fk_recruitment_requisition_form__recommended_by05_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+
+        <addForeignKeyConstraint baseColumnNames="employee_to_be_replaced_id"
+                                 baseTableName="recruitment_requisition_form"
+                                 constraintName="fk_recruitment_requisition_form__employee_to_be_replaced_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+    </changeSet>
+</databaseChangeLog>

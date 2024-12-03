@@ -1,0 +1,105 @@
+<div>
+  <jhi-header
+    [addButtonText]="'add new Working Experiences'"
+    [headerName]="'Work Experiences'"
+    [routerLinkText]="'/working-experience/new'"
+    [shouldHaveHr]="false"
+  >
+  </jhi-header>
+
+  <jhi-alert-error></jhi-alert-error>
+  <jhi-alert></jhi-alert>
+</div>
+
+<div *ngIf="workingExperiences && workingExperiences.length > 0" class="table-responsive">
+  <table aria-describedby="page-heading" class="table table-hover list-text-color">
+    <thead>
+      <tr>
+        <th scope="col"><span>PIN</span></th>
+        <th scope="col"><span>Name</span></th>
+        <th scope="col"><span>Department</span></th>
+        <th scope="col"><span>Unit</span></th>
+        <th scope="col"><span>Designation</span></th>
+        <th scope="col"><span jhiTranslate="bitsHrPayrollApp.workingExperience.lastDesignation">Last Designation</span></th>
+        <th scope="col"><span jhiTranslate="bitsHrPayrollApp.workingExperience.organizationName">Organization Name</span></th>
+        <th scope="col"><span jhiTranslate="bitsHrPayrollApp.workingExperience.dojOfLastOrganization">Doj Of Last Organization</span></th>
+        <th scope="col"><span jhiTranslate="bitsHrPayrollApp.workingExperience.dorOfLastOrganization">Dor Of Last Organization</span></th>
+
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let workingExperience of workingExperiences; trackBy: trackId">
+        <td>
+          <a [routerLink]="['/employee-custom', workingExperience.employeeId, 'view']">{{ workingExperience.pin }}</a>
+        </td>
+
+        <td>
+          {{ workingExperience.employeeName }}
+        </td>
+
+        <td>
+          {{ workingExperience.departmentName }}
+        </td>
+
+        <td>
+          {{ workingExperience.unitName }}
+        </td>
+
+        <td>
+          {{ workingExperience.designationName }}
+        </td>
+
+        <td>{{ workingExperience.lastDesignation }}</td>
+        <td>{{ workingExperience.organizationName }}</td>
+        <td>{{ workingExperience.dojOfLastOrganization | formatMediumDate }}</td>
+        <td>{{ workingExperience.dorOfLastOrganization | formatMediumDate }}</td>
+
+        <td class="text-end">
+          <div class="btn-group">
+            <button
+              [routerLink]="['/working-experience', workingExperience.id, 'view']"
+              class="btn btn-info btn-sm px-md-3"
+              data-placement="top"
+              data-toggle="tooltip"
+              title="View"
+              type="submit"
+            >
+              <fa-icon icon="eye"></fa-icon>
+            </button>
+
+            <button
+              [routerLink]="['/working-experience', workingExperience.id, 'edit']"
+              class="btn btn-primary btn-sm px-md-3"
+              data-placement="top"
+              data-toggle="tooltip"
+              title="Edit"
+              type="submit"
+            >
+              <fa-icon icon="pencil-alt"></fa-icon>
+            </button>
+
+            <button
+              (click)="delete(workingExperience)"
+              class="btn btn-danger btn-sm px-md-3"
+              data-placement="top"
+              data-toggle="tooltip"
+              title="Delete"
+              type="submit"
+            >
+              <fa-icon icon="times"></fa-icon>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div
+  *ngIf="!workingExperiences || workingExperiences.length === 0"
+  style="height: 75vh"
+  class="text-center d-flex align-items-center justify-content-center"
+>
+  <img src="./content/images/approval.svg" width="400px" height="400px" />
+</div>

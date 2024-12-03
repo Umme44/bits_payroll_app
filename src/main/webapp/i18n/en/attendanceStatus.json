@@ -1,0 +1,62 @@
+{
+  "bitsHrPayrollApp": {
+    "attendanceStatus": {
+      "normalize": {
+        "null": "",
+        "BLANK": "-",
+        "BLANK_INEFFECTIVE": "-",
+        "WEEKLY_OFFDAY": "Weekend",
+        "GOVT_HOLIDAY": "Govt. Holiday",
+        "SPECIAL_HOLIDAY": "Special Holiday",
+        "PRESENT": "Present",
+        "MOVEMENT": "Movement",
+        "PRESENT_GOVT_HOLIDAY": "Present Govt. Holiday",
+        "PRESENT_WEEKLY_OFFDAY": "Present Weekly Off Day",
+        "NON_FULFILLED_OFFICE_HOURS": "Non Fulfilled office Hours",
+        "LATE": "Late",
+        "ABSENT": "Absent",
+
+        "MENTIONABLE_ANNUAL_LEAVE": "Annual Leave",
+        "MENTIONABLE_CASUAL_LEAVE": "Casual Leave",
+        "NON_MENTIONABLE_COMPENSATORY_LEAVE": "Compensatory Leave",
+        "NON_MENTIONABLE_PANDEMIC_LEAVE": "Pandemic Leave",
+        "NON_MENTIONABLE_PATERNITY_LEAVE": "Paternity Leave",
+        "NON_MENTIONABLE_MATERNITY_LEAVE": "Maternity Leave",
+        "LEAVE_WITHOUT_PAY": "Leave without Pay",
+        "LEAVE_WITHOUT_PAY_SANDWICH": "Leave without Pay",
+        "Leave": "Leave",
+
+        "OTHER": "Other",
+        "GENERAL_HOLIDAY": "General Holiday"
+      },
+      "minimal": {
+        "null": "",
+        "BLANK": "-",
+        "BLANK_INEFFECTIVE": "-",
+        "WEEKLY_OFFDAY": "Weekend",
+        "GOVT_HOLIDAY": "Govt. Holiday",
+        "SPECIAL_HOLIDAY": "Special Holiday",
+        "PRESENT": "Present",
+        "MOVEMENT": "Movement",
+        "PRESENT_GOVT_HOLIDAY": "Present Govt. Holiday",
+        "PRESENT_WEEKLY_OFFDAY": "Present Weekly Off Day",
+        "NON_FULFILLED_OFFICE_HOURS": "NFOH",
+        "LATE": "Late",
+        "ABSENT": "Absent",
+
+        "MENTIONABLE_ANNUAL_LEAVE": "Annual Leave",
+        "MENTIONABLE_CASUAL_LEAVE": "Casual Leave",
+        "NON_MENTIONABLE_COMPENSATORY_LEAVE": "Compensatory Leave",
+        "NON_MENTIONABLE_PANDEMIC_LEAVE": "Pandemic Leave",
+        "NON_MENTIONABLE_PATERNITY_LEAVE": "Paternity Leave",
+        "NON_MENTIONABLE_MATERNITY_LEAVE": "Maternity Leave",
+        "LEAVE_WITHOUT_PAY": "LWP",
+        "LEAVE_WITHOUT_PAY_SANDWICH": "LWP",
+        "Leave": "Leave",
+
+        "OTHER": "Other",
+        "GENERAL_HOLIDAY": "General Holiday"
+      }
+    }
+  }
+}

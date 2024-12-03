@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity EmploymentHistory.
+    -->
+    <changeSet id="20210215124430-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="previous_designation_id"
+                                 baseTableName="employment_history"
+                                 constraintName="fk_employment_history__previous_designation_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="designation"/>
+
+        <addForeignKeyConstraint baseColumnNames="changed_designation_id"
+                                 baseTableName="employment_history"
+                                 constraintName="fk_employment_history__changed_designation_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="designation"/>
+
+        <addForeignKeyConstraint baseColumnNames="previous_department_id"
+                                 baseTableName="employment_history"
+                                 constraintName="fk_employment_history__previous_department_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="department"/>
+
+        <addForeignKeyConstraint baseColumnNames="changed_department_id"
+                                 baseTableName="employment_history"
+                                 constraintName="fk_employment_history__changed_department_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="department"/>
+
+        <addForeignKeyConstraint baseColumnNames="previous_reporting_to_id"
+                                 baseTableName="employment_history"
+                                 constraintName="fk_employment_history__previous_reporting_to_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+
+        <addForeignKeyConstraint baseColumnNames="changed_reporting_to_id"
+                                 baseTableName="employment_history"
+                                 constraintName="fk_employment_history__changed_reporting_to_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+
+        <addForeignKeyConstraint baseColumnNames="employee_id"
+                                 baseTableName="employment_history"
+                                 constraintName="fk_employment_history__employee_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+
+        <addForeignKeyConstraint baseColumnNames="previous_unit_id"
+                                 baseTableName="employment_history"
+                                 constraintName="fk_employment_history__previous_unit_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="unit"/>
+
+        <addForeignKeyConstraint baseColumnNames="changed_unit_id"
+                                 baseTableName="employment_history"
+                                 constraintName="fk_employment_history__changed_unit_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="unit"/>
+
+        <addForeignKeyConstraint baseColumnNames="previous_band_id"
+                                 baseTableName="employment_history"
+                                 constraintName="fk_employment_history__previous_band_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="band"/>
+
+        <addForeignKeyConstraint baseColumnNames="changed_band_id"
+                                 baseTableName="employment_history"
+                                 constraintName="fk_employment_history__changed_band_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="band"/>
+    </changeSet>
+</databaseChangeLog>

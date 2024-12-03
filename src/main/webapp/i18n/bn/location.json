@@ -1,0 +1,31 @@
+{
+  "bitsHrPayrollApp": {
+    "location": {
+      "home": {
+        "title": "Locations",
+        "createLabel": "Create a new Location",
+        "createOrEditLabel": "Create or edit a Location",
+        "notFound": "No Locations found"
+      },
+      "created": "A new Location is created with identifier {{ param }}",
+      "updated": "A Location is updated with identifier {{ param }}",
+      "deleted": "A Location is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Location {{ id }}?"
+      },
+      "detail": {
+        "title": "Location"
+      },
+      "locationType": "Location Type",
+      "locationName": "Location Name",
+      "hasParent": "Has Parent",
+      "isLastChild": "Is Last Child",
+      "createdAt": "Created At",
+      "updateAt": "Update At",
+      "createdById": "Created By Id",
+      "updatedById": "Updated By Id",
+      "locationCode": "Location Code",
+      "parent": "Parent"
+    }
+  }
+}

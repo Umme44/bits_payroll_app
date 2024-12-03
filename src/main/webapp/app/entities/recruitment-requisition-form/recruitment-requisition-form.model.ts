@@ -1,0 +1,68 @@
+import dayjs from 'dayjs/esm';
+import { EmployeeCategory } from 'app/entities/enumerations/employee-category.model';
+import { RequisitionResourceType } from 'app/entities/enumerations/requisition-resource-type.model';
+import { RequisitionStatus } from 'app/entities/enumerations/requisition-status.model';
+import { RecruitmentNature } from 'app/entities/enumerations/recruitment-nature.model';
+
+export interface IRecruitmentRequisitionForm {
+  id?: number;
+  expectedJoiningDate?: dayjs.Dayjs;
+  project?: string;
+  numberOfVacancies?: number;
+  employmentType?: EmployeeCategory;
+  resourceType?: RequisitionResourceType;
+  rrfNumber?: string;
+  preferredEducationType?: string;
+  dateOfRequisition?: dayjs.Dayjs;
+  requestedDate?: dayjs.Dayjs;
+  requesterId?: number;
+  requesterFullName?: string;
+  requesterDesignationName?: string;
+  requesterPin?: string;
+  recommendationDate01?: dayjs.Dayjs;
+  recommendationDate02?: dayjs.Dayjs;
+  recommendationDate03?: dayjs.Dayjs;
+  recommendationDate04?: dayjs.Dayjs;
+  recommendationDate05?: dayjs.Dayjs;
+  requisitionStatus?: RequisitionStatus;
+  rejectedAt?: dayjs.Dayjs;
+  createdAt?: dayjs.Dayjs;
+  updatedAt?: dayjs.Dayjs;
+  preferredSkillType?: string;
+  recruitmentNature?: RecruitmentNature;
+  specialRequirement?: string;
+  functionalDesignationId?: number;
+  functionalDesignationName?: string;
+  bandId?: number;
+  bandName?: string;
+  departmentId?: number;
+  departmentName?: string;
+  unitId?: number;
+  unitName?: string;
+  recommendedBy01Id?: number;
+  recommendedBy01FullName?: string;
+  recommendedBy02Id?: number;
+  recommendedBy02FullName?: string;
+  recommendedBy03Id?: number;
+  recommendedBy03FullName?: string;
+  recommendedBy04Id?: number;
+  recommendedBy04FullName?: string;
+  rejectedById?: number;
+  isChecked?: boolean;
+  createdByLogin?: string;
+  createdById?: number;
+  updatedByLogin?: string;
+  updatedById?: number;
+
+  isDeleted?: boolean;
+  deletedByLogin?: string;
+  deletedById?: number;
+  recommendedBy05Id?: number;
+  recommendedBy05FullName?: string;
+  totalOnboard?: number;
+  employeeToBeReplacedId?: number | undefined;
+  employeeToBeReplacedFullName?: string | undefined;
+  employeeToBeReplacedPin?: string | undefined;
+}
+
+export type NewRecruitmentRequisitionForm = Omit<IRecruitmentRequisitionForm, 'id'> & { id: null };

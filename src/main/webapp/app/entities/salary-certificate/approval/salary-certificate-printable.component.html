@@ -1,0 +1,165 @@
+<style>
+
+
+</style>
+
+<div *ngIf="salaryCertificateReport" class="">
+<!--    <div class="logo ml-5 pl-4">-->
+<!--        <img src="../../../content/images/logo.svg" alt="BRAC-IT-logo">-->
+<!--    </div>-->
+    <div class="jhi-header">
+        <jhi-header [headerName]="'Salary Certificate Statement'"
+                    [midHeaderName01]="'Salary Certificate'"
+                    [midRouterLinkText01]="'/salary-certificate'">
+        </jhi-header>
+    </div>
+
+
+    <div class="print-btn-container container pr-0">
+        <div class="print-btn mb-2 text-right">
+            <button type="button" (click)="print()" class="btn btn-primary">
+                <fa-icon icon="print"></fa-icon>
+                Print
+            </button>
+        </div>
+    </div>
+
+
+
+    <div class="printDiv">
+        <div class="container letter-head report-border print-doc-area">
+            <div class="document-body">
+                <div style="height: 200px"></div>
+                <div class="row">
+                    <div class="col-md-12 default-font">{{today}}</div>
+                </div>
+
+                <br>
+                <br>
+
+                <div class="row">
+                    <div class="col-md-12 font-weight-bold text-center header-text">
+                        TO WHOM IT MAY CONCERN
+                    </div>
+                </div>
+
+                <br>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="default-font">
+                            This is to certify that
+                            <span class="font-weight-bold">{{salaryCertificateReport.employeeName}}</span> is of {{salaryCertificateReport.department}}
+                            Department has been working for {{organizationFullName}} since
+                            <span>{{salaryCertificateReport.joiningDate | formatMediumDate}}</span>. S/he is a {{employeeCategoryCapitalize(salaryCertificateReport.employeeCategory!)}} of {{organizationFullName}}.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row my-3">
+                    <div class="col-md-12 font-weight-bold default-font">
+                        <div>His/Her salary structure is as follows by {{monthNameNormaCapitalize(salaryCertificateReport.month!)}}/{{salaryCertificateReport.year}} :</div>
+                    </div>
+                </div>
+
+                <table class="default-font">
+                    <thead>
+                    <tr>
+                        <th>Particulars</th>
+                        <th class="text-right">Amount in Taka</th>
+                    </tr>
+                    <tr>
+                        <th colspan="2">Pays & Benefits:</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Basic:</td>
+                        <td class="text-right">{{salaryCertificateReport.payableGrossBasicSalary}}</td>
+                    </tr>
+                    <tr>
+                        <td>House Rent:</td>
+                        <td class="text-right">{{salaryCertificateReport.payableGrossHouseRent}}</td>
+                    </tr>
+                    <tr>
+                        <td>Medical Allowance:</td>
+                        <td class="text-right">{{salaryCertificateReport.payableGrossMedicalAllowance}}</td>
+                    </tr>
+                    <tr>
+                        <td>Conveyance Allowance:</td>
+                        <td class="text-right">{{salaryCertificateReport.payableGrossConveyanceAllowance}}</td>
+                    </tr>
+                    <tr>
+                        <td>Entertainment:</td>
+                        <td class="text-right">{{salaryCertificateReport.entertainment}}</td>
+                    </tr>
+                    <tr>
+                        <td>Utility:</td>
+                        <td class="text-right">{{salaryCertificateReport.utility}}</td>
+                    </tr>
+                    <tr>
+                        <td>Other Addition:</td>
+                        <td class="text-right">{{salaryCertificateReport.otherAddition}}</td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold">A - Gross Pay:</td>
+                        <td class="text-right">{{salaryCertificateReport.payableGrossSalary}}</td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold" colspan="2">Deduction:</td>
+                    </tr>
+                    <tr>
+                        <td>PF Deduction:</td>
+                        <td class="text-right">{{salaryCertificateReport.pfDeduction}}</td>
+                    </tr>
+                    <tr>
+                        <td>Income Tax:</td>
+                        <td class="text-right">{{salaryCertificateReport.taxDeduction}}</td>
+                    </tr>
+                    <tr>
+                        <td>Ex.Mobile Bill:</td>
+                        <td class="text-right">{{salaryCertificateReport.mobileBillDeduction}}</td>
+                    </tr>
+                    <tr>
+                        <td>Welfare Fund:</td>
+                        <td class="text-right">{{salaryCertificateReport.welfareFundDeduction}}</td>
+                    </tr>
+                    <tr>
+                        <td>Other Deduction:</td>
+                        <td class="text-right">{{salaryCertificateReport.otherDeduction}}</td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold">B - Total Deduction:</td>
+                        <td class="text-right">{{salaryCertificateReport.totalDeduction}}</td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold">Net Payable(A-B):</td>
+                        <td class="text-right">{{salaryCertificateReport.netPay}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div class="row my-3">
+                    <div class="col-md-12">Taka (In words): {{salaryCertificateReport.netPayInWords}} taka only</div>
+                </div>
+
+                <div class="row my-5">
+                    <div class="col-md-12 font-weight-bold">Authorized Signature by</div>
+                </div>
+
+                <div class="row">
+<!--                    <div class="col-md-12">-->
+<!--                        <img style="width: 180px" src="../../../content/images/atiun_amin_signature.svg">-->
+<!--                    </div>-->
+                    <div class="col-12" style="height: 120px">
+
+                    </div>
+                    <div class="col-md-12 font-weight-bold">-------------------------</div>
+                    <div class="col-md-12 font-weight-bold">{{salaryCertificateReport.signatoryPersonName}}</div>
+                    <div class="col-md-12">{{salaryCertificateReport.signatoryPersonDesignation}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

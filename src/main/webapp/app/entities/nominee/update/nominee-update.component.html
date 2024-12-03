@@ -1,0 +1,643 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-nominee-heading" data-cy="NomineeCreateUpdateHeading" jhiTranslate="bitsHrPayrollApp.nominee.home.createOrEditLabel">
+        Create or edit a Nominee
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.nominee.nomineeName" for="field_nomineeName">Nominee Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="nomineeName"
+            id="field_nomineeName"
+            data-cy="nomineeName"
+            formControlName="nomineeName"
+          />
+          <div *ngIf="editForm.get('nomineeName')!.invalid && (editForm.get('nomineeName')!.dirty || editForm.get('nomineeName')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('nomineeName')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('nomineeName')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 0 }"
+            >
+              This field is required to be at least 0 characters.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('nomineeName')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 255 }"
+            >
+              This field cannot be longer than 255 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.nominee.presentAddress" for="field_presentAddress"
+            >Present Address</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="presentAddress"
+            id="field_presentAddress"
+            data-cy="presentAddress"
+            formControlName="presentAddress"
+          />
+          <div
+            *ngIf="
+              editForm.get('presentAddress')!.invalid && (editForm.get('presentAddress')!.dirty || editForm.get('presentAddress')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('presentAddress')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('presentAddress')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 0 }"
+            >
+              This field is required to be at least 0 characters.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('presentAddress')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 255 }"
+            >
+              This field cannot be longer than 255 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.nominee.relationshipWithEmployee" for="field_relationshipWithEmployee"
+            >Relationship With Employee</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="relationshipWithEmployee"
+            id="field_relationshipWithEmployee"
+            data-cy="relationshipWithEmployee"
+            formControlName="relationshipWithEmployee"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.nominee.dateOfBirth" for="field_dateOfBirth">Date Of Birth</label>
+          <div class="input-group">
+            <input
+              id="field_dateOfBirth"
+              data-cy="dateOfBirth"
+              type="text"
+              class="form-control"
+              name="dateOfBirth"
+              ngbDatepicker
+              #dateOfBirthDp="ngbDatepicker"
+              formControlName="dateOfBirth"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateOfBirthDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.nominee.age" for="field_age">Age</label>
+          <input type="number" class="form-control" name="age" id="field_age" data-cy="age" formControlName="age" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.nominee.sharePercentage" for="field_sharePercentage"
+            >Share Percentage</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="sharePercentage"
+            id="field_sharePercentage"
+            data-cy="sharePercentage"
+            formControlName="sharePercentage"
+          />
+          <div
+            *ngIf="
+              editForm.get('sharePercentage')!.invalid &&
+              (editForm.get('sharePercentage')!.dirty || editForm.get('sharePercentage')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('sharePercentage')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('sharePercentage')?.errors?.min"
+              jhiTranslate="entity.validation.min"
+              [translateValues]="{ min: 1 }"
+            >
+              This field should be at least 1.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('sharePercentage')?.errors?.max"
+              jhiTranslate="entity.validation.max"
+              [translateValues]="{ max: 100 }"
+            >
+              This field cannot be more than 100.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('sharePercentage')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.nominee.imagePath" for="field_imagePath">Image Path</label>
+          <input type="text" class="form-control" name="imagePath" id="field_imagePath" data-cy="imagePath" formControlName="imagePath" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.nominee.status" for="field_status">Status</label>
+          <select class="form-control" name="status" formControlName="status" id="field_status" data-cy="status">
+            <option [ngValue]="null">{{ 'bitsHrPayrollApp.Status.null' | translate }}</option>
+            <option *ngFor="let status of statusValues" [value]="status">{{ 'bitsHrPayrollApp.Status.' + status | translate }}</option>
+          </select>
+          <div *ngIf="editForm.get('status')!.invalid && (editForm.get('status')!.dirty || editForm.get('status')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('status')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.nominee.guardianName" for="field_guardianName">Guardian Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="guardianName"
+            id="field_guardianName"
+            data-cy="guardianName"
+            formControlName="guardianName"
+          />
+          <div
+            *ngIf="editForm.get('guardianName')!.invalid && (editForm.get('guardianName')!.dirty || editForm.get('guardianName')!.touched)"
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('guardianName')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 0 }"
+            >
+              This field is required to be at least 0 characters.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('guardianName')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 255 }"
+            >
+              This field cannot be longer than 255 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.nominee.guardianFatherName" for="field_guardianFatherName"
+            >Guardian Father Name</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="guardianFatherName"
+            id="field_guardianFatherName"
+            data-cy="guardianFatherName"
+            formControlName="guardianFatherName"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.nominee.guardianSpouseName" for="field_guardianSpouseName"
+            >Guardian Spouse Name</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="guardianSpouseName"
+            id="field_guardianSpouseName"
+            data-cy="guardianSpouseName"
+            formControlName="guardianSpouseName"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.nominee.guardianDateOfBirth" for="field_guardianDateOfBirth"
+            >Guardian Date Of Birth</label
+          >
+          <div class="input-group">
+            <input
+              id="field_guardianDateOfBirth"
+              data-cy="guardianDateOfBirth"
+              type="text"
+              class="form-control"
+              name="guardianDateOfBirth"
+              ngbDatepicker
+              #guardianDateOfBirthDp="ngbDatepicker"
+              formControlName="guardianDateOfBirth"
+            />
+            <button type="button" class="btn btn-secondary" (click)="guardianDateOfBirthDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.nominee.guardianPresentAddress" for="field_guardianPresentAddress"
+            >Guardian Present Address</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="guardianPresentAddress"
+            id="field_guardianPresentAddress"
+            data-cy="guardianPresentAddress"
+            formControlName="guardianPresentAddress"
+          />
+          <div
+            *ngIf="
+              editForm.get('guardianPresentAddress')!.invalid &&
+              (editForm.get('guardianPresentAddress')!.dirty || editForm.get('guardianPresentAddress')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('guardianPresentAddress')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 0 }"
+            >
+              This field is required to be at least 0 characters.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('guardianPresentAddress')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 255 }"
+            >
+              This field cannot be longer than 255 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.nominee.guardianDocumentName" for="field_guardianDocumentName"
+            >Guardian Document Name</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="guardianDocumentName"
+            id="field_guardianDocumentName"
+            data-cy="guardianDocumentName"
+            formControlName="guardianDocumentName"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.nominee.guardianRelationshipWith" for="field_guardianRelationshipWith"
+            >Guardian Relationship With</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="guardianRelationshipWith"
+            id="field_guardianRelationshipWith"
+            data-cy="guardianRelationshipWith"
+            formControlName="guardianRelationshipWith"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.nominee.guardianImagePath" for="field_guardianImagePath"
+            >Guardian Image Path</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="guardianImagePath"
+            id="field_guardianImagePath"
+            data-cy="guardianImagePath"
+            formControlName="guardianImagePath"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.nominee.isLocked" for="field_isLocked">Is Locked</label>
+          <input type="checkbox" class="form-check" name="isLocked" id="field_isLocked" data-cy="isLocked" formControlName="isLocked" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.nominee.nominationDate" for="field_nominationDate"
+            >Nomination Date</label
+          >
+          <div class="input-group">
+            <input
+              id="field_nominationDate"
+              data-cy="nominationDate"
+              type="text"
+              class="form-control"
+              name="nominationDate"
+              ngbDatepicker
+              #nominationDateDp="ngbDatepicker"
+              formControlName="nominationDate"
+            />
+            <button type="button" class="btn btn-secondary" (click)="nominationDateDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.nominee.permanentAddress" for="field_permanentAddress"
+            >Permanent Address</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="permanentAddress"
+            id="field_permanentAddress"
+            data-cy="permanentAddress"
+            formControlName="permanentAddress"
+          />
+          <div
+            *ngIf="
+              editForm.get('permanentAddress')!.invalid &&
+              (editForm.get('permanentAddress')!.dirty || editForm.get('permanentAddress')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('permanentAddress')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('permanentAddress')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 0 }"
+            >
+              This field is required to be at least 0 characters.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('permanentAddress')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 255 }"
+            >
+              This field cannot be longer than 255 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.nominee.guardianPermanentAddress" for="field_guardianPermanentAddress"
+            >Guardian Permanent Address</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="guardianPermanentAddress"
+            id="field_guardianPermanentAddress"
+            data-cy="guardianPermanentAddress"
+            formControlName="guardianPermanentAddress"
+          />
+          <div
+            *ngIf="
+              editForm.get('guardianPermanentAddress')!.invalid &&
+              (editForm.get('guardianPermanentAddress')!.dirty || editForm.get('guardianPermanentAddress')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('guardianPermanentAddress')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 0 }"
+            >
+              This field is required to be at least 0 characters.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('guardianPermanentAddress')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 255 }"
+            >
+              This field cannot be longer than 255 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.nominee.nomineeType" for="field_nomineeType">Nominee Type</label>
+          <select class="form-control" name="nomineeType" formControlName="nomineeType" id="field_nomineeType" data-cy="nomineeType">
+            <option [ngValue]="null">{{ 'bitsHrPayrollApp.NomineeType.null' | translate }}</option>
+            <option *ngFor="let nomineeType of nomineeTypeValues" [value]="nomineeType">
+              {{ 'bitsHrPayrollApp.NomineeType.' + nomineeType | translate }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.nominee.identityType" for="field_identityType">Identity Type</label>
+          <select class="form-control" name="identityType" formControlName="identityType" id="field_identityType" data-cy="identityType">
+            <option [ngValue]="null">{{ 'bitsHrPayrollApp.IdentityType.null' | translate }}</option>
+            <option *ngFor="let identityType of identityTypeValues" [value]="identityType">
+              {{ 'bitsHrPayrollApp.IdentityType.' + identityType | translate }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.nominee.documentName" for="field_documentName">Document Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="documentName"
+            id="field_documentName"
+            data-cy="documentName"
+            formControlName="documentName"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.nominee.idNumber" for="field_idNumber">Id Number</label>
+          <input type="text" class="form-control" name="idNumber" id="field_idNumber" data-cy="idNumber" formControlName="idNumber" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.nominee.isNidVerified" for="field_isNidVerified">Is Nid Verified</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isNidVerified"
+            id="field_isNidVerified"
+            data-cy="isNidVerified"
+            formControlName="isNidVerified"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.nominee.guardianIdentityType" for="field_guardianIdentityType"
+            >Guardian Identity Type</label
+          >
+          <select
+            class="form-control"
+            name="guardianIdentityType"
+            formControlName="guardianIdentityType"
+            id="field_guardianIdentityType"
+            data-cy="guardianIdentityType"
+          >
+            <option [ngValue]="null">{{ 'bitsHrPayrollApp.IdentityType.null' | translate }}</option>
+            <option *ngFor="let identityType of identityTypeValues" [value]="identityType">
+              {{ 'bitsHrPayrollApp.IdentityType.' + identityType | translate }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.nominee.guardianIdNumber" for="field_guardianIdNumber"
+            >Guardian Id Number</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="guardianIdNumber"
+            id="field_guardianIdNumber"
+            data-cy="guardianIdNumber"
+            formControlName="guardianIdNumber"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.nominee.isGuardianNidVerified" for="field_isGuardianNidVerified"
+            >Is Guardian Nid Verified</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isGuardianNidVerified"
+            id="field_isGuardianNidVerified"
+            data-cy="isGuardianNidVerified"
+            formControlName="isGuardianNidVerified"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.nominee.employee" for="field_employee">Employee</label>
+          <select
+            class="form-control"
+            id="field_employee"
+            data-cy="employee"
+            name="employee"
+            formControlName="employee"
+            [compareWith]="compareEmployee"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="employeeOption" *ngFor="let employeeOption of employeesSharedCollection">{{ employeeOption.id }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.nominee.approvedBy" for="field_approvedBy">Approved By</label>
+          <select
+            class="form-control"
+            id="field_approvedBy"
+            data-cy="approvedBy"
+            name="approvedBy"
+            formControlName="approvedBy"
+            [compareWith]="compareEmployee"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="employeeOption" *ngFor="let employeeOption of employeesSharedCollection">{{ employeeOption.id }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.nominee.witness" for="field_witness">Witness</label>
+          <select
+            class="form-control"
+            id="field_witness"
+            data-cy="witness"
+            name="witness"
+            formControlName="witness"
+            [compareWith]="compareEmployee"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="employeeOption" *ngFor="let employeeOption of employeesSharedCollection">{{ employeeOption.id }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.nominee.member" for="field_member">Member</label>
+          <select
+            class="form-control"
+            id="field_member"
+            data-cy="member"
+            name="member"
+            formControlName="member"
+            [compareWith]="compareEmployee"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="employeeOption" *ngFor="let employeeOption of employeesSharedCollection">{{ employeeOption.id }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

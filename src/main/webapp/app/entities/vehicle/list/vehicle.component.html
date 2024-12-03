@@ -1,0 +1,187 @@
+<div>
+  <h2 id="page-heading" data-cy="VehicleHeading">
+    <span jhiTranslate="bitsHrPayrollApp.vehicle.home.title">Vehicles</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="bitsHrPayrollApp.vehicle.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-vehicle"
+        [routerLink]="['/vehicle/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="bitsHrPayrollApp.vehicle.home.createLabel"> Create a new Vehicle </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="vehicles?.length === 0">
+    <span jhiTranslate="bitsHrPayrollApp.vehicle.home.notFound">No Vehicles found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="vehicles && vehicles.length > 0">
+    <table class="table table-hover list-text-color" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">ID</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="modelName">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.vehicle.modelName">Model Name</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="chassisNumber">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.vehicle.chassisNumber">Chassis Number</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="registrationNumber">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.vehicle.registrationNumber">Registration Number</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="status">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.vehicle.status">Status</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="capacity">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.vehicle.capacity">Capacity</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="remarks">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.vehicle.remarks">Remarks</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="createdAt">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.vehicle.createdAt">Created At</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="updatedAt">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.vehicle.updatedAt">Updated At</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="approvedAt">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.vehicle.approvedAt">Approved At</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="createdBy.login">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.vehicle.createdBy">Created By</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="updatedBy.login">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.vehicle.updatedBy">Updated By</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="approvedBy.login">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.vehicle.approvedBy">Approved By</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="assignedDriver.id">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.vehicle.assignedDriver">Assigned Driver</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody
+        infinite-scroll
+        (scrolled)="loadPage(page + 1)"
+        [infiniteScrollDisabled]="page - 1 >= links['last']"
+        [infiniteScrollDistance]="0"
+      >
+        <tr *ngFor="let vehicle of vehicles; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/vehicle', vehicle.id, 'view']">{{ vehicle.id }}</a>
+          </td>
+          <td>{{ vehicle.modelName }}</td>
+          <td>{{ vehicle.chassisNumber }}</td>
+          <td>{{ vehicle.registrationNumber }}</td>
+          <td jhiTranslate="{{ 'bitsHrPayrollApp.Status.' + vehicle.status }}">{{ vehicle.status }}</td>
+          <td>{{ vehicle.capacity }}</td>
+          <td>{{ vehicle.remarks }}</td>
+          <td>{{ vehicle.createdAt | formatMediumDatetime }}</td>
+          <td>{{ vehicle.updatedAt | formatMediumDatetime }}</td>
+          <td>{{ vehicle.approvedAt | formatMediumDatetime }}</td>
+          <td>
+            {{ vehicle.createdBy?.login }}
+          </td>
+          <td>
+            {{ vehicle.updatedBy?.login }}
+          </td>
+          <td>
+            {{ vehicle.approvedBy?.login }}
+          </td>
+          <td>
+            <div *ngIf="vehicle.assignedDriver">
+              <a [routerLink]="['/employee', vehicle.assignedDriver.id, 'view']">{{ vehicle.assignedDriver.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/vehicle', vehicle.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/vehicle', vehicle.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(vehicle)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

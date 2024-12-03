@@ -1,0 +1,82 @@
+<div>
+  <jhi-header
+    [addButtonText]="'add new References'"
+    [headerName]="'References'"
+    [routerLinkText]="'/references/edit'"
+    [shouldHaveHr]="false"
+  >
+  </jhi-header>
+
+  <jhi-alert-error></jhi-alert-error>
+  <jhi-alert></jhi-alert>
+  <div class="font-sm">
+    <div *ngIf="references">
+      <dl class="row-md jh-entity-details">
+        <div class="row">
+          <div class="col-md-2">
+            <dt><span jhiTranslate="bitsHrPayrollApp.references.name">Name</span></dt>
+          </div>
+          <div class="col-md-4">
+            <dd>
+              <span>{{ references.name }}</span>
+            </dd>
+          </div>
+          <div class="col-md-2">
+            <dt><span jhiTranslate="bitsHrPayrollApp.references.institute">Institute</span></dt>
+          </div>
+          <div class="col-md-4">
+            <dd>
+              <span>{{ references.institute }}</span>
+            </dd>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-2">
+            <dt><span jhiTranslate="bitsHrPayrollApp.references.designation">Designation</span></dt>
+          </div>
+          <div class="col-md-4">
+            <dd>
+              <span>{{ references.designation }}</span>
+            </dd>
+          </div>
+          <div class="col-md-2">
+            <dt><span jhiTranslate="bitsHrPayrollApp.references.relationshipWithEmployee">Relationship With Employee</span></dt>
+          </div>
+          <div class="col-md-4">
+            <dd>
+              <span jhiTranslate="{{ 'bitsHrPayrollApp.RelationshipWithEmployee.' + references.relationshipWithEmployee }}">{{
+                references.relationshipWithEmployee
+              }}</span>
+            </dd>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-2">
+            <dt><span jhiTranslate="bitsHrPayrollApp.references.email">Email</span></dt>
+          </div>
+          <div class="col-md-4">
+            <dd>
+              <span>{{ references.email }}</span>
+            </dd>
+          </div>
+          <div class="col-md-2">
+            <dt><span jhiTranslate="bitsHrPayrollApp.references.contactNumber">Contact Number</span></dt>
+          </div>
+          <div class="col-md-4">
+            <dd>
+              <span>{{ references.contactNumber }}</span>
+            </dd>
+          </div>
+        </div>
+      </dl>
+
+      <button (click)="previousState()" class="btn btn-info" type="submit">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button [routerLink]="['/references', references.id, 'edit']" class="btn btn-primary" type="button">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

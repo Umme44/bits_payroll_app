@@ -1,0 +1,114 @@
+<div>
+  <jhi-header
+    [headerName]="'Leave Application Details'"
+    [midHeaderName01]="'Leave Applications'"
+    [midRouterLinkText01]="'/leave-application'"
+    [shouldHaveHr]="false"
+  >
+  </jhi-header>
+
+  <div *ngIf="leaveApplication">
+    <jhi-alert-error></jhi-alert-error>
+
+    <div class="font-sm card card-body">
+      <div class="row py-2">
+        <div class="col-md-2 fw-bold">
+          <span jhiTranslate="bitsHrPayrollApp.workingExperience.employee">Employee</span>
+        </div>
+        <div class="col-md-4">
+          <div *ngIf="employee != null">
+            <a [routerLink]="['/employee-custom', leaveApplication.employeeId, 'view']">
+              {{ employee.pin }} -
+              {{ employee.fullName }}
+            </a>
+          </div>
+        </div>
+        <div class="col-md-2 fw-bold">
+          <span jhiTranslate="bitsHrPayrollApp.leaveApplication.applicationDate">Application Date</span>
+        </div>
+        <div class="col-md-4">
+          <span>{{ leaveApplication.applicationDate | formatMediumDate }}</span>
+        </div>
+      </div>
+
+      <div class="row py-2">
+        <div class="col-md-2 fw-bold">
+          <span jhiTranslate="bitsHrPayrollApp.leaveApplication.leaveType">Leave Type</span>
+        </div>
+        <div class="col-md-4">
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.LeaveType.' + leaveApplication.leaveType }}">{{ leaveApplication.leaveType }}</span>
+        </div>
+      </div>
+      <div class="row py-2">
+        <div class="col-md-2 fw-bold">
+          <span jhiTranslate="bitsHrPayrollApp.leaveApplication.startDate">Start Date</span>
+        </div>
+        <div class="col-md-4">
+          <span>{{ leaveApplication.startDate | formatMediumDate }}</span>
+        </div>
+        <div class="col-md-2 fw-bold">
+          <span jhiTranslate="bitsHrPayrollApp.leaveApplication.endDate">End Date</span>
+        </div>
+        <div class="col-md-4">
+          <span>{{ leaveApplication.endDate | formatMediumDate }}</span>
+        </div>
+      </div>
+      <div class="row py-2">
+        <div class="col-md-2 fw-bold">Line Manager Approval</div>
+        <div class="col-md-4">
+          <span>{{ leaveApplication.isLineManagerApproved ? 'yes' : 'no' }}</span>
+        </div>
+        <div class="col-md-2 fw-bold">HR Approval</div>
+        <div class="col-md-4">
+          <span>{{ leaveApplication.isHRApproved ? 'yes' : 'no' }}</span>
+        </div>
+      </div>
+      <div class="row py-2">
+        <div class="col-md-2 fw-bold">
+          <span jhiTranslate="bitsHrPayrollApp.leaveApplication.isRejected">Is Rejected</span>
+        </div>
+        <div class="col-md-4">
+          <span>{{ leaveApplication.isRejected ? 'yes' : 'no' }}</span>
+        </div>
+        <div class="col-md-2 fw-bold">
+          <span jhiTranslate="bitsHrPayrollApp.leaveApplication.rejectionComment">Rejection Comment</span>
+        </div>
+        <div class="col-md-4">
+          <span>{{ leaveApplication.rejectionComment }}</span>
+        </div>
+      </div>
+
+      <div class="row py-2">
+        <div class="col-md-2 fw-bold">Duration In Day</div>
+        <div class="col-md-4">{{ leaveApplication.durationInDay }}</div>
+        <div class="col-md-2 fw-bold">Phone Number On Leave</div>
+        <div class="col-md-4">{{ leaveApplication.phoneNumberOnLeave }}</div>
+      </div>
+
+      <div class="row py-2">
+        <div class="col-md-2 fw-bold">Address On Leave</div>
+        <div class="col-md-10">{{ leaveApplication.addressOnLeave }}</div>
+      </div>
+
+      <div class="row py-2">
+        <div class="col-md-2 fw-bold">Reason</div>
+        <div class="col-md-10">{{ leaveApplication.reason }}</div>
+      </div>
+      <div class="col-md-3">
+        <button
+          (click)="previousState()"
+          class="btn btn-info ml-1"
+          type="submit">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button
+          [routerLink]="['/leave-application', leaveApplication.id, 'edit']"
+          class="btn btn-primary ml-1"
+          type="button">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

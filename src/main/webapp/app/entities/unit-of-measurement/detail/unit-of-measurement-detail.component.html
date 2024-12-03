@@ -1,0 +1,40 @@
+<div class="modal-header">
+  <h6 class="modal-title">Unit of Measurement Details</h6>
+
+  <button type="button" class="btn-close close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
+</div>
+
+<div class="modal-body">
+  <div *ngIf="unitOfMeasurement">
+    <jhi-alert-error></jhi-alert-error>
+
+    <dl class="row font-sm">
+      <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.unitOfMeasurement.name">Name</span></dt>
+      <dd class="col-md-3">
+        <span>{{ unitOfMeasurement.name }}</span>
+      </dd>
+      <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.unitOfMeasurement.remarks">Remarks</span></dt>
+      <dd class="col-md-3">
+        <span>{{ unitOfMeasurement.remarks }}</span>
+      </dd>
+      <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.unitOfMeasurement.createdAt">Created At</span></dt>
+      <dd class="col-md-3">
+        <span>{{ unitOfMeasurement.createdAt | formatMediumDatetime }}</span>
+      </dd>
+      <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.unitOfMeasurement.updatedAt">Updated At</span></dt>
+      <dd class="col-md-3">
+        <span>{{ unitOfMeasurement.updatedAt | formatMediumDatetime }}</span>
+      </dd>
+      <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.unitOfMeasurement.createdBy">Created By</span></dt>
+      <dd class="col-md-3">
+        {{ unitOfMeasurement.createdByLogin }}
+      </dd>
+      <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.unitOfMeasurement.updatedBy">Updated By</span></dt>
+      <dd class="col-md-3">
+        {{ unitOfMeasurement.updatedByLogin }}
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<div class="modal-footer"></div>

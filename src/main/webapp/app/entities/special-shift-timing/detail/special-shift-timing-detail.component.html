@@ -1,0 +1,77 @@
+<jhi-header
+  [headerName]="'Special Shift Timing'"
+  [midHeaderName01]="'Special Shift Timings'"
+  [midRouterLinkText01]="'/special-shift-timing'"
+  [shouldHaveHr]="false">
+
+</jhi-header>
+
+
+<div class="font-sm">
+  <jhi-alert-error></jhi-alert-error>
+  <div class="">
+    <div *ngIf="specialShiftTiming">
+
+      <dl class="row">
+        <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.specialShiftTiming.startDate">Start Date</span></dt>
+        <dd class="col-md-3">
+          <span>{{ specialShiftTiming.startDate | formatMediumDate }}</span>
+        </dd>
+        <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.specialShiftTiming.endDate">End Date</span></dt>
+        <dd class="col-md-3">
+          <span>{{ specialShiftTiming.endDate | formatMediumDate }}</span>
+        </dd>
+        <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.specialShiftTiming.overrideRoaster">Override Roaster</span></dt>
+        <dd class="col-md-3">
+          <span><fa-icon [icon]="specialShiftTiming.overrideRoaster ? 'check': 'times'"></fa-icon></span>
+        </dd>
+        <dt class="col-md-3"><span
+          jhiTranslate="bitsHrPayrollApp.specialShiftTiming.overrideFlexSchedule">Override Flex Schedule</span>
+        </dt>
+        <dd class="col-md-3">
+          <span><fa-icon [icon]="specialShiftTiming.overrideFlexSchedule ? 'check': 'times'"></fa-icon></span>
+        </dd>
+        <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.specialShiftTiming.remarks">Remarks</span></dt>
+        <dd class="col-md-3">
+          <span>{{ specialShiftTiming.remarks }}</span>
+        </dd>
+        <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.specialShiftTiming.createdAt">Created At</span></dt>
+        <dd class="col-md-3">
+          <span>{{ specialShiftTiming.createdAt | formatMediumDatetime }}</span>
+        </dd>
+        <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.specialShiftTiming.updatedAt">Updated At</span></dt>
+        <dd class="col-md-3">
+          <span>{{ specialShiftTiming.updatedAt | formatMediumDatetime }}</span>
+        </dd>
+        <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.specialShiftTiming.timeSlot">Time Slot</span></dt>
+        <dd class="col-md-3">
+          <div *ngIf="specialShiftTiming.timeSlotId">
+            <a [routerLink]="['/time-slot', specialShiftTiming.timeSlotId, 'view']">
+              {{ specialShiftTiming.inTime  | formatTime }} - {{specialShiftTiming.outTime | formatTime }}
+            </a>
+          </div>
+        </dd>
+        <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.specialShiftTiming.createdBy">Created By</span></dt>
+        <dd class="col-md-3">
+          {{ specialShiftTiming.createdByLogin }}
+        </dd>
+        <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.specialShiftTiming.updatedBy">Updated By</span></dt>
+        <dd class="col-md-3">
+          {{ specialShiftTiming.updatedByLogin }}
+        </dd>
+      </dl>
+
+      <button type="submit"
+              (click)="previousState()"
+              class="btn btn-info">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button"
+              [routerLink]="['/special-shift-timing', specialShiftTiming.id, 'edit']"
+              class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,245 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-salary-deduction-heading"
+        data-cy="SalaryDeductionCreateUpdateHeading"
+        jhiTranslate="bitsHrPayrollApp.salaryDeduction.home.createOrEditLabel"
+      >
+        Create or edit a Salary Deduction
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.salaryDeduction.deductionAmount" for="field_deductionAmount"
+            >Deduction Amount</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="deductionAmount"
+            id="field_deductionAmount"
+            data-cy="deductionAmount"
+            formControlName="deductionAmount"
+          />
+          <div
+            *ngIf="
+              editForm.get('deductionAmount')!.invalid &&
+              (editForm.get('deductionAmount')!.dirty || editForm.get('deductionAmount')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('deductionAmount')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('deductionAmount')?.errors?.min"
+              jhiTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              This field should be at least 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('deductionAmount')?.errors?.max"
+              jhiTranslate="entity.validation.max"
+              [translateValues]="{ max: 1000000 }"
+            >
+              This field cannot be more than 1000000.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('deductionAmount')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.salaryDeduction.deductionYear" for="field_deductionYear"
+            >Deduction Year</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="deductionYear"
+            id="field_deductionYear"
+            data-cy="deductionYear"
+            formControlName="deductionYear"
+          />
+          <div
+            *ngIf="
+              editForm.get('deductionYear')!.invalid && (editForm.get('deductionYear')!.dirty || editForm.get('deductionYear')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('deductionYear')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('deductionYear')?.errors?.min"
+              jhiTranslate="entity.validation.min"
+              [translateValues]="{ min: 1990 }"
+            >
+              This field should be at least 1990.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('deductionYear')?.errors?.max"
+              jhiTranslate="entity.validation.max"
+              [translateValues]="{ max: 2100 }"
+            >
+              This field cannot be more than 2100.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('deductionYear')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.salaryDeduction.deductionMonth" for="field_deductionMonth"
+            >Deduction Month</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="deductionMonth"
+            id="field_deductionMonth"
+            data-cy="deductionMonth"
+            formControlName="deductionMonth"
+          />
+          <div
+            *ngIf="
+              editForm.get('deductionMonth')!.invalid && (editForm.get('deductionMonth')!.dirty || editForm.get('deductionMonth')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('deductionMonth')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('deductionMonth')?.errors?.min"
+              jhiTranslate="entity.validation.min"
+              [translateValues]="{ min: 1 }"
+            >
+              This field should be at least 1.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('deductionMonth')?.errors?.max"
+              jhiTranslate="entity.validation.max"
+              [translateValues]="{ max: 12 }"
+            >
+              This field cannot be more than 12.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('deductionMonth')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.salaryDeduction.deductionType" for="field_deductionType"
+            >Deduction Type</label
+          >
+          <select
+            class="form-control"
+            id="field_deductionType"
+            data-cy="deductionType"
+            name="deductionType"
+            formControlName="deductionType"
+            [compareWith]="compareDeductionType"
+          >
+            <option *ngIf="!editForm.get('deductionType')!.value" [ngValue]="null" selected></option>
+            <option [ngValue]="deductionTypeOption" *ngFor="let deductionTypeOption of deductionTypesSharedCollection">
+              {{ deductionTypeOption.id }}
+            </option>
+          </select>
+        </div>
+        <div
+          *ngIf="
+            editForm.get(['deductionType'])!.invalid && (editForm.get(['deductionType'])!.dirty || editForm.get(['deductionType'])!.touched)
+          "
+        >
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['deductionType'])?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.salaryDeduction.employee" for="field_employee">Employee</label>
+          <select
+            class="form-control"
+            id="field_employee"
+            data-cy="employee"
+            name="employee"
+            formControlName="employee"
+            [compareWith]="compareEmployee"
+          >
+            <option *ngIf="!editForm.get('employee')!.value" [ngValue]="null" selected></option>
+            <option [ngValue]="employeeOption" *ngFor="let employeeOption of employeesSharedCollection">{{ employeeOption.id }}</option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['employee'])!.invalid && (editForm.get(['employee'])!.dirty || editForm.get(['employee'])!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['employee'])?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

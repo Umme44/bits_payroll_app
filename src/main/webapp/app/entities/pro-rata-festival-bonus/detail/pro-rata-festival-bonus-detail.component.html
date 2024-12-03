@@ -1,0 +1,42 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="proRataFestivalBonus">
+      <h2>
+        <span jhiTranslate="bitsHrPayrollApp.proRataFestivalBonus.detail.title">Pro Rata Festival Bonus</span> {{ proRataFestivalBonus.id }}
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="bitsHrPayrollApp.proRataFestivalBonus.date">Date</span></dt>
+        <dd>
+          <span>{{ proRataFestivalBonus.date }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.proRataFestivalBonus.amount">Amount</span></dt>
+        <dd>
+          <span>{{ proRataFestivalBonus.amount }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.proRataFestivalBonus.description">Description</span></dt>
+        <dd>
+          <span>{{ proRataFestivalBonus.description }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.proRataFestivalBonus.employee">Employee</span></dt>
+        <dd>
+          <div *ngIf="proRataFestivalBonus.employeeId">
+            <a [routerLink]="['/employee', proRataFestivalBonus.employeeId, 'view']">{{ proRataFestivalBonus.employeeId }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/pro-rata-festival-bonus', proRataFestivalBonus.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

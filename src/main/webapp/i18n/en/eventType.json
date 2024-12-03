@@ -1,0 +1,13 @@
+{
+  "bitsHrPayrollApp": {
+    "EventType": {
+      "null": "",
+      "TRANSFER": "TRANSFER",
+      "PROMOTION": "PROMOTION",
+      "INCREMENT": "INCREMENT",
+      "JOIN": "JOIN",
+      "CONFIRM": "CONFIRM",
+      "RESIGNATION": "RESIGNATION"
+    }
+  }
+}

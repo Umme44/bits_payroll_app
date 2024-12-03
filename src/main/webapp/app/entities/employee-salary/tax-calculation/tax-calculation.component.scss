@@ -1,0 +1,12 @@
+table {
+  border: none !important;
+  width: 100% !important;
+}
+
+tr > td:first-child {
+  text-align: left;
+}
+
+tr > td:not(:first-child) {
+  text-align: right;
+}

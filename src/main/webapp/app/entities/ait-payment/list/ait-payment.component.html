@@ -1,0 +1,170 @@
+<div class="my-0">
+  <!--  <h2 id="page-heading" data-cy="AitPaymentHeading">-->
+  <!--    <span jhiTranslate="bitsHrPayrollApp.aitPayment.home.title">Ait Payments</span>-->
+
+  <!--    <div class="d-flex justify-content-end">-->
+  <!--      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">-->
+  <!--        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>-->
+  <!--        <span jhiTranslate="bitsHrPayrollApp.aitPayment.home.refreshListLabel">Refresh list</span>-->
+  <!--      </button>-->
+
+  <!--      <button-->
+  <!--        id="jh-create-entity"-->
+  <!--        data-cy="entityCreateButton"-->
+  <!--        class="btn btn-primary jh-create-entity create-ait-payment"-->
+  <!--        [routerLink]="['/ait-payment/new']"-->
+  <!--      >-->
+  <!--        <fa-icon icon="plus"></fa-icon>-->
+  <!--        <span jhiTranslate="bitsHrPayrollApp.aitPayment.home.createLabel"> Create a new Ait Payment </span>-->
+  <!--      </button>-->
+  <!--    </div>-->
+  <!--  </h2>-->
+
+  <jhi-header
+    [addButtonText]="'Add New AIT Payment'"
+    [routerLinkText]="'/ait-payment/new'"
+    [headerName]="'Advance Income Tax Payments'"
+    [shouldHaveHr]="false"
+  >
+  </jhi-header>
+
+  <div class="d-flex justify-content-between my-0" [formGroup]="searchParamsForm">
+    <div class="col-md-4 my-4">
+      <div class="form-group">
+        <div class="col-md-12 pl-0 input-group">
+          <input id="searchText" formControlName="searchText" class="form-control" placeholder="Search by Name or PIN" type="text" />
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <div class="form-group">
+        <label class="form-control-label mr-2" for="field_startDate">Start Date:</label>
+        <div class="input-group">
+          <input
+            #startDateDp="ngbDatepicker"
+            (change)="checkDate()"
+            class="form-control px-3"
+            formControlName="startDate"
+            id="field_startDate"
+            name="startDate"
+            ngbDatepicker
+            type="text"
+          />
+          <span class="input-group-append">
+            <button (click)="startDateDp.toggle()" class="btn btn-secondary" type="button"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-2">
+      <div class="form-group">
+        <label class="form-control-label mr-2" for="field_endDate">End Date:</label>
+        <div class="input-group">
+          <input
+            #endDateDp="ngbDatepicker"
+            (change)="checkDate()"
+            class="form-control px-3"
+            formControlName="endDate"
+            id="field_endDate"
+            name="endDate"
+            ngbDatepicker
+            type="text"
+          />
+          <span class="input-group-append">
+            <button (click)="endDateDp.toggle()" class="btn btn-secondary" type="button"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </span>
+        </div>
+        <div *ngIf="isInvalid">
+          <small class="form-text text-danger"> End date can't be smaller then start date. </small>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-2 my-4">
+      <button [disabled]="isInvalid" (click)="searchOnList()" class="btn btn-primary ml-5" id="search-entity" type="submit">
+        <fa-icon icon="search"></fa-icon>&nbsp;<span>Search</span>
+      </button>
+    </div>
+  </div>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="aitPayments?.length === 0">
+    <span jhiTranslate="bitsHrPayrollApp.aitPayment.home.notFound">No Ait Payments found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="aitPayments && aitPayments.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="handleNavigation()">
+          <th scope="col" jhiSortBy="id"><span>Employee</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="date">
+            <span jhiTranslate="bitsHrPayrollApp.aitPayment.date">Date</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" class="text-right" jhiSortBy="amount">
+            <span jhiTranslate="bitsHrPayrollApp.aitPayment.amount">Amount</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="description">
+            <span jhiTranslate="bitsHrPayrollApp.aitPayment.description">Description</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <!--                    <th scope="col"  jhiSortBy="employeeId"><span jhiTranslate="bitsHrPayrollApp.aitPayment.employee">Employee</span> <fa-icon icon="sort"></fa-icon></th>-->
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let aitPayment of aitPayments; trackBy: trackId">
+          <td>
+            <a [routerLink]="['/ait-payment', aitPayment.id, 'view']">{{ aitPayment.pin }} - {{ aitPayment.fullName }}</a>
+          </td>
+          <td>{{ dayjs(aitPayment.date).toDate() | date: 'mediumDate' }}</td>
+          <td class="text-right">{{ aitPayment.amount | number }}</td>
+          <td>{{ aitPayment.description }}</td>
+          <!--                    <td>-->
+          <!--                        <div *ngIf="aitPayment.employeeId">-->
+          <!--                            <a [routerLink]="['/employee', aitPayment.employeeId , 'view']" >{{ aitPayment.employeeId }}</a>-->
+          <!--                        </div>-->
+          <!--                    </td>-->
+          <td class="text-end">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/ait-payment', aitPayment.id, 'view']" class="btn btn-info btn-sm">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button type="submit" [routerLink]="['/ait-payment', aitPayment.id, 'edit']" class="btn btn-primary btn-sm">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(aitPayment)" class="btn btn-danger btn-sm">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="aitPayments && aitPayments.length > 0">
+    <div class="row justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="row justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

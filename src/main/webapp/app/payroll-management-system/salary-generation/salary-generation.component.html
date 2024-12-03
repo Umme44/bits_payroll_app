@@ -1,0 +1,267 @@
+<div>
+  <jhi-header [headerName]="'Generate Salary'" [shouldHaveHr]="false"> </jhi-header>
+  <!--    year & month-->
+  <form [formGroup]="editForm" class="form-inlinexxx" name="editForm" role="form">
+    <div class="card px-3 py-3 container">
+      <div class="mb-3 row align-items-center my-0">
+        <label class="col-sm-1 col-form-label">Year:</label>
+        <div class="col-sm-2">
+          <select
+            [attr.disabled]="ready ? '' : null"
+            [disabled]="ready"
+            class="form-control w-100"
+            formControlName="year"
+            id="year"
+            name="year"
+          >
+            <option *ngFor="let year of years" value="{{ year }}">
+              {{ year }}
+            </option>
+          </select>
+        </div>
+
+        <label class="col-sm-1 col-form-label">Month:</label>
+        <div class="col-sm-2">
+          <select
+            [attr.disabled]="ready ? '' : null"
+            [disabled]="ready"
+            class="form-control w-100"
+            formControlName="month"
+            id="month"
+            name="month"
+          >
+            <option *ngFor="let month of months" value="{{ month.Value }}">
+              {{ month.Text }}
+            </option>
+          </select>
+        </div>
+
+        <div class="col-sm-1">
+          <button (click)="clickNext()" [disabled]="ready" class="btn btn-success" style="margin-left: 10px !important">Next</button>
+        </div>
+
+        <div class="col-sm-2">
+          <span
+            *ngIf="salaryGenerationPreValidation && salaryGenerationPreValidation.aitConfigMissing == true"
+            class="badge rounded-pill bg-dark text-white"
+          >
+            Missing Tax Configuration
+          </span>
+        </div>
+      </div>
+    </div>
+    <!--//////////////////////////////////////////////////////////////////////// new -->
+
+    <div *ngIf="ready" class="container">
+      <div class="row">
+        <div class="card mb-3 mt-3" style="width: 100%">
+          <div class="card-body mt-2">
+            <div class="card-text align-baseline">
+              <div class="row align-items-center">
+                <div class="col ms-3">
+                  <span
+                    *ngIf="!mobileBillUploadSuccess && !viewAlreadyUploadedMobileBill"
+                    class="px-md-2 text-danger"
+                    data-placement="top"
+                    data-toggle="tooltip"
+                    title="Not Imported"
+                  >
+                    <fa-icon icon="exclamation-circle"></fa-icon>
+                  </span>
+                  <span
+                    *ngIf="mobileBillUploadSuccess || viewAlreadyUploadedMobileBill"
+                    class="px-md-2 text-success"
+                    data-placement="top"
+                    data-toggle="tooltip"
+                    title="Already Imported"
+                  >
+                    <fa-icon icon="check-circle"></fa-icon>
+                  </span>
+                  Mobile-Bill
+                </div>
+
+                <div class="col">
+                  <label class="btn btn-primary float-start px-sm-2 mx-sm-1" for="file_mobile_upload">{{ mobImportBtnTxt }}</label>
+                  <input
+                    (change)="importXlsx($event, 'mobile')"
+                    class="form-control-file form-control-file"
+                    id="file_mobile_upload"
+                    name="fileMobileBill"
+                    type="file"
+                  />
+                  <button
+                    [disabled]="!mobileBillUploadSuccess && !viewAlreadyUploadedMobileBill"
+                    [routerLink]="['/mobile-bill', editForm.get(['year'])?.value, editForm.get(['month'])?.value]"
+                    class="btn btn-success float-start mx-sm-0"
+                  >
+                    View
+                  </button>
+                  <span class="ps-3">
+                    <a class="btn btn-outline-info" href="api-open/salary-generation/mobile-bill-xlsx-upload-format/" target="_blank">
+                      Download format</a
+                    >
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="card mb-3" style="width: 100%">
+          <div class="card-body mt-2">
+            <div class="card-text align-baseline">
+              <div class="row align-items-center">
+                <div class="col ms-3">
+                  <span
+                    *ngIf="isAttendanceCovered === false || (!attendanceUploadSuccess && !viewAlreadyUploadedAttendance)"
+                    class="px-md-2 text-danger"
+                  >
+                    <fa-icon icon="exclamation-circle"></fa-icon>
+                  </span>
+                  <span
+                    *ngIf="isAttendanceCovered && (attendanceUploadSuccess || viewAlreadyUploadedAttendance)"
+                    class="px-md-2 text-success"
+                  >
+                    <fa-icon icon="check-circle"></fa-icon>
+                  </span>
+                  Attendance
+                </div>
+
+                <div class="col">
+                  <label class="btn btn-primary float-start px-sm-2 mx-sm-1" for="file_attendance_upload">{{
+                    attendanceImportBtnTxt
+                  }}</label>
+                  <input
+                    (change)="importXlsx($event, 'attendance')"
+                    class="form-control-file form-control-file"
+                    id="file_attendance_upload"
+                    name="fileAttendance"
+                    type="file"
+                  />
+                  <button
+                    [disabled]="!attendanceUploadSuccess && !viewAlreadyUploadedAttendance"
+                    [routerLink]="['/attendance-summary', editForm.get(['year'])?.value, editForm.get(['month'])?.value]"
+                    class="btn btn-success float-start mx-sm-0"
+                  >
+                    View
+                  </button>
+                  <span class="ps-3">
+                    <a
+                      class="btn btn-outline-info"
+                      href="api-open/salary-generation/attendance-summary-xlsx-upload-format/"
+                      target="_blank"
+                    >
+                      Download format</a
+                    >
+                  </span>
+
+                  <span class="float-end">
+                    <a class="btn btn-outline-secondary" (click)="generateAttendanceSummary()">
+                      <div class="spinner-grow spinner-grow-sm" role="status" *ngIf="isAttendanceGenerationOnProgress">
+                        <span class="visually-hidden"></span>
+                      </div>
+                      Generate from AMS
+                    </a>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="isAttendanceCovered === false && employees !== undefined" class="card-footer py-0">
+            <div *ngIf="isAttendanceCovered === false" class="col">
+              <small class="small text-danger" style="margin-left: 10px !important">
+                <span class="font-sm">
+                  Attendance not found for <span class="fw-bold">{{ employees.length }}</span> employees. Please re-import the attendance
+                  file after adding missing attendance data.
+                </span>
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--                            Missing Attendance List-->
+      <div class="row" *ngIf="isAttendanceCovered === false && employees !== undefined">
+        <div class="card mb-3" style="width: 100%">
+          <div class="card-body p-0">
+            <div class="card-text align-baseline">
+              <div class="note-black p-2">
+                Missing <span class="fw-bold">Attendance(s) - </span> <br />
+                {{ employees.join(', ') }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="card mb-3" style="width: 100%">
+          <div class="card-body mt-2">
+            <div class="card-text align-baseline">
+              <div class="row align-items-center">
+                <div class="col ms-3">
+                  <span *ngIf="!deductionUploadSuccess && !viewAlreadyUploadedDeductions" class="px-md-2 text-danger">
+                    <fa-icon icon="exclamation-circle"></fa-icon>
+                  </span>
+                  <span
+                    *ngIf="deductionUploadSuccess || viewAlreadyUploadedDeductions"
+                    class="px-md-2 text-success"
+                    style="color: limegreen"
+                  >
+                    <fa-icon icon="check-circle"></fa-icon>
+                  </span>
+                  Other Deduction <span class="text-muted small">(e.g. Loan Repayments)</span>
+                </div>
+
+                <div class="col">
+                  <label class="btn btn-primary float-start px-sm-2 mx-sm-1" for="file_deductions_upload">
+                    {{ otherDeductionImportBtnTxt }}
+                  </label>
+                  <input
+                    (change)="importXlsx($event, 'salary-deductions')"
+                    class="form-control-file form-control-file"
+                    id="file_deductions_upload"
+                    name="fileDeductions"
+                    type="file"
+                  />
+                  <button
+                    [disabled]="!deductionUploadSuccess && !viewAlreadyUploadedDeductions"
+                    [routerLink]="['/salary-deduction/', editForm.get(['year'])?.value, editForm.get(['month'])?.value]"
+                    class="btn btn-success float-start mx-sm-0"
+                  >
+                    View
+                  </button>
+                  <span class="ps-3">
+                    <a class="btn btn-outline-info" href="api-open/salary-generation/salary-deductions-xlsx-upload-format/" target="_blank">
+                      Download format</a
+                    >
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="ready" class="container">
+      <div
+        *ngIf="
+          (mobileBillUploadSuccess || viewAlreadyUploadedMobileBill) &&
+          (deductionUploadSuccess || viewAlreadyUploadedMobileBill) &&
+          (attendanceUploadSuccess || viewAlreadyUploadedAttendance) &&
+          salaryGenerationPreValidation &&
+          salaryGenerationPreValidation.aitConfigMissing === false &&
+          isAttendanceCovered
+        "
+        class="row"
+      >
+        <div class="col-md-12 text-center card px-0">
+          <button (click)="generate()" class="btn btn-primary d-block w-100 btn-lg">Generate Salary</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

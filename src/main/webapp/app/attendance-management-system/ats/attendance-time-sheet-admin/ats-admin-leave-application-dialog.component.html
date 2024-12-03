@@ -1,0 +1,57 @@
+<div id="simpleLeaveApplication">
+  <div class="modal-header border-none">
+    <h4 class="modal-title"></h4>
+    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" (click)="cancel()"></button>
+  </div>
+
+  <div class="modal-body dashboard-modal">
+    <div class="container">
+      <div class="row">
+        <div
+          class="card p-1 btn color-ash col mx-1 mt-0 mb-1 border-none box-shadow"
+          (click)="preValidateLeaveApplication('casual')"
+          [ngClass]="remainingCasualLeave > 0 ? 'col-active' : 'disabled'"
+        >
+          <fa-icon class="icon icon-size-mid pt-4" icon="stethoscope"></fa-icon>
+          <div class="card-body pt-0 pb-2 px-0">
+            <div class="card-title text-center mb-0 font-sm">Casual Leave</div>
+            <div class="card-title text-center mb-0 font-sm">Balance: {{ this.remainingCasualLeave }}</div>
+          </div>
+        </div>
+        <div
+          class="card p-1 btn color-ash col mx-1 mt-0 mb-1 border-none box-shadow"
+          (click)="preValidateLeaveApplication('annual')"
+          [ngClass]="remainingAnnualLeave > 0 ? 'col-active' : 'disabled'"
+        >
+          <fa-icon class="icon icon-size-mid pt-4" icon="plane-departure"></fa-icon>
+          <div class="card-body pt-0 pb-2 px-0">
+            <div class="card-title text-center mb-0 font-sm">Annual Leave</div>
+            <div class="card-title text-center mb-0 font-sm">Balance: {{ this.remainingAnnualLeave }}</div>
+          </div>
+        </div>
+        <div
+          class="card p-1 btn color-ash col mx-1 mt-0 mb-1 border-none box-shadow"
+          (click)="preValidateLeaveApplication('compensatory')"
+          [ngClass]="remainingCompensatoryLeave > 0 ? 'col-active' : 'disabled'"
+        >
+          <fa-icon class="icon icon-size-mid pt-4" icon="briefcase"></fa-icon>
+          <div class="card-body pt-0 pb-2 px-0">
+            <div class="card-title text-center mb-0 font-sm">Compensatory Leave</div>
+            <div class="card-title text-center mb-0 font-sm">Balance: {{ this.remainingCompensatoryLeave }}</div>
+          </div>
+        </div>
+
+        <div
+          class="card p-1 btn lite-red col col-active mx-1 mt-0 mb-1 border-none box-shadow"
+          (click)="preValidateLeaveApplication('leaveWithoutPay')"
+        >
+          <fa-icon class="icon icon-size-mid pt-4" icon="cut"></fa-icon>
+          <div class="card-body pt-0 pb-2 px-0">
+            <div class="card-title text-center mb-0 font-sm">Leave without Pay</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer p-3 border-none"></div>
+</div>

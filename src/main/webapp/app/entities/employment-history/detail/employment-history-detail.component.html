@@ -1,0 +1,144 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="employmentHistory">
+      <h2 data-cy="employmentHistoryDetailsHeading">
+        <span jhiTranslate="bitsHrPayrollApp.employmentHistory.detail.title">Employment History</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ employmentHistory.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employmentHistory.referenceId">Reference Id</span></dt>
+        <dd>
+          <span>{{ employmentHistory.referenceId }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employmentHistory.pin">Pin</span></dt>
+        <dd>
+          <span>{{ employmentHistory.pin }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employmentHistory.eventType">Event Type</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.EventType.' + employmentHistory.eventType }}">{{ employmentHistory.eventType }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employmentHistory.effectiveDate">Effective Date</span></dt>
+        <dd>
+          <span>{{ employmentHistory.effectiveDate | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employmentHistory.previousMainGrossSalary">Previous Main Gross Salary</span></dt>
+        <dd>
+          <span>{{ employmentHistory.previousMainGrossSalary }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employmentHistory.currentMainGrossSalary">Current Main Gross Salary</span></dt>
+        <dd>
+          <span>{{ employmentHistory.currentMainGrossSalary }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employmentHistory.previousWorkingHour">Previous Working Hour</span></dt>
+        <dd>
+          <span>{{ employmentHistory.previousWorkingHour }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employmentHistory.changedWorkingHour">Changed Working Hour</span></dt>
+        <dd>
+          <span>{{ employmentHistory.changedWorkingHour }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employmentHistory.isModifiable">Is Modifiable</span></dt>
+        <dd>
+          <span>{{ employmentHistory.isModifiable }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employmentHistory.previousDesignation">Previous Designation</span></dt>
+        <dd>
+          <div *ngIf="employmentHistory.previousDesignation">
+            <a [routerLink]="['/designation', employmentHistory.previousDesignation.id, 'view']">{{
+              employmentHistory.previousDesignation.id
+            }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employmentHistory.changedDesignation">Changed Designation</span></dt>
+        <dd>
+          <div *ngIf="employmentHistory.changedDesignation">
+            <a [routerLink]="['/designation', employmentHistory.changedDesignation.id, 'view']">{{
+              employmentHistory.changedDesignation.id
+            }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employmentHistory.previousDepartment">Previous Department</span></dt>
+        <dd>
+          <div *ngIf="employmentHistory.previousDepartment">
+            <a [routerLink]="['/department', employmentHistory.previousDepartment.id, 'view']">{{
+              employmentHistory.previousDepartment.id
+            }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employmentHistory.changedDepartment">Changed Department</span></dt>
+        <dd>
+          <div *ngIf="employmentHistory.changedDepartment">
+            <a [routerLink]="['/department', employmentHistory.changedDepartment.id, 'view']">{{
+              employmentHistory.changedDepartment.id
+            }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employmentHistory.previousReportingTo">Previous Reporting To</span></dt>
+        <dd>
+          <div *ngIf="employmentHistory.previousReportingTo">
+            <a [routerLink]="['/employee', employmentHistory.previousReportingTo.id, 'view']">{{
+              employmentHistory.previousReportingTo.id
+            }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employmentHistory.changedReportingTo">Changed Reporting To</span></dt>
+        <dd>
+          <div *ngIf="employmentHistory.changedReportingTo">
+            <a [routerLink]="['/employee', employmentHistory.changedReportingTo.id, 'view']">{{
+              employmentHistory.changedReportingTo.id
+            }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employmentHistory.employee">Employee</span></dt>
+        <dd>
+          <div *ngIf="employmentHistory.employee">
+            <a [routerLink]="['/employee', employmentHistory.employee.id, 'view']">{{ employmentHistory.employee.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employmentHistory.previousUnit">Previous Unit</span></dt>
+        <dd>
+          <div *ngIf="employmentHistory.previousUnit">
+            <a [routerLink]="['/unit', employmentHistory.previousUnit.id, 'view']">{{ employmentHistory.previousUnit.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employmentHistory.changedUnit">Changed Unit</span></dt>
+        <dd>
+          <div *ngIf="employmentHistory.changedUnit">
+            <a [routerLink]="['/unit', employmentHistory.changedUnit.id, 'view']">{{ employmentHistory.changedUnit.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employmentHistory.previousBand">Previous Band</span></dt>
+        <dd>
+          <div *ngIf="employmentHistory.previousBand">
+            <a [routerLink]="['/band', employmentHistory.previousBand.id, 'view']">{{ employmentHistory.previousBand.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employmentHistory.changedBand">Changed Band</span></dt>
+        <dd>
+          <div *ngIf="employmentHistory.changedBand">
+            <a [routerLink]="['/band', employmentHistory.changedBand.id, 'view']">{{ employmentHistory.changedBand.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/employment-history', employmentHistory.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

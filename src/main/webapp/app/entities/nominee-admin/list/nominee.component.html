@@ -1,0 +1,326 @@
+<jhi-header [headerName]="'Nominees'"></jhi-header>
+<div>
+  <!-- employee search-->
+  <div class="row mb-2">
+    <div class="col-md-4 font-sm">
+      <!--<jhi-simple-select-employee-form #simpleSelectEmployeeFormComponent
+                (onChangedEmployeeId)="onSearchTextChange($event)"
+                (keydown.backspace)="onKeydown($event)"
+                (keydown.esc)="onKeydown($event)">
+            </jhi-simple-select-employee-form>
+-->
+      <ng-select
+        [items]="employees"
+        bindLabel="fullName"
+        bindValue="id"
+        appearance="outline"
+        [searchable]="true"
+        [clearable]="true"
+        labelForId="employeeId"
+        placeholder="Select Employee"
+        id="field_employee"
+        [formControl]="employeeId"
+        (change)="onSearchTextChange($event)"
+      >
+      </ng-select>
+    </div>
+    <div class="col-md-6">
+      <button *ngIf="nomineeType === 'all'" type="button" id="-save" class="btn btn-secondary" (click)="open(content)">
+        <fa-icon icon="search"></fa-icon> <span>Filter</span>
+      </button>
+
+      <button *ngIf="nomineeType !== 'all'" type="button" class="btn btn-secondary" (click)="resetList()">
+        <fa-icon icon="ban"></fa-icon> <span>Reset</span>
+      </button>
+    </div>
+  </div>
+  <jhi-alert></jhi-alert>
+
+  <!-- NomineeInfo table -->
+  <div class="table-responsive" id="entities" *ngIf="employeesNomineeInfo && employeesNomineeInfo.length > 0">
+    <table class="table table-hover table-sm my-1 text-center" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span>PIN</span></th>
+          <th scope="col" class="text-start"><span jhiTranslate="bitsHrPayrollApp.employee.fullName">Full Name</span></th>
+          <th scope="col" class="text-start"><span jhiTranslate="bitsHrPayrollApp.employee.designation">Designation</span></th>
+          <th scope="col" class="text-start"><span>Employee Category</span></th>
+          <th *ngIf="nomineeType === 'all' || nomineeType === 'General'" scope="col" class="text-center"><span>GEN</span></th>
+          <th *ngIf="nomineeType === 'all' || nomineeType === 'Gf'" scope="col" class="text-center"><span>GF</span></th>
+          <th *ngIf="nomineeType === 'all' || nomineeType === 'Pf'" scope="col" class="text-center"><span>PF</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.employee.employmentStatus">Status</span></th>
+          <th scope="col">
+            <div class="text-end">
+              <button class="btn btn-outline-success btn-sm me-4" ngbTooltip="Download" (click)="nomineeExportDownload()">
+                <fa-icon icon="download"></fa-icon> Excel
+              </button>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+        <tr *ngFor="let employee of employeesNomineeInfo">
+          <td>{{ employee.pin }}</td>
+          <td class="text-start text-nowrap">
+            <span *ngIf="employee.fullName!.length > 25; else fullNameTipContent" [ngbTooltip]="employee.fullName">
+              {{ addressSlice(employee.fullName!) }}
+            </span>
+            <ng-template #fullNameTipContent>
+              <span>
+                {{ employee.fullName! }}
+              </span>
+            </ng-template>
+          </td>
+          <td class="text-start">
+            <span *ngIf="employee.designationName!.length > 25; else designationNameTipContent" [ngbTooltip]="employee.designationName">
+              {{ addressSlice(employee.designationName!) }}
+            </span>
+            <ng-template #designationNameTipContent>
+              <span>
+                {{ employee.designationName! }}
+              </span>
+            </ng-template>
+          </td>
+          <td class="text-start">{{ getUIFriendly(employee.employeeCategory!) }}</td>
+          <td *ngIf="nomineeType === 'all' || nomineeType === 'General'" class="text-center">
+            <span *ngIf="employee.isAllGeneralNomineeApproved === 'ALL_APPROVED'">
+              <ng-template #isAllGeneralNomineeApprovedTipContent> Hard copy received </ng-template>
+              <span [ngbTooltip]="isAllGeneralNomineeApprovedTipContent">
+                <fa-icon icon="check-circle" class="text-success"></fa-icon>
+              </span>
+            </span>
+            <span *ngIf="employee.isAllGeneralNomineeApproved === 'PENDING'">
+              <ng-template #isAllGeneralNomineeApprovedTipContent> Hard copy not received </ng-template>
+              <span [ngbTooltip]="isAllGeneralNomineeApprovedTipContent">
+                <fa-icon icon="clock" class="text-secondary"></fa-icon>
+              </span>
+            </span>
+            <span *ngIf="employee.isAllGeneralNomineeApproved === 'PARTIAL_APPROVED'">
+              <ng-template #isAllGeneralNomineeApprovedTipContent> Partially Approved </ng-template>
+              <span [ngbTooltip]="isAllGeneralNomineeApprovedTipContent">
+                <fa-icon icon="check-circle" class="text-warning"></fa-icon>
+              </span>
+            </span>
+            <span *ngIf="employee.isAllGeneralNomineeApproved === 'NOT_ELIGIBLE'">
+              <ng-template #isAllGeneralNomineeApprovedTipContent> Not Eligible </ng-template>
+              <span [ngbTooltip]="isAllGeneralNomineeApprovedTipContent">
+                <fa-icon icon="ban" class="text-secondary"></fa-icon>
+              </span>
+            </span>
+            <span *ngIf="employee.isAllGeneralNomineeApproved === 'INCOMPLETE'">
+              <ng-template #isAllGeneralNomineeApprovedTipContent> Data is not provided </ng-template>
+              <span [ngbTooltip]="isAllGeneralNomineeApprovedTipContent">
+                <fa-icon icon="times-circle" class="text-danger"></fa-icon>
+              </span>
+            </span>
+          </td>
+          <td *ngIf="nomineeType === 'all' || nomineeType === 'Gf'" class="text-center">
+            <span *ngIf="employee.isAllGFNomineeApproved === 'ALL_APPROVED'">
+              <ng-template #isAllGFNomineeApprovedTipContent> Hard copy received </ng-template>
+              <span [ngbTooltip]="isAllGFNomineeApprovedTipContent">
+                <fa-icon icon="check-circle" class="text-success"></fa-icon>
+              </span>
+            </span>
+
+            <span *ngIf="employee.isAllGFNomineeApproved === 'PENDING'">
+              <ng-template #isAllGFNomineeApprovedTipContent> Hard copy not received </ng-template>
+              <span [ngbTooltip]="isAllGFNomineeApprovedTipContent">
+                <fa-icon icon="clock" class="text-secondary"></fa-icon>
+              </span>
+            </span>
+            <span *ngIf="employee.isAllGFNomineeApproved === 'PARTIAL_APPROVED'">
+              <ng-template #isAllGFNomineeApprovedTipContent> Partially Approved </ng-template>
+              <span [ngbTooltip]="isAllGFNomineeApprovedTipContent">
+                <fa-icon icon="check-circle" class="text-warning"></fa-icon>
+              </span>
+            </span>
+            <span *ngIf="employee.isAllGFNomineeApproved === 'NOT_ELIGIBLE'">
+              <ng-template #isAllGFNomineeApprovedTipContent> Not Eligible </ng-template>
+              <span [ngbTooltip]="isAllGFNomineeApprovedTipContent">
+                <fa-icon icon="ban" class="text-secondary"></fa-icon>
+              </span>
+            </span>
+            <span *ngIf="employee.isAllGFNomineeApproved === 'INCOMPLETE'">
+              <ng-template #isAllGFNomineeApprovedTipContent> Data is not provided </ng-template>
+              <span [ngbTooltip]="isAllGFNomineeApprovedTipContent">
+                <fa-icon icon="times-circle" class="text-danger"></fa-icon>
+              </span>
+            </span>
+          </td>
+          <td *ngIf="nomineeType === 'all' || nomineeType === 'Pf'" class="text-center">
+            <span *ngIf="employee.isAllPfNomineeApproved === 'ALL_APPROVED'">
+              <ng-template #isAllPfNomineeApprovedTipContent> Hard copy received </ng-template>
+              <span [ngbTooltip]="isAllPfNomineeApprovedTipContent">
+                <fa-icon icon="check-circle" class="text-success"></fa-icon>
+              </span>
+            </span>
+            <span *ngIf="employee.isAllPfNomineeApproved === 'PENDING'">
+              <ng-template #isAllPfNomineeApprovedTipContent> Hard copy not received </ng-template>
+              <span [ngbTooltip]="isAllPfNomineeApprovedTipContent">
+                <fa-icon icon="clock" class="text-secondary"></fa-icon>
+              </span>
+            </span>
+            <span *ngIf="employee.isAllPfNomineeApproved === 'PARTIAL_APPROVED'">
+              <ng-template #isAllPfNomineeApprovedTipContent> Partially Approved </ng-template>
+              <span [ngbTooltip]="isAllPfNomineeApprovedTipContent">
+                <fa-icon icon="check-circle" class="text-warning"></fa-icon>
+              </span>
+            </span>
+            <span *ngIf="employee.isAllPfNomineeApproved === 'NOT_ELIGIBLE'">
+              <ng-template #isAllPfNomineeApprovedTipContent> Not Eligible </ng-template>
+              <span [ngbTooltip]="isAllPfNomineeApprovedTipContent">
+                <fa-icon icon="ban" class="text-secondary"></fa-icon>
+              </span>
+            </span>
+            <span *ngIf="employee.isAllPfNomineeApproved === 'INCOMPLETE'">
+              <ng-template #isAllPfNomineeApprovedTipContent> Data is not provided </ng-template>
+              <span [ngbTooltip]="isAllPfNomineeApprovedTipContent">
+                <fa-icon icon="times-circle" class="text-danger"></fa-icon>
+              </span>
+            </span>
+          </td>
+          <td>{{ employee.employmentStatus }}</td>
+          <td class="text-end">
+            <div class="btn-group px-3 m-2">
+              <button type="submit" [routerLink]="['/nominee/summary', employee.pin, 'view']" class="btn btn-info btn-sm">
+                <fa-icon class="fa fa-long-arrow-right" icon="arrow-left"></fa-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- filter modal-->
+<ng-template #content let-modal>
+  <div class="modal-header border">
+    <h6 class="modal-title fw-light" id="modal-basic-title">Search Nominee</h6>
+    <button type="button" class="close outline-none" aria-label="Close" (click)="closeModal()">&times;</button>
+  </div>
+  <div class="modal-body" ngbAutofocus>
+    <form id="nominee-form" name="editForm" role="form" novalidate [formGroup]="editForm">
+      <div id="nominee-input-fields" class="row">
+        <div class="col-md-12 mb-3">
+          <div class="form-check form-check-inline mx-md-5 mx-2">
+            <input
+              class="form-check-input mt-2"
+              (change)="filterByApprovalType('general')"
+              name="nomineeType"
+              formControlName="nomineeType"
+              value="General"
+              id="formSelectGeneral"
+              checked
+              type="radio"
+            />
+            <label class="form-check-label" for="formSelectGeneral">General</label>
+          </div>
+
+          <div class="form-check form-check-inline mx-md-5 mx-2">
+            <input
+              class="form-check-input mt-2"
+              (change)="filterByApprovalType('gf')"
+              name="nomineeType"
+              formControlName="nomineeType"
+              id="formSelectGF"
+              value="Gf"
+              type="radio"
+            />
+            <label class="form-check-label" for="formSelectGF">GF</label>
+          </div>
+
+          <div class="form-check form-check-inline mx-md-5 mx-2">
+            <input
+              class="form-check-input mt-2"
+              (change)="filterByApprovalType('pf')"
+              name="nomineeType"
+              formControlName="nomineeType"
+              value="Pf"
+              id="formSelectPF"
+              type="radio"
+            />
+            <label class="form-check-label" for="formSelectPF">PF</label>
+          </div>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label class="form-control-label required">Start Date</label>
+          <div class="input-group">
+            <input
+              id="field_dateOfBirth required"
+              type="text"
+              class="form-control"
+              name="startDate"
+              ngbDatepicker
+              #dateOfBirthDp="ngbDatepicker"
+              formControlName="startDate"
+              (dateSelect)="checkTime($event)"
+            />
+            <span class="input-group-append">
+              <button type="button" class="btn btn-secondary" (click)="dateOfBirthDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </span>
+          </div>
+          <div *ngIf="editForm.get('startDate')!.invalid && (editForm.get('startDate')!.dirty || editForm.get('startDate')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('startDate')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label class="form-control-label required">End Date</label>
+          <div class="input-group">
+            <input
+              id="field_endDate required"
+              type="text"
+              class="form-control"
+              name="endDate"
+              ngbDatepicker
+              #endDateDp="ngbDatepicker"
+              formControlName="endDate"
+              (dateSelect)="checkTime($event)"
+            />
+            <span class="input-group-append">
+              <button type="button" class="btn btn-secondary" (click)="endDateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+            </span>
+          </div>
+          <div *ngIf="editForm.get('endDate')!.invalid && (editForm.get('endDate')!.dirty || editForm.get('endDate')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('endDate')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+          <div *ngIf="isInvalid === true">
+            <small class="form-text text-danger"> Start date can not be greater than End date. </small>
+          </div>
+        </div>
+
+        <div class="row mt-3 px-4">
+          <div class="col-12">
+            <button type="button" id="cancel-save" class="btn btn-secondary" (click)="closeModal()">
+              <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+            </button>
+            <button
+              type="submit"
+              id="save-entity"
+              [disabled]="editForm.invalid || this.isInvalid"
+              class="btn btn-primary"
+              (click)="searchByDate()"
+            >
+              <fa-icon icon="save"></fa-icon>&nbsp;<span>Submit</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>

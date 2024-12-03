@@ -1,0 +1,11 @@
+id;leave_type;opening_balance;closing_balance;consumed_during_year;year;amount;leave_amount_type
+1;Non_Mentionable_Maternity_Leave;12528;56722;95004;56157;65425;Year
+2;Non_Mentionable_Compensatory_Leave;4658;85999;38112;72366;67864;Day
+3;Non_Mentionable_Paternity_Leave;26382;83982;47638;98448;26390;Year
+4;Non_Mentionable_Compensatory_Leave;60813;10118;68399;53361;27891;Day
+5;Other;58677;60977;43471;1752;38909;Year
+6;Other;79368;31545;5083;95728;292;Year
+7;Mentionable_Annual_Leave;79489;78022;30635;64471;89474;Day
+8;Mentionable_Annual_Leave;60148;42537;6921;12239;7873;Year
+9;Non_Mentionable_Paternity_Leave;2830;62073;96808;9962;48915;Day
+10;Non_Mentionable_Maternity_Leave;50479;80764;54549;24861;82510;Year

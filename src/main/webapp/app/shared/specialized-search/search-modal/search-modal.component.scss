@@ -1,0 +1,59 @@
+.card {
+  flex-direction: row;
+}
+
+.card-img-top {
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+}
+
+.card-img-sub {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Rounded border */
+hr.rounded {
+  border-top: 3px solid rgba(187, 187, 187, 0.479);
+  border-radius: 8px;
+}
+
+.table-sm td,
+.table-sm th {
+  padding: 0rem !important;
+}
+
+.table {
+  margin-bottom: 0;
+  border: 0 !important;
+}
+
+.text-small {
+  font-size: 0.7rem;
+}
+
+.text-md {
+  font-size: 0.8rem;
+}
+
+.text-avg {
+  font-size: 0.9rem;
+}
+
+.card-title {
+  font-width: 400 !important;
+}
+.card-subtitle {
+  font-weight: 400 !important;
+}
+
+.font-large {
+  font-size: large;
+}

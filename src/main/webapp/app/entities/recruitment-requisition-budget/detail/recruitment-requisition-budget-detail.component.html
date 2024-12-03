@@ -1,0 +1,48 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="recruitmentRequisitionBudget">
+      <h2><span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionBudget.detail.title">Recruitment Requisition Budget</span> {{ recruitmentRequisitionBudget.id }}</h2>
+
+      <hr>
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionBudget.year">Year</span></dt>
+        <dd>
+          <span>{{ recruitmentRequisitionBudget.year }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionBudget.budget">Budget</span></dt>
+        <dd>
+          <span>{{ recruitmentRequisitionBudget.budget }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionBudget.remainingBudget">Remaining Budget</span></dt>
+        <dd>
+          <span>{{ recruitmentRequisitionBudget.remainingBudget }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionBudget.remainingManpower">Remaining Manpower</span></dt>
+        <dd>
+          <span>{{ recruitmentRequisitionBudget.remainingManpower }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionBudget.employee">Employee</span></dt>
+        <dd>
+          <div *ngIf="recruitmentRequisitionBudget.employeeId">
+            <a [routerLink]="['/employee', recruitmentRequisitionBudget.employeeId, 'view']">{{ recruitmentRequisitionBudget.employeeId }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit"
+              (click)="previousState()"
+              class="btn btn-info">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button"
+              [routerLink]="['/recruitment-requisition-budget', recruitmentRequisitionBudget.id, 'edit']"
+              class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

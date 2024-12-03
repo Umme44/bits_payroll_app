@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="en">
+<head>
+    <!--    done    -->
+    <title> Nominee Update </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="icon" th:href="@{|${baseUrl}/favicon.ico|}"/>
+
+    <style>
+        table{
+            border-collapse: collapse;
+        }
+
+        table.health-insurance-feature > thead > tr > th,
+        table.health-insurance-feature > tbody > tr > td{
+            padding: 10px;
+        }
+
+        .text-center{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<span>
+    Dear [[${name}]],
+</span>
+<p>
+    Requesting you to register for BRAC IT Life and Health Insurance scheme. </p>
+
+    Link
+
+<table border="1" class="health-insurance-feature">
+    <thead>
+    <tr style="background-color: rgb(222, 234, 246)">
+        <th>Sl.</th>
+        <th>Insurance Type</th>
+        <th>Life Insurance</th>
+        <th>Hospitalization</th>
+        <th>Maternity</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td>1.</td>
+        <td>Employee</td>
+        <td class="text-center">Yes</td>
+        <td class="text-center">Yes</td>
+        <td class="text-center">-</td>
+    </tr>
+
+    <tr>
+        <td>2.</td>
+        <td>Spouse</td>
+        <td class="text-center">-</td>
+        <td class="text-center">Yes</td>
+        <td class="text-center">Yes</td>
+    </tr>
+
+    <tr>
+        <td>3.</td>
+        <td>Children (all)</td>
+        <td class="text-center">-</td>
+        <td class="text-center">Yes</td>
+        <td class="text-center">-</td>
+    </tr>
+
+
+    </tbody>
+</table>
+
+
+<p> Please complete the registration process by DD/MMM/YYYY.</p>
+
+</body>
+
+<footer>
+    <h4 style="text-align: center">This is a system generated email. Please do not reply.</h4>
+</footer>
+</html>

@@ -1,0 +1,1497 @@
+application {
+  config {
+    applicationType monolith
+    authenticationType jwt
+    baseName BitsHrPayroll
+    blueprints []
+    buildTool gradle
+    cacheProvider ehcache
+    clientFramework angularX
+    clientPackageManager npm
+    clientTheme simplex
+    clientThemeVariant primary
+    creationTimestamp 1613282514828
+    databaseType sql
+    devDatabaseType h2Disk
+    dtoSuffix DTO
+    embeddableLaunchScript false
+    enableHibernateCache true
+    enableSwaggerCodegen false
+    enableTranslation true
+    jhiPrefix jhi
+    jhipsterVersion "6.10.5"
+    jwtSecretKey "YjJlYmY0Y2NkZDJmODgwYWJlNWI5NDkxY2JmZDhhZWZiZGQxMDVmMzdlMjM1MmIxZGI1OTllYjEyYWM2MGVhMGRiNWMzZGZlNjk1ZDQ0MmQwYjg0ZjRiNWQ4YTZlMGJlNTU4MTNhNzNkMTk4OTQ1N2QyYzQ1OGYxMzhkNmZiZmY="
+    languages [en, bn]
+    messageBroker false
+    nativeLanguage en
+    otherModules []
+    packageName com.bits.hr
+    prodDatabaseType postgresql
+    searchEngine false
+    serverPort 8080
+    serviceDiscoveryType false
+    skipClient false
+    skipServer false
+    skipUserManagement false
+    testFrameworks []
+    useSass true
+    websocket false
+  }
+
+  entities AitConfig, AitPayment, Area, ArrearPayment, ArrearSalary, ArrearSalaryItem, ArrearSalaryMaster, Attendance, AttendanceEntry, AttendanceSummary, AttendanceSyncCache, Band, BankBranch, Building, CalenderYear, Config, DeductionType, Department, Designation, EducationDetails, Employee, EmployeeNOC, EmployeePin, EmployeePinConfiguration, EmployeeResignation, EmployeeSalary, EmployeeSalaryTempData, EmployeeStaticFile, EmploymentCertificate, EmploymentHistory, EventLog, Festival, FestivalBonus, FestivalBonusConfig, FestivalBonusDetails, FileTemplates, FinalSettlement, FlexSchedule, FlexScheduleApplication, Floor, GeneratedSalaryHistory, HoldFbDisbursement, HoldSalaryDisbursement, Holidays, IncomeTaxChallan, IndividualArrearSalary, InsuranceClaim, InsuranceConfiguration, InsuranceRegistration, InsuranceRelation, ItemInformation, LeaveAllocation, LeaveApplication, LeaveBalance, ManualAttendanceEntry, MobileBill, MovementEntry, Nationality, Nominee, Offer, OfficeNotices, Organization, PfAccount, PfArrear, PfCollection, PfLoan, PfLoanApplication, PfLoanRepayment, PfNominee, ProcReq, ProcReqMaster, ProRataFestivalBonus, RecruitmentRequisitionForm, References, Room, RoomRequisition, RoomType, SalaryCertificate, SalaryDeduction, SalaryGeneratorMaster, SpecialShiftTiming, TaxAcknowledgementReceipt, TimeSlot, TrainingHistory, Unit, UnitOfMeasurement, UserFeedback, Vehicle, VehicleRequisition, WorkFromHomeApplication, WorkingExperience, YearMonth
+}
+
+entity AitConfig {
+  startDate LocalDate required,
+  endDate LocalDate required,
+  taxConfig TextBlob
+}
+entity AitPayment {
+  date LocalDate,
+  amount Double,
+  description String
+}
+entity Area {
+  name String required minlength(0) maxlength(255)
+}
+entity ArrearPayment {
+  paymentType ArrearPaymentType required,
+  disbursementDate LocalDate,
+  salaryMonth Month,
+  salaryYear Integer min(1900) max(2277),
+  approvalStatus Status,
+  disbursementAmount Double required min(1) max(100000000),
+  isDeleted Boolean required,
+  arrearPF Double required min(0) max(100000000),
+  taxDeduction Double required min(0) max(100000000),
+  deductTaxUponPayment Boolean required
+}
+entity ArrearSalary {
+  month Month required,
+  year Integer required min(1990) max(2099),
+  amount Double required min(1) max(9999999),
+  arrearType String
+}
+entity ArrearSalaryItem {
+  title String required minlength(3) maxlength(255),
+  arrearAmount Double required min(0) max(10000000),
+  hasPfArrearDeduction Boolean,
+  pfArrearDeduction Double,
+  isFestivalBonus Boolean,
+  isDeleted Boolean required
+}
+entity ArrearSalaryMaster {
+  title String required unique minlength(3) maxlength(250),
+  isLocked Boolean required,
+  isDeleted Boolean required
+}
+entity Attendance {
+  year Integer min(1990) max(2099),
+  month Integer min(1) max(12),
+  absentDays Integer,
+  fractionDays Integer,
+  compensatoryLeaveGained Integer
+}
+entity AttendanceEntry {
+  date LocalDate,
+  inTime Instant,
+  inNote String,
+  outTime Instant,
+  outNote String,
+  status Status,
+  note String minlength(0) maxlength(250)
+}
+entity AttendanceSummary {
+  month Integer,
+  year Integer,
+  totalWorkingDays Integer,
+  totalLeaveDays Integer,
+  totalAbsentDays Integer,
+  totalFractionDays Integer,
+  attendanceRegularisationStartDate LocalDate,
+  attendanceRegularisationEndDate LocalDate
+}
+entity AttendanceSyncCache {
+  employeePin String,
+  timestamp Instant,
+  terminal Integer
+}
+entity Band {
+  bandName String required minlength(1) maxlength(250) unique,
+  minSalary Double required,
+  maxSalary Double required,
+  welfareFund Double min(0) max(100000),
+  mobileCelling Double min(0) max(100000),
+  createdAt LocalDate,
+  updatedAt LocalDate
+}
+entity BankBranch {
+  branchName String required minlength(5) maxlength(25) unique
+}
+entity Building {
+  buildingName String required unique minlength(0) maxlength(250),
+  buildingLocation String minlength(0) maxlength(250),
+  remarks String minlength(0) maxlength(250),
+  createdAt Instant,
+  updatedAt Instant
+}
+entity CalenderYear {
+  year Integer required unique min(1900) max(2100),
+  startDate LocalDate required,
+  endDate LocalDate required
+}
+entity Config {
+  key String required unique minlength(1) maxlength(255),
+  value String minlength(1) maxlength(255)
+}
+entity DeductionType {
+  name String required unique minlength(2) maxlength(250)
+}
+entity Department {
+  departmentName String required minlength(1) maxlength(250) unique
+}
+entity Designation {
+  designationName String required minlength(1) maxlength(250) unique
+}
+entity EducationDetails {
+  nameOfDegree String,
+  subject String,
+  institute String,
+  yearOfDegreeCompletion String
+}
+entity Employee {
+  referenceId String,
+  pin String unique required,
+  picture String,
+  fullName String,
+  surName String,
+  nationalIdNo String,
+  dateOfBirth LocalDate,
+  placeOfBirth String,
+  fatherName String,
+  motherName String,
+  bloodGroup BloodGroup,
+  presentAddress String,
+  permanentAddress String,
+  personalContactNo String,
+  personalEmail String,
+  religion Religion,
+  maritalStatus MaritalStatus,
+  dateOfMarriage LocalDate,
+  spouseName String,
+  officialEmail String,
+  officialContactNo String,
+  officePhoneExtension String,
+  whatsappId String,
+  skypeId String,
+  emergencyContactPersonName String,
+  emergencyContactPersonRelationshipWithEmployee String,
+  emergencyContactPersonContactNumber String,
+  mainGrossSalary Double,
+  employeeCategory EmployeeCategory,
+  location String,
+  dateOfJoining LocalDate,
+  dateOfConfirmation LocalDate,
+  isProbationaryPeriodExtended Boolean,
+  probationPeriodExtendedTo LocalDate,
+  payType PayType,
+  disbursementMethod DisbursementMethod,
+  bankName String,
+  bankAccountNo String,
+  mobileCelling Long,
+  bkashNumber String,
+  cardType CardType,
+  cardNumber String,
+  tinNumber String,
+  passportNo String,
+  passportPlaceOfIssue String,
+  passportIssuedDate LocalDate,
+  passportExpiryDate LocalDate,
+  gender Gender,
+  welfareFundDeduction Double,
+  employmentStatus EmploymentStatus,
+  hasDisabledChild Boolean,
+  isFirstTimeAitGiver Boolean,
+  isSalaryHold Boolean,
+  isFestivalBonusHold Boolean,
+  isPhysicallyDisabled Boolean,
+  isFreedomFighter Boolean,
+  hasOverTime Boolean,
+  probationPeriodEndDate LocalDate,
+  contractPeriodExtendedTo LocalDate,
+  contractPeriodEndDate LocalDate,
+  cardType02 CardType,
+  cardNumber02 String,
+  cardType03 CardType,
+  cardNumber03 String,
+  allowance01 Double min(0) max(10000000),
+  allowance01EffectiveFrom LocalDate,
+  allowance01EffectiveTo LocalDate,
+  allowance02 Double min(0) max(10000000),
+  allowance02EffectiveFrom LocalDate,
+  allowance02EffectiveTo LocalDate,
+  allowance03 Double min(0) max(10000000),
+  allowance03EffectiveFrom LocalDate,
+  allowance03EffectiveTo LocalDate,
+  allowance04 Double min(0) max(10000000),
+  allowance04EffectiveFrom LocalDate,
+  allowance04EffectiveTo LocalDate,
+  allowance05 Double min(0) max(10000000),
+  allowance05EffectiveFrom LocalDate,
+  allowance05EffectiveTo LocalDate,
+  allowance06 Double min(0) max(10000000),
+  allowance06EffectiveFrom LocalDate,
+  allowance06EffectiveTo LocalDate,
+  isTaxPaidByOrganisation Boolean,
+  createdBy String,
+  createdAt Instant,
+  updatedBy String,
+  updatedAt LocalDate,
+  isAllowedToGiveOnlineAttendance Boolean,
+  noticePeriodInDays Integer,
+  isFixedTermContract Boolean,
+  currentInTime Instant,
+  currentOutTime Instant,
+  onlineAttendanceSanctionedAt Instant,
+  isNidVerified Boolean,
+  canRaiseRrfOnBehalf Boolean,
+  taxesCircle String maxlength(250),
+  taxesZone String maxlength(250),
+  canManageTaxAcknowledgementReceipt Boolean,
+  isEligibleForAutomatedAttendance Boolean
+}
+entity EmployeeNOC (employeenoc) {
+  passportNumber String required,
+  leaveStartDate LocalDate required,
+  leaveEndDate LocalDate required,
+  countryToVisit String required,
+  referenceNumber String unique,
+  issueDate LocalDate,
+  createdAt Instant required,
+  updatedAt Instant,
+  generatedAt Instant,
+  reason String,
+  purposeOfNOC PurposeOfNOC required,
+  certificateStatus CertificateStatus required,
+  isRequiredForVisa Boolean
+}
+entity EmployeePin {
+  pin String unique,
+  fullName String required,
+  employeeCategory EmployeeCategory required,
+  employeePinStatus EmployeePinStatus required,
+  createdAt Instant required,
+  updatedAt Instant
+}
+entity EmployeePinConfiguration {
+  employeeCategory EmployeeCategory required,
+  sequenceStart String required unique,
+  sequenceEnd String required unique,
+  lastSequence String,
+  hasFullFilled Boolean,
+  createdAt Instant required,
+  updatedAt Instant,
+  lastCreatedPin String
+}
+entity EmployeeResignation {
+  createdAt LocalDate,
+  updatedAt LocalDate,
+  resignationDate LocalDate,
+  approvalStatus Status,
+  approvalComment String,
+  isSalaryHold Boolean,
+  isFestivalBonusHold Boolean,
+  resignationReason String,
+  lastWorkingDay LocalDate required
+}
+entity EmployeeSalary {
+  month Month,
+  year Integer,
+  salaryGenerationDate LocalDate,
+  createdBy String,
+  createdAt Instant,
+  updatedBy String,
+  updatedAt Instant,
+  refPin String,
+  pin String,
+  joiningDate LocalDate,
+  confirmationDate LocalDate,
+  employeeCategory EmployeeCategory,
+  unit String,
+  department String,
+  mainGrossSalary Double,
+  mainGrossBasicSalary Double,
+  mainGrossHouseRent Double,
+  mainGrossMedicalAllowance Double,
+  mainGrossConveyanceAllowance Double,
+  absentDays Integer,
+  fractionDays Integer,
+  payableGrossSalary Double,
+  payableGrossBasicSalary Double,
+  payableGrossHouseRent Double,
+  payableGrossMedicalAllowance Double,
+  payableGrossConveyanceAllowance Double,
+  arrearSalary Double,
+  pfDeduction Double,
+  taxDeduction Double,
+  welfareFundDeduction Double,
+  mobileBillDeduction Double,
+  otherDeduction Double,
+  totalDeduction Double,
+  netPay Double,
+  remarks String,
+  pfContribution Double,
+  gfContribution Double,
+  provisionForFestivalBonus Double,
+  provisionForLeaveEncashment Double,
+  isFinalized Boolean,
+  isDispatched Boolean,
+  entertainment Double min(0) max(10000000),
+  utility Double min(0) max(10000000),
+  otherAddition Double,
+  salaryAdjustment Double min(-10000000) max(10000000),
+  providentFundArrear Double min(0) max(10000000),
+  allowance01 Double min(0) max(10000000),
+  allowance02 Double min(0) max(10000000),
+  allowance03 Double min(0) max(10000000),
+  allowance04 Double min(0) max(10000000),
+  allowance05 Double min(0) max(10000000),
+  allowance06 Double min(0) max(10000000),
+  provisionForProjectBonus Double min(0) max(10000000),
+  isHold Boolean,
+  attendanceRegularisationStartDate LocalDate,
+  attendanceRegularisationEndDate LocalDate,
+  title String,
+  isVisibleToEmployee Boolean,
+  pfArrear Double,
+  taxCalculationSnapshot TextBlob
+}
+entity EmployeeSalaryTempData {
+  month Month,
+  year Integer,
+  mainGrossSalary Double,
+  mainGrossBasicSalary Double,
+  mainGrossHouseRent Double,
+  mainGrossMedicalAllowance Double,
+  mainGrossConveyanceAllowance Double,
+  absentDays Integer,
+  fractionDays Integer,
+  payableGrossSalary Double,
+  payableGrossBasicSalary Double,
+  payableGrossHouseRent Double,
+  payableGrossMedicalAllowance Double,
+  payableGrossConveyanceAllowance Double,
+  arrearSalary Double,
+  pfDeduction Double,
+  taxDeduction Double,
+  welfareFundDeduction Double,
+  mobileBillDeduction Double,
+  otherDeduction Double,
+  totalDeduction Double,
+  netPay Double,
+  remarks String,
+  pfContribution Double,
+  gfContribution Double,
+  provisionForFestivalBonus Double,
+  provisionForLeaveEncashment Double,
+  provishionForProjectBonus Double,
+  livingAllowance Double,
+  otherAddition Double,
+  salaryAdjustment Double,
+  providentFundArrear Double,
+  entertainment Double,
+  utility Double
+}
+entity EmployeeStaticFile {
+  filePath String minlength(0) maxlength(255)
+}
+entity EmploymentCertificate {
+  certificateStatus CertificateStatus required,
+  referenceNumber String unique,
+  issueDate LocalDate,
+  reason String,
+  createdAt Instant required,
+  updatedAt Instant,
+  generatedAt Instant
+}
+entity EmploymentHistory {
+  referenceId String,
+  pin String,
+  eventType EventType,
+  effectiveDate LocalDate,
+  previousMainGrossSalary Double,
+  currentMainGrossSalary Double,
+  previousWorkingHour String,
+  changedWorkingHour String,
+  isModifiable Boolean
+}
+entity EventLog {
+  title String minlength(0) maxlength(255),
+  requestMethod RequestMethod,
+  performedAt Instant required,
+  data TextBlob,
+  entityName String
+}
+entity Festival {
+  title String required unique minlength(3) maxlength(255),
+  festivalName String minlength(0) maxlength(255),
+  festivalDate LocalDate,
+  bonusDisbursementDate LocalDate required,
+  religion Religion required,
+  isProRata Boolean required
+}
+entity FestivalBonus
+entity FestivalBonusConfig {
+  employeeCategory EmployeeCategory required unique,
+  percentageFromGross Double required min(0) max(5000)
+}
+entity FestivalBonusDetails {
+  bonusAmount Double required min(0),
+  remarks String minlength(0) maxlength(255),
+  isHold Boolean required,
+  basic Double,
+  gross Double
+}
+entity FileTemplates {
+  title String required unique minlength(2) maxlength(250),
+  filePath TextBlob,
+  type FileTemplatesType,
+  accessPrivilege FileAccessPrevilage,
+  isActive Boolean required
+}
+entity FinalSettlement {
+  dateOfResignation LocalDate,
+  noticePeriod Integer,
+  lastWorkingDay LocalDate,
+  dateOfRelease LocalDate,
+  serviceTenure String,
+  mBasic Double,
+  mHouseRent Double,
+  mMedical Double,
+  mConveyance Double,
+  salaryPayable Double,
+  salaryPayableRemarks String,
+  totalDaysForLeaveEncashment Double,
+  totalLeaveEncashment Double,
+  mobileBillInCash Double,
+  allowance01Name String,
+  allowance01Amount Double,
+  allowance01Remarks String,
+  allowance02Name String,
+  allowance02Amount Double,
+  allowance02Remarks String,
+  allowance03Name String,
+  allowance03Amount Double,
+  allowance03Remarks String,
+  allowance04Name String,
+  allowance04Amount Double,
+  allowance04Remarks String,
+  deductionNoticePay Double,
+  deductionPf Double,
+  deductionHaf Double,
+  deductionExcessCellBill Double,
+  deductionAbsentDaysAdjustment Double,
+  totalSalaryPayable Double,
+  deductionAnnualIncomeTax Double,
+  netSalaryPayable Double,
+  totalPayablePf Double,
+  totalPayableGf Double,
+  totalFinalSettlementAmount Double,
+  createdAt LocalDate,
+  updatedAt LocalDate,
+  deductionNoticePayDays Integer,
+  deductionAbsentDaysAdjustmentDays Integer,
+  deductionOther Double,
+  totalSalary Double,
+  totalGrossSalary Double,
+  totalDeduction Double,
+  finalSettlementDate LocalDate,
+  isFinalized Boolean,
+  salaryNumOfMonth Integer,
+  remarks String
+}
+entity FlexSchedule {
+  effectiveDate LocalDate required,
+  inTime Instant required,
+  outTime Instant required
+}
+entity FlexScheduleApplication {
+  effectiveFrom LocalDate required,
+  effectiveTo LocalDate required,
+  reason TextBlob,
+  status Status required,
+  sanctionedAt Instant,
+  appliedAt LocalDate required,
+  createdAt Instant required,
+  updatedAt Instant
+}
+entity Floor {
+  floorName String required minlength(0) maxlength(250),
+  remarks String minlength(0) maxlength(250),
+  createdAt Instant,
+  updatedAt Instant
+}
+entity GeneratedSalaryHistory {
+  year Integer min(1990) max(2099),
+  month Integer min(1) max(12),
+  status Boolean
+}
+entity HoldFbDisbursement {
+  disbursedAt LocalDate required,
+  remarks String minlength(0) maxlength(255)
+}
+entity HoldSalaryDisbursement {
+  date LocalDate required
+}
+entity Holidays {
+  holidayType HolidayType,
+  description String,
+  startDate LocalDate,
+  endDate LocalDate,
+  isMoonDependent Boolean
+}
+entity IncomeTaxChallan {
+  challanNo String required maxlength(200),
+  challanDate LocalDate required,
+  amount Double required,
+  month Month required,
+  year Integer required min(1990) max(2199),
+  remarks String minlength(0) maxlength(250)
+}
+entity IndividualArrearSalary {
+  effectiveDate LocalDate,
+  existingBand String,
+  newBand String,
+  existingGross Double,
+  newGross Double,
+  increment Double,
+  arrearSalary Double,
+  arrearPfDeduction Double,
+  taxDeduction Double,
+  netPay Double,
+  pfContribution Double,
+  title String,
+  titleEffectiveFrom String,
+  arrearRemarks String,
+  festivalBonus Double
+}
+entity InsuranceClaim {
+  settlementDate LocalDate,
+  paymentDate LocalDate,
+  regretDate LocalDate,
+  regretReason String,
+  claimedAmount Double,
+  settledAmount Double,
+  claimStatus ClaimStatus,
+  createdAt Instant,
+  updatedAt Instant
+}
+entity InsuranceConfiguration {
+  maxTotalClaimLimitPerYear Double required,
+  maxAllowedChildAge Double,
+  insuranceClaimLink String
+}
+entity InsuranceRegistration {
+  name String minlength(0) maxlength(250),
+  dateOfBirth LocalDate required,
+  photo TextBlob,
+  insuranceRelation InsuranceRelation required,
+  insuranceStatus InsuranceStatus required,
+  unapprovalReason String,
+  availableBalance Double required,
+  updatedAt Instant,
+  approvedAt Instant,
+  insuranceId String unique,
+  createdAt Instant required
+}
+entity InsuranceRelation {
+  relationName String unique minlength(0) maxlength(200),
+  relation Relation required
+}
+entity ItemInformation {
+  code String required unique maxlength(255),
+  name String required maxlength(255),
+  specification TextBlob required,
+  createdAt Instant required,
+  updatedAt Instant
+}
+entity LeaveAllocation {
+  year Integer required min(1900) max(2199),
+  leaveType LeaveType,
+  allocatedDays Integer required min(0)
+}
+entity LeaveApplication {
+  applicationDate LocalDate,
+  leaveType LeaveType,
+  description String,
+  startDate LocalDate,
+  endDate LocalDate,
+  isLineManagerApproved Boolean,
+  isHRApproved Boolean,
+  isRejected Boolean,
+  rejectionComment String,
+  isHalfDay Boolean,
+  durationInDay Integer min(0),
+  phoneNumberOnLeave String,
+  addressOnLeave TextBlob,
+  reason TextBlob,
+  sanctionedAt Instant
+}
+entity LeaveBalance {
+  leaveType LeaveType,
+  openingBalance Integer,
+  closingBalance Integer,
+  consumedDuringYear Integer,
+  year Integer,
+  amount Integer,
+  leaveAmountType LeaveAmountType
+}
+entity ManualAttendanceEntry {
+  date LocalDate,
+  inTime Instant,
+  inNote String,
+  outTime Instant,
+  outNote String,
+  isLineManagerApproved Boolean,
+  isHRApproved Boolean,
+  isRejected Boolean,
+  rejectionComment String,
+  note String minlength(0) maxlength(250)
+}
+entity MobileBill {
+  month Integer,
+  amount Double,
+  year Integer
+}
+entity MovementEntry {
+  startDate LocalDate required,
+  startTime Instant required,
+  startNote String required minlength(3) maxlength(250),
+  endDate LocalDate required,
+  endTime Instant required,
+  endNote String required minlength(3) maxlength(250),
+  type MovementType required,
+  status Status required,
+  createdAt LocalDate required,
+  updatedAt LocalDate,
+  sanctionAt LocalDate,
+  note String minlength(0) maxlength(250)
+}
+entity Nationality {
+  nationalityName String required minlength(5) maxlength(25) unique
+}
+entity Nominee {
+  nomineeName String required minlength(0) maxlength(255),
+  presentAddress String required minlength(0) maxlength(255),
+  relationshipWithEmployee String,
+  dateOfBirth LocalDate,
+  age Integer,
+  sharePercentage Double required min(1) max(100),
+  imagePath String,
+  status Status required,
+  guardianName String minlength(0) maxlength(255),
+  guardianFatherName String,
+  guardianSpouseName String,
+  guardianDateOfBirth LocalDate,
+  guardianPresentAddress String minlength(0) maxlength(255),
+  guardianDocumentName String,
+  guardianRelationshipWith String,
+  guardianImagePath String,
+  isLocked Boolean,
+  nominationDate LocalDate,
+  permanentAddress String required minlength(0) maxlength(255),
+  guardianPermanentAddress String minlength(0) maxlength(255),
+  nomineeType NomineeType,
+  identityType IdentityType,
+  documentName String,
+  idNumber String,
+  isNidVerified Boolean,
+  guardianIdentityType IdentityType,
+  guardianIdNumber String,
+  isGuardianNidVerified Boolean
+}
+entity Offer {
+  title String,
+  description String required minlength(3) maxlength(250),
+  imagePath String,
+  createdAt LocalDate
+}
+entity OfficeNotices {
+  title String required minlength(3) maxlength(250),
+  description TextBlob,
+  status NoticeStatus,
+  publishForm LocalDate,
+  publishTo LocalDate,
+  createdAt LocalDate,
+  updatedAt LocalDate,
+  createdBy String,
+  updatedBy String
+}
+entity Organization {
+  shortName String required maxlength(255),
+  fullName String required maxlength(255),
+  slogan String maxlength(255),
+  domainName String required maxlength(255),
+  emailAddress String required maxlength(255),
+  hrEmailAddress String maxlength(255),
+  noReplyEmailAddress String maxlength(255),
+  contactNumber String maxlength(255),
+  financeManagerPIN String maxlength(255),
+  financeManagerSignature TextBlob,
+  logo TextBlob,
+  documentLetterHead TextBlob,
+  pfStatementLetterHead TextBlob,
+  taxStatementLetterHead TextBlob,
+  nomineeLetterHead TextBlob,
+  salaryPayslipLetterHead TextBlob,
+  festivalBonusPayslipLetterHead TextBlob,
+  recruitmentRequisitionLetterHead TextBlob,
+  hasOrganizationStamp Boolean,
+  organizationStamp TextBlob,
+  linkedin String maxlength(255),
+  twitter String maxlength(255),
+  facebook String maxlength(255),
+  youtube String maxlength(255),
+  instagram String maxlength(255),
+  whatsapp String maxlength(255)
+}
+entity PfAccount {
+  pfCode String,
+  membershipStartDate LocalDate,
+  membershipEndDate LocalDate,
+  status PfAccountStatus,
+  designationName String,
+  departmentName String,
+  unitName String,
+  accHolderName String,
+  pin String,
+  dateOfJoining LocalDate,
+  dateOfConfirmation LocalDate
+}
+entity PfArrear {
+  month Month required,
+  year Integer required min(1900) max(2100),
+  amount Double required min(0) max(10000000),
+  remarks String required minlength(3) maxlength(250)
+}
+entity PfCollection {
+  employeeContribution Double,
+  employerContribution Double,
+  transactionDate LocalDate,
+  year Integer,
+  month Integer,
+  collectionType PfCollectionType,
+  employeeInterest Double min(0) max(10000000),
+  employerInterest Double min(0) max(10000000),
+  gross Double min(0) max(10000000),
+  basic Double min(0) max(10000000)
+}
+entity PfLoan {
+  disbursementAmount Double,
+  disbursementDate LocalDate,
+  bankName String,
+  bankBranch String,
+  bankAccountNumber String,
+  chequeNumber String,
+  instalmentNumber String,
+  installmentAmount Double,
+  instalmentStartFrom LocalDate,
+  status PfLoanStatus
+}
+entity PfLoanApplication {
+  installmentAmount Double,
+  noOfInstallment Integer,
+  remarks String,
+  isRecommended Boolean,
+  recommendationDate LocalDate,
+  isApproved Boolean,
+  approvalDate LocalDate,
+  isRejected Boolean,
+  rejectionReason String,
+  rejectionDate LocalDate,
+  disbursementDate LocalDate,
+  disbursementAmount Double,
+  status Status
+}
+entity PfLoanRepayment {
+  amount Double,
+  status PfRepaymentStatus,
+  deductionMonth Integer,
+  deductionYear Integer,
+  deductionDate LocalDate
+}
+entity PfNominee {
+  nominationDate LocalDate,
+  fullName String,
+  presentAddress String,
+  permanentAddress String,
+  relationship String,
+  dateOfBirth LocalDate,
+  age Integer,
+  sharePercentage Double,
+  nidNumber String,
+  isNidVerified Boolean,
+  passportNumber String,
+  brnNumber String,
+  photo String,
+  guardianName String,
+  guardianFatherOrSpouseName String,
+  guardianDateOfBirth LocalDate,
+  guardianPresentAddress String,
+  guardianPermanentAddress String,
+  guardianProofOfIdentityOfLegalGuardian String,
+  guardianRelationshipWithNominee String,
+  guardianNidNumber String,
+  guardianBrnNumber String,
+  guardianIdNumber String,
+  isGuardianNidVerified Boolean,
+  isApproved Boolean,
+  identityType IdentityType required,
+  idNumber String required minlength(0) maxlength(50),
+  documentName String minlength(0) maxlength(200),
+  guardianIdentityType IdentityType,
+  guardianDocumentName String minlength(0) maxlength(200)
+}
+entity ProcReq {
+  quantity Double required min(1),
+  referenceFilePath TextBlob
+}
+entity ProcReqMaster {
+  requisitionNo String required unique maxlength(255),
+  requestedDate LocalDate required,
+  isCTOApprovalRequired Boolean,
+  requisitionStatus RequisitionStatus required,
+  expectedReceivedDate LocalDate,
+  reasoning TextBlob,
+  totalApproximatePrice Double min(1),
+  recommendationAt01 Instant,
+  recommendationAt02 Instant,
+  recommendationAt03 Instant,
+  recommendationAt04 Instant,
+  recommendationAt05 Instant,
+  nextRecommendationOrder Integer,
+  rejectedDate LocalDate,
+  rejectionReason TextBlob,
+  closedAt Instant,
+  createdAt Instant required,
+  updatedAt Instant
+}
+entity ProRataFestivalBonus {
+  date LocalDate,
+  amount Double,
+  description String
+}
+entity RecruitmentRequisitionForm {
+  expectedJoiningDate LocalDate required,
+  project String minlength(0) maxlength(250),
+  numberOfVacancies Integer required min(1) max(1000),
+  employmentType EmployeeCategory required,
+  resourceType RequisitionResourceType required,
+  rrfNumber String,
+  preferredEducationType String minlength(2) maxlength(250),
+  dateOfRequisition LocalDate,
+  requestedDate LocalDate,
+  recommendationDate01 LocalDate,
+  recommendationDate02 LocalDate,
+  recommendationDate03 LocalDate,
+  recommendationDate04 LocalDate,
+  requisitionStatus RequisitionStatus required,
+  rejectedAt LocalDate,
+  createdAt Instant,
+  updatedAt Instant,
+  isDeleted Boolean,
+  totalOnboard Integer
+}
+entity References (jhi_references) {
+  name String,
+  institute String,
+  designation String,
+  relationshipWithEmployee RelationshipWithEmployee,
+  email String,
+  contactNumber String
+}
+entity Room {
+  roomName String required minlength(0) maxlength(250),
+  remarks String minlength(0) maxlength(250),
+  createdAt Instant,
+  updatedAt Instant,
+  capacity Integer required min(1) max(100),
+  facilities TextBlob minlength(0) maxlength(500)
+}
+entity RoomRequisition {
+  status Status required,
+  bookingTrn String unique minlength(0) maxlength(250),
+  createdAt Instant,
+  updatedAt Instant,
+  sanctionedAt Instant,
+  participantList TextBlob minlength(0) maxlength(500),
+  rejectedReason String minlength(0) maxlength(250),
+  bookingStartDate LocalDate required,
+  bookingEndDate LocalDate required,
+  startTime Double required min(0) max(100),
+  endTime Double required min(0) max(100),
+  title String required minlength(0) maxlength(250),
+  agenda String minlength(0) maxlength(250),
+  optionalParticipantList TextBlob,
+  isFullDay Boolean
+}
+entity RoomType {
+  typeName String required unique minlength(0) maxlength(250),
+  remarks String minlength(0) maxlength(250),
+  createdAt Instant,
+  updatedAt Instant
+}
+entity SalaryCertificate {
+  purpose String required minlength(3) maxlength(250),
+  remarks String minlength(3) maxlength(250),
+  status Status required,
+  createdAt LocalDate,
+  updatedAt LocalDate,
+  sanctionAt LocalDate,
+  month Month required,
+  year Integer required
+}
+entity SalaryDeduction {
+  deductionAmount Double required min(0) max(1000000),
+  deductionYear Integer required min(1990) max(2100),
+  deductionMonth Integer required min(1) max(12)
+}
+entity SalaryGeneratorMaster {
+  year String,
+  month String,
+  isGenerated Boolean,
+  isMobileBillImported Boolean,
+  isPFLoanRepaymentImported Boolean,
+  isAttendanceImported Boolean,
+  isSalaryDeductionImported Boolean,
+  isFinalized Boolean,
+  visibility Visibility
+}
+entity SpecialShiftTiming {
+  startDate LocalDate required,
+  endDate LocalDate required,
+  overrideRoaster Boolean required,
+  overrideFlexSchedule Boolean required,
+  remarks String,
+  createdAt Instant,
+  updatedAt Instant,
+  reason String maxlength(250)
+}
+entity TaxAcknowledgementReceipt {
+  tinNumber String required,
+  receiptNumber String required,
+  taxesCircle String required,
+  taxesZone String required,
+  dateOfSubmission LocalDate required,
+  filePath TextBlob required,
+  acknowledgementStatus AcknowledgementStatus required,
+  receivedAt Instant,
+  createdAt Instant,
+  updatedAt Instant
+}
+entity TimeSlot {
+  title String required unique minlength(0) maxlength(250),
+  inTime Instant required,
+  outTime Instant required,
+  isApplicableByEmployee Boolean,
+  isDefaultShift Boolean,
+  code String unique minlength(0) maxlength(50),
+  weekEnds TextBlob minlength(0) maxlength(500)
+}
+entity TrainingHistory {
+  trainingName String,
+  coordinatedBy String,
+  dateOfCompletion LocalDate
+}
+entity Unit {
+  unitName String required unique
+}
+entity UnitOfMeasurement {
+  name String required unique maxlength(255),
+  remarks String maxlength(255),
+  createdAt Instant required,
+  updatedAt Instant
+}
+entity UserFeedback {
+  rating Integer required min(1) max(10),
+  suggestion String minlength(0) maxlength(255)
+}
+entity Vehicle {
+  modelName String required,
+  chassisNumber String required,
+  registrationNumber String required,
+  status Status required,
+  capacity Integer required,
+  remarks String,
+  createdAt Instant,
+  updatedAt Instant,
+  approvedAt Instant
+}
+entity VehicleRequisition {
+  purpose String required,
+  otherPassengersName String,
+  totalNumberOfPassengers Long required min(0) max(500),
+  status Status required,
+  remarks String,
+  createdAt Instant,
+  updatedAt Instant,
+  sanctionAt Instant,
+  transactionNumber String,
+  startDate LocalDate required,
+  endDate LocalDate required,
+  startTime Double required min(0) max(24),
+  endTime Double required min(0) max(24),
+  area String required
+}
+entity WorkFromHomeApplication {
+  startDate LocalDate required,
+  endDate LocalDate required,
+  reason String required minlength(0) maxlength(250),
+  duration Integer,
+  status Status required,
+  appliedAt LocalDate,
+  updatedAt Instant,
+  createdAt Instant,
+  sanctionedAt Instant
+}
+entity WorkingExperience {
+  lastDesignation String,
+  organizationName String,
+  dojOfLastOrganization LocalDate,
+  dorOfLastOrganization LocalDate
+}
+entity YearMonth {
+  month Integer min(1) max(12),
+  year Integer min(1990) max(2099)
+}
+enum ArrearPaymentType {
+  INDIVIDUAL,
+  ALONGSIDE_MONTHLY_SALARY
+}
+enum Month {
+  JANUARY,
+  FEBRUARY,
+  MARCH,
+  APRIL,
+  MAY,
+  JUNE,
+  JULY,
+  AUGUST,
+  SEPTEMBER,
+  OCTOBER,
+  NOVEMBER,
+  DECEMBER
+}
+enum Status {
+  PENDING,
+  APPROVED,
+  NOT_APPROVED
+}
+enum BloodGroup {
+  A_POSITIVE,
+  A_NEGATIVE,
+  B_POSITIVE,
+  B_NEGATIVE,
+  AB_POSITIVE,
+  AB_NEGATIVE,
+  O_POSITIVE,
+  O_NEGATIVE
+}
+enum Religion {
+  ISLAM,
+  HINDU,
+  BUDDHA,
+  CHRISTIAN,
+  OTHER,
+  ALL
+}
+enum MaritalStatus {
+  SINGLE,
+  MARRIED,
+  WIDOWED,
+  DIVORCED
+}
+enum EmployeeCategory {
+  REGULAR_CONFIRMED_EMPLOYEE,
+  REGULAR_PROVISIONAL_EMPLOYEE,
+  CONTRACTUAL_EMPLOYEE,
+  INTERN
+}
+enum PayType {
+  UNPAID,
+  MONTHLY,
+  HOURLY
+}
+enum DisbursementMethod {
+  BANK,
+  CASH,
+  MOBILE_BANKING
+}
+enum CardType {
+  DEBIT_CARD,
+  CREDIT_CARD,
+  PREPAID_CARD
+}
+enum Gender {
+  MALE,
+  FEMALE,
+  OTHER
+}
+enum EmploymentStatus {
+  ACTIVE,
+  HOLD,
+  RESIGNED
+}
+enum PurposeOfNOC {
+  ACADEMIC,
+  MEDICAL,
+  OFFICIAL,
+  TOURISM
+}
+enum CertificateStatus {
+  SENT_FOR_GENERATION,
+  REJECTED,
+  GENERATED,
+  DOCUMENT_PROVIDED
+}
+enum EmployeePinStatus {
+  CREATED,
+  JOINED,
+  NOT_JOINED,
+  RESIGNED,
+  CONTRACT_END
+}
+enum EventType {
+  TRANSFER,
+  PROMOTION,
+  INCREMENT,
+  JOIN,
+  CONFIRM,
+  RESIGNATION
+}
+enum RequestMethod {
+  GET,
+  POST,
+  PUT,
+  PATCH,
+  DELETE
+}
+enum FileTemplatesType {
+  POLICIES,
+  TEMPLATES,
+  FORMS
+}
+enum FileAccessPrevilage {
+  GENERAL,
+  MANAGEMENT
+}
+enum HolidayType {
+  Weekly,
+  Govt,
+  Other
+}
+enum ClaimStatus {
+  SETTLED,
+  REGRETTED
+}
+enum InsuranceRelation {
+  SELF,
+  SPOUSE,
+  CHILD_1,
+  CHILD_2,
+  CHILD_3
+}
+enum InsuranceStatus {
+  PENDING,
+  APPROVED,
+  NOT_APPROVED,
+  CANCELED,
+  SEPARATED
+}
+enum Relation {
+  SELF,
+  SPOUSE,
+  CHILD
+}
+enum LeaveType {
+  Mentionable_Annual_Leave,
+  Mentionable_Casual_Leave,
+  Non_Mentionable_Compensatory_Leave,
+  Non_Mentionable_Pandemic_Leave,
+  Non_Mentionable_Paternity_Leave,
+  Non_Mentionable_Maternity_Leave,
+  Other
+}
+enum LeaveAmountType {
+  Day,
+  Year
+}
+enum MovementType {
+  MOVEMENT
+}
+enum NomineeType {
+  GRATUITY_FUND,
+  GENERAL
+}
+enum IdentityType {
+  NID,
+  PASSPORT,
+  BIRTH_REGISTRATION,
+  OTHER
+}
+enum NoticeStatus {
+  PUBLISHED,
+  UNPUBLISHED,
+  DRAFT
+}
+enum PfAccountStatus {
+  ACTIVE,
+  INACTIVE,
+  CLOSED
+}
+enum PfCollectionType {
+  ARREAR,
+  ADVANCE,
+  CASH,
+  MONTHLY,
+  OPENING_BALANCE
+}
+enum PfLoanStatus {
+  OPEN_REPAYING,
+  PAID_OFF,
+  NOT_FULLFILLED
+}
+enum PfRepaymentStatus {
+  SUBMITTED,
+  PROVISIONED,
+  CHECKED,
+  APPROVED
+}
+enum RequisitionStatus {
+  PENDING,
+  IN_PROGRESS,
+  OPEN,
+  CLOSED,
+  PARTIALLY_CLOSED,
+  NOT_APPROVED
+}
+enum RequisitionResourceType {
+  BUDGET,
+  NON_BUDGET
+}
+enum RelationshipWithEmployee {
+  PERSONAL,
+  PROFESSIONAL
+}
+enum Visibility {
+  NOT_VISIBLE_TO_EMPLOYEE,
+  VISIBLE_TO_EMPLOYEE,
+  PARTIALLY_VISIBLE
+}
+enum AcknowledgementStatus {
+  SUBMITTED,
+  RECEIVED
+}
+
+relationship OneToOne {
+  Employee{user(login)} to User
+}
+relationship OneToMany {
+  Department{departmentHead required} to Employee{department},
+  ProcReqMaster{procReq} to ProcReq{procReqMaster(requisitionNo) required}
+}
+relationship ManyToOne {
+  AitPayment{employee} to Employee,
+  ArrearPayment{arrearSalaryItem required} to ArrearSalaryItem,
+  ArrearSalary{employee required} to Employee,
+  ArrearSalaryItem{arrearSalaryMaster required} to ArrearSalaryMaster,
+  ArrearSalaryItem{employee required} to Employee,
+  Attendance{employee} to Employee,
+  AttendanceEntry{employee} to Employee,
+  AttendanceSummary{employee(pin)} to Employee,
+  Band{createdBy(login)} to User,
+  Band{updatedBy(login)} to User,
+  Building{createdBy(login)} to User,
+  Building{updatedBy(login)} to User,
+  Department{departmentHead required} to Employee,
+  EducationDetails{employee} to Employee,
+  Employee{designation} to Designation,
+  Employee{reportingTo} to Employee,
+  Employee{nationality(nationalityName)} to Nationality,
+  Employee{bankBranch} to BankBranch,
+  Employee{band} to Band,
+  Employee{unit} to Unit,
+  EmployeeNOC{employee required} to Employee,
+  EmployeeNOC{signatoryPerson} to Employee,
+  EmployeeNOC{createdBy(login) required} to User,
+  EmployeeNOC{updatedBy(login)} to User,
+  EmployeeNOC{generatedBy(login)} to User,
+  EmployeePin{department required} to Department,
+  EmployeePin{designation required} to Designation,
+  EmployeePin{unit required} to Unit,
+  EmployeePin{updatedBy(login)} to User,
+  EmployeePin{createdBy(login) required} to User,
+  EmployeePinConfiguration{createdBy(login) required} to User,
+  EmployeePinConfiguration{updatedBy(login)} to User,
+  EmployeeResignation{createdBy} to Employee,
+  EmployeeResignation{uodatedBy} to Employee,
+  EmployeeResignation{employee} to Employee,
+  EmployeeSalary{employee} to Employee,
+  EmployeeSalaryTempData{employee} to Employee,
+  EmployeeStaticFile{employee} to Employee,
+  EmploymentCertificate{employee required} to Employee,
+  EmploymentCertificate{signatoryPerson} to Employee,
+  EmploymentCertificate{createdBy(login) required} to User,
+  EmploymentCertificate{updatedBy(login)} to User,
+  EmploymentCertificate{generatedBy(login)} to User,
+  EmploymentHistory{previousDesignation} to Designation,
+  EmploymentHistory{changedDesignation} to Designation,
+  EmploymentHistory{previousDepartment} to Department,
+  EmploymentHistory{changedDepartment} to Department,
+  EmploymentHistory{previousReportingTo} to Employee,
+  EmploymentHistory{changedReportingTo} to Employee,
+  EmploymentHistory{employee} to Employee,
+  EmploymentHistory{previousUnit} to Unit,
+  EmploymentHistory{changedUnit} to Unit,
+  EmploymentHistory{previousBand} to Band,
+  EmploymentHistory{changedBand} to Band,
+  EventLog{performedBy(login) required} to User,
+  FestivalBonusDetails{employee required} to Employee,
+  FestivalBonusDetails{festival required} to Festival,
+  FinalSettlement{employee required} to Employee,
+  FinalSettlement{createdBy(login)} to User,
+  FinalSettlement{updatedBy(login)} to User,
+  FlexSchedule{employee required} to Employee,
+  FlexSchedule{createdBy(login) required} to User,
+  FlexScheduleApplication{requester required} to Employee,
+  FlexScheduleApplication{sanctionedBy(login)} to User,
+  FlexScheduleApplication{appliedBy(login) required} to User,
+  FlexScheduleApplication{createdBy(login) required} to User,
+  FlexScheduleApplication{updatedBy(login) required} to User,
+  FlexScheduleApplication{timeSlot required} to TimeSlot,
+  Floor{createdBy(login)} to User,
+  Floor{updatedBy(login)} to User,
+  Floor{building} to Building,
+  HoldFbDisbursement{disbursedBy(login) required} to User,
+  HoldFbDisbursement{festivalBonusDetail required} to FestivalBonusDetails,
+  HoldSalaryDisbursement{user(login)} to User,
+  HoldSalaryDisbursement{employeeSalary} to EmployeeSalary,
+  IncomeTaxChallan{aitConfig} to AitConfig,
+  IndividualArrearSalary{employee} to Employee,
+  InsuranceClaim{insuranceRegistration required} to InsuranceRegistration,
+  InsuranceClaim{createdBy(login) required} to User,
+  InsuranceClaim{updatedBy(login)} to User,
+  InsuranceRegistration{employee required} to Employee,
+  InsuranceRegistration{approvedBy(login)} to User,
+  InsuranceRegistration{updatedBy(login)} to User,
+  InsuranceRegistration{createdBy(login) required} to User,
+  ItemInformation{department(departmentName) required} to Department,
+  ItemInformation{unitOfMeasurement(name) required} to UnitOfMeasurement,
+  ItemInformation{createdBy(login) required} to User,
+  ItemInformation{updatedBy(login)} to User,
+  LeaveApplication{employee} to Employee,
+  LeaveApplication{sanctionedBy(login)} to User,
+  LeaveBalance{employee} to Employee,
+  ManualAttendanceEntry{employee(fullName)} to Employee,
+  MobileBill{employee} to Employee,
+  MovementEntry{employee required} to Employee,
+  MovementEntry{createdBy(login) required} to User,
+  MovementEntry{updatedBy(login)} to User,
+  MovementEntry{sanctionBy(login)} to User,
+  Nominee{employee required} to Employee,
+  Nominee{approvedBy} to Employee,
+  Nominee{witness} to Employee,
+  Nominee{member} to Employee,
+  PfArrear{employee} to Employee,
+  PfCollection{pfAccount} to PfAccount,
+  PfLoan{pfLoanApplication} to PfLoanApplication,
+  PfLoan{pfAccount} to PfAccount,
+  PfLoanApplication{recommendedBy} to Employee,
+  PfLoanApplication{approvedBy} to Employee,
+  PfLoanApplication{rejectedBy} to Employee,
+  PfLoanApplication{pfAccount} to PfAccount,
+  PfLoanRepayment{pfLoan} to PfLoan,
+  PfNominee{pfAccount} to PfAccount,
+  PfNominee{pfWitness} to Employee,
+  PfNominee{approvedBy} to Employee,
+  ProcReq{itemInformation(name) required} to ItemInformation,
+  ProcReqMaster{department(name) required} to Department,
+  ProcReqMaster{requestedBy(fullName) required} to Employee,
+  ProcReqMaster{recommendedBy01(fullName)} to Employee,
+  ProcReqMaster{recommendedBy02(fullName)} to Employee,
+  ProcReqMaster{recommendedBy03(fullName)} to Employee,
+  ProcReqMaster{recommendedBy04(fullName)} to Employee,
+  ProcReqMaster{recommendedBy05(fullName)} to Employee,
+  ProcReqMaster{nextApprovalFrom(fullName)} to Employee,
+  ProcReqMaster{rejectedBy(fullName)} to Employee,
+  ProcReqMaster{closedBy(fullName)} to Employee,
+  ProcReqMaster{updatedBy(login)} to User,
+  ProcReqMaster{createdBy(login) required} to User,
+  ProRataFestivalBonus{employee} to Employee,
+  RecruitmentRequisitionForm{functionalDesignation required} to Designation,
+  RecruitmentRequisitionForm{band required} to Band,
+  RecruitmentRequisitionForm{department} to Department,
+  RecruitmentRequisitionForm{unit} to Unit,
+  RecruitmentRequisitionForm{recommendedBy01} to Employee,
+  RecruitmentRequisitionForm{recommendedBy02} to Employee,
+  RecruitmentRequisitionForm{recommendedBy03} to Employee,
+  RecruitmentRequisitionForm{recommendedBy04} to Employee,
+  RecruitmentRequisitionForm{requester} to Employee,
+  RecruitmentRequisitionForm{rejectedBy} to Employee,
+  RecruitmentRequisitionForm{createdBy(login)} to User,
+  RecruitmentRequisitionForm{updatedBy(login)} to User,
+  RecruitmentRequisitionForm{deletedBy(login)} to User,
+  References{employee required} to Employee,
+  Room{createdBy(login)} to User,
+  Room{updatedBy(login)} to User,
+  Room{building required} to Building,
+  Room{floor required} to Floor,
+  Room{roomType required} to RoomType,
+  RoomRequisition{createdBy(login)} to User,
+  RoomRequisition{updatedBy(login)} to User,
+  RoomRequisition{sanctionedBy(login)} to User,
+  RoomRequisition{requester} to Employee,
+  RoomRequisition{room} to Room,
+  RoomType{createdBy(login)} to User,
+  RoomType{updatedBy(login)} to User,
+  SalaryCertificate{createdBy(login) required} to User,
+  SalaryCertificate{updatedBy(login)} to User,
+  SalaryCertificate{sanctionBy(login)} to User,
+  SalaryCertificate{employee required} to Employee,
+  SalaryCertificate{signatoryPerson} to Employee,
+  SalaryDeduction{deductionType required} to DeductionType,
+  SalaryDeduction{employee required} to Employee,
+  SpecialShiftTiming{timeSlot required} to TimeSlot,
+  SpecialShiftTiming{createdBy(login)} to User,
+  SpecialShiftTiming{updatedBy(login)} to User,
+  TaxAcknowledgementReceipt{fiscalYear required} to AitConfig,
+  TaxAcknowledgementReceipt{employee required} to Employee,
+  TaxAcknowledgementReceipt{receivedBy(login)} to User,
+  TaxAcknowledgementReceipt{createdBy(login)} to User,
+  TaxAcknowledgementReceipt{updatedBy(login)} to User,
+  TrainingHistory{employee} to Employee,
+  UnitOfMeasurement{createdBy(login) required} to User,
+  UnitOfMeasurement{updatedBy(login)} to User,
+  UserFeedback{user(login) required} to User,
+  Vehicle{createdBy(login)} to User,
+  Vehicle{updatedBy(login)} to User,
+  Vehicle{approvedBy(login)} to User,
+  Vehicle{assignedDriver required} to Employee,
+  VehicleRequisition{createdBy(login) required} to User,
+  VehicleRequisition{updatedBy(login)} to User,
+  VehicleRequisition{approvedBy(login)} to User,
+  VehicleRequisition{requester} to Employee,
+  VehicleRequisition{vehicle} to Vehicle,
+  WorkFromHomeApplication{appliedBy(login)} to User,
+  WorkFromHomeApplication{createdBy(login)} to User,
+  WorkFromHomeApplication{updatedBy(login)} to User,
+  WorkFromHomeApplication{sanctionedBy(login)} to User,
+  WorkFromHomeApplication{employee required} to Employee,
+  WorkingExperience{employee} to Employee
+}
+
+dto AitConfig, AitPayment, Area, ArrearPayment, ArrearSalary, ArrearSalaryItem, ArrearSalaryMaster, Attendance, AttendanceEntry, AttendanceSummary, Band, BankBranch, Building, CalenderYear, Config, DeductionType, Department, Designation, EducationDetails, Employee, EmployeeNOC, EmployeePin, EmployeePinConfiguration, EmployeeResignation, EmployeeSalary, EmployeeSalaryTempData, EmployeeStaticFile, EmploymentCertificate, EmploymentHistory, EventLog, Festival, FestivalBonus, FestivalBonusConfig, FestivalBonusDetails, FileTemplates, FinalSettlement, FlexSchedule, FlexScheduleApplication, Floor, HoldFbDisbursement, HoldSalaryDisbursement, Holidays, IncomeTaxChallan, IndividualArrearSalary, InsuranceClaim, InsuranceConfiguration, InsuranceRegistration, InsuranceRelation, ItemInformation, LeaveAllocation, LeaveApplication, LeaveBalance, ManualAttendanceEntry, MobileBill, MovementEntry, Nationality, Nominee, Offer, OfficeNotices, Organization, PfAccount, PfArrear, PfCollection, PfLoan, PfLoanApplication, PfLoanRepayment, PfNominee, ProcReq, ProcReqMaster, ProRataFestivalBonus, RecruitmentRequisitionForm, References, Room, RoomRequisition, RoomType, SalaryCertificate, SalaryDeduction, SpecialShiftTiming, TaxAcknowledgementReceipt, TimeSlot, TrainingHistory, Unit, UnitOfMeasurement, UserFeedback, Vehicle, VehicleRequisition, WorkFromHomeApplication, WorkingExperience, YearMonth with mapstruct
+paginate AitConfig, AitPayment, ArrearSalary, Attendance, AttendanceEntry, CalenderYear, Employee, EmployeeResignation, EmployeeSalaryTempData, EmploymentHistory, Festival, FestivalBonus, FestivalBonusDetails, FileTemplates, FinalSettlement, LeaveAllocation, LeaveApplication, LeaveBalance, MovementEntry, OfficeNotices, PfAccount, PfCollection, PfLoan, PfLoanApplication, PfLoanRepayment, PfNominee, ProRataFestivalBonus, RecruitmentRequisitionForm, SalaryCertificate, SalaryDeduction, TrainingHistory with pagination
+paginate Area, ArrearPayment, ArrearSalaryItem, ArrearSalaryMaster, Building, EmployeeNOC, EmployeePin, EmployeePinConfiguration, EmployeeStaticFile, EmploymentCertificate, EventLog, FlexSchedule, FlexScheduleApplication, Floor, HoldFbDisbursement, HoldSalaryDisbursement, IncomeTaxChallan, IndividualArrearSalary, InsuranceClaim, InsuranceConfiguration, InsuranceRegistration, InsuranceRelation, ItemInformation, ManualAttendanceEntry, Nominee, Offer, Organization, PfArrear, ProcReq, ProcReqMaster, Room, RoomRequisition, RoomType, SpecialShiftTiming, TaxAcknowledgementReceipt, TimeSlot, UnitOfMeasurement, UserFeedback, Vehicle, VehicleRequisition, WorkFromHomeApplication with infinite-scroll
+service AitConfig, AitPayment, Area, ArrearPayment, ArrearSalary, ArrearSalaryItem, ArrearSalaryMaster, Attendance, AttendanceEntry, AttendanceSummary, AttendanceSyncCache, Band, BankBranch, Building, CalenderYear, Config, DeductionType, Department, Designation, EducationDetails, Employee, EmployeeNOC, EmployeePin, EmployeePinConfiguration, EmployeeResignation, EmployeeSalary, EmployeeSalaryTempData, EmployeeStaticFile, EmploymentCertificate, EmploymentHistory, EventLog, Festival, FestivalBonus, FestivalBonusConfig, FestivalBonusDetails, FileTemplates, FinalSettlement, FlexSchedule, FlexScheduleApplication, Floor, HoldFbDisbursement, HoldSalaryDisbursement, Holidays, IncomeTaxChallan, IndividualArrearSalary, InsuranceClaim, InsuranceConfiguration, InsuranceRegistration, InsuranceRelation, ItemInformation, LeaveAllocation, LeaveApplication, LeaveBalance, ManualAttendanceEntry, MobileBill, MovementEntry, Nationality, Nominee, Offer, OfficeNotices, Organization, PfAccount, PfArrear, PfCollection, PfLoan, PfLoanApplication, PfLoanRepayment, PfNominee, ProcReq, ProcReqMaster, ProRataFestivalBonus, RecruitmentRequisitionForm, References, Room, RoomRequisition, RoomType, SalaryCertificate, SalaryDeduction, SpecialShiftTiming, TaxAcknowledgementReceipt, TimeSlot, TrainingHistory, Unit, UnitOfMeasurement, UserFeedback, Vehicle, VehicleRequisition, WorkFromHomeApplication, WorkingExperience, YearMonth with serviceImpl
+filter ManualAttendanceEntry

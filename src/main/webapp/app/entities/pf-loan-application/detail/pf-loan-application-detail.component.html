@@ -1,0 +1,232 @@
+<div>
+  <div *ngIf="pfLoanApplication" class="font-size-small-08rem">
+    <jhi-header
+      [headerName]="'PF Loan Application Details'"
+      [shouldHaveHr]="true">
+    </jhi-header>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <dl class="row-md jh-entity-details">
+      <div class="row">
+
+        <div class="col-md-2">
+          <dt>
+            <span>Pf Code</span>
+          </dt>
+        </div>
+        <div class="col-md-2">
+          <dd>
+            <span>{{ pfLoanApplication.pfCode }}</span>
+          </dd>
+        </div>
+
+        <div class="col-md-2">
+          <dt>
+            <span>Acc Holder Name</span>
+          </dt>
+        </div>
+        <div class="col-md-2">
+          <dd>
+            <span>{{ pfLoanApplication.accHolderName }}</span>
+          </dd>
+        </div>
+
+        <div class="col-md-2">
+          <dt>
+            <span>Designation Name</span>
+          </dt>
+        </div>
+        <div class="col-md-2">
+          <dd>
+            <span>{{ pfLoanApplication.designationName }}</span>
+          </dd>
+        </div>
+
+        <div class="col-md-2">
+          <dt>
+            <span>Department Name</span>
+          </dt>
+        </div>
+        <div class="col-md-2">
+          <dd>
+            <span>{{ pfLoanApplication.departmentName }}</span>
+          </dd>
+        </div>
+
+        <div class="col-md-2">
+          <dt>
+            <span>Unit Name</span>
+          </dt>
+        </div>
+        <div class="col-md-2">
+          <dd>
+            <span>{{ pfLoanApplication.unitName }}</span>
+          </dd>
+        </div>
+
+        <div class="col-md-2">
+          <dt><span>Status</span></dt>
+        </div>
+        <div class="col-md-2">
+          <dd>
+            <span>{{ pfLoanApplication.accountStatus }}</span>
+          </dd>
+        </div>
+
+        <div class="col-md-2">
+          <dt><span>Installment Amount</span>
+          </dt>
+        </div>
+        <div class="col-md-2">
+          <dd>
+            <span>{{ pfLoanApplication.installmentAmount }}</span>
+          </dd>
+        </div>
+        <div class="col-md-2">
+          <dt><span>No Of Installment</span>
+          </dt>
+        </div>
+        <div class="col-md-2">
+          <dd>
+            <span>{{ pfLoanApplication.noOfInstallment }}</span>
+          </dd>
+        </div>
+        <div class="col-md-2">
+          <dt><span>Remarks</span></dt>
+        </div>
+        <div class="col-md-2">
+          <dd>
+            <span>{{ pfLoanApplication.remarks }}</span>
+          </dd>
+        </div>
+        <div class="col-md-2">
+          <dt><span>Is Recommended</span></dt>
+        </div>
+        <div class="col-md-2">
+          <dd>
+            <span>{{ pfLoanApplication.isRecommended }}</span>
+          </dd>
+        </div>
+        <div class="col-md-2">
+          <dt><span>Recommendation Date</span>
+          </dt>
+        </div>
+        <div class="col-md-2">
+          <dd>
+            <span>{{ pfLoanApplication.recommendationDate | formatMediumDate}}</span>
+          </dd>
+        </div>
+        <div class="col-md-2">
+          <dt><span>Is Approved</span></dt>
+        </div>
+        <div class="col-md-2">
+          <dd>
+            <span>{{ pfLoanApplication.isApproved }}</span>
+          </dd>
+        </div>
+        <div class="col-md-2">
+          <dt><span>Approval Date</span></dt>
+        </div>
+        <div class="col-md-2">
+          <dd>
+            <span>{{ pfLoanApplication.approvalDate | formatMediumDate }}</span>
+          </dd>
+        </div>
+        <div class="col-md-2">
+          <dt><span>Is Rejected</span></dt>
+        </div>
+        <div class="col-md-2">
+          <dd>
+            <span>{{ pfLoanApplication.isRejected }}</span>
+          </dd>
+        </div>
+        <div class="col-md-2">
+          <dt><span >Rejection Reason</span>
+          </dt>
+        </div>
+        <div class="col-md-2">
+          <dd>
+            <span>{{ pfLoanApplication.rejectionReason }}</span>
+          </dd>
+        </div>
+        <div class="col-md-2">
+          <dt><span>Rejection Date</span></dt>
+        </div>
+        <div class="col-md-2">
+          <dd>
+            <span>{{ pfLoanApplication.rejectionDate | formatMediumDate}}</span>
+          </dd>
+        </div>
+        <div class="col-md-2">
+          <dt><span>Disbursement Date</span>
+          </dt>
+        </div>
+        <div class="col-md-2">
+          <dd>
+            <span>{{ pfLoanApplication.disbursementDate | formatMediumDate }}</span>
+          </dd>
+        </div>
+        <div class="col-md-2">
+          <dt><span>Disbursement Amount</span>
+          </dt>
+        </div>
+        <div class="col-md-2">
+          <dd>
+            <span>{{ pfLoanApplication.disbursementAmount | number}}</span>
+          </dd>
+        </div>
+        <div class="col-md-2">
+          <dt><span >Status</span></dt>
+        </div>
+        <div class="col-md-2">
+          <dd>
+            <span jhiTranslate="{{ 'bitsHrPayrollApp.Status.' + pfLoanApplication.status }}">{{ pfLoanApplication.status }}</span>
+          </dd>
+        </div>
+        <div class="col-md-2">
+          <dt><span >Recommended By</span></dt>
+        </div>
+        <div class="col-md-2">
+          <dd>
+            <div *ngIf="pfLoanApplication.recommendedById">
+              <a [routerLink]="['/employee', pfLoanApplication.recommendedById, 'view']">{{ pfLoanApplication.recommendedById }}</a>
+            </div>
+          </dd>
+        </div>
+        <div class="col-md-2">
+          <dt><span >Approved By</span></dt>
+        </div>
+        <div class="col-md-2">
+          <dd>
+            <div *ngIf="pfLoanApplication.approvedById">
+              <a [routerLink]="['/employee-custom', pfLoanApplication.approvedById, 'view']">{{ pfLoanApplication.approvedByFullName }}</a>
+            </div>
+          </dd>
+        </div>
+        <div class="col-md-2">
+          <dt><span>Rejected By</span></dt>
+        </div>
+        <div class="col-md-2">
+          <dd>
+            <div *ngIf="pfLoanApplication.rejectedById">
+              <a [routerLink]="['/employee-custom', pfLoanApplication.rejectedById, 'view']">{{ pfLoanApplication.rejectedByFullName }}</a>
+            </div>
+          </dd>
+        </div>
+      </div>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+      <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+    </button>
+
+    <button *ngIf="pfLoanApplication.status==='PENDING'" type="button"
+            [routerLink]="['/pf-loan-application', pfLoanApplication.id, 'edit']"
+            class="btn btn-primary">
+      <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+    </button>
+  </div>
+</div>

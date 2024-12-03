@@ -1,0 +1,168 @@
+<div>
+  <div>
+    <div *ngIf="pfLoan" class="font-size-small-08rem">
+      <jhi-header [headerName]="'PF Loan Details'" [shouldHaveHr]="true"> </jhi-header>
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <dl class="row-md jh-entity-details">
+        <div class="row">
+          <div class="col-md-2">
+            <dt>
+              <span>Pf Code</span>
+            </dt>
+          </div>
+          <div class="col-md-2">
+            <dd>
+              <span>{{ pfLoan.pfCode }}</span>
+            </dd>
+          </div>
+
+          <div class="col-md-2">
+            <dt>
+              <span>Acc Holder Name</span>
+            </dt>
+          </div>
+          <div class="col-md-2">
+            <dd>
+              <span>{{ pfLoan.accHolderName }}</span>
+            </dd>
+          </div>
+
+          <div class="col-md-2">
+            <dt>
+              <span>Designation Name</span>
+            </dt>
+          </div>
+          <div class="col-md-2">
+            <dd>
+              <span>{{ pfLoan.designationName }}</span>
+            </dd>
+          </div>
+
+          <div class="col-md-2">
+            <dt>
+              <span>Department Name</span>
+            </dt>
+          </div>
+          <div class="col-md-2">
+            <dd>
+              <span>{{ pfLoan.departmentName }}</span>
+            </dd>
+          </div>
+
+          <div class="col-md-2">
+            <dt>
+              <span>Unit Name</span>
+            </dt>
+          </div>
+          <div class="col-md-2">
+            <dd>
+              <span>{{ pfLoan.unitName }}</span>
+            </dd>
+          </div>
+
+          <div class="col-md-2">
+            <dt><span>Status</span></dt>
+          </div>
+          <div class="col-md-2">
+            <dd>
+              <span>{{ pfLoan.accountStatus }}</span>
+            </dd>
+          </div>
+
+          <div class="col-md-2">
+            <dt><span jhiTranslate="bitsHrPayrollApp.pfLoan.disbursementDate">Disbursement Date</span></dt>
+          </div>
+          <div class="col-md-2">
+            <dd>
+              <span>{{ pfLoan.disbursementDate | formatMediumDate }}</span>
+            </dd>
+          </div>
+
+          <div class="col-md-2">
+            <dt><span jhiTranslate="bitsHrPayrollApp.pfLoan.disbursementAmount">Disbursement Amount</span></dt>
+          </div>
+          <div class="col-md-2">
+            <dd>
+              <span>{{ pfLoan.disbursementAmount | number: '1.0':'en-US' }}</span>
+            </dd>
+          </div>
+
+          <div class="col-md-2">
+            <dt><span jhiTranslate="bitsHrPayrollApp.pfLoan.bankName">Bank Name</span></dt>
+          </div>
+          <div class="col-md-2">
+            <dd>
+              <span>{{ pfLoan.bankName }}</span>
+            </dd>
+          </div>
+          <div class="col-md-2">
+            <dt><span jhiTranslate="bitsHrPayrollApp.pfLoan.bankBranch">Bank Branch</span></dt>
+          </div>
+          <div class="col-md-2">
+            <dd>
+              <span>{{ pfLoan.bankBranch }}</span>
+            </dd>
+          </div>
+          <div class="col-md-2">
+            <dt><span jhiTranslate="bitsHrPayrollApp.pfLoan.bankAccountNumber">Bank Account Number</span></dt>
+          </div>
+          <div class="col-md-2">
+            <dd>
+              <span>{{ pfLoan.bankAccountNumber }}</span>
+            </dd>
+          </div>
+          <div class="col-md-2">
+            <dt><span jhiTranslate="bitsHrPayrollApp.pfLoan.chequeNumber">Cheque Number</span></dt>
+          </div>
+          <div class="col-md-2">
+            <dd>
+              <span>{{ pfLoan.chequeNumber }}</span>
+            </dd>
+          </div>
+          <div class="col-md-2">
+            <dt><span jhiTranslate="bitsHrPayrollApp.pfLoan.instalmentNumber">Instalment Number</span></dt>
+          </div>
+          <div class="col-md-2">
+            <dd>
+              <span>{{ pfLoan.instalmentNumber }}</span>
+            </dd>
+          </div>
+          <div class="col-md-2">
+            <dt><span jhiTranslate="bitsHrPayrollApp.pfLoan.installmentAmount">Installment Amount</span></dt>
+          </div>
+          <div class="col-md-2">
+            <dd>
+              <span>{{ pfLoan.installmentAmount }}</span>
+            </dd>
+          </div>
+          <div class="col-md-2">
+            <dt><span jhiTranslate="bitsHrPayrollApp.pfLoan.instalmentStartFrom">Instalment Start From</span></dt>
+          </div>
+          <div class="col-md-2">
+            <dd>
+              <span>{{ pfLoan.instalmentStartFrom | formatMediumDate }}</span>
+            </dd>
+          </div>
+          <div class="col-md-2">
+            <dt><span jhiTranslate="bitsHrPayrollApp.pfLoan.status">Status</span></dt>
+          </div>
+          <div class="col-md-2">
+            <dd>
+              <span jhiTranslate="{{ 'bitsHrPayrollApp.PfLoanStatus.' + pfLoan.status }}">{{ pfLoan.status }}</span>
+            </dd>
+          </div>
+        </div>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button [hidden]="true" type="button" [routerLink]="['/pf-loan', pfLoan.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

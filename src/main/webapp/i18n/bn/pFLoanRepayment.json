@@ -1,0 +1,29 @@
+{
+  "bitsHrPayrollApp": {
+    "pfLoanRepayment": {
+      "home": {
+        "title": "Pf Loan Repayments",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Pf Loan Repayment",
+        "createOrEditLabel": "Create or edit a Pf Loan Repayment",
+        "notFound": "No Pf Loan Repayments found"
+      },
+      "created": "A new Pf Loan Repayment is created with identifier {{ param }}",
+      "updated": "A Pf Loan Repayment is updated with identifier {{ param }}",
+      "deleted": "A Pf Loan Repayment is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Pf Loan Repayment {{ id }}?"
+      },
+      "detail": {
+        "title": "Pf Loan Repayment"
+      },
+      "id": "ID",
+      "amount": "Amount",
+      "status": "Status",
+      "deductionMonth": "Deduction Month",
+      "deductionYear": "Deduction Year",
+      "deductionDate": "Deduction Date",
+      "pfLoan": "Pf Loan"
+    }
+  }
+}

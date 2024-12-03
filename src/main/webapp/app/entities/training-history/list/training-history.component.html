@@ -1,0 +1,111 @@
+<div>
+  <jhi-header
+    [addButtonText]="'add new Training Histories'"
+    [headerName]="'Training Histories'"
+    [routerLinkText]="'/training-history/new'"
+    [shouldHaveHr]="false"
+  >
+  </jhi-header>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="trainingHistories?.length === 0">
+    <span jhiTranslate="bitsHrPayrollApp.trainingHistory.home.notFound">No Training Histories found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="trainingHistories && trainingHistories.length > 0">
+    <table class="table table-hover list-text-color" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col"><span>PIN</span></th>
+          <th scope="col"><span>Name</span></th>
+          <th scope="col"><span>Department</span></th>
+          <th scope="col"><span>Unit</span></th>
+          <th scope="col"><span>Designation</span></th>
+          <th class="text-nowrap"><span>Training Name</span></th>
+          <th scope="col" class="text-nowrap"><span>Coordinated By</span></th>
+          <th scope="col" class="text-nowrap"><span>Date Of Completion</span></th>
+          <th scope="col" class="text-end">
+            <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+              <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+              <span jhiTranslate="bitsHrPayrollApp.trainingHistory.home.refreshListLabel">Refresh list</span>
+            </button>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let trainingHistory of trainingHistories; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/employee-custom', trainingHistory.employeeId, 'view']">
+              {{ trainingHistory.pin }}
+            </a>
+          </td>
+          <td>{{ trainingHistory.employeeName }}</td>
+          <td>{{ trainingHistory.departmentName }}</td>
+          <td>{{ trainingHistory.unitName }}</td>
+          <td>{{ trainingHistory.designationName }}</td>
+          <td>{{ trainingHistory.trainingName }}</td>
+          <td>{{ trainingHistory.coordinatedBy }}</td>
+          <td>{{ trainingHistory.dateOfCompletion | formatMediumDate }}</td>
+
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/training-history', trainingHistory.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/training-history', trainingHistory.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(trainingHistory)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="trainingHistories && trainingHistories.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>
+
+<div
+  *ngIf="!trainingHistories || trainingHistories.length === 0"
+  style="height: 75vh"
+  class="text-center d-flex align-items-center justify-content-center"
+>
+  <img src="./content/images/approval.svg" width="400px" height="400px" />
+</div>

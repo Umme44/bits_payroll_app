@@ -1,0 +1,50 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="flexSchedule">
+      <h2 data-cy="flexScheduleDetailsHeading"><span jhiTranslate="bitsHrPayrollApp.flexSchedule.detail.title">Flex Schedule</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ flexSchedule.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.flexSchedule.effectiveDate">Effective Date</span></dt>
+        <dd>
+          <span>{{ flexSchedule.effectiveDate | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.flexSchedule.inTime">In Time</span></dt>
+        <dd>
+          <span>{{ flexSchedule.inTime | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.flexSchedule.outTime">Out Time</span></dt>
+        <dd>
+          <span>{{ flexSchedule.outTime | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.flexSchedule.employee">Employee</span></dt>
+        <dd>
+          <div *ngIf="flexSchedule.employee">
+            <a [routerLink]="['/employee', flexSchedule.employee.id, 'view']">{{ flexSchedule.employee.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.flexSchedule.createdBy">Created By</span></dt>
+        <dd>
+          <span>{{ flexSchedule.createdBy?.login }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/flex-schedule', flexSchedule.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

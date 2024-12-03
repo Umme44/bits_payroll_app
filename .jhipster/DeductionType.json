@@ -1,0 +1,24 @@
+{
+  "changelogDate": "20211228055018",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "deduction_type",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "250",
+      "fieldValidateRulesMinlength": "2"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "DeductionType",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

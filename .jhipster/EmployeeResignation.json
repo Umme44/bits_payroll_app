@@ -1,0 +1,77 @@
+{
+  "changelogDate": "20210517101049",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "employee_resignation",
+  "fields": [
+    {
+      "fieldName": "createdAt",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "updatedAt",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "resignationDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "approvalStatus",
+      "fieldType": "Status",
+      "fieldValues": "PENDING,APPROVED,NOT_APPROVED"
+    },
+    {
+      "fieldName": "approvalComment",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "isSalaryHold",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isFestivalBonusHold",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "resignationReason",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "lastWorkingDay",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "EmployeeResignation",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "employeeResignation",
+      "relationshipName": "createdBy",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "employeeResignation",
+      "relationshipName": "uodatedBy",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "employeeResignation",
+      "relationshipName": "employee",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

@@ -1,0 +1,67 @@
+<div class="modal-header border-none pb-0">
+  <div class="modal-title ps-2" id="modal-basic-title">Special Shift Timing Details</div>
+  <button type="button" class="btn-close" aria-label="Close" (click)="cancel()"></button>
+</div>
+
+<div class="modal-body pt-0">
+  <div class="font-sm" *ngIf="specialShiftTiming">
+    <table class="table table-borderless border-none">
+      <tr>
+        <th><span>Date</span></th>
+        <td>
+          <span>{{ specialShiftTiming.startDate | formatMediumDate }} - {{ specialShiftTiming.endDate | formatMediumDate }}</span>
+        </td>
+      </tr>
+
+      <tr>
+        <th><span jhiTranslate="bitsHrPayrollApp.specialShiftTiming.timeSlot">Time Slot</span></th>
+        <td>
+          <div *ngIf="specialShiftTiming.timeSlotId">
+            <span>
+              {{ specialShiftTiming.inTime | formatTime }} - {{ specialShiftTiming.outTime | formatTime }} ({{
+                specialShiftTiming.timeSlotTitle
+              }})
+            </span>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <th><span jhiTranslate="bitsHrPayrollApp.specialShiftTiming.overrideRoaster">Override Roaster</span></th>
+        <td>
+          <div class="text-success" *ngIf="specialShiftTiming.overrideRoaster === true">
+            <fa-icon icon="check"></fa-icon>
+          </div>
+          <div *ngIf="specialShiftTiming.overrideRoaster === false" class="text-danger">
+            <fa-icon icon="times"></fa-icon>
+          </div>
+        </td>
+
+        <th><span jhiTranslate="bitsHrPayrollApp.specialShiftTiming.overrideFlexSchedule">Override Flex Schedule</span></th>
+        <td>
+          <div class="text-success" *ngIf="specialShiftTiming.overrideFlexSchedule === true">
+            <fa-icon icon="check"></fa-icon>
+          </div>
+          <div *ngIf="specialShiftTiming.overrideFlexSchedule === false" class="text-danger">
+            <fa-icon icon="times"></fa-icon>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <th><span jhiTranslate="bitsHrPayrollApp.specialShiftTiming.reason">Reason</span></th>
+
+        <td colspan="3">
+          <span>{{ specialShiftTiming.reason }}</span>
+        </td>
+      </tr>
+
+      <tr>
+        <th><span jhiTranslate="bitsHrPayrollApp.specialShiftTiming.remarks">Remarks</span></th>
+
+        <td colspan="3">
+          <span>{{ specialShiftTiming.remarks }}</span>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

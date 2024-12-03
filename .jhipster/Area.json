@@ -1,0 +1,24 @@
+{
+  "changelogDate": "20220622103039",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "area",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "255",
+      "fieldValidateRulesMinlength": "0"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Area",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

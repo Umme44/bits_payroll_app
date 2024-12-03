@@ -1,0 +1,26 @@
+{
+  "bitsHrPayrollApp": {
+    "arrearSalaryMaster": {
+      "home": {
+        "title": "Arrear Salary Masters",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Arrear Salary Master",
+        "createOrEditLabel": "Create or edit a Arrear Salary Master",
+        "notFound": "No Arrear Salary Masters found"
+      },
+      "created": "A new Arrear Salary Master is created with identifier {{ param }}",
+      "updated": "A Arrear Salary Master is updated with identifier {{ param }}",
+      "deleted": "A Arrear Salary Master is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Arrear Salary Master {{ id }}?"
+      },
+      "detail": {
+        "title": "Arrear Salary Master"
+      },
+      "id": "ID",
+      "title": "Title",
+      "isLocked": "Is Locked",
+      "isDeleted": "Is Deleted"
+    }
+  }
+}

@@ -1,0 +1,117 @@
+<div>
+  <jhi-header
+    [headerName]="'Salaries'"
+    [midHeaderName01]="'Individual Arrear Salary'"
+    [midRouterLinkText01]="'/individual-arrear-salary'"
+    [shouldHaveHr]="false"
+  >
+  </jhi-header>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="table-responsive" id="entities" *ngIf="individualArrearSalaries && individualArrearSalaries.length > 0">
+    <div class="card card-body font-sm mb-2" style="font-size: 0.7rem">
+      <div class="row">
+        <div class="col-md-3 fw-bold">Title</div>
+        <div class="col-md-3">{{ individualArrearSalaries[0].title }}</div>
+
+        <div class="col-md-3 fw-bold">Arrear Remarks</div>
+        <div class="col-md-3">{{ individualArrearSalaries[0].arrearRemarks }}</div>
+
+        <div class="col-md-3 fw-bold">Effective From</div>
+        <div class="col-md-3">{{ dayjs(individualArrearSalaries[0].titleEffectiveFrom) | formatMediumDate }}</div>
+
+        <div class="col-md-3 fw-bold">Effective Date</div>
+        <div class="col-md-3">{{ individualArrearSalaries[0].effectiveDate | formatMediumDate }}</div>
+      </div>
+    </div>
+
+    <table class="table table-hover list-text-color" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.employee">Employee</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.existingBand">Existing Band</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.newBand">New Band</span></th>
+          <th class="text-end" scope="col">
+            <span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.existingGross">Existing Gross</span>
+          </th>
+          <th class="text-end" scope="col"><span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.newGross">New Gross</span></th>
+          <th class="text-end" scope="col"><span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.increment">Increment</span></th>
+          <th class="text-end" scope="col">
+            <span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.arrearSalary">Arrear Salary</span>
+          </th>
+          <th class="text-end" scope="col">
+            <span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.festivalBonus">Festival Bonus</span>
+          </th>
+          <th class="text-end" scope="col">
+            <span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.arrearPfDeduction">Arrear Pf Deduction</span>
+          </th>
+          <th class="text-end" scope="col">
+            <span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.taxDeduction">Tax Deduction</span>
+          </th>
+          <th class="text-end" scope="col"><span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.netPay">Net Pay</span></th>
+          <th class="text-end" scope="col">
+            <span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.pfContribution">Pf Contribution</span>
+          </th>
+          <th scope="col">
+            <div class="btn-group float-end">
+              <button type="submit" class="btn btn-outline-primary" (click)="export(individualArrearSalaries[0].title)">
+                <span>Download </span>
+                <fa-icon icon="download"></fa-icon>
+              </button>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+        <tr *ngFor="let individualArrearSalary of individualArrearSalaries; trackBy: trackId">
+          <td>
+            <div *ngIf="individualArrearSalary.employeeId">
+              <a [routerLink]="['/employee-custom', individualArrearSalary.employeeId, 'view']"
+                >{{ individualArrearSalary.pin }} {{ individualArrearSalary.fullName }}</a
+              >
+            </div>
+          </td>
+
+          <td>{{ individualArrearSalary.existingBand }}</td>
+          <td>{{ individualArrearSalary.newBand }}</td>
+          <td class="text-end">{{ individualArrearSalary.existingGross | number }}</td>
+          <td class="text-end">{{ individualArrearSalary.newGross | number }}</td>
+          <td class="text-end">{{ individualArrearSalary.increment | number }}</td>
+          <td class="text-end">{{ individualArrearSalary.arrearSalary | number }}</td>
+          <td class="text-end">{{ individualArrearSalary.festivalBonus | number }}</td>
+          <td class="text-end">{{ individualArrearSalary.arrearPfDeduction | number }}</td>
+          <td class="text-end">{{ individualArrearSalary.taxDeduction | number }}</td>
+          <td class="text-end">{{ individualArrearSalary.netPay | number }}</td>
+          <td class="text-end">{{ individualArrearSalary.pfContribution | number }}</td>
+
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/individual-arrear-salary', individualArrearSalary.id, 'view']"
+                class="btn btn-info btn-sm px-md-3"
+              >
+                <fa-icon icon="arrow-left"></fa-icon>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/individual-arrear-salary', individualArrearSalary.id, 'edit']"
+                class="btn btn-primary btn-sm px-md-3"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+              </button>
+
+              <button type="submit" (click)="delete(individualArrearSalary)" class="btn btn-danger btn-sm px-md-3">
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

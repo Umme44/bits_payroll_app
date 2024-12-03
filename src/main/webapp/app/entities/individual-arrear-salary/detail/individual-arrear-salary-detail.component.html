@@ -1,0 +1,186 @@
+<div class="">
+  <jhi-header [headerName]="'Individual Arrear Salary'" [shouldHaveHr]="false"> </jhi-header>
+
+  <div *ngIf="individualArrearSalary">
+    <jhi-alert-error></jhi-alert-error>
+
+    <div class="row font-small">
+      <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.title">Title</span></dt>
+      <dd class="col-md-3">
+        <span>{{ individualArrearSalary.title }}</span>
+      </dd>
+
+      <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.titleEffectiveFrom">Effective From</span></dt>
+      <dd class="col-md-3">
+        <span>{{ individualArrearSalary.titleEffectiveFrom }}</span>
+      </dd>
+
+      <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.effectiveDate">Effective Date</span></dt>
+      <dd class="col-md-3">
+        <span>{{ individualArrearSalary.effectiveDate | formatMediumDate }}</span>
+      </dd>
+      <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.existingBand">Existing Band</span></dt>
+      <dd class="col-md-3">
+        <span>{{ individualArrearSalary.existingBand }}</span>
+      </dd>
+      <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.newBand">New Band</span></dt>
+      <dd class="col-md-3">
+        <span>{{ individualArrearSalary.newBand }}</span>
+      </dd>
+      <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.existingGross">Existing Gross</span></dt>
+      <dd class="col-md-3">
+        <span>{{ individualArrearSalary.existingGross | number }}</span>
+      </dd>
+      <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.newGross">New Gross</span></dt>
+      <dd class="col-md-3">
+        <span>{{ individualArrearSalary.newGross | number }}</span>
+      </dd>
+      <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.increment">Increment</span></dt>
+      <dd class="col-md-3">
+        <span>{{ individualArrearSalary.increment | number }}</span>
+      </dd>
+      <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.arrearSalary">Arrear Salary</span></dt>
+      <dd class="col-md-3">
+        <span>{{ individualArrearSalary.arrearSalary | number }}</span>
+      </dd>
+      <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.festivalBonus">Festival Bonus</span></dt>
+      <dd class="col-md-3">
+        <span>{{ individualArrearSalary.festivalBonus | number }}</span>
+      </dd>
+      <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.arrearPfDeduction">Arrear Pf Deduction</span></dt>
+      <dd class="col-md-3">
+        <span>{{ individualArrearSalary.arrearPfDeduction | number }}</span>
+      </dd>
+      <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.taxDeduction">Tax Deduction</span></dt>
+      <dd class="col-md-3">
+        <span>{{ individualArrearSalary.taxDeduction | number }}</span>
+      </dd>
+      <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.netPay">Net Pay</span></dt>
+      <dd class="col-md-3">
+        <span>{{ individualArrearSalary.netPay | number }}</span>
+      </dd>
+      <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.pfContribution">Pf Contribution</span></dt>
+      <dd class="col-md-3">
+        <span>{{ individualArrearSalary.pfContribution | number }}</span>
+      </dd>
+
+      <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.arrearRemarks">Arrear Remarks</span></dt>
+      <dd class="col-md-3">
+        <span>{{ individualArrearSalary.arrearRemarks }}</span>
+      </dd>
+      <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.employee">Employee</span></dt>
+      <dd class="col-md-3">
+        <div *ngIf="individualArrearSalary.employeeId">
+          <a [routerLink]="['/employee-custom', individualArrearSalary.employeeId, 'view']">
+            {{ individualArrearSalary.pin }} {{ individualArrearSalary.fullName }}
+          </a>
+        </div>
+      </dd>
+    </div>
+
+    <button type="submit" (click)="previousState()" class="btn btn-info">
+      <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+    </button>
+
+    <button type="button" [routerLink]="['/individual-arrear-salary', individualArrearSalary.id, 'edit']" class="btn btn-primary">
+      <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+    </button>
+  </div>
+</div>
+
+<!--<div class="d-flex justify-content-center">-->
+<!--  <div class="col-8">-->
+<!--    <div *ngIf="individualArrearSalary">-->
+<!--      <h2 data-cy="individualArrearSalaryDetailsHeading">-->
+<!--        <span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.detail.title">Individual Arrear Salary</span>-->
+<!--      </h2>-->
+
+<!--      <hr />-->
+
+<!--      <jhi-alert-error></jhi-alert-error>-->
+
+<!--      <jhi-alert></jhi-alert>-->
+
+<!--      <dl class="row-md jh-entity-details">-->
+<!--        <dt><span jhiTranslate="global.field.id">ID</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ individualArrearSalary.id }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.effectiveDate">Effective Date</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ individualArrearSalary.effectiveDate | formatMediumDate }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.existingBand">Existing Band</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ individualArrearSalary.existingBand }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.newBand">New Band</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ individualArrearSalary.newBand }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.existingGross">Existing Gross</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ individualArrearSalary.existingGross }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.newGross">New Gross</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ individualArrearSalary.newGross }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.increment">Increment</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ individualArrearSalary.increment }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.arrearSalary">Arrear Salary</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ individualArrearSalary.arrearSalary }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.arrearPfDeduction">Arrear Pf Deduction</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ individualArrearSalary.arrearPfDeduction }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.taxDeduction">Tax Deduction</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ individualArrearSalary.taxDeduction }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.netPay">Net Pay</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ individualArrearSalary.netPay }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.pfContribution">Pf Contribution</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ individualArrearSalary.pfContribution }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.title">Title</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ individualArrearSalary.title }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.titleEffectiveFrom">Title Effective From</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ individualArrearSalary.titleEffectiveFrom }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.arrearRemarks">Arrear Remarks</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ individualArrearSalary.arrearRemarks }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.festivalBonus">Festival Bonus</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ individualArrearSalary.festivalBonus }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.employee">Employee</span></dt>-->
+<!--        <dd>-->
+<!--          <div *ngIf="individualArrearSalary.employee">-->
+<!--            <a [routerLink]="['/employee', individualArrearSalary.employee.id, 'view']">{{ individualArrearSalary.employee.id }}</a>-->
+<!--          </div>-->
+<!--        </dd>-->
+<!--      </dl>-->
+
+<!--      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">-->
+<!--        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>-->
+<!--      </button>-->
+
+<!--      <button type="button" [routerLink]="['/individual-arrear-salary', individualArrearSalary.id, 'edit']" class="btn btn-primary">-->
+<!--        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>-->
+<!--      </button>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->

@@ -1,0 +1,10 @@
+{
+  "bitsHrPayrollApp": {
+    "PfLoanStatus": {
+      "null": "",
+      "OPEN_REPAYING": "Repaying",
+      "PAID_OFF": "Paid Off",
+      "NOT_FULLFILLED": "Not Fullfilled"
+    }
+  }
+}

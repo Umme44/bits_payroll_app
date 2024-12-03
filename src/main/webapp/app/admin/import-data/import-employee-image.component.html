@@ -1,0 +1,85 @@
+<jhi-header
+  [addButtonText]="'Upload Employee Images'"
+  [routerLinkText]="'/import-data/import-employee-image/upload'"
+  [headerName]="'Employee Images'"
+  [shouldHaveHr]="false"
+>
+</jhi-header>
+
+<div>
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <jhi-search-text-box (searchEvent)="search($event)"> </jhi-search-text-box>
+
+  <div
+    class="row"
+    infinite-scroll
+    (scrolled)="loadPage(page + 1)"
+    [infiniteScrollDisabled]="page >= links['last']"
+    [infiniteScrollDistance]="0"
+  >
+    <div class="col-xs-12 col-sm-6 col-md-3" *ngFor="let employeeImage of employeeImageUploads">
+      <div class="card border p-3 my-2" style="width: 18rem">
+        <img src="data:image/jpg;base64,{{ employeeImage.getByteStreamFromFilePath }}" width="250" height="250" alt="" />
+        <div class="card-body">
+          <div class="row">
+            <div class="col-3 px-0" style="font-size: 0.8rem">
+              <p>{{ employeeImage.pin }}</p>
+            </div>
+            <div class="col-9 px-0 text-end" style="font-size: 0.8rem">
+              <p>{{ employeeImage.fullName }}</p>
+            </div>
+          </div>
+          <div class="row font-sm">
+            <div class="col-12 px-0">
+              <p class="text-start">{{ employeeImage.designationName }}</p>
+            </div>
+            <div class="col-12 px-0 text-wrap">
+              <p>Joining Date: {{ employeeImage.dateOfJoining | formatMediumDate }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer font-sm px-0 text-end">
+          <div class="row">
+            <div class="col-6">
+              <button
+                class="btn btn-info btn-md w-100"
+                routerLink="/import-data/import-employee-image/upload/{{ employeeImage.employeeId }}"
+              >
+                Edit
+              </button>
+            </div>
+            <div class="col-6">
+              <button class="btn btn-danger btn-md w-100" (click)="delete(employeeImage.pin)">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="employeeCard p-3 rounded my-2">
+                <img
+                    src="data:image/jpg;base64,{{employeeImage.getByteStreamFromFilePath}}"
+                    class="w-100 m"
+                    style=""
+                    alt=""/>
+                <div class="content mt-2">
+                    <h6 class="text-truncate" [ngbTooltip]="employeeImage.fullName">{{ employeeImage.fullName}}</h6>
+                    <p>{{ employeeImage.pin}}</p>
+                    <p>{{ employeeImage.dateOfJoining  | date:'d MMM, y' }}</p>
+                </div>
+                <div class="mt-2">
+
+                    <div class="row">
+                        <div class="col-6">
+                            <button class="btn btn-info btn-md w-100" routerLink="/import-data/import-employee-image/{{ employeeImage.id }}">Edit</button>
+                        </div>
+                        <div class="col-6">
+                            <button class="btn btn-danger btn-md w-100" (click)="delete(employeeImage.pin)">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+    </div>
+  </div>
+</div>

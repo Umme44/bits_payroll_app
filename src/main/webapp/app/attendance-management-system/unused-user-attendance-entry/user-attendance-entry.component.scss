@@ -1,0 +1,116 @@
+$lateColor: #f93;
+$lateColorShade: #fdb;
+
+.container {
+  margin: auto;
+  text-align: center;
+}
+
+.btn-clock-entry {
+  margin-top: 5rem;
+  margin-left: 1rem;
+  width: 200px !important;
+  height: 200px !important;
+  border-radius: 100px;
+  background-color: #31cb5a;
+  border: 10px solid rgba(49, 203, 90, 0.5);
+  transition: transform 0.3s ease-in-out;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.btn-clock-entry:hover {
+  border: 10px solid rgba(0, 0, 0, 0);
+  transform: scale(1.1);
+  background-color: #26a243;
+  animation: pulse-wave 2s infinite;
+}
+
+.clock-txt {
+  color: white;
+}
+
+.clock-txt-header-entry {
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 1rem;
+}
+
+.clock-txt-time {
+  font-size: 1rem;
+}
+
+.btn-clock-out {
+  background-color: #59f;
+  border: 10px solid #def;
+}
+
+.btn-clock-out:hover {
+  background-color: #37d;
+}
+
+.btn-clock-late {
+  background-color: $lateColor;
+  border: 10px solid $lateColorShade;
+}
+
+.btn-clock-late:hover {
+  background-color: #d71;
+}
+
+b {
+  font-weight: bold;
+}
+
+.attendance-alert {
+  width: 50%;
+  position: absolute;
+  transition: all 0.2s ease-in-out;
+  z-index: 1000;
+}
+
+.clock-info-card-wrapper {
+  margin-top: 5rem;
+  width: 50%;
+}
+
+.clock-info-card {
+  width: auto;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  background-color: #9f97;
+
+  span {
+    padding: 0.5rem;
+  }
+}
+
+.clock-info-card-late {
+  background-color: rgba(255, 153, 51, 0.2);
+}
+
+.clock-info-card-danger {
+  background-color: rgba(239, 68, 38, 0.64);
+}
+
+.clock-info-card-red {
+  background-color: #fdb;
+}
+
+@keyframes pulse-wave {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.4);
+  }
+
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 50px rgba(0, 0, 0, 0);
+  }
+
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+}

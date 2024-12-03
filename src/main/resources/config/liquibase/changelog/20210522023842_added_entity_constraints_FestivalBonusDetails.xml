@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity FestivalBonusDetails.
+    -->
+    <changeSet id="20210522023842-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="employee_id"
+                                 baseTableName="festival_bonus_details"
+                                 constraintName="fk_festival_bonus_details__employee_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+
+        <addForeignKeyConstraint baseColumnNames="festival_id"
+                                 baseTableName="festival_bonus_details"
+                                 constraintName="fk_festival_bonus_details__festival_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="festival"/>
+    </changeSet>
+</databaseChangeLog>

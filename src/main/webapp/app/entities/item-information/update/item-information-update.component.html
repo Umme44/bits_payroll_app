@@ -1,0 +1,133 @@
+<jhi-header
+  [headerName]="!editForm.get('id')!.value ? 'Add New Item Information' : 'Update Item Information'"
+  [midHeaderName01]="'Item Information'"
+  [midRouterLinkText01]="'/item-information'"
+>
+</jhi-header>
+
+<div class="card font-sm">
+  <jhi-alert-error></jhi-alert-error>
+
+  <form class="card card-body" name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+    <div class="row">
+      <div class="col-md-6 form-group">
+        <label class="form-control-label mt-2" jhiTranslate="bitsHrPayrollApp.itemInformation.code" for="field_code">Code</label>
+        <input  readonly type="text" class="form-control" name="code" id="field_code" formControlName="code" />
+        <div *ngIf="editForm.get('code')!.invalid && (editForm.get('code')!.dirty || editForm.get('code')!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get('code')?.errors?.required" jhiTranslate="entity.validation.required">
+            This field is required.
+          </small>
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get('code')?.errors?.maxlength"
+            jhiTranslate="entity.validation.maxlength"
+            [translateValues]="{ max: 255 }"
+          >
+            This field cannot be longer than 255 characters.
+          </small>
+        </div>
+      </div>
+
+      <div class="col-md-6 form-group">
+        <label class="form-control-label required mt-2" jhiTranslate="bitsHrPayrollApp.itemInformation.name" for="field_name">Name</label>
+        <input type="text" class="form-control" name="name" id="field_name" formControlName="name" />
+        <div *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get('name')?.errors?.required" jhiTranslate="entity.validation.required">
+            This field is required.
+          </small>
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get('name')?.errors?.maxlength"
+            jhiTranslate="entity.validation.maxlength"
+            [translateValues]="{ max: 255 }"
+          >
+            This field cannot be longer than 255 characters.
+          </small>
+        </div>
+      </div>
+
+      <div class="col-md-6 form-group">
+        <label class="form-control-label required mt-2" jhiTranslate="bitsHrPayrollApp.itemInformation.department" for="field_department"
+          >Department</label
+        >
+        <select class="form-control form-select" id="field_department" name="department" formControlName="departmentId">
+          <!--                    <option *ngIf="!editForm.get('departmentId')!.value" [ngValue]="null" selected>&#45;&#45;Select Department-&#45;&#45;</option>-->
+          <option [ngValue]="departmentOption.id" *ngFor="let departmentOption of departments; trackBy: trackById">
+            {{ departmentOption.departmentName }}
+          </option>
+        </select>
+
+        <div
+          *ngIf="editForm.get('departmentId')!.invalid && (editForm.get('departmentId')!.dirty || editForm.get('departmentId')!.touched)"
+        >
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get('departmentId')?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div class="col-md-6 form-group">
+        <label
+          class="form-control-label required mt-2"
+          jhiTranslate="bitsHrPayrollApp.itemInformation.unitOfMeasurement"
+          for="field_unitOfMeasurement"
+          >Unit of Measurement</label
+        >
+        <select class="form-control form-select" id="field_unitOfMeasurement" name="unitOfMeasurement" formControlName="unitOfMeasurementId">
+          <!--                    <option *ngIf="!editForm.get('unitOfMeasurementId')!.value" [ngValue]="null" selected>&#45;&#45;Select Unit of Measurement&#45;&#45;</option>-->
+          <option [ngValue]="unitOfMeasurementOption.id" *ngFor="let unitOfMeasurementOption of unitOfMeasurements; trackBy: trackById">
+            {{ unitOfMeasurementOption.name }}
+          </option>
+        </select>
+
+        <div
+          *ngIf="
+            editForm.get('unitOfMeasurementId')!.invalid &&
+            (editForm.get('unitOfMeasurementId')!.dirty || editForm.get('unitOfMeasurementId')!.touched)
+          "
+        >
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get('unitOfMeasurementId')?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div class="col-md-12 form-group">
+        <label class="form-control-label required mt-2" jhiTranslate="bitsHrPayrollApp.itemInformation.specification" for="field_specification"
+          >Specification</label
+        >
+        <textarea class="form-control" name="specification" id="field_specification" formControlName="specification"></textarea>
+        <div
+          *ngIf="editForm.get('specification')!.invalid && (editForm.get('specification')!.dirty || editForm.get('specification')!.touched)"
+        >
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get('specification')?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-3">
+      <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+        <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+      </button>
+
+      <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+        <fa-icon icon="save"></fa-icon>&nbsp;
+        <span [jhiTranslate]="editForm.get('id')!.value ? 'entity.action.update' : 'entity.action.save'">Save</span>
+      </button>
+    </div>
+  </form>
+</div>

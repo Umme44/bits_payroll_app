@@ -1,0 +1,168 @@
+<div>
+  <jhi-header [headerName]="'Probation End'" [shouldHaveHr]="false"> </jhi-header>
+
+  <div class="card m-1 p-1">
+    <div class="search-filter container-fluid">
+      <div class="row my-3">
+        <div class="col-md-6">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <label class="input-group-text" for="inputGroupSelect01">Search</label>
+            </div>
+            <input
+              (change)="onSearchTextChange()"
+              [(ngModel)]="filters.searchText"
+              class="form-control"
+              placeholder="Search Text"
+              type="text"
+            />
+          </div>
+          <small class="text-danger" *ngIf="isSearchTextInvalid">This text is invalid</small>
+        </div>
+
+        <div class="col-md-3">
+          <select class="form-control hide-arrow" (change)="onChangeYear($event)">
+            <option [value]="null">Select Year</option>
+            <option *ngFor="let year of years" [value]="year">
+              {{ year }}
+            </option>
+          </select>
+        </div>
+
+        <div class="col-md-3">
+          <div [formGroup]="editForm">
+            <select class="form-control" id="field_month" formControlName="month" (change)="onChangeMonth($event)">
+              <option value="null" selected>Select Month</option>
+              <option value="JANUARY">{{ 'bitsHrPayrollApp.Month.JANUARY' | translate }}</option>
+              <option value="FEBRUARY">{{ 'bitsHrPayrollApp.Month.FEBRUARY' | translate }}</option>
+              <option value="MARCH">{{ 'bitsHrPayrollApp.Month.MARCH' | translate }}</option>
+              <option value="APRIL">{{ 'bitsHrPayrollApp.Month.APRIL' | translate }}</option>
+              <option value="MAY">{{ 'bitsHrPayrollApp.Month.MAY' | translate }}</option>
+              <option value="JUNE">{{ 'bitsHrPayrollApp.Month.JUNE' | translate }}</option>
+              <option value="JULY">{{ 'bitsHrPayrollApp.Month.JULY' | translate }}</option>
+              <option value="AUGUST">{{ 'bitsHrPayrollApp.Month.AUGUST' | translate }}</option>
+              <option value="SEPTEMBER">{{ 'bitsHrPayrollApp.Month.SEPTEMBER' | translate }}</option>
+              <option value="OCTOBER">{{ 'bitsHrPayrollApp.Month.OCTOBER' | translate }}</option>
+              <option value="NOVEMBER">{{ 'bitsHrPayrollApp.Month.NOVEMBER' | translate }}</option>
+              <option value="DECEMBER">{{ 'bitsHrPayrollApp.Month.DECEMBER' | translate }}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <div class="input-group-prepend d-inline-block float-start">
+            <!--            <label class="input-group-text all-label-height" style="height: 36px" for="inputGroupSelect03">Department</label>-->
+            <label class="input-group-text" for="inputGroupSelect03">Department</label>
+          </div>
+          <!--Using items input-->
+          <div class="d-inline-block float-start font-sm all-ng-options">
+            <ng-select
+              [items]="departments"
+              bindLabel="departmentName"
+              bindValue="id"
+              [searchable]="true"
+              [clearable]="true"
+              appearance="outline"
+              [(ngModel)]="filters.departmentId"
+              (change)="onDepartmentSelect()"
+            >
+            </ng-select>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="input-group-prepend d-inline-block float-start">
+            <!--            <label class="input-group-text all-label-height" for="inputGroupSelect03" style="height: 36px">Designation</label>-->
+            <label class="input-group-text" for="inputGroupSelect03">Designation</label>
+          </div>
+          <!--Using items input-->
+          <div class="d-inline-block float-start font-sm all-ng-options">
+            <ng-select
+              [items]="designations"
+              bindLabel="designationName"
+              bindValue="id"
+              [searchable]="true"
+              [clearable]="true"
+              appearance="outline"
+              [(ngModel)]="filters.destinationId"
+              (change)="onDesignationSelect()"
+            >
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="input-group-prepend d-inline-block float-start">
+            <!--            <label class="input-group-text all-label-height" style="height: 36px" for="inputGroupSelect03">Unit</label>-->
+            <label class="input-group-text" for="inputGroupSelect03">Unit</label>
+          </div>
+          <!--Using items input-->
+          <div class="d-inline-block float-start font-sm all-ng-options">
+            <ng-select
+              [items]="units"
+              bindLabel="unitName"
+              bindValue="id"
+              [searchable]="true"
+              [clearable]="true"
+              appearance="outline"
+              [(ngModel)]="filters.unitId"
+              (change)="onUnitSelect()"
+            >
+            </ng-select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <jhi-alert-error></jhi-alert-error>
+  <jhi-alert></jhi-alert>
+
+  <div *ngIf="employees?.length === 0" class="alert alert-warning" id="no-result">
+    <span jhiTranslate="bitsHrPayrollApp.employee.home.notFound">No employees found</span>
+  </div>
+  <div *ngIf="employees && employees.length > 0" class="table-responsive" id="container-employee-table" style="width: 100%; overflow: auto">
+    <table aria-describedby="page-heading" class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col"><span>PIN</span></th>
+          <th scope="col"><span>Name</span></th>
+          <th scope="col"><span>Designation</span></th>
+          <th scope="col"><span>Unit</span></th>
+          <th scope="col"><span>Department</span></th>
+          <th scope="col" class="text-nowrap"><span>Date of Joining</span></th>
+          <th scope="col" class="text-nowrap"><span>Probation End</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let employee of employees; trackBy: trackId">
+          <td>{{ employee.pin }}</td>
+          <td>{{ employee.fullName }}</td>
+          <td>{{ employee.designationName }}</td>
+          <td>{{ employee.unitName }}</td>
+          <td>{{ employee.departmentName }}</td>
+          <td class="text-nowrap">{{ employee.dateOfJoining | formatMediumDate }}</td>
+          <td class="text-nowrap">{{ employee.probationPeriodEndDate | formatMediumDate }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div *ngIf="employees && employees.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

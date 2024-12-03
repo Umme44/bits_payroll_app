@@ -1,0 +1,10 @@
+{
+  "bitsHrPayrollApp": {
+    "Visibility": {
+      "null": "",
+      "NOT_VISIBLE_TO_EMPLOYEE": "NOT_VISIBLE_TO_EMPLOYEE",
+      "VISIBLE_TO_EMPLOYEE": "VISIBLE_TO_EMPLOYEE",
+      "PARTIALLY_VISIBLE": "PARTIALLY_VISIBLE"
+    }
+  }
+}

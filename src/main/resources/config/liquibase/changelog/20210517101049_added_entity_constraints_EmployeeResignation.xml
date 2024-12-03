@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity EmployeeResignation.
+    -->
+    <changeSet id="20210517101049-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="created_by_id"
+                                 baseTableName="employee_resignation"
+                                 constraintName="fk_employee_resignation__created_by_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+
+        <addForeignKeyConstraint baseColumnNames="uodated_by_id"
+                                 baseTableName="employee_resignation"
+                                 constraintName="fk_employee_resignation__uodated_by_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+
+        <addForeignKeyConstraint baseColumnNames="employee_id"
+                                 baseTableName="employee_resignation"
+                                 constraintName="fk_employee_resignation__employee_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+    </changeSet>
+</databaseChangeLog>

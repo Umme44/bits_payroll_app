@@ -1,0 +1,10 @@
+{
+  "bitsHrPayrollApp": {
+    "FileCategory": {
+      "null": "",
+      "IMAGE": "IMAGE",
+      "PDF": "PDF",
+      "OTHERS": "OTHERS"
+    }
+  }
+}

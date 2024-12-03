@@ -1,0 +1,31 @@
+{
+  "bitsHrPayrollApp": {
+    "arrearSalaryItem": {
+      "home": {
+        "title": "Arrear Salary Items",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Arrear Salary Item",
+        "createOrEditLabel": "Create or edit a Arrear Salary Item",
+        "notFound": "No Arrear Salary Items found"
+      },
+      "created": "A new Arrear Salary Item is created with identifier {{ param }}",
+      "updated": "A Arrear Salary Item is updated with identifier {{ param }}",
+      "deleted": "A Arrear Salary Item is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Arrear Salary Item {{ id }}?"
+      },
+      "detail": {
+        "title": "Arrear Salary Item"
+      },
+      "id": "ID",
+      "title": "Title",
+      "arrearAmount": "Arrear Amount",
+      "hasPfArrearDeduction": "Has Pf Arrear Deduction",
+      "pfArrearDeduction": "Pf Arrear Deduction",
+      "isFestivalBonus": "Is Festival Bonus",
+      "isDeleted": "Is Deleted",
+      "arrearSalaryMaster": "Arrear Salary Master",
+      "employee": "Employee"
+    }
+  }
+}

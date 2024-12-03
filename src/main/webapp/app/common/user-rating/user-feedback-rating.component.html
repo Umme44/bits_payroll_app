@@ -1,0 +1,41 @@
+<div class="text-center rating mt-5 pt-5">
+  <form name="editForm" role="form" novalidate [formGroup]="editForm">
+    <div class="mb-2">
+      <div class="heading-1 text-center">Thank you</div>
+
+      <div class="me-4 my-2">
+        <div class="text-center pt-4">How was your experience ?</div>
+        <div class="star-direction">
+          <ng-container *ngFor="let star of starValues">
+            <a><input (click)="onClickValue(star)" name="stars" [id]="'e' + star" [value]="star" type="radio" /> </a>
+            <label [ngClass]="selectedRating >= star ? 'star-rating' : ''" [for]="'e' + star">☆</label>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-3 ps-5" *ngIf="takeSuggestion" style="width: 500px; margin: auto">
+      <span for="exampleFormControlTextarea1" style="font-size: 16px" class="d-block py-2 text-center">Suggestion</span>
+      <textarea
+        formControlName="suggestion"
+        class="form-control"
+        id="exampleFormControlTextarea1"
+        rows="3"
+        placeholder="How can we make it better?"
+      ></textarea>
+    </div>
+
+    <div class="text-center pt-2">
+      <button type="submit" class="btn btn-warning m-1" (click)="logout()">Later</button>
+      <button type="submit" (click)="save()" id="save-entity" [disabled]="!selectedRating" class="btn btn-primary">Submit & Logout</button>
+    </div>
+  </form>
+
+  <div class="mt-5 text-center mx-auto" style="width: 25rem">
+    Automatically logging out after
+    <span class="" style="color: #f25d5a"> {{ countDownDisplay }}</span>
+    <p class="progress-bar-spacing p-0 m-0">
+      <ngb-progressbar type="secondary" [value]="progressBarValue" height=".1rem"></ngb-progressbar>
+    </p>
+  </div>
+</div>

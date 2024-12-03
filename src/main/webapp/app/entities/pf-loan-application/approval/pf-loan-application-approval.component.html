@@ -1,0 +1,401 @@
+<div>
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+        <jhi-header
+            [headerName]="'PF Loan Application Approval'"
+            [shouldHaveHr]="false">
+        </jhi-header>
+
+        <div class="card card-body">
+            <jhi-alert-error></jhi-alert-error>
+            <div class="flex-column">
+
+                <div class="row align-items-center">
+
+                    <div class="form-group col-md-3">
+                        <label class="form-control-label"
+                               jhiTranslate="bitsHrPayrollApp.pfLoanApplication.disbursementAmount"
+                               for="field_disbursementAmount">Disbursement Amount</label> <span class="text-danger">*</span>
+                        <input type="number" class="form-control" name="disbursementAmount"
+                               id="field_disbursementAmount"
+                               formControlName="disbursementAmount" (change)="installmentAmountCalculation()"/>
+                        <div
+                            *ngIf="editForm.get('disbursementAmount')!.invalid && (editForm.get('disbursementAmount')!.dirty || editForm.get('disbursementAmount')!.touched)">
+                            <small *ngIf="editForm.get('disbursementAmount')?.errors?.required"
+                                   class="form-text text-danger"
+                                   jhiTranslate="entity.validation.required">
+                                This field is required.
+                            </small>
+                            <small *ngIf="editForm.get('disbursementAmount')?.errors?.min"
+                                   [translateValues]="{ min: 1 }" class="form-text text-danger"
+                                   jhiTranslate="entity.validation.min">
+                                This field should be at least 1.
+                            </small>
+                            <small *ngIf="editForm.get('disbursementAmount')?.errors?.max"
+                                   class="form-text text-danger">
+                                Loan Eligible amount ({{pfLoanEligibleAmount}}) Limit has been exceeded
+                            </small>
+                        </div>
+
+
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label class="form-control-label"
+                               jhiTranslate="bitsHrPayrollApp.pfLoanApplication.disbursementDate"
+                               for="field_disbursementDate">Disbursement Date</label> <span class="text-danger">*</span>
+                        <div class="input-group">
+                            <input id="field_disbursementDate" type="date" class="form-control"
+                                   name="disbursementDate"
+                                   ngbDatepicker #disbursementDateDp="ngbDatepicker"
+                                   formControlName="disbursementDate"/>
+                            <span class="input-group-append">
+                            <button [hidden]="true" type="button" class="btn btn-secondary"
+                                    (click)="disbursementDateDp.toggle()"><fa-icon
+                                icon="calendar-alt"></fa-icon></button>
+                        </span>
+                        </div>
+                        <div
+                            *ngIf="editForm.get('disbursementDate')!.invalid && (editForm.get('disbursementDate')!.dirty || editForm.get('disbursementDate')!.touched)">
+                            <small *ngIf="editForm.get('disbursementDate')?.errors?.required"
+                                   class="form-text text-danger"
+                                   jhiTranslate="entity.validation.required">
+                                This field is required.
+                            </small>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.pfLoan.instalmentStartFrom"
+                               for="field_instalmentStartFrom">Instalment Start From</label> <span class="text-danger">*</span>
+                        <div class="input-group">
+                            <input id="field_instalmentStartFrom" type="date" class="form-control"
+                                   name="instalmentStartFrom" ngbDatepicker #instalmentStartFromDp="ngbDatepicker"
+                                   formControlName="instalmentStartFrom"/>
+                            <span class="input-group-append">
+                            <button [hidden]="true" type="button" class="btn btn-secondary" (click)="instalmentStartFromDp.toggle()"><fa-icon
+                                icon="calendar-alt"></fa-icon></button>
+                        </span>
+                        </div>
+                        <div
+                            *ngIf="editForm.get('instalmentStartFrom')!.invalid && (editForm.get('instalmentStartFrom')!.dirty || editForm.get('instalmentStartFrom')!.touched)">
+                            <small *ngIf="editForm.get('instalmentStartFrom')?.errors?.required"
+                                   class="form-text text-danger"
+                                   jhiTranslate="entity.validation.required">
+                                This field is required.
+                            </small>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label class="form-control-label"
+                               jhiTranslate="bitsHrPayrollApp.pfLoanApplication.noOfInstallment"
+                               for="field_noOfInstallment">No Of Installment</label> <span class="text-danger">*</span>
+                        <input type="number" class="form-control" name="noOfInstallment"
+                               id="field_noOfInstallment"
+                               formControlName="noOfInstallment" (change)="installmentAmountCalculation()" />
+                        <div
+                            *ngIf="editForm.get('noOfInstallment')!.invalid && (editForm.get('noOfInstallment')!.dirty || editForm.get('noOfInstallment')!.touched)">
+                            <small *ngIf="editForm.get('noOfInstallment')?.errors?.required"
+                                   class="form-text text-danger"
+                                   jhiTranslate="entity.validation.required">
+                                This field is required.
+                            </small>
+                            <small *ngIf="editForm.get('noOfInstallment')?.errors?.min"
+                                   [translateValues]="{ min: 1 }" class="form-text text-danger"
+                                   jhiTranslate="entity.validation.min">
+                                This field should be at least 1.
+                            </small>
+                            <small *ngIf="editForm.get('noOfInstallment')?.errors?.max"
+                                   [translateValues]="{ max:24 }" class="form-text text-danger"
+                                   jhiTranslate="entity.validation.max">
+                                Maximum 24 installment is allowed
+                            </small>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label class="form-control-label"
+                               jhiTranslate="bitsHrPayrollApp.pfLoanApplication.installmentAmount"
+                               for="field_installmentAmount">Installment Amount</label> <span class="text-danger">*</span>
+                        <input readonly type="number" class="form-control" name="installmentAmount"
+                               id="field_installmentAmount"
+                               formControlName="installmentAmount"/>
+                        <div
+                            *ngIf="editForm.get('installmentAmount')!.invalid && (editForm.get('installmentAmount')!.dirty || editForm.get('installmentAmount')!.touched)">
+                            <small *ngIf="editForm.get('installmentAmount')?.errors?.required"
+                                   class="form-text text-danger"
+                                   jhiTranslate="entity.validation.required">
+                                This field is required.
+                            </small>
+                            <small *ngIf="editForm.get('installmentAmount')?.errors?.min"
+                                   [translateValues]="{ min: 1 }" class="form-text text-danger"
+                                   jhiTranslate="entity.validation.min">
+                                This field should be at least 1.
+                            </small>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label class="form-control-label"
+                               jhiTranslate="bitsHrPayrollApp.pfLoanApplication.approvalDate"
+                               for="field_approvalDate">Approval Date</label> <span class="text-danger">*</span>
+                        <div class="input-group">
+                            <input id="field_approvalDate" type="date" class="form-control"
+                                   name="approvalDate"
+                                   ngbDatepicker
+                                   #approvalDateDp="ngbDatepicker" formControlName="approvalDate"/>
+                            <span class="input-group-append">
+                            <button [hidden]="true" type="button" class="btn btn-secondary"
+                                    (click)="approvalDateDp.toggle()"><fa-icon
+                                icon="calendar-alt"></fa-icon></button>
+                        </span>
+                        </div>
+                        <div
+                            *ngIf="editForm.get('approvalDate')!.invalid && (editForm.get('approvalDate')!.dirty || editForm.get('approvalDate')!.touched)">
+                            <small *ngIf="editForm.get('approvalDate')?.errors?.required"
+                                   class="form-text text-danger"
+                                   jhiTranslate="entity.validation.required">
+                                This field is required.
+                            </small>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label class="form-control-label"
+                               jhiTranslate="bitsHrPayrollApp.pfLoanApplication.remarks"
+                               for="field_remarks">Remarks</label>
+                        <input type="text" class="form-control" name="remarks" id="field_remarks"
+                               formControlName="remarks"/>
+                    </div>
+
+                    <div class="form-check col-md-12 py-3">
+                        <input type="checkbox" [checked]="true" class="form-check-input" data-cy="isRecommended"
+                               formControlName="isRecommended"
+                               name="isRecommended" id="field_isRecommended"
+                               formControlName="isRecommended" (change)="isRecommendedChange($event)"/>
+                        <label class="form-control-label"
+                               jhiTranslate="bitsHrPayrollApp.pfLoanApplication.isRecommended"
+                               for="field_isRecommended">Is Recommended</label>
+                    </div>
+                    <ng-container *ngIf="isRecommendedChecked && isRecommendedChecked === true">
+                        <div class="form-group col-md-3">
+                            <label class="form-control-label"
+                                   jhiTranslate="bitsHrPayrollApp.pfLoanApplication.recommendationDate"
+                                   for="field_recommendationDate">Recommendation Date</label>
+                            <div class="input-group">
+                                <input id="field_recommendationDate" type="date" class="form-control"
+                                       name="recommendationDate"
+                                       ngbDatepicker #recommendationDateDp="ngbDatepicker"
+                                       formControlName="recommendationDate"/>
+                                <span class="input-group-append">
+                            <button [hidden]="true" type="button" class="btn btn-secondary"
+                                    (click)="recommendationDateDp.toggle()"><fa-icon
+                                icon="calendar-alt"></fa-icon></button>
+                        </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label class="form-control-label"
+                                   jhiTranslate="bitsHrPayrollApp.pfLoanApplication.recommendedBy"
+                                   for="field_recommendedBy">Recommended By</label>
+
+                            <ng-select
+                                [items]="employees"
+                                bindLabel="fullName"
+                                bindValue="id"
+                                appearance="outline"
+                                [searchable]="true"
+                                [clearable]="true"
+                                labelForId="field_recommendedBy"
+                                formControlName="recommendedById"
+                                id="field_recommendedBy"
+                                name="recommendedById">
+                            </ng-select>
+
+                            <!--<select class="form-control" id="field_recommendedBy" name="recommendedBy"
+                                    formControlName="recommendedById">
+                                <option [ngValue]="null"></option>
+                                <option [ngValue]="employeeOption.id"
+                                        *ngFor="let employeeOption of employees; trackBy: trackById">
+                                    {{ employeeOption.pin }} - {{employeeOption.fullName}} - {{employeeOption.designationName}}
+                                </option>
+                            </select>-->
+                        </div>
+                    </ng-container>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="form-group col-md-3">
+                        <p class="form-control-label">Disbursement Method <span class="text-danger">*</span></p>
+                    </div>
+
+                    <div class="form-check col-md-3">
+                        <input name="disbursementMethod" type="radio" class="form-check-input"
+                               [value]="'bank'" [checked]="bankSelector" (change)="bankAndCheckValidation($event)"/>
+                        <label class="form-control-label">Bank</label>
+                    </div>
+
+                    <div class="form-check col-md-3">
+                        <input name="disbursementMethod" type="radio" class="form-check-input"
+                               [value]="'cheque'"  [checked]="chequeSelector" (change)="bankAndCheckValidation($event)"/>
+                        <label class="form-control-label">Cheque</label>
+                    </div>
+                </div>
+
+                <div class="row align-items-center" *ngIf="bankSelector">
+
+                    <ng-container *ngIf="employeeBankDetails">
+                        <p class="col-md-12 form-text text-danger"
+                               *ngIf="isBankInfoMissing()">
+                            Employee Bank Info is incomplete. Please update from Employee Details Section.
+                        </p>
+                    </ng-container>
+
+                    <div class="form-group col-md-3">
+                        <label class="form-control-label"
+                               jhiTranslate="bitsHrPayrollApp.pfLoan.bankName" for="field_bankName">Bank
+                            Name</label> <span class="text-danger">*</span>
+                        <input type="text" readonly class="form-control" name="bankName" id="field_bankName"
+                               formControlName="bankName">
+                        <div
+                            *ngIf="editForm.get('bankName')!.invalid && (editForm.get('bankName')!.dirty || editForm.get('bankName')!.touched)">
+                            <small *ngIf="editForm.get('bankName')?.errors?.required"
+                                   class="form-text text-danger"
+                                   jhiTranslate="entity.validation.required">
+                                This field is required.
+                            </small>
+                            <small *ngIf="editForm.get('bankName')?.errors?.minlength"
+                                   [translateValues]="{ min: 2 }" class="form-text text-danger"
+                                   jhiTranslate="entity.validation.minlength">
+                                This field is required to be at least 2 characters.
+                            </small>
+                            <small *ngIf="editForm.get('bankName')?.errors?.maxlength"
+                                   [translateValues]="{ max: 250 }" class="form-text text-danger"
+                                   jhiTranslate="entity.validation.maxlength">
+                                This field cannot be longer than 250 characters.
+                            </small>
+                            <small *ngIf="editForm.get('bankName')?.errors?.pattern"
+                                   [translateValues]="{ pattern: 'Bank Name' }"
+                                   class="form-text text-danger"
+                                   jhiTranslate="entity.validation.pattern">
+                                Please input valid Bank Name
+                            </small>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label class="form-control-label"
+                               jhiTranslate="bitsHrPayrollApp.pfLoan.bankAccountNumber"
+                               for="field_bankAccountNumber">Bank Account Number</label> <span class="text-danger">*</span>
+                        <input type="text" readonly class="form-control" name="bankAccountNumber"
+                               id="field_bankAccountNumber"
+                               formControlName="bankAccountNumber"/>
+                        <div
+                            *ngIf="editForm.get('bankAccountNumber')!.invalid && (editForm.get('bankAccountNumber')!.dirty || editForm.get('bankAccountNumber')!.touched)">
+                            <small *ngIf="editForm.get('bankAccountNumber')?.errors?.required"
+                                   class="form-text text-danger"
+                                   jhiTranslate="entity.validation.required">
+                                This field is required.
+                            </small>
+                            <small *ngIf="editForm.get('bankAccountNumber')?.errors?.minlength"
+                                   [translateValues]="{ min: 9 }" class="form-text text-danger"
+                                   jhiTranslate="entity.validation.minlength">
+                                This field is required to be at least 9 characters.
+                            </small>
+                            <small *ngIf="editForm.get('bankAccountNumber')?.errors?.maxlength"
+                                   [translateValues]="{ max: 250 }" class="form-text text-danger"
+                                   jhiTranslate="entity.validation.maxlength">
+                                This field cannot be longer than 250 characters.
+                            </small>
+                            <small *ngIf="editForm.get('bankAccountNumber')?.errors?.pattern"
+                                   [translateValues]="{ pattern: 'Bank Account Number' }"
+                                   class="form-text text-danger"
+                                   jhiTranslate="entity.validation.pattern">
+                                Please input valid Bank Account Number
+                            </small>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label class="form-control-label"
+                               jhiTranslate="bitsHrPayrollApp.pfLoan.bankBranch"
+                               for="field_bankBranch">Bank Branch</label> <span class="text-danger">*</span>
+                        <input type="text" readonly class="form-control" name="bankBranch" id="field_bankBranch"
+                               formControlName="bankBranch"/>
+                        <div
+                            *ngIf="editForm.get('bankBranch')!.invalid && (editForm.get('bankBranch')!.dirty || editForm.get('bankBranch')!.touched)">
+                            <small *ngIf="editForm.get('bankBranch')?.errors?.required"
+                                   class="form-text text-danger"
+                                   jhiTranslate="entity.validation.required">
+                                This field is required.
+                            </small>
+                            <small *ngIf="editForm.get('bankBranch')?.errors?.minlength"
+                                   [translateValues]="{ min: 2 }" class="form-text text-danger"
+                                   jhiTranslate="entity.validation.minlength">
+                                This field is required to be at least 2 characters.
+                            </small>
+                            <small *ngIf="editForm.get('bankBranch')?.errors?.maxlength"
+                                   class="form-text text-danger">
+                                This field can be max 250.
+                            </small>
+                            <small *ngIf="editForm.get('bankBranch')?.errors?.pattern"
+                                   [translateValues]="{ pattern: 'Bank Branch Name' }"
+                                   class="form-text text-danger"
+                                   jhiTranslate="entity.validation.pattern">
+                                Please input valid Bank Branch Name
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="chequeSelector" class="mb-3">
+                    <div class="form-group col-md-3">
+                        <label class="form-control-label"
+                               jhiTranslate="bitsHrPayrollApp.pfLoan.chequeNumber"
+                               for="field_chequeNumber">Cheque Number</label> <span class="text-danger">*</span>
+                        <input type="text" class="form-control" name="chequeNumber"
+                               id="field_chequeNumber"
+                               formControlName="chequeNumber"/>
+                        <div
+                            *ngIf="editForm.get('chequeNumber')!.invalid && (editForm.get('chequeNumber')!.dirty || editForm.get('chequeNumber')!.touched)">
+                            <small *ngIf="editForm.get('chequeNumber')?.errors?.required"
+                                   class="form-text text-danger"
+                                   jhiTranslate="entity.validation.required">
+                                This field is required.
+                            </small>
+                            <small *ngIf="editForm.get('chequeNumber')?.errors?.minlength"
+                                   [translateValues]="{ min: 10 }" class="form-text text-danger"
+                                   jhiTranslate="entity.validation.minlength">
+                                This field is required to be at least 10 characters.
+                            </small>
+                            <small *ngIf="editForm.get('chequeNumber')?.errors?.maxlength"
+                                   [translateValues]="{ max: 250 }" class="form-text text-danger"
+                                   jhiTranslate="entity.validation.maxlength">
+                                This field cannot be longer than 250 characters.
+                            </small>
+                            <small *ngIf="editForm.get('chequeNumber')?.errors?.pattern"
+                                   class="form-text text-danger">
+                                Please input valid Cheque Number
+                            </small>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" id="cancel-save" class="btn btn-secondary"
+                        (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span
+                    jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+
+                <button type="submit" class="btn btn-primary" [disabled]="editForm.invalid || isSaving">
+                    <fa-icon icon="check-circle"></fa-icon>&nbsp;<span>Approve</span>
+                </button>
+
+            </div>
+        </div>
+    </form>
+</div>

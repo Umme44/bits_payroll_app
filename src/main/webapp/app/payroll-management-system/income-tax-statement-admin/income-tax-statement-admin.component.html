@@ -1,0 +1,51 @@
+<jhi-header [headerName]="'Tax Statement'" [shouldHaveHr]="false"> </jhi-header>
+
+<div>
+  <div class="container">
+    <div class="hide-in-print pb-2" style="padding: 0 65px">
+      <form [formGroup]="editForm" class="" name="editForm" role="form">
+        <div class="row">
+          <div class="col-md-3">
+            <select (change)="onYearSelect($event)" class="form-control" formControlName="year" id="year" name="year">
+              <option [ngValue]="null" disabled>Select Year</option>
+              <option *ngFor="let year of dropDownMenus" value="{{ year.id }}">
+                {{ year.range }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-7">
+            <ng-select
+              formControlName="selectedEmployeeId"
+              (ngModelChange)="onSelectEmployee($event)"
+              [items]="activeEmployeeList"
+              bindLabel="fullName"
+              bindValue="id"
+              appearance="outline"
+              [searchable]="true"
+              [clearable]="true"
+              class="font-sm"
+              name="pin"
+            >
+            </ng-select>
+          </div>
+          <div class="col-md-2 text-end">
+            <button
+              [disabled]="taxStatementModel === null || taxStatementModel === undefined"
+              (click)="downloadAsPDF()"
+              class="btn btn-primary btn-md px-3"
+            >
+              <fa-icon icon="print"></fa-icon>
+              Print
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div *ngIf="taxStatementModel">
+    <jhi-report-new *ngIf="taxStatementModel.hasConsolidatedExemption" [taxStatementModel]="taxStatementModel"></jhi-report-new>
+
+    <jhi-report-old *ngIf="!taxStatementModel.hasConsolidatedExemption" [taxStatementModel]="taxStatementModel"></jhi-report-old>
+  </div>
+</div>

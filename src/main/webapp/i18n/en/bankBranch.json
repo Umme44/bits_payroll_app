@@ -1,0 +1,24 @@
+{
+  "bitsHrPayrollApp": {
+    "bankBranch": {
+      "home": {
+        "title": "Bank Branches",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Bank Branch",
+        "createOrEditLabel": "Create or edit a Bank Branch",
+        "notFound": "No Bank Branches found"
+      },
+      "created": "A new Bank Branch is created with identifier {{ param }}",
+      "updated": "A Bank Branch is updated with identifier {{ param }}",
+      "deleted": "A Bank Branch is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Bank Branch {{ id }}?"
+      },
+      "detail": {
+        "title": "Bank Branch"
+      },
+      "id": "ID",
+      "branchName": "Branch Name"
+    }
+  }
+}

@@ -1,0 +1,1422 @@
+<div *ngIf="finalSettlement">
+  <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+    <jhi-header
+      [headerName]="'Edit Final Settlement'"
+      [midHeaderName01]="'Final Settlements'"
+      [midRouterLinkText01]="'/final-settlement'"
+      [shouldHaveHr]="false"
+    >
+    </jhi-header>
+
+    <div class="card card-body py-1 my-2 font-sm">
+      <h6 class="fw-light camel-case">Employee Info</h6>
+
+      <div>
+        <div class="row">
+          <div class="col-md-3">
+            <dt>
+              <span>Name of Employee</span>
+            </dt>
+          </div>
+          <div class="col-md-3">
+            <dd>
+              <span>{{ finalSettlement.employeeFullName }}</span>
+            </dd>
+          </div>
+
+          <div class="col-md-3">
+            <dt>
+              <span>PIN</span>
+            </dt>
+          </div>
+          <div class="col-md-3">
+            <dd>
+              <span>{{ finalSettlement.employeePin }}</span>
+            </dd>
+          </div>
+
+          <div class="col-md-3">
+            <dt>
+              <span>Date of Joining</span>
+            </dt>
+          </div>
+          <div class="col-md-3">
+            <dd>
+              <span>{{ finalSettlement.dateOfJoining | formatMediumDate }}</span>
+            </dd>
+          </div>
+
+          <div class="col-md-3">
+            <dt>
+              <span>Date of Resignation</span>
+            </dt>
+          </div>
+          <div class="col-md-3">
+            <dd>
+              <span>{{ finalSettlement.dateOfResignation | formatMediumDate }}</span>
+            </dd>
+          </div>
+
+          <div class="col-md-3">
+            <dt>
+              <span>Notice Period</span>
+            </dt>
+          </div>
+          <div class="col-md-3">
+            <dd>
+              <span>{{ finalSettlement.noticePeriod }}</span>
+            </dd>
+          </div>
+
+          <div class="col-md-3">
+            <dt>
+              <span>Last Working Day </span>
+            </dt>
+          </div>
+          <div class="col-md-3">
+            <dd>
+              <span>{{ finalSettlement.lastWorkingDay | formatMediumDate }}</span>
+            </dd>
+          </div>
+
+          <div class="col-md-3">
+            <dt>
+              <span>Date of Release</span>
+            </dt>
+          </div>
+          <div class="col-md-3">
+            <dd>
+              <span>{{ finalSettlement.dateOfRelease | formatMediumDate }}</span>
+            </dd>
+          </div>
+
+          <div class="col-md-3">
+            <dt>
+              <span>Service Tenure</span>
+            </dt>
+          </div>
+          <div class="col-md-3">
+            <dd>
+              <span>{{ finalSettlement.serviceTenure }}</span>
+            </dd>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-body py-1 my-2 font-sm">
+      <h6 class="fw-light camel-case">Salary Structure</h6>
+
+      <div class="">
+        <div class="row">
+          <div class="col-md-3">
+            <dt>
+              <span>Basic</span>
+            </dt>
+          </div>
+          <div class="col-md-1 text-end">
+            <dd>
+              <span>{{ finalSettlement.mBasic | number }}</span>
+            </dd>
+          </div>
+          <div class="col-md-2"></div>
+
+          <div class="col-md-3">
+            <dt>
+              <span>Salary Payable</span>
+            </dt>
+          </div>
+          <div class="col-md-1 text-end">
+            <dd>
+              <span>{{ finalSettlement.salaryPayable | number }}</span>
+            </dd>
+          </div>
+          <div class="col-md-2"></div>
+
+          <div class="col-md-3">
+            <dt>
+              <span>House Rent</span>
+            </dt>
+          </div>
+          <div class="col-md-1 text-end">
+            <dd>
+              <span>{{ finalSettlement.mHouseRent | number }}</span>
+            </dd>
+          </div>
+          <div class="col-md-2"></div>
+
+          <div class="col-md-3">
+            <dt>
+              <span>Annual Income Tax</span>
+            </dt>
+          </div>
+          <div class="col-md-1 text-end">
+            <dd>
+              <span>{{ finalSettlement.deductionAnnualIncomeTax | number }}</span>
+            </dd>
+          </div>
+          <div class="col-md-2"></div>
+
+          <div class="col-md-3">
+            <dt>
+              <span>Medical</span>
+            </dt>
+          </div>
+          <div class="col-md-1 text-end">
+            <dd>
+              <span>{{ finalSettlement.mMedical | number }}</span>
+            </dd>
+          </div>
+          <div class="col-md-2"></div>
+
+          <div class="col-md-3">
+            <dt>
+              <span>Net Salary Payable</span>
+            </dt>
+          </div>
+          <div class="col-md-1 text-end">
+            <dd>
+              <span>{{ finalSettlement.netSalaryPayable | number }}</span>
+            </dd>
+          </div>
+          <div class="col-md-2"></div>
+
+          <div class="col-md-3">
+            <dt>
+              <span>Conveyance</span>
+            </dt>
+          </div>
+          <div class="col-md-1 text-end">
+            <dd>
+              <span>{{ finalSettlement.mConveyance | number }}</span>
+            </dd>
+          </div>
+          <div class="col-md-2"></div>
+
+          <div class="col-md-3">
+            <dt>
+              <span>Total PF</span>
+            </dt>
+          </div>
+          <div class="col-md-1 text-end">
+            <dd>
+              <span>{{ finalSettlement.totalPayablePf | number }}</span>
+            </dd>
+          </div>
+          <div class="col-md-2"></div>
+
+          <div class="col-md-3">
+            <dt>
+              <span>Total Salary</span>
+            </dt>
+          </div>
+          <div class="col-md-1 text-end">
+            <dd>
+              <span>{{ finalSettlement.totalSalary | number }}</span>
+            </dd>
+          </div>
+          <div class="col-md-2"></div>
+
+          <div class="col-md-3">
+            <dt>
+              <span>Total GF</span>
+            </dt>
+          </div>
+          <div class="col-md-1 text-end">
+            <dd>
+              <span>{{ finalSettlement.totalPayableGf | number }}</span>
+            </dd>
+          </div>
+          <div class="col-md-2"></div>
+
+          <div class="col-md-3">
+            <dt>
+              <span>Total Gross Salary</span>
+            </dt>
+          </div>
+          <div class="col-md-1 text-end">
+            <dd>
+              <span>{{ finalSettlement.totalGrossSalary | number }}</span>
+            </dd>
+          </div>
+          <div class="col-md-2"></div>
+
+          <div class="col-md-3">
+            <dt>
+              <span>Total Final Settlement Amount</span>
+            </dt>
+          </div>
+          <div class="col-md-1 text-end">
+            <dd>
+              <span>{{ finalSettlement.totalFinalSettlementAmount | number }}</span>
+            </dd>
+          </div>
+          <div class="col-md-2"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-body py-1 mt-2">
+      <jhi-alert-error></jhi-alert-error>
+
+      <div class="row">
+        <div class="col-md-3 mb-3">
+          <label
+            class="form-control-label"
+            jhiTranslate="bitsHrPayrollApp.finalSettlement.finalSettlementDate"
+            for="field_finalSettlementDate"
+            >Final Settlement Date</label
+          >
+          <div class="input-group">
+            <input
+              id="field_finalSettlementDate"
+              type="date"
+              class="form-control"
+              name="finalSettlementDate"
+              ngbDatepicker
+              #finalSettlementDateDp="ngbDatepicker"
+              formControlName="finalSettlementDate"
+            />
+            <span class="input-group-append">
+              <button [hidden]="true" type="button" class="btn btn-secondary" (click)="finalSettlementDateDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </span>
+          </div>
+          <div
+            *ngIf="
+              editForm.get('finalSettlementDate')!.invalid &&
+              (editForm.get('finalSettlementDate')!.dirty || editForm.get('finalSettlementDate')!.touched)
+            "
+          >
+            <small
+              *ngIf="editForm.get('finalSettlementDate')?.errors?.required"
+              class="form-text text-danger"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+          <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.mobileBillInCash" for="field_mobileBillInCash"
+            >Mobile Bill In Cash</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="mobileBillInCash"
+            id="field_mobileBillInCash"
+            formControlName="mobileBillInCash"
+          />
+          <div
+            *ngIf="
+              editForm.get('mobileBillInCash')!.invalid &&
+              (editForm.get('mobileBillInCash')!.dirty || editForm.get('mobileBillInCash')!.touched)
+            "
+          >
+            <small
+              *ngIf="editForm.get('mobileBillInCash')?.errors?.required"
+              class="form-text text-danger"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+          <label
+            class="form-control-label"
+            jhiTranslate="bitsHrPayrollApp.finalSettlement.deductionAnnualIncomeTax"
+            for="field_deductionAnnualIncomeTax"
+            >Deduction Annual Income Tax</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="deductionAnnualIncomeTax"
+            id="field_deductionAnnualIncomeTax"
+            formControlName="deductionAnnualIncomeTax"
+          />
+          <div
+            *ngIf="
+              editForm.get('deductionAnnualIncomeTax')!.invalid &&
+              (editForm.get('deductionAnnualIncomeTax')!.dirty || editForm.get('deductionAnnualIncomeTax')!.touched)
+            "
+          >
+            <small
+              *ngIf="editForm.get('deductionAnnualIncomeTax')?.errors?.required"
+              class="form-text text-danger"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="col-md-3"></div>
+
+        <div class="col-md-3 mb-3">
+          <label class="form-control-label" for="field_allowance01Amount"
+            >{{ finalSettlement.allowance01Name }} {{ finalSettlement.allowance01Remarks }}
+          </label>
+          <input
+            type="number"
+            class="form-control"
+            name="allowance01Amount"
+            id="field_allowance01Amount"
+            formControlName="allowance01Amount"
+          />
+          <div
+            *ngIf="
+              editForm.get('allowance01Amount')!.invalid &&
+              (editForm.get('allowance01Amount')!.dirty || editForm.get('allowance01Amount')!.touched)
+            "
+          >
+            <small
+              *ngIf="editForm.get('allowance01Amount')?.errors?.required"
+              class="form-text text-danger"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+          <label class="form-control-label" for="field_allowance02Amount"
+            >{{ finalSettlement.allowance02Name }} {{ finalSettlement.allowance02Remarks }}</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="allowance02Amount"
+            id="field_allowance02Amount"
+            formControlName="allowance02Amount"
+          />
+          <div
+            *ngIf="
+              editForm.get('allowance02Amount')!.invalid &&
+              (editForm.get('allowance02Amount')!.dirty || editForm.get('allowance02Amount')!.touched)
+            "
+          >
+            <small
+              *ngIf="editForm.get('allowance02Amount')?.errors?.required"
+              class="form-text text-danger"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+          <label class="form-control-label" for="field_allowance03Amount"
+            >{{ finalSettlement.allowance03Name }} {{ finalSettlement.allowance03Remarks }}</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="allowance03Amount"
+            id="field_allowance03Amount"
+            formControlName="allowance03Amount"
+          />
+          <div
+            *ngIf="
+              editForm.get('allowance03Amount')!.invalid &&
+              (editForm.get('allowance03Amount')!.dirty || editForm.get('allowance03Amount')!.touched)
+            "
+          >
+            <small
+              *ngIf="editForm.get('allowance03Amount')?.errors?.required"
+              class="form-text text-danger"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+          <label class="form-control-label" for="field_allowance04Amount"
+            >{{ finalSettlement.allowance04Name }} {{ finalSettlement.allowance04Remarks }}</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="allowance04Amount"
+            id="field_allowance04Amount"
+            formControlName="allowance04Amount"
+          />
+          <div
+            *ngIf="
+              editForm.get('allowance04Amount')!.invalid &&
+              (editForm.get('allowance04Amount')!.dirty || editForm.get('allowance04Amount')!.touched)
+            "
+          >
+            <small
+              *ngIf="editForm.get('allowance04Amount')?.errors?.required"
+              class="form-text text-danger"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+          <label class="form-control-label" for="field_allowance01Remarks">{{ finalSettlement.allowance01Name }} Remarks</label>
+          <input
+            type="text"
+            class="form-control"
+            name="allowance01Remarks"
+            id="field_allowance01Remarks"
+            formControlName="allowance01Remarks"
+          />
+        </div>
+
+        <div class="col-md-3 mb-3">
+          <label class="form-control-label" for="field_allowance02Remarks">{{ finalSettlement.allowance02Name }} Remarks</label>
+          <input
+            type="text"
+            class="form-control"
+            name="allowance02Remarks"
+            id="field_allowance02Remarks"
+            formControlName="allowance02Remarks"
+          />
+        </div>
+
+        <div class="col-md-3 mb-3">
+          <label class="form-control-label" for="field_allowance03Remarks">{{ finalSettlement.allowance03Name }} Remarks</label>
+          <input
+            type="text"
+            class="form-control"
+            name="allowance03Remarks"
+            id="field_allowance03Remarks"
+            formControlName="allowance03Remarks"
+          />
+        </div>
+
+        <div class="col-md-3 mb-3">
+          <label class="form-control-label" for="field_allowance04Remarks">{{ finalSettlement.allowance04Name }} Remarks</label>
+          <input
+            type="text"
+            class="form-control"
+            name="allowance04Remarks"
+            id="field_allowance04Remarks"
+            formControlName="allowance04Remarks"
+          />
+        </div>
+
+        <div class="col-md-3 mb-3">
+          <label
+            class="form-control-label"
+            jhiTranslate="bitsHrPayrollApp.finalSettlement.deductionNoticePayDays"
+            for="field_deductionNoticePayDays"
+            >Deduction Notice Pay Days</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="deductionNoticePayDays"
+            id="field_deductionNoticePayDays"
+            formControlName="deductionNoticePayDays"
+          />
+          <div
+            *ngIf="
+              editForm.get('deductionNoticePayDays')!.invalid &&
+              (editForm.get('deductionNoticePayDays')!.dirty || editForm.get('deductionNoticePayDays')!.touched)
+            "
+          >
+            <small
+              *ngIf="editForm.get('deductionNoticePayDays')?.errors?.required"
+              class="form-text text-danger"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+          <label
+            class="form-control-label"
+            jhiTranslate="bitsHrPayrollApp.finalSettlement.deductionAbsentDaysAdjustmentDays"
+            for="field_deductionAbsentDaysAdjustmentDays"
+            >Deduction Absent Days Adjustment Days</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="deductionAbsentDaysAdjustmentDays"
+            id="field_deductionAbsentDaysAdjustmentDays"
+            formControlName="deductionAbsentDaysAdjustmentDays"
+          />
+          <div
+            *ngIf="
+              editForm.get('deductionAbsentDaysAdjustmentDays')!.invalid &&
+              (editForm.get('deductionAbsentDaysAdjustmentDays')!.dirty || editForm.get('deductionAbsentDaysAdjustmentDays')!.touched)
+            "
+          >
+            <small
+              *ngIf="editForm.get('deductionAbsentDaysAdjustmentDays')?.errors?.required"
+              class="form-text text-danger"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="col-md-3 mb-3" *ngIf="finalSettlement.employeeCategory === 'REGULAR_CONFIRMED_EMPLOYEE'">
+          <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.totalPayablePf" for="field_totalPayablePf"
+            >Total Payable PF</label
+          >
+          <input type="number" class="form-control" name="totalPayablePf" id="field_totalPayablePf" formControlName="totalPayablePf" />
+          <div
+            *ngIf="
+              editForm.get('totalPayablePf')!.invalid && (editForm.get('totalPayablePf')!.dirty || editForm.get('totalPayablePf')!.touched)
+            "
+          >
+            <small
+              *ngIf="editForm.get('totalPayablePf')?.errors?.required"
+              class="form-text text-danger"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="col-md-3 mb-3" *ngIf="finalSettlement.employeeCategory === 'REGULAR_CONFIRMED_EMPLOYEE'">
+          <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.totalPayableGf" for="field_totalPayableGf"
+            >Total Payable GF</label
+          >
+          <input type="number" class="form-control" name="totalPayableGf" id="field_totalPayableGf" formControlName="totalPayableGf" />
+          <div
+            *ngIf="
+              editForm.get('totalPayableGf')!.invalid && (editForm.get('totalPayableGf')!.dirty || editForm.get('totalPayableGf')!.touched)
+            "
+          >
+            <small
+              *ngIf="editForm.get('totalPayableGf')?.errors?.required"
+              class="form-text text-danger"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!--<div class="d-flex justify-content-center">-->
+<!--  <div class="col-8">-->
+<!--    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">-->
+<!--      <h2-->
+<!--        id="jhi-final-settlement-heading"-->
+<!--        data-cy="FinalSettlementCreateUpdateHeading"-->
+<!--        jhiTranslate="bitsHrPayrollApp.finalSettlement.home.createOrEditLabel"-->
+<!--      >-->
+<!--        Create or edit a Final Settlement-->
+<!--      </h2>-->
+
+<!--      <div>-->
+<!--        <jhi-alert-error></jhi-alert-error>-->
+
+<!--        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">-->
+<!--          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>-->
+<!--          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.dateOfResignation" for="field_dateOfResignation"-->
+<!--            >Date Of Resignation</label-->
+<!--          >-->
+<!--          <div class="input-group">-->
+<!--            <input-->
+<!--              id="field_dateOfResignation"-->
+<!--              data-cy="dateOfResignation"-->
+<!--              type="text"-->
+<!--              class="form-control"-->
+<!--              name="dateOfResignation"-->
+<!--              ngbDatepicker-->
+<!--              #dateOfResignationDp="ngbDatepicker"-->
+<!--              formControlName="dateOfResignation"-->
+<!--            />-->
+<!--            <button type="button" class="btn btn-secondary" (click)="dateOfResignationDp.toggle()">-->
+<!--              <fa-icon icon="calendar-alt"></fa-icon>-->
+<!--            </button>-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.noticePeriod" for="field_noticePeriod"-->
+<!--            >Notice Period</label-->
+<!--          >-->
+<!--          <input-->
+<!--            type="number"-->
+<!--            class="form-control"-->
+<!--            name="noticePeriod"-->
+<!--            id="field_noticePeriod"-->
+<!--            data-cy="noticePeriod"-->
+<!--            formControlName="noticePeriod"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.lastWorkingDay" for="field_lastWorkingDay"-->
+<!--            >Last Working Day</label-->
+<!--          >-->
+<!--          <div class="input-group">-->
+<!--            <input-->
+<!--              id="field_lastWorkingDay"-->
+<!--              data-cy="lastWorkingDay"-->
+<!--              type="text"-->
+<!--              class="form-control"-->
+<!--              name="lastWorkingDay"-->
+<!--              ngbDatepicker-->
+<!--              #lastWorkingDayDp="ngbDatepicker"-->
+<!--              formControlName="lastWorkingDay"-->
+<!--            />-->
+<!--            <button type="button" class="btn btn-secondary" (click)="lastWorkingDayDp.toggle()">-->
+<!--              <fa-icon icon="calendar-alt"></fa-icon>-->
+<!--            </button>-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.dateOfRelease" for="field_dateOfRelease"-->
+<!--            >Date Of Release</label-->
+<!--          >-->
+<!--          <div class="input-group">-->
+<!--            <input-->
+<!--              id="field_dateOfRelease"-->
+<!--              data-cy="dateOfRelease"-->
+<!--              type="text"-->
+<!--              class="form-control"-->
+<!--              name="dateOfRelease"-->
+<!--              ngbDatepicker-->
+<!--              #dateOfReleaseDp="ngbDatepicker"-->
+<!--              formControlName="dateOfRelease"-->
+<!--            />-->
+<!--            <button type="button" class="btn btn-secondary" (click)="dateOfReleaseDp.toggle()">-->
+<!--              <fa-icon icon="calendar-alt"></fa-icon>-->
+<!--            </button>-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.serviceTenure" for="field_serviceTenure"-->
+<!--            >Service Tenure</label-->
+<!--          >-->
+<!--          <input-->
+<!--            type="text"-->
+<!--            class="form-control"-->
+<!--            name="serviceTenure"-->
+<!--            id="field_serviceTenure"-->
+<!--            data-cy="serviceTenure"-->
+<!--            formControlName="serviceTenure"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.mBasic" for="field_mBasic">M Basic</label>-->
+<!--          <input type="number" class="form-control" name="mBasic" id="field_mBasic" data-cy="mBasic" formControlName="mBasic" />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.mHouseRent" for="field_mHouseRent">M House Rent</label>-->
+<!--          <input-->
+<!--            type="number"-->
+<!--            class="form-control"-->
+<!--            name="mHouseRent"-->
+<!--            id="field_mHouseRent"-->
+<!--            data-cy="mHouseRent"-->
+<!--            formControlName="mHouseRent"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.mMedical" for="field_mMedical">M Medical</label>-->
+<!--          <input type="number" class="form-control" name="mMedical" id="field_mMedical" data-cy="mMedical" formControlName="mMedical" />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.mConveyance" for="field_mConveyance">M Conveyance</label>-->
+<!--          <input-->
+<!--            type="number"-->
+<!--            class="form-control"-->
+<!--            name="mConveyance"-->
+<!--            id="field_mConveyance"-->
+<!--            data-cy="mConveyance"-->
+<!--            formControlName="mConveyance"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.salaryPayable" for="field_salaryPayable"-->
+<!--            >Salary Payable</label-->
+<!--          >-->
+<!--          <input-->
+<!--            type="number"-->
+<!--            class="form-control"-->
+<!--            name="salaryPayable"-->
+<!--            id="field_salaryPayable"-->
+<!--            data-cy="salaryPayable"-->
+<!--            formControlName="salaryPayable"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.salaryPayableRemarks" for="field_salaryPayableRemarks"-->
+<!--            >Salary Payable Remarks</label-->
+<!--          >-->
+<!--          <input-->
+<!--            type="text"-->
+<!--            class="form-control"-->
+<!--            name="salaryPayableRemarks"-->
+<!--            id="field_salaryPayableRemarks"-->
+<!--            data-cy="salaryPayableRemarks"-->
+<!--            formControlName="salaryPayableRemarks"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label-->
+<!--            class="form-label"-->
+<!--            jhiTranslate="bitsHrPayrollApp.finalSettlement.totalDaysForLeaveEncashment"-->
+<!--            for="field_totalDaysForLeaveEncashment"-->
+<!--            >Total Days For Leave Encashment</label-->
+<!--          >-->
+<!--          <input-->
+<!--            type="number"-->
+<!--            class="form-control"-->
+<!--            name="totalDaysForLeaveEncashment"-->
+<!--            id="field_totalDaysForLeaveEncashment"-->
+<!--            data-cy="totalDaysForLeaveEncashment"-->
+<!--            formControlName="totalDaysForLeaveEncashment"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.totalLeaveEncashment" for="field_totalLeaveEncashment"-->
+<!--            >Total Leave Encashment</label-->
+<!--          >-->
+<!--          <input-->
+<!--            type="number"-->
+<!--            class="form-control"-->
+<!--            name="totalLeaveEncashment"-->
+<!--            id="field_totalLeaveEncashment"-->
+<!--            data-cy="totalLeaveEncashment"-->
+<!--            formControlName="totalLeaveEncashment"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.mobileBillInCash" for="field_mobileBillInCash"-->
+<!--            >Mobile Bill In Cash</label-->
+<!--          >-->
+<!--          <input-->
+<!--            type="number"-->
+<!--            class="form-control"-->
+<!--            name="mobileBillInCash"-->
+<!--            id="field_mobileBillInCash"-->
+<!--            data-cy="mobileBillInCash"-->
+<!--            formControlName="mobileBillInCash"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.allowance01Name" for="field_allowance01Name"-->
+<!--            >Allowance 01 Name</label-->
+<!--          >-->
+<!--          <input-->
+<!--            type="text"-->
+<!--            class="form-control"-->
+<!--            name="allowance01Name"-->
+<!--            id="field_allowance01Name"-->
+<!--            data-cy="allowance01Name"-->
+<!--            formControlName="allowance01Name"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.allowance01Amount" for="field_allowance01Amount"-->
+<!--            >Allowance 01 Amount</label-->
+<!--          >-->
+<!--          <input-->
+<!--            type="number"-->
+<!--            class="form-control"-->
+<!--            name="allowance01Amount"-->
+<!--            id="field_allowance01Amount"-->
+<!--            data-cy="allowance01Amount"-->
+<!--            formControlName="allowance01Amount"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.allowance01Remarks" for="field_allowance01Remarks"-->
+<!--            >Allowance 01 Remarks</label-->
+<!--          >-->
+<!--          <input-->
+<!--            type="text"-->
+<!--            class="form-control"-->
+<!--            name="allowance01Remarks"-->
+<!--            id="field_allowance01Remarks"-->
+<!--            data-cy="allowance01Remarks"-->
+<!--            formControlName="allowance01Remarks"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.allowance02Name" for="field_allowance02Name"-->
+<!--            >Allowance 02 Name</label-->
+<!--          >-->
+<!--          <input-->
+<!--            type="text"-->
+<!--            class="form-control"-->
+<!--            name="allowance02Name"-->
+<!--            id="field_allowance02Name"-->
+<!--            data-cy="allowance02Name"-->
+<!--            formControlName="allowance02Name"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.allowance02Amount" for="field_allowance02Amount"-->
+<!--            >Allowance 02 Amount</label-->
+<!--          >-->
+<!--          <input-->
+<!--            type="number"-->
+<!--            class="form-control"-->
+<!--            name="allowance02Amount"-->
+<!--            id="field_allowance02Amount"-->
+<!--            data-cy="allowance02Amount"-->
+<!--            formControlName="allowance02Amount"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.allowance02Remarks" for="field_allowance02Remarks"-->
+<!--            >Allowance 02 Remarks</label-->
+<!--          >-->
+<!--          <input-->
+<!--            type="text"-->
+<!--            class="form-control"-->
+<!--            name="allowance02Remarks"-->
+<!--            id="field_allowance02Remarks"-->
+<!--            data-cy="allowance02Remarks"-->
+<!--            formControlName="allowance02Remarks"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.allowance03Name" for="field_allowance03Name"-->
+<!--            >Allowance 03 Name</label-->
+<!--          >-->
+<!--          <input-->
+<!--            type="text"-->
+<!--            class="form-control"-->
+<!--            name="allowance03Name"-->
+<!--            id="field_allowance03Name"-->
+<!--            data-cy="allowance03Name"-->
+<!--            formControlName="allowance03Name"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.allowance03Amount" for="field_allowance03Amount"-->
+<!--            >Allowance 03 Amount</label-->
+<!--          >-->
+<!--          <input-->
+<!--            type="number"-->
+<!--            class="form-control"-->
+<!--            name="allowance03Amount"-->
+<!--            id="field_allowance03Amount"-->
+<!--            data-cy="allowance03Amount"-->
+<!--            formControlName="allowance03Amount"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.allowance03Remarks" for="field_allowance03Remarks"-->
+<!--            >Allowance 03 Remarks</label-->
+<!--          >-->
+<!--          <input-->
+<!--            type="text"-->
+<!--            class="form-control"-->
+<!--            name="allowance03Remarks"-->
+<!--            id="field_allowance03Remarks"-->
+<!--            data-cy="allowance03Remarks"-->
+<!--            formControlName="allowance03Remarks"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.allowance04Name" for="field_allowance04Name"-->
+<!--            >Allowance 04 Name</label-->
+<!--          >-->
+<!--          <input-->
+<!--            type="text"-->
+<!--            class="form-control"-->
+<!--            name="allowance04Name"-->
+<!--            id="field_allowance04Name"-->
+<!--            data-cy="allowance04Name"-->
+<!--            formControlName="allowance04Name"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.allowance04Amount" for="field_allowance04Amount"-->
+<!--            >Allowance 04 Amount</label-->
+<!--          >-->
+<!--          <input-->
+<!--            type="number"-->
+<!--            class="form-control"-->
+<!--            name="allowance04Amount"-->
+<!--            id="field_allowance04Amount"-->
+<!--            data-cy="allowance04Amount"-->
+<!--            formControlName="allowance04Amount"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.allowance04Remarks" for="field_allowance04Remarks"-->
+<!--            >Allowance 04 Remarks</label-->
+<!--          >-->
+<!--          <input-->
+<!--            type="text"-->
+<!--            class="form-control"-->
+<!--            name="allowance04Remarks"-->
+<!--            id="field_allowance04Remarks"-->
+<!--            data-cy="allowance04Remarks"-->
+<!--            formControlName="allowance04Remarks"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.deductionNoticePay" for="field_deductionNoticePay"-->
+<!--            >Deduction Notice Pay</label-->
+<!--          >-->
+<!--          <input-->
+<!--            type="number"-->
+<!--            class="form-control"-->
+<!--            name="deductionNoticePay"-->
+<!--            id="field_deductionNoticePay"-->
+<!--            data-cy="deductionNoticePay"-->
+<!--            formControlName="deductionNoticePay"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.deductionPf" for="field_deductionPf">Deduction Pf</label>-->
+<!--          <input-->
+<!--            type="number"-->
+<!--            class="form-control"-->
+<!--            name="deductionPf"-->
+<!--            id="field_deductionPf"-->
+<!--            data-cy="deductionPf"-->
+<!--            formControlName="deductionPf"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.deductionHaf" for="field_deductionHaf"-->
+<!--            >Deduction Haf</label-->
+<!--          >-->
+<!--          <input-->
+<!--            type="number"-->
+<!--            class="form-control"-->
+<!--            name="deductionHaf"-->
+<!--            id="field_deductionHaf"-->
+<!--            data-cy="deductionHaf"-->
+<!--            formControlName="deductionHaf"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label-->
+<!--            class="form-label"-->
+<!--            jhiTranslate="bitsHrPayrollApp.finalSettlement.deductionExcessCellBill"-->
+<!--            for="field_deductionExcessCellBill"-->
+<!--            >Deduction Excess Cell Bill</label-->
+<!--          >-->
+<!--          <input-->
+<!--            type="number"-->
+<!--            class="form-control"-->
+<!--            name="deductionExcessCellBill"-->
+<!--            id="field_deductionExcessCellBill"-->
+<!--            data-cy="deductionExcessCellBill"-->
+<!--            formControlName="deductionExcessCellBill"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label-->
+<!--            class="form-label"-->
+<!--            jhiTranslate="bitsHrPayrollApp.finalSettlement.deductionAbsentDaysAdjustment"-->
+<!--            for="field_deductionAbsentDaysAdjustment"-->
+<!--            >Deduction Absent Days Adjustment</label-->
+<!--          >-->
+<!--          <input-->
+<!--            type="number"-->
+<!--            class="form-control"-->
+<!--            name="deductionAbsentDaysAdjustment"-->
+<!--            id="field_deductionAbsentDaysAdjustment"-->
+<!--            data-cy="deductionAbsentDaysAdjustment"-->
+<!--            formControlName="deductionAbsentDaysAdjustment"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.totalSalaryPayable" for="field_totalSalaryPayable"-->
+<!--            >Total Salary Payable</label-->
+<!--          >-->
+<!--          <input-->
+<!--            type="number"-->
+<!--            class="form-control"-->
+<!--            name="totalSalaryPayable"-->
+<!--            id="field_totalSalaryPayable"-->
+<!--            data-cy="totalSalaryPayable"-->
+<!--            formControlName="totalSalaryPayable"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label-->
+<!--            class="form-label"-->
+<!--            jhiTranslate="bitsHrPayrollApp.finalSettlement.deductionAnnualIncomeTax"-->
+<!--            for="field_deductionAnnualIncomeTax"-->
+<!--            >Deduction Annual Income Tax</label-->
+<!--          >-->
+<!--          <input-->
+<!--            type="number"-->
+<!--            class="form-control"-->
+<!--            name="deductionAnnualIncomeTax"-->
+<!--            id="field_deductionAnnualIncomeTax"-->
+<!--            data-cy="deductionAnnualIncomeTax"-->
+<!--            formControlName="deductionAnnualIncomeTax"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.netSalaryPayable" for="field_netSalaryPayable"-->
+<!--            >Net Salary Payable</label-->
+<!--          >-->
+<!--          <input-->
+<!--            type="number"-->
+<!--            class="form-control"-->
+<!--            name="netSalaryPayable"-->
+<!--            id="field_netSalaryPayable"-->
+<!--            data-cy="netSalaryPayable"-->
+<!--            formControlName="netSalaryPayable"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.totalPayablePf" for="field_totalPayablePf"-->
+<!--            >Total Payable Pf</label-->
+<!--          >-->
+<!--          <input-->
+<!--            type="number"-->
+<!--            class="form-control"-->
+<!--            name="totalPayablePf"-->
+<!--            id="field_totalPayablePf"-->
+<!--            data-cy="totalPayablePf"-->
+<!--            formControlName="totalPayablePf"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.totalPayableGf" for="field_totalPayableGf"-->
+<!--            >Total Payable Gf</label-->
+<!--          >-->
+<!--          <input-->
+<!--            type="number"-->
+<!--            class="form-control"-->
+<!--            name="totalPayableGf"-->
+<!--            id="field_totalPayableGf"-->
+<!--            data-cy="totalPayableGf"-->
+<!--            formControlName="totalPayableGf"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label-->
+<!--            class="form-label"-->
+<!--            jhiTranslate="bitsHrPayrollApp.finalSettlement.totalFinalSettlementAmount"-->
+<!--            for="field_totalFinalSettlementAmount"-->
+<!--            >Total Final Settlement Amount</label-->
+<!--          >-->
+<!--          <input-->
+<!--            type="number"-->
+<!--            class="form-control"-->
+<!--            name="totalFinalSettlementAmount"-->
+<!--            id="field_totalFinalSettlementAmount"-->
+<!--            data-cy="totalFinalSettlementAmount"-->
+<!--            formControlName="totalFinalSettlementAmount"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.createdAt" for="field_createdAt">Created At</label>-->
+<!--          <div class="input-group">-->
+<!--            <input-->
+<!--              id="field_createdAt"-->
+<!--              data-cy="createdAt"-->
+<!--              type="text"-->
+<!--              class="form-control"-->
+<!--              name="createdAt"-->
+<!--              ngbDatepicker-->
+<!--              #createdAtDp="ngbDatepicker"-->
+<!--              formControlName="createdAt"-->
+<!--            />-->
+<!--            <button type="button" class="btn btn-secondary" (click)="createdAtDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.updatedAt" for="field_updatedAt">Updated At</label>-->
+<!--          <div class="input-group">-->
+<!--            <input-->
+<!--              id="field_updatedAt"-->
+<!--              data-cy="updatedAt"-->
+<!--              type="text"-->
+<!--              class="form-control"-->
+<!--              name="updatedAt"-->
+<!--              ngbDatepicker-->
+<!--              #updatedAtDp="ngbDatepicker"-->
+<!--              formControlName="updatedAt"-->
+<!--            />-->
+<!--            <button type="button" class="btn btn-secondary" (click)="updatedAtDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label-->
+<!--            class="form-label"-->
+<!--            jhiTranslate="bitsHrPayrollApp.finalSettlement.deductionNoticePayDays"-->
+<!--            for="field_deductionNoticePayDays"-->
+<!--            >Deduction Notice Pay Days</label-->
+<!--          >-->
+<!--          <input-->
+<!--            type="number"-->
+<!--            class="form-control"-->
+<!--            name="deductionNoticePayDays"-->
+<!--            id="field_deductionNoticePayDays"-->
+<!--            data-cy="deductionNoticePayDays"-->
+<!--            formControlName="deductionNoticePayDays"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label-->
+<!--            class="form-label"-->
+<!--            jhiTranslate="bitsHrPayrollApp.finalSettlement.deductionAbsentDaysAdjustmentDays"-->
+<!--            for="field_deductionAbsentDaysAdjustmentDays"-->
+<!--            >Deduction Absent Days Adjustment Days</label-->
+<!--          >-->
+<!--          <input-->
+<!--            type="number"-->
+<!--            class="form-control"-->
+<!--            name="deductionAbsentDaysAdjustmentDays"-->
+<!--            id="field_deductionAbsentDaysAdjustmentDays"-->
+<!--            data-cy="deductionAbsentDaysAdjustmentDays"-->
+<!--            formControlName="deductionAbsentDaysAdjustmentDays"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.deductionOther" for="field_deductionOther"-->
+<!--            >Deduction Other</label-->
+<!--          >-->
+<!--          <input-->
+<!--            type="number"-->
+<!--            class="form-control"-->
+<!--            name="deductionOther"-->
+<!--            id="field_deductionOther"-->
+<!--            data-cy="deductionOther"-->
+<!--            formControlName="deductionOther"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.totalSalary" for="field_totalSalary">Total Salary</label>-->
+<!--          <input-->
+<!--            type="number"-->
+<!--            class="form-control"-->
+<!--            name="totalSalary"-->
+<!--            id="field_totalSalary"-->
+<!--            data-cy="totalSalary"-->
+<!--            formControlName="totalSalary"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.totalGrossSalary" for="field_totalGrossSalary"-->
+<!--            >Total Gross Salary</label-->
+<!--          >-->
+<!--          <input-->
+<!--            type="number"-->
+<!--            class="form-control"-->
+<!--            name="totalGrossSalary"-->
+<!--            id="field_totalGrossSalary"-->
+<!--            data-cy="totalGrossSalary"-->
+<!--            formControlName="totalGrossSalary"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.totalDeduction" for="field_totalDeduction"-->
+<!--            >Total Deduction</label-->
+<!--          >-->
+<!--          <input-->
+<!--            type="number"-->
+<!--            class="form-control"-->
+<!--            name="totalDeduction"-->
+<!--            id="field_totalDeduction"-->
+<!--            data-cy="totalDeduction"-->
+<!--            formControlName="totalDeduction"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.finalSettlementDate" for="field_finalSettlementDate"-->
+<!--            >Final Settlement Date</label-->
+<!--          >-->
+<!--          <div class="input-group">-->
+<!--            <input-->
+<!--              id="field_finalSettlementDate"-->
+<!--              data-cy="finalSettlementDate"-->
+<!--              type="text"-->
+<!--              class="form-control"-->
+<!--              name="finalSettlementDate"-->
+<!--              ngbDatepicker-->
+<!--              #finalSettlementDateDp="ngbDatepicker"-->
+<!--              formControlName="finalSettlementDate"-->
+<!--            />-->
+<!--            <button type="button" class="btn btn-secondary" (click)="finalSettlementDateDp.toggle()">-->
+<!--              <fa-icon icon="calendar-alt"></fa-icon>-->
+<!--            </button>-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.isFinalized" for="field_isFinalized">Is Finalized</label>-->
+<!--          <input-->
+<!--            type="checkbox"-->
+<!--            class="form-check"-->
+<!--            name="isFinalized"-->
+<!--            id="field_isFinalized"-->
+<!--            data-cy="isFinalized"-->
+<!--            formControlName="isFinalized"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.salaryNumOfMonth" for="field_salaryNumOfMonth"-->
+<!--            >Salary Num Of Month</label-->
+<!--          >-->
+<!--          <input-->
+<!--            type="number"-->
+<!--            class="form-control"-->
+<!--            name="salaryNumOfMonth"-->
+<!--            id="field_salaryNumOfMonth"-->
+<!--            data-cy="salaryNumOfMonth"-->
+<!--            formControlName="salaryNumOfMonth"-->
+<!--          />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.remarks" for="field_remarks">Remarks</label>-->
+<!--          <input type="text" class="form-control" name="remarks" id="field_remarks" data-cy="remarks" formControlName="remarks" />-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.employee" for="field_employee">Employee</label>-->
+<!--          <select-->
+<!--            class="form-control"-->
+<!--            id="field_employee"-->
+<!--            data-cy="employee"-->
+<!--            name="employee"-->
+<!--            formControlName="employee"-->
+<!--            [compareWith]="compareEmployee"-->
+<!--          >-->
+<!--            <option *ngIf="!editForm.get('employee')!.value" [ngValue]="null" selected></option>-->
+<!--            <option [ngValue]="employeeOption" *ngFor="let employeeOption of employeesSharedCollection">{{ employeeOption.id }}</option>-->
+<!--          </select>-->
+<!--        </div>-->
+<!--        <div *ngIf="editForm.get(['employee'])!.invalid && (editForm.get(['employee'])!.dirty || editForm.get(['employee'])!.touched)">-->
+<!--          <small-->
+<!--            class="form-text text-danger"-->
+<!--            *ngIf="editForm.get(['employee'])?.errors?.required"-->
+<!--            jhiTranslate="entity.validation.required"-->
+<!--          >-->
+<!--            This field is required.-->
+<!--          </small>-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.createdBy" for="field_createdBy">Created By</label>-->
+<!--          <select-->
+<!--            class="form-control"-->
+<!--            id="field_createdBy"-->
+<!--            data-cy="createdBy"-->
+<!--            name="createdBy"-->
+<!--            formControlName="createdBy"-->
+<!--            [compareWith]="compareUser"-->
+<!--          >-->
+<!--            <option [ngValue]="null"></option>-->
+<!--            <option [ngValue]="userOption" *ngFor="let userOption of usersSharedCollection">{{ userOption.login }}</option>-->
+<!--          </select>-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <label class="form-label" jhiTranslate="bitsHrPayrollApp.finalSettlement.updatedBy" for="field_updatedBy">Updated By</label>-->
+<!--          <select-->
+<!--            class="form-control"-->
+<!--            id="field_updatedBy"-->
+<!--            data-cy="updatedBy"-->
+<!--            name="updatedBy"-->
+<!--            formControlName="updatedBy"-->
+<!--            [compareWith]="compareUser"-->
+<!--          >-->
+<!--            <option [ngValue]="null"></option>-->
+<!--            <option [ngValue]="userOption" *ngFor="let userOption of usersSharedCollection">{{ userOption.login }}</option>-->
+<!--          </select>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div>-->
+<!--        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">-->
+<!--          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>-->
+<!--        </button>-->
+
+<!--        <button-->
+<!--          type="submit"-->
+<!--          id="save-entity"-->
+<!--          data-cy="entityCreateSaveButton"-->
+<!--          [disabled]="editForm.invalid || isSaving"-->
+<!--          class="btn btn-primary"-->
+<!--        >-->
+<!--          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>-->
+<!--        </button>-->
+<!--      </div>-->
+<!--    </form>-->
+<!--  </div>-->
+<!--</div>-->

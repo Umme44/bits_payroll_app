@@ -1,0 +1,482 @@
+<div>
+  <jhi-header
+    [headerName]="!editForm.get('id')!.value ? 'Add New Attendance summaries' : 'Edit Attendance Summaries'"
+    [midHeaderName01]="'Attendance Summaries - Admin'"
+    [midRouterLinkText01]="'/attendance-summary'"
+    [shouldHaveHr]="false"
+  >
+  </jhi-header>
+
+  <div>
+    <jhi-alert-error></jhi-alert-error>
+
+    <form (ngSubmit)="save()" [formGroup]="editForm" name="editForm" novalidate role="form">
+      <div class="card container-fluid">
+        <div class="card-body">
+          <div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="form-control-label required" for="field_employee" jhiTranslate="bitsHrPayrollApp.attendanceSummary.employee"
+                    >Employee</label
+                  >
+
+                  <jhi-simple-select-employee-form
+                    id="field_employee"
+                    [selectedFieldValue]="editForm.get('employeeId')!.value"
+                    (onChangeEmployee)="patchSelectedEmployeeId($event)"
+                    [isDisabled]="isUpdate"
+                  ></jhi-simple-select-employee-form>
+
+                  <div
+                    *ngIf="
+                      editForm.get('employeeId')!.invalid && (editForm.get('employeeId')!.dirty || editForm.get('employeeId')!.touched)
+                    "
+                  >
+                    <small
+                      *ngIf="editForm.get('employeeId')?.errors?.required"
+                      class="form-text text-danger"
+                      jhiTranslate="entity.validation.required"
+                    >
+                      This field is required.
+                    </small>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="mb-3">
+                  <label class="form-control-label required" for="field_month" jhiTranslate="bitsHrPayrollApp.attendanceSummary.month"
+                    >Month</label
+                  >
+                  <select (change)="monthDateValidation()" class="form-control w-100" formControlName="month" id="field_month" name="month">
+                    <option *ngFor="let month of months" value="{{ month.Value }}">
+                      {{ month.Text }}
+                    </option>
+                  </select>
+
+                  <div *ngIf="editForm.get('month')!.invalid && (editForm.get('month')!.dirty || editForm.get('month')!.touched)">
+                    <small
+                      *ngIf="editForm.get('month')?.errors?.required"
+                      class="form-text text-danger"
+                      jhiTranslate="entity.validation.required"
+                    >
+                      This field is required.
+                    </small>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="mb-3">
+                  <label class="form-control-label required" for="field_year" jhiTranslate="bitsHrPayrollApp.attendanceSummary.year"
+                    >Year</label
+                  >
+                  <!--                    <input type="number" class="form-control" name="year" id="field_year"-->
+                  <!--                           formControlName="year"/>-->
+                  <select (change)="monthDateValidation()" class="form-control w-100" formControlName="year" id="field_year" name="year">
+                    <option *ngFor="let year of years" value="{{ year }}">
+                      {{ year }}
+                    </option>
+                  </select>
+
+                  <div *ngIf="editForm.get('year')!.invalid && (editForm.get('year')!.dirty || editForm.get('year')!.touched)">
+                    <small
+                      *ngIf="editForm.get('year')?.errors?.required"
+                      class="form-text text-danger"
+                      jhiTranslate="entity.validation.required"
+                    >
+                      This field is required.
+                    </small>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-3">
+                <div class="mb-3">
+                  <label
+                    class="form-control-label required"
+                    for="field_totalWorkingDays"
+                    jhiTranslate="bitsHrPayrollApp.attendanceSummary.totalWorkingDays"
+                    >Total Working Days</label
+                  >
+                  <input
+                    class="form-control"
+                    formControlName="totalWorkingDays"
+                    id="field_totalWorkingDays"
+                    name="totalWorkingDays"
+                    type="number"
+                  />
+
+                  <div
+                    *ngIf="
+                      editForm.get('totalWorkingDays')!.invalid &&
+                      (editForm.get('totalWorkingDays')!.dirty || editForm.get('totalWorkingDays')!.touched)
+                    "
+                  >
+                    <small
+                      *ngIf="editForm.get('totalWorkingDays')?.errors?.required"
+                      class="form-text text-danger"
+                      jhiTranslate="entity.validation.required"
+                    >
+                      This field is required.
+                    </small>
+                    <small
+                      *ngIf="editForm.get('totalWorkingDays')?.errors?.max"
+                      [translateValues]="{ max: 31 }"
+                      class="form-text text-danger"
+                      jhiTranslate="entity.validation.max"
+                    >
+                      This field cannot be more than 31.
+                    </small>
+
+                    <small
+                      *ngIf="editForm.get('totalWorkingDays')?.errors?.min"
+                      [translateValues]="{ min: 0 }"
+                      class="form-text text-danger"
+                      jhiTranslate="entity.validation.min"
+                    >
+                      This field should be at least 0.
+                    </small>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="mb-3">
+                  <label
+                    class="form-control-label required"
+                    for="field_totalLeaveDays"
+                    jhiTranslate="bitsHrPayrollApp.attendanceSummary.totalLeaveDays"
+                    >Total Leave Days</label
+                  >
+                  <input
+                    class="form-control"
+                    formControlName="totalLeaveDays"
+                    id="field_totalLeaveDays"
+                    name="totalLeaveDays"
+                    type="number"
+                  />
+
+                  <div
+                    *ngIf="
+                      editForm.get('totalLeaveDays')!.invalid &&
+                      (editForm.get('totalLeaveDays')!.dirty || editForm.get('totalLeaveDays')!.touched)
+                    "
+                  >
+                    <small
+                      *ngIf="editForm.get('totalLeaveDays')?.errors?.required"
+                      class="form-text text-danger"
+                      jhiTranslate="entity.validation.required"
+                    >
+                      This field is required.
+                    </small>
+                    <small
+                      *ngIf="editForm.get('totalLeaveDays')?.errors?.max"
+                      [translateValues]="{ max: 31 }"
+                      class="form-text text-danger"
+                      jhiTranslate="entity.validation.max"
+                    >
+                      This field cannot be more than 31.
+                    </small>
+                    <small
+                      *ngIf="editForm.get('totalLeaveDays')?.errors?.min"
+                      [translateValues]="{ min: 0 }"
+                      class="form-text text-danger"
+                      jhiTranslate="entity.validation.min"
+                    >
+                      This field should be at least 0.
+                    </small>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="mb-3">
+                  <label
+                    class="form-control-label required"
+                    for="field_totalAbsentDays"
+                    jhiTranslate="bitsHrPayrollApp.attendanceSummary.totalAbsentDays"
+                    >Total Absent Days</label
+                  >
+                  <input
+                    class="form-control"
+                    formControlName="totalAbsentDays"
+                    id="field_totalAbsentDays"
+                    name="totalAbsentDays"
+                    type="number"
+                  />
+
+                  <div
+                    *ngIf="
+                      editForm.get('totalAbsentDays')!.invalid &&
+                      (editForm.get('totalAbsentDays')!.dirty || editForm.get('totalAbsentDays')!.touched)
+                    "
+                  >
+                    <small
+                      *ngIf="editForm.get('totalAbsentDays')?.errors?.required"
+                      class="form-text text-danger"
+                      jhiTranslate="entity.validation.required"
+                    >
+                      This field is required.
+                    </small>
+                    <small
+                      *ngIf="editForm.get('totalAbsentDays')?.errors?.max"
+                      [translateValues]="{ max: 31 }"
+                      class="form-text text-danger"
+                      jhiTranslate="entity.validation.max"
+                    >
+                      This field cannot be more than 31.
+                    </small>
+
+                    <small
+                      *ngIf="editForm.get('totalAbsentDays')?.errors?.min"
+                      [translateValues]="{ min: 0 }"
+                      class="form-text text-danger"
+                      jhiTranslate="entity.validation.min"
+                    >
+                      This field should be at least 0.
+                    </small>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="mb-3">
+                  <label
+                    class="form-control-label required"
+                    for="field_totalFractionDays"
+                    jhiTranslate="bitsHrPayrollApp.attendanceSummary.totalFractionDays"
+                    >Total Fraction Days</label
+                  >
+                  <input
+                    class="form-control"
+                    (change)="monthDateValidation()"
+                    formControlName="totalFractionDays"
+                    id="field_totalFractionDays"
+                    name="totalFractionDays"
+                    type="number"
+                  />
+
+                  <div
+                    *ngIf="
+                      editForm.get('totalFractionDays')!.invalid &&
+                      (editForm.get('totalFractionDays')!.dirty || editForm.get('totalFractionDays')!.touched)
+                    "
+                  >
+                    <small
+                      *ngIf="editForm.get('totalFractionDays')?.errors?.required"
+                      class="form-text text-danger"
+                      jhiTranslate="entity.validation.required"
+                    >
+                      This field is required.
+                    </small>
+                    <small
+                      *ngIf="editForm.get('totalFractionDays')?.errors?.max"
+                      [translateValues]="{ max: monthLastDay }"
+                      class="form-text text-danger"
+                      jhiTranslate="entity.validation.max"
+                    >
+                      This field cannot be more than 31.
+                    </small>
+                    <small
+                      *ngIf="editForm.get('totalFractionDays')?.errors?.min"
+                      [translateValues]="{ min: 0 }"
+                      class="form-text text-danger"
+                      jhiTranslate="entity.validation.min"
+                    >
+                      This field should be at least 0.
+                    </small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <button (click)="previousState()" class="btn btn-secondary" id="cancel-save" type="button">
+              <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+            </button>
+
+            <button [disabled]="editForm.invalid || isSaving" class="btn btn-primary" id="save-entity" type="submit">
+              <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!--
+<div>
+  <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+    <jhi-header
+      [headerName]="!editForm.get('id')!.value ? 'Add New Attendance summaries' : 'Edit Attendance Summaries'"
+      [midHeaderName01]="'Attendance Summaries - Admin'"
+      [midRouterLinkText01]="'/attendance-summary'"
+      [shouldHaveHr]="false"
+    >
+    </jhi-header>
+
+    <div>
+      <jhi-alert-error></jhi-alert-error>
+      <div class="card card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="form-label required" jhiTranslate="bitsHrPayrollApp.attendanceSummary.employee"
+                   for="field_employee"
+            >Employee</label
+            >
+            <jhi-simple-select-employee-form
+              id="field_employee"
+              [selectedFieldValue]="editForm.get('employeeId')!.value"
+              (onChangeEmployee)="patchSelectedEmployeeId($event)"
+            ></jhi-simple-select-employee-form>
+          </div>
+
+          <div class="col-md-3">
+            <label class="form-control-label required mb-2" for="field_month"
+                   jhiTranslate="bitsHrPayrollApp.attendanceSummary.month"
+            >Month</label
+            >
+            <select
+              (change)="monthDateValidation()"
+              class="form-control w-100 form-select"
+              formControlName="month"
+              id="field_month"
+              name="month"
+            >
+              <option *ngFor="let month of months" value="{{ month.Value }}">
+                {{ month.Text }}
+              </option>
+            </select>
+            <div
+              *ngIf="editForm.get('month')!.invalid && (editForm.get('month')!.dirty || editForm.get('month')!.touched)">
+              <small
+                *ngIf="editForm.get('month')?.errors?.required"
+                class="form-text text-danger"
+                jhiTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <label class="form-label required" jhiTranslate="bitsHrPayrollApp.attendanceSummary.year" for="field_year">Year</label>
+            <select
+              (change)="monthDateValidation()"
+              class="form-control w-100 form-select"
+              formControlName="year"
+              id="field_year"
+              name="year"
+            >
+              <option *ngFor="let year of years" value="{{ year }}">
+                {{ year }}
+              </option>
+            </select>
+
+            <div
+              *ngIf="editForm.get('year')!.invalid && (editForm.get('year')!.dirty || editForm.get('year')!.touched)">
+              <small *ngIf="editForm.get('year')?.errors?.required" class="form-text text-danger"
+                     jhiTranslate="entity.validation.required">
+                This field is required.
+              </small>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <label
+              class="form-label required mt-3"
+              jhiTranslate="bitsHrPayrollApp.attendanceSummary.totalWorkingDays"
+              for="field_totalWorkingDays"
+            >Total Working Days</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              name="totalWorkingDays"
+              id="field_totalWorkingDays"
+              data-cy="totalWorkingDays"
+              formControlName="totalWorkingDays"
+            />
+          </div>
+
+          <div class="col-md-3">
+            <label
+              class="form-label required mt-3"
+              jhiTranslate="bitsHrPayrollApp.attendanceSummary.totalLeaveDays"
+              for="field_totalLeaveDays"
+            >Total Leave Days</label
+            >
+            <input
+              type="number"
+              class="form-control required"
+              name="totalLeaveDays"
+              id="field_totalLeaveDays"
+              data-cy="totalLeaveDays"
+              formControlName="totalLeaveDays"
+            />
+          </div>
+
+          <div class="col-md-3">
+            <label
+              class="form-label required mt-3"
+              jhiTranslate="bitsHrPayrollApp.attendanceSummary.totalAbsentDays"
+              for="field_totalAbsentDays"
+            >Total Absent Days</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              name="totalAbsentDays"
+              id="field_totalAbsentDays"
+              data-cy="totalAbsentDays"
+              formControlName="totalAbsentDays"
+            />
+          </div>
+
+          <div class="col-md-3">
+            <label
+              class="form-label required mt-3"
+              jhiTranslate="bitsHrPayrollApp.attendanceSummary.totalFractionDays"
+              for="field_totalFractionDays"
+            >Total Fraction Days</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              name="totalFractionDays"
+              id="field_totalFractionDays"
+              data-cy="totalFractionDays"
+              formControlName="totalFractionDays"
+            />
+          </div>
+        </div>
+
+        <div>
+          <button
+            type="button"
+            id="cancel-save"
+            data-cy="entityCreateCancelButton"
+            class="btn btn-secondary mt-3"
+            (click)="previousState()"
+          >
+            <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+          </button>
+
+          <button
+            type="submit"
+            id="save-entity"
+            data-cy="entityCreateSaveButton"
+            [disabled]="editForm.invalid || isSaving"
+            class="btn btn-primary mt-3"
+          >
+            <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </form>
+</div>
+-->

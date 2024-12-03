@@ -1,0 +1,61 @@
+<div class="modal-header border-none">
+  <h4 class="modal-title"></h4>
+  <button
+    type="button"
+    class="btn-close py-1 outline-none"
+    data-dismiss="modal"
+    aria-hidden="true"
+    (click)="commonService.dismiss()"
+  ></button>
+</div>
+
+<div class="modal-body dashboard-modal">
+  <div class="container">
+    <!------------------------------------------------------------------------------------------------------->
+
+    <div class="dashboard row">
+      <div
+        class="card p-1 btn color-ash col col-active mx-1 mt-0 mb-1 border-none box-shadow"
+        (click)="commonService.routerNavigation('/my-payslip')"
+      >
+        <img class="svg-image-size-mid mx-auto dashboard-svg-icon" src="../../../content/images/svg/salary.svg" />
+
+        <div class="card-body pt-0 pb-2 px-0">
+          <div class="card-title text-center mb-0 font-sm">Salary</div>
+        </div>
+      </div>
+      <div
+        class="card p-1 btn color-ash col col-active mx-1 mt-0 mb-1 border-none box-shadow"
+        (click)="commonService.routerNavigation('/my-arrear-payslip')"
+      >
+        <img class="svg-image-size-mid mx-auto dashboard-svg-icon" src="../../../content/images/svg/payslip.svg" />
+
+        <div class="card-body pt-0 pb-2 px-0">
+          <div class="card-title text-center mb-0 font-sm">Arrear</div>
+        </div>
+      </div>
+      <div
+        class="card p-1 btn color-ash col col-active mx-1 mt-0 mb-1 border-none box-shadow"
+        (click)="commonService.routerNavigation('/my-festival-bonus-payslip')"
+      >
+        <img class="svg-image-size-mid mx-auto dashboard-svg-icon" src="../../../content/images/svg/festival-bonus.svg" />
+
+        <div class="card-body pt-0 pb-2 px-0">
+          <div class="card-title text-center mb-0 font-sm">Festival Bonus</div>
+        </div>
+      </div>
+      <!--            <div class="card p-1 btn color-ash col col-active mx-1 mt-0 mb-1 border-none box-shadow"-->
+      <!--                 (click)="commonService.routerNavigation('/user-salary-certificate')">-->
+      <!--                <fa-icon class="icon icon-size-mid pt-4" icon="file-alt"></fa-icon>-->
+      <!--                <div class="card-body pt-0 pb-2 px-0">-->
+      <!--                    <div class="card-title text-center mb-0 font-sm">Salary Certificate</div>-->
+      <!--                </div>-->
+      <!--            </div>-->
+    </div>
+
+    <!------------------------------------------------------------------------------------------------------->
+  </div>
+</div>
+<div class="modal-footer p-3 border-none">
+  <!--<button type="button" class="btn btn-sm btn-outline-dark" (click)="commonService.close()">Close</button>-->
+</div>

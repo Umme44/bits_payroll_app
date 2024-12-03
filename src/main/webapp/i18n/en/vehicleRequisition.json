@@ -1,0 +1,42 @@
+{
+  "bitsHrPayrollApp": {
+    "vehicleRequisition": {
+      "home": {
+        "title": "Vehicle Requisitions",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Vehicle Requisition",
+        "createOrEditLabel": "Create or edit a Vehicle Requisition",
+        "notFound": "No Vehicle Requisitions found"
+      },
+      "created": "A new Vehicle Requisition is created with identifier {{ param }}",
+      "updated": "A Vehicle Requisition is updated with identifier {{ param }}",
+      "deleted": "A Vehicle Requisition is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Vehicle Requisition {{ id }}?"
+      },
+      "detail": {
+        "title": "Vehicle Requisition"
+      },
+      "id": "ID",
+      "purpose": "Purpose",
+      "otherPassengersName": "Other Passengers Name",
+      "totalNumberOfPassengers": "Total Number Of Passengers",
+      "status": "Status",
+      "remarks": "Remarks",
+      "createdAt": "Created At",
+      "updatedAt": "Updated At",
+      "sanctionAt": "Sanction At",
+      "transactionNumber": "Transaction Number",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "startTime": "Start Time",
+      "endTime": "End Time",
+      "area": "Area",
+      "createdBy": "Created By",
+      "updatedBy": "Updated By",
+      "approvedBy": "Approved By",
+      "requester": "Requester",
+      "vehicle": "Vehicle"
+    }
+  }
+}

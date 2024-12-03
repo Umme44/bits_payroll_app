@@ -1,0 +1,11 @@
+{
+  "bitsHrPayrollApp": {
+    "EmployeeCategory": {
+      "null": "",
+      "REGULAR_CONFIRMED_EMPLOYEE": "Regular",
+      "REGULAR_PROVISIONAL_EMPLOYEE": "Regular Provisional",
+      "CONTRACTUAL_EMPLOYEE": "By Contract",
+      "INTERN": "Intern"
+    }
+  }
+}

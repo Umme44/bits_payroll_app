@@ -1,0 +1,67 @@
+<div *ngIf="salaryDeduction" class="font-size-small-08rem">
+  <jhi-header [headerName]="'Salary Deduction Details'" [shouldHaveHr]="true"> </jhi-header>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <dl class="row-md jh-entity-details">
+    <div class="row">
+      <div class="col-md-2">
+        <dt>
+          <span jhiTranslate="bitsHrPayrollApp.salaryDeduction.deductionAmount">Deduction Amount</span>
+        </dt>
+      </div>
+      <div class="col-md-2">
+        <dd>
+          <span>{{ salaryDeduction.deductionAmount }}</span>
+        </dd>
+      </div>
+      <div class="col-md-2">
+        <dt>
+          <span jhiTranslate="bitsHrPayrollApp.salaryDeduction.deductionYear">Deduction Year</span>
+        </dt>
+      </div>
+      <div class="col-md-2">
+        <dd>
+          <span>{{ salaryDeduction.deductionYear }}</span>
+        </dd>
+      </div>
+      <div class="col-md-2">
+        <dt>
+          <span jhiTranslate="bitsHrPayrollApp.salaryDeduction.deductionMonth">Deduction Month</span>
+        </dt>
+      </div>
+      <div class="col-md-2">
+        <dd>
+          <span> {{ toDate(salaryDeduction.deductionYear!, salaryDeduction.deductionMonth!) }}, {{ salaryDeduction.deductionYear }} </span>
+        </dd>
+      </div>
+      <div class="col-md-2">
+        <dt>
+          <span jhiTranslate="bitsHrPayrollApp.salaryDeduction.deductionType">Deduction Type</span>
+        </dt>
+      </div>
+      <div class="col-md-2">
+        <dd>
+          <div *ngIf="salaryDeduction.deductionTypeId">
+            {{ getDeductionType(salaryDeduction.deductionTypeId) }}
+            <!--<a [routerLink]="['/deduction-type', salaryDeduction.deductionTypeId, 'view']">{{ getDeductionType(salaryDeduction.deductionTypeId) }}</a>-->
+          </div>
+        </dd>
+      </div>
+      <dt class="col-md-2"><span jhiTranslate="bitsHrPayrollApp.salaryDeduction.employee">Employee</span></dt>
+      <dd class="col-md-2">
+        <div *ngIf="salaryDeduction.employeeId">
+          <a [routerLink]="['/employee-custom', salaryDeduction.employeeId, 'view']">View</a>
+        </div>
+      </dd>
+    </div>
+  </dl>
+
+  <button type="submit" (click)="previousState()" class="btn btn-info">
+    <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+  </button>
+
+  <button type="button" [routerLink]="['/salary-deduction', salaryDeduction.id, 'edit']" class="btn btn-primary">
+    <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+  </button>
+</div>

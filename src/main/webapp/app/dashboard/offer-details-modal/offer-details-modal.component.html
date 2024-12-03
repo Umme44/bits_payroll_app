@@ -1,0 +1,38 @@
+<div class="modal-header border-none">
+  <h4 class="modal-title"></h4>
+  <button
+    type="button"
+    class="btn-close py-1 outline-none"
+    data-dismiss="modal"
+    aria-hidden="true"
+    (click)="commonService.dismiss()"
+  ></button>
+</div>
+
+<div class="modal-body dashboard-modal">
+  <div class="container">
+    <div class="custom-card col-active card card-body card-size pt-3 px-3 cursor-default">
+      <span class="side-stick"></span>
+      <div class="note-title mb-0">
+        <div class="">
+          <span class="h6 d-inline-block mb-1">
+            {{ offer.title }}
+          </span>
+          <br />
+          <p class="note-date font-12 text-muted pb-1 mb-1 d-inline font-sm">{{ offer.createdAt | formatMediumDate }}</p>
+          <br />
+          <br />
+          <div class="note-content d-inline font-sm">
+            <span class="mb-2 text-justify note-inner-content text-muted d-block">
+              <img class="float-end ms-3" [src]="getOfferImage(offer.id!)" width="160" />
+              {{ offer.description }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer p-3 border-none"></div>
+
+<!--styles, not working when in scss file-->

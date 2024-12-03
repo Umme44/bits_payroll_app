@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity PfNominee.
+    -->
+    <changeSet id="20210418033159-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="pf_account_id"
+                                 baseTableName="pf_nominee"
+                                 constraintName="fk_pf_nominee__pf_account_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="pf_account"/>
+
+        <addForeignKeyConstraint baseColumnNames="pf_witness_id"
+                                 baseTableName="pf_nominee"
+                                 constraintName="fk_pf_nominee__pf_witness_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+
+        <addForeignKeyConstraint baseColumnNames="approved_by_id"
+                                 baseTableName="pf_nominee"
+                                 constraintName="fk_pf_nominee__approved_by_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+    </changeSet>
+</databaseChangeLog>

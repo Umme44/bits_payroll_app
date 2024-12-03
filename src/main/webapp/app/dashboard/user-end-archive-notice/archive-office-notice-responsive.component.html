@@ -1,0 +1,28 @@
+<jhi-header
+    [headerName]="'Archive Notices'"
+    [shouldHaveHr]="false">
+</jhi-header>
+
+<div class="font-sm page-content note-has-grid">
+
+    <div *ngIf="officeNotices && officeNotices.length > 0"
+        class="tab-content bg-transparent">
+        <div infinite-scroll (scrolled)="loadPage(page+1)"
+             [infiniteScrollDisabled]="page >= links['last']"
+             [infiniteScrollDistance]="0"
+            id="note-full-container" class="note-has-grid row">
+            <div *ngFor="let officeNotice of officeNotices"
+                class="col-md-4 pr-4 pb-4 pl-0 col-sm-12 col-12 single-note-item all-category">
+                <div class="custom-card col-active card card-body card-size pl-4 pt-3 pr-3 cursor-default">
+                    <span class="side-stick ml-3"></span>
+                    <h6 class="note-title mb-0">{{officeNotice.title}}</h6>
+                    <p class="note-date font-12 text-muted pb-1 mb-1">{{ officeNotice.createdAt | formatMediumDate }}</p>
+                    <div class="note-content">
+                        <p class="mb-2 text-justify note-inner-content text-muted">{{ officeNotice.description }}</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

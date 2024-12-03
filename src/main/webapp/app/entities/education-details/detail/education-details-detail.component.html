@@ -1,0 +1,70 @@
+<div>
+  <jhi-header [headerName]="'Education Details'" [shouldHaveHr]="true"> </jhi-header>
+  <div class="container-fluid p-3">
+    <jhi-alert-error></jhi-alert-error>
+
+    <div *ngIf="educationDetails">
+      <dl class="row-md font-sm jh-entity-details">
+        <div class="row">
+          <div class="col-md-2">
+            <dt><span jhiTranslate="bitsHrPayrollApp.educationDetails.employee">Employee</span></dt>
+          </div>
+
+          <div class="col-md-4">
+            <dd>
+              <div *ngIf="educationDetails.employeeId">
+                <a [routerLink]="['/employee-custom', educationDetails.employeeId, 'view']">
+                  {{ educationDetails.pin }} - {{ educationDetails.employeeName }}
+                </a>
+              </div>
+            </dd>
+          </div>
+          <div class="col-md-2">
+            <dt><span jhiTranslate="bitsHrPayrollApp.educationDetails.nameOfDegree">Name Of Degree</span></dt>
+          </div>
+          <div class="col-md-4">
+            <dd>
+              <span>{{ educationDetails.nameOfDegree }}</span>
+            </dd>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-2">
+            <dt><span jhiTranslate="bitsHrPayrollApp.educationDetails.subject">Subject</span></dt>
+          </div>
+          <div class="col-md-4">
+            <dd>
+              <span>{{ educationDetails.subject }}</span>
+            </dd>
+          </div>
+          <div class="col-md-2">
+            <dt><span jhiTranslate="bitsHrPayrollApp.educationDetails.institute">Institute</span></dt>
+          </div>
+          <div class="col-md-4">
+            <dd>
+              <span>{{ educationDetails.institute }}</span>
+            </dd>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-2">
+            <dt><span jhiTranslate="bitsHrPayrollApp.educationDetails.yearOfDegreeCompletion">Year Of Degree Completion</span></dt>
+          </div>
+          <div class="col-md-4">
+            <dd>
+              <span>{{ educationDetails.yearOfDegreeCompletion }}</span>
+            </dd>
+          </div>
+        </div>
+      </dl>
+
+      <button (click)="previousState()" class="btn btn-info" type="submit">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button [routerLink]="['/education-details', educationDetails.id, 'edit']" class="btn btn-primary" type="button">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

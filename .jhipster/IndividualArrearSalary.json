@@ -1,0 +1,85 @@
+{
+  "changelogDate": "20220313072133",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "individual_arrear_salary",
+  "fields": [
+    {
+      "fieldName": "effectiveDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "existingBand",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "newBand",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "existingGross",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "newGross",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "increment",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "arrearSalary",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "arrearPfDeduction",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "taxDeduction",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "netPay",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "pfContribution",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "title",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "titleEffectiveFrom",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "arrearRemarks",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "festivalBonus",
+      "fieldType": "Double"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "IndividualArrearSalary",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "individualArrearSalary",
+      "relationshipName": "employee",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

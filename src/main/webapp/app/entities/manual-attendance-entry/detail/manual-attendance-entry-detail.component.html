@@ -1,0 +1,76 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="manualAttendanceEntry">
+      <h2 data-cy="manualAttendanceEntryDetailsHeading">
+        <span jhiTranslate="bitsHrPayrollApp.manualAttendanceEntry.detail.title">Manual Attendance Entry</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ manualAttendanceEntry.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.manualAttendanceEntry.date">Date</span></dt>
+        <dd>
+          <span>{{ manualAttendanceEntry.date | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.manualAttendanceEntry.inTime">In Time</span></dt>
+        <dd>
+          <span>{{ manualAttendanceEntry.inTime | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.manualAttendanceEntry.inNote">In Note</span></dt>
+        <dd>
+          <span>{{ manualAttendanceEntry.inNote }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.manualAttendanceEntry.outTime">Out Time</span></dt>
+        <dd>
+          <span>{{ manualAttendanceEntry.outTime | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.manualAttendanceEntry.outNote">Out Note</span></dt>
+        <dd>
+          <span>{{ manualAttendanceEntry.outNote }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.manualAttendanceEntry.isLineManagerApproved">Is Line Manager Approved</span></dt>
+        <dd>
+          <span>{{ manualAttendanceEntry.isLineManagerApproved }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.manualAttendanceEntry.isHRApproved">Is HR Approved</span></dt>
+        <dd>
+          <span>{{ manualAttendanceEntry.isHRApproved }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.manualAttendanceEntry.isRejected">Is Rejected</span></dt>
+        <dd>
+          <span>{{ manualAttendanceEntry.isRejected }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.manualAttendanceEntry.rejectionComment">Rejection Comment</span></dt>
+        <dd>
+          <span>{{ manualAttendanceEntry.rejectionComment }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.manualAttendanceEntry.note">Note</span></dt>
+        <dd>
+          <span>{{ manualAttendanceEntry.note }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.manualAttendanceEntry.employee">Employee</span></dt>
+        <dd>
+          <div *ngIf="manualAttendanceEntry.employee">
+            <a [routerLink]="['/employee', manualAttendanceEntry.employee.id, 'view']">{{ manualAttendanceEntry.employee.fullName }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/manual-attendance-entry', manualAttendanceEntry.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

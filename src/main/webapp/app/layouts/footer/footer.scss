@@ -1,0 +1,49 @@
+.logo-img {
+  height: 12px;
+  width: 56px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../../../content/images/logo.svg') no-repeat center center;
+  background-size: contain;
+  margin-bottom: 3px;
+}
+
+.container-fluid {
+  min-height: 83%;
+}
+
+.footer-copyright {
+  font-size: 0.6rem;
+}
+
+.footer-link {
+  font-size: 0.6rem !important;
+}
+
+footer {
+  /*position: absolute;
+  bottom: 5px;*/
+}
+
+.social-icon {
+  /*position: relative;
+  left: 67rem;*/
+}
+
+.social-icon > a {
+  padding-left: 9px;
+}
+.social-icon > a > img {
+  width: 1rem;
+}
+
+.vertical-align-sub {
+  vertical-align: sub;
+}
+
+@media print {
+  footer,
+  .footer-copyright {
+    display: none;
+  }
+}

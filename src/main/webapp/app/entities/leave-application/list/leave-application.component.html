@@ -1,0 +1,260 @@
+<jhi-header
+  [addButtonText]="'add new Leave Applications'"
+  [headerName]="'Leave Applications- Admin'"
+  [routerLinkText]="'/leave-application/new'"
+  [shouldHaveHr]="false"
+>
+</jhi-header>
+
+<jhi-alert-error></jhi-alert-error>
+<jhi-alert></jhi-alert>
+
+<form (ngSubmit)="search()" [formGroup]="editForm" name="editForm" novalidate role="form">
+  <div class="card py-3 mb-3">
+    <div class="search-filter container-fluid">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.leaveApplication.employee">Employee</label>
+            <jhi-select-employee-form [employeeIdForm]="employeeIdForm!" (onChangeEmployeeId)="search()"></jhi-select-employee-form>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="mb-3">
+            <label class="form-control-label" for="field_startDate" jhiTranslate="bitsHrPayrollApp.leaveApplication.startDate"
+              >Start Date</label
+            >
+            <div class="input-group">
+              <input
+                #startDateDp="ngbDatepicker"
+                (dateSelect)="checkDate()"
+                class="form-control"
+                formControlName="startDate"
+                id="field_startDate"
+                name="startDate"
+                ngbDatepicker
+                type="text"
+              />
+              <span class="input-group-append">
+                <button (click)="startDateDp.toggle()" class="btn btn-secondary" type="button">
+                  <fa-icon icon="calendar-alt"></fa-icon>
+                </button>
+              </span>
+            </div>
+            <div *ngIf="!editForm.get('startDate')!.value && editForm.get('endDate')!.value">
+              <small class="form-text text-danger"> Please select start date. </small>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="mb-3">
+            <label class="form-control-label" for="field_endDate" jhiTranslate="bitsHrPayrollApp.leaveApplication.endDate">End Date</label>
+            <div class="input-group">
+              <input
+                #endDateDp="ngbDatepicker"
+                (dateSelect)="checkDate()"
+                class="form-control"
+                formControlName="endDate"
+                id="field_endDate"
+                name="endDate"
+                ngbDatepicker
+                type="text"
+              />
+              <span class="input-group-append">
+                <button (click)="endDateDp.toggle()" class="btn btn-secondary" type="button">
+                  <fa-icon icon="calendar-alt"></fa-icon>
+                </button>
+              </span>
+            </div>
+            <div *ngIf="isInvalid">
+              <small class="form-text text-danger"> End date can't be smaller then start date. </small>
+            </div>
+
+            <div *ngIf="editForm.get('startDate')!.value && !editForm.get('endDate')!.value">
+              <small class="form-text text-danger"> Please select end date. </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-2">
+          <div class="mb-3">
+            <label class="form-control-label" for="field_leaveType" jhiTranslate="bitsHrPayrollApp.leaveApplication.leaveType"
+              >Leave Type</label
+            >
+            <select class="form-control" formControlName="leaveType" id="field_leaveType" name="leaveType" (change)="search()">
+              <option value="ALL">All</option>
+
+              <option value="MENTIONABLE_ANNUAL_LEAVE">
+                {{ 'bitsHrPayrollApp.LeaveType.MENTIONABLE_ANNUAL_LEAVE' | translate }}
+              </option>
+
+              <option value="MENTIONABLE_CASUAL_LEAVE">
+                {{ 'bitsHrPayrollApp.LeaveType.MENTIONABLE_CASUAL_LEAVE' | translate }}
+              </option>
+
+              <option value="NON_MENTIONABLE_COMPENSATORY_LEAVE">
+                {{ 'bitsHrPayrollApp.LeaveType.NON_MENTIONABLE_COMPENSATORY_LEAVE' | translate }}
+              </option>
+
+              <option value="NON_MENTIONABLE_PANDEMIC_LEAVE">
+                {{ 'bitsHrPayrollApp.LeaveType.NON_MENTIONABLE_PANDEMIC_LEAVE' | translate }}
+              </option>
+              <option value="NON_MENTIONABLE_PATERNITY_LEAVE">
+                {{ 'bitsHrPayrollApp.LeaveType.NON_MENTIONABLE_PATERNITY_LEAVE' | translate }}
+              </option>
+              <option value="NON_MENTIONABLE_MATERNITY_LEAVE">
+                {{ 'bitsHrPayrollApp.LeaveType.NON_MENTIONABLE_MATERNITY_LEAVE' | translate }}
+              </option>
+              <option value="LEAVE_WITHOUT_PAY">
+                {{ 'bitsHrPayrollApp.LeaveType.LEAVE_WITHOUT_PAY' | translate }}
+              </option>
+              <option value="LEAVE_WITHOUT_PAY_SANDWICH">
+                {{ 'bitsHrPayrollApp.LeaveType.LEAVE_WITHOUT_PAY_SANDWICH' | translate }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-md-2">
+          <button [disabled]="isInvalid" class="btn btn-primary me-1" id="save-entity" type="submit">
+            <fa-icon icon="search"></fa-icon>&nbsp;<span>Search</span>
+          </button>
+
+          <button class="btn btn-secondary" id="reset-entity" (click)="reset()">
+            <fa-icon icon="ban"></fa-icon>&nbsp;<span>Reset</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<!--Data Grid-->
+<div *ngIf="leaveApplications?.length === 0" id="no-result">
+  <div class="d-flex justify-content-center">
+    <img src="../../../content/images/no-data-found.png" alt="No Data Found" width="550" />
+  </div>
+</div>
+
+<div *ngIf="leaveApplications && leaveApplications.length > 0">
+  <table aria-describedby="page-heading" class="table table-hover list-text-color">
+    <thead>
+      <tr>
+        <th scope="col"><span>PIN</span></th>
+        <th scope="col"><span>Name</span></th>
+        <th scope="col"><span>Designation</span></th>
+
+        <th scope="col"><span jhiTranslate="bitsHrPayrollApp.leaveApplication.leaveType">Leave Type</span></th>
+
+        <th scope="col"><span jhiTranslate="bitsHrPayrollApp.leaveApplication.startDate">Start Date</span></th>
+        <th scope="col"><span jhiTranslate="bitsHrPayrollApp.leaveApplication.endDate">End Date</span></th>
+        <th scope="col"><span>Duration</span></th>
+        <th scope="col">Status</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let leaveApplication of leaveApplications; trackBy: trackId">
+        <td>
+          <div *ngIf="leaveApplication.employeeId != null">
+            <a [routerLink]="['/employee-custom', leaveApplication.employeeId, 'view']"> {{ leaveApplication.pin }}</a>
+          </div>
+        </td>
+
+        <td>
+          <div>
+            {{ this.leaveApplication.fullName! }}
+          </div>
+        </td>
+
+        <td>
+          <div>
+            {{ this.leaveApplication.designationName }}
+          </div>
+        </td>
+        <td jhiTranslate="{{ 'bitsHrPayrollApp.LeaveType.' + leaveApplication.leaveType }}">{{ leaveApplication.leaveType }}</td>
+        <td>{{ leaveApplication!.startDate | formatMediumDate }}</td>
+        <td>{{ leaveApplication!.endDate | formatMediumDate }}</td>
+        <td>{{ leaveApplication!.durationInDay }}</td>
+        <td>
+          <div
+            *ngIf="
+              leaveApplication.isLineManagerApproved === false &&
+              leaveApplication.isHRApproved === false &&
+              leaveApplication.isRejected === false
+            "
+          >
+            Pending
+          </div>
+          <div *ngIf="leaveApplication.isLineManagerApproved === true || leaveApplication.isHRApproved === true">Approved</div>
+          <div *ngIf="leaveApplication.isRejected === true">Rejected</div>
+        </td>
+        <td class="text-end">
+          <div class="btn-group">
+            <button
+              [routerLink]="['/leave-application', leaveApplication.id, 'view']"
+              class="btn btn-info btn-sm px-md-3"
+              data-placement="top"
+              data-toggle="tooltip"
+              title="View"
+              type="submit"
+            >
+              <fa-icon icon="eye"></fa-icon>
+            </button>
+
+            <button
+              [routerLink]="['/leave-application', leaveApplication.id, 'edit']"
+              class="btn btn-primary btn-sm px-md-3"
+              data-placement="top"
+              data-toggle="tooltip"
+              title="Edit"
+              type="submit"
+            >
+              <fa-icon icon="pencil-alt"></fa-icon>
+            </button>
+
+            <button
+              (click)="delete(leaveApplication)"
+              class="btn btn-danger btn-sm px-md-3"
+              data-placement="top"
+              data-toggle="tooltip"
+              title="Delete"
+              type="submit"
+            >
+              <fa-icon icon="times"></fa-icon>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <!--<div *ngIf="leaveApplications && leaveApplications.length > 0">
+    <div class="row justify-content-center">
+      <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+    </div>
+
+    <div class="row justify-content-center">
+      <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage"
+                      [maxSize]="5" [rotate]="true" [boundaryLinks]="true"
+                      (pageChange)="loadPage($event)"></ngb-pagination>
+    </div>
+  </div>-->
+
+  <div *ngIf="leaveApplications && leaveApplications.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

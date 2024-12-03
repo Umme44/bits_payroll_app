@@ -1,0 +1,357 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-employment-history-heading"
+        data-cy="EmploymentHistoryCreateUpdateHeading"
+        jhiTranslate="bitsHrPayrollApp.employmentHistory.home.createOrEditLabel"
+      >
+        Create or edit a Employment History
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employmentHistory.referenceId" for="field_referenceId"
+            >Reference Id</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="referenceId"
+            id="field_referenceId"
+            data-cy="referenceId"
+            formControlName="referenceId"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employmentHistory.pin" for="field_pin">Pin</label>
+          <input type="text" class="form-control" name="pin" id="field_pin" data-cy="pin" formControlName="pin" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employmentHistory.eventType" for="field_eventType">Event Type</label>
+          <select class="form-control" name="eventType" formControlName="eventType" id="field_eventType" data-cy="eventType">
+            <option [ngValue]="null">{{ 'bitsHrPayrollApp.EventType.null' | translate }}</option>
+            <option *ngFor="let eventType of eventTypeValues" [value]="eventType">
+              {{ 'bitsHrPayrollApp.EventType.' + eventType | translate }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employmentHistory.effectiveDate" for="field_effectiveDate"
+            >Effective Date</label
+          >
+          <div class="input-group">
+            <input
+              id="field_effectiveDate"
+              data-cy="effectiveDate"
+              type="text"
+              class="form-control"
+              name="effectiveDate"
+              ngbDatepicker
+              #effectiveDateDp="ngbDatepicker"
+              formControlName="effectiveDate"
+            />
+            <button type="button" class="btn btn-secondary" (click)="effectiveDateDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="bitsHrPayrollApp.employmentHistory.previousMainGrossSalary"
+            for="field_previousMainGrossSalary"
+            >Previous Main Gross Salary</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="previousMainGrossSalary"
+            id="field_previousMainGrossSalary"
+            data-cy="previousMainGrossSalary"
+            formControlName="previousMainGrossSalary"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="bitsHrPayrollApp.employmentHistory.currentMainGrossSalary"
+            for="field_currentMainGrossSalary"
+            >Current Main Gross Salary</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="currentMainGrossSalary"
+            id="field_currentMainGrossSalary"
+            data-cy="currentMainGrossSalary"
+            formControlName="currentMainGrossSalary"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employmentHistory.previousWorkingHour" for="field_previousWorkingHour"
+            >Previous Working Hour</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="previousWorkingHour"
+            id="field_previousWorkingHour"
+            data-cy="previousWorkingHour"
+            formControlName="previousWorkingHour"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employmentHistory.changedWorkingHour" for="field_changedWorkingHour"
+            >Changed Working Hour</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="changedWorkingHour"
+            id="field_changedWorkingHour"
+            data-cy="changedWorkingHour"
+            formControlName="changedWorkingHour"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employmentHistory.isModifiable" for="field_isModifiable"
+            >Is Modifiable</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isModifiable"
+            id="field_isModifiable"
+            data-cy="isModifiable"
+            formControlName="isModifiable"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employmentHistory.previousDesignation" for="field_previousDesignation"
+            >Previous Designation</label
+          >
+          <select
+            class="form-control"
+            id="field_previousDesignation"
+            data-cy="previousDesignation"
+            name="previousDesignation"
+            formControlName="previousDesignation"
+            [compareWith]="compareDesignation"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="designationOption" *ngFor="let designationOption of designationsSharedCollection">
+              {{ designationOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employmentHistory.changedDesignation" for="field_changedDesignation"
+            >Changed Designation</label
+          >
+          <select
+            class="form-control"
+            id="field_changedDesignation"
+            data-cy="changedDesignation"
+            name="changedDesignation"
+            formControlName="changedDesignation"
+            [compareWith]="compareDesignation"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="designationOption" *ngFor="let designationOption of designationsSharedCollection">
+              {{ designationOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employmentHistory.previousDepartment" for="field_previousDepartment"
+            >Previous Department</label
+          >
+          <select
+            class="form-control"
+            id="field_previousDepartment"
+            data-cy="previousDepartment"
+            name="previousDepartment"
+            formControlName="previousDepartment"
+            [compareWith]="compareDepartment"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="departmentOption" *ngFor="let departmentOption of departmentsSharedCollection">
+              {{ departmentOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employmentHistory.changedDepartment" for="field_changedDepartment"
+            >Changed Department</label
+          >
+          <select
+            class="form-control"
+            id="field_changedDepartment"
+            data-cy="changedDepartment"
+            name="changedDepartment"
+            formControlName="changedDepartment"
+            [compareWith]="compareDepartment"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="departmentOption" *ngFor="let departmentOption of departmentsSharedCollection">
+              {{ departmentOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employmentHistory.previousReportingTo" for="field_previousReportingTo"
+            >Previous Reporting To</label
+          >
+          <select
+            class="form-control"
+            id="field_previousReportingTo"
+            data-cy="previousReportingTo"
+            name="previousReportingTo"
+            formControlName="previousReportingTo"
+            [compareWith]="compareEmployee"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="employeeOption" *ngFor="let employeeOption of employeesSharedCollection">{{ employeeOption.id }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employmentHistory.changedReportingTo" for="field_changedReportingTo"
+            >Changed Reporting To</label
+          >
+          <select
+            class="form-control"
+            id="field_changedReportingTo"
+            data-cy="changedReportingTo"
+            name="changedReportingTo"
+            formControlName="changedReportingTo"
+            [compareWith]="compareEmployee"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="employeeOption" *ngFor="let employeeOption of employeesSharedCollection">{{ employeeOption.id }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employmentHistory.employee" for="field_employee">Employee</label>
+          <select
+            class="form-control"
+            id="field_employee"
+            data-cy="employee"
+            name="employee"
+            formControlName="employee"
+            [compareWith]="compareEmployee"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="employeeOption" *ngFor="let employeeOption of employeesSharedCollection">{{ employeeOption.id }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employmentHistory.previousUnit" for="field_previousUnit"
+            >Previous Unit</label
+          >
+          <select
+            class="form-control"
+            id="field_previousUnit"
+            data-cy="previousUnit"
+            name="previousUnit"
+            formControlName="previousUnit"
+            [compareWith]="compareUnit"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="unitOption" *ngFor="let unitOption of unitsSharedCollection">{{ unitOption.id }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employmentHistory.changedUnit" for="field_changedUnit"
+            >Changed Unit</label
+          >
+          <select
+            class="form-control"
+            id="field_changedUnit"
+            data-cy="changedUnit"
+            name="changedUnit"
+            formControlName="changedUnit"
+            [compareWith]="compareUnit"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="unitOption" *ngFor="let unitOption of unitsSharedCollection">{{ unitOption.id }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employmentHistory.previousBand" for="field_previousBand"
+            >Previous Band</label
+          >
+          <select
+            class="form-control"
+            id="field_previousBand"
+            data-cy="previousBand"
+            name="previousBand"
+            formControlName="previousBand"
+            [compareWith]="compareBand"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="bandOption" *ngFor="let bandOption of bandsSharedCollection">{{ bandOption.id }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employmentHistory.changedBand" for="field_changedBand"
+            >Changed Band</label
+          >
+          <select
+            class="form-control"
+            id="field_changedBand"
+            data-cy="changedBand"
+            name="changedBand"
+            formControlName="changedBand"
+            [compareWith]="compareBand"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="bandOption" *ngFor="let bandOption of bandsSharedCollection">{{ bandOption.id }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

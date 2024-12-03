@@ -1,0 +1,44 @@
+<jhi-header [addButtonText]="'Add New Offer'" [headerName]="'Offers'" [routerLinkText]="'/offer/new'" [shouldHaveHr]="false"> </jhi-header>
+
+<div>
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="table-responsive" id="entities" *ngIf="offers && offers.length > 0">
+    <table class="table table-hover list-text-color" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.offer.title">Title</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.offer.description">Description</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.offer.imagePath">Image</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.offer.createdAt">Created At</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+        <tr *ngFor="let offer of offers; trackBy: trackId">
+          <td>{{ offer.title }}</td>
+          <td>{{ offer.description }}</td>
+          <td><a class="btn btn-info p-1" [href]="getImageUrl(offer.id!)" target="_blank">Open</a></td>
+          <td>{{ offer.createdAt | formatMediumDate }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/offer', offer.id, 'view']" class="btn btn-info btn-sm px-md-3">
+                <fa-icon icon="eye"></fa-icon>
+              </button>
+
+              <button type="submit" [routerLink]="['/offer', offer.id, 'edit']" class="btn btn-primary btn-sm px-md-3">
+                <fa-icon icon="pencil-alt"></fa-icon>
+              </button>
+
+              <button type="submit" (click)="delete(offer)" class="btn btn-danger btn-sm px-md-3">
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

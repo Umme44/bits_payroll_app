@@ -1,0 +1,10 @@
+{
+  "bitsHrPayrollApp": {
+    "RecruitmentNature": {
+      "null": "",
+      "PLANNED_ADDITION": "PLANNED_ADDITION",
+      "NEW_RECRUITMENT": "NEW_RECRUITMENT",
+      "REPLACEMENT": "REPLACEMENT"
+    }
+  }
+}

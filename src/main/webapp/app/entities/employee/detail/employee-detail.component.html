@@ -1,0 +1,506 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="employee">
+      <h2 data-cy="employeeDetailsHeading"><span jhiTranslate="bitsHrPayrollApp.employee.detail.title">Employee</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ employee.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.referenceId">Reference Id</span></dt>
+        <dd>
+          <span>{{ employee.referenceId }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.pin">Pin</span></dt>
+        <dd>
+          <span>{{ employee.pin }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.picture">Picture</span></dt>
+        <dd>
+          <span>{{ employee.picture }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.fullName">Full Name</span></dt>
+        <dd>
+          <span>{{ employee.fullName }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.surName">Sur Name</span></dt>
+        <dd>
+          <span>{{ employee.surName }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.nationalIdNo">National Id No</span></dt>
+        <dd>
+          <span>{{ employee.nationalIdNo }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.dateOfBirth">Date Of Birth</span></dt>
+        <dd>
+          <span>{{ employee.dateOfBirth | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.placeOfBirth">Place Of Birth</span></dt>
+        <dd>
+          <span>{{ employee.placeOfBirth }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.fatherName">Father Name</span></dt>
+        <dd>
+          <span>{{ employee.fatherName }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.motherName">Mother Name</span></dt>
+        <dd>
+          <span>{{ employee.motherName }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.bloodGroup">Blood Group</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.BloodGroup.' + employee.bloodGroup }}">{{ employee.bloodGroup }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.presentAddress">Present Address</span></dt>
+        <dd>
+          <span>{{ employee.presentAddress }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.permanentAddress">Permanent Address</span></dt>
+        <dd>
+          <span>{{ employee.permanentAddress }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.personalContactNo">Personal Contact No</span></dt>
+        <dd>
+          <span>{{ employee.personalContactNo }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.personalEmail">Personal Email</span></dt>
+        <dd>
+          <span>{{ employee.personalEmail }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.religion">Religion</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.Religion.' + employee.religion }}">{{ employee.religion }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.maritalStatus">Marital Status</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.MaritalStatus.' + employee.maritalStatus }}">{{ employee.maritalStatus }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.dateOfMarriage">Date Of Marriage</span></dt>
+        <dd>
+          <span>{{ employee.dateOfMarriage | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.spouseName">Spouse Name</span></dt>
+        <dd>
+          <span>{{ employee.spouseName }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.officialEmail">Official Email</span></dt>
+        <dd>
+          <span>{{ employee.officialEmail }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.officialContactNo">Official Contact No</span></dt>
+        <dd>
+          <span>{{ employee.officialContactNo }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.officePhoneExtension">Office Phone Extension</span></dt>
+        <dd>
+          <span>{{ employee.officePhoneExtension }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.whatsappId">Whatsapp Id</span></dt>
+        <dd>
+          <span>{{ employee.whatsappId }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.skypeId">Skype Id</span></dt>
+        <dd>
+          <span>{{ employee.skypeId }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.emergencyContactPersonName">Emergency Contact Person Name</span></dt>
+        <dd>
+          <span>{{ employee.emergencyContactPersonName }}</span>
+        </dd>
+        <dt>
+          <span jhiTranslate="bitsHrPayrollApp.employee.emergencyContactPersonRelationshipWithEmployee"
+            >Emergency Contact Person Relationship With Employee</span
+          >
+        </dt>
+        <dd>
+          <span>{{ employee.emergencyContactPersonRelationshipWithEmployee }}</span>
+        </dd>
+        <dt>
+          <span jhiTranslate="bitsHrPayrollApp.employee.emergencyContactPersonContactNumber">Emergency Contact Person Contact Number</span>
+        </dt>
+        <dd>
+          <span>{{ employee.emergencyContactPersonContactNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.mainGrossSalary">Main Gross Salary</span></dt>
+        <dd>
+          <span>{{ employee.mainGrossSalary }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.employeeCategory">Employee Category</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.EmployeeCategory.' + employee.employeeCategory }}">{{ employee.employeeCategory }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.location">Location</span></dt>
+        <dd>
+          <span>{{ employee.location }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.dateOfJoining">Date Of Joining</span></dt>
+        <dd>
+          <span>{{ employee.dateOfJoining | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.dateOfConfirmation">Date Of Confirmation</span></dt>
+        <dd>
+          <span>{{ employee.dateOfConfirmation | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.isProbationaryPeriodExtended">Is Probationary Period Extended</span></dt>
+        <dd>
+          <span>{{ employee.isProbationaryPeriodExtended }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.probationPeriodExtendedTo">Probation Period Extended To</span></dt>
+        <dd>
+          <span>{{ employee.probationPeriodExtendedTo | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.payType">Pay Type</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.PayType.' + employee.payType }}">{{ employee.payType }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.disbursementMethod">Disbursement Method</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.DisbursementMethod.' + employee.disbursementMethod }}">{{
+            employee.disbursementMethod
+          }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.bankName">Bank Name</span></dt>
+        <dd>
+          <span>{{ employee.bankName }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.bankAccountNo">Bank Account No</span></dt>
+        <dd>
+          <span>{{ employee.bankAccountNo }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.mobileCelling">Mobile Celling</span></dt>
+        <dd>
+          <span>{{ employee.mobileCelling }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.bkashNumber">Bkash Number</span></dt>
+        <dd>
+          <span>{{ employee.bkashNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.cardType">Card Type</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.CardType.' + employee.cardType }}">{{ employee.cardType }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.cardNumber">Card Number</span></dt>
+        <dd>
+          <span>{{ employee.cardNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.tinNumber">Tin Number</span></dt>
+        <dd>
+          <span>{{ employee.tinNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.passportNo">Passport No</span></dt>
+        <dd>
+          <span>{{ employee.passportNo }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.passportPlaceOfIssue">Passport Place Of Issue</span></dt>
+        <dd>
+          <span>{{ employee.passportPlaceOfIssue }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.passportIssuedDate">Passport Issued Date</span></dt>
+        <dd>
+          <span>{{ employee.passportIssuedDate | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.passportExpiryDate">Passport Expiry Date</span></dt>
+        <dd>
+          <span>{{ employee.passportExpiryDate | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.gender">Gender</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.Gender.' + employee.gender }}">{{ employee.gender }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.welfareFundDeduction">Welfare Fund Deduction</span></dt>
+        <dd>
+          <span>{{ employee.welfareFundDeduction }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.employmentStatus">Employment Status</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.EmploymentStatus.' + employee.employmentStatus }}">{{ employee.employmentStatus }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.hasDisabledChild">Has Disabled Child</span></dt>
+        <dd>
+          <span>{{ employee.hasDisabledChild }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.isFirstTimeAitGiver">Is First Time Ait Giver</span></dt>
+        <dd>
+          <span>{{ employee.isFirstTimeAitGiver }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.isSalaryHold">Is Salary Hold</span></dt>
+        <dd>
+          <span>{{ employee.isSalaryHold }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.isFestivalBonusHold">Is Festival Bonus Hold</span></dt>
+        <dd>
+          <span>{{ employee.isFestivalBonusHold }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.isPhysicallyDisabled">Is Physically Disabled</span></dt>
+        <dd>
+          <span>{{ employee.isPhysicallyDisabled }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.isFreedomFighter">Is Freedom Fighter</span></dt>
+        <dd>
+          <span>{{ employee.isFreedomFighter }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.hasOverTime">Has Over Time</span></dt>
+        <dd>
+          <span>{{ employee.hasOverTime }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.probationPeriodEndDate">Probation Period End Date</span></dt>
+        <dd>
+          <span>{{ employee.probationPeriodEndDate | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.contractPeriodExtendedTo">Contract Period Extended To</span></dt>
+        <dd>
+          <span>{{ employee.contractPeriodExtendedTo | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.contractPeriodEndDate">Contract Period End Date</span></dt>
+        <dd>
+          <span>{{ employee.contractPeriodEndDate | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.cardType02">Card Type 02</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.CardType.' + employee.cardType02 }}">{{ employee.cardType02 }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.cardNumber02">Card Number 02</span></dt>
+        <dd>
+          <span>{{ employee.cardNumber02 }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.cardType03">Card Type 03</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.CardType.' + employee.cardType03 }}">{{ employee.cardType03 }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.cardNumber03">Card Number 03</span></dt>
+        <dd>
+          <span>{{ employee.cardNumber03 }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.allowance01">Allowance 01</span></dt>
+        <dd>
+          <span>{{ employee.allowance01 }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.allowance01EffectiveFrom">Allowance 01 Effective From</span></dt>
+        <dd>
+          <span>{{ employee.allowance01EffectiveFrom | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.allowance01EffectiveTo">Allowance 01 Effective To</span></dt>
+        <dd>
+          <span>{{ employee.allowance01EffectiveTo | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.allowance02">Allowance 02</span></dt>
+        <dd>
+          <span>{{ employee.allowance02 }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.allowance02EffectiveFrom">Allowance 02 Effective From</span></dt>
+        <dd>
+          <span>{{ employee.allowance02EffectiveFrom | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.allowance02EffectiveTo">Allowance 02 Effective To</span></dt>
+        <dd>
+          <span>{{ employee.allowance02EffectiveTo | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.allowance03">Allowance 03</span></dt>
+        <dd>
+          <span>{{ employee.allowance03 }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.allowance03EffectiveFrom">Allowance 03 Effective From</span></dt>
+        <dd>
+          <span>{{ employee.allowance03EffectiveFrom | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.allowance03EffectiveTo">Allowance 03 Effective To</span></dt>
+        <dd>
+          <span>{{ employee.allowance03EffectiveTo | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.allowance04">Allowance 04</span></dt>
+        <dd>
+          <span>{{ employee.allowance04 }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.allowance04EffectiveFrom">Allowance 04 Effective From</span></dt>
+        <dd>
+          <span>{{ employee.allowance04EffectiveFrom | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.allowance04EffectiveTo">Allowance 04 Effective To</span></dt>
+        <dd>
+          <span>{{ employee.allowance04EffectiveTo | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.allowance05">Allowance 05</span></dt>
+        <dd>
+          <span>{{ employee.allowance05 }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.allowance05EffectiveFrom">Allowance 05 Effective From</span></dt>
+        <dd>
+          <span>{{ employee.allowance05EffectiveFrom | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.allowance05EffectiveTo">Allowance 05 Effective To</span></dt>
+        <dd>
+          <span>{{ employee.allowance05EffectiveTo | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.allowance06">Allowance 06</span></dt>
+        <dd>
+          <span>{{ employee.allowance06 }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.allowance06EffectiveFrom">Allowance 06 Effective From</span></dt>
+        <dd>
+          <span>{{ employee.allowance06EffectiveFrom | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.allowance06EffectiveTo">Allowance 06 Effective To</span></dt>
+        <dd>
+          <span>{{ employee.allowance06EffectiveTo | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.isTaxPaidByOrganisation">Is Tax Paid By Organisation</span></dt>
+        <dd>
+          <span>{{ employee.isTaxPaidByOrganisation }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.createdBy">Created By</span></dt>
+        <dd>
+          <span>{{ employee.createdBy }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.createdAt">Created At</span></dt>
+        <dd>
+          <span>{{ employee.createdAt | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.updatedBy">Updated By</span></dt>
+        <dd>
+          <span>{{ employee.updatedBy }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.updatedAt">Updated At</span></dt>
+        <dd>
+          <span>{{ employee.updatedAt | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.isAllowedToGiveOnlineAttendance">Is Allowed To Give Online Attendance</span></dt>
+        <dd>
+          <span>{{ employee.isAllowedToGiveOnlineAttendance }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.noticePeriodInDays">Notice Period In Days</span></dt>
+        <dd>
+          <span>{{ employee.noticePeriodInDays }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.isFixedTermContract">Is Fixed Term Contract</span></dt>
+        <dd>
+          <span>{{ employee.isFixedTermContract }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.currentInTime">Current In Time</span></dt>
+        <dd>
+          <span>{{ employee.currentInTime | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.currentOutTime">Current Out Time</span></dt>
+        <dd>
+          <span>{{ employee.currentOutTime | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.onlineAttendanceSanctionedAt">Online Attendance Sanctioned At</span></dt>
+        <dd>
+          <span>{{ employee.onlineAttendanceSanctionedAt | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.isNidVerified">Is Nid Verified</span></dt>
+        <dd>
+          <span>{{ employee.isNidVerified }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.canRaiseRrfOnBehalf">Can Raise Rrf On Behalf</span></dt>
+        <dd>
+          <span>{{ employee.canRaiseRrfOnBehalf }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.taxesCircle">Taxes Circle</span></dt>
+        <dd>
+          <span>{{ employee.taxesCircle }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.taxesZone">Taxes Zone</span></dt>
+        <dd>
+          <span>{{ employee.taxesZone }}</span>
+        </dd>
+        <dt>
+          <span jhiTranslate="bitsHrPayrollApp.employee.canManageTaxAcknowledgementReceipt">Can Manage Tax Acknowledgement Receipt</span>
+        </dt>
+        <dd>
+          <span>{{ employee.canManageTaxAcknowledgementReceipt }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.isEligibleForAutomatedAttendance">Is Eligible For Automated Attendance</span></dt>
+        <dd>
+          <span>{{ employee.isEligibleForAutomatedAttendance }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.floor">Floor</span></dt>
+        <dd>
+          <span>{{ employee.floor }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.deskLocation">Desk Location</span></dt>
+        <dd>
+          <span>{{ employee.deskLocation }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.isBillableResource">Is Billable Resource</span></dt>
+        <dd>
+          <span>{{ employee.isBillableResource }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.isAugmentedResource">Is Augmented Resource</span></dt>
+        <dd>
+          <span>{{ employee.isAugmentedResource }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.lastWorkingDay">Last Working Day</span></dt>
+        <dd>
+          <span>{{ employee.lastWorkingDay | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.officeLocation">Office Location</span></dt>
+        <dd>
+          <div *ngIf="employee.officeLocation">
+            <a [routerLink]="['/location', employee.officeLocation.id, 'view']">{{ employee.officeLocation.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.designation">Designation</span></dt>
+        <dd>
+          <div *ngIf="employee.designation">
+            <a [routerLink]="['/designation', employee.designation.id, 'view']">{{ employee.designation.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.department">Department</span></dt>
+        <dd>
+          <div *ngIf="employee.department">
+            <a [routerLink]="['/department', employee.department.id, 'view']">{{ employee.department.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.reportingTo">Reporting To</span></dt>
+        <dd>
+          <div *ngIf="employee.reportingTo">
+            <a [routerLink]="['/employee', employee.reportingTo.id, 'view']">{{ employee.reportingTo.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.nationality">Nationality</span></dt>
+        <dd>
+          <div *ngIf="employee.nationality">
+            <a [routerLink]="['/nationality', employee.nationality.id, 'view']">{{ employee.nationality.nationalityName }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.bankBranch">Bank Branch</span></dt>
+        <dd>
+          <div *ngIf="employee.bankBranch">
+            <a [routerLink]="['/bank-branch', employee.bankBranch.id, 'view']">{{ employee.bankBranch.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.band">Band</span></dt>
+        <dd>
+          <div *ngIf="employee.band">
+            <a [routerLink]="['/band', employee.band.id, 'view']">{{ employee.band.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.unit">Unit</span></dt>
+        <dd>
+          <div *ngIf="employee.unit">
+            <a [routerLink]="['/unit', employee.unit.id, 'view']">{{ employee.unit.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employee.user">User</span></dt>
+        <dd>
+          <span>{{ employee.user?.login }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/employee', employee.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

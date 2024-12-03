@@ -1,0 +1,240 @@
+<div>
+  <h2 id="page-heading" data-cy="RoomRequisitionHeading">
+    <span jhiTranslate="bitsHrPayrollApp.roomRequisition.home.title">Room Requisitions</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="bitsHrPayrollApp.roomRequisition.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-room-requisition"
+        [routerLink]="['/room-requisition/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="bitsHrPayrollApp.roomRequisition.home.createLabel"> Create a new Room Requisition </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="roomRequisitions?.length === 0">
+    <span jhiTranslate="bitsHrPayrollApp.roomRequisition.home.notFound">No Room Requisitions found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="roomRequisitions && roomRequisitions.length > 0">
+    <table class="table table-hover list-text-color" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">ID</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="status">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.roomRequisition.status">Status</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="bookingTrn">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.roomRequisition.bookingTrn">Booking Trn</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="createdAt">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.roomRequisition.createdAt">Created At</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="updatedAt">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.roomRequisition.updatedAt">Updated At</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="sanctionedAt">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.roomRequisition.sanctionedAt">Sanctioned At</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="participantList">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.roomRequisition.participantList">Participant List</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="rejectedReason">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.roomRequisition.rejectedReason">Rejected Reason</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="bookingStartDate">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.roomRequisition.bookingStartDate">Booking Start Date</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="bookingEndDate">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.roomRequisition.bookingEndDate">Booking End Date</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="startTime">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.roomRequisition.startTime">Start Time</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="endTime">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.roomRequisition.endTime">End Time</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="title">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.roomRequisition.title">Title</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="agenda">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.roomRequisition.agenda">Agenda</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="optionalParticipantList">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.roomRequisition.optionalParticipantList">Optional Participant List</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="isFullDay">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.roomRequisition.isFullDay">Is Full Day</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="createdBy.login">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.roomRequisition.createdBy">Created By</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="updatedBy.login">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.roomRequisition.updatedBy">Updated By</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="sanctionedBy.login">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.roomRequisition.sanctionedBy">Sanctioned By</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="requester.id">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.roomRequisition.requester">Requester</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="room.id">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.roomRequisition.room">Room</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody
+        infinite-scroll
+        (scrolled)="loadPage(page + 1)"
+        [infiniteScrollDisabled]="page - 1 >= links['last']"
+        [infiniteScrollDistance]="0"
+      >
+        <tr *ngFor="let roomRequisition of roomRequisitions; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/room-requisition', roomRequisition.id, 'view']">{{ roomRequisition.id }}</a>
+          </td>
+          <td jhiTranslate="{{ 'bitsHrPayrollApp.Status.' + roomRequisition.status }}">{{ roomRequisition.status }}</td>
+          <td>{{ roomRequisition.bookingTrn }}</td>
+          <td>{{ roomRequisition.createdAt | formatMediumDatetime }}</td>
+          <td>{{ roomRequisition.updatedAt | formatMediumDatetime }}</td>
+          <td>{{ roomRequisition.sanctionedAt | formatMediumDatetime }}</td>
+          <td>{{ roomRequisition.participantList }}</td>
+          <td>{{ roomRequisition.rejectedReason }}</td>
+          <td>{{ roomRequisition.bookingStartDate | formatMediumDate }}</td>
+          <td>{{ roomRequisition.bookingEndDate | formatMediumDate }}</td>
+          <td>{{ roomRequisition.startTime }}</td>
+          <td>{{ roomRequisition.endTime }}</td>
+          <td>{{ roomRequisition.title }}</td>
+          <td>{{ roomRequisition.agenda }}</td>
+          <td>{{ roomRequisition.optionalParticipantList }}</td>
+          <td>{{ roomRequisition.isFullDay }}</td>
+          <td>
+            {{ roomRequisition.createdBy?.login }}
+          </td>
+          <td>
+            {{ roomRequisition.updatedBy?.login }}
+          </td>
+          <td>
+            {{ roomRequisition.sanctionedBy?.login }}
+          </td>
+          <td>
+            <div *ngIf="roomRequisition.requester">
+              <a [routerLink]="['/employee', roomRequisition.requester.id, 'view']">{{ roomRequisition.requester.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="roomRequisition.room">
+              <a [routerLink]="['/room', roomRequisition.room.id, 'view']">{{ roomRequisition.room.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/room-requisition', roomRequisition.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/room-requisition', roomRequisition.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(roomRequisition)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

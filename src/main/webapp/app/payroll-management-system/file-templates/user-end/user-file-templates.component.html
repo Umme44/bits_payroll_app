@@ -1,0 +1,115 @@
+<div class="user-file-templates">
+  <jhi-header [headerName]="'Docs'" [shouldHaveHr]="false"> </jhi-header>
+
+  <div class="">
+    <div class="row mb-2" [formGroup]="searchForm">
+      <div class="col-md-4">
+        <jhi-search-text-box
+          (searchEvent)="onSearchTextChangeV2($event)"
+          [placeHolderText]="'Search'"
+          [searchBoxSize]="'18rem'"
+          [suggestionList]="titles"
+        >
+        </jhi-search-text-box>
+      </div>
+
+      <div class="col-md-8 mt-md-1 mt-3">
+        <div class="form-check d-inline-flex mx-md-5 mx-2">
+          <input
+            class="form-check-input"
+            (change)="filterByFileTypes()"
+            id="all"
+            [value]="''"
+            checked="checked"
+            formControlName="fileType"
+            name="fileType"
+            type="radio"
+            value="option1"
+          />
+          <label class="form-check-label ms-2" for="all">All</label>
+        </div>
+        <div class="form-check d-inline-flex mx-md-5 mx-2">
+          <input
+            class="form-check-input"
+            (change)="filterByFileTypes()"
+            id="formSelect"
+            value="FORMS"
+            formControlName="fileType"
+            name="fileType"
+            type="radio"
+          />
+          <label class="form-check-label ms-2" for="formSelect">Form</label>
+        </div>
+        <div class="form-check d-inline-flex mx-md-5 mx-2">
+          <input
+            class="form-check-input"
+            (change)="filterByFileTypes()"
+            id="policySelect"
+            value="POLICIES"
+            formControlName="fileType"
+            name="fileType"
+            type="radio"
+          />
+          <label class="form-check-label ms-2" for="policySelect">Policy</label>
+        </div>
+
+        <div class="form-check d-inline-flex mx-md-5 mx-2">
+          <input
+            class="form-check-input"
+            (change)="filterByFileTypes()"
+            id="templateSelect"
+            value="TEMPLATES"
+            formControlName="fileType"
+            name="fileType"
+            type="radio"
+          />
+          <label class="form-check-label ms-2" for="templateSelect">Template</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="table-responsive" id="entities" *ngIf="fileTemplates && fileTemplates.length > 0">
+    <table class="table table-hover list-text-color" aria-describedby="page-heading">
+      <thead class="list-text-color">
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">
+            <span>Type</span>
+          </th>
+          <th scope="col">
+            <span>Title</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody
+        infinite-scroll
+        (scrolled)="loadPage(page + 1)"
+        [infiniteScrollDisabled]="page >= links['last']"
+        [infiniteScrollDistance]="0"
+        class="list-text-color"
+      >
+        <tr *ngFor="let fileTemplates of fileTemplates; trackBy: trackId">
+          <td class="w-5">
+            <span [ngbTooltip]="ClickToDownload">
+              <button class="btn btn-outline-primary" (click)="export(fileTemplates.id!)">
+                <fa-icon class="font-size-1-rem" [icon]="getFontAwesomeIcon(fileTemplates.fileContentType!)"></fa-icon>
+              </button>
+            </span>
+            <ng-template #ClickToDownload> Click To Download </ng-template>
+          </td>
+
+          <td class="w-5">
+            {{ fileTemplates.type }}
+          </td>
+
+          <td>{{ fileTemplates.title }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

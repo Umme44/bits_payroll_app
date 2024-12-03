@@ -1,0 +1,32 @@
+{
+  "bitsHrPayrollApp": {
+    "itemInformation": {
+      "home": {
+        "title": "Item Informations",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Item Information",
+        "createOrEditLabel": "Create or edit a Item Information",
+        "notFound": "No Item Informations found"
+      },
+      "created": "A new Item Information is created with identifier {{ param }}",
+      "updated": "A Item Information is updated with identifier {{ param }}",
+      "deleted": "A Item Information is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Item Information {{ id }}?"
+      },
+      "detail": {
+        "title": "Item Information"
+      },
+      "id": "ID",
+      "code": "Code",
+      "name": "Name",
+      "specification": "Specification",
+      "createdAt": "Created At",
+      "updatedAt": "Updated At",
+      "department": "Department",
+      "unitOfMeasurement": "Unit Of Measurement",
+      "createdBy": "Created By",
+      "updatedBy": "Updated By"
+    }
+  }
+}

@@ -1,0 +1,211 @@
+<div>
+  <jhi-header
+    [addButtonText]="'Add New Employees'"
+    [headerName]="'Employees'"
+    [routerLinkText]="'/employee-custom/new'"
+    [shouldHaveHr]="false"
+  >
+  </jhi-header>
+
+  <jhi-employee-analytics></jhi-employee-analytics>
+
+  <div class="card m-1 p-1">
+    <div class="search-filter container-fluid">
+      <div class="row my-3">
+        <div class="input-group col-md-12">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <label class="input-group-text" for="inputGroupSelect01">Search</label>
+            </div>
+            <input
+              (change)="onSearchTextChange()"
+              [(ngModel)]="filters.searchText"
+              class="form-control"
+              placeholder="Search Text"
+              type="text"
+            />
+          </div>
+        </div>
+        <div class="col-md-12" *ngIf="isSearchTextInvalid">
+          <small class="text-danger">This text is invalid</small>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect03">Department</label>
+          </div>
+          <!--Using items input-->
+          <div class="container w-80 p-0" style="font-size: 0.7rem">
+            <ng-select
+              [items]="departments"
+              bindLabel="departmentName"
+              bindValue="id"
+              [searchable]="true"
+              [clearable]="true"
+              appearance="outline"
+              [(ngModel)]="filters.departmentId"
+              (change)="onDepartmentSelect()"
+            >
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect03">Designation</label>
+          </div>
+          <!--Using items input-->
+          <div class="container w-80 p-0" style="font-size: 0.7rem">
+            <ng-select
+              [items]="designations"
+              bindLabel="designationName"
+              bindValue="id"
+              [searchable]="true"
+              [clearable]="true"
+              appearance="outline"
+              [(ngModel)]="filters.destinationId"
+              (change)="onDesignationSelect()"
+            >
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect03">Unit</label>
+          </div>
+          <!--Using items input-->
+          <div class="container w-80 p-0" style="font-size: 0.7rem">
+            <ng-select
+              [items]="units"
+              bindLabel="unitName"
+              bindValue="id"
+              [searchable]="true"
+              [clearable]="true"
+              appearance="outline"
+              [(ngModel)]="filters.unitId"
+              (change)="onUnitSelect()"
+            >
+            </ng-select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <jhi-alert-error></jhi-alert-error>
+  <jhi-alert></jhi-alert>
+
+  <div *ngIf="employees?.length === 0" class="alert alert-warning" id="no-result">
+    <span jhiTranslate="bitsHrPayrollApp.employee.home.notFound">No employees found</span>
+  </div>
+
+  <ng-container *ngFor="let employee of employees">
+    <div class="card m-1 my-2 p-2" *ngIf="employee.pin !== undefined" [class.resigned]="employee.currentlyResigned " >
+      <img role="button" (click)="viewImage(employee.pin, employee.fullName! )" class="card-img-top m-2 me-3 ms-3 user_picture" [src]="getProfilePicture(employee.pin)" alt="Card image cap" />
+      <div class="card-body p-1">
+        <h5 class="card-title mb-2 text-xl">
+          {{ employee.fullName }} <span class="text-muted">{{ employee.pin }}</span>
+          <span class="float-end">
+            <span class="btn-group">
+              <button
+                [routerLink]="['/employment-histories', employee.id]"
+                class="btn btn-outline-success btn-sm px-md-3"
+                data-placement="top"
+                data-toggle="tooltip"
+                title="employment history"
+                type="submit"
+              >
+                <fa-icon [icon]="['fas', 'arrow-left']"></fa-icon>
+              </button>
+              <button
+                [routerLink]="['/employee-custom', employee.id, 'view']"
+                class="btn btn-outline-info btn-sm px-md-3"
+                data-placement="top"
+                data-toggle="tooltip"
+                title="View"
+                type="submit"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <!--                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>-->
+              </button>
+
+              <button
+                [routerLink]="['/employee-custom', employee.id, 'edit']"
+                class="btn btn-outline-primary btn-sm px-md-3"
+                data-placement="top"
+                data-toggle="tooltip"
+                title="Edit"
+                type="submit"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <!--                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>-->
+              </button>
+
+              <button
+                (click)="delete(employee)"
+                class="btn btn-outline-danger btn-sm px-md-3"
+                data-placement="top"
+                data-toggle="tooltip"
+                title="Delete"
+                type="submit"
+              >
+                <fa-icon icon="times"></fa-icon>
+                <!--                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>-->
+              </button>
+            </span>
+          </span>
+        </h5>
+        <h6 class="card-subtitle mb-2 text-muted text-lg">
+          {{ employee.designationName }}, {{ employee.departmentName }}
+          <span class="badge rounded-pill bg-secondary text-white">{{ employee.unitName }}</span>
+        </h6>
+
+        <div class="card-subtitle text-muted text-md">
+          <div class="row">
+            <div class="col-sm-6 col-lg-3">
+              Category :
+              <span jhiTranslate="{{ 'bitsHrPayrollApp.EmployeeCategory.' + employee.employeeCategory }}">{{
+                  employee.employeeCategory
+                }}</span>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+              Email: <a href="mailto:{{ employee.officialEmail }}">{{ employee.officialEmail }}</a>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+              Work Phone: <a href="tel:{{ employee.officialContactNo }}"> {{ employee.officialContactNo }}</a>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+              Personal: <a href="tel:{{ employee.personalContactNo }}">{{ employee.personalContactNo }}</a>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+              Emergency:
+              <a
+                href="tel:{{ employee.emergencyContactPersonContactNumber }}">{{ employee.emergencyContactPersonContactNumber }}</a>
+            </div>
+            <div class="col-sm-6 col-lg-3">WhatsApp: {{ employee.whatsappId }}</div>
+            <div class="col-sm-6 col-lg-3">Skype: {{ employee.skypeId }}</div>
+            <div class="col-sm-6 col-lg-3">Reports to: {{ employee.reportingToName }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <div *ngIf="employees && employees.length > 0" class="d-flex flex-column align-items-center">
+    <div class="row justify-content-center py-2">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="row justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

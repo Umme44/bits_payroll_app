@@ -1,0 +1,87 @@
+<div class="modal-header">
+  <h4 class="modal-title"></h4>
+  <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" (click)="dismiss()"></button>
+</div>
+
+<div class="modal-body">
+  <div class="card card-body">
+    <div class="row font-sm" *ngIf="employee">
+      <div class="col-md-2 fw-bold">PIN</div>
+      <div class="col-md-4">
+        {{ employee.pin }}
+      </div>
+      <div class="col-md-2 fw-bold">Name</div>
+      <div class="col-md-4">
+        {{ employee.fullName }}
+      </div>
+      <div class="col-md-2 fw-bold">Designation</div>
+      <div class="col-md-4">
+        {{ employee.designationName }}
+      </div>
+      <div class="col-md-2 fw-bold">Department</div>
+      <div class="col-md-4">
+        {{ employee.departmentName }}
+      </div>
+
+      <div class="col-md-2 fw-bold">Unit</div>
+      <div class="col-md-4">
+        {{ employee.unitName }}
+      </div>
+    </div>
+  </div>
+
+  <jhi-education-details-update-modal [(idForUpdate)]="educationDetailsIdForUpdate" [employeeId]="employeeId">
+  </jhi-education-details-update-modal>
+
+  <div *ngIf="educationDetails && educationDetails.length > 0" class="table-responsive">
+    <table aria-describedby="page-heading" class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.educationDetails.nameOfDegree">Name Of Degree</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.educationDetails.subject">Subject</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.educationDetails.institute">Institute</span></th>
+          <th scope="col">
+            <span jhiTranslate="bitsHrPayrollApp.educationDetails.yearOfDegreeCompletion">Year Of Degree Completion</span>
+          </th>
+
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let educationDetails of educationDetails; trackBy: trackId">
+          <td>{{ educationDetails.nameOfDegree }}</td>
+          <td>{{ educationDetails.subject }}</td>
+          <td>{{ educationDetails.institute }}</td>
+          <td>{{ educationDetails.yearOfDegreeCompletion }}</td>
+
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                *ngIf="educationDetails.id"
+                (click)="populateEditForm(educationDetails.id)"
+                class="btn btn-primary btn-sm px-md-3 me-1"
+                data-placement="top"
+                data-toggle="tooltip"
+                title="Edit"
+                type="submit"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+              </button>
+
+              <button
+                (click)="delete(educationDetails)"
+                class="btn btn-danger btn-sm px-md-3"
+                data-placement="top"
+                data-toggle="tooltip"
+                title="Delete"
+                type="submit"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

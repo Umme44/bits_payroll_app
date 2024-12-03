@@ -1,0 +1,28 @@
+{
+  "bitsHrPayrollApp": {
+    "workingExperience": {
+      "home": {
+        "title": "Working Experiences",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Working Experience",
+        "createOrEditLabel": "Create or edit a Working Experience",
+        "notFound": "No Working Experiences found"
+      },
+      "created": "A new Working Experience is created with identifier {{ param }}",
+      "updated": "A Working Experience is updated with identifier {{ param }}",
+      "deleted": "A Working Experience is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Working Experience {{ id }}?"
+      },
+      "detail": {
+        "title": "Working Experience"
+      },
+      "id": "ID",
+      "lastDesignation": "Last Designation",
+      "organizationName": "Organization Name",
+      "dojOfLastOrganization": "Doj Of Last Organization",
+      "dorOfLastOrganization": "Dor Of Last Organization",
+      "employee": "Employee"
+    }
+  }
+}

@@ -1,0 +1,387 @@
+<div class="font-sm">
+  <jhi-header
+    [headerName]="!editForm.get('id')!.value ? 'Add New Leave Applications' : 'Edit Leave Applications'"
+    [midHeaderName01]="'Leave Applications'"
+    [midRouterLinkText01]="'/leave-application'"
+    [shouldHaveHr]="false"
+  >
+  </jhi-header>
+
+  <!--    leave balances  -->
+
+  <div
+    *ngIf="editForm.get('employeeId')!.value && editForm.get('startDate')!.value && leaveBalanceEndUserView.length === 0"
+    class="alert alert-warning"
+    id="no-result"
+  >
+    <span> No Leave Balances Found for {{ leaveApplicationYear }}, Please Create Leave Balance. </span>
+  </div>
+
+  <div *ngIf="leaveBalanceEndUserView && leaveBalanceEndUserView.length > 0 && !editForm.get('id')!.value" class="table-responsive">
+    <table aria-describedby="page-heading" class="table table-hover text-center">
+      <thead>
+        <tr>
+          <th scope="col"><span>Leave Type</span></th>
+          <th scope="col"><span>Carry Forwarded</span></th>
+          <th scope="col"><span>Consumed</span></th>
+          <th scope="col"><span>Allocated</span></th>
+          <th scope="col"><span>Requested</span></th>
+          <th scope="col"><span>Approved</span></th>
+          <th scope="col"><span>Cancelled</span></th>
+          <th scope="col"><span>Remaining</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let leaveBalance of leaveBalanceEndUserView">
+          <td class="fw-bold" jhiTranslate="{{ 'bitsHrPayrollApp.LeaveType.' + leaveBalance.leaveType }}">{{ leaveBalance.leaveType }}</td>
+          <td>{{ leaveBalance.openingBalance }}</td>
+          <td>{{ leaveBalance.consumedDuringYear }}</td>
+          <td>{{ leaveBalance.amount }}</td>
+          <td>{{ leaveBalance.daysRequested }}</td>
+          <td>{{ leaveBalance.daysApproved }}</td>
+          <td>{{ leaveBalance.daysCancelled }}</td>
+          <td class="fw-bold text-success">{{ leaveBalance.daysRemaining }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!--    leave balances  -->
+  <form (ngSubmit)="save()" [formGroup]="editForm" name="editForm" novalidate role="form">
+    <jhi-alert-error></jhi-alert-error>
+    <div class="card card-body">
+      <div class="row">
+        <small class="col text-muted py-3">
+          <mark>Note: After selection of Employee and Start Date, Leave balance summary will appear.</mark>
+        </small>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label class="form-control-label required" jhiTranslate="bitsHrPayrollApp.leaveApplication.employee">Employee</label>
+
+            <jhi-simple-select-employee-form
+              [selectedFieldValue]="editForm.get('employeeId')!.value"
+              [listType]="employeeSelectListType"
+              (onChangeEmployee)="changeEmployee($event)"
+            >
+            </jhi-simple-select-employee-form>
+
+            <div *ngIf="editForm.get('employeeId')!.invalid && (editForm.get('employeeId')!.dirty || editForm.get('employeeId')!.touched)">
+              <small
+                *ngIf="editForm.get('employeeId')?.errors?.required"
+                class="form-text text-danger"
+                jhiTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label class="form-control-label required" for="field_leaveType" jhiTranslate="bitsHrPayrollApp.leaveApplication.leaveType"
+              >Leave Type</label
+            >
+            <select
+              class="form-control"
+              formControlName="leaveType"
+              id="field_leaveType"
+              name="leaveType"
+              [disabled]="editForm.get('id')!.value !== null"
+            >
+              <option *ngIf="!editForm.get('id')!.value" selected value="null">Select Leave Type</option>
+
+              <option value="MENTIONABLE_ANNUAL_LEAVE">
+                {{ 'bitsHrPayrollApp.LeaveType.MENTIONABLE_ANNUAL_LEAVE' | translate }}
+                <span class="badge rounded-pill bg-secondary bold"> - {{ this.annualLeave }}</span>
+              </option>
+
+              <option value="MENTIONABLE_CASUAL_LEAVE">
+                {{ 'bitsHrPayrollApp.LeaveType.MENTIONABLE_CASUAL_LEAVE' | translate }}
+                <span class="badge rounded-pill bg-secondary"> - {{ this.casualLeave }}</span>
+              </option>
+
+              <option value="NON_MENTIONABLE_COMPENSATORY_LEAVE">
+                {{ 'bitsHrPayrollApp.LeaveType.NON_MENTIONABLE_COMPENSATORY_LEAVE' | translate }}
+                <span class="badge rounded-pill bg-secondary"> - {{ this.compensatoryLeave }}</span>
+              </option>
+
+              <option value="NON_MENTIONABLE_PANDEMIC_LEAVE">
+                {{ 'bitsHrPayrollApp.LeaveType.NON_MENTIONABLE_PANDEMIC_LEAVE' | translate }}
+                <span class="badge rounded-pill bg-secondary"> - {{ this.pandemicLeave }}</span>
+              </option>
+              <option *ngIf="!selectedEmployee || selectedEmployee.gender === 'MALE'" value="NON_MENTIONABLE_PATERNITY_LEAVE">
+                {{ 'bitsHrPayrollApp.LeaveType.NON_MENTIONABLE_PATERNITY_LEAVE' | translate }}
+                <span class="badge rounded-pill bg-secondary"> - {{ this.paternityLeave }}</span>
+              </option>
+              <option *ngIf="!selectedEmployee || selectedEmployee.gender === 'FEMALE'" value="NON_MENTIONABLE_MATERNITY_LEAVE">
+                {{ 'bitsHrPayrollApp.LeaveType.NON_MENTIONABLE_MATERNITY_LEAVE' | translate }}
+                <span class="badge rounded-pill bg-secondary"> - {{ this.maternityLeave }}</span>
+              </option>
+
+              <option value="LEAVE_WITHOUT_PAY">
+                {{ 'bitsHrPayrollApp.LeaveType.LEAVE_WITHOUT_PAY' | translate }}
+              </option>
+
+              <option value="LEAVE_WITHOUT_PAY_SANDWICH">
+                {{ 'bitsHrPayrollApp.LeaveType.LEAVE_WITHOUT_PAY_SANDWICH' | translate }}
+              </option>
+
+              <option value="OTHER">
+                {{ 'bitsHrPayrollApp.LeaveType.OTHER' | translate }}
+                <span class="badge badge-pill badge-secondary"> - {{ this.other }}</span>
+              </option>
+            </select>
+
+            <div *ngIf="editForm.get('leaveType')!.invalid && (editForm.get('leaveType')!.dirty || editForm.get('leaveType')!.touched)">
+              <small
+                *ngIf="editForm.get('leaveType')?.errors?.required"
+                class="form-text text-danger"
+                jhiTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3">
+          <div class="mb-3">
+            <label class="form-control-label required" for="field_startDate" jhiTranslate="bitsHrPayrollApp.leaveApplication.startDate"
+              >Start Date</label
+            >
+            <div class="input-group">
+              <input
+                #startDateDp="ngbDatepicker"
+                (dateSelect)="loadDataByEmployeeAndDate()"
+                (ngModelChange)="loadDuration()"
+                class="form-control"
+                formControlName="startDate"
+                id="field_startDate"
+                name="startDate"
+                ngbDatepicker
+                type="text"
+              />
+              <span class="input-group-append">
+                <button (click)="startDateDp.toggle()" class="btn btn-secondary" type="button">
+                  <fa-icon icon="calendar-alt"></fa-icon>
+                </button>
+              </span>
+            </div>
+            <div *ngIf="editForm.get('startDate')!.invalid && (editForm.get('startDate')!.dirty || editForm.get('startDate')!.touched)">
+              <small
+                *ngIf="editForm.get('startDate')?.errors?.required"
+                class="form-text text-danger"
+                jhiTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="mb-3">
+            <label class="form-control-label required" for="field_endDate" jhiTranslate="bitsHrPayrollApp.leaveApplication.endDate"
+              >End Date</label
+            >
+            <div class="input-group">
+              <input
+                #endDateDp="ngbDatepicker"
+                (ngModelChange)="loadDuration()"
+                class="form-control"
+                formControlName="endDate"
+                id="field_endDate"
+                name="endDate"
+                ngbDatepicker
+                type="text"
+              />
+              <span class="input-group-append">
+                <button (click)="endDateDp.toggle()" class="btn btn-secondary" type="button">
+                  <fa-icon icon="calendar-alt"></fa-icon>
+                </button>
+              </span>
+            </div>
+            <div *ngIf="editForm.get('endDate')!.invalid && (editForm.get('endDate')!.dirty || editForm.get('endDate')!.touched)">
+              <small
+                *ngIf="editForm.get('endDate')?.errors?.required"
+                class="form-text text-danger"
+                jhiTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+            </div>
+            <div *ngIf="editForm.get('endDate')!.valid && (editForm.get('endDate')!.dirty || editForm.get('endDate')!.touched)">
+              <small *ngIf="isDateInvalid && !isConflict" class="form-text text-danger">
+                End Date can not be smaller than Start Date.
+              </small>
+
+              <div *ngIf="isYearInvalid == true">
+                <small class="form-text text-danger"> Start date and End date must be within the same year. </small>
+              </div>
+
+              <small *ngIf="isConflict" class="form-text text-danger"> This duration conflicts with previous application. </small>
+
+              <small *ngIf="hasAnyConflict" class="form-text text-danger">{{ conflictMessage }} </small>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="mb-3">
+            <label
+              class="form-control-label required"
+              for="field_durationInDay"
+              jhiTranslate="bitsHrPayrollApp.leaveApplication.durationInDay"
+              >Duration In Day</label
+            >
+            <input
+              [value]="durationInDays"
+              class="form-control"
+              formControlName="durationInDay"
+              id="field_durationInDay"
+              name="durationInDay"
+              type="number"
+            />
+            <div>
+              <small *ngIf="isDaysEqualZero" class="form-text text-danger"> During this period has Holiday or Weekend. </small>
+              <small
+                [hidden]="!editForm.get('durationInDay')?.errors?.number"
+                class="form-text text-danger"
+                jhiTranslate="entity.validation.number"
+              >
+                This field should be a number.
+              </small>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="mb-3">
+            <label
+              class="form-control-label"
+              for="field_phoneNumberOnLeave"
+              jhiTranslate="bitsHrPayrollApp.leaveApplication.phoneNumberOnLeave"
+              >Phone Number On Leave</label
+            >
+            <input
+              class="form-control"
+              formControlName="phoneNumberOnLeave"
+              id="field_phoneNumberOnLeave"
+              name="phoneNumberOnLeave"
+              type="text"
+            />
+            <!--<div
+              *ngIf="
+                editForm.get('phoneNumberOnLeave')!.invalid &&
+                (editForm.get('phoneNumberOnLeave')!.dirty || editForm.get('phoneNumberOnLeave')!.touched)
+              "
+            >
+              &lt;!&ndash;<small *ngIf="editForm.get('phoneNumberOnLeave')?.errors?.required"
+                     class="form-text text-danger"
+                     jhiTranslate="entity.validation.required">
+                  This field is required.
+              </small>&ndash;&gt;
+
+              <small *ngIf="editForm.get('phoneNumberOnLeave')?.errors?.pattern" class="form-text text-danger">
+                This field should be a valid Mobile Number
+              </small>
+            </div>-->
+            <div
+              *ngIf="
+                editForm.get('phoneNumberOnLeave')!.invalid &&
+                (editForm.get('phoneNumberOnLeave')!.dirty || editForm.get('phoneNumberOnLeave')!.touched)
+              "
+            >
+              <small class="form-text text-danger" *ngIf="editForm.get('phoneNumberOnLeave')?.errors?.pattern">
+                This field must be a valid Mobile Number
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3 align-items-center" *ngIf="false">
+          <div class="form-check pt-4">
+            <input
+              [attr.disabled]="true"
+              class="form-check-input"
+              formControlName="isHalfDay"
+              id="field_isHalfDay"
+              name="isHalfDay"
+              type="checkbox"
+            />
+            <label class="form-check-label" for="field_isHalfDay" jhiTranslate="bitsHrPayrollApp.leaveApplication.isHalfDay"
+              >Is Half Day</label
+            >
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label class="form-control-label" for="field_reason" jhiTranslate="bitsHrPayrollApp.leaveApplication.reason">Reason</label>
+            <textarea class="form-control" formControlName="reason" id="field_reason" name="reason"></textarea>
+            <!--<div *ngIf="editForm.get('reason')!.invalid && (editForm.get('reason')!.dirty || editForm.get('reason')!.touched)">
+              <small *ngIf="editForm.get('reason')?.errors?.maxlength" class="form-text text-danger">
+                This field cannot be longer than 255 characters.
+              </small>
+              <small *ngIf="editForm.get('reason')?.errors?.pattern" class="form-text text-danger">
+                This field must be alphanumeric.
+              </small>
+            </div>-->
+            <div *ngIf="editForm.get('reason')!.invalid && (editForm.get('reason')!.dirty || editForm.get('reason')!.touched)">
+              <small class="form-text text-danger" *ngIf="editForm.get('reason')?.errors?.pattern"> This text is invalid </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label class="form-control-label" for="field_addressOnLeave" jhiTranslate="bitsHrPayrollApp.leaveApplication.addressOnLeave"
+              >Address On Leave</label
+            >
+            <textarea class="form-control" formControlName="addressOnLeave" id="field_addressOnLeave" name="addressOnLeave"></textarea>
+            <div
+              *ngIf="
+                editForm.get('addressOnLeave')!.invalid &&
+                (editForm.get('addressOnLeave')!.dirty || editForm.get('addressOnLeave')!.touched)
+              "
+            >
+              <small *ngIf="editForm.get('addressOnLeave')?.errors?.maxlength" class="form-text text-danger">
+                This field cannot be longer than 255 characters.
+              </small>
+            </div>
+            <div
+              *ngIf="
+                editForm.get('addressOnLeave')!.invalid &&
+                (editForm.get('addressOnLeave')!.dirty || editForm.get('addressOnLeave')!.touched)
+              "
+            >
+              <small class="form-text text-danger" *ngIf="editForm.get('addressOnLeave')?.errors?.pattern">
+                This field must be a natural text.
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mt-3">
+        <button (click)="previousState()" class="btn btn-secondary me-2" id="cancel-save" type="button">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          [disabled]="editForm.invalid || isSaving || isDateInvalid || hasAnyConflict || isDaysEqualZero || isYearInvalid"
+          class="btn btn-primary"
+          id="save-entity"
+          type="submit"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;
+          <span *ngIf="!editForm.get('id')!.value">Apply</span>
+          <span *ngIf="editForm.get('id')!.value">Update</span>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

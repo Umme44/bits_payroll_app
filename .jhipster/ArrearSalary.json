@@ -1,0 +1,50 @@
+{
+  "changelogDate": "20210921045024",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "arrear_salary",
+  "fields": [
+    {
+      "fieldName": "month",
+      "fieldType": "Month",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "JANUARY,FEBRUARY,MARCH,APRIL,MAY,JUNE,JULY,AUGUST,SEPTEMBER,OCTOBER,NOVEMBER,DECEMBER"
+    },
+    {
+      "fieldName": "year",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required", "min", "max"],
+      "fieldValidateRulesMax": "2099",
+      "fieldValidateRulesMin": "1990"
+    },
+    {
+      "fieldName": "amount",
+      "fieldType": "Double",
+      "fieldValidateRules": ["required", "min", "max"],
+      "fieldValidateRulesMax": "9999999",
+      "fieldValidateRulesMin": "1"
+    },
+    {
+      "fieldName": "arrearType",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "ArrearSalary",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "arrearSalary",
+      "relationshipName": "employee",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    }
+  ],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

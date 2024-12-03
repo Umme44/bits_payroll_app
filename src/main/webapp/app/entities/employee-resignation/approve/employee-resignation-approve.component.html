@@ -1,0 +1,188 @@
+<div class="">
+  <div>
+    <form (ngSubmit)="approvalConfirmation()" [formGroup]="editForm" name="editForm" novalidate role="form">
+      <jhi-header [headerName]="'Approve Resignation'" [shouldHaveHr]="false"> </jhi-header>
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <div class="container-fluid card py-3">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label class="form-control-label" for="field_employee" jhiTranslate="bitsHrPayrollApp.employeeResignation.employee"
+                >Employee</label
+              >
+              <select [attr.disabled]="true" class="form-control" formControlName="employeeId" id="field_employee" name="employee">
+                <option [ngValue]="null"></option>
+                <option *ngFor="let employeeOption of employees; trackBy: trackById" [ngValue]="employeeOption.id">
+                  {{ employeeOption.pin }} - {{ employeeOption.fullName }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="mb-3">
+              <label
+                class="form-control-label"
+                for="field_resignationDate"
+                jhiTranslate="bitsHrPayrollApp.employeeResignation.resignationDate"
+                >Resignation Date</label
+              >
+              <div class="input-group">
+                <input
+                  #resignationDateDp="ngbDatepicker"
+                  (click)="resignationDateDp.toggle()"
+                  [disabled]="true"
+                  class="form-control"
+                  formControlName="resignationDate"
+                  id="field_resignationDate"
+                  name="resignationDate"
+                  ngbDatepicker
+                  type="text"
+                />
+                <span class="input-group-append">
+                  <button (click)="resignationDateDp.toggle()" class="btn btn-secondary btn-sm" type="button">
+                    <fa-icon icon="calendar-alt"></fa-icon>
+                  </button>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="mb-3">
+              <label class="form-control-label" for="field_lastWorkingDay">Last Working Day <span class="red-text">*</span> </label>
+              <div class="input-group">
+                <input
+                  #lastWorkingDayDp="ngbDatepicker"
+                  (click)="lastWorkingDayDp.toggle()"
+                  class="form-control"
+                  [disabled]="true"
+                  formControlName="lastWorkingDay"
+                  id="field_lastWorkingDay"
+                  name="lastWorkingDay"
+                  ngbDatepicker
+                  type="date"
+                />
+                <span class="input-group-append">
+                  <button (click)="lastWorkingDayDp.toggle()" class="btn btn-secondary btn-sm" type="button">
+                    <fa-icon icon="calendar-alt"></fa-icon>
+                  </button>
+                </span>
+              </div>
+              <div
+                *ngIf="
+                  editForm.get('lastWorkingDay')!.invalid &&
+                  (editForm.get('lastWorkingDay')!.dirty || editForm.get('lastWorkingDay')!.touched)
+                "
+              >
+                <small
+                  *ngIf="editForm.get('lastWorkingDay')?.errors?.required"
+                  class="form-text text-danger"
+                  jhiTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="mb-3">
+              <label
+                class="form-control-label"
+                for="field_resignationReason"
+                jhiTranslate="bitsHrPayrollApp.employeeResignation.resignationReason"
+                >Resignation Reason</label
+              >
+              <input
+                [readOnly]="true"
+                class="form-control"
+                formControlName="resignationReason"
+                id="field_resignationReason"
+                name="resignationReason"
+                type="text"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!--                <div class="mb-3">-->
+        <!--                    <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.employeeResignation.approvalStatus"-->
+        <!--                           for="field_approvalStatus">Approval Status</label>-->
+        <!--                    <select class="form-control" name="approvalStatus" formControlName="approvalStatus"-->
+        <!--                            id="field_approvalStatus">-->
+        <!--                        <option value="PENDING">{{ 'bitsHrPayrollApp.Status.PENDING' | translate }}</option>-->
+        <!--                        <option value="APPROVED">{{ 'bitsHrPayrollApp.Status.APPROVED' | translate }}</option>-->
+        <!--                        <option value="NOT_APPROVED">{{ 'bitsHrPayrollApp.Status.NOT_APPROVED' | translate }}</option>-->
+        <!--                    </select>-->
+        <!--                </div>-->
+
+        <div class="mb-3">
+          <label class="form-control-label" for="field_approvalComment">Approval Comment <span class="red-text">*</span> </label>
+          <input class="form-control" formControlName="approvalComment" id="field_approvalComment" name="approvalComment" type="text" />
+
+          <div
+            *ngIf="
+              editForm.get('approvalComment')!.invalid &&
+              (editForm.get('approvalComment')!.dirty || editForm.get('approvalComment')!.touched)
+            "
+          >
+            <small
+              *ngIf="editForm.get('approvalComment')?.errors?.required"
+              class="form-text text-danger"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-check">
+              <input
+                [attr.disabled]="true"
+                class="form-check-input"
+                formControlName="isSalaryHold"
+                id="field_isSalaryHold"
+                name="isSalaryHold"
+                type="checkbox"
+              />
+              <label class="form-check-label" for="field_isSalaryHold">Mark to Hold salary</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-check">
+              <input
+                [attr.disabled]="true"
+                class="form-check-input"
+                formControlName="isFestivalBonusHold"
+                id="field_isFestivalBonusHold"
+                name="isFestivalBonusHold"
+                type="checkbox"
+              />
+              <label class="form-check-label" for="field_isFestivalBonusHold">Mark to Hold Festival Bonus </label>
+            </div>
+          </div>
+        </div>
+        <div class="row pt-3">
+          <div class="col-md-12">
+            <div>
+              <button (click)="previousState()" class="btn btn-secondary" id="cancel-save" type="button">
+                <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+              </button>
+              <button [disabled]="editForm.invalid || isSaving" class="btn btn-primary" id="save-entity" type="submit">
+                <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

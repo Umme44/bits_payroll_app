@@ -1,0 +1,38 @@
+{
+  "bitsHrPayrollApp": {
+    "workFromHomeApplication": {
+      "home": {
+        "title": "Work From Home Applications",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Work From Home Application",
+        "createOrEditLabel": "Create or edit a Work From Home Application",
+        "notFound": "No Work From Home Applications found",
+        "titleApprovals": "BRAC IT || Movement Entry Approvals Admin"
+      },
+      "created": "A new Work From Home Application is created with identifier {{ param }}",
+      "updated": "A Work From Home Application is updated with identifier {{ param }}",
+      "deleted": "A Work From Home Application is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Work From Home Application {{ id }}?"
+      },
+      "detail": {
+        "title": "Work From Home Application"
+      },
+      "id": "ID",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "reason": "Reason",
+      "duration": "Duration",
+      "status": "Status",
+      "appliedAt": "Applied At",
+      "updatedAt": "Updated At",
+      "createdAt": "Created At",
+      "sanctionedAt": "Sanctioned At",
+      "appliedBy": "Applied By",
+      "createdBy": "Created By",
+      "updatedBy": "Updated By",
+      "sanctionedBy": "Sanctioned By",
+      "employee": "Employee"
+    }
+  }
+}

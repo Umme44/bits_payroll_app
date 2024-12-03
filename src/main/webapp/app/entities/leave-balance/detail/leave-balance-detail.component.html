@@ -1,0 +1,110 @@
+<div class="d-flex justify-content-center">
+  <div class="col-12">
+    <jhi-header [headerName]="'Leave Balance Details'" [shouldHaveHr]="false"> </jhi-header>
+
+    <div *ngIf="leaveBalance">
+      <!--<h2 data-cy="leaveBalanceDetailsHeading"><span jhiTranslate="bitsHrPayrollApp.leaveBalance.detail.title">Leave Balance</span></h2>
+
+            <hr />-->
+      <jhi-alert-error></jhi-alert-error>
+      <jhi-alert></jhi-alert>
+
+      <div class="container-fluid py-3 card card-body font-sm">
+        <div class="row pb-3">
+          <div class="col-md-3 fw-bold">
+            <dt><span jhiTranslate="bitsHrPayrollApp.leaveBalance.employee">Employee</span></dt>
+          </div>
+          <div class="col-md-3">
+            <dd>
+              <span>{{ leaveBalance.fullName }}</span>
+            </dd>
+          </div>
+          <div class="col-md-3 fw-bold">
+            <dt><span jhiTranslate="bitsHrPayrollApp.leaveBalance.leaveType">Leave Type</span></dt>
+          </div>
+          <div class="col-md-3">
+            <dd>
+              <span jhiTranslate="{{ 'bitsHrPayrollApp.LeaveType.' + leaveBalance.leaveType }}">{{ leaveBalance.leaveType }}</span>
+            </dd>
+          </div>
+        </div>
+
+        <div class="row pb-3">
+          <div class="col-md-3 fw-bold">
+            <dt><span jhiTranslate="bitsHrPayrollApp.leaveBalance.openingBalance">Opening Balance</span></dt>
+          </div>
+          <div class="col-md-3">
+            <dd>
+              <span>{{ leaveBalance.openingBalance }}</span>
+            </dd>
+          </div>
+          <div class="col-md-3 fw-bold">
+            <dt><span jhiTranslate="bitsHrPayrollApp.leaveBalance.leaveAmountType">Leave Amount Type</span></dt>
+          </div>
+          <div class="col-md-3">
+            <dd>
+              <span jhiTranslate="{{ 'bitsHrPayrollApp.LeaveAmountType.' + leaveBalance.leaveAmountType }}">{{
+                leaveBalance.leaveAmountType
+              }}</span>
+            </dd>
+          </div>
+        </div>
+
+        <div class="row pb-3">
+          <div class="col-md-3 fw-bold">
+            <dt><span jhiTranslate="bitsHrPayrollApp.leaveBalance.consumedDuringYear">Consumed During Year</span></dt>
+          </div>
+          <div class="col-md-3">
+            <dd>
+              <span>{{ leaveBalance.consumedDuringYear }}</span>
+            </dd>
+          </div>
+          <div class="col-md-3 fw-bold">
+            <dt><span jhiTranslate="bitsHrPayrollApp.leaveBalance.year">Year</span></dt>
+          </div>
+          <div class="col-md-3">
+            <dd>
+              <span>{{ leaveBalance.year }}</span>
+            </dd>
+          </div>
+        </div>
+
+        <div class="row pb-3">
+          <div class="col-md-3 fw-bold">
+            <dt><span jhiTranslate="bitsHrPayrollApp.leaveBalance.amount">Amount</span></dt>
+          </div>
+          <div class="col-md-3">
+            <dd>
+              <span>{{ leaveBalance.amount }}</span>
+            </dd>
+          </div>
+          <div class="col-md-3 fw-bold"></div>
+          <div class="col-md-3"></div>
+        </div>
+        <div class="mt-3">
+          <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+            <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+          </button>
+
+          <button type="button" [routerLink]="['/leave-balance', leaveBalance.id, 'edit']" class="btn btn-primary">
+            <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+          </button>
+        </div>
+      </div>
+
+      <!--              <dl class="row-md jh-entity-details">
+
+                <dt><span jhiTranslate="bitsHrPayrollApp.leaveBalance.closingBalance">Closing Balance</span></dt>
+                <dd>
+                  <span>{{ leaveBalance.closingBalance }}</span>
+                </dd>
+                <dt><span jhiTranslate="bitsHrPayrollApp.leaveBalance.employee">Employee</span></dt>
+                <dd>
+                  <div *ngIf="leaveBalance.employee">
+                    <a [routerLink]="['/employee', leaveBalance.employee.id, 'view']">{{ leaveBalance.employee.id }}</a>
+                  </div>
+                </dd>
+              </dl>-->
+    </div>
+  </div>
+</div>

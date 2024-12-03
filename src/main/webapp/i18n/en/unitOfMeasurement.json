@@ -1,0 +1,29 @@
+{
+  "bitsHrPayrollApp": {
+    "unitOfMeasurement": {
+      "home": {
+        "title": "Unit Of Measurements",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Unit Of Measurement",
+        "createOrEditLabel": "Create or edit a Unit Of Measurement",
+        "notFound": "No Unit Of Measurements found"
+      },
+      "created": "A new Unit Of Measurement is created with identifier {{ param }}",
+      "updated": "A Unit Of Measurement is updated with identifier {{ param }}",
+      "deleted": "A Unit Of Measurement is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Unit Of Measurement {{ id }}?"
+      },
+      "detail": {
+        "title": "Unit Of Measurement"
+      },
+      "id": "ID",
+      "name": "Name",
+      "remarks": "Remarks",
+      "createdAt": "Created At",
+      "updatedAt": "Updated At",
+      "createdBy": "Created By",
+      "updatedBy": "Updated By"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+id;code;name;specification;created_at;updated_at;department_id;unit_of_measurement_id;created_by_id
+1;web;interface encompassing;../fake-data/blob/hipster.txt;2023-01-17T19:37:22;2023-01-17T22:19:35;1;1;1
+2;Togo;purple;../fake-data/blob/hipster.txt;2023-01-17T17:06:41;2023-01-18T05:01:42;2;2;2
+3;Implemented Directives;Loan Planner Argentina;../fake-data/blob/hipster.txt;2023-01-17T12:17:24;2023-01-18T02:41:05;3;3;1
+4;Michigan;Plastic deposit black;../fake-data/blob/hipster.txt;2023-01-17T07:43:45;2023-01-18T03:25:05;4;4;2
+5;relationships Grass-roots;Brand strategic;../fake-data/blob/hipster.txt;2023-01-17T19:38:05;2023-01-18T00:35:34;5;5;2
+6;Sports Tuvalu protocol;Mali Street;../fake-data/blob/hipster.txt;2023-01-17T22:51:29;2023-01-17T13:06:39;6;6;1
+7;Rubber Mobility;Serbia;../fake-data/blob/hipster.txt;2023-01-17T21:19:11;2023-01-18T01:29:26;7;7;1
+8;Mouse;Manager Cedi Avon;../fake-data/blob/hipster.txt;2023-01-17T20:54:18;2023-01-17T11:34:16;8;8;2
+9;Orchestrator Chicken;Utah;../fake-data/blob/hipster.txt;2023-01-18T04:00:23;2023-01-17T15:14:48;9;9;1
+10;Chicken protocol;Implementation withdrawal;../fake-data/blob/hipster.txt;2023-01-17T08:16:02;2023-01-17T20:33:12;10;10;2

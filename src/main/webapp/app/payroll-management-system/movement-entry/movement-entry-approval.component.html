@@ -1,0 +1,98 @@
+<div>
+  <jhi-header *ngIf="pageType === 'hr'" [headerName]="'Movement Entry Approvals - Admin'" [shouldHaveHr]="false"> </jhi-header>
+
+  <jhi-header
+    *ngIf="pageType === 'lm'"
+    [headerName]="'Movement Entry Approvals'"
+    [midHeaderName01]="'Approvals'"
+    [midRouterLinkText01]="'/'"
+    [midHeader01hasSessionStorage]="true"
+    [midHeader01SessionStorageKey]="'keepApprovalModalOpen'"
+    [midHeader01SessionStorageValue]="'yes'"
+    [shouldHaveHr]="false"
+  >
+  </jhi-header>
+
+  <div class="">
+    <div class="row mb-2">
+      <div class="col-md-12">
+        <jhi-search-text-box (searchEvent)="search($event)" [placeHolderText]="'Search'" [searchBoxSize]="'20rem'"> </jhi-search-text-box>
+      </div>
+    </div>
+  </div>
+
+  <jhi-alert-error></jhi-alert-error>
+  <jhi-alert></jhi-alert>
+</div>
+
+<div class="" *ngIf="movementEntriesFiltered && movementEntriesFiltered.length > 0">
+  <table class="table table-hover list-text-color" aria-describedby="page-heading">
+    <thead>
+      <tr>
+        <th scope="col">
+          <span>
+            <input class="form-check-input" type="checkbox" [value]="-1" [(ngModel)]="allSelector" (change)="onChange($event)" />
+          </span>
+        </th>
+        <th scope="col"><span>PIN</span></th>
+        <th scope="col"><span>Name</span></th>
+        <th scope="col"><span>Designation</span></th>
+        <th scope="col"><span>Start Date</span></th>
+        <th scope="col"><span>End Date</span></th>
+        <th scope="col"><span>Remarks</span></th>
+        <th scope="col" class="text-end">
+          <div class="d-flex align-items-center justify-content-end" *ngIf="movementEntriesFiltered && movementEntriesFiltered.length > 0">
+            <div class="" ngbTooltip="Approve">
+              <button class="btn btn-success btn-sm" [disabled]="approvalDTO!.listOfIds!.length < 1" (click)="approveSelected()">
+                <fa-icon [icon]="['fas', 'check']"></fa-icon>
+              </button>
+            </div>
+            <div class="ps-1" ngbTooltip="Reject">
+              <button class="btn btn-danger btn-sm" [disabled]="approvalDTO!.listOfIds!.length < 1" (click)="rejectSelected()">
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+          </div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let movementEntry of movementEntriesFiltered; trackBy: trackId" class="text-nowrap">
+        <!--            (click)="onSelect(movementEntry.id)"-->
+        <td>
+          <input
+            class="form-check-input"
+            type="checkbox"
+            [value]="movementEntry.id"
+            [checked]="movementEntry.isChecked"
+            (change)="onChange($event)"
+          />
+        </td>
+        <td>{{ movementEntry.pin }}</td>
+        <td>{{ movementEntry.employeeName }}</td>
+        <td>{{ movementEntry.designationName }}</td>
+        <td>{{ movementEntry.startDate | formatMediumDate }}</td>
+        <td>{{ movementEntry.endDate | formatMediumDate }}</td>
+        <td>
+          <span *ngIf="movementEntry.note?.length > 30; else noteElse" [ngbTooltip]="movementEntry.note">
+            {{ textSlicing(movementEntry.note) }}
+          </span>
+          <ng-template #noteElse>
+            <span>
+              {{ movementEntry.note }}
+            </span>
+          </ng-template>
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div
+  *ngIf="!movementEntriesFiltered || movementEntriesFiltered.length === 0"
+  style="height: 75vh"
+  class="text-center d-flex align-items-center justify-content-center"
+>
+  <img src="../../../content/images/approval.svg" width="400px" height="400px" />
+</div>

@@ -1,0 +1,122 @@
+<div>
+  <jhi-header [headerName]="'Flex Schedules'" [shouldHaveHr]="false"> </jhi-header>
+</div>
+
+<div>
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <!--<div class="alert alert-warning" id="no-result" *ngIf="flexSchedules?.length === 0">
+      <span jhiTranslate="bitsHrPayrollApp.flexSchedule.home.notFound">No flexSchedules found</span>
+  </div>-->
+
+  <div class="card">
+    <div>
+      <form class="justify-content-start align-items-center p-2 px-3" name="editForm" role="form" novalidate [formGroup]="editForm">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="required">Employee</label>
+            <jhi-select-employee-form [employeeIdForm]="employeeIdForm!"></jhi-select-employee-form>
+          </div>
+          <div class="col-md-3 mb-3">
+            <label for="startDate">From</label>
+            <div class="input-group">
+              <input
+                #startDateDp="ngbDatepicker"
+                (ngModelChange)="checkDate()"
+                id="startDate"
+                type="text"
+                class="form-control input-attendance-time-sheet"
+                ngbDatepicker
+                formControlName="startDate"
+              />
+              <span class="input-group-append">
+                <button (click)="startDateDp.toggle()" class="btn btn-secondary" type="button">
+                  <fa-icon icon="calendar-alt"></fa-icon>
+                </button>
+              </span>
+            </div>
+          </div>
+          <div class="col-md-3 mb-3">
+            <label for="endDate">To</label>
+            <div class="input-group">
+              <input
+                #endDateDp="ngbDatepicker"
+                (ngModelChange)="checkDate()"
+                id="endDate"
+                type="text"
+                class="form-control input-attendance-time-sheet"
+                ngbDatepicker
+                formControlName="endDate"
+              />
+              <span class="input-group-append">
+                <button (click)="endDateDp.toggle()" class="btn btn-secondary" type="button">
+                  <fa-icon icon="calendar-alt"></fa-icon>
+                </button>
+              </span>
+              <div *ngIf="isInvalid">
+                <small class="form-text text-danger"> End date can't be smaller then start date. </small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <button
+              [disabled]="editForm.invalid || isInvalid"
+              type="submit"
+              class="btn btn-primary my-2"
+              (click)="loadFromRangeAndFlexSchedule()"
+            >
+              Show
+            </button>
+            <!-- <button  type="submit" class="btn btn-success my-2"
+                     (click)="loadLastThirtyDays()">Show last 30 day's
+                 status
+             </button>-->
+            <button type="submit" class="btn btn-secondary my-2" (click)="clearAll()">Clear</button>
+            <button class="btn btn-outline-success my-2" (click)="exportAsFlexScheduleData()">
+              <fa-icon icon="download"></fa-icon> Excel
+            </button>
+
+            <button class="btn btn-outline-success my-2" (click)="exportAsMissingFlexScheduleData()">
+              <fa-icon icon="download"></fa-icon> Missing Flex Data
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="table-responsive pt-2" id="entities" *ngIf="flexSchedules && flexSchedules.length > 0">
+    <table class="table table-striped list-text-color" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.flexSchedule.employee">Employee</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.flexSchedule.effectiveDate">Effective Date</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.flexSchedule.inTime">In Time</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.flexSchedule.outTime">Out Time</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.flexSchedule.createdBy">Created By</span></th>
+        </tr>
+      </thead>
+      <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+        <tr *ngFor="let flexSchedule of flexSchedules; trackBy: trackId">
+          <td>
+            <div *ngIf="flexSchedule.employeeId">
+              <a [routerLink]="['/employee-custom', flexSchedule.employeeId, 'view']"
+                >{{ flexSchedule.pin }} - {{ flexSchedule.fullName }}</a
+              >
+            </div>
+          </td>
+          <td>{{ flexSchedule.effectiveDate | formatMediumDate }}</td>
+          <td>{{ flexSchedule.inTime | formatTime }}</td>
+          <td>{{ flexSchedule.outTime | formatTime }}</td>
+          <td>
+            {{ flexSchedule.createdByLogin }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

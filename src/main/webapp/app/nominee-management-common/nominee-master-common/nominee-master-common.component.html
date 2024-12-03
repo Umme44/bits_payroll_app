@@ -1,0 +1,98 @@
+<jhi-header
+  [headerName]="'My Nominee'"
+  [midHeader01SessionStorageKey]="'keepMyStuffModalOpen'"
+  [midHeader01SessionStorageValue]="'yes'"
+  [midHeader01hasSessionStorage]="true"
+  [midHeaderName01]="'My Stuff'"
+  [midRouterLinkText01]="'/'"
+>
+</jhi-header>
+<!-- todo: this page would be fixed on entity migration -->
+<ul #nav="ngbNav" [(activeId)]="active" [destroyOnHide]="false" class="nav-tabs" ngbNav>
+  <li [ngbNavItem]="1" (click)="renderNomineePage('general')" >
+    <a class="fw-bold" ngbNavLink>General Nominee</a>
+    <ng-template ngbNavContent>
+      <jhi-nominee-crud-component
+        *ngIf="activeElementName === 'general'"
+        [accessGroup]="'employee'"
+        [nomineeType]="nomineeTypeGeneral"
+        [hideJhiHeader]="true"
+      >
+      </jhi-nominee-crud-component>
+    </ng-template>
+  </li>
+  <li [ngbNavItem]="2" (click)="renderNomineePage('pf')">
+    <a class="fw-bold" ngbNavLink>Provident Fund Nominee</a>
+    <ng-template ngbNavContent>
+      <jhi-pf-nominee-form-crud
+        *ngIf="activeElementName === 'pf'"
+        [hideJhiHeader]="true"
+      >
+      </jhi-pf-nominee-form-crud>
+    </ng-template>
+  </li>
+  <li [ngbNavItem]="3" (click)="renderNomineePage('gf')" >
+    <a class="fw-bold" ngbNavLink>Gratuity Fund Nominee</a>
+    <ng-template ngbNavContent>
+      <jhi-nominee-crud-component
+        *ngIf="activeElementName === 'gf'"
+        [accessGroup]="'employee'"
+        [nomineeType]="nomineeTypeGF"
+        [hideJhiHeader]="true"
+      >
+      </jhi-nominee-crud-component>
+    </ng-template>
+  </li>
+</ul>
+<div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+<!--<div>-->
+<!--  <span-->
+<!--    [hidden]="!nomineeEligibility.eligibleForGeneral"-->
+<!--    class="btn bg-light border-bottom mx-2"-->
+<!--    (click)="renderNomineePage('general')"-->
+<!--    [ngClass]="{ 'badge bg-dark text-white ': activeElementName === 'general' }"-->
+<!--  >-->
+<!--    <img class="svg-image-size-mid mx-auto svg-icon" src="../../../content/images/svg/general-nominee.svg" />-->
+<!--    General Nominee-->
+<!--  </span>-->
+<!--  <span-->
+<!--    [hidden]="!nomineeEligibility.eligibleForPf"-->
+<!--    class="btn bg-light border-bottom mx-2"-->
+<!--    (click)="renderNomineePage('pf')"-->
+<!--    [ngClass]="{ 'badge bg-dark text-white ': activeElementName === 'pf' }"-->
+<!--  >-->
+<!--    <img class="svg-image-size-mid mx-auto svg-icon" src="../../../content/images/svg/pf-nominee.svg" />-->
+<!--    Provident Fund Nominee-->
+<!--  </span>-->
+<!--  <span-->
+<!--    [hidden]="!nomineeEligibility.eligibleForGf"-->
+<!--    class="btn bg-light border-bottom mx-2"-->
+<!--    (click)="renderNomineePage('gf')"-->
+<!--    [ngClass]="{ 'badge bg-dark text-white ': activeElementName === 'gf' }"-->
+<!--  >-->
+<!--    <img class="svg-image-size-mid mx-auto svg-icon" src="../../../content/images/svg/gf-nominee.svg" />-->
+<!--    Gratuity Fund Nominee-->
+<!--  </span>-->
+<!--</div>-->
+
+<!--<div style="min-height: 700px">-->
+<!--  &lt;!&ndash;conditional rendering a) general, b) pf, c) gf&ndash;&gt;-->
+<!--  <jhi-nominee-crud-component-->
+<!--    *ngIf="activeElementName === 'general'"-->
+<!--    [accessGroup]="'employee'"-->
+<!--    [nomineeType]="nomineeTypeGeneral"-->
+<!--    [hideJhiHeader]="true"-->
+<!--  >-->
+<!--  </jhi-nominee-crud-component>-->
+
+<!--  <jhi-pf-nominee-form-crud *ngIf="activeElementName === 'pf'" [hideJhiHeader]="true"> </jhi-pf-nominee-form-crud>-->
+
+<!--  <jhi-nominee-crud-component-->
+<!--    *ngIf="activeElementName === 'gf'"-->
+<!--    [accessGroup]="'employee'"-->
+<!--    [nomineeType]="nomineeTypeGF"-->
+<!--    [hideJhiHeader]="true"-->
+<!--  >-->
+<!--  </jhi-nominee-crud-component>-->
+<!--</div>-->

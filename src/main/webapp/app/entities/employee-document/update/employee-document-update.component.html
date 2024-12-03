@@ -1,0 +1,147 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-employee-document-heading"
+        data-cy="EmployeeDocumentsCreateUpdateHeading"
+        jhiTranslate="bitsHrPayrollApp.employeeDocument.home.createOrEditLabel"
+      >
+        Create or edit a Employee Documents
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3">
+          <div class="col-12 form-group">
+            <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeDocument.pin" for="field_pin">Pin</label>
+            <input type="text" class="form-control" name="pin" id="field_pin" data-cy="pin" formControlName="pin" required="required" />
+            <div *ngIf="editForm.get('pin')!.invalid && (editForm.get('pin')!.dirty || editForm.get('pin')!.touched)">
+              <small class="form-text text-danger" *ngIf="editForm.get('pin')?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-12 form-group">
+            <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeDocument.fileName" for="field_fileName">File Name</label>
+            <input
+              type="text"
+              class="form-control"
+              name="fileName"
+              id="field_fileName"
+              data-cy="fileName"
+              formControlName="fileName"
+              required="required"
+            />
+            <div *ngIf="editForm.get('fileName')!.invalid && (editForm.get('fileName')!.dirty || editForm.get('fileName')!.touched)">
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('fileName')?.errors?.required"
+                jhiTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-12 form-group">
+            <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeDocument.remarks" for="field_remarks">Remarks</label>
+            <input
+              type="text"
+              class="form-control"
+              name="remarks"
+              id="field_remarks"
+              data-cy="remarks"
+              formControlName="remarks"
+              required="required"
+            />
+            <div *ngIf="editForm.get('remarks')!.invalid && (editForm.get('remarks')!.dirty || editForm.get('remarks')!.touched)">
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('remarks')?.errors?.required"
+                jhiTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12 form-group d-flex">
+            <div class="form-check form-switch">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                role="switch"
+                id="field_hasEmployeeVisibility"
+                formControlName="hasEmployeeVisibility"
+                checked="{{ employeeDocument.hasEmployeeVisibility }}"
+              />
+            </div>
+            <label
+              class="form-label"
+              jhiTranslate="bitsHrPayrollApp.employeeDocument.hasEmployeeVisibility"
+              for="field_hasEmployeeVisibility"
+            >Has Employee Visibility</label
+            >
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <!-- file select here -->
+          <div class="col-12 form-group">
+            <label class="form-control-label required" for="field_file">File</label>
+            <div>
+              <input
+                #takeInput
+                type="file"
+                id="file_file"
+                (change)="setFileData($event, 'file', false)"
+                jhiTranslate="entity.action.addblob"
+              />
+              <div *ngIf="editForm.get('file')!.invalid && (editForm.get('file')!.dirty || editForm.get('file')!.touched)">
+                <small
+                  class="form-text text-danger"
+                  *ngIf="editForm.get('file')?.errors?.required"
+                  jhiTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+              </div>
+              <div *ngIf="inValidFile">
+                <small class="form-text text-danger">
+                  {{ inValidFileErrorMsg }}
+                </small>
+              </div>
+            </div>
+
+            <input type="hidden" class="form-control" name="file" id="field_file" formControlName="file" />
+            <input type="hidden" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

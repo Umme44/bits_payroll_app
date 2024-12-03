@@ -1,0 +1,41 @@
+{
+  "changelogDate": "20220411040802",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "user_feedback",
+  "fields": [
+    {
+      "fieldName": "rating",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required", "min", "max"],
+      "fieldValidateRulesMax": "10",
+      "fieldValidateRulesMin": "1"
+    },
+    {
+      "fieldName": "suggestion",
+      "fieldType": "String",
+      "fieldValidateRules": ["minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "255",
+      "fieldValidateRulesMinlength": "0"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "UserFeedback",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "userFeedback",
+      "ownerSide": true,
+      "relationshipName": "user",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": []
+    }
+  ],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

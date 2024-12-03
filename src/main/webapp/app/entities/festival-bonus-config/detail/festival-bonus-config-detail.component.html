@@ -1,0 +1,80 @@
+<jhi-header
+  [headerName]="'Festival Bonus Config Details'"
+  [midHeaderName01]="'Festival Bonus Configs'"
+  [midRouterLinkText01]="'/festival-bonus-config'">
+</jhi-header>
+
+<div>
+  <div>
+    <div *ngIf="festivalBonusConfig">
+      <!--<h2 data-cy="festivalBonusConfigDetailsHeading">
+        <span jhiTranslate="bitsHrPayrollApp.festivalBonusConfig.detail.title">Festival Bonus Config</span>
+      </h2>
+-->
+      <!--<hr />-->
+      <jhi-alert-error></jhi-alert-error>
+      <jhi-alert></jhi-alert>
+
+      <dl class="row font-sm">
+        <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.festivalBonusConfig.employeeCategory">Employee Category</span>
+        </dt>
+        <dd class="col-md-3">
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.EmployeeCategory.' + festivalBonusConfig.employeeCategory }}">{{
+            festivalBonusConfig.employeeCategory}}</span>
+        </dd>
+        <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.festivalBonusConfig.percentageFromGross">Percentage From Gross</span>
+        </dt>
+        <dd class="col-md-3">
+          <span>{{ festivalBonusConfig.percentageFromGross }}%</span>
+        </dd>
+      </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--  <dl class="font-sm jh-entity-details" >
+
+        &lt;!&ndash;<dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd><span>{{ festivalBonusConfig.id }}</span></dd>&ndash;&gt;
+
+        <div class="col-12 d-flex">
+          <div class="row">
+            <div class="col-md-3">
+              <dt ><span jhiTranslate="bitsHrPayrollApp.festivalBonusConfig.employeeCategory">Employee Category</span></dt>
+            </div>
+            <div class="col-md-3">
+              <dd ><span jhiTranslate="{{ 'bitsHrPayrollApp.EmployeeCategory.' + festivalBonusConfig.employeeCategory }}">{{
+                festivalBonusConfig.employeeCategory}}</span></dd>
+            </div>
+            <div class="col-md-3">
+              <dt ><span jhiTranslate="bitsHrPayrollApp.festivalBonusConfig.percentageFromGross">Percentage From Gross</span></dt>
+            </div>
+            <div class="col-md-3">
+              <dd ><span>{{ festivalBonusConfig.percentageFromGross }}</span></dd>
+            </div>
+          </div>
+        </div>
+
+
+      </dl>-->
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/festival-bonus-config', festivalBonusConfig.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+
+    </div>
+  </div>
+</div>

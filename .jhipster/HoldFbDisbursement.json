@@ -1,0 +1,47 @@
+{
+  "changelogDate": "20220411061448",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "hold_fb_disbursement",
+  "fields": [
+    {
+      "fieldName": "disbursedAt",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "remarks",
+      "fieldType": "String",
+      "fieldValidateRules": ["minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "255",
+      "fieldValidateRulesMinlength": "0"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "HoldFbDisbursement",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "holdFbDisbursement",
+      "ownerSide": true,
+      "relationshipName": "disbursedBy",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "festivalBonusDetails",
+      "otherEntityRelationshipName": "holdFbDisbursement",
+      "relationshipName": "festivalBonusDetail",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    }
+  ],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

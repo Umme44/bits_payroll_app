@@ -1,0 +1,295 @@
+<div>
+  <h2 id="page-heading" data-cy="EmploymentHistoryHeading">
+    <span jhiTranslate="bitsHrPayrollApp.employmentHistory.home.title">Employment Histories</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="bitsHrPayrollApp.employmentHistory.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-employment-history"
+        [routerLink]="['/employment-history/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="bitsHrPayrollApp.employmentHistory.home.createLabel"> Create a new Employment History </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="employmentHistories?.length === 0">
+    <span jhiTranslate="bitsHrPayrollApp.employmentHistory.home.notFound">No Employment Histories found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="employmentHistories && employmentHistories.length > 0">
+    <table class="table table-hover list-text-color" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">ID</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="referenceId">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employmentHistory.referenceId">Reference Id</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="pin">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employmentHistory.pin">Pin</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="eventType">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employmentHistory.eventType">Event Type</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="effectiveDate">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employmentHistory.effectiveDate">Effective Date</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="previousMainGrossSalary">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employmentHistory.previousMainGrossSalary">Previous Main Gross Salary</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="currentMainGrossSalary">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employmentHistory.currentMainGrossSalary">Current Main Gross Salary</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="previousWorkingHour">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employmentHistory.previousWorkingHour">Previous Working Hour</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="changedWorkingHour">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employmentHistory.changedWorkingHour">Changed Working Hour</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="isModifiable">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employmentHistory.isModifiable">Is Modifiable</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="previousDesignation.id">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employmentHistory.previousDesignation">Previous Designation</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="changedDesignation.id">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employmentHistory.changedDesignation">Changed Designation</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="previousDepartment.id">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employmentHistory.previousDepartment">Previous Department</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="changedDepartment.id">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employmentHistory.changedDepartment">Changed Department</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="previousReportingTo.id">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employmentHistory.previousReportingTo">Previous Reporting To</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="changedReportingTo.id">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employmentHistory.changedReportingTo">Changed Reporting To</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="employee.id">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employmentHistory.employee">Employee</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="previousUnit.id">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employmentHistory.previousUnit">Previous Unit</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="changedUnit.id">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employmentHistory.changedUnit">Changed Unit</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="previousBand.id">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employmentHistory.previousBand">Previous Band</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="changedBand.id">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employmentHistory.changedBand">Changed Band</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let employmentHistory of employmentHistories; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/employment-history', employmentHistory.id, 'view']">{{ employmentHistory.id }}</a>
+          </td>
+          <td>{{ employmentHistory.referenceId }}</td>
+          <td>{{ employmentHistory.pin }}</td>
+          <td jhiTranslate="{{ 'bitsHrPayrollApp.EventType.' + employmentHistory.eventType }}">{{ employmentHistory.eventType }}</td>
+          <td>{{ employmentHistory.effectiveDate | formatMediumDate }}</td>
+          <td>{{ employmentHistory.previousMainGrossSalary }}</td>
+          <td>{{ employmentHistory.currentMainGrossSalary }}</td>
+          <td>{{ employmentHistory.previousWorkingHour }}</td>
+          <td>{{ employmentHistory.changedWorkingHour }}</td>
+          <td>{{ employmentHistory.isModifiable }}</td>
+          <td>
+            <div *ngIf="employmentHistory.previousDesignation">
+              <a [routerLink]="['/designation', employmentHistory.previousDesignation.id, 'view']">{{
+                employmentHistory.previousDesignation.id
+              }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="employmentHistory.changedDesignation">
+              <a [routerLink]="['/designation', employmentHistory.changedDesignation.id, 'view']">{{
+                employmentHistory.changedDesignation.id
+              }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="employmentHistory.previousDepartment">
+              <a [routerLink]="['/department', employmentHistory.previousDepartment.id, 'view']">{{
+                employmentHistory.previousDepartment.id
+              }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="employmentHistory.changedDepartment">
+              <a [routerLink]="['/department', employmentHistory.changedDepartment.id, 'view']">{{
+                employmentHistory.changedDepartment.id
+              }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="employmentHistory.previousReportingTo">
+              <a [routerLink]="['/employee', employmentHistory.previousReportingTo.id, 'view']">{{
+                employmentHistory.previousReportingTo.id
+              }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="employmentHistory.changedReportingTo">
+              <a [routerLink]="['/employee', employmentHistory.changedReportingTo.id, 'view']">{{
+                employmentHistory.changedReportingTo.id
+              }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="employmentHistory.employee">
+              <a [routerLink]="['/employee', employmentHistory.employee.id, 'view']">{{ employmentHistory.employee.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="employmentHistory.previousUnit">
+              <a [routerLink]="['/unit', employmentHistory.previousUnit.id, 'view']">{{ employmentHistory.previousUnit.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="employmentHistory.changedUnit">
+              <a [routerLink]="['/unit', employmentHistory.changedUnit.id, 'view']">{{ employmentHistory.changedUnit.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="employmentHistory.previousBand">
+              <a [routerLink]="['/band', employmentHistory.previousBand.id, 'view']">{{ employmentHistory.previousBand.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="employmentHistory.changedBand">
+              <a [routerLink]="['/band', employmentHistory.changedBand.id, 'view']">{{ employmentHistory.changedBand.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/employment-history', employmentHistory.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/employment-history', employmentHistory.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(employmentHistory)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="employmentHistories && employmentHistories.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

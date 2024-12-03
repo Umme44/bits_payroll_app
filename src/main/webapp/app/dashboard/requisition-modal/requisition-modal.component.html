@@ -1,0 +1,91 @@
+<div class="modal-header border-none">
+  <h4 class="modal-title"></h4>
+  <button
+    type="button"
+    class="btn-close py-1 outline-none"
+    data-dismiss="modal"
+    aria-hidden="true"
+    (click)="commonService.dismiss()"
+  ></button>
+</div>
+
+<div class="modal-body dashboard-modal">
+
+  <div class="container">
+    <div class="row d-flex" style="flex-wrap: wrap; gap: 2%">
+      <div style="flex-basis: 32%;" [hidden]="true" class="card col-active btn color-ash mt-0 mb-1 border-none box-shadow"
+           (click)="commonService.routerNavigation('/user-vehicle-requisition')">
+        <fa-icon class="icon icon-size-mid pt-4" icon="car"></fa-icon>
+        <div class="card-body pt-0 pb-2 px-0">
+          <div class="card-title text-center mb-0 font-sm">Car Requisition</div>
+        </div>
+      </div>
+
+      <div style="flex-basis: 32%;" [hidden]="true" class="card col-active btn color-ash mt-0 mb-1 border-none box-shadow"
+           (click)="commonService.routerNavigation('/room-requisition/user')">
+        <fa-icon class="icon icon-size-mid pt-4" icon="file-signature"></fa-icon>
+        <div class="card-body pt-0 pb-2 px-0">
+          <div class="card-title text-center mb-0 font-sm">Room Requisition</div>
+        </div>
+      </div>
+
+      <div style="flex-basis: 32%;" class="card col-active btn color-ash mt-0 mb-1 border-none box-shadow"
+           [ngClass]="canRaiseRRFOnBehalf ? 'col-active' : 'disabled'"
+           [hidden]="!isRrfEnabled"
+           (click)="navigateToRRFOnBehalfPage('/recruitment-requisition-form/raise-on-behalf')">
+        <img class="svg-image-size-mid mx-auto dashboard-svg-icon "
+             src="../../../content/images/svg/rrf-on-behalf.svg"/>
+        <div class="card-body pt-0 pb-2 px-0">
+          <div class="card-title text-center mb-0 font-sm">Recruitment Requisition (Behalf)</div>
+        </div>
+      </div>
+
+      <div style="flex-basis: 32%;" class="card col-active btn color-ash mt-0 mb-1 border-none box-shadow"
+           [ngClass]="canRaiseRRF ? 'col-active' : 'disabled'"
+           [hidden]="!isRrfEnabled"
+           (click)="navigateToRRFPage('/recruitment-requisition-form/user')">
+        <img class="svg-image-size-mid mx-auto dashboard-svg-icon "
+             src="../../../content/images/svg/rrf-approval.svg"/>
+
+        <div class="card-body pt-0 pb-2 px-0">
+          <div class="card-title text-center mb-0 font-sm">Recruitment Requisition (Own)</div>
+        </div>
+      </div>
+      <div style="flex-basis: 32%;" class="card col-active btn color-ash mt-0 mb-1 border-none box-shadow"
+           routerLink="/procurement-requisition/user">
+        <img class="dashboard-svg-icon"
+             src="../../../content/images/svg/procurement-requisition.svg" style="height: 70px;margin-bottom: 10px;margin-top: 16px;
+}"/>
+        <div class="card-body pt-0 pb-2 px-0">
+          <div class="card-title text-center mb-0 font-sm">Procurement Requisition</div>
+        </div>
+      </div>
+
+      <div style="flex-basis: 32%;" class="card col-active btn color-ash mt-0 mb-1 border-none box-shadow"
+           (click)="commonService.routerNavigation('/employee-docs')">
+
+        <img class="svg-image-size-mid mx-auto dashboard-svg-icon "
+             src="../../../content/images/svg/tax-statement.svg"/>
+
+        <div class="card-body pt-0 pb-2 px-0">
+          <div class="card-title text-center mb-0 font-sm">Employee Docs</div>
+        </div>
+      </div>
+
+      <div style="flex-basis: 32%;" class="card col-active btn color-ash mt-0 mb-1 border-none box-shadow">
+        <a class="text-decoration-none" href="https://refreshments.bracits.com" target="_blank">
+          <img class="svg-image-size-mid mx-auto dashboard-svg-icon "
+               src="../../../content/images/svg/utensils-solid.svg "/>
+
+          <div class="card-body pt-0 pb-2 px-0">
+            <div class="card-title text-center mb-0 font-sm">Refreshment Tool</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div class="modal-footer p-3 border-none">
+  <!--<button type="button" class="btn btn-sm btn-outline-dark" (click)="commonService.close()">Close</button>-->
+</div>

@@ -1,0 +1,564 @@
+<jhi-header [headerName]="'Nominee Details'" [midHeaderName01]="'Nominees'" [midRouterLinkText01]="'/nominee'"> </jhi-header>
+
+<div class="justify-content-center">
+  <jhi-alert-error></jhi-alert-error>
+  <div class="row py-3" *ngIf="nomineesMaster">
+    <div class="col-12 table-border">
+      <div style="padding-top: 15px">
+        <p>Employee Information</p>
+        <div class="row">
+          <div class="col-4">
+            <div class="row">
+              <div class="col-4">
+                <p style="font-size: 0.7rem; font-weight: bold">Name</p>
+              </div>
+              <div class="col-8">
+                <p style="font-size: 0.75rem">: {{ nomineesMaster!.fullName! }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="row">
+              <div class="col-4">
+                <p style="font-size: 0.7rem; font-weight: bold">PIN</p>
+              </div>
+              <div class="col-8">
+                <p style="font-size: 0.75rem">: {{ nomineesMaster!.pin! }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="row">
+              <div class="col-4">
+                <p style="font-size: 0.7rem; font-weight: bold">Category</p>
+              </div>
+              <div class="col-8">
+                <p style="font-size: 0.75rem">
+                  :
+                  <span jhiTranslate="{{ 'bitsHrPayrollApp.EmployeeCategory.' + nomineesMaster!.employeeCategory }}">{{
+                    nomineesMaster!.employeeCategory!
+                  }}</span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="row">
+              <div class="col-4">
+                <p style="font-size: 0.7rem; font-weight: bold">Department</p>
+              </div>
+              <div class="col-8">
+                <p style="font-size: 0.75rem">: {{ nomineesMaster!.departmentName! }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="row">
+              <div class="col-4">
+                <p style="font-size: 0.7rem; font-weight: bold">Designation</p>
+              </div>
+              <div class="col-8">
+                <p style="font-size: 0.75rem">: {{ nomineesMaster!.designationName! }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="row">
+              <div class="col-4">
+                <p style="font-size: 0.7rem; font-weight: bold">Unit</p>
+              </div>
+              <div class="col-8">
+                <p style="font-size: 0.75rem">: {{ nomineesMaster!.unitName! }}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-4">
+            <div class="row">
+              <div class="col-4">
+                <p style="font-size: 0.7rem; font-weight: bold">Joining Date</p>
+              </div>
+              <div class="col-8">
+                <p style="font-size: 0.75rem">: {{ nomineesMaster!.dateOfJoining | formatMediumDate }}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-4">
+            <div class="row">
+              <div class="col-4">
+                <p style="font-size: 0.7rem; font-weight: bold">Confirmation Date</p>
+              </div>
+              <div class="col-8">
+                <p style="font-size: 0.75rem">: {{ nomineesMaster!.dateOfConfirmation | formatMediumDate }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row py-3" *ngIf="generalNominees.length > 0">
+    <div *ngIf="generalNominees" class="col-12 table-border">
+      <p style="padding-top: 15px" class="ps-2">General Nominee</p>
+      <div class="table-responsive pb-2" *ngIf="generalNominees && generalNominees.length > 0">
+        <table class="table table-hover table-sm my-1 text-center">
+          <thead>
+            <tr>
+              <th scope="col" class="text-center"><span>Status</span></th>
+              <th scope="col" class="text-left"><span>Name</span></th>
+              <th scope="col" class="text-left"><span>DoB</span></th>
+              <th scope="col" class="text-left"><span jhiTranslate="bitsHrPayrollApp.nominee.presentAddress">Present address</span></th>
+              <th scope="col" class="text-left"><span jhiTranslate="bitsHrPayrollApp.nominee.permanentAddress">Permanent address</span></th>
+              <th scope="col" class="text-left"><span>Relationship</span></th>
+              <th scope="col" class="text-end"><span jhiTranslate="bitsHrPayrollApp.nominee.sharePercentage">Share</span></th>
+              <th scope="col" class="text-end">
+                <div
+                  *ngIf="
+                    nomineesMaster.isAllGeneralNomineeApproved === 'PENDING' ||
+                    nomineesMaster.isAllGeneralNomineeApproved === 'NOT_APPROVED' ||
+                    nomineesMaster.isAllGeneralNomineeApproved === 'PARTIAL_APPROVED'
+                  "
+                  class="d-inline"
+                >
+                  <div class="d-inline">
+                    <!--<button class="btn btn-outline-primary btn-sm float-end camel-case btn-pos btn-add me-3"
+                                            ngbTooltip="Add new general nominee"
+                                            placement="left"
+                                            [routerLink]="['/nominee/general/new']">
+                                        <fa-icon icon="plus"></fa-icon>
+                                    </button>-->
+                    <button
+                      *ngIf="nomineesMaster.generalSharePercentage === 100"
+                      class="btn btn-outline-primary btn-sm text-end camel-case btn-pos btn-add"
+                      (click)="approvedGeneralNominees()"
+                    >
+                      Hard copy received
+                    </button>
+                  </div>
+                </div>
+                <div *ngIf="nomineesMaster.isAllGeneralNomineeApproved === 'ALL_APPROVED'" class="text-end mr-4">
+                  <div class="d-inline">
+                    <span *ngIf="nomineesMaster.isAllGeneralNomineeApproved === 'ALL_APPROVED'" ngbTooltip="Hard copy received">
+                      <fa-icon icon="check-circle" style="color: #51e951; font-size: 1rem"></fa-icon>
+                    </span>
+                  </div>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let nominee of generalNominees">
+              <td class="text-center">
+                <div *ngIf="nominee.status === 'PENDING'">Pending</div>
+                <div class="text-success" *ngIf="nominee.status === 'APPROVED'">
+                  <fa-icon icon="check"></fa-icon>
+                </div>
+                <div *ngIf="nominee.status === 'NOT_APPROVED'">
+                  <fa-icon icon="times"></fa-icon>
+                </div>
+              </td>
+              <td class="text-start">
+                <span *ngIf="nominee.nomineeName!.length > 25; else nomineeName" [ngbTooltip]="nominee.nomineeName">
+                  {{ addressSlice(nominee.nomineeName!) }}
+                </span>
+                <ng-template #nomineeName>
+                  <span>
+                    {{ nominee.nomineeName }}
+                  </span>
+                </ng-template>
+              </td>
+              <td class="text-nowrap text-start">{{ nominee.dateOfBirth }}</td>
+              <td *ngIf="nominee.presentAddress" class="text-nowrap text-start">
+                <span *ngIf="nominee.presentAddress!.length > 25; else presentAddressTipContent" [ngbTooltip]="nominee.presentAddress">
+                  {{ addressSlice(nominee.presentAddress!) }}
+                </span>
+                <ng-template #presentAddressTipContent>
+                  <span>
+                    {{ nominee.presentAddress }}
+                  </span>
+                </ng-template>
+              </td>
+              <td *ngIf="nominee.permanentAddress" class="text-nowrap text-start">
+                <span
+                  *ngIf="nominee.permanentAddress!.length > 25; else permanentAddressTipContent"
+                  [ngbTooltip]="nominee.permanentAddress"
+                >
+                  {{ addressSlice(nominee.permanentAddress!) }}
+                </span>
+                <ng-template #permanentAddressTipContent>
+                  <span>
+                    {{ nominee.permanentAddress }}
+                  </span>
+                </ng-template>
+              </td>
+              <td *ngIf="nominee.relationshipWithEmployee" class="text-nowrap text-start">
+                <span
+                  *ngIf="nominee.relationshipWithEmployee!.length > 25; else relationshipWithEmployee"
+                  [ngbTooltip]="nominee.relationshipWithEmployee"
+                >
+                  {{ addressSlice(nominee.relationshipWithEmployee!) }}
+                </span>
+                <ng-template #relationshipWithEmployee>
+                  <span>
+                    {{ nominee.relationshipWithEmployee }}
+                  </span>
+                </ng-template>
+              </td>
+              <td class="text-end">{{ nominee.sharePercentage }}%</td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <button type="submit" class="btn btn-info btn-sm m-1" (click)="openNomineeDetails(nominee)">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline"></span>
+                  </button>
+                  <button type="submit" (click)="redirectToUpdateGeneralNominee(nominee)" class="btn btn-primary btn-sm m-1">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline"></span>
+                  </button>
+                  <button type="submit" class="btn btn-danger btn-sm m-1" (click)="delete(nominee)">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline"></span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="6" class="font-weight-bold text-end">
+                <span class="">Total</span>
+                <span class="ps-3"></span>
+              </td>
+              <td colspan="1" class="font-weight-bold text-end">
+                <span>{{ nomineesMaster.generalSharePercentage }}%</span>
+              </td>
+
+              <td colspan="1" class="font-weight-bold text-end">
+                <span class="ms-5 align-items-end">
+                  <button
+                    type="button"
+                    [disabled]="nomineesMaster.generalSharePercentage! < 100"
+                    (click)="redirectToNomineeReport('GENERAL', nomineesMaster!)"
+                    class="btn btn-outline-primary"
+                  >
+                    Nominee Report
+                    <fa-icon class="fa fa-long-arrow-right" icon="arrow-left"></fa-icon>
+                  </button>
+                </span>
+              </td>
+            </tr>
+
+            <tr></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="row py-3" *ngIf="gfNominees.length > 0">
+    <div *ngIf="gfNominees" class="col-12 table-border">
+      <p style="padding-top: 15px" class="ps-2">Gratuity Fund Nominee</p>
+      <div class="table-responsive pb-2" *ngIf="gfNominees && gfNominees.length > 0">
+        <table class="table table-hover table-sm my-1 text-center">
+          <thead>
+            <tr>
+              <th scope="col" class="text-center"><span>Status</span></th>
+              <th scope="col" class="text-left"><span>Name</span></th>
+              <th scope="col" class="text-left"><span>DoB</span></th>
+              <th scope="col" class="text-left"><span jhiTranslate="bitsHrPayrollApp.nominee.presentAddress">Present address</span></th>
+              <th scope="col" class="text-left"><span jhiTranslate="bitsHrPayrollApp.nominee.permanentAddress">Permanent address</span></th>
+              <th scope="col" class="text-left"><span>Relationship</span></th>
+              <th scope="col" class="text-end"><span jhiTranslate="bitsHrPayrollApp.nominee.sharePercentage">Share</span></th>
+              <th scope="col" class="text-end">
+                <div
+                  *ngIf="
+                    nomineesMaster.isAllGFNomineeApproved === 'PENDING' ||
+                    nomineesMaster.isAllGFNomineeApproved === 'NOT_APPROVED' ||
+                    nomineesMaster.isAllGFNomineeApproved === 'PARTIAL_APPROVED'
+                  "
+                  class="d-inline"
+                >
+                  <div class="d-inline">
+                    <!-- <button class="btn btn-outline-primary btn-sm float-end camel-case btn-pos btn-add me-3"
+                                            ngbTooltip="Add new gf nominee"
+                                            placement="left"
+                                            [routerLink]="['/nominee/gf/new']">
+                                        <fa-icon icon="plus"></fa-icon>
+                                    </button>-->
+                    <button
+                      *ngIf="nomineesMaster.gfSharePercentage! === 100"
+                      class="btn btn-outline-primary btn-sm float-end camel-case btn-pos btn-add"
+                      (click)="approvedGFNominees()"
+                    >
+                      Hard copy received
+                    </button>
+                  </div>
+                </div>
+
+                <div *ngIf="nomineesMaster.isAllGFNomineeApproved === 'ALL_APPROVED'" class="text-end mr-4">
+                  <div class="d-inline">
+                    <span *ngIf="nomineesMaster.isAllGFNomineeApproved === 'ALL_APPROVED'" ngbTooltip="Hard copy received">
+                      <fa-icon icon="check-circle" style="color: #51e951; font-size: 1rem"></fa-icon>
+                    </span>
+                  </div>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let nominee of gfNominees">
+              <td class="text-center">
+                <div *ngIf="nominee.status === 'PENDING'">Pending</div>
+                <div class="text-success" *ngIf="nominee.status === 'APPROVED'">
+                  <fa-icon icon="check"></fa-icon>
+                </div>
+                <div *ngIf="nominee.status === 'NOT_APPROVED'">
+                  <fa-icon icon="times"></fa-icon>
+                </div>
+              </td>
+              <td class="text-start">
+                <span *ngIf="nominee.nomineeName!.length > 25; else nomineeName" [ngbTooltip]="nominee.nomineeName">
+                  {{ addressSlice(nominee.nomineeName!) }}
+                </span>
+                <ng-template #nomineeName>
+                  <span>
+                    {{ nominee.nomineeName }}
+                  </span>
+                </ng-template>
+              </td>
+              <td class="text-nowrap text-start">{{ nominee.dateOfBirth }}</td>
+              <td *ngIf="nominee.presentAddress" class="text-nowrap text-start">
+                <span *ngIf="nominee.presentAddress!.length > 25; else presentAddressTipContent" [ngbTooltip]="nominee.presentAddress">
+                  {{ addressSlice(nominee.presentAddress!) }}
+                </span>
+                <ng-template #presentAddressTipContent>
+                  <span>
+                    {{ nominee.presentAddress }}
+                  </span>
+                </ng-template>
+              </td>
+              <td *ngIf="nominee.permanentAddress" class="text-nowrap text-start">
+                <span
+                  *ngIf="nominee.permanentAddress!.length > 25; else permanentAddressTipContent"
+                  [ngbTooltip]="nominee.permanentAddress"
+                >
+                  {{ addressSlice(nominee.permanentAddress!) }}
+                </span>
+                <ng-template #permanentAddressTipContent>
+                  <span>
+                    {{ nominee.permanentAddress }}
+                  </span>
+                </ng-template>
+              </td>
+              <td *ngIf="nominee.relationshipWithEmployee" class="text-nowrap text-start">
+                <span
+                  *ngIf="nominee.relationshipWithEmployee!.length > 25; else relationshipWithEmployee"
+                  [ngbTooltip]="nominee.relationshipWithEmployee"
+                >
+                  {{ addressSlice(nominee.relationshipWithEmployee!) }}
+                </span>
+                <ng-template #relationshipWithEmployee>
+                  <span>
+                    {{ nominee.relationshipWithEmployee }}
+                  </span>
+                </ng-template>
+              </td>
+
+              <td class="text-end">{{ nominee.sharePercentage }}%</td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <button type="submit" class="btn btn-info btn-sm m-1" (click)="openNomineeDetails(nominee)">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline"></span>
+                  </button>
+                  <button type="submit" (click)="redirectToUpdateGFNominee(nominee)" class="btn btn-primary btn-sm m-1">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline"></span>
+                  </button>
+                  <button type="submit" class="btn btn-danger btn-sm m-1" (click)="delete(nominee)">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline"></span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="6" class="font-weight-bold text-end">
+                <span class="">Total</span>
+                <span class="ps-3"></span>
+              </td>
+              <td colspan="1" class="font-weight-bold text-end">
+                <span>{{ nomineesMaster.gfSharePercentage }}%</span>
+              </td>
+
+              <td colspan="1" class="font-weight-bold text-end">
+                <span class="ml-5 align-items-end">
+                  <button
+                    type="button"
+                    [disabled]="nomineesMaster.gfSharePercentage! < 100"
+                    (click)="redirectToNomineeReport('GRATUITY_FUND', nomineesMaster!)"
+                    class="btn btn-outline-primary"
+                  >
+                    Nominee Report
+                    <fa-icon class="fa fa-long-arrow-right" icon="arrow-left"></fa-icon>
+                  </button>
+                </span>
+              </td>
+            </tr>
+
+            <tr></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="row py-3" *ngIf="pfNominees.length > 0">
+    <div *ngIf="pfNominees" class="col-12 table-border">
+      <p style="padding-top: 15px" class="ps-2">Provident Fund Nominee</p>
+      <div class="table-responsive pb-2" *ngIf="pfNominees && pfNominees.length > 0">
+        <table class="table table-hover table-sm my-1 text-center">
+          <thead>
+            <tr>
+              <th scope="col" class="text-center"><span>Status</span></th>
+              <th scope="col" class="text-left"><span>Name</span></th>
+              <th scope="col" class="text-left"><span>DoB</span></th>
+              <th scope="col" class="text-left"><span jhiTranslate="bitsHrPayrollApp.nominee.presentAddress">Present address</span></th>
+              <th scope="col" class="text-left"><span jhiTranslate="bitsHrPayrollApp.nominee.permanentAddress">Permanent address</span></th>
+              <th scope="col" class="text-left"><span>Relationship</span></th>
+              <th scope="col" class="text-end"><span jhiTranslate="bitsHrPayrollApp.nominee.sharePercentage">Share</span></th>
+              <th scope="col" class="text-end">
+                <div
+                  *ngIf="
+                    nomineesMaster.isAllPfNomineeApproved === 'PENDING' ||
+                    nomineesMaster.isAllPfNomineeApproved === 'NOT_APPROVED' ||
+                    nomineesMaster.isAllPfNomineeApproved === 'PARTIAL_APPROVED'
+                  "
+                  class="d-inline"
+                >
+                  <div class="d-inline">
+                    <!-- <button class="btn btn-outline-primary btn-sm float-right camel-case btn-pos btn-add mr-3"
+                                            ngbTooltip="Add new pf nominee"
+                                            placement="left"
+                                            [routerLink]="['/pf-nominee/new']">
+                                        <fa-icon icon="plus"></fa-icon>
+                                    </button>-->
+                    <button
+                      *ngIf="nomineesMaster.pfSharePercentage === 100"
+                      class="btn btn-outline-primary btn-sm float-end camel-case btn-pos btn-add"
+                      (click)="approvedPFNominees()"
+                    >
+                      Hard copy received
+                    </button>
+                  </div>
+                </div>
+                <div *ngIf="nomineesMaster.isAllPfNomineeApproved === 'ALL_APPROVED'" class="text-end mr-4">
+                  <div class="d-inline">
+                    <span *ngIf="nomineesMaster.isAllPfNomineeApproved === 'ALL_APPROVED'" ngbTooltip="Hard copy received">
+                      <fa-icon icon="check-circle" style="color: #51e951; font-size: 1rem"></fa-icon>
+                    </span>
+                  </div>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let nominee of pfNominees">
+              <td class="text-center">
+                <div *ngIf="!nominee.isApproved">Pending</div>
+                <div class="text-success" *ngIf="nominee.isApproved">
+                  <fa-icon icon="check"></fa-icon>
+                </div>
+              </td>
+              <td class="text-start">
+                <span *ngIf="nominee.fullName!.length > 25; else fullName" [ngbTooltip]="nominee.fullName">
+                  {{ addressSlice(nominee.fullName!) }}
+                </span>
+                <ng-template #fullName>
+                  <span>
+                    {{ nominee.fullName }}
+                  </span>
+                </ng-template>
+              </td>
+              <td class="text-start text-nowrap">{{ nominee.dateOfBirth }}</td>
+              <td *ngIf="nominee.presentAddress" class="text-nowrap text-start">
+                <span *ngIf="nominee.presentAddress!.length > 25; else presentAddressTipContent" [ngbTooltip]="nominee.presentAddress">
+                  {{ addressSlice(nominee.presentAddress!) }}
+                </span>
+                <ng-template #presentAddressTipContent>
+                  <span>
+                    {{ nominee.presentAddress }}
+                  </span>
+                </ng-template>
+              </td>
+              <td *ngIf="nominee.permanentAddress" class="text-nowrap text-start">
+                <span
+                  *ngIf="nominee.permanentAddress!.length > 25; else permanentAddressTipContent"
+                  [ngbTooltip]="nominee.permanentAddress"
+                >
+                  {{ addressSlice(nominee.permanentAddress!) }}
+                </span>
+                <ng-template #permanentAddressTipContent>
+                  <span>
+                    {{ nominee.permanentAddress }}
+                  </span>
+                </ng-template>
+              </td>
+              <td *ngIf="nominee.relationship" class="text-nowrap text-start">
+                <span *ngIf="nominee.relationship!.length > 25; else relationship" [ngbTooltip]="nominee.relationship">
+                  {{ addressSlice(nominee.relationship!) }}
+                </span>
+                <ng-template #relationship>
+                  <span>
+                    {{ nominee.relationship }}
+                  </span>
+                </ng-template>
+              </td>
+              <td class="text-end">{{ nominee.sharePercentage }}%</td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <button type="submit" class="btn btn-info btn-sm m-1" (click)="openPFNomineeDetails(nominee)">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline"></span>
+                  </button>
+                  <button type="submit" (click)="redirectToUpdatePfNominee(nominee)" class="btn btn-primary btn-sm m-1">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline"></span>
+                  </button>
+                  <button type="submit" class="btn btn-danger btn-sm m-1" (click)="deletePFNominee(nominee)">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline"></span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="6" class="font-weight-bold text-end">
+                <span class="">Total</span>
+                <span class="ps-3"></span>
+              </td>
+              <td colspan="1" class="font-weight-bold text-end">
+                <span>{{ nomineesMaster.pfSharePercentage }}%</span>
+              </td>
+              <td colspan="1" class="font-weight-bold text-end">
+                <span class="ml-5 align-items-end">
+                  <button
+                    type="button"
+                    [disabled]="nomineesMaster.pfSharePercentage! < 100"
+                    (click)="redirectToNomineeReport('PF', nomineesMaster!)"
+                    class="btn btn-outline-primary"
+                  >
+                    Nominee Report
+                    <fa-icon class="fa fa-long-arrow-right" icon="arrow-left"></fa-icon>
+                  </button>
+                </span>
+              </td>
+            </tr>
+
+            <tr></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

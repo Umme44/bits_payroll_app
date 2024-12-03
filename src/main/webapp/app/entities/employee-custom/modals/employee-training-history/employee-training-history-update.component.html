@@ -1,0 +1,134 @@
+<div>
+  <form (ngSubmit)="save()" [formGroup]="editForm" name="editForm" novalidate role="form">
+    <div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label
+              class="form-control-label required"
+              for="field_dateOfCompletion"
+              jhiTranslate="bitsHrPayrollApp.trainingHistory.dateOfCompletion"
+              >Date Of Completion</label
+            >
+            <div class="input-group">
+              <input
+                #dateOfCompletionDp="ngbDatepicker"
+                class="form-control"
+                formControlName="dateOfCompletion"
+                id="field_dateOfCompletion"
+                name="dateOfCompletion"
+                ngbDatepicker
+                type="text"
+              />
+              <span class="input-group-append">
+                <button type="button" class="btn btn-secondary" (click)="dateOfCompletionDp.toggle()">
+                  <fa-icon icon="calendar-alt"></fa-icon>
+                </button>
+              </span>
+            </div>
+            <div
+              *ngIf="
+                editForm.get('dateOfCompletion')!.invalid &&
+                (editForm.get('dateOfCompletion')!.dirty || editForm.get('dateOfCompletion')!.touched)
+              "
+            >
+              <small
+                *ngIf="editForm.get('dateOfCompletion')?.errors?.required"
+                class="form-text text-danger"
+                jhiTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label class="form-control-label required" for="field_trainingName" jhiTranslate="bitsHrPayrollApp.trainingHistory.trainingName"
+              >Training Name</label
+            >
+            <input
+              class="form-control"
+              formControlName="trainingName"
+              id="field_trainingName"
+              name="trainingName"
+              onkeypress="return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode == 32))"
+              type="text"
+            />
+            <div
+              *ngIf="
+                editForm.get('trainingName')!.invalid && (editForm.get('trainingName')!.dirty || editForm.get('trainingName')!.touched)
+              "
+            >
+              <div
+                *ngIf="editForm.get('trainingName')?.errors?.required || editForm.get('trainingName')?.errors?.notOnlyWhitespace"
+                class="form-text text-danger"
+                jhiTranslate="entity.validation.required"
+              >
+                This field is required.
+              </div>
+              <div
+                *ngIf="editForm.get('trainingName')?.errors?.pattern"
+                class="form-text text-danger"
+              >
+                This text is invalid
+              </div>
+              <div *ngIf="editForm.get('trainingName')?.errors?.maxlength" class="form-text text-danger">
+                This field cannot be longer than 255 characters.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label
+              class="form-control-label required"
+              for="field_coordinatedBy"
+              jhiTranslate="bitsHrPayrollApp.trainingHistory.coordinatedBy"
+              >Coordinated By</label
+            >
+            <input
+              class="form-control"
+              formControlName="coordinatedBy"
+              id="field_coordinatedBy"
+              name="coordinatedBy"
+              onkeypress="return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode == 32))"
+              type="text"
+            />
+            <div
+              *ngIf="
+                editForm.get('coordinatedBy')!.invalid && (editForm.get('coordinatedBy')!.dirty || editForm.get('coordinatedBy')!.touched)
+              "
+            >
+              <div
+                *ngIf="editForm.get('coordinatedBy')?.errors?.required || editForm.get('coordinatedBy')?.errors?.notOnlyWhitespace"
+                class="form-text text-danger"
+                jhiTranslate="entity.validation.required"
+              >
+                This field is required.
+              </div>
+              <div *ngIf="editForm.get('coordinatedBy')?.errors?.maxlength" class="form-text text-danger">
+                This field cannot be longer than 255 characters.
+              </div>
+              <div *ngIf="editForm.get('coordinatedBy')?.errors?.pattern" class="form-text text-danger">
+                This text is invalid
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-2">
+        <button (click)="clear()" class="btn btn-danger" id="cancel-save" type="button">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Clear</span>
+        </button>
+
+        <button [disabled]="editForm.invalid || isSaving" class="btn btn-primary" id="save-entity" type="submit">
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

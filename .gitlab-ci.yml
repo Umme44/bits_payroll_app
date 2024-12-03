@@ -1,0 +1,58 @@
+stages:
+  - build
+  - deploy
+
+build-jar:
+  stage: build
+  image: nuruldhamar/java17-node-16-jhipster:1.0.1
+  before_script:
+    - export GRADLE_USER_HOME=`pwd`/.gradle
+    - npm ci --cache .npm --prefer-offline
+  script:
+    - ./gradlew -Pprod clean bootJar
+  artifacts:
+    paths:
+      - build/libs/bits-hr-payroll-0.0.1-SNAPSHOT.jar
+    expire_in: 60 mins
+
+  cache:
+    key: $CI_COMMIT_REF_SLUG
+    paths:
+      - .gradle/wrapper
+      - .gradle/caches
+      - .npm/
+
+  allow_failure: false
+
+deploy-testing-server:
+  stage: deploy
+  image: sarojroy/openjdk8-nodejs
+  dependencies:
+    - build-jar
+  before_script:
+    - eval $(ssh-agent -s)
+    - echo "$CI_HR_UAT_PK" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan -t rsa $CI_HR_UAT_SERVER_ADD >> ~/.ssh/known_hosts
+
+  script:
+    - scp build/libs/bits-hr-payroll-0.0.1-SNAPSHOT.jar $CI_HR_TESTING_DEPLOY_USR@$CI_HR_UAT_SERVER_ADD:app_8585/
+    - echo "Building docker image"
+    - ssh $CI_HR_TESTING_DEPLOY_USR@$CI_HR_UAT_SERVER_ADD "cd ~/app_8585 && docker build . -t payroll"
+    - echo "Removing old deployment"
+    - ssh $CI_HR_TESTING_DEPLOY_USR@$CI_HR_UAT_SERVER_ADD "if [ \$(docker ps --filter 'name=payroll_8585' --format '{{.Names}}') = 'payroll_8585' ]; then cd ~/app_8585 && docker stop payroll_8585 && docker rm payroll_8585; fi"
+    - echo "Creating new deployment"
+    - ssh $CI_HR_TESTING_DEPLOY_USR@$CI_HR_UAT_SERVER_ADD "cd ~/app_8585 && docker run -d -it --name=payroll_8585 -p 8585:8585 payroll"
+    - echo "Deployed on $CI_HR_UAT_SERVER_ADD:8585"
+
+  after_script:
+    - echo "Deployed on $CI_HR_UAT_SERVER_ADD:8585"
+
+  allow_failure: false
+
+  only:
+    refs:
+      - /^cicd-.*/
+  except:
+    - branches

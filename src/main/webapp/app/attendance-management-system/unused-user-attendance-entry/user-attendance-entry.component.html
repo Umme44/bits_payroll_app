@@ -1,0 +1,47 @@
+<div class="container">
+  <jhi-alert-error></jhi-alert-error>
+
+  <div *ngIf="checkInSuccess" class="row justify-content-center">
+    <button class="alert attendance-alert">Check In Success!</button>
+  </div>
+  <div *ngIf="checkOutSuccess" class="row justify-content-center">
+    <button class="alert attendance-alert">Check Out Success!</button>
+  </div>
+
+  <div *ngIf="!checkInDone" class="row justify-content-center">
+    <div
+      (click)="checkIn()"
+      [ngClass]="{ 'btn-clock-late': isLate }"
+      class="btn btn-clock-entry d-flex flex-column justify-content-center align-items-center"
+    >
+      <span class="clock-txt clock-txt-header-entry">{{ clockInBtnText }}</span>
+      <span class="clock-txt clock-txt-time">
+        <!--                {{ getUpdatedCurrentTime() }}-->
+        {{ rxTime // | formatTime // todo: Fix formatter }}
+      </span>
+    </div>
+  </div>
+
+  <div *ngIf="checkInDone" class="row d-flex flex-column align-items-center pt-6">
+    <div (click)="checkOut()" class="btn btn-clock-entry d-flex flex-column justify-content-center align-items-center btn-clock-out">
+      <span class="clock-txt clock-txt-header-entry">{{ clockOutBtnText }}</span>
+      <span class="clock-txt clock-txt-time">
+        <!--                {{ getUpdatedCurrentTime() }}-->
+        {{ rxTime // | formatTime // todo: need fix }}
+      </span>
+    </div>
+
+    <div class="clock-info-card-wrapper">
+      <div *ngIf="!checkOutDone" [ngClass]="{ 'clock-info-card-late': isLate }" class="clock-info-card">
+        <span>
+          Clocked in at <b>{{ checkInTimeString }}</b>
+        </span>
+      </div>
+      <div *ngIf="checkOutDone" [ngClass]="{ 'clock-info-card-late': isLate }" class="clock-info-card">
+        <span>
+          <b>{{ checkInTimeString }} ~ {{ checkOutTimeString }} </b> ({{ workingTimeDifference }})</span
+        >
+      </div>
+    </div>
+  </div>
+</div>

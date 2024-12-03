@@ -1,0 +1,14 @@
+<ng-container>
+  <span *ngIf="status === 'PENDING'" class="px-md-2 text-secondary" data-placement="top" data-toggle="tooltip">
+    Pending
+    <!--<fa-icon icon="question"></fa-icon>-->
+  </span>
+
+  <span *ngIf="status === 'APPROVED'" class="px-md-2 text-success" data-placement="top" data-toggle="tooltip" container="body" ngbTooltip="Approved">
+    <fa-icon icon="check"></fa-icon>
+  </span>
+
+  <span *ngIf="status === 'NOT_APPROVED'" class="px-md-2 text-danger" data-placement="top" data-toggle="tooltip" container="body" ngbTooltip="Not Approved">
+    <fa-icon icon="times"></fa-icon>
+  </span>
+</ng-container>

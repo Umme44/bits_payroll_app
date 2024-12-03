@@ -1,0 +1,784 @@
+<jhi-header
+  [headerName]="!editForm.get('id')!.value ? 'Create A PF Collection' : 'Edit PF Collection'"
+  [midHeaderName01]="'PF Collection'"
+  [midRouterLinkText01]="'/pf-collection'"
+  [shouldHaveHr]="false"
+>
+</jhi-header>
+
+<div class="row justify-content-center">
+  <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+    <div class="card card-body">
+      <jhi-alert-error></jhi-alert-error>
+
+      <div class="flex-column">
+        <div class="row">
+          <div class="col-md-6 font-sm">
+            <div class="mb-3">
+              <label class="form-control-label required" jhiTranslate="bitsHrPayrollApp.pfCollection.pfAccount" for="field_pfAccount"
+                >Pf Account</label
+              >
+              <jhi-select-pf-account-form [pfAccountIdForm]="pfAccountIdForm" [selectedId]="selectedPfAccountId">
+              </jhi-select-pf-account-form>
+
+              <!--  {{editForm.get('pfAccountId')!.value}}
+              <jhi-simple-select-employee-form
+                id="field_pfAccount"
+                [selectedFieldValue]="editForm.get('pfAccountId')!.value"
+                (onChangeEmployee)="patchSelectedEmployee($event)"
+              ></jhi-simple-select-employee-form>-->
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="mb-3">
+              <label
+                class="form-control-label required"
+                jhiTranslate="bitsHrPayrollApp.pfCollection.collectionType"
+                for="field_collectionType"
+                >Collection Type</label
+              >
+              <select class="form-control" name="collectionType" formControlName="collectionType" id="field_collectionType">
+                <option value="ARREAR">{{ 'bitsHrPayrollApp.PfCollectionType.ARREAR' | translate }}</option>
+                <option value="ADVANCE">{{ 'bitsHrPayrollApp.PfCollectionType.ADVANCE' | translate }}</option>
+                <option value="CASH">{{ 'bitsHrPayrollApp.PfCollectionType.CASH' | translate }}</option>
+                <option value="MONTHLY">{{ 'bitsHrPayrollApp.PfCollectionType.MONTHLY' | translate }}</option>
+                <option value="OPENING_BALANCE">{{ 'bitsHrPayrollApp.PfCollectionType.OPENING_BALANCE' | translate }}</option>
+              </select>
+            </div>
+
+            <div
+              *ngIf="
+                editForm.get('collectionType')!.invalid &&
+                (editForm.get('collectionType')!.dirty || editForm.get('collectionType')!.touched)
+              "
+            >
+              <small
+                *ngIf="editForm.get('collectionType')?.errors?.required"
+                class="form-text text-danger"
+                jhiTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="mb-3">
+              <label
+                class="form-control-label required"
+                jhiTranslate="bitsHrPayrollApp.pfCollection.transactionDate"
+                for="field_transactionDate"
+              >
+                Transaction Date
+              </label>
+              <div class="input-group">
+                <input
+                  id="field_transactionDate"
+                  type="text"
+                  class="form-control"
+                  name="transactionDate"
+                  ngbDatepicker
+                  #transactionDateDp="ngbDatepicker"
+                  formControlName="transactionDate"
+                />
+                <span class="input-group-append">
+                  <button type="button" class="btn btn-secondary" (click)="transactionDateDp.toggle()">
+                    <fa-icon icon="calendar-alt"></fa-icon>
+                  </button>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="mb-3">
+              <label class="form-control-label required" jhiTranslate="bitsHrPayrollApp.pfCollection.year" for="field_year">Year</label>
+              <input type="number" class="form-control" name="year" id="field_year" formControlName="year" />
+            </div>
+            <div *ngIf="editForm.get('year')!.invalid && (editForm.get('year')!.dirty || editForm.get('year')!.touched)">
+              <small *ngIf="editForm.get('year')?.errors?.required" class="form-text text-danger" jhiTranslate="entity.validation.required">
+                This field is required.
+              </small>
+
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('year')?.errors?.min"
+                jhiTranslate="entity.validation.min"
+                [translateValues]="{ min: 1950 }"
+              >
+                This field should be at least 1950.
+              </small>
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('year')?.errors?.max"
+                jhiTranslate="entity.validation.max"
+                [translateValues]="{ max: 2099 }"
+              >
+                This field cannot be more than 2099.
+              </small>
+              <small class="form-text text-danger" [hidden]="!editForm.get('year')?.errors?.number" jhiTranslate="entity.validation.number">
+                This field should be a number.
+              </small>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="mb-3">
+              <label class="form-control-label required" jhiTranslate="bitsHrPayrollApp.pfCollection.month" for="field_month">Month</label>
+              <select class="form-control" formControlName="month" id="field_month" name="month">
+                <option *ngFor="let month of months" value="{{ month.Value }}">
+                  {{ month.Text }}
+                </option>
+              </select>
+            </div>
+            <div *ngIf="editForm.get('month')!.invalid && (editForm.get('month')!.dirty || editForm.get('month')!.touched)">
+              <small
+                *ngIf="editForm.get('month')?.errors?.required"
+                class="form-text text-danger"
+                jhiTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="mb-3">
+              <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.pfCollection.gross" for="field_gross">Gross</label>
+              <input type="number" class="form-control" name="gross" id="field_gross" formControlName="gross" />
+              <div *ngIf="editForm.get('gross')!.invalid && (editForm.get('gross')!.dirty || editForm.get('gross')!.touched)">
+                <small
+                  *ngIf="editForm.get('gross')?.errors?.required"
+                  class="form-text text-danger"
+                  jhiTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+
+                <small
+                  class="form-text text-danger"
+                  *ngIf="editForm.get('gross')?.errors?.min"
+                  jhiTranslate="entity.validation.min"
+                  [translateValues]="{ min: 0 }"
+                >
+                  This field should be at least 0.
+                </small>
+                <small
+                  class="form-text text-danger"
+                  *ngIf="editForm.get('gross')?.errors?.max"
+                  jhiTranslate="entity.validation.max"
+                  [translateValues]="{ max: 10000000 }"
+                >
+                  This field cannot be more than 10000000.
+                </small>
+                <small
+                  class="form-text text-danger"
+                  [hidden]="!editForm.get('gross')?.errors?.number"
+                  jhiTranslate="entity.validation.number"
+                >
+                  This field should be a number.
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="mb-3">
+              <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.pfCollection.basic" for="field_basic">Basic</label>
+              <input type="number" class="form-control" name="basic" id="field_basic" formControlName="basic" />
+              <div *ngIf="editForm.get('basic')!.invalid && (editForm.get('basic')!.dirty || editForm.get('basic')!.touched)">
+                <!--                                                <small *ngIf="editForm.get('basic')?.errors?.required"
+                                                       class="form-text text-danger"
+                                                       jhiTranslate="entity.validation.required">
+                                                    This field is required.
+                                                </small>-->
+                <small
+                  class="form-text text-danger"
+                  *ngIf="editForm.get('basic')?.errors?.min"
+                  jhiTranslate="entity.validation.min"
+                  [translateValues]="{ min: 0 }"
+                >
+                  This field should be at least 0.
+                </small>
+                <small
+                  class="form-text text-danger"
+                  *ngIf="editForm.get('basic')?.errors?.max"
+                  jhiTranslate="entity.validation.max"
+                  [translateValues]="{ max: 10000000 }"
+                >
+                  This field cannot be more than 10000000.
+                </small>
+                <small
+                  class="form-text text-danger"
+                  [hidden]="!editForm.get('basic')?.errors?.number"
+                  jhiTranslate="entity.validation.number"
+                >
+                  This field should be a number.
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="mb-3">
+              <label
+                class="form-control-label"
+                jhiTranslate="bitsHrPayrollApp.pfCollection.employeeContribution"
+                for="field_employeeContribution"
+                >Employee Contribution</label
+              >
+              <input
+                type="number"
+                class="form-control"
+                name="employeeContribution"
+                id="field_employeeContribution"
+                formControlName="employeeContribution"
+              />
+            </div>
+            <div
+              *ngIf="
+                editForm.get('employeeContribution')!.invalid &&
+                (editForm.get('employeeContribution')!.dirty || editForm.get('employeeContribution')!.touched)
+              "
+            >
+              <!--                                          <small *ngIf="editForm.get('employeeContribution')?.errors?.required"
+                                                 class="form-text text-danger"
+                                                 jhiTranslate="entity.validation.required">
+                                              This field is required.
+                                          </small>-->
+
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('employeeContribution')?.errors?.min"
+                jhiTranslate="entity.validation.min"
+                [translateValues]="{ min: 0 }"
+              >
+                This field should be at least 0.
+              </small>
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('employeeContribution')?.errors?.max"
+                jhiTranslate="entity.validation.max"
+                [translateValues]="{ max: 10000000 }"
+              >
+                This field cannot be more than 10000000.
+              </small>
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('employeeContribution')?.errors?.number"
+                jhiTranslate="entity.validation.number"
+              >
+                This field should be a number.
+              </small>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="mb-3">
+              <label
+                class="form-control-label"
+                jhiTranslate="bitsHrPayrollApp.pfCollection.employerContribution"
+                for="field_employerContribution"
+                >Employer Contribution</label
+              >
+              <input
+                type="number"
+                class="form-control"
+                name="employerContribution"
+                id="field_employerContribution"
+                formControlName="employerContribution"
+              />
+            </div>
+            <div
+              *ngIf="
+                editForm.get('employerContribution')!.invalid &&
+                (editForm.get('employerContribution')!.dirty || editForm.get('employerContribution')!.touched)
+              "
+            >
+              <!--                                          <small *ngIf="editForm.get('employerContribution')?.errors?.required"
+                                                 class="form-text text-danger"
+                                                 jhiTranslate="entity.validation.required">
+                                              This field is required.
+                                          </small>-->
+
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('employerContribution')?.errors?.min"
+                jhiTranslate="entity.validation.min"
+                [translateValues]="{ min: 0 }"
+              >
+                This field should be at least 0.
+              </small>
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('employerContribution')?.errors?.max"
+                jhiTranslate="entity.validation.max"
+                [translateValues]="{ max: 10000000 }"
+              >
+                This field cannot be more than 10000000.
+              </small>
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('employerContribution')?.errors?.number"
+                jhiTranslate="entity.validation.number"
+              >
+                This field should be a number.
+              </small>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="mb-3">
+              <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.pfCollection.employeeInterest" for="field_employeeInterest"
+                >Employee Interest</label
+              >
+              <input
+                type="number"
+                class="form-control"
+                name="employeeInterest"
+                id="field_employeeInterest"
+                formControlName="employeeInterest"
+              />
+              <div
+                *ngIf="
+                  editForm.get('employeeInterest')!.invalid &&
+                  (editForm.get('employeeInterest')!.dirty || editForm.get('employeeInterest')!.touched)
+                "
+              >
+                <!--                                                <small *ngIf="editForm.get('employeeInterest')?.errors?.required"
+                                                       class="form-text text-danger"
+                                                       jhiTranslate="entity.validation.required">
+                                                    This field is required.
+                                                </small>-->
+
+                <small
+                  class="form-text text-danger"
+                  *ngIf="editForm.get('employeeInterest')?.errors?.min"
+                  jhiTranslate="entity.validation.min"
+                  [translateValues]="{ min: 0 }"
+                >
+                  This field should be at least 0.
+                </small>
+                <small
+                  class="form-text text-danger"
+                  *ngIf="editForm.get('employeeInterest')?.errors?.max"
+                  jhiTranslate="entity.validation.max"
+                  [translateValues]="{ max: 10000000 }"
+                >
+                  This field cannot be more than 10000000.
+                </small>
+                <small
+                  class="form-text text-danger"
+                  [hidden]="!editForm.get('employeeInterest')?.errors?.number"
+                  jhiTranslate="entity.validation.number"
+                >
+                  This field should be a number.
+                </small>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="mb-3">
+              <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.pfCollection.employerInterest" for="field_employerInterest"
+                >Employer Interest</label
+              >
+              <input
+                type="number"
+                class="form-control"
+                name="employerInterest"
+                id="field_employerInterest"
+                formControlName="employerInterest"
+              />
+              <div
+                *ngIf="
+                  editForm.get('employerInterest')!.invalid &&
+                  (editForm.get('employerInterest')!.dirty || editForm.get('employerInterest')!.touched)
+                "
+              >
+                <!--                                                <small *ngIf="editForm.get('employerInterest')?.errors?.required"
+                                                       class="form-text text-danger"
+                                                       jhiTranslate="entity.validation.required">
+                                                    This field is required.
+                                                </small>-->
+
+                <small
+                  class="form-text text-danger"
+                  *ngIf="editForm.get('employerInterest')?.errors?.min"
+                  jhiTranslate="entity.validation.min"
+                  [translateValues]="{ min: 0 }"
+                >
+                  This field should be at least 0.
+                </small>
+                <small
+                  class="form-text text-danger"
+                  *ngIf="editForm.get('employerInterest')?.errors?.max"
+                  jhiTranslate="entity.validation.max"
+                  [translateValues]="{ max: 10000000 }"
+                >
+                  This field cannot be more than 10000000.
+                </small>
+                <small
+                  class="form-text text-danger"
+                  [hidden]="!editForm.get('employerInterest')?.errors?.number"
+                  jhiTranslate="entity.validation.number"
+                >
+                  This field should be a number.
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-3">
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!--
+<jhi-header
+  [headerName]="!editForm.get('id')!.value ? 'Create A PF Collection' : 'Edit PF Collection'"
+  [midHeaderName01]="'PF Collection'"
+  [midRouterLinkText01]="'/pf-collection'"
+  [shouldHaveHr]="false"
+>
+</jhi-header>
+
+<div class="d-flex justify-content-center">
+  <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+
+    <div class="card card-body">
+      <jhi-alert-error></jhi-alert-error>
+      <div class="flex-column">
+        <div class="row">
+          <div class="col-md-6 font-sm">
+            <label class="form-label required" jhiTranslate="bitsHrPayrollApp.pfCollection.pfAccount" for="field_pfAccountId"
+              >Pf Account</label
+            >
+            <select
+              class="form-control"
+              id="field_pfAccountId"
+              data-cy="pfAccountId"
+              name="pfAccountId"
+              formControlName="pfAccountId"
+              [compareWith]="comparePfAccount"
+            >
+              <option [ngValue]="null"></option>
+              <option [ngValue]="pfAccountOption.id" *ngFor="let pfAccountOption of pfAccountsSharedCollection">
+                {{ pfAccountOption.id }}
+              </option>
+            </select>
+          </div>
+
+          <div class="col-md-3 font-sm">
+            <label class="form-label required" jhiTranslate="bitsHrPayrollApp.pfCollection.collectionType" for="field_collectionType"
+              >Collection Type</label
+            >
+            <select
+              class="form-control form-select"
+              name="collectionType"
+              formControlName="collectionType"
+              id="field_collectionType"
+              data-cy="collectionType"
+            >
+              <option [ngValue]="null">{{ 'bitsHrPayrollApp.PfCollectionType.null' | translate }}</option>
+              <option *ngFor="let pfCollectionType of pfCollectionTypeValues" [value]="pfCollectionType">
+                {{ 'bitsHrPayrollApp.PfCollectionType.' + pfCollectionType | translate }}
+              </option>
+            </select>
+            <div
+              *ngIf="
+                editForm.get('collectionType')!.invalid &&
+                (editForm.get('collectionType')!.dirty || editForm.get('collectionType')!.touched)
+              "
+            >
+              <small
+                *ngIf="editForm.get('collectionType')?.errors?.required"
+                class="form-text text-danger"
+                jhiTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+            </div>
+          </div>
+
+          <div class="col-md-3 font-sm">
+            <label class="form-label required" jhiTranslate="bitsHrPayrollApp.pfCollection.transactionDate" for="field_transactionDate"
+              >Transaction Date</label
+            >
+            <div class="input-group">
+              <input
+                id="field_transactionDate"
+                data-cy="transactionDate"
+                type="text"
+                class="form-control"
+                name="transactionDate"
+                ngbDatepicker
+                #transactionDateDp="ngbDatepicker"
+                formControlName="transactionDate"
+              />
+              <button type="button" class="btn btn-secondary" (click)="transactionDateDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </div>
+          </div>
+
+          <div class="col-md-3 font-sm">
+            <label class="form-label mt-3 required" jhiTranslate="bitsHrPayrollApp.pfCollection.year" for="field_year">Year</label>
+            <input type="number" class="form-control" name="year" id="field_year" data-cy="year" formControlName="year" />
+
+            <div *ngIf="editForm.get('year')!.invalid && (editForm.get('year')!.dirty || editForm.get('year')!.touched)">
+              <small *ngIf="editForm.get('year')?.errors?.required" class="form-text text-danger" jhiTranslate="entity.validation.required">
+                This field is required.
+              </small>
+
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('year')?.errors?.min"
+                jhiTranslate="entity.validation.min"
+                [translateValues]="{ min: 1950 }"
+              >
+                This field should be at least 1950.
+              </small>
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('year')?.errors?.max"
+                jhiTranslate="entity.validation.max"
+                [translateValues]="{ max: 2099 }"
+              >
+                This field cannot be more than 2099.
+              </small>
+              <small class="form-text text-danger" [hidden]="!editForm.get('year')?.errors?.number" jhiTranslate="entity.validation.number">
+                This field should be a number.
+              </small>
+            </div>
+          </div>
+          <div class="col-md-3 font-sm">
+            <div class="mb-3 mt-3  required">
+              <label class="form-control-label required" jhiTranslate="bitsHrPayrollApp.pfCollection.month" for="field_month">
+                Month
+              </label>
+              <select class="form-control form-select" formControlName="month" id="field_month" name="month">
+                <option *ngFor="let month of months" value="{{ month.Value }}">
+                  {{ month.Text }}
+                </option>
+              </select>
+            </div>
+            <div *ngIf="editForm.get('month')!.invalid && (editForm.get('month')!.dirty || editForm.get('month')!.touched)">
+              <small *ngIf="editForm.get('month')?.errors?.required"
+                     class="form-text text-danger"
+                     jhiTranslate="entity.validation.required">
+                This field is required.
+              </small>
+            </div>
+          </div>
+
+          <div class="col-md-3 font-sm">
+            <label class="form-label mt-3" jhiTranslate="bitsHrPayrollApp.pfCollection.gross" for="field_gross">Gross</label>
+            <input type="number" class="form-control" name="gross" id="field_gross" data-cy="gross" formControlName="gross" />
+            <div *ngIf="editForm.get('gross')!.invalid && (editForm.get('gross')!.dirty || editForm.get('gross')!.touched)">
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('gross')?.errors?.min"
+                jhiTranslate="entity.validation.min"
+                [translateValues]="{ min: 0 }"
+              >
+                This field should be at least 0.
+              </small>
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('gross')?.errors?.max"
+                jhiTranslate="entity.validation.max"
+                [translateValues]="{ max: 10000000 }"
+              >
+                This field cannot be more than 10000000.
+              </small>
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('gross')?.errors?.number"
+                jhiTranslate="entity.validation.number"
+              >
+                This field should be a number.
+              </small>
+            </div>
+          </div>
+
+          <div class="col-md-3 font-sm">
+            <label class="form-label mt-3" jhiTranslate="bitsHrPayrollApp.pfCollection.basic" for="field_basic">Basic</label>
+            <input type="number" class="form-control" name="basic" id="field_basic" data-cy="basic" formControlName="basic" />
+            <div *ngIf="editForm.get('basic')!.invalid && (editForm.get('basic')!.dirty || editForm.get('basic')!.touched)">
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('basic')?.errors?.min"
+                jhiTranslate="entity.validation.min"
+                [translateValues]="{ min: 0 }"
+              >
+                This field should be at least 0.
+              </small>
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('basic')?.errors?.max"
+                jhiTranslate="entity.validation.max"
+                [translateValues]="{ max: 10000000 }"
+              >
+                This field cannot be more than 10000000.
+              </small>
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('basic')?.errors?.number"
+                jhiTranslate="entity.validation.number"
+              >
+                This field should be a number.
+              </small>
+            </div>
+          </div>
+
+          <div class="col-md-3 font-sm">
+            <label
+              class="form-label mt-3"
+              jhiTranslate="bitsHrPayrollApp.pfCollection.employeeContribution"
+              for="field_employeeContribution"
+              >Employee Contribution</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              name="employeeContribution"
+              id="field_employeeContribution"
+              data-cy="employeeContribution"
+              formControlName="employeeContribution"
+            />
+          </div>
+
+          <div class="col-md-3 font-sm">
+            <label
+              class="form-label mt-3"
+              jhiTranslate="bitsHrPayrollApp.pfCollection.employerContribution"
+              for="field_employerContribution"
+              >Employer Contribution</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              name="employerContribution"
+              id="field_employerContribution"
+              data-cy="employerContribution"
+              formControlName="employerContribution"
+            />
+          </div>
+
+          <div class="col-md-3 font-sm">
+            <label class="form-label mt-3" jhiTranslate="bitsHrPayrollApp.pfCollection.employeeInterest" for="field_employeeInterest"
+              >Employee Interest</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              name="employeeInterest"
+              id="field_employeeInterest"
+              data-cy="employeeInterest"
+              formControlName="employeeInterest"
+            />
+            <div
+              *ngIf="
+                editForm.get('employeeInterest')!.invalid &&
+                (editForm.get('employeeInterest')!.dirty || editForm.get('employeeInterest')!.touched)
+              "
+            >
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('employeeInterest')?.errors?.min"
+                jhiTranslate="entity.validation.min"
+                [translateValues]="{ min: 0 }"
+              >
+                This field should be at least 0.
+              </small>
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('employeeInterest')?.errors?.max"
+                jhiTranslate="entity.validation.max"
+                [translateValues]="{ max: 10000000 }"
+              >
+                This field cannot be more than 10000000.
+              </small>
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('employeeInterest')?.errors?.number"
+                jhiTranslate="entity.validation.number"
+              >
+                This field should be a number.
+              </small>
+            </div>
+          </div>
+
+          <div class="col-md-3 font-sm">
+            <label class="form-label mt-3" jhiTranslate="bitsHrPayrollApp.pfCollection.employerInterest" for="field_employerInterest"
+              >Employer Interest</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              name="employerInterest"
+              id="field_employerInterest"
+              data-cy="employerInterest"
+              formControlName="employerInterest"
+            />
+            <div
+              *ngIf="
+                editForm.get('employerInterest')!.invalid &&
+                (editForm.get('employerInterest')!.dirty || editForm.get('employerInterest')!.touched)
+              "
+            >
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('employerInterest')?.errors?.min"
+                jhiTranslate="entity.validation.min"
+                [translateValues]="{ min: 0 }"
+              >
+                This field should be at least 0.
+              </small>
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('employerInterest')?.errors?.max"
+                jhiTranslate="entity.validation.max"
+                [translateValues]="{ max: 10000000 }"
+              >
+                This field cannot be more than 10000000.
+              </small>
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('employerInterest')?.errors?.number"
+                jhiTranslate="entity.validation.number"
+              >
+                This field should be a number.
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary my-3" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+-->

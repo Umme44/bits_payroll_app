@@ -1,0 +1,62 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="festivalBonusDetails">
+      <h2 data-cy="festivalBonusDetailsDetailsHeading">
+        <span jhiTranslate="bitsHrPayrollApp.festivalBonusDetails.detail.title">Festival Bonus Details</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ festivalBonusDetails.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.festivalBonusDetails.bonusAmount">Bonus Amount</span></dt>
+        <dd>
+          <span>{{ festivalBonusDetails.bonusAmount }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.festivalBonusDetails.remarks">Remarks</span></dt>
+        <dd>
+          <span>{{ festivalBonusDetails.remarks }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.festivalBonusDetails.isHold">Is Hold</span></dt>
+        <dd>
+          <span>{{ festivalBonusDetails.isHold }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.festivalBonusDetails.basic">Basic</span></dt>
+        <dd>
+          <span>{{ festivalBonusDetails.basic }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.festivalBonusDetails.gross">Gross</span></dt>
+        <dd>
+          <span>{{ festivalBonusDetails.gross }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.festivalBonusDetails.employee">Employee</span></dt>
+        <dd>
+          <div *ngIf="festivalBonusDetails.employee">
+            <a [routerLink]="['/employee', festivalBonusDetails.employee.id, 'view']">{{ festivalBonusDetails.employee.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.festivalBonusDetails.festival">Festival</span></dt>
+        <dd>
+          <div *ngIf="festivalBonusDetails.festival">
+            <a [routerLink]="['/festival', festivalBonusDetails.festival.id, 'view']">{{ festivalBonusDetails.festival.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/festival-bonus-details', festivalBonusDetails.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

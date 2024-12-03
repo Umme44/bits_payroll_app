@@ -1,0 +1,132 @@
+<!-- manual attendance entry modal-->
+<div>
+  <div class="modal-header">
+    <h4 class="modal-title"></h4>
+    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" (click)="cancel()"></button>
+  </div>
+  <div class="modal-body">
+    <div>
+      <form name="editForm" role="form" (ngSubmit)="applyManualAttendanceEntry()" [formGroup]="manualAttendanceEditForm">
+        <div>
+          <jhi-alert-error></jhi-alert-error>
+          <div class="card-body border-none box-shadow py-1">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="">
+                  <label class="form-control-label"
+                    >Date:
+                    <span class="ms-1">
+                      <strong>
+                        {{ manualAttendanceEditForm.get('date')!.value // | formatMediumDate // todo: fix date formatter. }}
+                      </strong>
+                    </span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="">
+                  <label class="form-control-label required" jhiTranslate="bitsHrPayrollApp.manualAttendanceEntry.inTime" for="field_inTime"
+                    >In Time</label
+                  >
+                  <div class="d-flex">
+                    <input
+                      id="field_inTime"
+                      type="time"
+                      class="form-control"
+                      name="inTime"
+                      formControlName="inTime"
+                      (ngModelChange)="checkTime()"
+                      placeholder="YYYY-MM-DD HH:mm"
+                    />
+                  </div>
+                  <div
+                    *ngIf="
+                      manualAttendanceEditForm.get('inTime')!.invalid &&
+                      (manualAttendanceEditForm.get('inTime')!.dirty || manualAttendanceEditForm.get('inTime')!.touched)
+                    "
+                  >
+                    <small
+                      *ngIf="manualAttendanceEditForm.get('inTime')?.errors?.required"
+                      class="form-text text-danger"
+                      jhiTranslate="entity.validation.required"
+                    >
+                      This field is required.
+                    </small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="">
+                  <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.manualAttendanceEntry.outTime" for="field_outTime"
+                    >Out Time</label
+                  >
+                  <div class="d-flex">
+                    <input
+                      id="field_outTime"
+                      type="time"
+                      class="form-control"
+                      name="outTime"
+                      formControlName="outTime"
+                      (ngModelChange)="checkTime()"
+                      placeholder="YYYY-MM-DD HH:mm"
+                    />
+                  </div>
+
+                  <div
+                    *ngIf="
+                      manualAttendanceEditForm.get('outTime')!.invalid &&
+                      (manualAttendanceEditForm.get('outTime')!.dirty || manualAttendanceEditForm.get('outTime')!.touched)
+                    "
+                  >
+                    <small
+                      *ngIf="manualAttendanceEditForm.get('outTime')?.errors?.required"
+                      class="form-text text-danger"
+                      jhiTranslate="entity.validation.required"
+                    >
+                      This field is required.
+                    </small>
+                  </div>
+                  <div>
+                    <small class="form-text text-danger" *ngIf="isInvalidManualAttendanceEntry === true">
+                      In time can not be greater than out time.
+                    </small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <div class="">
+                  <label class="form-control-label" for="field_note">Remarks</label>
+                  <input type="text" class="form-control" name="note" id="field_note" formControlName="note" />
+                </div>
+                <div
+                  *ngIf="
+                    manualAttendanceEditForm.get('note')!.invalid &&
+                    (manualAttendanceEditForm.get('note')!.dirty || manualAttendanceEditForm.get('note')!.touched)
+                  "
+                >
+                  <small class="form-text text-danger" *ngIf="manualAttendanceEditForm.get('note')?.errors?.maxlength">
+                    This field cannot be longer than 255 characters.
+                  </small>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-2">
+              <button
+                type="submit"
+                id="save-entity"
+                [disabled]="manualAttendanceEditForm.invalid || isInvalidManualAttendanceEntry"
+                class="btn btn-primary px-md-2"
+              >
+                <fa-icon icon="save"></fa-icon>&nbsp;Apply
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

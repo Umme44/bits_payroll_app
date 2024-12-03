@@ -1,0 +1,100 @@
+<jhi-header
+  [addButtonText]="'New Festival Bonus Config'"
+  [headerName]="'Festival Bonus Configs'"
+  [routerLinkText]="'/festival-bonus-config/new'"
+  [shouldHaveHr]="false"
+>
+</jhi-header>
+
+<div>
+  <!--  <h2 id="page-heading" data-cy="FestivalBonusConfigHeading">
+    <span jhiTranslate="bitsHrPayrollApp.festivalBonusConfig.home.title">Festival Bonus Configs</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="bitsHrPayrollApp.festivalBonusConfig.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-festival-bonus-config"
+        [routerLink]="['/festival-bonus-config/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="bitsHrPayrollApp.festivalBonusConfig.home.createLabel"> Create a new Festival Bonus Config </span>
+      </button>
+    </div>
+  </h2>-->
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="festivalBonusConfigs?.length === 0">
+    <span jhiTranslate="bitsHrPayrollApp.festivalBonusConfig.home.notFound">No Festival Bonus Configs found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="festivalBonusConfigs && festivalBonusConfigs.length > 0">
+    <table class="table table-hover list-text-color" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="employeeCategory">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.festivalBonusConfig.employeeCategory">Employee Category</span>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="percentageFromGross">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.festivalBonusConfig.percentageFromGross">Percentage From Gross</span>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody
+        infinite-scroll
+        (scrolled)="loadPage(page + 1)"
+        [infiniteScrollDisabled]="page - 1 >= links['last']"
+        [infiniteScrollDistance]="0"
+      >
+        <tr *ngFor="let festivalBonusConfig of festivalBonusConfigs; trackBy: trackId" data-cy="entityTable">
+          <td jhiTranslate="{{ 'bitsHrPayrollApp.EmployeeCategory.' + festivalBonusConfig.employeeCategory }}">
+            {{ festivalBonusConfig.employeeCategory }}
+          </td>
+          <td>{{ festivalBonusConfig.percentageFromGross }}%</td>
+
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/festival-bonus-config', festivalBonusConfig.id, 'view']"
+                class="btn btn-info btn-sm px-3"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <!--<span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>-->
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/festival-bonus-config', festivalBonusConfig.id, 'edit']"
+                class="btn btn-primary btn-sm px-3"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <!-- <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>-->
+              </button>
+
+              <button type="submit" (click)="delete(festivalBonusConfig)" class="btn btn-danger btn-sm px-3" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <!--<span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>-->
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

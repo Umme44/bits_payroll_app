@@ -1,0 +1,200 @@
+/* ==========================================================================
+Main page styles
+========================================================================== */
+
+.hipster {
+  display: inline-block;
+  width: 347px;
+  height: 497px;
+  background-size: contain;
+}
+
+/* wait autoprefixer update to allow simple generation of high pixel density media query */
+@media only screen and (-webkit-min-device-pixel-ratio: 2),
+  only screen and (-moz-min-device-pixel-ratio: 2),
+  only screen and (-o-min-device-pixel-ratio: 2/1),
+  only screen and (min-resolution: 192dpi),
+  only screen and (min-resolution: 2dppx) {
+  .hipster {
+    background-size: contain;
+  }
+}
+
+/* You can add global styles to this file, and also import other style files */
+/* colors */
+html {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  background-color: #eff3f4;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  font-size: 16px;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+
+form {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  background-color: #fff;
+  margin: 0;
+  padding: 2.25em;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid 1px #ddd;
+  border-radius: 0.5em;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+form .svgContainer {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin: 0 auto 1em;
+  border-radius: 50%;
+  background: none;
+  border: solid 2.5px #002d58;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+form .svgContainer div {
+  position: relative;
+  width: 100%;
+  height: 0;
+  overflow: hidden;
+  padding-bottom: 100%;
+}
+
+form .svgContainer .mySVG {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+form .inputGroup {
+  margin: 0 0 0.8em;
+  padding: 0;
+  position: relative;
+}
+
+form .inputGroup:last-of-type {
+  margin-bottom: 0;
+}
+
+form label {
+  margin: 0 0 12px;
+  display: block;
+  font-size: 1em;
+  font-weight: 200;
+  font-family: inherit;
+}
+
+form input[type='email'],
+form input[type='text'],
+form input[type='password'] {
+  width: 100%;
+  height: 50px;
+  font-size: 1em;
+  padding-left: 1em;
+}
+
+form input[type='checkbox'] {
+  width: 20px;
+  height: 20px;
+  font-size: 1em;
+}
+
+form button {
+  display: block;
+  margin: 0;
+  // padding: .65em 1em 1em;
+  background-color: #002d58;
+  border: none;
+  border-radius: 4px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  width: 100%;
+  height: 50px;
+  font-size: 1.55em;
+  text-align: center;
+  color: #fff;
+  font-weight: 400;
+  font-family: inherit;
+  -webkit-transition: background-color 0.2s ease-out;
+  transition: background-color 0.2s ease-out;
+}
+
+form button:hover,
+form button:active {
+  background-color: #002d58;
+}
+
+form .inputGroup1 .helper {
+  position: absolute;
+  z-index: 1;
+  font-family: inherit;
+}
+
+form .inputGroup1 .helper1 {
+  top: 0;
+  left: 0;
+  -webkit-transform: translate(1.4em, 2.6em) scale(1);
+  transform: translate(1.4em, 2.6em) scale(1);
+  -webkit-transform-origin: 0 0;
+  transform-origin: 0 0;
+  font-size: 1.25em;
+  font-weight: 400;
+  opacity: 0.65;
+  pointer-events: none;
+  -webkit-transition: opacity 0.2s linear, -webkit-transform 0.2s ease-out;
+  transition: opacity 0.2s linear, -webkit-transform 0.2s ease-out;
+  transition: transform 0.2s ease-out, opacity 0.2s linear;
+  transition: transform 0.2s ease-out, opacity 0.2s linear, -webkit-transform 0.2s ease-out;
+}
+
+form .inputGroup1.focusWithText .helper {
+  /*input[type='email']:focus + .helper {*/
+  -webkit-transform: translate(1.4em, 2em) scale(0.65);
+  transform: translate(1.4em, 2em) scale(0.65);
+  opacity: 1;
+}
+
+//.form-check-input {
+//  position: absolute;
+//  margin-top: 0.4rem;
+//  margin-left: -1.25rem;
+//  margin-right: 10px;
+//  margin-left: 0rem !important;
+//  position: relative !important;
+//}
+
+.form-check {
+  display: inline-flex !important;
+}
+
+.form-check-label {
+  margin-left: 0.4rem;
+}
+
+.alert-msg {
+  color: rgb(206, 10, 10);
+  padding: 0 0 0 0;
+  margin: 0 0 5px 0;
+}

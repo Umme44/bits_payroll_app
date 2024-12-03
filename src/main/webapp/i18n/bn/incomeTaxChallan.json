@@ -1,0 +1,30 @@
+{
+  "bitsHrPayrollApp": {
+    "incomeTaxChallan": {
+      "home": {
+        "title": "Income Tax Challans",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Income Tax Challan",
+        "createOrEditLabel": "Create or edit a Income Tax Challan",
+        "notFound": "No Income Tax Challans found"
+      },
+      "created": "A new Income Tax Challan is created with identifier {{ param }}",
+      "updated": "A Income Tax Challan is updated with identifier {{ param }}",
+      "deleted": "A Income Tax Challan is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Income Tax Challan {{ id }}?"
+      },
+      "detail": {
+        "title": "Income Tax Challan"
+      },
+      "id": "ID",
+      "challanNo": "Challan No",
+      "challanDate": "Challan Date",
+      "amount": "Amount",
+      "month": "Month",
+      "year": "Year",
+      "remarks": "Remarks",
+      "aitConfig": "Ait Config"
+    }
+  }
+}

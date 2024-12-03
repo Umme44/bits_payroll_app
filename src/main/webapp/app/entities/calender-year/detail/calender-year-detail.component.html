@@ -1,0 +1,40 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="calenderYear">
+      <h2 data-cy="calenderYearDetailsHeading"><span jhiTranslate="bitsHrPayrollApp.calenderYear.detail.title">Calender Year</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ calenderYear.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.calenderYear.year">Year</span></dt>
+        <dd>
+          <span>{{ calenderYear.year }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.calenderYear.startDate">Start Date</span></dt>
+        <dd>
+          <span>{{ calenderYear.startDate | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.calenderYear.endDate">End Date</span></dt>
+        <dd>
+          <span>{{ calenderYear.endDate | formatMediumDate }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/calender-year', calenderYear.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

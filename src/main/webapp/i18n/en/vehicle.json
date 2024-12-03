@@ -1,0 +1,36 @@
+{
+  "bitsHrPayrollApp": {
+    "vehicle": {
+      "home": {
+        "title": "Vehicles",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Vehicle",
+        "createOrEditLabel": "Create or edit a Vehicle",
+        "notFound": "No Vehicles found"
+      },
+      "created": "A new Vehicle is created with identifier {{ param }}",
+      "updated": "A Vehicle is updated with identifier {{ param }}",
+      "deleted": "A Vehicle is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Vehicle {{ id }}?"
+      },
+      "detail": {
+        "title": "Vehicle"
+      },
+      "id": "ID",
+      "modelName": "Model Name",
+      "chassisNumber": "Chassis Number",
+      "registrationNumber": "Registration Number",
+      "status": "Status",
+      "capacity": "Capacity",
+      "remarks": "Remarks",
+      "createdAt": "Created At",
+      "updatedAt": "Updated At",
+      "approvedAt": "Approved At",
+      "createdBy": "Created By",
+      "updatedBy": "Updated By",
+      "approvedBy": "Approved By",
+      "assignedDriver": "Assigned Driver"
+    }
+  }
+}

@@ -1,0 +1,389 @@
+<div>
+  <jhi-header
+    [headerName]="'Recruitment Requisition Form'"
+    [addButtonText]="'New Recruitment Requisition'"
+    [routerLinkText]="'/recruitment-requisition-form/new'"
+    [shouldHaveHr]="false"
+  >
+  </jhi-header>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="custom-card mb-4" *ngIf="recruitmentRequisitionBudgets && recruitmentRequisitionBudgets.length > 0">
+    <div class="row">
+      <div class="col-12">
+        <div class="table-responsive" id="budget_entities">
+          <table class="table table-striped my-0" aria-describedby="page-heading">
+            <thead>
+              <tr>
+                <th scope="col"><span>Year</span></th>
+                <th scope="col"><span>Department</span></th>
+                <th scope="col" class="text-right"><span>Budget</span></th>
+                <th scope="col" class="text-right"><span>Remaining Budget</span></th>
+                <th scope="col" class="text-right"><span>Remaining Manpower</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let recruitmentRequisitionBudget of recruitmentRequisitionBudgets">
+                <td>{{ recruitmentRequisitionBudget.year }}</td>
+                <td>{{ recruitmentRequisitionBudget.departmentName }}</td>
+                <td class="text-right">{{ recruitmentRequisitionBudget.budget | number }}</td>
+                <td class="text-right">{{ recruitmentRequisitionBudget.remainingBudget | number }}</td>
+                <td class="text-right">{{ recruitmentRequisitionBudget.remainingManpower | number }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="custom-card mb-4">
+    <div class="row" [formGroup]="editForm" name="editForm" novalidate role="form">
+      <!--Employee-->
+      <div class="form-group col-3 font-sm py-1">
+        <label class="form-control-label required">Requester</label>
+        <ng-select
+          [items]="employees"
+          bindLabel="fullName"
+          bindValue="id"
+          [searchable]="true"
+          [clearable]="true"
+          appearance="outline"
+          id="field_requesterId"
+          formControlName="requesterId"
+          placeholder="Select Employee"
+          (change)="loadRrfUsingFilters()"
+        >
+        </ng-select>
+      </div>
+
+      <!--department-->
+      <div class="form-group col">
+        <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.department" for="field_department"
+          >Department</label
+        >
+        <select
+          class="form-control"
+          id="field_department"
+          name="department"
+          formControlName="departmentId"
+          (change)="loadRrfUsingFilters()"
+        >
+          <option [ngValue]="null">All Departments</option>
+          <option [ngValue]="departmentOption.id" *ngFor="let departmentOption of departments">
+            {{ departmentOption.departmentName }}
+          </option>
+        </select>
+      </div>
+
+      <!--Status-->
+      <div class="form-group col">
+        <label class="form-control-label" for="field_requisitionStatus">Requisition Status</label>
+        <select
+          class="form-control"
+          name="requisitionStatus"
+          formControlName="requisitionStatus"
+          id="field_requisitionStatus"
+          (change)="loadRrfUsingFilters()"
+        >
+          <option value="null">All</option>
+          <option value="PENDING">Pending</option>
+          <option value="LM_APPROVED">LM Approved</option>
+          <option value="HOD_APPROVED">HoD Approved</option>
+          <option value="CTO_APPROVED">CTO Approved</option>
+          <option value="HOHR_VETTED">HoHR Vetted</option>
+          <option value="CEO_APPROVED">CEO Approved</option>
+          <option value="CLOSED">Closed</option>
+          <option value="PARTIALLY_CLOSED">Partially Closed</option>
+          <option value="NOT_APPROVED">Not Approved</option>
+        </select>
+      </div>
+
+      <!--Start date-->
+      <div class="form-group col">
+        <div class="">
+          <label class="form-control-label" for="field_startDate">Start Date</label>
+          <div class="input-group">
+            <input
+              #startDateDp="ngbDatepicker"
+              class="form-control"
+              formControlName="startDate"
+              id="field_startDate"
+              name="startDate"
+              (dateSelect)="loadRrfUsingFilters()"
+              (change)="loadRrfUsingFilters()"
+              ngbDatepicker
+              type="text"
+            />
+            <span class="input-group-append">
+              <button (click)="startDateDp.toggle()" class="btn btn-secondary" type="button">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </span>
+          </div>
+          <div *ngIf="startDateErrMsg">
+            <small class="form-text text-danger"> Please select start date. </small>
+          </div>
+        </div>
+      </div>
+
+      <!--End date-->
+      <div class="form-group col">
+        <div class="">
+          <label class="form-control-label" for="field_endDate">End Date</label>
+          <div class="input-group">
+            <input
+              #endDateDp="ngbDatepicker"
+              class="form-control"
+              formControlName="endDate"
+              id="field_endDate"
+              name="startDate"
+              (dateSelect)="loadRrfUsingFilters()"
+              (change)="loadRrfUsingFilters()"
+              ngbDatepicker
+              type="text"
+            />
+            <span class="input-group-append">
+              <button (click)="endDateDp.toggle()" class="btn btn-secondary" type="button">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </span>
+          </div>
+          <div *ngIf="endDateErrMsg">
+            <small class="form-text text-danger"> Please select end date. </small>
+          </div>
+        </div>
+      </div>
+
+      <!--Buttons-->
+      <!--      <div class="col d-flex align-items-center justify-content-end" style="padding-top: 12px">-->
+      <div class="col d-flex align-items-center justify-content-end pt-4">
+        <button class="btn btn-outline-primary btn-md" (click)="resetFilter()">Clear Form</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="recruitmentRequisitionForms && recruitmentRequisitionForms.length > 0">
+    <table class="table table-striped list-text-color" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending">
+          <th scope="col"><span>RRF Number</span></th>
+
+          <th scope="col"><span>Requester</span></th>
+
+          <th scope="col"><span>Functional Designation</span></th>
+
+          <th scope="col"><span>Project</span></th>
+
+          <th scope="col"><span>Date of Requisition</span></th>
+
+          <th scope="col"><span>Band</span></th>
+
+          <th scope="col" class="text-right"><span>Vacancies</span></th>
+
+          <th scope="col" class="text-right"><span>Total Onboard</span></th>
+
+          <th scope="col">Status</th>
+
+          <th scope="col" class="d-flex justify-content-end">
+            <button class="btn btn-success" (click)="downloadReport()">Report</button>
+          </th>
+        </tr>
+      </thead>
+      <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+        <tr *ngFor="let recruitmentRequisitionForm of recruitmentRequisitionForms; trackBy: trackId">
+          <td class="text-nowrap">
+            <a class="text-decoration-underline" (click)="navigatePrintView(recruitmentRequisitionForm.id!)">
+              {{ recruitmentRequisitionForm.rrfNumber }}
+            </a>
+          </td>
+
+          <td class="text-nowrap">{{ recruitmentRequisitionForm.requesterPin }} - {{ recruitmentRequisitionForm.requesterFullName }}</td>
+
+          <td class="text-nowrap">
+            <div *ngIf="recruitmentRequisitionForm.functionalDesignationId">
+              {{ recruitmentRequisitionForm.functionalDesignationName }}
+            </div>
+          </td>
+
+          <td class="text-nowrap">
+            <span
+              container="body"
+              ngbTooltip="{{
+                recruitmentRequisitionForm.project && recruitmentRequisitionForm.project!.length > 25
+                  ? recruitmentRequisitionForm.project
+                  : ''
+              }}"
+            >
+              {{
+                recruitmentRequisitionForm.project && recruitmentRequisitionForm.project!.length > 25
+                  ? recruitmentRequisitionForm.project!.slice(0, 25) + '...'
+                  : recruitmentRequisitionForm.project
+              }}
+            </span>
+          </td>
+
+          <td>{{ recruitmentRequisitionForm.dateOfRequisition | formatMediumDate }}</td>
+
+          <td>
+            <div *ngIf="recruitmentRequisitionForm.bandId">
+              {{ recruitmentRequisitionForm.bandName }}
+            </div>
+          </td>
+
+          <td class="text-right">{{ recruitmentRequisitionForm.numberOfVacancies }}</td>
+
+          <td class="text-right">
+            {{ recruitmentRequisitionForm.totalOnboard === null ? '0' : recruitmentRequisitionForm.totalOnboard }}
+          </td>
+
+          <td>{{ getStatus(recruitmentRequisitionForm) }}</td>
+
+          <td class="d-flex justify-content-end">
+            <div class="btn-group">
+              <button type="submit" (click)="navigatePrintView(recruitmentRequisitionForm.id!)" class="btn btn-secondary btn-sm">
+                <span class="d-none d-md-inline">Print</span>
+              </button>
+              <button
+                type="submit"
+                *ngIf="recruitmentRequisitionForm.requisitionStatus! == 'CEO_APPROVED'"
+                class="btn btn-success btn-sm px-md-3"
+                (click)="closeRRF(recruitmentRequisitionForm, rrfCloseModal)"
+              >
+                <fa-icon icon="check"></fa-icon> <span>Complete</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/recruitment-requisition-form', recruitmentRequisitionForm.id, 'edit']"
+                class="btn btn-primary btn-sm px-md-3"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+              </button>
+
+              <button type="submit" (click)="delete(recruitmentRequisitionForm)" class="btn btn-danger btn-sm px-md-3">
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div
+    *ngIf="!recruitmentRequisitionForms || recruitmentRequisitionForms.length === 0"
+    style="height: 75vh"
+    class="text-center d-flex align-items-center justify-content-center"
+  >
+    <img src="../../../../content/images/requisition.svg" width="400px" height="400px" />
+  </div>
+</div>
+
+<ng-template #rrfCloseModal let-modal>
+  <div class="modal-header border-0">
+    <h6 class="modal-title" id="modal-basic-title">Close RRF Partially</h6>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="font-sm row mb-3">
+      <div class="col-6">RRF Number</div>
+      <div class="col-6">{{ selectedRRF.rrfNumber }}</div>
+      <div class="col-6">Requester</div>
+      <div class="col-6">{{ selectedRRF.requesterPin }} - {{ selectedRRF.requesterFullName }}</div>
+      <div class="col-6">Requisition Date</div>
+      <div class="col-6">{{ selectedRRF.requestedDate | formatMediumDate }}</div>
+      <div class="col-6">Functional Designation</div>
+      <div class="col-6">{{ selectedRRF.functionalDesignationName }}</div>
+      <div class="col-6">Department</div>
+      <div class="col-6">{{ selectedRRF.departmentName }}</div>
+      <div class="col-6">Unit</div>
+      <div class="col-6">{{ selectedRRF.unitName }}</div>
+      <div class="col-6">Band</div>
+      <div class="col-6">{{ selectedRRF.bandName }}</div>
+      <div class="col-6">Resource Type</div>
+      <div class="col-6" jhiTranslate="bitsHrPayrollApp.RequisitionResourceType.{{ selectedRRF.resourceType }}">
+        {{ selectedRRF.resourceType }}
+      </div>
+      <div class="col-6">Employment Type</div>
+      <div class="col-6" jhiTranslate="{{ 'bitsHrPayrollApp.EmployeeCategory.' + selectedRRF.employmentType }}">
+        {{ selectedRRF.employmentType }}
+      </div>
+      <div class="col-6">Expected Joining Date</div>
+      <div class="col-6">{{ selectedRRF.expectedJoiningDate | formatMediumDate }}</div>
+      <div class="col-6">Project</div>
+      <div class="col-6">{{ selectedRRF.project }}</div>
+      <div class="col-6">Preferred Education/Skills</div>
+      <div class="col-6">{{ selectedRRF.preferredEducationType }}</div>
+      <div class="col-6">Number of Vacancy(s)</div>
+      <div class="col-6">{{ selectedRRF.numberOfVacancies | number }}</div>
+    </div>
+
+    <div class="form-group">
+      <label class="font-sm font-weight-bold">Total Onboard</label>
+
+      <input (input)="onChangeTotalOnboard()" class="form-control" [formControl]="totalOnboard" type="number" />
+      <div *ngIf="invalidOnboardedMembers">
+        <small class="form-text text-danger"> Invalid number of onboarded members. </small>
+      </div>
+      <div *ngIf="onboardedMembersExceededNumberOfVacancies">
+        <small class="form-text text-danger"> Number of onboarded members can not be larger than total number of vacancies. </small>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-6">
+        <button
+          [disabled]="totalOnboard.invalid || invalidOnboardedMembers || onboardedMembersExceededNumberOfVacancies"
+          type="button"
+          class="btn btn-success btn-md w-100"
+          (click)="modal.close('Save click')"
+        >
+          Close Partially
+        </button>
+      </div>
+
+      <div class="col-6">
+        <button type="button" class="btn btn-danger btn-md w-100" (click)="modal.dismiss()">Cancel</button>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer border-0 justify-content-start"></div>
+</ng-template>
+
+<!--<ng-template #closeRRF let-modal>-->
+<!--    <div class="modal-header border-0">-->
+<!--        <h6 class="modal-title" id="modal-basic-title-x">Partially close RRF</h6>-->
+<!--        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">-->
+<!--            <span aria-hidden="true">&times;</span>-->
+<!--        </button>-->
+<!--    </div>-->
+<!--    <div class="modal-body ">-->
+<!--        <form class="row" [formGroup]="partiallyCloseRRFForm">-->
+
+<!--            <div class="form-group col-md-12">-->
+<!--                <label class="form-control-label" for="totalOnboard">Total Onboarded</label>-->
+<!--                <input type="number"-->
+<!--                       class="form-control"-->
+<!--                       id="totalOnboard"-->
+<!--                       name="totalOnboard"-->
+<!--                       formControlName="totalOnboard"-->
+<!--                       placeholder="Total Onboarded"-->
+<!--                >-->
+<!--            </div>-->
+<!--            <div class="row">-->
+<!--                <div class="col-6">-->
+<!--                    <button [disabled]="partiallyCloseRRFForm.invalid" type="submit" class="btn btn-success btn-md w-100" (click)="modal.close('Update')">Update</button>-->
+<!--                </div>-->
+<!--                <div class="col-6">-->
+<!--                    <button type="button" class="btn btn-danger btn-md w-100" (click)="modal.dismiss()">Cancel</button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </form>-->
+<!--    </div>-->
+<!--</ng-template>-->

@@ -1,0 +1,18 @@
+<div class="font-sm">
+  <ng-select
+    #ngSelectComponent
+    [(ngModel)]="selectedFieldValue"
+    [items]="employees"
+    bindLabel="fullName"
+    [bindValue]="selectFieldName"
+    appearance="outline"
+    [searchable]="true"
+    [clearable]="true"
+    [labelForId]="selectFieldName"
+    placeholder="Select Employee"
+    id="field_employee"
+    (change)="onChange($event)"
+    [disabled]="isDisabled"
+  >
+  </ng-select>
+</div>

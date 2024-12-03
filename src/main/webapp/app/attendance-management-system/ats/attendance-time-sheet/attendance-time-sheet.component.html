@@ -1,0 +1,293 @@
+<div>
+  <jhi-header
+    [headerName]="'Attendance Time Sheet'"
+    [midHeaderName01]="'Attendances'"
+    [midRouterLinkText01]="'/'"
+    [midHeader01hasSessionStorage]="true"
+    [midHeader01SessionStorageKey]="'keepAttendancesModalOpen'"
+    [midHeader01SessionStorageValue]="'yes'"
+    [shouldHaveHr]="false"
+  >
+  </jhi-header>
+  <jhi-alert-error></jhi-alert-error>
+  <jhi-alert></jhi-alert>
+
+  <!--Employee name and pin in PDF-->
+  <div class="employee-info card-body">
+    <div class="row">
+      <div class="col-md-5">PIN: {{ employee?.pin }}</div>
+      <div class="col-md-5">Name: {{ employee?.fullName }}</div>
+    </div>
+  </div>
+
+  <div class="hide-in-print">
+    <form class="row justify-content-start align-items-center py-2" name="editForm" role="form" novalidate [formGroup]="editForm">
+      <div class="mb-3 col-auto font-sm">From</div>
+      <div class="mb-3 col-auto">
+        <!--<input type="date" class="form-control input-attendance-time-sheet" formControlName="startDate">-->
+        <div class="input-group">
+          <input #startDateDp="ngbDatepicker" class="form-control" formControlName="startDate" name="startDate" ngbDatepicker type="text" />
+          <span class="input-group-append">
+            <button (click)="startDateDp.toggle()" class="btn btn-secondary" type="button"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </span>
+        </div>
+      </div>
+      <div class="mb-3 col-auto font-sm">To</div>
+      <div class="mb-3 col-auto">
+        <div class="input-group">
+          <input #endDateDp="ngbDatepicker" class="form-control" formControlName="endDate" name="endDate" ngbDatepicker type="text" />
+          <span class="input-group-append">
+            <button (click)="endDateDp.toggle()" class="btn btn-secondary" type="button"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </span>
+        </div>
+      </div>
+      <div class="mb-3 col-auto">
+        <select class="form-control" id="field_status" name="status" (change)="filterAttendanceList()" formControlName="status">
+          <option value="ALL">All</option>
+          <option [value]="status" *ngFor="let status of attendanceStatusList">{{ getUserFriendlyAttendanceStatus(status) }}</option>
+        </select>
+      </div>
+      <div class="mb-3 col d-flex gap-2">
+        <button type="submit" class="btn btn-primary" (click)="loadFromRange()">Show</button>
+        <button [disabled]="editForm.invalid" type="submit" class="btn btn-outline-primary" (click)="print()">
+          <fa-icon icon="print"></fa-icon>
+          PDF
+        </button>
+        <button class="btn btn-outline-success" (click)="exportAtsData()">
+          <fa-icon icon="download"></fa-icon>
+          Excel
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="" id="entities" *ngIf="filteredAttendanceTimeSheets && filteredAttendanceTimeSheets.length > 0">
+    <!-- attendance summary start -->
+    <table class="table table-hover table-sm my-1 list-text-color">
+      <thead>
+        <tr>
+          <th class="text-nowrap text-end text-primary">Days Showing</th>
+          <th class="text-nowrap text-end text-primary">Working Days</th>
+          <th class="text-nowrap text-end text-success">Present</th>
+          <th class="text-nowrap text-end text-danger">Absent</th>
+          <th class="text-nowrap text-end text-success">Leave</th>
+          <th class="text-nowrap text-end text-warning">NFOH</th>
+          <th class="text-nowrap text-end text-warning">Late</th>
+          <th class="text-nowrap text-right text-warning">Auto</th>
+          <th class="text-nowrap text-end">Govt. Holidays</th>
+          <th class="text-nowrap text-end">Weekly Off Days</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="text-nowrap text-end">{{ totalDays >= 10 ? totalDays : '0' + totalDays }}</td>
+          <td class="text-nowrap text-end">
+            {{
+              calculateTotalWorkingDays(totalDays, govtHolidays, weeklyOffday) >= 10
+                ? calculateTotalWorkingDays(totalDays, govtHolidays, weeklyOffday)
+                : '0' + calculateTotalWorkingDays(totalDays, govtHolidays, weeklyOffday)
+            }}
+          </td>
+          <td class="text-nowrap text-end">{{ presentDays >= 10 ? presentDays : '0' + presentDays }}</td>
+          <td class="text-nowrap text-end">{{ absentDays >= 10 ? absentDays : '0' + absentDays }}</td>
+          <td class="text-nowrap text-end">{{ leaveDays >= 10 ? leaveDays : '0' + leaveDays }}</td>
+          <td class="text-nowrap text-end">
+            {{ nonFulfilledOfficeHours >= 10 ? nonFulfilledOfficeHours : '0' + nonFulfilledOfficeHours }}
+          </td>
+          <td class="text-nowrap text-end">{{ lateDays >= 10 ? lateDays : '0' + lateDays }}</td>
+          <td class="text-nowrap text-right">{{ autoPunchDays >= 10 ? autoPunchDays : '0' + autoPunchDays }}</td>
+
+          <td class="text-nowrap text-end">{{ govtHolidays >= 10 ? govtHolidays : '0' + govtHolidays }}</td>
+          <td class="text-nowrap text-end">{{ weeklyOffday >= 10 ? weeklyOffday : '0' + weeklyOffday }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- attendance summary end -->
+
+    <!-- attendance time sheet details with time -->
+    <table class="table table-hover table-sm text-center table-attendance-time-sheet list-text-color" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col" class="text-start"><span>Date</span></th>
+          <th scope="col" class="text-start"><span>Day</span></th>
+          <th scope="col" class="text-start"><span>In Time</span></th>
+          <th scope="col" class="text-start"><span>Out Time</span></th>
+          <th scope="col" class="text-start">
+            <fa-icon icon="business-time" ngbTooltip="Total Working Hour"></fa-icon>
+          </th>
+          <th scope="col" class="text-start hide-in-print"></th>
+          <th scope="col" class="text-start"><span>Status</span></th>
+          <th scope="col" class="text-start hide-in-print"><span></span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let attendanceEntry of filteredAttendanceTimeSheets"
+          [ngClass]="{
+            'table-attendance-success':
+              attendanceEntry.attendanceStatus == 'PRESENT' ||
+              attendanceEntry.attendanceStatus === 'PRESENT_WEEKLY_OFFDAY' ||
+              attendanceEntry.attendanceStatus === 'PRESENT_GOVT_HOLIDAY' ||
+              attendanceEntry.attendanceStatus === 'MOVEMENT',
+            'table-attendance-danger': attendanceEntry.attendanceStatus == 'ABSENT',
+            'table-attendance-warning':
+              attendanceEntry.attendanceStatus == 'LATE' || attendanceEntry.attendanceStatus == 'NON_FULFILLED_OFFICE_HOURS',
+            'table-attendance-info': attendanceEntry.attendanceStatus == 'GOVT_HOLIDAY',
+            'table-attendance-active': attendanceEntry.attendanceStatus == 'WEEKLY_OFFDAY'
+          }"
+        >
+          <!--                date-->
+          <td class="text-start">{{ attendanceEntry.date | formatMediumDate }}</td>
+          <!--                day-->
+          <td class="text-start">{{ attendanceEntry.date | formatMediumDate }}</td>
+          <!--                intime-->
+          <td class="text-start">
+            <fa-icon
+              *ngIf="attendanceEntry.punchInDeviceOrigin == 'DEVICE'"
+              class="text-primary"
+              ngbTooltip="Punch in using device"
+              icon="fingerprint"
+            ></fa-icon>
+            <fa-icon
+              *ngIf="attendanceEntry.punchInDeviceOrigin == 'WEB'"
+              class="text-primary"
+              ngbTooltip="Punch in using web"
+              icon="desktop"
+            ></fa-icon>
+            {{ attendanceEntry.inTime ? (attendanceEntry.inTime | formatTime) : '-' }}
+          </td>
+          <!--                outtime-->
+          <td class="text-start">
+            <fa-icon
+              *ngIf="attendanceEntry.punchOutDeviceOrigin == 'DEVICE'"
+              class="text-primary"
+              ngbTooltip="Punch out using device"
+              icon="fingerprint"
+            ></fa-icon>
+            <fa-icon
+              *ngIf="attendanceEntry.punchOutDeviceOrigin == 'WEB'"
+              class="text-primary"
+              ngbTooltip="Punch out using web"
+              icon="desktop"
+            ></fa-icon>
+            {{ attendanceEntry.outTime ? (attendanceEntry.outTime | formatTime) : '-' }}
+          </td>
+
+          <!--                worked for-->
+          <td class="text-start">
+            {{ attendanceEntry.totalWorkingHour ? getTimeStringFromDecimalValue(attendanceEntry.totalWorkingHour) + ' h' : '' }}
+            <fa-icon *ngIf="attendanceEntry.isAutoPunchOut" class="text-primary" ngbTooltip="Auto punch out" icon="magic"></fa-icon>
+            <span
+              *ngIf="
+                !attendanceEntry.totalWorkingHour &&
+                attendanceEntry.attendanceStatus !== 'WEEKLY_OFFDAY' &&
+                attendanceEntry.attendanceStatus !== 'GOVT_HOLIDAY'
+              "
+            >
+              -
+            </span>
+          </td>
+
+          <!--                pending -->
+          <td class="text-start hide-in-print">
+            <button
+              *ngIf="
+                attendanceEntry.hasPendingLeaveApplication &&
+                attendanceEntry.attendanceStatus != 'WEEKLY_OFFDAY' &&
+                attendanceEntry.attendanceStatus != 'GOVT_HOLIDAY'
+              "
+              class="btn btn-sm btn-outline-primary btn-primary-no-border"
+              routerLink="/user-leave-application-status-and-history"
+            >
+              <fa-icon ngbTooltip="Pending Leave Application" icon="user-clock"></fa-icon>
+            </button>
+
+            <button
+              *ngIf="attendanceEntry.hasPendingManualAttendance"
+              class="btn btn-sm btn-outline-primary btn-primary-no-border"
+              [routerLink]="['/manual-attendance-entry/apply']"
+            >
+              <fa-icon ngbTooltip="Pending Manual Attendance" icon="user-clock"></fa-icon>
+            </button>
+
+            <button
+              *ngIf="attendanceEntry.hasPendingMovementEntry"
+              class="btn btn-sm btn-outline-primary btn-primary-no-border"
+              routerLink="/movement-entry/apply"
+            >
+              <fa-icon ngbTooltip="Pending Movement Entry" icon="user-clock"></fa-icon>
+            </button>
+          </td>
+
+          <!--                attendance status-->
+          <td class="text-start">
+            <span
+              jhiTranslate="{{ 'bitsHrPayrollApp.attendanceStatus.minimal.' + attendanceEntry.attendanceStatus }}"
+              ngbTooltip="{{ getUserFriendlyAttendanceStatus(attendanceEntry.attendanceStatus) }}"
+            >
+              {{ attendanceEntry.attendanceStatus }}
+            </span>
+            <!--                late -->
+            {{
+              attendanceEntry.lateDuration && attendanceEntry.attendanceStatus === 'LATE'
+                ? getTimeStringFromDecimalValue(attendanceEntry.lateDuration) + ' h'
+                : ''
+            }}
+          </td>
+
+          <!--                edit attendance button -->
+          <td class="text-start hide-in-print">
+            <span *ngIf="attendanceEntry.canApplyAttendanceEntry">
+              <!-- apply for manual attendance button -->
+              <button
+                type="button"
+                class="btn btn-sm btn-outline-primary btn-primary-no-border"
+                (click)="routeToManualAttendancePage(attendanceEntry)"
+                ngbTooltip="Apply for Attendance"
+                container="body"
+              >
+                <fa-icon icon="calendar-plus"></fa-icon>
+              </button>
+            </span>
+
+            <span *ngIf="attendanceEntry.canApplyMovementEntry">
+              <!-- apply for movement entry button -->
+              <button
+                type="button"
+                class="btn btn-sm btn-outline-primary btn-primary-no-border"
+                (click)="routeToMovementEntryPage(attendanceEntry)"
+                ngbTooltip="Apply for Movement"
+                container="body"
+              >
+                <fa-icon icon="map-marked-alt"></fa-icon>
+              </button>
+            </span>
+
+            <span *ngIf="attendanceEntry.canApplyLeaveApplication">
+              <!--                apply leave button -->
+              <button
+                type="button"
+                class="btn btn-sm btn-outline-primary btn-primary-no-border"
+                (click)="routeToLeaveApplicationDate(attendanceEntry)"
+                ngbTooltip="Apply for Leave"
+                container="body"
+              >
+                <fa-icon icon="umbrella-beach"></fa-icon>
+              </button>
+            </span>
+
+            <!--                edit manual attendance button-->
+            <button
+              *ngIf="attendanceEntry.canEditAttendanceEntry === true"
+              type="button"
+              class="btn btn-sm btn-outline-primary btn-primary-no-border"
+              (click)="routeToManualAttendancePage(attendanceEntry)"
+              ngbTooltip="Edit Entry"
+            >
+              <fa-icon icon="pencil-alt"></fa-icon>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

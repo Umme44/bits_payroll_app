@@ -1,0 +1,162 @@
+{
+  "changelogDate": "20210905051314",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "employee_salary_temp_data",
+  "fields": [
+    {
+      "fieldName": "month",
+      "fieldType": "Month",
+      "fieldValues": "JANUARY,FEBRUARY,MARCH,APRIL,MAY,JUNE,JULY,AUGUST,SEPTEMBER,OCTOBER,NOVEMBER,DECEMBER"
+    },
+    {
+      "fieldName": "year",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "mainGrossSalary",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "mainGrossBasicSalary",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "mainGrossHouseRent",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "mainGrossMedicalAllowance",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "mainGrossConveyanceAllowance",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "absentDays",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "fractionDays",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "payableGrossSalary",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "payableGrossBasicSalary",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "payableGrossHouseRent",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "payableGrossMedicalAllowance",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "payableGrossConveyanceAllowance",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "arrearSalary",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "pfDeduction",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "taxDeduction",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "welfareFundDeduction",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "mobileBillDeduction",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "otherDeduction",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "totalDeduction",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "netPay",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "remarks",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "pfContribution",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "gfContribution",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "provisionForFestivalBonus",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "provisionForLeaveEncashment",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "provishionForProjectBonus",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "livingAllowance",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "otherAddition",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "salaryAdjustment",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "providentFundArrear",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "entertainment",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "utility",
+      "fieldType": "Double"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "EmployeeSalaryTempData",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "employeeSalaryTempData",
+      "relationshipName": "employee",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

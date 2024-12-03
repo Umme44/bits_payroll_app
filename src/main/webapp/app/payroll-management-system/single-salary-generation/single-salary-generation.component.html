@@ -1,0 +1,66 @@
+<div>
+  <jhi-header [headerName]="'Single Salary Generation'" [shouldHaveHr]="false"> </jhi-header>
+  <!--    year & month-->
+  <form [formGroup]="editForm" name="editForm" role="form">
+    <div class="card px-3 py-3 container-fluid">
+      <div class="row align-items-lg-center">
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label class="form-control-label required" for="" jhiTranslate="bitsHrPayrollApp.employmentHistory.employee">Employee</label>
+            <jhi-select-employee-form [employeeIdForm]="employeeIdForm!"></jhi-select-employee-form>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="mb-3">
+            <label class="form-control-label">Year</label>
+            <select class="form-control w-100" formControlName="year" id="year" name="year">
+              <option *ngFor="let year of years" value="{{ year }}">
+                {{ year }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="mb-3">
+            <label class="form-control-label">Month</label>
+            <select class="form-control" formControlName="month" id="month" name="month">
+              <option *ngFor="let month of months" value="{{ month.Value }}">
+                {{ month.Text }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <button (click)="clickNext()" class="btn btn-success" style="margin-left: 10px !important">Next</button>
+        </div>
+      </div>
+
+      <div class="note" *ngIf="salaryGenerationPreValidation && salaryGenerationPreValidation.aitConfigMissing == true">
+        <div class="note-black p-2">Missing <span class="fw-bold">Income Tax</span> Configuration</div>
+      </div>
+
+      <div class="note" *ngIf="salaryGenerationPreValidation && salaryGenerationPreValidation.salaryLocked == true">
+        <div class="note-black p-2">Salary is <span class="fw-bold">Locked!</span></div>
+      </div>
+
+      <div class="note" *ngIf="ready && isEmployeeSelected == false">
+        <span class="note-black p-2">Please Select <strong>Employee</strong> To Continue</span>
+      </div>
+
+      <div
+        *ngIf="
+          isEmployeeSelected &&
+          salaryGenerationPreValidation &&
+          salaryGenerationPreValidation.aitConfigMissing === false &&
+          salaryGenerationPreValidation.salaryLocked === false
+        "
+      >
+        <div class="row">
+          <div class="col-md-12 text-center mt-3 card">
+            <button (click)="generate()" class="btn btn-primary rounded btn-lg">Generate Salary</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

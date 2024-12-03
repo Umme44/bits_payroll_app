@@ -1,0 +1,76 @@
+<div>
+  <jhi-header
+    [addButtonText]="'Create a new Time Slot'"
+    [headerName]="'Time Slots'"
+    [routerLinkText]="'/time-slot/new'"
+    [shouldHaveHr]="false"
+  >
+  </jhi-header>
+</div>
+<div>
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="table-responsive" id="entities" *ngIf="timeSlots && timeSlots.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead class="list-text-color">
+        <tr>
+          <th scope="col"><span>Code</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.timeSlot.title">Title</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.timeSlot.inTime">In Time</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.timeSlot.outTime">Out Time</span></th>
+          <th scope="col" ><span container="body" ngbTooltip="Is Visible to Employee">Is Visible</span></th>
+          <th scope="col"></th>
+          <th scope="col"><span >Weekends</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+        <tr *ngFor="let timeSlot of timeSlots; trackBy: trackId" class="list-text-color">
+
+          <td>{{ timeSlot.code }}</td>
+          <td>{{ timeSlot.title }}</td>
+          <td>{{ timeSlot.inTime | formatTime }}</td>
+          <td>{{ timeSlot.outTime | formatTime }}</td>
+          <td>
+            <span
+              *ngIf="timeSlot.isApplicableByEmployee; else notApplicableForEmployee"
+              class="px-md-2 text-success"
+              data-placement="top"
+              data-toggle="tooltip" container="body"
+              ngbTooltip="Applicable for All Employee"
+            >
+              <fa-icon icon="check"></fa-icon>
+            </span>
+            <ng-template #notApplicableForEmployee>
+              <span class="px-md-2 text-danger" data-placement="top" data-toggle="tooltip" container="body" ngbTooltip="Not Applicable for All Employee">
+                <fa-icon icon="times"></fa-icon>
+              </span>
+            </ng-template>
+          </td>
+          <td><span class="badge bg-secondary text-white" [ngClass]="{ 'badge badge-pill badge-dark p-1': timeSlot.isDefaultShift }">
+              {{ timeSlot.isDefaultShift ? 'Default' : '' }}
+            </span></td>
+          <td>{{ timeSlot.weekEnds }}</td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/time-slot', timeSlot.id, 'view']" class="btn btn-info btn-sm btn-sm px-md-3">
+                <fa-icon icon="eye"></fa-icon>
+              </button>
+
+              <button type="submit" [routerLink]="['/time-slot', timeSlot.id, 'edit']" class="btn btn-primary btn-sm btn-sm px-md-3">
+                <fa-icon icon="pencil-alt"></fa-icon>
+              </button>
+
+              <button type="submit" (click)="delete(timeSlot)" class="btn btn-danger btn-sm btn-sm px-md-3">
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

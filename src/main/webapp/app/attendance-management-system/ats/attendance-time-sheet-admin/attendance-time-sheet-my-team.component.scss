@@ -1,0 +1,65 @@
+/* attendance-time-sheet.component.scss */
+.btn-primary-no-border {
+  border: none;
+  border-radius: 5px;
+}
+
+.table-attendance-time-sheet {
+  color: rgba(0, 0, 0, 0.65);
+
+  td {
+    //border-top: none;
+  }
+}
+
+.table-attendance-info {
+  background-color: rgba(185, 227, 234, 0.18);
+}
+
+.table-attendance-danger {
+  background-color: rgba(220, 53, 69, 0.13);
+}
+
+.table-attendance-warning {
+  background-color: rgba(255, 193, 7, 0.15);
+}
+
+.table-attendance-active {
+  background-color: rgba(137, 144, 151, 0.13);
+}
+
+.table-attendance-success {
+  background-color: rgba(116, 198, 135, 0.3);
+}
+
+//.input-attendance-time-sheet {
+//  border: none;
+//  background-color: rgba(128, 128, 128, 0.15);
+//  border-radius: 3px;
+//}
+//
+//.input-attendance-time-sheet:focus {
+//  border: none;
+//}
+
+@media screen {
+  .employee-info {
+    display: none;
+  }
+}
+
+@media print {
+  .filter-option,
+  .hide-in-print {
+    display: none;
+  }
+
+  .container {
+    display: block;
+  }
+
+  .filter-option,
+  .hide-in-print {
+    display: none;
+  }
+}

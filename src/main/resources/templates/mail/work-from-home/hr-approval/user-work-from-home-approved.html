@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="en">
+<head>
+    <title> Approval for work from home</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="icon" th:href="@{|${baseUrl}/favicon.ico|}"/>
+
+</head>
+<body>
+<span>
+    Dear [[${employeeName}]],
+</span>
+<p>
+    Please be informed that your work from home period: [[${startDate}]] to [[${endDate}]] has been assigned by HR.
+    Your web punch-in/out option has been enabled. Requesting to ensure your daily attendance during work from home period.
+</p>
+
+</body>
+
+<footer>
+    <h4 style="text-align: center">This is system generated email. Please do not reply.</h4>
+</footer>
+</html>

@@ -1,0 +1,174 @@
+<!--<div>-->
+<!--    <div *ngIf="movementEntry" class="font-size-small-08rem">-->
+<!--        <jhi-header-->
+<!--            [headerName]="'Movement Entry'"-->
+<!--            [shouldHaveHr]="true">-->
+<!--        </jhi-header>-->
+
+<!--        <jhi-alert-error></jhi-alert-error>-->
+
+<!--        <dl class="row-md jh-entity-details">-->
+<!--            <div class="row">-->
+<!--                <div class="col-md-2">-->
+<!--                    <dt><span jhiTranslate="bitsHrPayrollApp.movementEntry.startDate">Start Date</span></dt>-->
+<!--                </div>-->
+
+<!--                <div class="col-md-2">-->
+<!--                    <dd>-->
+<!--                        <span>{{ movementEntry.startDate | formatMediumDate }}</span>-->
+<!--                    </dd>-->
+<!--                </div>-->
+
+<!--                <div class="col-md-2">-->
+<!--                    <dt><span jhiTranslate="bitsHrPayrollApp.movementEntry.startTime">Start Time</span></dt>-->
+<!--                </div>-->
+
+<!--                <div class="col-md-2">-->
+<!--                    <dd>-->
+<!--                        <span>{{ movementEntry.startTime | formatMediumDate }}</span>-->
+<!--                    </dd>-->
+<!--                </div>-->
+<!--                <div class="col-md-2">-->
+<!--                    <dt><span jhiTranslate="bitsHrPayrollApp.movementEntry.startNote">Start Note</span></dt>-->
+<!--                </div>-->
+
+<!--                <div class="col-md-2">-->
+<!--                    <dd>-->
+<!--                        <span>{{ movementEntry.startNote}}</span>-->
+<!--                    </dd>-->
+<!--                </div>-->
+
+<!--                <div class="col-md-2">-->
+<!--                    <dt><span jhiTranslate="bitsHrPayrollApp.movementEntry.endDate">End Date</span></dt>-->
+<!--                </div>-->
+
+<!--                <div class="col-md-2">-->
+<!--                    <dd>-->
+<!--                        <span>{{ movementEntry.endDate | formatMediumDate }}</span>-->
+<!--                    </dd>-->
+<!--                </div>-->
+
+<!--                <div class="col-md-2">-->
+<!--                    <dt><span jhiTranslate="bitsHrPayrollApp.movementEntry.endTime">End Time</span></dt>-->
+<!--                </div>-->
+
+<!--                <div class="col-md-2">-->
+<!--                    <dd>-->
+<!--                        <span>{{ movementEntry.endTime | formatMediumDate }}</span>-->
+<!--                    </dd>-->
+<!--                </div>-->
+
+<!--                <div class="col-md-2">-->
+<!--                    <dt><span jhiTranslate="bitsHrPayrollApp.movementEntry.endNote">End Note</span></dt>-->
+<!--                </div>-->
+
+<!--                <div class="col-md-2">-->
+<!--                    <dd>-->
+<!--                        <span>{{ movementEntry.endNote }}</span>-->
+<!--                    </dd>-->
+<!--                </div>-->
+
+<!--                <div class="col-md-2">-->
+<!--                    <dt><span jhiTranslate="bitsHrPayrollApp.movementEntry.type">Type</span></dt>-->
+<!--                </div>-->
+
+<!--                <div class="col-md-2">-->
+<!--                    <dd>-->
+<!--                        <span-->
+<!--                            jhiTranslate="{{ 'bitsHrPayrollApp.MovementType.' + movementEntry.type }}">{{ movementEntry.type }}</span>-->
+<!--                    </dd>-->
+<!--                </div>-->
+
+<!--                <div class="col-md-2">-->
+<!--                    <dt><span jhiTranslate="bitsHrPayrollApp.movementEntry.status">Status</span></dt>-->
+<!--                </div>-->
+
+<!--                <div class="col-md-2">-->
+<!--                    <dd>-->
+<!--                        <span-->
+<!--                            jhiTranslate="{{ 'bitsHrPayrollApp.Status.' + movementEntry.status }}">{{ movementEntry.status }}</span>-->
+<!--                    </dd>-->
+<!--                </div>-->
+<!--                <div class="col-md-2">-->
+<!--                    <dt><span jhiTranslate="bitsHrPayrollApp.movementEntry.createdAt">Created At</span></dt>-->
+<!--                </div>-->
+
+<!--                <div class="col-md-2">-->
+<!--                    <dd>-->
+<!--                        <span>{{ movementEntry.createdAt | formatMediumDate }}</span>-->
+<!--                    </dd>-->
+<!--                </div>-->
+
+<!--                <div class="col-md-2">-->
+<!--                    <dt><span jhiTranslate="bitsHrPayrollApp.movementEntry.updatedAt">Updated At</span></dt>-->
+<!--                </div>-->
+<!--                <div class="col-md-2">-->
+<!--                    <dd>-->
+<!--                        <span>{{ movementEntry.updatedAt | formatMediumDate }}</span>-->
+<!--                    </dd>-->
+<!--                </div>-->
+
+<!--                <div class="col-md-2">-->
+<!--                    <dt><span jhiTranslate="bitsHrPayrollApp.movementEntry.sanctionAt">Sanction At</span></dt>-->
+<!--                </div>-->
+<!--                <div class="col-md-2">-->
+<!--                    <dd>-->
+<!--                        <span>{{ movementEntry.sanctionAt | formatMediumDate}}</span>-->
+<!--                    </dd>-->
+<!--                </div>-->
+
+<!--                <div class="col-md-2">-->
+<!--                    <dt><span jhiTranslate="bitsHrPayrollApp.movementEntry.employee">Employee</span></dt>-->
+<!--                </div>-->
+<!--                <div class="col-md-2">-->
+<!--                    <dd>-->
+<!--                        <div *ngIf="movementEntry.employeeId">-->
+<!--                            <a [routerLink]="['/employee-custom', movementEntry.employeeId, 'view']">{{ movementEntry.employeeName }}</a>-->
+<!--                        </div>-->
+<!--                    </dd>-->
+<!--                </div>-->
+
+<!--                <div class="col-md-2">-->
+<!--                    <dt><span jhiTranslate="bitsHrPayrollApp.movementEntry.createdBy">Created By</span></dt>-->
+<!--                </div>-->
+<!--                <div class="col-md-2">-->
+<!--                    <dd>-->
+<!--                        {{ movementEntry.createdByLogin }}-->
+<!--                    </dd>-->
+<!--                </div>-->
+
+<!--                <div class="col-md-2">-->
+<!--                    <dt><span jhiTranslate="bitsHrPayrollApp.movementEntry.updatedBy">Updated By</span></dt>-->
+<!--                </div>-->
+<!--                <div class="col-md-2">-->
+<!--                    <dd>-->
+<!--                        {{ movementEntry.updatedByLogin }}-->
+<!--                    </dd>-->
+<!--                </div>-->
+
+<!--                <div class="col-md-2">-->
+<!--                    <dt><span jhiTranslate="bitsHrPayrollApp.movementEntry.sanctionBy">Sanction By</span></dt>-->
+<!--                </div>-->
+<!--                <div class="col-md-2">-->
+<!--                    <dd>-->
+<!--                        {{ movementEntry.sanctionByLogin }}-->
+<!--                    </dd>-->
+<!--                </div>-->
+
+<!--            </div>-->
+
+<!--        </dl>-->
+
+<!--        <button type="submit"-->
+<!--                (click)="previousState()"-->
+<!--                class="btn btn-info">-->
+<!--            <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>-->
+<!--        </button>-->
+
+<!--        <button type="button"-->
+<!--                [routerLink]="['/movement-entry', movementEntry.id, 'edit']"-->
+<!--                class="btn btn-primary">-->
+<!--            <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>-->
+<!--        </button>-->
+<!--    </div>-->
+<!--</div>-->

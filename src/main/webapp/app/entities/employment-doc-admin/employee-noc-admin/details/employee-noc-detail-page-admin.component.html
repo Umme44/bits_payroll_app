@@ -1,0 +1,104 @@
+<jhi-header
+  [headerName]="'Employee NOC Details'"
+  [midHeaderName01]="'Employee Docs'"
+  [midRouterLinkText01]="'/employee-docs-admin'">
+</jhi-header>
+
+<div class="row justify-content-center">
+  <div class="col-12 font-sm">
+    <div class="card card-body" *ngIf="employeeNOC">
+      <jhi-alert-error></jhi-alert-error>
+
+      <dl class="row">
+        <dt class="col-md-3"><span>Employee PIN</span></dt>
+        <dd class="col-md-3">
+          <span>{{ employeeNOC.employeePin }}</span>
+        </dd>
+
+        <dt class="col-md-3"><span>Employee Name</span></dt>
+        <dd class="col-md-3">
+          <span>{{ employeeNOC.employeeName }}</span>
+        </dd>
+
+        <dt class="col-md-3"><span>Department</span></dt>
+        <dd class="col-md-3">
+          <span>{{ employeeNOC.departmentName }}</span>
+        </dd>
+
+        <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.employeeNOC.passportNumber">Passport Number</span></dt>
+        <dd class="col-md-3">
+          <span>{{ employeeNOC.passportNumber }}</span>
+        </dd>
+        <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.employeeNOC.leaveStartDate">Leave Start Date</span></dt>
+        <dd class="col-md-3">
+          <span>{{ employeeNOC.leaveStartDate | formatMediumDate }}</span>
+        </dd>
+        <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.employeeNOC.leaveEndDate">Leave End Date</span></dt>
+        <dd class="col-md-3">
+          <span>{{ employeeNOC.leaveEndDate | formatMediumDate }}</span>
+        </dd>
+        <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.employeeNOC.countryToVisit">Country To Visit</span></dt>
+        <dd class="col-md-3">
+          <span>{{ employeeNOC.countryToVisit }}</span>
+        </dd>
+        <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.employeeNOC.purposeOfNOC">Purpose Of NOC</span></dt>
+        <dd class="col-md-3">
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.PurposeOfNOC.' + employeeNOC.purposeOfNOC }}">{{ employeeNOC.purposeOfNOC }}</span>
+        </dd>
+        <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.employeeNOC.isRequiredForVisa">Required for Visa</span></dt>
+        <dd class="col-md-3">
+          <span>{{ employeeNOC.isRequiredForVisa === true ? 'Yes' : 'No' }}</span>
+        </dd>
+        <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.employeeNOC.certificateStatus">Certificate Status</span></dt>
+        <dd class="col-md-3">
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.CertificateStatus.' + employeeNOC.certificateStatus }}">{{
+            employeeNOC.certificateStatus
+          }}</span>
+        </dd>
+        <dt *ngIf="employeeNOC.certificateStatus === 'GENERATED'" class="col-md-3">
+          <span jhiTranslate="bitsHrPayrollApp.employeeNOC.referenceNumber">Reference Number</span>
+        </dt>
+        <dd *ngIf="employeeNOC.certificateStatus === 'GENERATED'" class="col-md-3">
+          <span>{{ employeeNOC.referenceNumber }}</span>
+        </dd>
+        <dt *ngIf="employeeNOC.certificateStatus === 'GENERATED'" class="col-md-3">
+          <span jhiTranslate="bitsHrPayrollApp.employeeNOC.issueDate">Issue Date</span>
+        </dt>
+        <dd *ngIf="employeeNOC.certificateStatus === 'GENERATED'" class="col-md-3">
+          <span>{{ employeeNOC.issueDate | formatMediumDate }}</span>
+        </dd>
+        <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.employeeNOC.createdAt">Created At</span></dt>
+        <dd class="col-md-3">
+          <span>{{ employeeNOC.createdAt | formatMediumDate }}</span>
+        </dd>
+
+        <dt *ngIf="employeeNOC.certificateStatus === 'REJECTED'" class="col-md-3">
+          <span jhiTranslate="bitsHrPayrollApp.employeeNOC.reason">Reason</span>
+        </dt>
+        <dd *ngIf="employeeNOC.certificateStatus === 'REJECTED'" class="col-md-3">
+          <span>{{ employeeNOC.reason }}</span>
+        </dd>
+        <dt *ngIf="employeeNOC.certificateStatus === 'GENERATED'" class="col-md-3"><span>Signatory Person PIN</span></dt>
+        <dd *ngIf="employeeNOC.certificateStatus === 'GENERATED'" class="col-md-3">
+          <span>{{ employeeNOC.signatoryPersonPin }}</span>
+        </dd>
+
+        <dt *ngIf="employeeNOC.certificateStatus === 'GENERATED'" class="col-md-3"><span>Signatory Person Name</span></dt>
+        <dd *ngIf="employeeNOC.certificateStatus === 'GENERATED'" class="col-md-3">
+          <span>{{ employeeNOC.signatoryPersonName }}</span>
+        </dd>
+
+        <dt *ngIf="employeeNOC.certificateStatus === 'GENERATED'" class="col-md-3"><span>Signatory Person Designation</span></dt>
+        <dd *ngIf="employeeNOC.certificateStatus === 'GENERATED'" class="col-md-3">
+          <span>{{ employeeNOC.signatoryPersonDesignation }}</span>
+        </dd>
+      </dl>
+
+      <div>
+        <button type="submit" (click)="previousState()" class="btn btn-info">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

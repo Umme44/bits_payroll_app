@@ -1,0 +1,28 @@
+<div>
+  <div *ngIf="bankBranch">
+    <jhi-header [headerName]="'Bank Branch Details'" [shouldHaveHr]="false"> </jhi-header>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <dl class="row-md jh-entity-details">
+      <div class="row">
+        <div class="col-md-3">
+          <dt><span jhiTranslate="bitsHrPayrollApp.bankBranch.branchName">Branch Name</span></dt>
+        </div>
+        <div class="col-md-3">
+          <dd>
+            <span>{{ bankBranch.branchName }}</span>
+          </dd>
+        </div>
+      </div>
+    </dl>
+
+    <button (click)="previousState()" class="btn btn-info" type="submit">
+      <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+    </button>
+
+    <button [routerLink]="['/bank-branch', bankBranch.id, 'edit']" class="btn btn-primary" type="button">
+      <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+    </button>
+  </div>
+</div>

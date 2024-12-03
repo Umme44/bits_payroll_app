@@ -1,0 +1,21 @@
+#entities {
+  th:nth-child(2), td:nth-child(2) {
+    max-width: 20rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  th:nth-child(3), td:nth-child(3) {
+    max-width: 30rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  th:nth-child(4), td:nth-child(4) {
+    width: 15rem;
+  }
+  th:nth-child(5), td:nth-child(5) {
+    width: 10rem;
+  }
+}

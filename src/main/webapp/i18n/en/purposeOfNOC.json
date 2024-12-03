@@ -1,0 +1,11 @@
+{
+  "bitsHrPayrollApp": {
+    "PurposeOfNOC": {
+      "null": "",
+      "ACADEMIC": "ACADEMIC",
+      "MEDICAL": "MEDICAL",
+      "OFFICIAL": "OFFICIAL",
+      "TOURISM": "TOURISM"
+    }
+  }
+}

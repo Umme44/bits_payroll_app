@@ -1,0 +1,35 @@
+<div>
+  <div *ngIf="department">
+    <jhi-header
+      [headerName]="'Department Details'"
+      [midHeaderName01]="'Departments'"
+      [midRouterLinkText01]="'/department'"
+      [shouldHaveHr]="false"
+    >
+    </jhi-header>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <div class="card card-body mb-2">
+      <dl class="row font-sm">
+        <div class="col-md-3"><span>Department Name</span></div>
+        <div class="col-md-3">
+          <span>{{ department.departmentName }}</span>
+        </div>
+
+        <div class="col-md-3"><span>Department Head</span></div>
+        <div class="col-md-3">
+          <span>{{ department.departmentHeadPin }} - {{ department.departmentHeadFullName }}</span>
+        </div>
+      </dl>
+    </div>
+
+    <button (click)="previousState()" class="btn btn-info" type="submit">
+      <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+    </button>
+
+    <button [routerLink]="['/department', department.id, 'edit']" class="btn btn-primary" type="button">
+      <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,79 @@
+.border-radius {
+  border-radius: 6px;
+}
+
+.circle {
+  background: rgb(148, 57, 184);
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border-style: solid;
+  border-width: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(255, 255, 255);
+}
+
+.c1 {
+  background: rgb(209, 233, 252) !important;
+  color: rgb(6, 27, 100);
+}
+
+.color1 {
+  background: -webkit-linear-gradient(to right, #28a786, #28a786ad); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #28a786, #28a786ad); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.color2 {
+  background: -webkit-linear-gradient(to left, #2884b8a1, #2884b8); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #2884b8a1, #2884b8); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.color3 {
+  background: -webkit-linear-gradient(to right, #dc3545d9, #dc3545ab); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #dc3545d9, #dc3545ab); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.employee-status-total-number {
+  font-weight: 300;
+  color: #fff;
+  font-size: 70px;
+  text-align: right;
+  margin: 0;
+  padding: 0;
+}
+
+.employee-number-by-category {
+  color: #fff;
+  font-weight: 400;
+  font-size: 0.8rem;
+}
+
+.employee-status-title {
+  color: #fff;
+  font-size: 27px;
+  font-weight: 300;
+}
+
+.c2 {
+  background: rgb(208, 242, 255) !important;
+  color: rgb(4, 41, 122);
+}
+
+.c3 {
+  background: #ca8a8b !important;
+  color: #fbf9f9;
+}
+
+.c4 {
+  background: #748da6 !important;
+  color: rgb(255, 255, 255);
+}
+
+.tablepadding1 {
+  padding-bottom: 3px;
+}
+.topics tr {
+  line-height: 28px !important;
+}

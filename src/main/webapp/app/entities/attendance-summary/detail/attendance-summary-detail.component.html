@@ -1,0 +1,70 @@
+<div>
+  <jhi-header [headerName]="'Attendance Summary Details'" [shouldHaveHr]="false"> </jhi-header>
+
+  <jhi-alert-error></jhi-alert-error>
+  <jhi-alert></jhi-alert>
+
+  <div *ngIf="attendanceSummary">
+    <div class="container-fluid card card-body font-sm">
+      <div class="row my-1">
+        <div class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.attendanceSummary.employee">Employee</span></div>
+        <div class="col-md-3 float-left">
+          <div *ngIf="employee != null">
+            <a [routerLink]="['/employee-custom', attendanceSummary.employeeId, 'view']" class="text-decoration-none">
+              {{ employee.pin }} -
+              {{ employee.fullName }}
+            </a>
+          </div>
+        </div>
+        <div class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.attendanceSummary.month">Month </span></div>
+        <div class="col-md-3 float-left">
+          <span>{{ convertMonthNumberToDayjs(attendanceSummary.month) | formatMonth }}</span> , <span>{{ attendanceSummary.year }}</span>
+        </div>
+      </div>
+
+      <div class="row my-1">
+        <div class="col-md-3">
+          <span jhiTranslate="bitsHrPayrollApp.attendanceSummary.totalWorkingDays">Total Working Days</span>
+        </div>
+        <div class="col-md-3 float-left">
+          <span>{{ attendanceSummary.totalWorkingDays }}</span>
+        </div>
+        <div class="col-md-3">
+          <span jhiTranslate="bitsHrPayrollApp.attendanceSummary.totalLeaveDays">Total Leave Days</span>
+        </div>
+        <div class="col-md-3 float-left">
+          <span>{{ attendanceSummary.totalLeaveDays }}</span>
+        </div>
+      </div>
+      <div class="row my-1">
+        <div class="col-md-3">
+          <span jhiTranslate="bitsHrPayrollApp.attendanceSummary.totalAbsentDays">Total Absent Days</span>
+        </div>
+        <div class="col-md-3">
+          <span>{{ attendanceSummary.totalAbsentDays }}</span>
+        </div>
+        <div class="col-md-3">
+          <span jhiTranslate="bitsHrPayrollApp.attendanceSummary.totalFractionDays">Total Fraction Days</span>
+        </div>
+        <div class="col-md-3">
+          <span>{{ attendanceSummary.totalFractionDays }}</span>
+        </div>
+      </div>
+
+      <div class="py-2">
+        <button (click)="previousState()" class="btn btn-info" type="submit">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button
+          [hidden]="isSalaryLocked"
+          [routerLink]="['/attendance-summary', attendanceSummary.id, 'edit']"
+          class="btn btn-primary"
+          type="button"
+        >
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

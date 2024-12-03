@@ -1,0 +1,194 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-manual-attendance-entry-heading"
+        data-cy="ManualAttendanceEntryCreateUpdateHeading"
+        jhiTranslate="bitsHrPayrollApp.manualAttendanceEntry.home.createOrEditLabel"
+      >
+        Create or edit a Manual Attendance Entry
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.manualAttendanceEntry.date" for="field_date">Date</label>
+          <div class="input-group">
+            <input
+              id="field_date"
+              data-cy="date"
+              type="text"
+              class="form-control"
+              name="date"
+              ngbDatepicker
+              #dateDp="ngbDatepicker"
+              formControlName="date"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.manualAttendanceEntry.inTime" for="field_inTime">In Time</label>
+          <div class="d-flex">
+            <input
+              id="field_inTime"
+              data-cy="inTime"
+              type="datetime-local"
+              class="form-control"
+              name="inTime"
+              formControlName="inTime"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.manualAttendanceEntry.inNote" for="field_inNote">In Note</label>
+          <input type="text" class="form-control" name="inNote" id="field_inNote" data-cy="inNote" formControlName="inNote" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.manualAttendanceEntry.outTime" for="field_outTime">Out Time</label>
+          <div class="d-flex">
+            <input
+              id="field_outTime"
+              data-cy="outTime"
+              type="datetime-local"
+              class="form-control"
+              name="outTime"
+              formControlName="outTime"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.manualAttendanceEntry.outNote" for="field_outNote">Out Note</label>
+          <input type="text" class="form-control" name="outNote" id="field_outNote" data-cy="outNote" formControlName="outNote" />
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="bitsHrPayrollApp.manualAttendanceEntry.isLineManagerApproved"
+            for="field_isLineManagerApproved"
+            >Is Line Manager Approved</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isLineManagerApproved"
+            id="field_isLineManagerApproved"
+            data-cy="isLineManagerApproved"
+            formControlName="isLineManagerApproved"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.manualAttendanceEntry.isHRApproved" for="field_isHRApproved"
+            >Is HR Approved</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isHRApproved"
+            id="field_isHRApproved"
+            data-cy="isHRApproved"
+            formControlName="isHRApproved"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.manualAttendanceEntry.isRejected" for="field_isRejected"
+            >Is Rejected</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isRejected"
+            id="field_isRejected"
+            data-cy="isRejected"
+            formControlName="isRejected"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.manualAttendanceEntry.rejectionComment" for="field_rejectionComment"
+            >Rejection Comment</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="rejectionComment"
+            id="field_rejectionComment"
+            data-cy="rejectionComment"
+            formControlName="rejectionComment"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.manualAttendanceEntry.note" for="field_note">Note</label>
+          <input type="text" class="form-control" name="note" id="field_note" data-cy="note" formControlName="note" />
+          <div *ngIf="editForm.get('note')!.invalid && (editForm.get('note')!.dirty || editForm.get('note')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('note')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 0 }"
+            >
+              This field is required to be at least 0 characters.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('note')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 250 }"
+            >
+              This field cannot be longer than 250 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.manualAttendanceEntry.employee" for="field_employee">Employee</label>
+          <select
+            class="form-control"
+            id="field_employee"
+            data-cy="employee"
+            name="employee"
+            formControlName="employee"
+            [compareWith]="compareEmployee"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="employeeOption" *ngFor="let employeeOption of employeesSharedCollection">
+              {{ employeeOption.fullName }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

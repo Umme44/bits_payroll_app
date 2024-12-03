@@ -1,0 +1,86 @@
+<jhi-header
+  [headerName]="'Tax Acknowledgement Receipt'"
+  [addButtonText]="'Add New Tax Acknowledgement Receipt'"
+  [routerLinkText]="'/user-tax-acknowledgement-receipt/new'"
+  [shouldHaveHr]="false"
+>
+</jhi-header>
+
+<div>
+  <jhi-alert-error></jhi-alert-error>
+
+  <div *ngIf="taxAcknowledgementReceipts && taxAcknowledgementReceipts.length > 0; else noDataFound" class="table-responsive" id="entities">
+    <table class="table table-hover list-text-color" aria-describedby="page-heading">
+      <thead>
+        <tr class="text-nowrap">
+          <th scope="col"><span>Status</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.taxAcknowledgementReceipt.fiscalYear">Fiscal Year</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.taxAcknowledgementReceipt.tinNumber">TIN No.</span></th>
+          <th scope="col"><span>Acknowledgement Receipt Number</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.taxAcknowledgementReceipt.taxesCircle">Taxes Circle</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.taxAcknowledgementReceipt.taxesZone">Taxes Zone</span></th>
+          <th scope="col"><span>Date of Submission</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+        <tr class="text-nowrap" *ngFor="let taxAcknowledgementReceipt of taxAcknowledgementReceipts; trackBy: trackId">
+          <td>{{ getUserFriendlyUi(taxAcknowledgementReceipt.acknowledgementStatus!) }}</td>
+          <td>
+            <div *ngIf="taxAcknowledgementReceipt.fiscalYearId">
+              {{ taxAcknowledgementReceipt.startYear }}-{{ taxAcknowledgementReceipt.endYear }}
+            </div>
+          </td>
+          <td>{{ taxAcknowledgementReceipt.tinNumber }}</td>
+          <td>{{ taxAcknowledgementReceipt.receiptNumber }}</td>
+          <td>{{ taxAcknowledgementReceipt.taxesCircle }}</td>
+          <td>{{ taxAcknowledgementReceipt.taxesZone }}</td>
+          <td>{{ taxAcknowledgementReceipt.dateOfSubmission | formatMediumDate }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button class="btn btn-secondary btn-sm me-4" ngbTooltip="Download" (click)="exportReport(taxAcknowledgementReceipt.id!)">
+                <fa-icon icon="print"></fa-icon> PDF
+              </button>
+              <button
+                type="submit"
+                class="btn btn-info btn-sm btn-sm px-md-3"
+                (click)="openTacAcknowledgementReceiptModal(taxAcknowledgementReceipt)"
+              >
+                <fa-icon icon="eye"></fa-icon>
+              </button>
+
+              <button
+                type="submit"
+                *ngIf="taxAcknowledgementReceipt.acknowledgementStatus === 'SUBMITTED'"
+                [routerLink]="['/user-tax-acknowledgement-receipt', taxAcknowledgementReceipt.id, 'edit']"
+                class="btn btn-primary btn-sm btn-sm px-md-3"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+              </button>
+
+              <button
+                *ngIf="taxAcknowledgementReceipt.acknowledgementStatus === 'SUBMITTED'"
+                type="submit"
+                (click)="delete(taxAcknowledgementReceipt)"
+                class="btn btn-danger btn-sm btn-sm px-md-3"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ng-template #noDataFound style="display: flex; align-items: center; justify-content: center">
+    <div class="d-flex align-items-center justify-content-center" style="height: 72vh">
+      <div>
+        <div>
+          <img src="../../../../content/images/empty_box.png" alt="No Data Found" width="340" />
+        </div>
+        <div class="text-center">No Data Found</div>
+      </div>
+    </div>
+  </ng-template>
+</div>

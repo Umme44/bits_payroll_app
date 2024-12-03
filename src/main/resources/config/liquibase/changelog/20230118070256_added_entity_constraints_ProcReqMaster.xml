@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity ProcReqMaster.
+    -->
+    <changeSet id="20230118070256-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="department_id"
+                                 baseTableName="proc_req_master"
+                                 constraintName="fk_proc_req_master__department_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="department"/>
+
+        <addForeignKeyConstraint baseColumnNames="requested_by_id"
+                                 baseTableName="proc_req_master"
+                                 constraintName="fk_proc_req_master__requested_by_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+
+        <addForeignKeyConstraint baseColumnNames="recommended_by01_id"
+                                 baseTableName="proc_req_master"
+                                 constraintName="fk_proc_req_master__recommended_by01_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+
+        <addForeignKeyConstraint baseColumnNames="recommended_by02_id"
+                                 baseTableName="proc_req_master"
+                                 constraintName="fk_proc_req_master__recommended_by02_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+
+        <addForeignKeyConstraint baseColumnNames="recommended_by03_id"
+                                 baseTableName="proc_req_master"
+                                 constraintName="fk_proc_req_master__recommended_by03_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+
+        <addForeignKeyConstraint baseColumnNames="recommended_by04_id"
+                                 baseTableName="proc_req_master"
+                                 constraintName="fk_proc_req_master__recommended_by04_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+
+        <addForeignKeyConstraint baseColumnNames="recommended_by05_id"
+                                 baseTableName="proc_req_master"
+                                 constraintName="fk_proc_req_master__recommended_by05_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+
+        <addForeignKeyConstraint baseColumnNames="next_approval_from_id"
+                                 baseTableName="proc_req_master"
+                                 constraintName="fk_proc_req_master__next_approval_from_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+
+        <addForeignKeyConstraint baseColumnNames="rejected_by_id"
+                                 baseTableName="proc_req_master"
+                                 constraintName="fk_proc_req_master__rejected_by_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+
+        <addForeignKeyConstraint baseColumnNames="closed_by_id"
+                                 baseTableName="proc_req_master"
+                                 constraintName="fk_proc_req_master__closed_by_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+
+        <addForeignKeyConstraint baseColumnNames="updated_by_id"
+                                 baseTableName="proc_req_master"
+                                 constraintName="fk_proc_req_master__updated_by_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="created_by_id"
+                                 baseTableName="proc_req_master"
+                                 constraintName="fk_proc_req_master__created_by_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+    </changeSet>
+</databaseChangeLog>

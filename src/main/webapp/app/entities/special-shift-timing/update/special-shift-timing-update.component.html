@@ -1,0 +1,299 @@
+<jhi-header
+  [headerName]="!editForm.get('id')!.value ? 'Add Special Shift Timing' : 'Edit Special Shift Timing'"
+  [midHeaderName01]="'Special Shift Timings'"
+  [midRouterLinkText01]="'/special-shift-timing'"
+  [shouldHaveHr]="false"
+>
+</jhi-header>
+
+<div>
+  <jhi-alert-error></jhi-alert-error>
+  <div class="">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <div class="card card-body">
+        <div class="row">
+          <div class="col-md-4">
+            <label class="form-control-label required" jhiTranslate="bitsHrPayrollApp.specialShiftTiming.startDate" for="field_startDate"
+              >Start Date</label
+            >
+            <div class="input-group">
+              <input
+                id="field_startDate"
+                type="text"
+                (dateSelect)="startDateSelect()"
+                class="form-control"
+                name="startDate"
+                ngbDatepicker
+                #startDateDp="ngbDatepicker"
+                formControlName="startDate"
+              />
+              <span class="input-group-append">
+                <button type="button" class="btn btn-secondary" (click)="startDateDp.toggle()">
+                  <fa-icon icon="calendar-alt"></fa-icon>
+                </button>
+              </span>
+            </div>
+            <div *ngIf="editForm.get('startDate')!.invalid && (editForm.get('startDate')!.dirty || editForm.get('startDate')!.touched)">
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('startDate')?.errors?.required"
+                jhiTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-control-label required" jhiTranslate="bitsHrPayrollApp.specialShiftTiming.endDate" for="field_endDate"
+              >End Date</label
+            >
+            <div class="input-group">
+              <input
+                id="field_endDate"
+                type="text"
+                [minDate]="minDateForEndDateDP"
+                class="form-control"
+                name="endDate"
+                ngbDatepicker
+                #endDateDp="ngbDatepicker"
+                formControlName="endDate"
+              />
+              <span class="input-group-append">
+                <button type="button" class="btn btn-secondary" (click)="endDateDp.toggle()">
+                  <fa-icon icon="calendar-alt"></fa-icon>
+                </button>
+              </span>
+            </div>
+            <div *ngIf="editForm.get('endDate')!.invalid && (editForm.get('endDate')!.dirty || editForm.get('endDate')!.touched)">
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('endDate')?.errors?.required"
+                jhiTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-control-label required" jhiTranslate="bitsHrPayrollApp.specialShiftTiming.timeSlot" for="field_timeSlot"
+              >Time Slot</label
+            >
+            <select class="form-control" id="field_timeSlot" name="timeSlot" formControlName="timeSlotId">
+              <option *ngIf="!editForm.get('timeSlotId')!.value" [ngValue]="null" selected></option>
+              <option [ngValue]="timeSlotOption.id" *ngFor="let timeSlotOption of timeslots; trackBy: trackById">
+                {{ timeSlotOption.inTime | formatTime }} - {{ timeSlotOption.outTime | formatTime }} ({{ timeSlotOption.title }})
+              </option>
+            </select>
+
+            <div *ngIf="editForm.get('timeSlotId')!.invalid && (editForm.get('timeSlotId')!.dirty || editForm.get('timeSlotId')!.touched)">
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('timeSlotId')?.errors?.required"
+                jhiTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <label class="form-control-label" for="field_reason"
+              >Reason (Please write a meaningful text. Employee will be notified by this message.)</label
+            >
+            <input type="text" class="form-control" name="reason" id="field_reason" formControlName="reason" />
+            <div *ngIf="editForm.get('reason')!.invalid && (editForm.get('reason')!.dirty || editForm.get('reason')!.touched)">
+              <small
+                *ngIf="editForm.get('reason')?.errors?.required || editForm.get('reason')?.errors?.notOnlyWhitespace"
+                class="form-text text-danger"
+                jhiTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('reason')?.errors?.minlength"
+                jhiTranslate="entity.validation.minlength"
+                [translateValues]="{ min: 3 }"
+              >
+                This field is required to be at least 3 characters.
+              </small>
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('reason')?.errors?.maxlength"
+                jhiTranslate="entity.validation.maxlength"
+                [translateValues]="{ max: 250 }"
+              >
+                This field cannot be longer than 250 characters.
+              </small>
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('reason')?.errors?.pattern"
+              >
+                This text is invalid
+              </small>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="mb-3">
+              <label class="form-control-label" for="field_remarks" jhiTranslate="bitsHrPayrollApp.specialShiftTiming.remarks"
+                >Remarks</label
+              >
+              <textarea class="form-control" formControlName="remarks" id="field_remarks" name="remarks" type="text"></textarea>
+              <div *ngIf="editForm.get('remarks')!.invalid && (editForm.get('remarks')!.dirty || editForm.get('remarks')!.touched)">
+                <small
+                  *ngIf="editForm.get('remarks')?.errors?.required || editForm.get('remarks')?.errors?.notOnlyWhitespace"
+                  class="form-text text-danger"
+                  jhiTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+
+                <small
+                  class="form-text text-danger"
+                  *ngIf="editForm.get('remarks')?.errors?.minlength"
+                  jhiTranslate="entity.validation.minlength"
+                  [translateValues]="{ min: 0 }"
+                >
+                  This field is required to be at least 0 characters.
+                </small>
+                <small
+                  class="form-text text-danger"
+                  *ngIf="editForm.get('remarks')?.errors?.maxlength"
+                  jhiTranslate="entity.validation.maxlength"
+                  [translateValues]="{ max: 250 }"
+                >
+                  This field cannot be longer than 250 characters.
+                </small>
+                <small
+                  class="form-text text-danger"
+                  *ngIf="editForm.get('remarks')?.errors?.pattern"
+                >
+                  This text is invalid
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 align-self-end">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              name="overrideRoaster"
+              id="field_overrideRoaster"
+              formControlName="overrideRoaster"
+            />
+            <label class="form-check-label" jhiTranslate="bitsHrPayrollApp.specialShiftTiming.overrideRoaster" for="field_overrideRoaster"
+              >Override Roaster</label
+            >
+            <div
+              *ngIf="
+                editForm.get('overrideRoaster')!.invalid &&
+                (editForm.get('overrideRoaster')!.dirty || editForm.get('overrideRoaster')!.touched)
+              "
+            >
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('overrideRoaster')?.errors?.required"
+                jhiTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+            </div>
+          </div>
+
+          <div class="col-md-4 align-self-end">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              name="overrideFlexSchedule"
+              id="field_overrideFlexSchedule"
+              formControlName="overrideFlexSchedule"
+            />
+            <label
+              class="form-check-label"
+              jhiTranslate="bitsHrPayrollApp.specialShiftTiming.overrideFlexSchedule"
+              for="field_overrideFlexSchedule"
+              >Override Flex Schedule</label
+            >
+
+            <div
+              *ngIf="
+                editForm.get('overrideFlexSchedule')!.invalid &&
+                (editForm.get('overrideFlexSchedule')!.dirty || editForm.get('overrideFlexSchedule')!.touched)
+              "
+            >
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('overrideFlexSchedule')?.errors?.required"
+                jhiTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+            </div>
+          </div>
+
+          <div class="col-md-4" *ngIf="false">
+            <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.specialShiftTiming.createdAt" for="field_createdAt"
+              >Created At</label
+            >
+            <div class="d-flex">
+              <input
+                id="field_createdAt"
+                type="datetime-local"
+                class="form-control"
+                name="createdAt"
+                formControlName="createdAt"
+                placeholder="YYYY-MM-DD HH:mm"
+              />
+            </div>
+          </div>
+
+          <div class="col-md-4" *ngIf="false">
+            <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.specialShiftTiming.updatedAt" for="field_updatedAt"
+              >Updated At</label
+            >
+            <div class="d-flex">
+              <input
+                id="field_updatedAt"
+                type="datetime-local"
+                class="form-control"
+                name="updatedAt"
+                formControlName="updatedAt"
+                placeholder="YYYY-MM-DD HH:mm"
+              />
+            </div>
+          </div>
+
+          <div class="col-md-4" *ngIf="false">
+            <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.specialShiftTiming.createdBy" for="field_createdBy"
+              >Created By</label
+            >
+            <select class="form-control" id="field_createdBy" name="createdBy" formControlName="createdById">
+              <option [ngValue]="null"></option>
+              <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackById">{{ userOption.login }}</option>
+            </select>
+          </div>
+
+          <div class="col-md-4" *ngIf="false">
+            <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.specialShiftTiming.updatedBy" for="field_updatedBy"
+              >Updated By</label
+            >
+            <select class="form-control" id="field_updatedBy" name="updatedBy" formControlName="updatedById">
+              <option [ngValue]="null"></option>
+              <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackById">{{ userOption.login }}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-3">
+        <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

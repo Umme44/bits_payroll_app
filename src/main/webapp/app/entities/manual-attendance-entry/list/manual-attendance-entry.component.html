@@ -1,0 +1,167 @@
+<div>
+  <h2 id="page-heading" data-cy="ManualAttendanceEntryHeading">
+    <span jhiTranslate="bitsHrPayrollApp.manualAttendanceEntry.home.title">Manual Attendance Entries</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="bitsHrPayrollApp.manualAttendanceEntry.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-manual-attendance-entry"
+        [routerLink]="['/manual-attendance-entry/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="bitsHrPayrollApp.manualAttendanceEntry.home.createLabel"> Create a new Manual Attendance Entry </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="manualAttendanceEntries?.length === 0">
+    <span jhiTranslate="bitsHrPayrollApp.manualAttendanceEntry.home.notFound">No Manual Attendance Entries found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="manualAttendanceEntries && manualAttendanceEntries.length > 0">
+    <table class="table table-hover list-text-color" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">ID</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="date">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.manualAttendanceEntry.date">Date</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="inTime">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.manualAttendanceEntry.inTime">In Time</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="inNote">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.manualAttendanceEntry.inNote">In Note</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="outTime">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.manualAttendanceEntry.outTime">Out Time</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="outNote">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.manualAttendanceEntry.outNote">Out Note</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="isLineManagerApproved">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.manualAttendanceEntry.isLineManagerApproved">Is Line Manager Approved</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="isHRApproved">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.manualAttendanceEntry.isHRApproved">Is HR Approved</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="isRejected">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.manualAttendanceEntry.isRejected">Is Rejected</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="rejectionComment">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.manualAttendanceEntry.rejectionComment">Rejection Comment</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="note">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.manualAttendanceEntry.note">Note</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="employee.fullName">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.manualAttendanceEntry.employee">Employee</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody
+        infinite-scroll
+        (scrolled)="loadPage(page + 1)"
+        [infiniteScrollDisabled]="page - 1 >= links['last']"
+        [infiniteScrollDistance]="0"
+      >
+        <tr *ngFor="let manualAttendanceEntry of manualAttendanceEntries; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/manual-attendance-entry', manualAttendanceEntry.id, 'view']">{{ manualAttendanceEntry.id }}</a>
+          </td>
+          <td>{{ manualAttendanceEntry.date | formatMediumDate }}</td>
+          <td>{{ manualAttendanceEntry.inTime | formatMediumDatetime }}</td>
+          <td>{{ manualAttendanceEntry.inNote }}</td>
+          <td>{{ manualAttendanceEntry.outTime | formatMediumDatetime }}</td>
+          <td>{{ manualAttendanceEntry.outNote }}</td>
+          <td>{{ manualAttendanceEntry.isLineManagerApproved }}</td>
+          <td>{{ manualAttendanceEntry.isHRApproved }}</td>
+          <td>{{ manualAttendanceEntry.isRejected }}</td>
+          <td>{{ manualAttendanceEntry.rejectionComment }}</td>
+          <td>{{ manualAttendanceEntry.note }}</td>
+          <td>
+            <div *ngIf="manualAttendanceEntry.employee">
+              <a [routerLink]="['/employee', manualAttendanceEntry.employee.id, 'view']">{{ manualAttendanceEntry.employee.fullName }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/manual-attendance-entry', manualAttendanceEntry.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/manual-attendance-entry', manualAttendanceEntry.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(manualAttendanceEntry)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

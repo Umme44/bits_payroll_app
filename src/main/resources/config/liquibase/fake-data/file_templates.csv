@@ -1,0 +1,11 @@
+id;title;file_path;type;access_privilege;is_active
+1;Chips Beauty vertical;../fake-data/blob/hipster.txt;FORMS;MANAGEMENT;true
+2;partnerships Usability Orchestrator;../fake-data/blob/hipster.txt;POLICIES;MANAGEMENT;true
+3;Realigned e-commerce wireless;../fake-data/blob/hipster.txt;FORMS;MANAGEMENT;true
+4;Architect plum bus;../fake-data/blob/hipster.txt;POLICIES;GENERAL;true
+5;Chief;../fake-data/blob/hipster.txt;FORMS;MANAGEMENT;true
+6;New experiences interactive;../fake-data/blob/hipster.txt;POLICIES;GENERAL;true
+7;Automotive green;../fake-data/blob/hipster.txt;TEMPLATES;GENERAL;false
+8;Virginia;../fake-data/blob/hipster.txt;TEMPLATES;GENERAL;true
+9;Home;../fake-data/blob/hipster.txt;FORMS;GENERAL;false
+10;synergies Underpass quantify;../fake-data/blob/hipster.txt;TEMPLATES;MANAGEMENT;false

@@ -1,0 +1,526 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-employee-salary-temp-data-heading"
+        data-cy="EmployeeSalaryTempDataCreateUpdateHeading"
+        jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.home.createOrEditLabel"
+      >
+        Create or edit a Employee Salary Temp Data
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.month" for="field_month">Month</label>
+          <select class="form-control" name="month" formControlName="month" id="field_month" data-cy="month">
+            <option [ngValue]="null">{{ 'bitsHrPayrollApp.Month.null' | translate }}</option>
+            <option *ngFor="let month of monthValues" [value]="month">{{ 'bitsHrPayrollApp.Month.' + month | translate }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.year" for="field_year">Year</label>
+          <input type="number" class="form-control" name="year" id="field_year" data-cy="year" formControlName="year" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.mainGrossSalary" for="field_mainGrossSalary"
+            >Main Gross Salary</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="mainGrossSalary"
+            id="field_mainGrossSalary"
+            data-cy="mainGrossSalary"
+            formControlName="mainGrossSalary"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.mainGrossBasicSalary"
+            for="field_mainGrossBasicSalary"
+            >Main Gross Basic Salary</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="mainGrossBasicSalary"
+            id="field_mainGrossBasicSalary"
+            data-cy="mainGrossBasicSalary"
+            formControlName="mainGrossBasicSalary"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.mainGrossHouseRent" for="field_mainGrossHouseRent"
+            >Main Gross House Rent</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="mainGrossHouseRent"
+            id="field_mainGrossHouseRent"
+            data-cy="mainGrossHouseRent"
+            formControlName="mainGrossHouseRent"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.mainGrossMedicalAllowance"
+            for="field_mainGrossMedicalAllowance"
+            >Main Gross Medical Allowance</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="mainGrossMedicalAllowance"
+            id="field_mainGrossMedicalAllowance"
+            data-cy="mainGrossMedicalAllowance"
+            formControlName="mainGrossMedicalAllowance"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.mainGrossConveyanceAllowance"
+            for="field_mainGrossConveyanceAllowance"
+            >Main Gross Conveyance Allowance</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="mainGrossConveyanceAllowance"
+            id="field_mainGrossConveyanceAllowance"
+            data-cy="mainGrossConveyanceAllowance"
+            formControlName="mainGrossConveyanceAllowance"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.absentDays" for="field_absentDays"
+            >Absent Days</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="absentDays"
+            id="field_absentDays"
+            data-cy="absentDays"
+            formControlName="absentDays"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.fractionDays" for="field_fractionDays"
+            >Fraction Days</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="fractionDays"
+            id="field_fractionDays"
+            data-cy="fractionDays"
+            formControlName="fractionDays"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.payableGrossSalary" for="field_payableGrossSalary"
+            >Payable Gross Salary</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="payableGrossSalary"
+            id="field_payableGrossSalary"
+            data-cy="payableGrossSalary"
+            formControlName="payableGrossSalary"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.payableGrossBasicSalary"
+            for="field_payableGrossBasicSalary"
+            >Payable Gross Basic Salary</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="payableGrossBasicSalary"
+            id="field_payableGrossBasicSalary"
+            data-cy="payableGrossBasicSalary"
+            formControlName="payableGrossBasicSalary"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.payableGrossHouseRent"
+            for="field_payableGrossHouseRent"
+            >Payable Gross House Rent</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="payableGrossHouseRent"
+            id="field_payableGrossHouseRent"
+            data-cy="payableGrossHouseRent"
+            formControlName="payableGrossHouseRent"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.payableGrossMedicalAllowance"
+            for="field_payableGrossMedicalAllowance"
+            >Payable Gross Medical Allowance</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="payableGrossMedicalAllowance"
+            id="field_payableGrossMedicalAllowance"
+            data-cy="payableGrossMedicalAllowance"
+            formControlName="payableGrossMedicalAllowance"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.payableGrossConveyanceAllowance"
+            for="field_payableGrossConveyanceAllowance"
+            >Payable Gross Conveyance Allowance</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="payableGrossConveyanceAllowance"
+            id="field_payableGrossConveyanceAllowance"
+            data-cy="payableGrossConveyanceAllowance"
+            formControlName="payableGrossConveyanceAllowance"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.arrearSalary" for="field_arrearSalary"
+            >Arrear Salary</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="arrearSalary"
+            id="field_arrearSalary"
+            data-cy="arrearSalary"
+            formControlName="arrearSalary"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.pfDeduction" for="field_pfDeduction"
+            >Pf Deduction</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="pfDeduction"
+            id="field_pfDeduction"
+            data-cy="pfDeduction"
+            formControlName="pfDeduction"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.taxDeduction" for="field_taxDeduction"
+            >Tax Deduction</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="taxDeduction"
+            id="field_taxDeduction"
+            data-cy="taxDeduction"
+            formControlName="taxDeduction"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.welfareFundDeduction"
+            for="field_welfareFundDeduction"
+            >Welfare Fund Deduction</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="welfareFundDeduction"
+            id="field_welfareFundDeduction"
+            data-cy="welfareFundDeduction"
+            formControlName="welfareFundDeduction"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.mobileBillDeduction"
+            for="field_mobileBillDeduction"
+            >Mobile Bill Deduction</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="mobileBillDeduction"
+            id="field_mobileBillDeduction"
+            data-cy="mobileBillDeduction"
+            formControlName="mobileBillDeduction"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.otherDeduction" for="field_otherDeduction"
+            >Other Deduction</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="otherDeduction"
+            id="field_otherDeduction"
+            data-cy="otherDeduction"
+            formControlName="otherDeduction"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.totalDeduction" for="field_totalDeduction"
+            >Total Deduction</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="totalDeduction"
+            id="field_totalDeduction"
+            data-cy="totalDeduction"
+            formControlName="totalDeduction"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.netPay" for="field_netPay">Net Pay</label>
+          <input type="number" class="form-control" name="netPay" id="field_netPay" data-cy="netPay" formControlName="netPay" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.remarks" for="field_remarks">Remarks</label>
+          <input type="text" class="form-control" name="remarks" id="field_remarks" data-cy="remarks" formControlName="remarks" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.pfContribution" for="field_pfContribution"
+            >Pf Contribution</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="pfContribution"
+            id="field_pfContribution"
+            data-cy="pfContribution"
+            formControlName="pfContribution"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.gfContribution" for="field_gfContribution"
+            >Gf Contribution</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="gfContribution"
+            id="field_gfContribution"
+            data-cy="gfContribution"
+            formControlName="gfContribution"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.provisionForFestivalBonus"
+            for="field_provisionForFestivalBonus"
+            >Provision For Festival Bonus</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="provisionForFestivalBonus"
+            id="field_provisionForFestivalBonus"
+            data-cy="provisionForFestivalBonus"
+            formControlName="provisionForFestivalBonus"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.provisionForLeaveEncashment"
+            for="field_provisionForLeaveEncashment"
+            >Provision For Leave Encashment</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="provisionForLeaveEncashment"
+            id="field_provisionForLeaveEncashment"
+            data-cy="provisionForLeaveEncashment"
+            formControlName="provisionForLeaveEncashment"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.provishionForProjectBonus"
+            for="field_provishionForProjectBonus"
+            >Provishion For Project Bonus</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="provishionForProjectBonus"
+            id="field_provishionForProjectBonus"
+            data-cy="provishionForProjectBonus"
+            formControlName="provishionForProjectBonus"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.livingAllowance" for="field_livingAllowance"
+            >Living Allowance</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="livingAllowance"
+            id="field_livingAllowance"
+            data-cy="livingAllowance"
+            formControlName="livingAllowance"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.otherAddition" for="field_otherAddition"
+            >Other Addition</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="otherAddition"
+            id="field_otherAddition"
+            data-cy="otherAddition"
+            formControlName="otherAddition"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.salaryAdjustment" for="field_salaryAdjustment"
+            >Salary Adjustment</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="salaryAdjustment"
+            id="field_salaryAdjustment"
+            data-cy="salaryAdjustment"
+            formControlName="salaryAdjustment"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.providentFundArrear"
+            for="field_providentFundArrear"
+            >Provident Fund Arrear</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="providentFundArrear"
+            id="field_providentFundArrear"
+            data-cy="providentFundArrear"
+            formControlName="providentFundArrear"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.entertainment" for="field_entertainment"
+            >Entertainment</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="entertainment"
+            id="field_entertainment"
+            data-cy="entertainment"
+            formControlName="entertainment"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.utility" for="field_utility">Utility</label>
+          <input type="number" class="form-control" name="utility" id="field_utility" data-cy="utility" formControlName="utility" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.employee" for="field_employee">Employee</label>
+          <select
+            class="form-control"
+            id="field_employee"
+            data-cy="employee"
+            name="employee"
+            formControlName="employee"
+            [compareWith]="compareEmployee"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="employeeOption" *ngFor="let employeeOption of employeesSharedCollection">{{ employeeOption.id }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

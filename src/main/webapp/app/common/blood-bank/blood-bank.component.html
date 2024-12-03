@@ -1,0 +1,52 @@
+<div>
+  <jhi-header [headerName]="'Blood Group Info'" [shouldCapitalize]="false" [shouldHaveHr]="false"> </jhi-header>
+
+  <div class="">
+    <div class="">
+      <div class="row mb-2">
+        <div class="input-group col-md-7 ps-0">
+          <jhi-search-text-box
+            class="ms-3"
+            (searchEvent)="onSearchTextChangeV2($event)"
+            [placeHolderText]="'Search'"
+            [searchBoxSize]="'18rem'"
+            [suggestionList]="getEmployeeNameList(employees)"
+          >
+          </jhi-search-text-box>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <jhi-alert-error></jhi-alert-error>
+  <jhi-alert></jhi-alert>
+
+  <div *ngIf="employees && employees.length > 0" class="table-responsive text-start" id="entities">
+    <table aria-describedby="page-heading" data-name="employee-details-table" class="table table-hover">
+      <thead>
+        <tr>
+          <th class="th-bloodgroup w-5" scope="col"><span>PIN</span></th>
+          <th class="th-bloodgroup w-25" scope="col"><span>Name</span></th>
+          <th class="th-bloodgroup w-15" scope="col"><span>Blood Group</span></th>
+          <th class="th-bloodgroup w-20" scope="col"><span>Can Donate</span></th>
+          <th class="th-bloodgroup w-15" scope="col"><span>Can Receive</span></th>
+          <th class="th-bloodgroup w-20" scope="col"><span>Contact Number</span></th>
+        </tr>
+      </thead>
+      <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+        <tr *ngFor="let employee of employees; trackBy: trackId">
+          <td class="w-5">{{ employee.pin }}</td>
+          <td class="w-25">{{ employee.fullName }}</td>
+          <td class="w-15">
+            <span jhiTranslate="{{ 'bitsHrPayrollApp.BloodGroup.' + employee.bloodGroup }}">{{ employee.bloodGroup }}</span>
+          </td>
+          <td class="w-20">{{ gives(employee.bloodGroup) }}</td>
+          <td class="w-15">{{ receives(employee.bloodGroup) }}</td>
+          <td class="w-20">
+            <a href="tel:{{ employee.officialContactNo }}">{{ employee.officialContactNo }}</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

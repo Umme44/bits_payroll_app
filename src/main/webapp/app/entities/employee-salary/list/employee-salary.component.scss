@@ -1,0 +1,126 @@
+.salary {
+  min-width: 10rem;
+}
+.pin {
+  min-width: 5rem;
+}
+.name {
+  min-width: 10rem;
+}
+.join-date {
+  white-space: nowrap;
+  min-width: 8rem;
+}
+
+.confirmation-date {
+  min-width: 9rem;
+}
+.employee-category {
+  min-width: 15rem;
+}
+.unit {
+  min-width: 15rem;
+}
+.department {
+  min-width: 15rem;
+}
+.main-gross-salary {
+  min-width: 27rem;
+}
+.main-gross-salary-hr {
+  border-top: 1px solid #d3d3d3;
+  min-width: 26rem;
+}
+
+.main-gross-salary-hr-value {
+  border-top: 1px solid #d3d3d3;
+  min-width: 26rem;
+}
+
+.absent-days {
+  min-width: 8rem;
+}
+
+.fraction-days {
+  min-width: 8rem;
+}
+
+.payable-gross-salary-hr {
+  border-top: 1px solid #d3d3d3;
+  min-width: 23rem;
+}
+
+.arrear-salary {
+  min-width: 8rem;
+}
+
+.total-deduction {
+  min-width: 34rem;
+}
+.total-deduction-hr {
+  border-top: 1px solid #d3d3d3;
+  min-width: 32rem;
+}
+
+.net-pay {
+  min-width: 7rem;
+  white-space: nowrap;
+}
+.total-company-contributions {
+  min-width: 18rem;
+}
+
+.total-company-contributions-hr {
+  border-top: 1px solid #d3d3d3;
+  min-width: 17rem;
+}
+
+.total-company-provision {
+  min-width: 30rem;
+}
+
+.total-company-provision-hr {
+  border-top: 1px solid #d3d3d3;
+  min-width: 29rem;
+}
+
+.employeeSalaries {
+  min-width: 26rem;
+}
+.employeeSalary-month {
+  min-width: 5rem;
+}
+
+.gross-salary-value {
+  min-width: 25rem;
+}
+
+.payableGrossSalary-value {
+  min-width: 25rem;
+}
+
+.payableGrossSalary-value-hr {
+  border-top: 1px solid #d3d3d3;
+  min-width: 24rem;
+}
+
+.pfContribution-value {
+  min-width: 18rem;
+}
+
+.pfContribution-value-hr {
+  border-top: 1px solid #d3d3d3;
+  min-width: 16rem;
+}
+
+.provisionForFestivalBonus-value-hr {
+  border-top: 1px solid #d3d3d3;
+  min-width: 29rem;
+}
+.table-warning {
+  background-color: rgba(255, 193, 7, 0.15);
+}
+
+.holdSalary {
+  background: #ffe6b0 !important;
+}

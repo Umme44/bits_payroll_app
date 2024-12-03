@@ -1,0 +1,74 @@
+<div>
+  <h2 id="page-heading">
+    <span jhiTranslate="bitsHrPayrollApp.insuranceConfiguration.home.title">Insurance Configurations</span>
+
+    <button
+      id="jh-create-entity"
+      class="btn btn-primary float-end jh-create-entity create-insurance-configuration"
+      [routerLink]="['/insurance-configuration/new']"
+    >
+      <fa-icon icon="plus"></fa-icon>
+      <span jhiTranslate="bitsHrPayrollApp.insuranceConfiguration.home.createLabel"> Create a new Insurance Configuration </span>
+    </button>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="insuranceConfigurations?.length === 0">
+    <span jhiTranslate="bitsHrPayrollApp.insuranceConfiguration.home.notFound">No insuranceConfigurations found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="insuranceConfigurations && insuranceConfigurations.length > 0">
+    <table class="table table-hover list-text-color" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
+          <th scope="col">
+            <span jhiTranslate="bitsHrPayrollApp.insuranceConfiguration.maxTotalClaimLimitPerYear">Max Total Claim Limit Per Year</span>
+          </th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.insuranceConfiguration.maxAllowedChildAge">Max Allowed Child Age</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.insuranceConfiguration.insuranceClaimLink">Insurance Claim Link</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+        <tr *ngFor="let insuranceConfiguration of insuranceConfigurations; trackBy: trackId">
+          <td>
+            <a [routerLink]="['/insurance-configuration', insuranceConfiguration.id, 'view']">{{ insuranceConfiguration.id }}</a>
+          </td>
+          <td>{{ insuranceConfiguration.maxTotalClaimLimitPerYear }}</td>
+          <td>{{ insuranceConfiguration.maxAllowedChildAge }}</td>
+          <td>{{ insuranceConfiguration.insuranceClaimLink }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/insurance-configuration', insuranceConfiguration.id, 'view']"
+                class="btn btn-info btn-sm"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/insurance-configuration', insuranceConfiguration.id, 'edit']"
+                class="btn btn-primary btn-sm"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(insuranceConfiguration)" class="btn btn-danger btn-sm">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

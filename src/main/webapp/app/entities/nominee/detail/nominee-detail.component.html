@@ -1,0 +1,166 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="nominee">
+      <h2 data-cy="nomineeDetailsHeading"><span jhiTranslate="bitsHrPayrollApp.nominee.detail.title">Nominee</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ nominee.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.nominee.nomineeName">Nominee Name</span></dt>
+        <dd>
+          <span>{{ nominee.nomineeName }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.nominee.presentAddress">Present Address</span></dt>
+        <dd>
+          <span>{{ nominee.presentAddress }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.nominee.relationshipWithEmployee">Relationship With Employee</span></dt>
+        <dd>
+          <span>{{ nominee.relationshipWithEmployee }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.nominee.dateOfBirth">Date Of Birth</span></dt>
+        <dd>
+          <span>{{ nominee.dateOfBirth | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.nominee.age">Age</span></dt>
+        <dd>
+          <span>{{ nominee.age }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.nominee.sharePercentage">Share Percentage</span></dt>
+        <dd>
+          <span>{{ nominee.sharePercentage }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.nominee.imagePath">Image Path</span></dt>
+        <dd>
+          <span>{{ nominee.imagePath }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.nominee.status">Status</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.Status.' + nominee.status }}">{{ nominee.status }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.nominee.guardianName">Guardian Name</span></dt>
+        <dd>
+          <span>{{ nominee.guardianName }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.nominee.guardianFatherName">Guardian Father Name</span></dt>
+        <dd>
+          <span>{{ nominee.guardianFatherName }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.nominee.guardianSpouseName">Guardian Spouse Name</span></dt>
+        <dd>
+          <span>{{ nominee.guardianSpouseName }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.nominee.guardianDateOfBirth">Guardian Date Of Birth</span></dt>
+        <dd>
+          <span>{{ nominee.guardianDateOfBirth | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.nominee.guardianPresentAddress">Guardian Present Address</span></dt>
+        <dd>
+          <span>{{ nominee.guardianPresentAddress }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.nominee.guardianDocumentName">Guardian Document Name</span></dt>
+        <dd>
+          <span>{{ nominee.guardianDocumentName }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.nominee.guardianRelationshipWith">Guardian Relationship With</span></dt>
+        <dd>
+          <span>{{ nominee.guardianRelationshipWith }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.nominee.guardianImagePath">Guardian Image Path</span></dt>
+        <dd>
+          <span>{{ nominee.guardianImagePath }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.nominee.isLocked">Is Locked</span></dt>
+        <dd>
+          <span>{{ nominee.isLocked }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.nominee.nominationDate">Nomination Date</span></dt>
+        <dd>
+          <span>{{ nominee.nominationDate | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.nominee.permanentAddress">Permanent Address</span></dt>
+        <dd>
+          <span>{{ nominee.permanentAddress }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.nominee.guardianPermanentAddress">Guardian Permanent Address</span></dt>
+        <dd>
+          <span>{{ nominee.guardianPermanentAddress }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.nominee.nomineeType">Nominee Type</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.NomineeType.' + nominee.nomineeType }}">{{ nominee.nomineeType }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.nominee.identityType">Identity Type</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.IdentityType.' + nominee.identityType }}">{{ nominee.identityType }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.nominee.documentName">Document Name</span></dt>
+        <dd>
+          <span>{{ nominee.documentName }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.nominee.idNumber">Id Number</span></dt>
+        <dd>
+          <span>{{ nominee.idNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.nominee.isNidVerified">Is Nid Verified</span></dt>
+        <dd>
+          <span>{{ nominee.isNidVerified }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.nominee.guardianIdentityType">Guardian Identity Type</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.IdentityType.' + nominee.guardianIdentityType }}">{{
+            nominee.guardianIdentityType
+          }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.nominee.guardianIdNumber">Guardian Id Number</span></dt>
+        <dd>
+          <span>{{ nominee.guardianIdNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.nominee.isGuardianNidVerified">Is Guardian Nid Verified</span></dt>
+        <dd>
+          <span>{{ nominee.isGuardianNidVerified }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.nominee.employee">Employee</span></dt>
+        <dd>
+          <div *ngIf="nominee.employee">
+            <a [routerLink]="['/employee', nominee.employee.id, 'view']">{{ nominee.employee.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.nominee.approvedBy">Approved By</span></dt>
+        <dd>
+          <div *ngIf="nominee.approvedBy">
+            <a [routerLink]="['/employee', nominee.approvedBy.id, 'view']">{{ nominee.approvedBy.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.nominee.witness">Witness</span></dt>
+        <dd>
+          <div *ngIf="nominee.witness">
+            <a [routerLink]="['/employee', nominee.witness.id, 'view']">{{ nominee.witness.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.nominee.member">Member</span></dt>
+        <dd>
+          <div *ngIf="nominee.member">
+            <a [routerLink]="['/employee', nominee.member.id, 'view']">{{ nominee.member.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/nominee', nominee.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

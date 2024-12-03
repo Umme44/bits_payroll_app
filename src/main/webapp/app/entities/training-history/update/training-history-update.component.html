@@ -1,0 +1,149 @@
+<div>
+  <jhi-header [headerName]="!editForm.get('id')!.value ? 'Add New Training Histories' : 'Edit Training Histories'" [shouldHaveHr]="false">
+  </jhi-header>
+
+  <form (ngSubmit)="save()" [formGroup]="editForm" name="editForm" novalidate role="form">
+    <div>
+      <jhi-alert-error></jhi-alert-error>
+
+      <div class="card card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label class="form-control-label" for="field_employee" jhiTranslate="bitsHrPayrollApp.trainingHistory.employee"
+                >Employee</label
+              >
+
+              <jhi-simple-select-employee-form
+                (onChangeEmployee)="changeEmployee($event)"
+                [selectedFieldValue]="editForm.get('employeeId')!.value"
+              >
+              </jhi-simple-select-employee-form>
+
+              <div
+                *ngIf="editForm.get('employeeId')!.invalid && (editForm.get('employeeId')!.dirty || editForm.get('employeeId')!.touched)"
+              >
+                <small
+                  *ngIf="editForm.get('employeeId')?.errors?.required"
+                  class="form-text text-danger"
+                  jhiTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label
+                class="form-control-label required"
+                for="field_dateOfCompletion"
+                jhiTranslate="bitsHrPayrollApp.trainingHistory.dateOfCompletion"
+                >Date Of Completion</label
+              >
+              <div class="input-group">
+                <input
+                  #dateOfCompletionDp="ngbDatepicker"
+                  class="form-control"
+                  formControlName="dateOfCompletion"
+                  id="field_dateOfCompletion"
+                  name="dateOfCompletion"
+                  ngbDatepicker
+                  type="text"
+                />
+                <span class="input-group-append">
+                  <button (click)="dateOfCompletionDp.toggle()" class="btn btn-secondary btn-sm" type="button">
+                    <fa-icon icon="calendar-alt"></fa-icon>
+                  </button>
+                </span>
+              </div>
+              <div
+                *ngIf="
+                  editForm.get('dateOfCompletion')!.invalid &&
+                  (editForm.get('dateOfCompletion')!.dirty || editForm.get('dateOfCompletion')!.touched)
+                "
+              >
+                <small
+                  *ngIf="editForm.get('dateOfCompletion')?.errors?.required"
+                  class="form-text text-danger"
+                  jhiTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-control-label required" for="field_trainingName" jhiTranslate="bitsHrPayrollApp.trainingHistory.trainingName"
+            >Training Name</label
+          >
+          <input
+            class="form-control"
+            formControlName="trainingName"
+            id="field_trainingName"
+            name="trainingName"
+            onkeypress="return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode == 32))"
+            type="text"
+          />
+          <div
+            *ngIf="editForm.get('trainingName')!.invalid && (editForm.get('trainingName')!.dirty || editForm.get('trainingName')!.touched)"
+          >
+            <small
+              *ngIf="editForm.get('trainingName')?.errors?.required || editForm.get('trainingName')?.errors?.notOnlyWhitespace"
+              class="form-text text-danger"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small *ngIf="editForm.get('trainingName')?.errors?.maxlength" class="form-text text-danger">
+              This field cannot be longer than 255 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-control-label required" for="field_coordinatedBy" jhiTranslate="bitsHrPayrollApp.trainingHistory.coordinatedBy"
+            >Coordinated By</label
+          >
+          <input
+            class="form-control"
+            formControlName="coordinatedBy"
+            id="field_coordinatedBy"
+            name="coordinatedBy"
+            onkeypress="return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode == 32))"
+            type="text"
+          />
+          <div
+            *ngIf="
+              editForm.get('coordinatedBy')!.invalid && (editForm.get('coordinatedBy')!.dirty || editForm.get('coordinatedBy')!.touched)
+            "
+          >
+            <small
+              *ngIf="editForm.get('coordinatedBy')?.errors?.required || editForm.get('coordinatedBy')?.errors?.notOnlyWhitespace"
+              class="form-text text-danger"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small *ngIf="editForm.get('coordinatedBy')?.errors?.maxlength" class="form-text text-danger">
+              This field cannot be longer than 255 characters.
+            </small>
+          </div>
+        </div>
+
+        <div>
+          <button (click)="previousState()" class="btn btn-secondary" id="cancel-save" type="button">
+            <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+          </button>
+
+          <button [disabled]="editForm.invalid || isSaving" class="btn btn-primary" id="save-entity" type="submit">
+            <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

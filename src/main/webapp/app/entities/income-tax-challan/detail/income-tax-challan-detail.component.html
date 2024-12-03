@@ -1,0 +1,75 @@
+<div>
+  <div *ngIf="incomeTaxChallan" class="font-sm">
+    <jhi-header
+      [headerName]="'Income Tax Challan Details'"
+      [midHeaderName01]="'Income Tax Challans'"
+      [midRouterLinkText01]="'/income-tax-challan'"
+      [shouldHaveHr]="false"
+    >
+    </jhi-header>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <dl class="row-md jh-entity-details">
+      <div class="row">
+        <div class="col-md-2">
+          <dt><span jhiTranslate="bitsHrPayrollApp.incomeTaxChallan.challanNo">Challan No</span></dt>
+        </div>
+        <div class="col-md-2">
+          <dd>
+            <span>{{ incomeTaxChallan.challanNo }}</span>
+          </dd>
+        </div>
+        <div class="col-md-2">
+          <dt><span jhiTranslate="bitsHrPayrollApp.incomeTaxChallan.challanDate">Challan Date</span></dt>
+        </div>
+        <div class="col-md-2">
+          <dd>
+            <span>{{ incomeTaxChallan.challanDate | formatMediumDate }}</span>
+          </dd>
+        </div>
+        <div class="col-md-2">
+          <dt><span jhiTranslate="bitsHrPayrollApp.incomeTaxChallan.month">Month</span></dt>
+        </div>
+        <div class="col-md-2">
+          <dd>
+            <span jhiTranslate="{{ 'bitsHrPayrollApp.Month.' + incomeTaxChallan.month }}">{{ incomeTaxChallan.month }}</span>
+          </dd>
+        </div>
+        <div class="col-md-2">
+          <dt><span jhiTranslate="bitsHrPayrollApp.incomeTaxChallan.remarks">Remarks</span></dt>
+        </div>
+        <div class="col-md-2">
+          <dd>
+            <span>{{ incomeTaxChallan.remarks }}</span>
+          </dd>
+        </div>
+        <div class="col-md-2">
+          <dt><span jhiTranslate="bitsHrPayrollApp.incomeTaxChallan.aitConfig">Ait Config</span></dt>
+        </div>
+        <div class="col-md-2">
+          <dd>
+            <div *ngIf="incomeTaxChallan.aitConfigId">{{ incomeTaxChallan.aitConfigId }}</div>
+          </dd>
+        </div>
+
+        <div class="col-md-2">
+          <dt><span jhiTranslate="bitsHrPayrollApp.incomeTaxChallan.amount">Amount</span></dt>
+        </div>
+        <div class="col-md-2">
+          <dd>
+            <span>{{ incomeTaxChallan.amount }}</span>
+          </dd>
+        </div>
+      </div>
+    </dl>
+
+    <button type="submit" (click)="previousState()" class="btn btn-info">
+      <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+    </button>
+
+    <button type="button" [routerLink]="['/income-tax-challan', incomeTaxChallan.id, 'edit']" class="btn btn-primary">
+      <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+    </button>
+  </div>
+</div>

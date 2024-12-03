@@ -1,0 +1,203 @@
+<jhi-header
+  [headerName]="'Provident Fund Statement'"
+  [midHeaderName01]="'PF Accounts'"
+  [midRouterLinkText01]="'/pf-account'"
+  [shouldHaveHr]="false"
+>
+</jhi-header>
+
+<div class="container w-50 py-2 print-btn-div">
+  <div class="row align-items-center">
+    <div class="col-md-3"></div>
+
+    <div class="col-md-4">
+      <div class="input-group">
+        <input class="form-control" [formControl]="date" type="text" ngbDatepicker #DateDp="ngbDatepicker" />
+        <span class="input-group-append">
+          <button type="button" class="btn btn-secondary" (click)="DateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+        </span>
+      </div>
+    </div>
+
+    <div class="d-flex">
+      <div class="ms-2">
+        <button (click)="onClickShowPfStatement()" [disabled]="!date.value" ngbTooltip="Show" class="btn btn-success">
+          <fa-icon icon="file-alt"></fa-icon>
+        </button>
+      </div>
+      <div class="ms-2">
+        <div ngbTooltip="Print">
+          <button (click)="downloadAsPDF()" [disabled]="!userPfStatement" class="btn btn-primary btn-md">
+            <fa-icon icon="print"></fa-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="userPfStatement">
+  <div
+    class="container-of-statement mx-auto border-1 letter-head"
+    [style.background]="'transparent url(' + getPfStatementLetterHead() + ') no-repeat'"
+  >
+    <div class="printDivOfUserPfStatement printFont letter-head-spacing">
+      <div class="report-size">
+        <br /><br /><br /><br /><br /><br /><br /><br />
+        <div style="" class="report-title">BRAC IT SERVICES EMPLOYEE'S PROVIDENT FUND</div>
+        <br />
+        <div style="text-align: left; font-weight: 400">
+          {{ selectedDate | formatMediumDate }}<br /><br />
+          {{ userPfStatement.fullName }} (PIN:{{ userPfStatement.pin }})<br />
+          {{ userPfStatement.designationName }}<br />
+          {{ userPfStatement.departmentName }}<br />
+          {{ organizationFullName }}<br /><br />
+          <p style="" class="report-subject">Subject:&nbsp;&nbsp;Provident Fund Statement as on {{ selectedDate | formatMediumDate }}</p>
+          Dear {{ userPfStatement.fullName }}<br /><br />
+          Your Provident Fund Statement is as follow:<br /><br />
+        </div>
+        <table class="printFont" style="border: 0 !important" border="0" cellpadding="3" cellspacing="0" width="100%">
+          <tbody>
+            <tr>
+              <th colspan="4" align="left">Closing balance as on {{ userPfStatement.previousClosingBalanceDate | formatMediumDate }}</th>
+            </tr>
+
+            <tr>
+              <td width="5%">&nbsp;</td>
+              <td width="50%">Opening Balance as on 01.01.{{ userPfStatement.previousYear }} (with Transfer BBL)</td>
+              <td width="0%">:</td>
+              <td width="45%" align="right">
+                <span class="commaInDecimal">{{ userPfStatement.openingBalance }}</span>
+              </td>
+            </tr>
+
+            <tr>
+              <td>&nbsp;</td>
+              <td>Member's Contribution {{ previousYear }}</td>
+              <td>:</td>
+              <td align="right">
+                <span class="commaInDecimal">{{ userPfStatement.previousYearMemberPfContribution }}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td>{{ organizationShortName }} Contribution {{ previousYear }}</td>
+              <td>:</td>
+              <td align="right">
+                <span class="commaInDecimal">{{ userPfStatement.previousYearCompanyPfContribution }}</span>
+              </td>
+            </tr>
+            <!--<tr>
+                        <td>&nbsp;</td>
+                        <td>Income for the year {{ previousYear }}</td>
+                        <td>:</td>
+                        <td align="right" style="border-bottom:1px solid black;">
+                            <span class="commaInDecimal">{{ previousYearPfCollection.incomeForTheYear | number }}</span>
+                        </td>
+                    </tr>-->
+            <tr>
+              <td>&nbsp;</td>
+              <td><b>Total</b></td>
+              <td>:</td>
+              <td align="right" style="border-bottom: 1px solid #000">
+                <div style="margin: 0px -3px -1px -3px; border-bottom: 1px solid #000">
+                  <b
+                    ><span class="commaInDecimal">{{ userPfStatement.openingAndPreviousYearContributionInTotal }}</span></b
+                  >
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <th colspan="4" align="left">Contribution for the year {{ userPfStatement.selectedYear }} :</th>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td>Member's Contribution.</td>
+              <td>:</td>
+              <td align="right">
+                <span class="commaInDecimal">{{ userPfStatement.selectedYearMemberPfContribution }}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td>{{ organizationShortName }} Contribution.</td>
+              <td>:</td>
+              <td align="right" style="border-bottom: 1px solid black">
+                <span class="commaInDecimal">{{ userPfStatement.selectedYearCompanyPfContribution }}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td><b>Total</b></td>
+              <td>:</td>
+              <td align="right" style="border-bottom: 1px solid #000">
+                <div style="margin: 0px -3px -1px -3px; border-bottom: 1px solid #000">
+                  <b
+                    ><span class="commaInDecimal">{{ userPfStatement.selectedYearTotalPfContribution }}</span></b
+                  >
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th colspan="4" align="left">Interest Calculation :</th>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td>Interest on Member's Contribution.</td>
+              <td>:</td>
+              <td align="right">
+                <span class="commaInDecimal">{{ userPfStatement.tillSelectedMonthYearPfMemberInterest }}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td>Interest on {{ organizationShortName }} Contribution.</td>
+              <td>:</td>
+              <td align="right" style="border-bottom: 1px solid black">
+                <span class="commaInDecimal">{{ userPfStatement.tillSelectedMonthYearPfCompanyInterest }}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td><b>Total Interest</b></td>
+              <td>:</td>
+              <td align="right" style="border-bottom: 1px solid #000">
+                <div style="margin: 0px -3px -1px -3px; border-bottom: 1px solid #000">
+                  <b
+                    ><span class="commaInDecimal">{{ userPfStatement.totalTillSelectedMonthYearPfCompanyInterest }}</span></b
+                  >
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th colspan="2" align="left">Closing Balance as on {{ selectedDate | formatMediumDate }}:</th>
+              <td>:</td>
+              <td align="right" style="border-bottom: 1px solid #000">
+                <div style="margin: 0px -3px -1px -3px; border-bottom: 1px solid #000">
+                  <b
+                    ><span class="commaInDecimal">{{ userPfStatement.totalClosingBalance }}</span></b
+                  >
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <br /><br />
+        <div class="row">
+          <div class="col-md-7" style="font-family: Calibri; font-size: 20px; text-align: left">
+            <span style="font-size: 16px">Sincerely Yours</span><br />
+            <img [src]="getFinanceManagerSignature()" height="50" /> <br />
+            ----------------------------------------------------
+            <div style="" class="account-manager-info">
+              <b>{{ financeManagerName }}</b> <br />{{ financeManagerDesignation }} <br />{{ financeManagerUnit }}
+            </div>
+            <div style="" class="brac-it-seal col-md-4 text-center">
+              <img border="0" width="100px" height="100px" src="../../../content/images/Seal-blue.svg" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

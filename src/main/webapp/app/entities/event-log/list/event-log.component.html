@@ -1,0 +1,130 @@
+<div>
+  <h2 id="page-heading" data-cy="EventLogHeading">
+    <span jhiTranslate="bitsHrPayrollApp.eventLog.home.title">Event Logs</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="bitsHrPayrollApp.eventLog.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-event-log"
+        [routerLink]="['/event-log/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="bitsHrPayrollApp.eventLog.home.createLabel"> Create a new Event Log </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="eventLogs?.length === 0">
+    <span jhiTranslate="bitsHrPayrollApp.eventLog.home.notFound">No Event Logs found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="eventLogs && eventLogs.length > 0">
+    <table class="table table-hover list-text-color" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">ID</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="title">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.eventLog.title">Title</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="requestMethod">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.eventLog.requestMethod">Request Method</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="performedAt">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.eventLog.performedAt">Performed At</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="data">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.eventLog.data">Data</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="entityName">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.eventLog.entityName">Entity Name</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="performedBy.login">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.eventLog.performedBy">Performed By</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody
+        infinite-scroll
+        (scrolled)="loadPage(page + 1)"
+        [infiniteScrollDisabled]="page - 1 >= links['last']"
+        [infiniteScrollDistance]="0"
+      >
+        <tr *ngFor="let eventLog of eventLogs; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/event-log', eventLog.id, 'view']">{{ eventLog.id }}</a>
+          </td>
+          <td>{{ eventLog.title }}</td>
+          <td jhiTranslate="{{ 'bitsHrPayrollApp.RequestMethod.' + eventLog.requestMethod }}">{{ eventLog.requestMethod }}</td>
+          <td>{{ eventLog.performedAt | formatMediumDatetime }}</td>
+          <td>{{ eventLog.data }}</td>
+          <td>{{ eventLog.entityName }}</td>
+          <td>
+            {{ eventLog.performedBy?.login }}
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/event-log', eventLog.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/event-log', eventLog.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(eventLog)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+{
+  "bitsHrPayrollApp": {
+    "flexSchedule": {
+      "home": {
+        "title": "Flex Schedules",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Flex Schedule",
+        "createOrEditLabel": "Create or edit a Flex Schedule",
+        "notFound": "No Flex Schedules found"
+      },
+      "created": "A new Flex Schedule is created with identifier {{ param }}",
+      "updated": "A Flex Schedule is updated with identifier {{ param }}",
+      "deleted": "A Flex Schedule is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Flex Schedule {{ id }}?"
+      },
+      "detail": {
+        "title": "Flex Schedule"
+      },
+      "id": "ID",
+      "effectiveDate": "Effective Date",
+      "inTime": "In Time",
+      "outTime": "Out Time",
+      "employee": "Employee",
+      "createdBy": "Created By"
+    }
+  }
+}

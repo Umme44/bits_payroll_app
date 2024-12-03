@@ -1,0 +1,222 @@
+<div>
+  <div>
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+
+      <jhi-header
+        [headerName]="!editForm.get('id')!.value ? 'Create A PF Loan' : 'Edit PF Loan'"
+        [shouldHaveHr]="false">
+      </jhi-header>
+
+      <div class="card card-body">
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="flex-column">
+          <div class="row">
+
+            <div class="form-group col-md-6">
+              <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.pfLoan.pfAccount"
+                     for="field_pfAccount">Pf Account</label>
+              <select class="form-control" id="field_pfAccount" name="pfAccount"
+                      formControlName="pfAccountId">
+                <option [ngValue]="null"></option>
+                <option [ngValue]="pfAccountOption.id"
+                        *ngFor="let pfAccountOption of pfaccounts; trackBy: trackById">{{ pfAccountOption.pfCode }} - {{pfAccountOption.accHolderName}} - {{pfAccountOption.designationName}}</option>
+              </select>
+              <div
+                *ngIf="editForm.get('pfAccountId')!.invalid && (editForm.get('pfAccountId')!.dirty || editForm.get('pfAccountId')!.touched)">
+                <small *ngIf="editForm.get('pfAccountId')?.errors?.required"
+                       class="form-text text-danger"
+                       jhiTranslate="entity.validation.required">
+                  This field is required.
+                </small>
+              </div>
+            </div>
+
+
+            <div class="form-group col-md-3">
+              <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.pfLoan.disbursementAmount"
+                     for="field_disbursementAmount">Disbursement Amount</label>
+              <input type="number" class="form-control" name="disbursementAmount"
+                     id="field_disbursementAmount"
+                     formControlName="disbursementAmount"/>
+            </div>
+
+            <div class="form-group col-md-3">
+              <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.pfLoan.disbursementDate"
+                     for="field_disbursementDate">Disbursement Date</label>
+              <div class="input-group">
+                <input id="field_disbursementDate" type="text" class="form-control"
+                       name="disbursementDate"
+                       ngbDatepicker #disbursementDateDp="ngbDatepicker"
+                       formControlName="disbursementDate"/>
+                <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="disbursementDateDp.toggle()"><fa-icon
+                              icon="calendar-alt"></fa-icon></button>
+                        </span>
+              </div>
+            </div>
+
+            <div class="form-group col-md-3">
+              <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.pfLoan.bankName"
+                     for="field_bankName">Bank Name</label>
+              <input type="text" class="form-control" name="bankName" id="field_bankName"
+                     formControlName="bankName"/>
+              <div
+                *ngIf="editForm.get('bankName')!.invalid && (editForm.get('bankName')!.dirty || editForm.get('bankName')!.touched)">
+                <small *ngIf="editForm.get('bankName')?.errors?.required"
+                       class="form-text text-danger"
+                       jhiTranslate="entity.validation.required">
+                  This field is required.
+                </small>
+              </div>
+            </div>
+
+            <div class="form-group col-md-3">
+              <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.pfLoan.bankBranch"
+                     for="field_bankBranch">Bank Branch</label>
+              <input type="text" class="form-control" name="bankBranch" id="field_bankBranch"
+                     formControlName="bankBranch"/>
+              <div
+                *ngIf="editForm.get('bankBranch')!.invalid && (editForm.get('bankBranch')!.dirty || editForm.get('bankBranch')!.touched)">
+                <small *ngIf="editForm.get('bankBranch')?.errors?.required"
+                       class="form-text text-danger"
+                       jhiTranslate="entity.validation.required">
+                  This field is required.
+                </small>
+              </div>
+            </div>
+
+            <div class="form-group col-md-3">
+              <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.pfLoan.bankAccountNumber"
+                     for="field_bankAccountNumber">Bank Account Number</label>
+              <input type="text" class="form-control" name="bankAccountNumber"
+                     id="field_bankAccountNumber"
+                     formControlName="bankAccountNumber"/>
+              <div
+                *ngIf="editForm.get('bankAccountNumber')!.invalid && (editForm.get('bankAccountNumber')!.dirty || editForm.get('bankAccountNumber')!.touched)">
+                <small *ngIf="editForm.get('bankAccountNumber')?.errors?.required"
+                       class="form-text text-danger"
+                       jhiTranslate="entity.validation.required">
+                  This field is required.
+                </small>
+              </div>
+            </div>
+
+            <div class="form-group col-md-3">
+              <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.pfLoan.chequeNumber"
+                     for="field_chequeNumber">Cheque Number</label>
+              <input type="text" class="form-control" name="chequeNumber" id="field_chequeNumber"
+                     formControlName="chequeNumber"/>
+              <div
+                *ngIf="editForm.get('chequeNumber')!.invalid && (editForm.get('chequeNumber')!.dirty || editForm.get('chequeNumber')!.touched)">
+                <small *ngIf="editForm.get('chequeNumber')?.errors?.required"
+                       class="form-text text-danger"
+                       jhiTranslate="entity.validation.required">
+                  This field is required.
+                </small>
+              </div>
+
+            </div>
+
+            <div class="form-group col-md-3">
+              <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.pfLoan.instalmentNumber"
+                     for="field_instalmentNumber">Instalment Number</label>
+              <input type="text" class="form-control" name="instalmentNumber" id="field_instalmentNumber"
+                     formControlName="instalmentNumber"/>
+              <div
+                *ngIf="editForm.get('instalmentNumber')!.invalid && (editForm.get('instalmentNumber')!.dirty || editForm.get('instalmentNumber')!.touched)">
+                <small *ngIf="editForm.get('instalmentNumber')?.errors?.required"
+                       class="form-text text-danger"
+                       jhiTranslate="entity.validation.required">
+                  This field is required.
+                </small>
+              </div>
+            </div>
+
+            <div class="form-group col-md-3">
+              <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.pfLoan.installmentAmount"
+                     for="field_installmentAmount">Installment Amount</label>
+              <input type="number" class="form-control" name="installmentAmount"
+                     id="field_installmentAmount"
+                     formControlName="installmentAmount"/>
+              <div
+                *ngIf="editForm.get('installmentAmount')!.invalid && (editForm.get('installmentAmount')!.dirty || editForm.get('installmentAmount')!.touched)">
+                <small *ngIf="editForm.get('installmentAmount')?.errors?.required"
+                       class="form-text text-danger"
+                       jhiTranslate="entity.validation.required">
+                  This field is required.
+                </small>
+              </div>
+            </div>
+
+            <div class="form-group col-md-3">
+              <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.pfLoan.instalmentStartFrom"
+                     for="field_instalmentStartFrom">Instalment Start From</label>
+              <div class="input-group">
+                <input id="field_instalmentStartFrom" type="text" class="form-control"
+                       name="instalmentStartFrom" ngbDatepicker #instalmentStartFromDp="ngbDatepicker"
+                       formControlName="instalmentStartFrom"/>
+                <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="instalmentStartFromDp.toggle()"><fa-icon
+                              icon="calendar-alt"></fa-icon></button>
+                        </span>
+              </div>
+              <div
+                *ngIf="editForm.get('instalmentStartFrom')!.invalid && (editForm.get('instalmentStartFrom')!.dirty || editForm.get('instalmentStartFrom')!.touched)">
+                <small *ngIf="editForm.get('instalmentStartFrom')?.errors?.required"
+                       class="form-text text-danger"
+                       jhiTranslate="entity.validation.required">
+                  This field is required.
+                </small>
+              </div>
+            </div>
+
+            <div class="form-group col-md-3">
+              <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.pfLoan.status"
+                     for="field_status">Status</label>
+              <select class="form-control" name="status" formControlName="status" id="field_status">
+                <option
+                  value="OPEN_REPAYING">{{ 'bitsHrPayrollApp.PfLoanStatus.OPEN_REPAYING' | translate }}</option>
+                <option
+                  value="PAID_OFF">{{ 'bitsHrPayrollApp.PfLoanStatus.PAID_OFF' | translate }}</option>
+                <option
+                  value="NOT_FULLFILLED">{{ 'bitsHrPayrollApp.PfLoanStatus.NOT_FULLFILLED' | translate }}</option>
+              </select>
+              <div
+                *ngIf="editForm.get('status')!.invalid && (editForm.get('status')!.dirty || editForm.get('status')!.touched)">
+                <small *ngIf="editForm.get('status')?.errors?.required"
+                       class="form-text text-danger"
+                       jhiTranslate="entity.validation.required">
+                  This field is required.
+                </small>
+              </div>
+            </div>
+
+            <div class="form-group col-md-3">
+              <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.pfLoan.pfLoanApplication"
+                     for="field_pfLoanApplication">Pf Loan Application</label>
+              <select class="form-control" id="field_pfLoanApplication" name="pfLoanApplication"
+                      formControlName="pfLoanApplicationId">
+                <option [ngValue]="null"></option>
+                <option [ngValue]="pfLoanApplicationOption.id"
+                        *ngFor="let pfLoanApplicationOption of pfloanapplications; trackBy: trackById">{{ pfLoanApplicationOption.id }}</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+              <fa-icon icon="ban"></fa-icon>&nbsp;<span
+              jhiTranslate="entity.action.cancel">Cancel</span>
+            </button>
+
+            <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving"
+                    class="btn btn-primary">
+              <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

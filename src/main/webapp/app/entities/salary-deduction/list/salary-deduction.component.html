@@ -1,0 +1,187 @@
+<div>
+  <div *ngIf="isViewByYearMonth">
+    <div>
+      <jhi-header
+        [headerName]="'Salary Deductions'"
+        [addButtonText]="'Add New Salary Deduction'"
+        [routerLinkText]="'/salary-deduction/new'"
+      >
+      </jhi-header>
+    </div>
+
+    <h2 class="comp-page-title camel-case">
+      <div *ngIf="year && month">
+        Salary Deductions of
+        <span>{{ toDate(year!, month!) | formatMediumDate }}</span>
+      </div>
+    </h2>
+  </div>
+
+  <div *ngIf="!isViewByYearMonth">
+    <jhi-header
+      [headerName]="'Salary Deductions'"
+      [addButtonText]="'Add New Salary Deductions'"
+      [routerLinkText]="'/salary-deduction/new'"
+      [shouldHaveHr]="false"
+    >
+    </jhi-header>
+  </div>
+
+  <div class="row my-3" [formGroup]="searchParamsForm">
+    <div [ngClass]="isViewByYearMonth === true ? 'col-md-12' : 'col-md-8'" class="input-group">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="searchText">Search</label>
+        </div>
+        <input
+          (change)="loadPage(1)"
+          id="searchText"
+          formControlName="searchText"
+          class="form-control"
+          placeholder="Search Text"
+          type="text"
+        />
+      </div>
+    </div>
+    <div class="col-md-2" *ngIf="!isViewByYearMonth">
+      <select (change)="loadPage(1)" class="form-control w-100" formControlName="year" id="year" name="year">
+        <option [ngValue]="0"></option>
+        <option *ngFor="let year of years" value="{{ year }}">
+          {{ year }}
+        </option>
+      </select>
+    </div>
+    <div class="col-md-2" *ngIf="!isViewByYearMonth">
+      <select (change)="loadPage(1)" class="form-control w-100" formControlName="month" id="month" name="month">
+        <option [ngValue]="0"></option>
+        <option *ngFor="let month of months" value="{{ month.Value }}">
+          {{ month.Text }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="salaryDeductions?.length === 0">
+    <span jhiTranslate="bitsHrPayrollApp.salaryDeduction.home.notFound">No Salary Deductions found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="salaryDeductions && salaryDeductions.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span>PIN</span></th>
+          <th scope="col"><span>Name</span></th>
+          <th scope="col"><span>Department</span></th>
+
+          <th scope="col">
+            <span jhiTranslate="bitsHrPayrollApp.salaryDeduction.deductionAmount"> Deduction Amount </span>
+          </th>
+
+          <th scope="col" *ngIf="!isViewByYearMonth">
+            <span jhiTranslate="bitsHrPayrollApp.salaryDeduction.deductionMonth"> Deduction Month </span>
+          </th>
+          <th scope="col">
+            <span jhiTranslate="bitsHrPayrollApp.salaryDeduction.deductionType"> Deduction Type </span>
+          </th>
+
+          <th scope="col" class="text-end"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let salaryDeduction of salaryDeductions; trackBy: trackId">
+          <td>
+            <div *ngIf="salaryDeduction.employeeId != null">
+              <a [routerLink]="['/employee-custom', salaryDeduction.employeeId, 'view']">
+                {{ salaryDeduction.pin }}
+              </a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="salaryDeduction.employeeId != null">
+              {{ salaryDeduction.fullName }}
+            </div>
+          </td>
+
+          <td>
+            <div *ngIf="salaryDeduction.employeeId != null">
+              {{ salaryDeduction.departmentName }}
+            </div>
+          </td>
+
+          <td>{{ salaryDeduction.deductionAmount }}</td>
+          <td *ngIf="!isViewByYearMonth">
+            {{ toDate(salaryDeduction.deductionYear!, salaryDeduction.deductionMonth!) }},
+            {{ salaryDeduction.deductionYear }}
+          </td>
+          <td>
+            <div *ngIf="salaryDeduction.deductionTypeId">
+              {{ salaryDeduction.deductionTypeName }}
+              <!--<a [routerLink]="['/deduction-type', salaryDeduction.deductionTypeId , 'view']">{{ getDeductionType(salaryDeduction.deductionTypeId) }}</a>-->
+            </div>
+          </td>
+
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/salary-deduction', salaryDeduction.id, 'view']"
+                title="View"
+                class="btn btn-info btn-sm px-md-3"
+                data-placement="top"
+                data-toggle="tooltip"
+              >
+                <fa-icon icon="eye"></fa-icon>
+              </button>
+
+              <button
+                type="submit"
+                [disabled]="isSalaryLocked"
+                [routerLink]="['/salary-deduction', salaryDeduction.id, 'edit']"
+                title="Edit"
+                class="btn btn-primary btn-sm px-md-3"
+                data-placement="top"
+                data-toggle="tooltip"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+              </button>
+
+              <button
+                [disabled]="isSalaryLocked"
+                type="submit"
+                (click)="delete(salaryDeduction)"
+                title="Delete"
+                class="btn btn-danger btn-sm px-md-3"
+                data-placement="top"
+                data-toggle="tooltip"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="salaryDeductions && salaryDeductions.length > 0" class="d-flex flex-column align-items-center">
+    <div class="row justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="row justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

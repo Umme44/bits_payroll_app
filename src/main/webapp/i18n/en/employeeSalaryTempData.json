@@ -1,0 +1,58 @@
+{
+  "bitsHrPayrollApp": {
+    "employeeSalaryTempData": {
+      "home": {
+        "title": "Employee Salary Temp Data",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Employee Salary Temp Data",
+        "createOrEditLabel": "Create or edit a Employee Salary Temp Data",
+        "notFound": "No Employee Salary Temp Data found"
+      },
+      "created": "A new Employee Salary Temp Data is created with identifier {{ param }}",
+      "updated": "A Employee Salary Temp Data is updated with identifier {{ param }}",
+      "deleted": "A Employee Salary Temp Data is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Employee Salary Temp Data {{ id }}?"
+      },
+      "detail": {
+        "title": "Employee Salary Temp Data"
+      },
+      "id": "ID",
+      "month": "Month",
+      "year": "Year",
+      "mainGrossSalary": "Main Gross Salary",
+      "mainGrossBasicSalary": "Main Gross Basic Salary",
+      "mainGrossHouseRent": "Main Gross House Rent",
+      "mainGrossMedicalAllowance": "Main Gross Medical Allowance",
+      "mainGrossConveyanceAllowance": "Main Gross Conveyance Allowance",
+      "absentDays": "Absent Days",
+      "fractionDays": "Fraction Days",
+      "payableGrossSalary": "Payable Gross Salary",
+      "payableGrossBasicSalary": "Payable Gross Basic Salary",
+      "payableGrossHouseRent": "Payable Gross House Rent",
+      "payableGrossMedicalAllowance": "Payable Gross Medical Allowance",
+      "payableGrossConveyanceAllowance": "Payable Gross Conveyance Allowance",
+      "arrearSalary": "Arrear Salary",
+      "pfDeduction": "Pf Deduction",
+      "taxDeduction": "Tax Deduction",
+      "welfareFundDeduction": "Welfare Fund Deduction",
+      "mobileBillDeduction": "Mobile Bill Deduction",
+      "otherDeduction": "Other Deduction",
+      "totalDeduction": "Total Deduction",
+      "netPay": "Net Pay",
+      "remarks": "Remarks",
+      "pfContribution": "Pf Contribution",
+      "gfContribution": "Gf Contribution",
+      "provisionForFestivalBonus": "Provision For Festival Bonus",
+      "provisionForLeaveEncashment": "Provision For Leave Encashment",
+      "provishionForProjectBonus": "Provishion For Project Bonus",
+      "livingAllowance": "Living Allowance",
+      "otherAddition": "Other Addition",
+      "salaryAdjustment": "Salary Adjustment",
+      "providentFundArrear": "Provident Fund Arrear",
+      "entertainment": "Entertainment",
+      "utility": "Utility",
+      "employee": "Employee"
+    }
+  }
+}

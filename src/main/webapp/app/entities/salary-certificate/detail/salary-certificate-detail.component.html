@@ -1,0 +1,79 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="salaryCertificate">
+      <h2 data-cy="salaryCertificateDetailsHeading">
+        <span jhiTranslate="bitsHrPayrollApp.salaryCertificate.detail.title">Salary Certificate</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ salaryCertificate.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.salaryCertificate.purpose">Purpose</span></dt>
+        <dd>
+          <span>{{ salaryCertificate.purpose }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.salaryCertificate.remarks">Remarks</span></dt>
+        <dd>
+          <span>{{ salaryCertificate.remarks }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.salaryCertificate.status">Status</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.Status.' + salaryCertificate.status }}">{{ salaryCertificate.status }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.salaryCertificate.createdAt">Created At</span></dt>
+        <dd>
+          <span>{{ salaryCertificate.createdAt | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.salaryCertificate.updatedAt">Updated At</span></dt>
+        <dd>
+          <span>{{ salaryCertificate.updatedAt | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.salaryCertificate.sanctionAt">Sanction At</span></dt>
+        <dd>
+          <span>{{ salaryCertificate.sanctionAt | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.salaryCertificate.month">Month</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.Month.' + salaryCertificate.month }}">{{ salaryCertificate.month }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.salaryCertificate.year">Year</span></dt>
+        <dd>
+          <span>{{ salaryCertificate.year }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.salaryCertificate.referenceNumber">Reference Number</span></dt>
+        <dd>
+          <span>{{ salaryCertificate.referenceNumber }}</span>
+        </dd>
+
+        <dt><span jhiTranslate="bitsHrPayrollApp.salaryCertificate.employee">Employee</span></dt>
+        <dd>
+          <div *ngIf="salaryCertificate.employeeId">
+            <a [routerLink]="['/employee', salaryCertificate.employeeName, 'view']">{{ salaryCertificate.employeeName }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.salaryCertificate.signatoryPerson">Signatory Person</span></dt>
+        <dd>
+          <div *ngIf="salaryCertificate.signatoryPersonId">
+            <a [routerLink]="['/employee', salaryCertificate.signatoryPersonName, 'view']">{{ salaryCertificate.signatoryPersonName }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/salary-certificate', salaryCertificate.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

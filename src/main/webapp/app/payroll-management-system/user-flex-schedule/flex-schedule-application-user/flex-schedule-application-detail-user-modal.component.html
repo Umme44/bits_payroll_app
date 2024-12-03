@@ -1,0 +1,63 @@
+<div class="modal-header border-none pb-0">
+  <p class="modal-title" id="modal-basic-title">Flex Schedule Application Details</p>
+  <button type="button" class="btn-close" aria-label="Close" (click)="cancel()"></button>
+</div>
+
+<div class="modal-body pt-0">
+  <div class="font-sm" *ngIf="flexScheduleApplication">
+    <table class="table table-borderless border-none">
+      <tr>
+        <th><span jhiTranslate="bitsHrPayrollApp.flexScheduleApplication.effectiveFrom" class="nowrap-end">Effective From</span></th>
+        <td>
+          <span>{{ flexScheduleApplication.effectiveFrom | formatMediumDate }}</span>
+        </td>
+
+        <th><span jhiTranslate="bitsHrPayrollApp.flexScheduleApplication.effectiveTo">Effective To</span></th>
+        <td>
+          <span>{{ flexScheduleApplication.effectiveTo | formatMediumDate }}</span>
+        </td>
+      </tr>
+
+      <tr>
+        <th><span>In Time</span></th>
+        <td>
+          <span>{{ flexScheduleApplication.inTime | formatMediumDatetime }}</span>
+        </td>
+
+        <th><span>Out Time</span></th>
+        <td>
+          <span>{{ flexScheduleApplication.outTime | formatMediumDatetime }}</span>
+        </td>
+      </tr>
+
+      <tr>
+        <th><span jhiTranslate="bitsHrPayrollApp.flexScheduleApplication.appliedAt">Applied at</span></th>
+        <td>
+          <span>{{ flexScheduleApplication.appliedAt | formatMediumDate }}</span>
+        </td>
+
+        <ng-container *ngIf="flexScheduleApplication.sanctionedAt">
+          <th><span jhiTranslate="bitsHrPayrollApp.flexScheduleApplication.sanctionedAt">Sanctioned at</span></th>
+          <td>
+            <span>{{ flexScheduleApplication.sanctionedAt | formatMediumDate }}</span>
+          </td>
+        </ng-container>
+      </tr>
+
+      <tr>
+        <th><span jhiTranslate="bitsHrPayrollApp.flexScheduleApplication.status">Status</span></th>
+        <td>
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.Status.' + flexScheduleApplication.status }}">{{ flexScheduleApplication.status }}</span>
+        </td>
+      </tr>
+
+      <tr>
+        <th><span jhiTranslate="bitsHrPayrollApp.flexScheduleApplication.reason">Reason</span></th>
+
+        <td colspan="3">
+          <span>{{ flexScheduleApplication.reason }}</span>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

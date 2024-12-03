@@ -1,0 +1,112 @@
+<div>
+
+        <div *ngIf="taxAcknowledgementReceipt">
+            <h2><span jhiTranslate="bitsHrPayrollApp.taxAcknowledgementReceipt.detail.title">Tax Acknowledgement Receipt</span> {{ taxAcknowledgementReceipt.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+
+                <dt><span jhiTranslate="bitsHrPayrollApp.taxAcknowledgementReceipt.employee">Employee</span></dt>
+                <dd>
+                    <div *ngIf="taxAcknowledgementReceipt.employeeId">
+                        <a [routerLink]="['/employee', taxAcknowledgementReceipt.employeeId, 'view']">{{ taxAcknowledgementReceipt.employeeId }}</a>
+                    </div>
+                </dd>
+
+                <dt><span>Name</span></dt>
+                <dd>
+                    <div>
+                        <a>Name</a>
+                    </div>
+                </dd>
+
+                <dt><span>Designation</span></dt>
+                <dd>
+                    <div>
+                        <a>Designation</a>
+                    </div>
+                </dd>
+
+                <dt><span jhiTranslate="bitsHrPayrollApp.taxAcknowledgementReceipt.tinNumber">Tin Number</span></dt>
+                <dd>
+                    <span>{{ taxAcknowledgementReceipt.tinNumber }}</span>
+                </dd>
+                <dt><span jhiTranslate="bitsHrPayrollApp.taxAcknowledgementReceipt.receiptNumber">Receipt Number</span></dt>
+                <dd>
+                    <span>{{ taxAcknowledgementReceipt.receiptNumber }}</span>
+                </dd>
+                <dt><span jhiTranslate="bitsHrPayrollApp.taxAcknowledgementReceipt.taxesCircle">Taxes Circle</span></dt>
+                <dd>
+                    <span>{{ taxAcknowledgementReceipt.taxesCircle }}</span>
+                </dd>
+                <dt><span jhiTranslate="bitsHrPayrollApp.taxAcknowledgementReceipt.taxesZone">Taxes Zone</span></dt>
+                <dd>
+                    <span>{{ taxAcknowledgementReceipt.taxesZone }}</span>
+                </dd>
+                <dt><span jhiTranslate="bitsHrPayrollApp.taxAcknowledgementReceipt.dateOfSubmission">Date Of Submission</span></dt>
+                <dd>
+                    <span>{{ taxAcknowledgementReceipt.dateOfSubmission }}</span>
+                </dd><!--
+                <dt><span jhiTranslate="bitsHrPayrollApp.taxAcknowledgementReceipt.filePath">File Path</span></dt>
+                <dd>
+                    <span>{{ taxAcknowledgementReceipt.filePath }}</span>
+                </dd>
+                <dt><span jhiTranslate="bitsHrPayrollApp.taxAcknowledgementReceipt.acknowledgementStatus">Acknowledgement Status</span></dt>
+                <dd>
+                    <span jhiTranslate="{{ 'bitsHrPayrollApp.AcknowledgementStatus.' + taxAcknowledgementReceipt.acknowledgementStatus }}">{{ taxAcknowledgementReceipt.acknowledgementStatus }}</span>
+                </dd>
+                <dt><span jhiTranslate="bitsHrPayrollApp.taxAcknowledgementReceipt.receivedAt">Received At</span></dt>
+                <dd>
+                    <span>{{ taxAcknowledgementReceipt.receivedAt }}</span>
+                </dd>
+                <dt><span jhiTranslate="bitsHrPayrollApp.taxAcknowledgementReceipt.createdAt">Created At</span></dt>
+                <dd>
+                    <span>{{ taxAcknowledgementReceipt.createdAt }}</span>
+                </dd>
+                <dt><span jhiTranslate="bitsHrPayrollApp.taxAcknowledgementReceipt.updatedAt">Updated At</span></dt>
+                <dd>
+                    <span>{{ taxAcknowledgementReceipt.updatedAt }}</span>
+                </dd>
+                <dt><span jhiTranslate="bitsHrPayrollApp.taxAcknowledgementReceipt.fiscalYear">Fiscal Year</span></dt>
+                <dd>
+                    <div *ngIf="taxAcknowledgementReceipt.fiscalYearId">
+                        <a [routerLink]="['/ait-config', taxAcknowledgementReceipt.fiscalYearId, 'view']">{{ taxAcknowledgementReceipt.fiscalYearId }}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="bitsHrPayrollApp.taxAcknowledgementReceipt.employee">Employee</span></dt>
+                <dd>
+                    <div *ngIf="taxAcknowledgementReceipt.employeeId">
+                        <a [routerLink]="['/employee', taxAcknowledgementReceipt.employeeId, 'view']">{{ taxAcknowledgementReceipt.employeeId }}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="bitsHrPayrollApp.taxAcknowledgementReceipt.receivedBy">Received By</span></dt>
+                <dd>
+                    {{ taxAcknowledgementReceipt.receivedByLogin }}
+                </dd>
+                <dt><span jhiTranslate="bitsHrPayrollApp.taxAcknowledgementReceipt.createdBy">Created By</span></dt>
+                <dd>
+                    {{ taxAcknowledgementReceipt.createdByLogin }}
+                </dd>
+                <dt><span jhiTranslate="bitsHrPayrollApp.taxAcknowledgementReceipt.updatedBy">Updated By</span></dt>
+                <dd>
+                    {{ taxAcknowledgementReceipt.updatedByLogin }}
+                </dd>-->
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/tax-acknowledgement-receipt', taxAcknowledgementReceipt.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+
+</div>

@@ -1,0 +1,211 @@
+<div>
+  <jhi-header
+    [addButtonText]="'Apply For Leave'"
+    [headerName]="'Leave Applications'"
+    [routerLinkText]="'/user-leave-application'"
+    [shouldHaveHr]="false"
+  >
+  </jhi-header>
+</div>
+
+<jhi-alert-error></jhi-alert-error>
+<jhi-alert></jhi-alert>
+
+<div *ngIf="leaveBalanceEndUserView && leaveBalanceEndUserView.length > 0" class="table-responsive">
+  <table aria-describedby="page-heading" class="table table-hover text-center list-text-color">
+    <thead>
+      <tr>
+        <th scope="col"><span>Type</span></th>
+        <th scope="col"><span>Carry Forwarded</span></th>
+        <th scope="col"><span>This Year</span></th>
+        <th scope="col"><span>Total</span></th>
+        <th scope="col"><span>Requested</span></th>
+        <th scope="col"><span>Approved</span></th>
+        <th scope="col"><span>Balance</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let leaveBalance of leaveBalanceEndUserView">
+        <td class="fw-bold" jhiTranslate="{{ 'bitsHrPayrollApp.LeaveType.' + leaveBalance.leaveType }}">
+          {{ leaveBalance.leaveType }}
+        </td>
+        <td>{{ leaveBalance.openingBalance }}</td>
+        <td>{{ leaveBalance.amount }}</td>
+        <td>{{ totalLeaveCalculation(leaveBalance.openingBalance, leaveBalance.amount) }}</td>
+        <td>{{ leaveBalance.daysRequested }}</td>
+        <td>{{ leaveBalance.daysApproved }}</td>
+        <td class="fw-bold text-success">{{ leaveBalance.daysRemaining }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="leaveApplications && leaveApplications.length > 0" class="table-responsive">
+  <table aria-describedby="page-heading" class="table table-hover text-center">
+    <thead>
+      <tr>
+        <th scope="col"><span> Status </span></th>
+        <th scope="col" class="text-start"><span>Leave</span></th>
+        <th scope="col"><span>Duration</span></th>
+        <th scope="col"><span>Type</span></th>
+        <th scope="col"><span>Applied At</span></th>
+        <!--<th scope="col">Reason</th>-->
+        <th scope="col">Phone</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let leaveApplication of leaveApplications; trackBy: trackId">
+        <td>
+          <div
+            *ngIf="
+              leaveApplication.isLineManagerApproved === false &&
+              leaveApplication.isHRApproved === false &&
+              leaveApplication.isRejected === false
+            "
+          >
+            Pending
+          </div>
+          <div class="text-success" *ngIf="leaveApplication.isLineManagerApproved === true || leaveApplication.isHRApproved === true">
+            <fa-icon icon="check"></fa-icon>
+          </div>
+          <div *ngIf="leaveApplication.isRejected === true" class="text-danger">
+            <fa-icon icon="times"></fa-icon>
+          </div>
+        </td>
+
+        <td class="text-start">{{ leaveApplication.startDate | formatMediumDate }} - {{ leaveApplication.endDate | formatMediumDate }}</td>
+
+        <td>
+          {{ leaveApplication.durationInDay }} <span *ngIf="leaveApplication.durationInDay! === 1">day</span
+          ><span *ngIf="leaveApplication.durationInDay! > 1">days</span>
+        </td>
+
+        <td jhiTranslate="{{ 'bitsHrPayrollApp.LeaveType.' + leaveApplication.leaveType }}">{{ leaveApplication.leaveType }}</td>
+
+        <td>{{ leaveApplication.applicationDate | formatMediumDate }}</td>
+
+        <!-- <td>
+                <div
+                    [ngbTooltip]="leaveApplication.reason"
+                    placement="top">
+                    {{truncate(leaveApplication.reason)}}
+                </div>
+            </td>-->
+
+        <td>{{ leaveApplication.phoneNumberOnLeave }}</td>
+
+        <td class="text-end">
+          <div class="btn-group">
+            <button type="submit" (click)="open(content, leaveApplication)" class="btn btn-info btn-sm px-md-3">
+              <fa-icon icon="eye"></fa-icon>
+            </button>
+
+            <button
+              type="submit"
+              *ngIf="
+                leaveApplication.isLineManagerApproved === false &&
+                leaveApplication.isHRApproved === false &&
+                leaveApplication.isRejected === false
+              "
+              [routerLink]="['/user-leave-application', leaveApplication.id, 'edit']"
+              class="btn btn-primary btn-sm px-md-3"
+              data-placement="top"
+              data-toggle="tooltip"
+              title="Edit"
+            >
+              <fa-icon icon="pencil-alt"></fa-icon>
+            </button>
+
+            <button
+              type="submit"
+              *ngIf="
+                leaveApplication.isLineManagerApproved === false &&
+                leaveApplication.isHRApproved === false &&
+                leaveApplication.isRejected === false
+              "
+              (click)="delete(leaveApplication)"
+              class="btn btn-danger btn-sm px-md-3"
+              data-placement="top"
+              data-toggle="tooltip"
+              title="Delete"
+            >
+              <fa-icon icon="times"></fa-icon>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header border-none pb-0">
+    <h4 class="modal-title" id="modal-basic-title"></h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">&times;</button>
+  </div>
+  <div class="modal-body pt-0" ngbAutofocus>
+    <div class="row font-sm">
+      <dd class="col-md-1">Leave</dd>
+      <dt class="col-md-5">
+        {{ selectedLeaveDetails.startDate | formatMediumDate }} -
+        {{ selectedLeaveDetails.endDate | formatMediumDate }}
+      </dt>
+
+      <dd class="col-md-1">Duration</dd>
+      <dt class="col-md-5">
+        {{ selectedLeaveDetails.durationInDay }} <span *ngIf="selectedLeaveDetails.durationInDay! === 1">day</span
+        ><span *ngIf="selectedLeaveDetails.durationInDay! > 1">days</span>
+      </dt>
+
+      <dd class="col-md-1">Type</dd>
+      <dt class="col-md-5" jhiTranslate="{{ 'bitsHrPayrollApp.LeaveType.' + selectedLeaveDetails.leaveType }}">
+        {{ selectedLeaveDetails.leaveType }}
+      </dt>
+
+      <dd class="col-md-1">Applied</dd>
+      <dt class="col-md-5">
+        {{ selectedLeaveDetails.applicationDate | formatMediumDate }}
+      </dt>
+
+      <dd class="col-md-1">Phone</dd>
+      <dt class="col-md-5">
+        {{ selectedLeaveDetails.phoneNumberOnLeave }}
+      </dt>
+
+      <dd class="col-md-1">Status</dd>
+      <dt class="col-md-5">
+        <span
+          *ngIf="selectedLeaveDetails.isHRApproved == true || selectedLeaveDetails.isLineManagerApproved == true; else isRejected"
+          class="text-primary"
+        >
+          Approved
+        </span>
+        <ng-template #isRejected>
+          <span *ngIf="selectedLeaveDetails.isRejected == true; else pending">Not Approved</span>
+        </ng-template>
+        <ng-template #pending>
+          <span>Pending</span>
+        </ng-template>
+      </dt>
+
+      <dd class="col-md-1">Reason</dd>
+      <dt class="col-md-11">
+        <div [ngbTooltip]="selectedLeaveDetails.reason" placement="top">
+          {{ truncate(selectedLeaveDetails.reason) }}
+        </div>
+      </dt>
+    </div>
+  </div>
+  <!--<div class="modal-footer border-none">
+
+    </div>-->
+</ng-template>
+
+<div
+  *ngIf="!leaveApplications || leaveApplications.length === 0"
+  style="height: 75vh"
+  class="text-center d-flex align-items-center justify-content-center"
+>
+  <img src="../../../content/images/leave-application.svg" width="400px" height="400px" />
+</div>

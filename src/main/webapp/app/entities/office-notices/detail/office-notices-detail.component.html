@@ -1,0 +1,30 @@
+<jhi-header [headerName]="'office Notice Details'" [shouldHaveHr]="false"> </jhi-header>
+
+<jhi-alert-error></jhi-alert-error>
+
+<div *ngIf="officeNotices">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title text-uppercase">{{ officeNotices.title }}</h5>
+      <div class="card-subtitle">
+        <div class="mb-2 text-muted">
+          <span class="badge bg-secondary text-white" jhiTranslate="{{ 'bitsHrPayrollApp.NoticeStatus.' + officeNotices.status }}"
+            >{{ officeNotices.status }}
+          </span>
+          <span *ngIf="officeNotices.publishForm">Effective date {{ officeNotices.publishForm }}</span>
+          <span *ngIf="officeNotices.publishTo">To {{ officeNotices.publishTo }}</span>
+        </div>
+      </div>
+      <div class="card-text mb-3">
+        <div class="text-justify">{{ officeNotices.description }}</div>
+      </div>
+      <button type="submit" (click)="previousState()" class="btn btn-info">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/office-notices', officeNotices.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

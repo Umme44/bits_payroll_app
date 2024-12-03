@@ -1,0 +1,76 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="arrearPayment">
+      <h2 data-cy="arrearPaymentDetailsHeading"><span jhiTranslate="bitsHrPayrollApp.arrearPayment.detail.title">Arrear Payment</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ arrearPayment.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.arrearPayment.paymentType">Payment Type</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.ArrearPaymentType.' + arrearPayment.paymentType }}">{{
+            arrearPayment.paymentType
+          }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.arrearPayment.disbursementDate">Disbursement Date</span></dt>
+        <dd>
+          <span>{{ arrearPayment.disbursementDate | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.arrearPayment.salaryMonth">Salary Month</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.Month.' + arrearPayment.salaryMonth }}">{{ arrearPayment.salaryMonth }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.arrearPayment.salaryYear">Salary Year</span></dt>
+        <dd>
+          <span>{{ arrearPayment.salaryYear }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.arrearPayment.approvalStatus">Approval Status</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.Status.' + arrearPayment.approvalStatus }}">{{ arrearPayment.approvalStatus }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.arrearPayment.disbursementAmount">Disbursement Amount</span></dt>
+        <dd>
+          <span>{{ arrearPayment.disbursementAmount }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.arrearPayment.isDeleted">Is Deleted</span></dt>
+        <dd>
+          <span>{{ arrearPayment.isDeleted }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.arrearPayment.arrearPF">Arrear PF</span></dt>
+        <dd>
+          <span>{{ arrearPayment.arrearPF }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.arrearPayment.taxDeduction">Tax Deduction</span></dt>
+        <dd>
+          <span>{{ arrearPayment.taxDeduction }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.arrearPayment.deductTaxUponPayment">Deduct Tax Upon Payment</span></dt>
+        <dd>
+          <span>{{ arrearPayment.deductTaxUponPayment }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.arrearPayment.arrearSalaryItem">Arrear Salary Item</span></dt>
+        <dd>
+          <div *ngIf="arrearPayment.arrearSalaryItem">
+            <a [routerLink]="['/arrear-salary-item', arrearPayment.arrearSalaryItem.id, 'view']">{{ arrearPayment.arrearSalaryItem.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/arrear-payment', arrearPayment.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

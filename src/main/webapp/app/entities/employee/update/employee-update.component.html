@@ -1,0 +1,1735 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-employee-heading" data-cy="EmployeeCreateUpdateHeading" jhiTranslate="bitsHrPayrollApp.employee.home.createOrEditLabel">
+        Create or edit a Employee
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.referenceId" for="field_referenceId">Reference Id</label>
+          <input
+            type="text"
+            class="form-control"
+            name="referenceId"
+            id="field_referenceId"
+            data-cy="referenceId"
+            formControlName="referenceId"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.pin" for="field_pin">Pin</label>
+          <input type="text" class="form-control" name="pin" id="field_pin" data-cy="pin" formControlName="pin" />
+          <div *ngIf="editForm.get('pin')!.invalid && (editForm.get('pin')!.dirty || editForm.get('pin')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('pin')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.picture" for="field_picture">Picture</label>
+          <input type="text" class="form-control" name="picture" id="field_picture" data-cy="picture" formControlName="picture" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.fullName" for="field_fullName">Full Name</label>
+          <input type="text" class="form-control" name="fullName" id="field_fullName" data-cy="fullName" formControlName="fullName" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.surName" for="field_surName">Sur Name</label>
+          <input type="text" class="form-control" name="surName" id="field_surName" data-cy="surName" formControlName="surName" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.nationalIdNo" for="field_nationalIdNo">National Id No</label>
+          <input
+            type="text"
+            class="form-control"
+            name="nationalIdNo"
+            id="field_nationalIdNo"
+            data-cy="nationalIdNo"
+            formControlName="nationalIdNo"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.dateOfBirth" for="field_dateOfBirth">Date Of Birth</label>
+          <div class="input-group">
+            <input
+              id="field_dateOfBirth"
+              data-cy="dateOfBirth"
+              type="text"
+              class="form-control"
+              name="dateOfBirth"
+              ngbDatepicker
+              #dateOfBirthDp="ngbDatepicker"
+              formControlName="dateOfBirth"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateOfBirthDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.placeOfBirth" for="field_placeOfBirth">Place Of Birth</label>
+          <input
+            type="text"
+            class="form-control"
+            name="placeOfBirth"
+            id="field_placeOfBirth"
+            data-cy="placeOfBirth"
+            formControlName="placeOfBirth"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.fatherName" for="field_fatherName">Father Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="fatherName"
+            id="field_fatherName"
+            data-cy="fatherName"
+            formControlName="fatherName"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.motherName" for="field_motherName">Mother Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="motherName"
+            id="field_motherName"
+            data-cy="motherName"
+            formControlName="motherName"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.bloodGroup" for="field_bloodGroup">Blood Group</label>
+          <select class="form-control" name="bloodGroup" formControlName="bloodGroup" id="field_bloodGroup" data-cy="bloodGroup">
+            <option [ngValue]="null">{{ 'bitsHrPayrollApp.BloodGroup.null' | translate }}</option>
+            <option *ngFor="let bloodGroup of bloodGroupValues" [value]="bloodGroup">
+              {{ 'bitsHrPayrollApp.BloodGroup.' + bloodGroup | translate }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.presentAddress" for="field_presentAddress"
+            >Present Address</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="presentAddress"
+            id="field_presentAddress"
+            data-cy="presentAddress"
+            formControlName="presentAddress"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.permanentAddress" for="field_permanentAddress"
+            >Permanent Address</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="permanentAddress"
+            id="field_permanentAddress"
+            data-cy="permanentAddress"
+            formControlName="permanentAddress"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.personalContactNo" for="field_personalContactNo"
+            >Personal Contact No</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="personalContactNo"
+            id="field_personalContactNo"
+            data-cy="personalContactNo"
+            formControlName="personalContactNo"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.personalEmail" for="field_personalEmail">Personal Email</label>
+          <input
+            type="text"
+            class="form-control"
+            name="personalEmail"
+            id="field_personalEmail"
+            data-cy="personalEmail"
+            formControlName="personalEmail"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.religion" for="field_religion">Religion</label>
+          <select class="form-control" name="religion" formControlName="religion" id="field_religion" data-cy="religion">
+            <option [ngValue]="null">{{ 'bitsHrPayrollApp.Religion.null' | translate }}</option>
+            <option *ngFor="let religion of religionValues" [value]="religion">
+              {{ 'bitsHrPayrollApp.Religion.' + religion | translate }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.maritalStatus" for="field_maritalStatus">Marital Status</label>
+          <select
+            class="form-control"
+            name="maritalStatus"
+            formControlName="maritalStatus"
+            id="field_maritalStatus"
+            data-cy="maritalStatus"
+          >
+            <option [ngValue]="null">{{ 'bitsHrPayrollApp.MaritalStatus.null' | translate }}</option>
+            <option *ngFor="let maritalStatus of maritalStatusValues" [value]="maritalStatus">
+              {{ 'bitsHrPayrollApp.MaritalStatus.' + maritalStatus | translate }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.dateOfMarriage" for="field_dateOfMarriage"
+            >Date Of Marriage</label
+          >
+          <div class="input-group">
+            <input
+              id="field_dateOfMarriage"
+              data-cy="dateOfMarriage"
+              type="text"
+              class="form-control"
+              name="dateOfMarriage"
+              ngbDatepicker
+              #dateOfMarriageDp="ngbDatepicker"
+              formControlName="dateOfMarriage"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateOfMarriageDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.spouseName" for="field_spouseName">Spouse Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="spouseName"
+            id="field_spouseName"
+            data-cy="spouseName"
+            formControlName="spouseName"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.officialEmail" for="field_officialEmail">Official Email</label>
+          <input
+            type="text"
+            class="form-control"
+            name="officialEmail"
+            id="field_officialEmail"
+            data-cy="officialEmail"
+            formControlName="officialEmail"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.officialContactNo" for="field_officialContactNo"
+            >Official Contact No</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="officialContactNo"
+            id="field_officialContactNo"
+            data-cy="officialContactNo"
+            formControlName="officialContactNo"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.officePhoneExtension" for="field_officePhoneExtension"
+            >Office Phone Extension</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="officePhoneExtension"
+            id="field_officePhoneExtension"
+            data-cy="officePhoneExtension"
+            formControlName="officePhoneExtension"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.whatsappId" for="field_whatsappId">Whatsapp Id</label>
+          <input
+            type="text"
+            class="form-control"
+            name="whatsappId"
+            id="field_whatsappId"
+            data-cy="whatsappId"
+            formControlName="whatsappId"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.skypeId" for="field_skypeId">Skype Id</label>
+          <input type="text" class="form-control" name="skypeId" id="field_skypeId" data-cy="skypeId" formControlName="skypeId" />
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="bitsHrPayrollApp.employee.emergencyContactPersonName"
+            for="field_emergencyContactPersonName"
+            >Emergency Contact Person Name</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="emergencyContactPersonName"
+            id="field_emergencyContactPersonName"
+            data-cy="emergencyContactPersonName"
+            formControlName="emergencyContactPersonName"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="bitsHrPayrollApp.employee.emergencyContactPersonRelationshipWithEmployee"
+            for="field_emergencyContactPersonRelationshipWithEmployee"
+            >Emergency Contact Person Relationship With Employee</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="emergencyContactPersonRelationshipWithEmployee"
+            id="field_emergencyContactPersonRelationshipWithEmployee"
+            data-cy="emergencyContactPersonRelationshipWithEmployee"
+            formControlName="emergencyContactPersonRelationshipWithEmployee"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="bitsHrPayrollApp.employee.emergencyContactPersonContactNumber"
+            for="field_emergencyContactPersonContactNumber"
+            >Emergency Contact Person Contact Number</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="emergencyContactPersonContactNumber"
+            id="field_emergencyContactPersonContactNumber"
+            data-cy="emergencyContactPersonContactNumber"
+            formControlName="emergencyContactPersonContactNumber"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.mainGrossSalary" for="field_mainGrossSalary"
+            >Main Gross Salary</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="mainGrossSalary"
+            id="field_mainGrossSalary"
+            data-cy="mainGrossSalary"
+            formControlName="mainGrossSalary"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.employeeCategory" for="field_employeeCategory"
+            >Employee Category</label
+          >
+          <select
+            class="form-control"
+            name="employeeCategory"
+            formControlName="employeeCategory"
+            id="field_employeeCategory"
+            data-cy="employeeCategory"
+          >
+            <option [ngValue]="null">{{ 'bitsHrPayrollApp.EmployeeCategory.null' | translate }}</option>
+            <option *ngFor="let employeeCategory of employeeCategoryValues" [value]="employeeCategory">
+              {{ 'bitsHrPayrollApp.EmployeeCategory.' + employeeCategory | translate }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.location" for="field_location">Location</label>
+          <input type="text" class="form-control" name="location" id="field_location" data-cy="location" formControlName="location" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.dateOfJoining" for="field_dateOfJoining">Date Of Joining</label>
+          <div class="input-group">
+            <input
+              id="field_dateOfJoining"
+              data-cy="dateOfJoining"
+              type="text"
+              class="form-control"
+              name="dateOfJoining"
+              ngbDatepicker
+              #dateOfJoiningDp="ngbDatepicker"
+              formControlName="dateOfJoining"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateOfJoiningDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.dateOfConfirmation" for="field_dateOfConfirmation"
+            >Date Of Confirmation</label
+          >
+          <div class="input-group">
+            <input
+              id="field_dateOfConfirmation"
+              data-cy="dateOfConfirmation"
+              type="text"
+              class="form-control"
+              name="dateOfConfirmation"
+              ngbDatepicker
+              #dateOfConfirmationDp="ngbDatepicker"
+              formControlName="dateOfConfirmation"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateOfConfirmationDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="bitsHrPayrollApp.employee.isProbationaryPeriodExtended"
+            for="field_isProbationaryPeriodExtended"
+            >Is Probationary Period Extended</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isProbationaryPeriodExtended"
+            id="field_isProbationaryPeriodExtended"
+            data-cy="isProbationaryPeriodExtended"
+            formControlName="isProbationaryPeriodExtended"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.probationPeriodExtendedTo" for="field_probationPeriodExtendedTo"
+            >Probation Period Extended To</label
+          >
+          <div class="input-group">
+            <input
+              id="field_probationPeriodExtendedTo"
+              data-cy="probationPeriodExtendedTo"
+              type="text"
+              class="form-control"
+              name="probationPeriodExtendedTo"
+              ngbDatepicker
+              #probationPeriodExtendedToDp="ngbDatepicker"
+              formControlName="probationPeriodExtendedTo"
+            />
+            <button type="button" class="btn btn-secondary" (click)="probationPeriodExtendedToDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.payType" for="field_payType">Pay Type</label>
+          <select class="form-control" name="payType" formControlName="payType" id="field_payType" data-cy="payType">
+            <option [ngValue]="null">{{ 'bitsHrPayrollApp.PayType.null' | translate }}</option>
+            <option *ngFor="let payType of payTypeValues" [value]="payType">{{ 'bitsHrPayrollApp.PayType.' + payType | translate }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.disbursementMethod" for="field_disbursementMethod"
+            >Disbursement Method</label
+          >
+          <select
+            class="form-control"
+            name="disbursementMethod"
+            formControlName="disbursementMethod"
+            id="field_disbursementMethod"
+            data-cy="disbursementMethod"
+          >
+            <option [ngValue]="null">{{ 'bitsHrPayrollApp.DisbursementMethod.null' | translate }}</option>
+            <option *ngFor="let disbursementMethod of disbursementMethodValues" [value]="disbursementMethod">
+              {{ 'bitsHrPayrollApp.DisbursementMethod.' + disbursementMethod | translate }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.bankName" for="field_bankName">Bank Name</label>
+          <input type="text" class="form-control" name="bankName" id="field_bankName" data-cy="bankName" formControlName="bankName" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.bankAccountNo" for="field_bankAccountNo">Bank Account No</label>
+          <input
+            type="text"
+            class="form-control"
+            name="bankAccountNo"
+            id="field_bankAccountNo"
+            data-cy="bankAccountNo"
+            formControlName="bankAccountNo"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.mobileCelling" for="field_mobileCelling">Mobile Celling</label>
+          <input
+            type="number"
+            class="form-control"
+            name="mobileCelling"
+            id="field_mobileCelling"
+            data-cy="mobileCelling"
+            formControlName="mobileCelling"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.bkashNumber" for="field_bkashNumber">Bkash Number</label>
+          <input
+            type="text"
+            class="form-control"
+            name="bkashNumber"
+            id="field_bkashNumber"
+            data-cy="bkashNumber"
+            formControlName="bkashNumber"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.cardType" for="field_cardType">Card Type</label>
+          <select class="form-control" name="cardType" formControlName="cardType" id="field_cardType" data-cy="cardType">
+            <option [ngValue]="null">{{ 'bitsHrPayrollApp.CardType.null' | translate }}</option>
+            <option *ngFor="let cardType of cardTypeValues" [value]="cardType">
+              {{ 'bitsHrPayrollApp.CardType.' + cardType | translate }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.cardNumber" for="field_cardNumber">Card Number</label>
+          <input
+            type="text"
+            class="form-control"
+            name="cardNumber"
+            id="field_cardNumber"
+            data-cy="cardNumber"
+            formControlName="cardNumber"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.tinNumber" for="field_tinNumber">Tin Number</label>
+          <input type="text" class="form-control" name="tinNumber" id="field_tinNumber" data-cy="tinNumber" formControlName="tinNumber" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.passportNo" for="field_passportNo">Passport No</label>
+          <input
+            type="text"
+            class="form-control"
+            name="passportNo"
+            id="field_passportNo"
+            data-cy="passportNo"
+            formControlName="passportNo"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.passportPlaceOfIssue" for="field_passportPlaceOfIssue"
+            >Passport Place Of Issue</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="passportPlaceOfIssue"
+            id="field_passportPlaceOfIssue"
+            data-cy="passportPlaceOfIssue"
+            formControlName="passportPlaceOfIssue"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.passportIssuedDate" for="field_passportIssuedDate"
+            >Passport Issued Date</label
+          >
+          <div class="input-group">
+            <input
+              id="field_passportIssuedDate"
+              data-cy="passportIssuedDate"
+              type="text"
+              class="form-control"
+              name="passportIssuedDate"
+              ngbDatepicker
+              #passportIssuedDateDp="ngbDatepicker"
+              formControlName="passportIssuedDate"
+            />
+            <button type="button" class="btn btn-secondary" (click)="passportIssuedDateDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.passportExpiryDate" for="field_passportExpiryDate"
+            >Passport Expiry Date</label
+          >
+          <div class="input-group">
+            <input
+              id="field_passportExpiryDate"
+              data-cy="passportExpiryDate"
+              type="text"
+              class="form-control"
+              name="passportExpiryDate"
+              ngbDatepicker
+              #passportExpiryDateDp="ngbDatepicker"
+              formControlName="passportExpiryDate"
+            />
+            <button type="button" class="btn btn-secondary" (click)="passportExpiryDateDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.gender" for="field_gender">Gender</label>
+          <select class="form-control" name="gender" formControlName="gender" id="field_gender" data-cy="gender">
+            <option [ngValue]="null">{{ 'bitsHrPayrollApp.Gender.null' | translate }}</option>
+            <option *ngFor="let gender of genderValues" [value]="gender">{{ 'bitsHrPayrollApp.Gender.' + gender | translate }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.welfareFundDeduction" for="field_welfareFundDeduction"
+            >Welfare Fund Deduction</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="welfareFundDeduction"
+            id="field_welfareFundDeduction"
+            data-cy="welfareFundDeduction"
+            formControlName="welfareFundDeduction"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.employmentStatus" for="field_employmentStatus"
+            >Employment Status</label
+          >
+          <select
+            class="form-control"
+            name="employmentStatus"
+            formControlName="employmentStatus"
+            id="field_employmentStatus"
+            data-cy="employmentStatus"
+          >
+            <option [ngValue]="null">{{ 'bitsHrPayrollApp.EmploymentStatus.null' | translate }}</option>
+            <option *ngFor="let employmentStatus of employmentStatusValues" [value]="employmentStatus">
+              {{ 'bitsHrPayrollApp.EmploymentStatus.' + employmentStatus | translate }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.hasDisabledChild" for="field_hasDisabledChild"
+            >Has Disabled Child</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="hasDisabledChild"
+            id="field_hasDisabledChild"
+            data-cy="hasDisabledChild"
+            formControlName="hasDisabledChild"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.isFirstTimeAitGiver" for="field_isFirstTimeAitGiver"
+            >Is First Time Ait Giver</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isFirstTimeAitGiver"
+            id="field_isFirstTimeAitGiver"
+            data-cy="isFirstTimeAitGiver"
+            formControlName="isFirstTimeAitGiver"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.isSalaryHold" for="field_isSalaryHold">Is Salary Hold</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isSalaryHold"
+            id="field_isSalaryHold"
+            data-cy="isSalaryHold"
+            formControlName="isSalaryHold"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.isFestivalBonusHold" for="field_isFestivalBonusHold"
+            >Is Festival Bonus Hold</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isFestivalBonusHold"
+            id="field_isFestivalBonusHold"
+            data-cy="isFestivalBonusHold"
+            formControlName="isFestivalBonusHold"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.isPhysicallyDisabled" for="field_isPhysicallyDisabled"
+            >Is Physically Disabled</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isPhysicallyDisabled"
+            id="field_isPhysicallyDisabled"
+            data-cy="isPhysicallyDisabled"
+            formControlName="isPhysicallyDisabled"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.isFreedomFighter" for="field_isFreedomFighter"
+            >Is Freedom Fighter</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isFreedomFighter"
+            id="field_isFreedomFighter"
+            data-cy="isFreedomFighter"
+            formControlName="isFreedomFighter"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.hasOverTime" for="field_hasOverTime">Has Over Time</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="hasOverTime"
+            id="field_hasOverTime"
+            data-cy="hasOverTime"
+            formControlName="hasOverTime"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.probationPeriodEndDate" for="field_probationPeriodEndDate"
+            >Probation Period End Date</label
+          >
+          <div class="input-group">
+            <input
+              id="field_probationPeriodEndDate"
+              data-cy="probationPeriodEndDate"
+              type="text"
+              class="form-control"
+              name="probationPeriodEndDate"
+              ngbDatepicker
+              #probationPeriodEndDateDp="ngbDatepicker"
+              formControlName="probationPeriodEndDate"
+            />
+            <button type="button" class="btn btn-secondary" (click)="probationPeriodEndDateDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.contractPeriodExtendedTo" for="field_contractPeriodExtendedTo"
+            >Contract Period Extended To</label
+          >
+          <div class="input-group">
+            <input
+              id="field_contractPeriodExtendedTo"
+              data-cy="contractPeriodExtendedTo"
+              type="text"
+              class="form-control"
+              name="contractPeriodExtendedTo"
+              ngbDatepicker
+              #contractPeriodExtendedToDp="ngbDatepicker"
+              formControlName="contractPeriodExtendedTo"
+            />
+            <button type="button" class="btn btn-secondary" (click)="contractPeriodExtendedToDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.contractPeriodEndDate" for="field_contractPeriodEndDate"
+            >Contract Period End Date</label
+          >
+          <div class="input-group">
+            <input
+              id="field_contractPeriodEndDate"
+              data-cy="contractPeriodEndDate"
+              type="text"
+              class="form-control"
+              name="contractPeriodEndDate"
+              ngbDatepicker
+              #contractPeriodEndDateDp="ngbDatepicker"
+              formControlName="contractPeriodEndDate"
+            />
+            <button type="button" class="btn btn-secondary" (click)="contractPeriodEndDateDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.cardType02" for="field_cardType02">Card Type 02</label>
+          <select class="form-control" name="cardType02" formControlName="cardType02" id="field_cardType02" data-cy="cardType02">
+            <option [ngValue]="null">{{ 'bitsHrPayrollApp.CardType.null' | translate }}</option>
+            <option *ngFor="let cardType of cardTypeValues" [value]="cardType">
+              {{ 'bitsHrPayrollApp.CardType.' + cardType | translate }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.cardNumber02" for="field_cardNumber02">Card Number 02</label>
+          <input
+            type="text"
+            class="form-control"
+            name="cardNumber02"
+            id="field_cardNumber02"
+            data-cy="cardNumber02"
+            formControlName="cardNumber02"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.cardType03" for="field_cardType03">Card Type 03</label>
+          <select class="form-control" name="cardType03" formControlName="cardType03" id="field_cardType03" data-cy="cardType03">
+            <option [ngValue]="null">{{ 'bitsHrPayrollApp.CardType.null' | translate }}</option>
+            <option *ngFor="let cardType of cardTypeValues" [value]="cardType">
+              {{ 'bitsHrPayrollApp.CardType.' + cardType | translate }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.cardNumber03" for="field_cardNumber03">Card Number 03</label>
+          <input
+            type="text"
+            class="form-control"
+            name="cardNumber03"
+            id="field_cardNumber03"
+            data-cy="cardNumber03"
+            formControlName="cardNumber03"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.allowance01" for="field_allowance01">Allowance 01</label>
+          <input
+            type="number"
+            class="form-control"
+            name="allowance01"
+            id="field_allowance01"
+            data-cy="allowance01"
+            formControlName="allowance01"
+          />
+          <div *ngIf="editForm.get('allowance01')!.invalid && (editForm.get('allowance01')!.dirty || editForm.get('allowance01')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('allowance01')?.errors?.min"
+              jhiTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              This field should be at least 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('allowance01')?.errors?.max"
+              jhiTranslate="entity.validation.max"
+              [translateValues]="{ max: 10000000 }"
+            >
+              This field cannot be more than 10000000.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('allowance01')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.allowance01EffectiveFrom" for="field_allowance01EffectiveFrom"
+            >Allowance 01 Effective From</label
+          >
+          <div class="input-group">
+            <input
+              id="field_allowance01EffectiveFrom"
+              data-cy="allowance01EffectiveFrom"
+              type="text"
+              class="form-control"
+              name="allowance01EffectiveFrom"
+              ngbDatepicker
+              #allowance01EffectiveFromDp="ngbDatepicker"
+              formControlName="allowance01EffectiveFrom"
+            />
+            <button type="button" class="btn btn-secondary" (click)="allowance01EffectiveFromDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.allowance01EffectiveTo" for="field_allowance01EffectiveTo"
+            >Allowance 01 Effective To</label
+          >
+          <div class="input-group">
+            <input
+              id="field_allowance01EffectiveTo"
+              data-cy="allowance01EffectiveTo"
+              type="text"
+              class="form-control"
+              name="allowance01EffectiveTo"
+              ngbDatepicker
+              #allowance01EffectiveToDp="ngbDatepicker"
+              formControlName="allowance01EffectiveTo"
+            />
+            <button type="button" class="btn btn-secondary" (click)="allowance01EffectiveToDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.allowance02" for="field_allowance02">Allowance 02</label>
+          <input
+            type="number"
+            class="form-control"
+            name="allowance02"
+            id="field_allowance02"
+            data-cy="allowance02"
+            formControlName="allowance02"
+          />
+          <div *ngIf="editForm.get('allowance02')!.invalid && (editForm.get('allowance02')!.dirty || editForm.get('allowance02')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('allowance02')?.errors?.min"
+              jhiTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              This field should be at least 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('allowance02')?.errors?.max"
+              jhiTranslate="entity.validation.max"
+              [translateValues]="{ max: 10000000 }"
+            >
+              This field cannot be more than 10000000.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('allowance02')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.allowance02EffectiveFrom" for="field_allowance02EffectiveFrom"
+            >Allowance 02 Effective From</label
+          >
+          <div class="input-group">
+            <input
+              id="field_allowance02EffectiveFrom"
+              data-cy="allowance02EffectiveFrom"
+              type="text"
+              class="form-control"
+              name="allowance02EffectiveFrom"
+              ngbDatepicker
+              #allowance02EffectiveFromDp="ngbDatepicker"
+              formControlName="allowance02EffectiveFrom"
+            />
+            <button type="button" class="btn btn-secondary" (click)="allowance02EffectiveFromDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.allowance02EffectiveTo" for="field_allowance02EffectiveTo"
+            >Allowance 02 Effective To</label
+          >
+          <div class="input-group">
+            <input
+              id="field_allowance02EffectiveTo"
+              data-cy="allowance02EffectiveTo"
+              type="text"
+              class="form-control"
+              name="allowance02EffectiveTo"
+              ngbDatepicker
+              #allowance02EffectiveToDp="ngbDatepicker"
+              formControlName="allowance02EffectiveTo"
+            />
+            <button type="button" class="btn btn-secondary" (click)="allowance02EffectiveToDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.allowance03" for="field_allowance03">Allowance 03</label>
+          <input
+            type="number"
+            class="form-control"
+            name="allowance03"
+            id="field_allowance03"
+            data-cy="allowance03"
+            formControlName="allowance03"
+          />
+          <div *ngIf="editForm.get('allowance03')!.invalid && (editForm.get('allowance03')!.dirty || editForm.get('allowance03')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('allowance03')?.errors?.min"
+              jhiTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              This field should be at least 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('allowance03')?.errors?.max"
+              jhiTranslate="entity.validation.max"
+              [translateValues]="{ max: 10000000 }"
+            >
+              This field cannot be more than 10000000.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('allowance03')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.allowance03EffectiveFrom" for="field_allowance03EffectiveFrom"
+            >Allowance 03 Effective From</label
+          >
+          <div class="input-group">
+            <input
+              id="field_allowance03EffectiveFrom"
+              data-cy="allowance03EffectiveFrom"
+              type="text"
+              class="form-control"
+              name="allowance03EffectiveFrom"
+              ngbDatepicker
+              #allowance03EffectiveFromDp="ngbDatepicker"
+              formControlName="allowance03EffectiveFrom"
+            />
+            <button type="button" class="btn btn-secondary" (click)="allowance03EffectiveFromDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.allowance03EffectiveTo" for="field_allowance03EffectiveTo"
+            >Allowance 03 Effective To</label
+          >
+          <div class="input-group">
+            <input
+              id="field_allowance03EffectiveTo"
+              data-cy="allowance03EffectiveTo"
+              type="text"
+              class="form-control"
+              name="allowance03EffectiveTo"
+              ngbDatepicker
+              #allowance03EffectiveToDp="ngbDatepicker"
+              formControlName="allowance03EffectiveTo"
+            />
+            <button type="button" class="btn btn-secondary" (click)="allowance03EffectiveToDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.allowance04" for="field_allowance04">Allowance 04</label>
+          <input
+            type="number"
+            class="form-control"
+            name="allowance04"
+            id="field_allowance04"
+            data-cy="allowance04"
+            formControlName="allowance04"
+          />
+          <div *ngIf="editForm.get('allowance04')!.invalid && (editForm.get('allowance04')!.dirty || editForm.get('allowance04')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('allowance04')?.errors?.min"
+              jhiTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              This field should be at least 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('allowance04')?.errors?.max"
+              jhiTranslate="entity.validation.max"
+              [translateValues]="{ max: 10000000 }"
+            >
+              This field cannot be more than 10000000.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('allowance04')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.allowance04EffectiveFrom" for="field_allowance04EffectiveFrom"
+            >Allowance 04 Effective From</label
+          >
+          <div class="input-group">
+            <input
+              id="field_allowance04EffectiveFrom"
+              data-cy="allowance04EffectiveFrom"
+              type="text"
+              class="form-control"
+              name="allowance04EffectiveFrom"
+              ngbDatepicker
+              #allowance04EffectiveFromDp="ngbDatepicker"
+              formControlName="allowance04EffectiveFrom"
+            />
+            <button type="button" class="btn btn-secondary" (click)="allowance04EffectiveFromDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.allowance04EffectiveTo" for="field_allowance04EffectiveTo"
+            >Allowance 04 Effective To</label
+          >
+          <div class="input-group">
+            <input
+              id="field_allowance04EffectiveTo"
+              data-cy="allowance04EffectiveTo"
+              type="text"
+              class="form-control"
+              name="allowance04EffectiveTo"
+              ngbDatepicker
+              #allowance04EffectiveToDp="ngbDatepicker"
+              formControlName="allowance04EffectiveTo"
+            />
+            <button type="button" class="btn btn-secondary" (click)="allowance04EffectiveToDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.allowance05" for="field_allowance05">Allowance 05</label>
+          <input
+            type="number"
+            class="form-control"
+            name="allowance05"
+            id="field_allowance05"
+            data-cy="allowance05"
+            formControlName="allowance05"
+          />
+          <div *ngIf="editForm.get('allowance05')!.invalid && (editForm.get('allowance05')!.dirty || editForm.get('allowance05')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('allowance05')?.errors?.min"
+              jhiTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              This field should be at least 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('allowance05')?.errors?.max"
+              jhiTranslate="entity.validation.max"
+              [translateValues]="{ max: 10000000 }"
+            >
+              This field cannot be more than 10000000.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('allowance05')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.allowance05EffectiveFrom" for="field_allowance05EffectiveFrom"
+            >Allowance 05 Effective From</label
+          >
+          <div class="input-group">
+            <input
+              id="field_allowance05EffectiveFrom"
+              data-cy="allowance05EffectiveFrom"
+              type="text"
+              class="form-control"
+              name="allowance05EffectiveFrom"
+              ngbDatepicker
+              #allowance05EffectiveFromDp="ngbDatepicker"
+              formControlName="allowance05EffectiveFrom"
+            />
+            <button type="button" class="btn btn-secondary" (click)="allowance05EffectiveFromDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.allowance05EffectiveTo" for="field_allowance05EffectiveTo"
+            >Allowance 05 Effective To</label
+          >
+          <div class="input-group">
+            <input
+              id="field_allowance05EffectiveTo"
+              data-cy="allowance05EffectiveTo"
+              type="text"
+              class="form-control"
+              name="allowance05EffectiveTo"
+              ngbDatepicker
+              #allowance05EffectiveToDp="ngbDatepicker"
+              formControlName="allowance05EffectiveTo"
+            />
+            <button type="button" class="btn btn-secondary" (click)="allowance05EffectiveToDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.allowance06" for="field_allowance06">Allowance 06</label>
+          <input
+            type="number"
+            class="form-control"
+            name="allowance06"
+            id="field_allowance06"
+            data-cy="allowance06"
+            formControlName="allowance06"
+          />
+          <div *ngIf="editForm.get('allowance06')!.invalid && (editForm.get('allowance06')!.dirty || editForm.get('allowance06')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('allowance06')?.errors?.min"
+              jhiTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              This field should be at least 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('allowance06')?.errors?.max"
+              jhiTranslate="entity.validation.max"
+              [translateValues]="{ max: 10000000 }"
+            >
+              This field cannot be more than 10000000.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('allowance06')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.allowance06EffectiveFrom" for="field_allowance06EffectiveFrom"
+            >Allowance 06 Effective From</label
+          >
+          <div class="input-group">
+            <input
+              id="field_allowance06EffectiveFrom"
+              data-cy="allowance06EffectiveFrom"
+              type="text"
+              class="form-control"
+              name="allowance06EffectiveFrom"
+              ngbDatepicker
+              #allowance06EffectiveFromDp="ngbDatepicker"
+              formControlName="allowance06EffectiveFrom"
+            />
+            <button type="button" class="btn btn-secondary" (click)="allowance06EffectiveFromDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.allowance06EffectiveTo" for="field_allowance06EffectiveTo"
+            >Allowance 06 Effective To</label
+          >
+          <div class="input-group">
+            <input
+              id="field_allowance06EffectiveTo"
+              data-cy="allowance06EffectiveTo"
+              type="text"
+              class="form-control"
+              name="allowance06EffectiveTo"
+              ngbDatepicker
+              #allowance06EffectiveToDp="ngbDatepicker"
+              formControlName="allowance06EffectiveTo"
+            />
+            <button type="button" class="btn btn-secondary" (click)="allowance06EffectiveToDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.isTaxPaidByOrganisation" for="field_isTaxPaidByOrganisation"
+            >Is Tax Paid By Organisation</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isTaxPaidByOrganisation"
+            id="field_isTaxPaidByOrganisation"
+            data-cy="isTaxPaidByOrganisation"
+            formControlName="isTaxPaidByOrganisation"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.createdBy" for="field_createdBy">Created By</label>
+          <input type="text" class="form-control" name="createdBy" id="field_createdBy" data-cy="createdBy" formControlName="createdBy" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.createdAt" for="field_createdAt">Created At</label>
+          <div class="d-flex">
+            <input
+              id="field_createdAt"
+              data-cy="createdAt"
+              type="datetime-local"
+              class="form-control"
+              name="createdAt"
+              formControlName="createdAt"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.updatedBy" for="field_updatedBy">Updated By</label>
+          <input type="text" class="form-control" name="updatedBy" id="field_updatedBy" data-cy="updatedBy" formControlName="updatedBy" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.updatedAt" for="field_updatedAt">Updated At</label>
+          <div class="input-group">
+            <input
+              id="field_updatedAt"
+              data-cy="updatedAt"
+              type="text"
+              class="form-control"
+              name="updatedAt"
+              ngbDatepicker
+              #updatedAtDp="ngbDatepicker"
+              formControlName="updatedAt"
+            />
+            <button type="button" class="btn btn-secondary" (click)="updatedAtDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="bitsHrPayrollApp.employee.isAllowedToGiveOnlineAttendance"
+            for="field_isAllowedToGiveOnlineAttendance"
+            >Is Allowed To Give Online Attendance</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isAllowedToGiveOnlineAttendance"
+            id="field_isAllowedToGiveOnlineAttendance"
+            data-cy="isAllowedToGiveOnlineAttendance"
+            formControlName="isAllowedToGiveOnlineAttendance"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.noticePeriodInDays" for="field_noticePeriodInDays"
+            >Notice Period In Days</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="noticePeriodInDays"
+            id="field_noticePeriodInDays"
+            data-cy="noticePeriodInDays"
+            formControlName="noticePeriodInDays"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.isFixedTermContract" for="field_isFixedTermContract"
+            >Is Fixed Term Contract</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isFixedTermContract"
+            id="field_isFixedTermContract"
+            data-cy="isFixedTermContract"
+            formControlName="isFixedTermContract"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.currentInTime" for="field_currentInTime">Current In Time</label>
+          <div class="d-flex">
+            <input
+              id="field_currentInTime"
+              data-cy="currentInTime"
+              type="datetime-local"
+              class="form-control"
+              name="currentInTime"
+              formControlName="currentInTime"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.currentOutTime" for="field_currentOutTime"
+            >Current Out Time</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_currentOutTime"
+              data-cy="currentOutTime"
+              type="datetime-local"
+              class="form-control"
+              name="currentOutTime"
+              formControlName="currentOutTime"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="bitsHrPayrollApp.employee.onlineAttendanceSanctionedAt"
+            for="field_onlineAttendanceSanctionedAt"
+            >Online Attendance Sanctioned At</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_onlineAttendanceSanctionedAt"
+              data-cy="onlineAttendanceSanctionedAt"
+              type="datetime-local"
+              class="form-control"
+              name="onlineAttendanceSanctionedAt"
+              formControlName="onlineAttendanceSanctionedAt"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.isNidVerified" for="field_isNidVerified">Is Nid Verified</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isNidVerified"
+            id="field_isNidVerified"
+            data-cy="isNidVerified"
+            formControlName="isNidVerified"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.canRaiseRrfOnBehalf" for="field_canRaiseRrfOnBehalf"
+            >Can Raise Rrf On Behalf</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="canRaiseRrfOnBehalf"
+            id="field_canRaiseRrfOnBehalf"
+            data-cy="canRaiseRrfOnBehalf"
+            formControlName="canRaiseRrfOnBehalf"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.taxesCircle" for="field_taxesCircle">Taxes Circle</label>
+          <input
+            type="text"
+            class="form-control"
+            name="taxesCircle"
+            id="field_taxesCircle"
+            data-cy="taxesCircle"
+            formControlName="taxesCircle"
+          />
+          <div *ngIf="editForm.get('taxesCircle')!.invalid && (editForm.get('taxesCircle')!.dirty || editForm.get('taxesCircle')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('taxesCircle')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 250 }"
+            >
+              This field cannot be longer than 250 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.taxesZone" for="field_taxesZone">Taxes Zone</label>
+          <input type="text" class="form-control" name="taxesZone" id="field_taxesZone" data-cy="taxesZone" formControlName="taxesZone" />
+          <div *ngIf="editForm.get('taxesZone')!.invalid && (editForm.get('taxesZone')!.dirty || editForm.get('taxesZone')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('taxesZone')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 250 }"
+            >
+              This field cannot be longer than 250 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="bitsHrPayrollApp.employee.canManageTaxAcknowledgementReceipt"
+            for="field_canManageTaxAcknowledgementReceipt"
+            >Can Manage Tax Acknowledgement Receipt</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="canManageTaxAcknowledgementReceipt"
+            id="field_canManageTaxAcknowledgementReceipt"
+            data-cy="canManageTaxAcknowledgementReceipt"
+            formControlName="canManageTaxAcknowledgementReceipt"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="bitsHrPayrollApp.employee.isEligibleForAutomatedAttendance"
+            for="field_isEligibleForAutomatedAttendance"
+            >Is Eligible For Automated Attendance</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isEligibleForAutomatedAttendance"
+            id="field_isEligibleForAutomatedAttendance"
+            data-cy="isEligibleForAutomatedAttendance"
+            formControlName="isEligibleForAutomatedAttendance"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.floor" for="field_floor">Floor</label>
+          <input type="text" class="form-control" name="floor" id="field_floor" data-cy="floor" formControlName="floor" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.deskLocation" for="field_deskLocation">Desk Location</label>
+          <input
+            type="text"
+            class="form-control"
+            name="deskLocation"
+            id="field_deskLocation"
+            data-cy="deskLocation"
+            formControlName="deskLocation"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.designation" for="field_designation">Designation</label>
+          <select
+            class="form-control"
+            id="field_designation"
+            data-cy="designation"
+            name="designation"
+            formControlName="designation"
+            [compareWith]="compareDesignation"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="designationOption" *ngFor="let designationOption of designationsSharedCollection">
+              {{ designationOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.department" for="field_department">Department</label>
+          <select
+            class="form-control"
+            id="field_department"
+            data-cy="department"
+            name="department"
+            formControlName="department"
+            [compareWith]="compareDepartment"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="departmentOption" *ngFor="let departmentOption of departmentsSharedCollection">
+              {{ departmentOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.reportingTo" for="field_reportingTo">Reporting To</label>
+          <select
+            class="form-control"
+            id="field_reportingTo"
+            data-cy="reportingTo"
+            name="reportingTo"
+            formControlName="reportingTo"
+            [compareWith]="compareEmployee"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="employeeOption" *ngFor="let employeeOption of employeesSharedCollection">{{ employeeOption.id }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.nationality" for="field_nationality">Nationality</label>
+          <select
+            class="form-control"
+            id="field_nationality"
+            data-cy="nationality"
+            name="nationality"
+            formControlName="nationality"
+            [compareWith]="compareNationality"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="nationalityOption" *ngFor="let nationalityOption of nationalitiesSharedCollection">
+              {{ nationalityOption.nationalityName }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.bankBranch" for="field_bankBranch">Bank Branch</label>
+          <select
+            class="form-control"
+            id="field_bankBranch"
+            data-cy="bankBranch"
+            name="bankBranch"
+            formControlName="bankBranch"
+            [compareWith]="compareBankBranch"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="bankBranchOption" *ngFor="let bankBranchOption of bankBranchesSharedCollection">
+              {{ bankBranchOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.band" for="field_band">Band</label>
+          <select class="form-control" id="field_band" data-cy="band" name="band" formControlName="band" [compareWith]="compareBand">
+            <option [ngValue]="null"></option>
+            <option [ngValue]="bandOption" *ngFor="let bandOption of bandsSharedCollection">{{ bandOption.id }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.unit" for="field_unit">Unit</label>
+          <select class="form-control" id="field_unit" data-cy="unit" name="unit" formControlName="unit" [compareWith]="compareUnit">
+            <option [ngValue]="null"></option>
+            <option [ngValue]="unitOption" *ngFor="let unitOption of unitsSharedCollection">{{ unitOption.id }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employee.user" for="field_user">User</label>
+          <select class="form-control" id="field_user" data-cy="user" name="user" formControlName="user" [compareWith]="compareUser">
+            <option [ngValue]="null"></option>
+            <option [ngValue]="userOption" *ngFor="let userOption of usersSharedCollection">{{ userOption.login }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

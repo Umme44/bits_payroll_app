@@ -1,0 +1,12 @@
+{
+  "bitsHrPayrollApp": {
+    "RelationType": {
+      "null": "",
+      "SELF": "Self",
+      "SON": "Son",
+      "DAUGHTER": "Daughter",
+      "HUSBAND": "Husband",
+      "WIFE": "Wife"
+    }
+  }
+}

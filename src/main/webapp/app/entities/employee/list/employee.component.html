@@ -1,0 +1,932 @@
+<div>
+  <h2 id="page-heading" data-cy="EmployeeHeading">
+    <span jhiTranslate="bitsHrPayrollApp.employee.home.title">Employees</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="bitsHrPayrollApp.employee.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-employee"
+        [routerLink]="['/employee/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="bitsHrPayrollApp.employee.home.createLabel"> Create a new Employee </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="employees?.length === 0">
+    <span jhiTranslate="bitsHrPayrollApp.employee.home.notFound">No Employees found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="employees && employees.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="referenceId">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.referenceId">Reference Id</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="pin">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.pin">Pin</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="picture">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.picture">Picture</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="fullName">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.fullName">Full Name</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="surName">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.surName">Sur Name</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="nationalIdNo">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.nationalIdNo">National Id No</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="dateOfBirth">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.dateOfBirth">Date Of Birth</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="placeOfBirth">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.placeOfBirth">Place Of Birth</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="fatherName">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.fatherName">Father Name</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="motherName">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.motherName">Mother Name</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="bloodGroup">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.bloodGroup">Blood Group</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="presentAddress">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.presentAddress">Present Address</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="permanentAddress">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.permanentAddress">Permanent Address</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="personalContactNo">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.personalContactNo">Personal Contact No</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="personalEmail">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.personalEmail">Personal Email</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="religion">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.religion">Religion</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="maritalStatus">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.maritalStatus">Marital Status</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="dateOfMarriage">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.dateOfMarriage">Date Of Marriage</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="spouseName">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.spouseName">Spouse Name</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="officialEmail">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.officialEmail">Official Email</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="officialContactNo">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.officialContactNo">Official Contact No</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="officePhoneExtension">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.officePhoneExtension">Office Phone Extension</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="whatsappId">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.whatsappId">Whatsapp Id</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="skypeId">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.skypeId">Skype Id</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="emergencyContactPersonName">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.emergencyContactPersonName">Emergency Contact Person Name</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="emergencyContactPersonRelationshipWithEmployee">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.emergencyContactPersonRelationshipWithEmployee"
+                >Emergency Contact Person Relationship With Employee</span
+              >
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="emergencyContactPersonContactNumber">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.emergencyContactPersonContactNumber"
+                >Emergency Contact Person Contact Number</span
+              >
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="mainGrossSalary">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.mainGrossSalary">Main Gross Salary</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="employeeCategory">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.employeeCategory">Employee Category</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="location">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.location">Location</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="dateOfJoining">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.dateOfJoining">Date Of Joining</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="dateOfConfirmation">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.dateOfConfirmation">Date Of Confirmation</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="isProbationaryPeriodExtended">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.isProbationaryPeriodExtended">Is Probationary Period Extended</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="probationPeriodExtendedTo">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.probationPeriodExtendedTo">Probation Period Extended To</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="payType">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.payType">Pay Type</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="disbursementMethod">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.disbursementMethod">Disbursement Method</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="bankName">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.bankName">Bank Name</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="bankAccountNo">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.bankAccountNo">Bank Account No</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="mobileCelling">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.mobileCelling">Mobile Celling</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="bkashNumber">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.bkashNumber">Bkash Number</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="cardType">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.cardType">Card Type</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="cardNumber">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.cardNumber">Card Number</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="tinNumber">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.tinNumber">Tin Number</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="passportNo">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.passportNo">Passport No</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="passportPlaceOfIssue">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.passportPlaceOfIssue">Passport Place Of Issue</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="passportIssuedDate">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.passportIssuedDate">Passport Issued Date</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="passportExpiryDate">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.passportExpiryDate">Passport Expiry Date</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="gender">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.gender">Gender</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="welfareFundDeduction">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.welfareFundDeduction">Welfare Fund Deduction</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="employmentStatus">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.employmentStatus">Employment Status</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="hasDisabledChild">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.hasDisabledChild">Has Disabled Child</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="isFirstTimeAitGiver">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.isFirstTimeAitGiver">Is First Time Ait Giver</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="isSalaryHold">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.isSalaryHold">Is Salary Hold</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="isFestivalBonusHold">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.isFestivalBonusHold">Is Festival Bonus Hold</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="isPhysicallyDisabled">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.isPhysicallyDisabled">Is Physically Disabled</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="isFreedomFighter">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.isFreedomFighter">Is Freedom Fighter</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="hasOverTime">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.hasOverTime">Has Over Time</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="probationPeriodEndDate">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.probationPeriodEndDate">Probation Period End Date</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="contractPeriodExtendedTo">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.contractPeriodExtendedTo">Contract Period Extended To</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="contractPeriodEndDate">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.contractPeriodEndDate">Contract Period End Date</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="cardType02">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.cardType02">Card Type 02</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="cardNumber02">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.cardNumber02">Card Number 02</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="cardType03">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.cardType03">Card Type 03</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="cardNumber03">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.cardNumber03">Card Number 03</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="allowance01">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.allowance01">Allowance 01</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="allowance01EffectiveFrom">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.allowance01EffectiveFrom">Allowance 01 Effective From</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="allowance01EffectiveTo">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.allowance01EffectiveTo">Allowance 01 Effective To</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="allowance02">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.allowance02">Allowance 02</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="allowance02EffectiveFrom">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.allowance02EffectiveFrom">Allowance 02 Effective From</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="allowance02EffectiveTo">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.allowance02EffectiveTo">Allowance 02 Effective To</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="allowance03">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.allowance03">Allowance 03</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="allowance03EffectiveFrom">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.allowance03EffectiveFrom">Allowance 03 Effective From</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="allowance03EffectiveTo">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.allowance03EffectiveTo">Allowance 03 Effective To</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="allowance04">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.allowance04">Allowance 04</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="allowance04EffectiveFrom">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.allowance04EffectiveFrom">Allowance 04 Effective From</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="allowance04EffectiveTo">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.allowance04EffectiveTo">Allowance 04 Effective To</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="allowance05">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.allowance05">Allowance 05</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="allowance05EffectiveFrom">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.allowance05EffectiveFrom">Allowance 05 Effective From</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="allowance05EffectiveTo">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.allowance05EffectiveTo">Allowance 05 Effective To</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="allowance06">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.allowance06">Allowance 06</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="allowance06EffectiveFrom">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.allowance06EffectiveFrom">Allowance 06 Effective From</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="allowance06EffectiveTo">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.allowance06EffectiveTo">Allowance 06 Effective To</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="isTaxPaidByOrganisation">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.isTaxPaidByOrganisation">Is Tax Paid By Organisation</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="createdBy">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.createdBy">Created By</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="createdAt">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.createdAt">Created At</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="updatedBy">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.updatedBy">Updated By</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="updatedAt">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.updatedAt">Updated At</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="isAllowedToGiveOnlineAttendance">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.isAllowedToGiveOnlineAttendance">Is Allowed To Give Online Attendance</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="noticePeriodInDays">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.noticePeriodInDays">Notice Period In Days</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="isFixedTermContract">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.isFixedTermContract">Is Fixed Term Contract</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="currentInTime">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.currentInTime">Current In Time</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="currentOutTime">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.currentOutTime">Current Out Time</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="onlineAttendanceSanctionedAt">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.onlineAttendanceSanctionedAt">Online Attendance Sanctioned At</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="isNidVerified">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.isNidVerified">Is Nid Verified</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="canRaiseRrfOnBehalf">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.canRaiseRrfOnBehalf">Can Raise Rrf On Behalf</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="taxesCircle">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.taxesCircle">Taxes Circle</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="taxesZone">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.taxesZone">Taxes Zone</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="canManageTaxAcknowledgementReceipt">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.canManageTaxAcknowledgementReceipt"
+                >Can Manage Tax Acknowledgement Receipt</span
+              >
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="isEligibleForAutomatedAttendance">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.isEligibleForAutomatedAttendance">Is Eligible For Automated Attendance</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="floor">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.floor">Floor</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="deskLocation">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.deskLocation">Desk Location</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="isBillableResource">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.isBillableResource">Is Billable Resource</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="isAugmentedResource">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.isAugmentedResource">Is Augmented Resource</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="lastWorkingDay">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.lastWorkingDay">Last Working Day</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="officeLocation.id">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.officeLocation">Office Location</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="designation.id">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.designation">Designation</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="department.id">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.department">Department</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="reportingTo.id">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.reportingTo">Reporting To</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="nationality.nationalityName">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.nationality">Nationality</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="bankBranch.id">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.bankBranch">Bank Branch</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="band.id">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.band">Band</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="unit.id">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.unit">Unit</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="user.login">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employee.user">User</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let employee of employees; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/employee', employee.id, 'view']">{{ employee.id }}</a>
+          </td>
+          <td>{{ employee.referenceId }}</td>
+          <td>{{ employee.pin }}</td>
+          <td>{{ employee.picture }}</td>
+          <td>{{ employee.fullName }}</td>
+          <td>{{ employee.surName }}</td>
+          <td>{{ employee.nationalIdNo }}</td>
+          <td>{{ employee.dateOfBirth | formatMediumDate }}</td>
+          <td>{{ employee.placeOfBirth }}</td>
+          <td>{{ employee.fatherName }}</td>
+          <td>{{ employee.motherName }}</td>
+          <td jhiTranslate="{{ 'bitsHrPayrollApp.BloodGroup.' + employee.bloodGroup }}">{{ employee.bloodGroup }}</td>
+          <td>{{ employee.presentAddress }}</td>
+          <td>{{ employee.permanentAddress }}</td>
+          <td>{{ employee.personalContactNo }}</td>
+          <td>{{ employee.personalEmail }}</td>
+          <td jhiTranslate="{{ 'bitsHrPayrollApp.Religion.' + employee.religion }}">{{ employee.religion }}</td>
+          <td jhiTranslate="{{ 'bitsHrPayrollApp.MaritalStatus.' + employee.maritalStatus }}">{{ employee.maritalStatus }}</td>
+          <td>{{ employee.dateOfMarriage | formatMediumDate }}</td>
+          <td>{{ employee.spouseName }}</td>
+          <td>{{ employee.officialEmail }}</td>
+          <td>{{ employee.officialContactNo }}</td>
+          <td>{{ employee.officePhoneExtension }}</td>
+          <td>{{ employee.whatsappId }}</td>
+          <td>{{ employee.skypeId }}</td>
+          <td>{{ employee.emergencyContactPersonName }}</td>
+          <td>{{ employee.emergencyContactPersonRelationshipWithEmployee }}</td>
+          <td>{{ employee.emergencyContactPersonContactNumber }}</td>
+          <td>{{ employee.mainGrossSalary }}</td>
+          <td jhiTranslate="{{ 'bitsHrPayrollApp.EmployeeCategory.' + employee.employeeCategory }}">{{ employee.employeeCategory }}</td>
+          <td>{{ employee.location }}</td>
+          <td>{{ employee.dateOfJoining | formatMediumDate }}</td>
+          <td>{{ employee.dateOfConfirmation | formatMediumDate }}</td>
+          <td>{{ employee.isProbationaryPeriodExtended }}</td>
+          <td>{{ employee.probationPeriodExtendedTo | formatMediumDate }}</td>
+          <td jhiTranslate="{{ 'bitsHrPayrollApp.PayType.' + employee.payType }}">{{ employee.payType }}</td>
+          <td jhiTranslate="{{ 'bitsHrPayrollApp.DisbursementMethod.' + employee.disbursementMethod }}">
+            {{ employee.disbursementMethod }}
+          </td>
+          <td>{{ employee.bankName }}</td>
+          <td>{{ employee.bankAccountNo }}</td>
+          <td>{{ employee.mobileCelling }}</td>
+          <td>{{ employee.bkashNumber }}</td>
+          <td jhiTranslate="{{ 'bitsHrPayrollApp.CardType.' + employee.cardType }}">{{ employee.cardType }}</td>
+          <td>{{ employee.cardNumber }}</td>
+          <td>{{ employee.tinNumber }}</td>
+          <td>{{ employee.passportNo }}</td>
+          <td>{{ employee.passportPlaceOfIssue }}</td>
+          <td>{{ employee.passportIssuedDate | formatMediumDate }}</td>
+          <td>{{ employee.passportExpiryDate | formatMediumDate }}</td>
+          <td jhiTranslate="{{ 'bitsHrPayrollApp.Gender.' + employee.gender }}">{{ employee.gender }}</td>
+          <td>{{ employee.welfareFundDeduction }}</td>
+          <td jhiTranslate="{{ 'bitsHrPayrollApp.EmploymentStatus.' + employee.employmentStatus }}">{{ employee.employmentStatus }}</td>
+          <td>{{ employee.hasDisabledChild }}</td>
+          <td>{{ employee.isFirstTimeAitGiver }}</td>
+          <td>{{ employee.isSalaryHold }}</td>
+          <td>{{ employee.isFestivalBonusHold }}</td>
+          <td>{{ employee.isPhysicallyDisabled }}</td>
+          <td>{{ employee.isFreedomFighter }}</td>
+          <td>{{ employee.hasOverTime }}</td>
+          <td>{{ employee.probationPeriodEndDate | formatMediumDate }}</td>
+          <td>{{ employee.contractPeriodExtendedTo | formatMediumDate }}</td>
+          <td>{{ employee.contractPeriodEndDate | formatMediumDate }}</td>
+          <td jhiTranslate="{{ 'bitsHrPayrollApp.CardType.' + employee.cardType02 }}">{{ employee.cardType02 }}</td>
+          <td>{{ employee.cardNumber02 }}</td>
+          <td jhiTranslate="{{ 'bitsHrPayrollApp.CardType.' + employee.cardType03 }}">{{ employee.cardType03 }}</td>
+          <td>{{ employee.cardNumber03 }}</td>
+          <td>{{ employee.allowance01 }}</td>
+          <td>{{ employee.allowance01EffectiveFrom | formatMediumDate }}</td>
+          <td>{{ employee.allowance01EffectiveTo | formatMediumDate }}</td>
+          <td>{{ employee.allowance02 }}</td>
+          <td>{{ employee.allowance02EffectiveFrom | formatMediumDate }}</td>
+          <td>{{ employee.allowance02EffectiveTo | formatMediumDate }}</td>
+          <td>{{ employee.allowance03 }}</td>
+          <td>{{ employee.allowance03EffectiveFrom | formatMediumDate }}</td>
+          <td>{{ employee.allowance03EffectiveTo | formatMediumDate }}</td>
+          <td>{{ employee.allowance04 }}</td>
+          <td>{{ employee.allowance04EffectiveFrom | formatMediumDate }}</td>
+          <td>{{ employee.allowance04EffectiveTo | formatMediumDate }}</td>
+          <td>{{ employee.allowance05 }}</td>
+          <td>{{ employee.allowance05EffectiveFrom | formatMediumDate }}</td>
+          <td>{{ employee.allowance05EffectiveTo | formatMediumDate }}</td>
+          <td>{{ employee.allowance06 }}</td>
+          <td>{{ employee.allowance06EffectiveFrom | formatMediumDate }}</td>
+          <td>{{ employee.allowance06EffectiveTo | formatMediumDate }}</td>
+          <td>{{ employee.isTaxPaidByOrganisation }}</td>
+          <td>{{ employee.createdBy }}</td>
+          <td>{{ employee.createdAt | formatMediumDatetime }}</td>
+          <td>{{ employee.updatedBy }}</td>
+          <td>{{ employee.updatedAt | formatMediumDate }}</td>
+          <td>{{ employee.isAllowedToGiveOnlineAttendance }}</td>
+          <td>{{ employee.noticePeriodInDays }}</td>
+          <td>{{ employee.isFixedTermContract }}</td>
+          <td>{{ employee.currentInTime | formatMediumDatetime }}</td>
+          <td>{{ employee.currentOutTime | formatMediumDatetime }}</td>
+          <td>{{ employee.onlineAttendanceSanctionedAt | formatMediumDatetime }}</td>
+          <td>{{ employee.isNidVerified }}</td>
+          <td>{{ employee.canRaiseRrfOnBehalf }}</td>
+          <td>{{ employee.taxesCircle }}</td>
+          <td>{{ employee.taxesZone }}</td>
+          <td>{{ employee.canManageTaxAcknowledgementReceipt }}</td>
+          <td>{{ employee.isEligibleForAutomatedAttendance }}</td>
+          <td>{{ employee.floor }}</td>
+          <td>{{ employee.deskLocation }}</td>
+          <td>{{ employee.isBillableResource }}</td>
+          <td>{{ employee.isAugmentedResource }}</td>
+          <td>{{ employee.lastWorkingDay | formatMediumDate }}</td>
+          <td>
+            <div *ngIf="employee.officeLocation">
+              <a [routerLink]="['/location', employee.officeLocation.id, 'view']">{{ employee.officeLocation.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="employee.designation">
+              <a [routerLink]="['/designation', employee.designation.id, 'view']">{{ employee.designation.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="employee.department">
+              <a [routerLink]="['/department', employee.department.id, 'view']">{{ employee.department.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="employee.reportingTo">
+              <a [routerLink]="['/employee', employee.reportingTo.id, 'view']">{{ employee.reportingTo.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="employee.nationality">
+              <a [routerLink]="['/nationality', employee.nationality.id, 'view']">{{ employee.nationality.nationalityName }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="employee.bankBranch">
+              <a [routerLink]="['/bank-branch', employee.bankBranch.id, 'view']">{{ employee.bankBranch.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="employee.band">
+              <a [routerLink]="['/band', employee.band.id, 'view']">{{ employee.band.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="employee.unit">
+              <a [routerLink]="['/unit', employee.unit.id, 'view']">{{ employee.unit.id }}</a>
+            </div>
+          </td>
+          <td>
+            {{ employee.user?.login }}
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/employee', employee.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/employee', employee.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(employee)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="employees && employees.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

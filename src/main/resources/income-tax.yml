@@ -1,0 +1,101 @@
+tax-rules:
+  has-consolidated-exemption: true
+  consolidated-exemption: min(450000, (#perYearTotalIncome / 3))
+  house-rent-exemption: min(300000, (#perYearBasic * 0.50))
+  medical-exemption: '#isDisabled? min(1000000, (#perYearBasic * 0.10)) : min(120000, (#perYearBasic * 0.10))'
+  conveyance-exemption: min(#perYearConveyance, 30000)
+  max-allowed-investment: '#taxableIncome * 0.25'
+  rebate: 'min((#taxableIncome * 0.03), 1000000)'
+  tax-slabs:
+    - limit: 350000
+      rate: 0.0
+      head: 'ON FIRST'
+      sub-head: '350,000 for Men or 400,000 for Women'
+    - limit: 100000
+      rate: 0.05
+      head: 'ON NEXT'
+      sub-head: ''
+    - limit: 300000
+      rate: 0.10
+      head: 'ON NEXT'
+      sub-head: ''
+    - limit: 400000
+      rate: 0.15
+      head: 'ON NEXT'
+      sub-head: ''
+    - limit: 500000
+      rate: 0.20
+      head: 'ON NEXT'
+      sub-head: ''
+    - limit: 0
+      rate: 0.25
+      head: 'ON BALANCE AMOUNT'
+      sub-head: ''
+  first-tax-slab-special-cases:
+    expressions:
+      - '#gender == 1 || #age >= 65 ? 400000 : #taxSlab_1'
+      - '#isDisabled ? 475000 : #taxSlab_1'
+      - '#isFreedomFighter ? 500000 : #taxSlab_1'
+      - '#hasDisabledChild ? #taxSlab_1 + 50000 : #taxSlab_1'
+tax-report-configurations:
+  report-labels:
+    total-income-label: 'TOTAL INCOME FROM EMPLOYMENT'
+    exemption-remarks: '1/3 of Income from employment or TK 450,000 whichever is lower'
+    total-tax-liability-label: 'TOTAL TAX LIABILITY'
+    investment-label-header: 'Investment : (6th Schedule Part 3)'
+    investment-label-pf: "Provident Fund (Own+Company's)"
+    investment-label-other: 'Other Investments'
+    investment-label-total: 'Total Investments'
+    less-rebate-label: 'LESS: REBATE ON INVESTMENT (3% on Total Income or 15% on Actual allowable Investment or TK 1,000,000 whichever is lower)'
+    net-tax-liability-considering-rebate: 'NET TAX LIABILITY AFTER CONSIDERING INVESTMENT REBATE'
+    final-label-ait: 'LESS: LAST YEAR ADJUSTMENT/AIT (Approved Documents from NBR)'
+    final-label-actual-tax: 'ACTUAL TAX PAID AND DULY DEDUCTED BY BRAC IT Services Limited'
+    label-total-payable-tax: '(REFUNDABLE)/PAYABLE'
+    certify-text: 'We hereby certify that the above statement contains SALARY income of the above mentioned employee which has been paid by BRAC IT Services Limited during the Year 2022-2023 corresponding to the assessment Year 2023 -2024. We also certify that above mentioned tax liability was duly deducted at source on monthly basis and deposited to SonaliBank,Gulshan-1 Corporate Branch,through Treasury Challan (s) along with all employees Tax liability which is enumerated below:'
+    note-text: 'Submission of income tax return of an individual Employee to the Tax office is compulsory on or before 30th November of each year, if the minimum income limit is exceeded.BRAC IT Services Limited staff is personally held responsible for submission of Tax return.'
+  salary-income-labels:
+    salary-income-basic:
+      key: 'SALARY_INCOME_BASIC'
+      head: 'Basic Salary'
+      sub-head: '(100% taxable)'
+      is-visible-in-tax-report: true
+    salary-income-hr:
+      key: 'SALARY_INCOME_HR'
+      head: 'HOUSE RENT'
+      sub-head: '(MAX EXEMPT TK 25,000 PM OR 50% OF BS-LOWER ONE)'
+      is-visible-in-tax-report: true
+    salary-income-medical:
+      key: 'SALARY_INCOME_MEDICAL'
+      head: 'MEDICAL'
+      sub-head: '(MAX EXEMPT TK 10,000 PM OR 10% OF BS-LOWER ONE)'
+      is-visible-in-tax-report: true
+    salary-income-conveyance-allowance:
+      key: 'SALARY_INCOME_CONVEYANCE_ALLOWANCE'
+      head: 'CONVEYANCE ALLOWANCE'
+      sub-head: '(MAX EXEMPT TK 2500 PM))'
+      is-visible-in-tax-report: true
+    salary-income-festival-bonus:
+      key: 'SALARY_INCOME_FESTIVAL_BONUS'
+      head: 'FESTIVAL BONUS'
+      sub-head: ''
+      is-visible-in-tax-report: true
+    salary-income-performance-bonus:
+      key: 'SALARY_INCOME_PERFORMANCE_BONUS'
+      head: 'PERFORMANCE BONUS'
+      sub-head: ''
+      is-visible-in-tax-report: true
+    salary-income-incentive:
+      key: 'SALARY_INCOME_INCENTIVE'
+      head: 'INCENTIVE'
+      sub-head: ''
+      is-visible-in-tax-report: true
+    salary-income-pf:
+      key: 'SALARY_INCOME_PF'
+      head: "EMPLOYER'S CONTRIBUTION TO P.F"
+      sub-head: ''
+      is-visible-in-tax-report: true
+    salary-income-total:
+      key: 'SALARY_INCOME_TOTAL'
+      head: 'TOTAL INCOME FROM EMPLOYMENT'
+      sub-head: ''
+      is-visible-in-tax-report: true # must be always true

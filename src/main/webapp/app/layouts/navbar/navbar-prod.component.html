@@ -1,0 +1,1081 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-light d-print-none" *ngIf="navbarStatus === 'show'">
+  <a (click)="collapseNavbar()" class="navbar-brand logo my-0 py-0 w-10" [routerLink]="''">
+    <span>
+      <img class="logo-img" [src]="getLogoUrl()" />
+    </span>
+    <!--        <span class="navbar-title">HR-Payroll</span> <span class="navbar-version">{{ version }}</span>-->
+  </a>
+  <a
+    (click)="toggleNavbar()"
+    aria-controls="navbarResponsive"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+    class="navbar-toggler d-lg-none"
+    data-target="#navbarResponsive"
+    data-toggle="collapse"
+    href="javascript:void(0);"
+  >
+    <fa-icon icon="bars" class="text-primary"></fa-icon>
+  </a>
+
+  <div
+    [ngSwitch]="isAuthenticated()"
+    [ngbCollapse]="isNavbarCollapsed"
+    class="navbar-collapse collapse d-flex flex-column"
+    id="navbarResponsive"
+  >
+    <ul class="navbar-nav ms-auto">
+      <!-- Attendance -->
+      <ng-container *jhiHasAnyAuthority="'ATTENDANCE_MANAGEMENT'">
+        <li *ngSwitchCase="true" class="nav-item dropdown align-self-center" display="dynamic" ngbDropdown>
+          <a class="nav-link dropdown-toggle" href="javascript:void(0);" id="attendance_common" ngbDropdownToggle>
+            <span>
+              <span> Attendance </span>
+            </span>
+          </a>
+          <ul aria-labelledby="entity-menu" class="dropdown-menu" ngbDropdownMenu>
+            <!--                        <li>-->
+            <!--                            <a (click)="collapseNavbar()" class="dropdown-item" routerLink="user-attendance-entry">-->
+            <!--                                <span>Attendance Entry</span>-->
+            <!--                            </a>-->
+            <!--                        </li>-->
+            <!--                        <li>-->
+            <!--                            <a (click)="collapseNavbar()" class="dropdown-item" routerLink="attendance-time-sheet">-->
+            <!--                                <span>Attendance Time Sheet</span>-->
+            <!--                            </a>-->
+            <!--                        </li>-->
+            <!--                        <li *jhiHasAnyAuthority="'ATTENDANCE_MANAGEMENT'">-->
+            <!--                            <hr class="dropdown-divider">-->
+            <!--                        </li>-->
+
+            <li *jhiHasAnyAuthority="'ATTENDANCE_MANAGEMENT'">
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="attendance-time-sheet-admin">
+                <span
+                  >Attendance Time Sheet
+                  <!--                                    <span class="badge rounded-pill bg-secondary text-white">Admin</span>-->
+                </span>
+              </a>
+            </li>
+
+            <li *jhiHasAnyAuthority="'ATTENDANCE_MANAGEMENT'">
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="monthly-attendance-time-sheet">
+                <span
+                  >Monthly Attendance Time Sheet
+                  <!--                                    <span class="badge rounded-pill bg-secondary text-white">Admin</span>-->
+                </span>
+              </a>
+            </li>
+
+            <li *jhiHasAnyAuthority="'ATTENDANCE_MANAGEMENT'">
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="attendance-entry">
+                <span
+                  >Attendance Entries
+                  <!--                                    <span class="badge rounded-pill bg-secondary text-white">Admin</span>-->
+                </span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="leave-policy-management">
+                <span>Leave Policy Management</span>
+              </a>
+            </li>
+            <li>
+            <li *jhiHasAnyAuthority="'ATTENDANCE_MANAGEMENT'">
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="attendance-summary">
+                <span
+                  >Attendance Summaries
+                  <!--                                    <span class="badge rounded-pill bg-secondary text-white">Admin</span>-->
+                </span>
+              </a>
+            </li>
+
+            <li *jhiHasAnyAuthority="'ATTENDANCE_MANAGEMENT'">
+              <hr class="dropdown-divider" />
+            </li>
+
+            <li *jhiHasAnyAuthority="'EMPLOYEE_MANAGEMENT'">
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="leave-application">
+                <span
+                  >Leave Applications
+                  <!--                                    <span class="badge rounded-pill bg-secondary text-white">Admin</span>-->
+                </span>
+              </a>
+            </li>
+            <li *jhiHasAnyAuthority="'ATTENDANCE_MANAGEMENT'">
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="leave-balance">
+                <span
+                  >Leave Balances
+                  <!--                                    <span class="badge rounded-pill bg-secondary text-white">Admin</span>-->
+                </span>
+              </a>
+            </li>
+
+            <li *jhiHasAnyAuthority="'ATTENDANCE_MANAGEMENT'">
+              <hr class="dropdown-divider" />
+            </li>
+
+            <li *jhiHasAnyAuthority="'ATTENDANCE_MANAGEMENT'">
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="movement-entry">
+                <span
+                  >Movement Entries
+                  <!--                                    <span class="badge rounded-pill bg-secondary text-white">Admin</span>-->
+                </span>
+              </a>
+            </li>
+
+            <li *jhiHasAnyAuthority="'ATTENDANCE_MANAGEMENT'">
+              <hr class="dropdown-divider" />
+            </li>
+
+            <li *jhiHasAnyAuthority="'ATTENDANCE_MANAGEMENT'">
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="flex-schedule-application">
+                <span
+                  >Flex Schedule Applications
+                  <!--<span class="badge rounded-pill bg-secondary text-white">Admin</span>-->
+                </span>
+              </a>
+            </li>
+
+            <li *jhiHasAnyAuthority="'ATTENDANCE_MANAGEMENT'">
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="work-from-home-application">
+                <span
+                  >Work From Home Applications
+                  <!--                                    <span class="badge rounded-pill bg-secondary text-white">Admin</span>-->
+                </span>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ng-container>
+
+      <!--  Approval  -->
+      <ng-container *jhiHasAnyAuthority="'ATTENDANCE_MANAGEMENT'">
+        <li *ngSwitchCase="true" class="nav-item dropdown align-self-center" display="dynamic" ngbDropdown (click)="loadNotifications()">
+          <a class="nav-link dropdown-toggle" href="javascript:void(0);" id="approval_common" ngbDropdownToggle>
+            <span>
+              <span> Approval </span>
+            </span>
+          </a>
+          <ul aria-labelledby="entity-menu" class="dropdown-menu" ngbDropdownMenu>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="salary-generator-master/lock">
+                <span
+                  >Salary Lock
+                  <span class="badge rounded-pill bg-secondary text-white">Admin</span>
+                </span>
+              </a>
+            </li>
+
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="salary-generator-master/hold">
+                <span
+                  >Hold Salaries
+                  <span class="badge rounded-pill bg-secondary text-white">Admin</span>
+                </span>
+              </a>
+            </li>
+
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="salary-certificate/approval-hr">
+                <span
+                  >Salary Certificate Approvals
+                  <span class="badge rounded-pill bg-secondary text-white">Admin</span>
+                </span>
+              </a>
+            </li>
+
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="/manual-attendance-entry/hr">
+                <span
+                  >Attendance Approvals
+                  <span class="badge rounded-pill bg-secondary text-white">Admin</span>
+                  <span
+                    *ngIf="hrNotifications && hrNotifications.pendingManualAttendanceApprovals > 0"
+                    class="badge rounded-pill bg-danger text-white"
+                  >
+                    {{ hrNotifications.pendingManualAttendanceApprovals }}
+                  </span>
+                </span>
+              </a>
+            </li>
+            <li *jhiHasAnyAuthority="'ATTENDANCE_MANAGEMENT'">
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="leave-approval-hrd">
+                <span
+                  >Leave Approvals
+                  <span class="badge rounded-pill bg-secondary text-white">Admin</span>
+                  <span
+                    *ngIf="hrNotifications && hrNotifications.pendingLeaveApprovals > 0"
+                    class="badge rounded-pill bg-danger text-white"
+                  >
+                    {{ hrNotifications.pendingLeaveApprovals }}
+                  </span>
+                </span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="/work-from-home-application/approvals">
+                <span
+                  >Work from Home Approvals
+                  <span class="badge rounded-pill bg-secondary text-white">Admin</span>
+                </span>
+              </a>
+            </li>
+
+            <!-- <li>
+                            <a (click)="collapseNavbar()" class="dropdown-item"
+                               routerLink="/attendance-entry/work-from-home/hr">
+                                <span>WFH
+                                    <span class="badge rounded-pill bg-secondary text-white">Admin</span>
+                                    <span *ngIf="hrNotifications && hrNotifications.pendingWorkFromHomeApprovals > 0"
+                                          class="badge rounded-pill bg-danger text-white">
+                                        {{hrNotifications.pendingWorkFromHomeApprovals}}
+                                    </span>
+                                </span>
+                            </a>
+                        </li>-->
+
+            <!--                        <li>-->
+            <!--                            <a (click)="collapseNavbar()" class="dropdown-item"-->
+            <!--                               routerLink="/flex-schedule-approval/hr">-->
+            <!--                                <span>Flex Schedule-->
+            <!--                                    <span class="badge rounded-pill bg-secondary text-white">Admin</span>-->
+            <!--                                </span>-->
+            <!--                            </a>-->
+            <!--                        </li>-->
+
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="/flex-schedule-application-approval/hr">
+                <span
+                  >Flex Schedule
+                  <span class="badge rounded-pill bg-secondary text-white">Admin</span>
+                  <span
+                    *ngIf="hrNotifications && hrNotifications.pendingFlexScheduleApprovals > 0"
+                    class="badge rounded-pill bg-danger text-white"
+                  >
+                    {{ hrNotifications.pendingFlexScheduleApprovals }}
+                  </span>
+                </span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="/movement-entry/approval/hr">
+                <span
+                  >Movement Entry Approvals
+                  <span class="badge rounded-pill bg-secondary text-white">Admin</span>
+                  <span
+                    *ngIf="hrNotifications && hrNotifications.pendingMovementEntriesApprovals > 0"
+                    class="badge rounded-pill bg-danger text-white notification-position fw-normal"
+                  >
+                    {{ hrNotifications.pendingMovementEntriesApprovals }}
+                  </span>
+                </span>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ng-container>
+
+      <!--  Employee  -->
+      <ng-container *jhiHasAnyAuthority="'EMPLOYEE_MANAGEMENT'">
+        <li *ngSwitchCase="true" class="nav-item dropdown align-self-center" display="dynamic" ngbDropdown>
+          <a class="nav-link dropdown-toggle" href="javascript:void(0);" id="employee" ngbDropdownToggle>
+            <span>
+              <span> Employee </span>
+            </span>
+          </a>
+          <ul aria-labelledby="entity-menu" class="dropdown-menu" ngbDropdownMenu>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="employee-custom">
+                <span>Employees</span>
+              </a>
+            </li>
+            <li *ngIf="false">
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="employment-actions/transfer">
+                <span>Add/Edit Employee</span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="education-details">
+                <span>Education Details</span>
+              </a>
+            </li>
+            <li>
+<!--            <li>-->
+<!--              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="leave-policy-management">-->
+<!--                <span>Leave Policy Management</span>-->
+<!--              </a>-->
+<!--            </li>-->
+<!--            <li>-->
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="working-experience">
+                <span>Work Experiences</span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="training-history">
+                <span>Training Histories</span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="references">
+                <span>References</span>
+              </a>
+            </li>
+            <li *ngIf="false">
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="">
+                <span>Employment Histories</span>
+              </a>
+            </li>
+            <li *ngIf="false">
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="">
+                <span>Nominee</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ng-container>
+
+      <!--  Setup  -->
+      <ng-container *jhiHasAnyAuthority="'EMPLOYEE_MANAGEMENT'">
+        <li *ngSwitchCase="true" class="nav-item dropdown align-self-center" display="dynamic" ngbDropdown>
+          <a class="nav-link dropdown-toggle" href="javascript:void(0);" id="setup" ngbDropdownToggle>
+            <span>
+              <span> Setup </span>
+            </span>
+          </a>
+          <ul aria-labelledby="entity-menu" class="dropdown-menu" ngbDropdownMenu>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="designation">
+                <span>Designations</span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="department">
+                <span>Departments</span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="unit">
+                <span>Units</span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="band">
+                <span>Bands</span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="nationality">
+                <span>Nationalities</span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="bank-branch">
+                <span>Bank Branches</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider" />
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="employee-pin">
+                <span>Create PIN</span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="employee-pin-configuration">
+                <span>PIN Configuration</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider" />
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="insurance-claim">
+                <span>Insurance Claim</span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="insurance-configuration">
+                <span>Insurance Configuration</span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="insurance-registration">
+                <span>Insurance Registration</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider" />
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="holidays">
+                <span>Holidays</span>
+              </a>
+            </li>
+            <li *jhiHasAnyAuthority="'EMPLOYEE_MANAGEMENT'">
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="leave-allocation">
+                <span>Leave Allocations</span>
+              </a>
+            </li>
+
+            <li *jhiHasAnyAuthority="'ATTENDANCE_MANAGEMENT'">
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="time-slot">
+                <span>Time Slot</span>
+              </a>
+            </li>
+
+            <li *jhiHasAnyAuthority="'ATTENDANCE_MANAGEMENT'">
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="location">
+                <span>Office Location</span>
+              </a>
+            </li>
+
+            <li *jhiHasAnyAuthority="'ATTENDANCE_MANAGEMENT'">
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="special-shift-timing">
+                <span>Special Shift Timing</span>
+              </a>
+            </li>
+
+            <li *jhiHasAnyAuthority="'ATTENDANCE_MANAGEMENT'">
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="flex-schedule">
+                <span>Flex Schedule <strong>(Old)</strong></span>
+              </a>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider" />
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="file-templates">
+                <span
+                  >Docs Managements
+                  <span class="badge rounded-pill bg-secondary text-white">Admin</span>
+                </span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="recruitment-requisition-budget">
+                <span
+                  >Recruitment Requisition Budget
+                  <span class="badge rounded-pill bg-secondary text-white">Admin</span>
+                </span>
+              </a>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider" />
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="room-type">
+                <span>Room Type</span>
+              </a>
+            </li>
+
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="building">
+                <span>Building</span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="floor">
+                <span>Floor</span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="room">
+                <span>Room</span>
+              </a>
+            </li>
+
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="room-requisition">
+                <span>Room Requisition</span>
+              </a>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider" />
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="ait-config">
+                <span>Income Tax Config</span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="income-tax-challan">
+                <span>Income Tax Challan</span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="ait-payment">
+                <span>Advance Income Tax</span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="pro-rata-festival-bonus">
+                <span>Festival Bonus Pro-Rata</span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="arrear-salary">
+                <span>Arrear Salary</span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="pf-arrear">
+                <span>PF Arrear </span>
+              </a>
+            </li>
+
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="individual-arrear-salary">
+                <span>Individual Arrear Salary</span>
+              </a>
+            </li>
+
+            <!--                        <li>-->
+            <!--                            <a (click)="collapseNavbar()" class="dropdown-item" routerLink="arrears/salary-master">-->
+            <!--                                <span>Arrear Salaries</span>-->
+            <!--                            </a>-->
+            <!--                        </li>-->
+          </ul>
+        </li>
+      </ng-container>
+
+      <!--  Action  -->
+      <ng-container *jhiHasAnyAuthority="'EMPLOYEE_MANAGEMENT'">
+        <li *ngSwitchCase="true" class="nav-item dropdown align-self-center" display="dynamic" ngbDropdown>
+          <a class="nav-link dropdown-toggle" href="javascript:void(0);" id="action" ngbDropdownToggle>
+            <span>
+              <span> Action </span>
+            </span>
+          </a>
+          <ul aria-labelledby="entity-menu" class="dropdown-menu" ngbDropdownMenu>
+            <li *ngIf="false">
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="">
+                <span>Trial Salary process</span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="salary-generator-master">
+                <span>Salary Generation</span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="single-salary-generation">
+                <span>Salary Generation</span> <span class="badge rounded-pill bg-secondary text-white">single</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider" />
+            </li>
+
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="salary-payslip-admin">
+                <span>Salary Payslip</span>
+              </a>
+            </li>
+
+            <!--            <li>-->
+            <!--              <hr class="dropdown-divider" />-->
+            <!--            </li>-->
+
+            <!--            <li>-->
+            <!--              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="salary-certificate">-->
+            <!--                <span>Salary Certificate</span>-->
+            <!--              </a>-->
+            <!--            </li>-->
+
+            <li>
+              <hr class="dropdown-divider" />
+            </li>
+
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="income-tax-statement-admin">
+                <span>Income Tax Statement Admin</span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="export-income-tax-report">
+                <span>Income Tax Report Export</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider" />
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="employment-actions/promotion">
+                <span>Promotions</span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="employment-actions/increment">
+                <span>Increments</span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="employment-actions/transfer">
+                <span>Transfers</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider" />
+            </li>
+
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="employee-resignation">
+                <span>Separations</span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="final-settlement/employee-select">
+                <span>Pending Final Settlements</span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="final-settlement">
+                <span>Final Settlements</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider" />
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="employee-custom/new">
+                <span>On-boarding</span>
+              </a>
+            </li>
+
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="employee-static-file/id-card-list"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <span>Upload Employee ID Card</span>
+              </a>
+            </li>
+
+            <li>
+              <a class="dropdown-item" routerLink="import-data/import-employee-image" (click)="collapseNavbar()">
+                <span>Upload Employee Image</span>
+              </a>
+            </li>
+
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="recruitment-requisition-form">
+                <span>Recruitment Requisition Form </span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="office-notices">
+                <span>Notices</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="offer"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <span jhiTranslate="global.menu.entities.offer">Offer</span>
+              </a>
+            </li>
+
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="employment-actions/batch-operations">
+                <span>Batch Operations</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ng-container>
+
+      <!--  Reports  -->
+      <ng-container *jhiHasAnyAuthority="'ADMINISTRATION'">
+        <li *ngSwitchCase="true" class="nav-item dropdown align-self-center" display="dynamic" ngbDropdown>
+          <a class="nav-link dropdown-toggle" href="javascript:void(0);" id="reports" ngbDropdownToggle>
+            <span>
+              <span> Reports </span>
+            </span>
+          </a>
+          <ul aria-labelledby="entity-menu" class="dropdown-menu" ngbDropdownMenu>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="employee-docs-admin">
+                <span>Employee Docs</span>
+              </a>
+            </li>
+
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="nominee">
+                <span>Nominees</span>
+              </a>
+            </li>
+
+            <li [hidden]="true">
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="my-payslip">
+                <span>Payslip</span>
+              </a>
+            </li>
+            <li [hidden]="true">
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="user-salary-certificate">
+                <span>Salary Certificate</span>
+              </a>
+            </li>
+            <li *ngIf="false">
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="">
+                <span>Pay Slip Festival Bonus</span>
+              </a>
+            </li>
+
+            <li *jhiHasAnyAuthority="'EMPLOYEE_MANAGEMENT'">
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="upcoming-event-contract-end">
+                <span>Contract End</span>
+              </a>
+            </li>
+            <li *jhiHasAnyAuthority="'EMPLOYEE_MANAGEMENT'">
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="upcoming-event-probation-end">
+                <span>Probation End</span>
+              </a>
+            </li>
+            <li *jhiHasAnyAuthority="'EMPLOYEE_MANAGEMENT'">
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="employment-histories">
+                <span>Employment Histories</span>
+              </a>
+            </li>
+
+            <li *ngIf="false">
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="income-tax-statement">
+                <span>TAX Certificate</span>
+              </a>
+            </li>
+            <li *ngIf="true">
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="user-pf-statement">
+                <span>PF Statement</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ng-container>
+
+      <!--  pf  -->
+      <ng-container *jhiHasAnyAuthority="'ADMINISTRATION'">
+        <li *ngSwitchCase="true" class="nav-item dropdown align-self-center" display="dynamic" ngbDropdown>
+          <a class="nav-link dropdown-toggle" href="javascript:void(0);" id="pf" ngbDropdownToggle>
+            <span>
+              <span> PF </span>
+            </span>
+          </a>
+          <ul aria-labelledby="entity-menu" class="dropdown-menu" ngbDropdownMenu>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="pf-account">
+                <span>PF Accounts</span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="pf-collection">
+                <span> PF Collections </span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="pf-loan">
+                <span>PF Loans</span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="pf-loan-application">
+                <span>PF Loan Applications</span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="pf-loan-repayment">
+                <span>PF Loan Repayments</span>
+              </a>
+            </li>
+            <!--<li>
+                            <a (click)="collapseNavbar()" class="dropdown-item" routerLink="pf-nominee">
+                                <span>PF Nominees</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a (click)="collapseNavbar()" class="dropdown-item" routerLink="nominee/general/new" >
+                                <span>General Nominees</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a (click)="collapseNavbar()" class="dropdown-item" routerLink="nominee/gf/new">
+                                <span>GF Nominees</span>
+                            </a>
+                        </li>-->
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="/pf-mgt/pf-import">
+                <span>PF Import</span>
+              </a>
+            </li>
+
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="/pf-mgt/pf-export">
+                <span>PF Export</span>
+              </a>
+            </li>
+
+            <li *jhiHasAnyAuthority="'ATTENDANCE_MANAGEMENT'">
+              <hr class="dropdown-divider" />
+            </li>
+
+            <!-- <li *jhiHasAnyAuthority="'EMPLOYEE_MANAGEMENT'">
+                            <a (click)="collapseNavbar()" class="dropdown-item" routerLink="/pf/pf-nominee-form">
+                                <span>PF Nominees <span
+                                    class="badge rounded-pill bg-secondary text-white">User</span></span>
+                            </a>
+                        </li>-->
+            <li *jhiHasAnyAuthority="'EMPLOYEE_MANAGEMENT'">
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="/pf/pf-loan-application-form">
+                <span>PF Loan Application Form <span class="badge rounded-pill bg-secondary text-white">User</span></span>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ng-container>
+
+      <!--  FB  -->
+      <ng-container *jhiHasAnyAuthority="'ADMINISTRATION'">
+        <li *ngSwitchCase="true" class="nav-item dropdown align-self-center" display="dynamic" ngbDropdown>
+          <a class="nav-link dropdown-toggle" href="javascript:void(0);" id="fb" ngbDropdownToggle>
+            <span>
+              <span> FB </span>
+            </span>
+          </a>
+          <ul aria-labelledby="entity-menu" class="dropdown-menu" ngbDropdownMenu>
+            <!--                        <li>-->
+            <!--                            <a (click)="collapseNavbar()" class="dropdown-item" routerLink="calender-year">-->
+            <!--                                <span>Calendar Years</span>-->
+            <!--                            </a>-->
+            <!--                        </li>-->
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="festival">
+                <span>Festivals</span>
+              </a>
+            </li>
+
+            <!-- <li>
+                             <a (click)="collapseNavbar()" class="dropdown-item" routerLink="festival-bonus">
+                                 <span>Festival Bonuses</span>
+                             </a>
+                         </li>
+                         <li>
+                             <a (click)="collapseNavbar()" class="dropdown-item" routerLink="festival-bonus-details">
+                                 <span>Festival Bonus Details</span>
+                             </a>
+                         </li>-->
+
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="festival-bonus-config">
+                <span>Festival Bonus Config</span>
+              </a>
+            </li>
+
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="hold-fb-disbursement/hold-list">
+                <span>Hold Festival Bonuses</span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="hold-fb-disbursement">
+                <span>Disbursed Festival Bonuses</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ng-container>
+
+      <!--  PRF  -->
+      <ng-container *jhiHasAnyAuthority="'PROCUREMENT_MANAGEMENT'">
+        <li *ngSwitchCase="true" class="nav-item dropdown align-self-center" display="dynamic" ngbDropdown>
+          <a class="nav-link dropdown-toggle" href="javascript:void(0);" id="procurement" ngbDropdownToggle>
+            <span>
+              <span> PRF </span>
+            </span>
+          </a>
+          <ul aria-labelledby="entity-menu" class="dropdown-menu" ngbDropdownMenu>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="unit-of-measurement">
+                <span>Unit of Measurement</span>
+              </a>
+            </li>
+
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="item-information">
+                <span>Item Information</span>
+              </a>
+            </li>
+
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="procurement-requisition-manage">
+                <span>Manage Procurement Requisition</span>
+              </a>
+            </li>
+
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="procurement-requisition-manage/configuration">
+                <span>Procurement Configuration</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ng-container>
+
+      <!--  Administration  -->
+      <ng-container *jhiHasAnyAuthority="'ADMINISTRATION'">
+        <li class="nav-item dropdown align-self-center pointer" display="dynamic" ngbDropdown>
+          <a class="nav-link dropdown-toggle" href="javascript:void(0);" id="admin-menu" ngbDropdownToggle>
+            <span>
+              <span jhiTranslate="global.menu.admin.main">Administration</span>
+            </span>
+          </a>
+          <ul aria-labelledby="admin-menu" class="dropdown-menu" ngbDropdownMenu>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="admin/user-management">
+                <span jhiTranslate="global.menu.admin.userManagement">User management</span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="admin/metrics">
+                <span jhiTranslate="global.menu.admin.metrics">Metrics</span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="admin/health">
+                <span jhiTranslate="global.menu.admin.health">Health</span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="admin/configuration">
+                <span jhiTranslate="global.menu.admin.configuration">Configuration</span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="admin/audits">
+                <span jhiTranslate="global.menu.admin.audits">Audits</span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="admin/logs">
+                <span jhiTranslate="global.menu.admin.logs">Logs</span>
+              </a>
+            </li>
+            <li *ngIf="openAPIEnabled">
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="admin/docs">
+                <span jhiTranslate="global.menu.admin.apidocs">API</span>
+              </a>
+            </li>
+            <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
+            <li *ngIf="!inProduction">
+              <a (click)="collapseNavbar()" class="dropdown-item" href="./h2-console" target="_tab">
+                <span jhiTranslate="global.menu.admin.database">Database</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider" />
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="config-custom">
+                <span>Application Configuration</span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="organization">
+                <span>Organization Configuration</span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="config">
+                <span>System Configuration</span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="import-data">
+                <span jhiTranslate="global.menu.import-data">Import Data</span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="export-reports">
+                <span>Export Data</span>
+              </a>
+            </li>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="employee-salary-temp-data/import">
+                <span> Salary Analysis</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ng-container>
+
+      <!--  Profile  -->
+      <ng-container *jhiHasAnyAuthority="'COMMON'">
+        <li
+          [hidden]="loadSearchBar"
+          *ngSwitchCase="true"
+          class="nav-item dropdown align-self-center nav-user"
+          data-toggle="dropdown"
+          display="dynamic"
+          ngbDropdown
+        >
+          <a
+            aria-expanded="false"
+            class="nav-link nav-user-img"
+            href="javascript:void(0);"
+            id="profile"
+            ngbDropdownToggle
+            (click)="checkTaxManagement()"
+          >
+            <span class="me-1">
+              <!--{{account.firstName + " "+ account.lastName}}-->
+              {{ showUIFriendlyName(account!.firstName, account!.lastName) }}
+            </span>
+            <span>
+              {{ account!.pin }}
+            </span>
+            <img [src]="imgSrc" alt="Employee Picture" class="user-avatar-md rounded-circle navbar-user-avatar" />
+          </a>
+          <ul aria-labelledby="entity-menu" class="dropdown-menu" ngbDropdownMenu>
+            <li>
+              <a (click)="collapseNavbar()" class="dropdown-item" routerLink="user-edit-account-information">
+                <span>Edit Profile</span>
+              </a>
+            </li>
+
+            <li *ngIf="canManageTaxAcknowledgementReceipt === true">
+              <a (click)="openSpecialAccessModal()" class="dropdown-item">
+                <span>Others</span>
+              </a>
+            </li>
+
+            <li *ngSwitchCase="true">
+              <a (click)="logout()" class="dropdown-item" id="logout">
+                <span>Sign Out</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ng-container>
+
+      <!--            <ng-container *jhiHasAnyAuthority="'COMMON'">-->
+      <!--                -->
+      <!--                <div class="p-3 searchIcon" (click)="loadSearchbar()">-->
+      <!--                    <fa-icon icon="search"></fa-icon>-->
+      <!--                </div>-->
+      <!--            </ng-container>-->
+    </ul>
+
+    <div *ngIf="isAuthenticated()" class="font-sm ms-auto fw-normal logo-color-brac-it" style="padding-end: 39px">
+      Hi, you have been working with BRAC IT for <span class="fw-bold">{{ totalWorkingDays }}</span>
+      {{ totalWorkingDays == 1 ? 'day' : 'days' }}!
+    </div>
+  </div>
+</nav>

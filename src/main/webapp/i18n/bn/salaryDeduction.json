@@ -1,0 +1,28 @@
+{
+  "bitsHrPayrollApp": {
+    "salaryDeduction": {
+      "home": {
+        "title": "Salary Deductions",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Salary Deduction",
+        "createOrEditLabel": "Create or edit a Salary Deduction",
+        "notFound": "No Salary Deductions found"
+      },
+      "created": "A new Salary Deduction is created with identifier {{ param }}",
+      "updated": "A Salary Deduction is updated with identifier {{ param }}",
+      "deleted": "A Salary Deduction is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Salary Deduction {{ id }}?"
+      },
+      "detail": {
+        "title": "Salary Deduction"
+      },
+      "id": "ID",
+      "deductionAmount": "Deduction Amount",
+      "deductionYear": "Deduction Year",
+      "deductionMonth": "Deduction Month",
+      "deductionType": "Deduction Type",
+      "employee": "Employee"
+    }
+  }
+}

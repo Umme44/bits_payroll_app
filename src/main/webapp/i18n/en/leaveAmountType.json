@@ -1,0 +1,9 @@
+{
+  "bitsHrPayrollApp": {
+    "LeaveAmountType": {
+      "null": "",
+      "Day": "Day",
+      "Year": "Year"
+    }
+  }
+}

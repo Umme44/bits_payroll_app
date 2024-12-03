@@ -1,0 +1,135 @@
+<jhi-header
+  [headerName]="'Promotion Details'"
+  [midHeaderName01]="'Promotions'"
+  [midRouterLinkText01]="'/employment-actions/promotion'"
+  [shouldHaveHr]="false"
+>
+</jhi-header>
+
+<jhi-alert-error></jhi-alert-error>
+
+<div *ngIf="employmentHistory" class="font-sm">
+  <div *ngIf="selectedEmployee" class="container-fluid card py-2 mt-5">
+    <div class="card-body">
+      <div class="card-title">
+        <h6 jhiTranslate="bitsHrPayrollApp.employee.employeeSelection">Employee</h6>
+      </div>
+      <div class="card-text">
+        <div class="row py-2">
+          <div class="col-md-2 fw-bold">Name</div>
+          <div [textContent]="selectedEmployee?.fullName" class="col-md-4"></div>
+          <div class="col-md-2 fw-bold">Department</div>
+          <div class="col-md-4">
+            {{ selectedEmployee?.departmentName }}
+          </div>
+        </div>
+
+        <div class="row py-2">
+          <div class="col-md-2 fw-bold">Designation</div>
+          <div class="col-md-4">
+            {{ selectedEmployee?.designationName }}
+          </div>
+          <div class="col-md-2 fw-bold">Unit</div>
+          <div class="col-md-4">
+            {{ selectedEmployee?.unitName }}
+          </div>
+        </div>
+
+        <div class="row py-2">
+          <div class="col-md-2 fw-bold">Category</div>
+          <div class="col-md-4">
+            <span jhiTranslate="{{ 'bitsHrPayrollApp.EmployeeCategory.' + selectedEmployee.employeeCategory }}">{{
+              selectedEmployee.employeeCategory
+            }}</span>
+          </div>
+          <div class="col-md-2 fw-bold">Desk Location</div>
+          <div class="col-md-4">
+            {{ selectedEmployee?.location }}
+          </div>
+        </div>
+
+        <div class="row py-2">
+          <div class="col-md-2 fw-bold">DoJ</div>
+          <div class="col-md-4">
+            {{ selectedEmployee?.dateOfJoining | formatMediumDate }}
+          </div>
+          <div class="col-md-2 fw-bold">DoC</div>
+          <div class="col-md-4">
+            {{ selectedEmployee?.dateOfConfirmation | formatMediumDate }}
+          </div>
+        </div>
+
+        <div class="row py-2">
+          <div class="col-md-2 fw-bold">Reporting To</div>
+          <div class="col-md-4">
+            {{ selectedEmployee?.reportingToName }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="selectedEmployee !== null" class="container-fluid card py-2 mt-5">
+    <div class="card-body">
+      <div class="card-title">
+        <h6>Promotion details</h6>
+      </div>
+      <div class="card-text">
+        <div class="row py-2">
+          <div class="col-md-3 fw-bold">Effective Date</div>
+          <div class="col-md-3">
+            <span>{{ employmentHistory.effectiveDate | formatMediumDate }}</span>
+          </div>
+        </div>
+
+        <div class="row py-2">
+          <div class="col-md-3 fw-bold">Previous Gross Salary</div>
+          <div class="col-md-3">
+            {{ employmentHistory.previousMainGrossSalary | number }}
+          </div>
+
+          <div class="col-md-3 fw-bold">Changed Gross Salary</div>
+          <div class="col-md-3">
+            {{ employmentHistory.currentMainGrossSalary | number }}
+          </div>
+        </div>
+
+        <div class="row py-2">
+          <div class="col-md-3 fw-bold">Previous designation</div>
+          <div class="col-md-3">
+            <div *ngIf="employmentHistory.previousDepartmentId">
+              {{ employmentHistory.previousDesignationName }}
+            </div>
+          </div>
+          <div class="col-md-3 fw-bold">Changed Designation</div>
+          <div class="col-md-3">
+            <div *ngIf="employmentHistory.changedDesignationName">
+              {{ employmentHistory.changedDesignationName }}
+            </div>
+          </div>
+        </div>
+
+        <div class="row py-2">
+          <div class="col-md-3 fw-bold">Previous Band</div>
+          <div class="col-md-3">
+            <div *ngIf="employmentHistory.previousBandName">
+              {{ employmentHistory.previousBandName }}
+            </div>
+          </div>
+          <div class="col-md-3 fw-bold">Changed Band</div>
+          <div class="col-md-3">
+            <div *ngIf="employmentHistory.changedBandName">
+              {{ employmentHistory.changedBandName }}
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <button [routerLink]="['/employment-actions/promotion', employmentHistory.id, 'edit']" class="btn btn-primary" type="button">
+            <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

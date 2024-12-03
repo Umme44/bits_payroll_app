@@ -1,0 +1,132 @@
+<div>
+  <h2 id="page-heading" data-cy="RoomTypeHeading">
+    <span jhiTranslate="bitsHrPayrollApp.roomType.home.title">Room Types</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="bitsHrPayrollApp.roomType.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-room-type"
+        [routerLink]="['/room-type/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="bitsHrPayrollApp.roomType.home.createLabel"> Create a new Room Type </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="roomTypes?.length === 0">
+    <span jhiTranslate="bitsHrPayrollApp.roomType.home.notFound">No Room Types found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="roomTypes && roomTypes.length > 0">
+    <table class="table table-hover list-text-color" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">ID</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="typeName">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.roomType.typeName">Type Name</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="remarks">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.roomType.remarks">Remarks</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="createdAt">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.roomType.createdAt">Created At</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="updatedAt">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.roomType.updatedAt">Updated At</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="createdBy.login">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.roomType.createdBy">Created By</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="updatedBy.login">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.roomType.updatedBy">Updated By</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody
+        infinite-scroll
+        (scrolled)="loadPage(page + 1)"
+        [infiniteScrollDisabled]="page - 1 >= links['last']"
+        [infiniteScrollDistance]="0"
+      >
+        <tr *ngFor="let roomType of roomTypes; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/room-type', roomType.id, 'view']">{{ roomType.id }}</a>
+          </td>
+          <td>{{ roomType.typeName }}</td>
+          <td>{{ roomType.remarks }}</td>
+          <td>{{ roomType.createdAt | formatMediumDatetime }}</td>
+          <td>{{ roomType.updatedAt | formatMediumDatetime }}</td>
+          <td>
+            {{ roomType.createdBy?.login }}
+          </td>
+          <td>
+            {{ roomType.updatedBy?.login }}
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/room-type', roomType.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/room-type', roomType.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(roomType)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

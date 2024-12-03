@@ -1,0 +1,24 @@
+tax-rebate:
+  house-rent: min(300000, (#perYearBasic * 0.50))
+  medical: '#isDisabled? min(1000000, (#perYearBasic * 0.10)) : min(120000, (#perYearBasic * 0.10))'
+  conveyance: min(#perYearConveyance, 30000)
+  investment: '#taxableIncome <= 1500000 ? (#taxableIncome * 0.25 * 0.15) : (#taxableIncome * 0.25 * 0.10)'
+tax-slabs:
+  - limit: 300000
+    rate: 0.0
+  - limit: 100000
+    rate: 0.05
+  - limit: 300000
+    rate: 0.10
+  - limit: 400000
+    rate: 0.15
+  - limit: 500000
+    rate: 0.20
+  - limit: 0
+    rate: 0.25
+first-tax-slab-special-cases:
+  expressions:
+    - '#gender == 1 || #age >= 65 ? 350000 : #taxSlab_1'
+    - '#isDisabled ? 450000 : #taxSlab_1'
+    - '#isFreedomFighter ? 475000 : #taxSlab_1'
+    - '#hasDisabledChild ? #taxSlab_1 + 50000 : #taxSlab_1'

@@ -1,0 +1,78 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="room">
+      <h2 data-cy="roomDetailsHeading"><span jhiTranslate="bitsHrPayrollApp.room.detail.title">Room</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ room.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.room.roomName">Room Name</span></dt>
+        <dd>
+          <span>{{ room.roomName }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.room.remarks">Remarks</span></dt>
+        <dd>
+          <span>{{ room.remarks }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.room.createdAt">Created At</span></dt>
+        <dd>
+          <span>{{ room.createdAt | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.room.updatedAt">Updated At</span></dt>
+        <dd>
+          <span>{{ room.updatedAt | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.room.capacity">Capacity</span></dt>
+        <dd>
+          <span>{{ room.capacity }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.room.facilities">Facilities</span></dt>
+        <dd>
+          <span>{{ room.facilities }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.room.createdBy">Created By</span></dt>
+        <dd>
+          <span>{{ room.createdBy?.login }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.room.updatedBy">Updated By</span></dt>
+        <dd>
+          <span>{{ room.updatedBy?.login }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.room.building">Building</span></dt>
+        <dd>
+          <div *ngIf="room.building">
+            <a [routerLink]="['/building', room.building.id, 'view']">{{ room.building.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.room.floor">Floor</span></dt>
+        <dd>
+          <div *ngIf="room.floor">
+            <a [routerLink]="['/floor', room.floor.id, 'view']">{{ room.floor.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.room.roomType">Room Type</span></dt>
+        <dd>
+          <div *ngIf="room.roomType">
+            <a [routerLink]="['/room-type', room.roomType.id, 'view']">{{ room.roomType.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/room', room.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,65 @@
+<div>
+  <jhi-header
+    [addButtonText]="'Create a new Locations'"
+    [headerName]="'Locations'"
+    [routerLinkText]="'/location/new'"
+    [shouldHaveHr]="false"
+  >
+  </jhi-header>
+</div>
+<div>
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="locations?.length === 0">
+    <span jhiTranslate="bitsHrPayrollApp.location.home.notFound">No locations found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="locations && locations.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead class="list-text-color">
+        <tr>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.location.locationType">Location Type</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.location.locationName">Location Name</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.location.locationCode">Location Code</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.location.parent">Parent Location</span></th>
+          <th scope="col"><span>Full Location</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+        <tr *ngFor="let location of locations; trackBy: trackId" class="list-text-color">
+          <td jhiTranslate="{{ 'bitsHrPayrollApp.LocationType.' + location.locationType }}">{{ location.locationType }}</td>
+          <td>{{ location.locationName }}</td>
+          <td>{{ location.locationCode }}</td>
+          <td>
+            <div *ngIf="location.parentId">
+              <a [routerLink]="['/location', location.parentId, 'view']">({{ location.parentCode }}){{ location.parentName }}</a>
+            </div>
+
+            <div *ngIf="!location.parentId">
+              <span class="badge badge-pill badge-dark p-1"> N/A </span>
+            </div>
+          </td>
+          <td>{{ location.fullLocation }}</td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/location', location.id, 'view']" class="btn btn-info btn-sm px-md-3">
+                <fa-icon icon="eye"></fa-icon>
+              </button>
+
+              <button type="submit" [routerLink]="['/location', location.id, 'edit']" class="btn btn-primary btn-sm px-md-3">
+                <fa-icon icon="pencil-alt"></fa-icon>
+              </button>
+
+              <button type="submit" (click)="delete(location)" class="btn btn-danger btn-sm px-md-3">
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

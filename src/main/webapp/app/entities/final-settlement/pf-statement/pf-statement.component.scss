@@ -1,0 +1,101 @@
+.font-bold {
+  font-weight: bold;
+}
+.signature {
+  font-size: 0.875rem;
+}
+
+.full-border {
+  border: 1px solid black;
+}
+
+.border-bottom-0 {
+  border-bottom: 0 !important;
+}
+
+.border-top-0 {
+  border-top: 0 !important;
+}
+
+.border-left-0 {
+  border-left: 0 !important;
+}
+
+.border-right-0 {
+  border-right: 0 !important;
+}
+
+.border-left-1 {
+  border-left: 1px solid black;
+}
+
+.border-bottom-1 {
+  border-bottom: 1px solid black;
+}
+
+.border-right-1 {
+  border-right: 1px solid black;
+}
+
+.border-top-1 {
+  border-top: 1px solid black;
+}
+
+.nominee-details-border {
+  border: 2px solid #8b9095;
+}
+
+.bits-logo {
+  width: 7.5rem;
+}
+
+span,
+h5,
+p {
+  font-size: 85%;
+}
+
+table.table-bordered {
+  border: 1px solid black;
+  margin-top: 1.25rem;
+}
+table.table-bordered > thead > tr > th {
+  border: 1px solid black;
+}
+table.table-bordered > tbody > tr > td {
+  border: 1px solid black;
+}
+
+th,
+td {
+  font-size: 85%;
+  padding: 2px !important;
+  text-align: center;
+}
+td {
+  text-align: right !important;
+}
+
+.bg-lime {
+  background-color: #b2ec5d;
+}
+
+.bg-lavender {
+  background-color: #e6e6fa;
+}
+
+.td-to-th {
+  text-align: center !important;
+  font-weight: bold;
+}
+.vertical-align-middle {
+  vertical-align: middle !important;
+}
+
+@media print {
+  .printDiv {
+    padding-left: 80px;
+    padding-right: 40px;
+    padding-top: 100px;
+  }
+}

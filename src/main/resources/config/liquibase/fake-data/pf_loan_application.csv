@@ -1,0 +1,11 @@
+id;installment_amount;no_of_installment;remarks;is_recommended;recommendation_date;is_approved;approval_date;is_rejected;rejection_reason;rejection_date;disbursement_date;disbursement_amount;status
+1;78849;30731;generating open Soap;false;2021-04-17;false;2021-04-17;false;Tools next-generation Fish;2021-04-17;2021-04-17;9066;NOT_APPROVED
+2;16953;31248;Maryland Automotive;true;2021-04-18;true;2021-04-18;true;Games Pants Sports;2021-04-17;2021-04-17;6286;NOT_APPROVED
+3;16672;59680;optimal SCSI;false;2021-04-17;false;2021-04-17;true;open-source Optional Steel;2021-04-17;2021-04-17;46498;NOT_APPROVED
+4;16194;50441;Computers;false;2021-04-17;true;2021-04-17;true;Nevada;2021-04-18;2021-04-18;73736;PENDING
+5;82987;20034;Leone copying Frozen;false;2021-04-17;false;2021-04-17;false;Berkshire;2021-04-17;2021-04-17;20311;PENDING
+6;77978;65422;analyzing SMS;true;2021-04-17;false;2021-04-18;true;Bacon Automotive;2021-04-18;2021-04-18;71693;APPROVED
+7;6637;68381;vertical Pre-emptive;true;2021-04-17;true;2021-04-17;true;Customer capacity;2021-04-18;2021-04-18;5721;APPROVED
+8;39925;32489;Games;false;2021-04-17;true;2021-04-17;true;Rustic discrete;2021-04-17;2021-04-17;33218;NOT_APPROVED
+9;16742;92466;Bike;true;2021-04-17;true;2021-04-17;false;cross-platform Buckinghamshire;2021-04-17;2021-04-17;25590;NOT_APPROVED
+10;83188;27900;Refined calculate National;true;2021-04-18;false;2021-04-17;true;interface;2021-04-18;2021-04-17;45359;NOT_APPROVED

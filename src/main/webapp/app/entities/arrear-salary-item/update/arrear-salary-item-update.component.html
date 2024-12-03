@@ -1,0 +1,225 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-arrear-salary-item-heading"
+        data-cy="ArrearSalaryItemCreateUpdateHeading"
+        jhiTranslate="bitsHrPayrollApp.arrearSalaryItem.home.createOrEditLabel"
+      >
+        Create or edit a Arrear Salary Item
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.arrearSalaryItem.title" for="field_title">Title</label>
+          <input type="text" class="form-control" name="title" id="field_title" data-cy="title" formControlName="title" />
+          <div *ngIf="editForm.get('title')!.invalid && (editForm.get('title')!.dirty || editForm.get('title')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('title')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('title')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 3 }"
+            >
+              This field is required to be at least 3 characters.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('title')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 255 }"
+            >
+              This field cannot be longer than 255 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.arrearSalaryItem.arrearAmount" for="field_arrearAmount"
+            >Arrear Amount</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="arrearAmount"
+            id="field_arrearAmount"
+            data-cy="arrearAmount"
+            formControlName="arrearAmount"
+          />
+          <div
+            *ngIf="editForm.get('arrearAmount')!.invalid && (editForm.get('arrearAmount')!.dirty || editForm.get('arrearAmount')!.touched)"
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('arrearAmount')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('arrearAmount')?.errors?.min"
+              jhiTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              This field should be at least 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('arrearAmount')?.errors?.max"
+              jhiTranslate="entity.validation.max"
+              [translateValues]="{ max: 10000000 }"
+            >
+              This field cannot be more than 10000000.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('arrearAmount')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.arrearSalaryItem.hasPfArrearDeduction" for="field_hasPfArrearDeduction"
+            >Has Pf Arrear Deduction</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="hasPfArrearDeduction"
+            id="field_hasPfArrearDeduction"
+            data-cy="hasPfArrearDeduction"
+            formControlName="hasPfArrearDeduction"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.arrearSalaryItem.pfArrearDeduction" for="field_pfArrearDeduction"
+            >Pf Arrear Deduction</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="pfArrearDeduction"
+            id="field_pfArrearDeduction"
+            data-cy="pfArrearDeduction"
+            formControlName="pfArrearDeduction"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.arrearSalaryItem.isFestivalBonus" for="field_isFestivalBonus"
+            >Is Festival Bonus</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isFestivalBonus"
+            id="field_isFestivalBonus"
+            data-cy="isFestivalBonus"
+            formControlName="isFestivalBonus"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.arrearSalaryItem.isDeleted" for="field_isDeleted">Is Deleted</label>
+          <input type="checkbox" class="form-check" name="isDeleted" id="field_isDeleted" data-cy="isDeleted" formControlName="isDeleted" />
+          <div *ngIf="editForm.get('isDeleted')!.invalid && (editForm.get('isDeleted')!.dirty || editForm.get('isDeleted')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('isDeleted')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.arrearSalaryItem.arrearSalaryMaster" for="field_arrearSalaryMaster"
+            >Arrear Salary Master</label
+          >
+          <select
+            class="form-control"
+            id="field_arrearSalaryMaster"
+            data-cy="arrearSalaryMaster"
+            name="arrearSalaryMaster"
+            formControlName="arrearSalaryMaster"
+            [compareWith]="compareArrearSalaryMaster"
+          >
+            <option *ngIf="!editForm.get('arrearSalaryMaster')!.value" [ngValue]="null" selected></option>
+            <option [ngValue]="arrearSalaryMasterOption" *ngFor="let arrearSalaryMasterOption of arrearSalaryMastersSharedCollection">
+              {{ arrearSalaryMasterOption.id }}
+            </option>
+          </select>
+        </div>
+        <div
+          *ngIf="
+            editForm.get(['arrearSalaryMaster'])!.invalid &&
+            (editForm.get(['arrearSalaryMaster'])!.dirty || editForm.get(['arrearSalaryMaster'])!.touched)
+          "
+        >
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['arrearSalaryMaster'])?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.arrearSalaryItem.employee" for="field_employee">Employee</label>
+          <select
+            class="form-control"
+            id="field_employee"
+            data-cy="employee"
+            name="employee"
+            formControlName="employee"
+            [compareWith]="compareEmployee"
+          >
+            <option *ngIf="!editForm.get('employee')!.value" [ngValue]="null" selected></option>
+            <option [ngValue]="employeeOption" *ngFor="let employeeOption of employeesSharedCollection">{{ employeeOption.id }}</option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['employee'])!.invalid && (editForm.get(['employee'])!.dirty || editForm.get(['employee'])!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['employee'])?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

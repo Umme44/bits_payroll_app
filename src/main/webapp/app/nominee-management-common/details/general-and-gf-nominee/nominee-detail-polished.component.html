@@ -1,0 +1,146 @@
+<jhi-header
+  [headerName]="'Nominee Details'"
+  [midHeaderName01]="nominee.nomineeType === 'GRATUITY_FUND' ? 'Gratuity Fund Nominee' : 'General Nominee'"
+  [midRouterLinkText01]="nominee.nomineeType === 'GRATUITY_FUND' ? '/my-nominee/dashboard' : '/my-nominee/dashboard'"
+>
+</jhi-header>
+
+<style>
+  dd:before {
+    content: ':';
+  }
+</style>
+
+<div *ngIf="nominee" class="font-sm">
+  <!--            nominee details-->
+  <div class="card card-body mb-2">
+    <div class="row ps-3">
+      <p class="font-size-1-rem">Nominee Information:</p>
+    </div>
+
+    <div class="row">
+      <div class="col-2 mb-3">
+        <div class="">
+          <img
+            style="height: 130px; width: 130px; border-radius: 3px; padding: 3px; background-color: #9fcdff"
+            [src]="getNomineeImage(nominee.id!)"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="row align-content-between" style="min-height: 200px">
+      <dt class="col-md-3"><span>Name</span></dt>
+      <dd class="col-md-3">
+        <span>{{ nominee.nomineeName }}</span>
+      </dd>
+
+      <dt class="col-md-3"><span>Date of Birth</span></dt>
+      <dd class="col-md-3">
+        <span>{{ nominee.dateOfBirth | formatMediumDate }}</span>
+      </dd>
+
+      <dt class="col-md-3"><span>Nominee Age</span></dt>
+      <dd class="col-md-3">
+        <span>{{ nominee.age }} Years</span>
+      </dd>
+
+      <dt class="col-md-3"><span>Relation</span></dt>
+      <dd class="col-md-3">
+        <span>{{ nominee.relationshipWithEmployee }}</span>
+      </dd>
+
+      <dt class="col-md-3"><span>Present Address</span></dt>
+      <dd class="col-md-9">
+        <span>{{ nominee.presentAddress }}</span>
+      </dd>
+
+      <dt class="col-md-3"><span>Permanent Address</span></dt>
+      <dd class="col-md-9">
+        <span>{{ nominee.permanentAddress }}</span>
+      </dd>
+
+      <dt class="col-md-3"><span>Share</span></dt>
+      <dd class="col-md-3">
+        <span>{{ nominee.sharePercentage }}</span>
+      </dd>
+
+      <dt class="col-md-3"><span>Identity type</span></dt>
+      <dd class="col-md-3">
+        <span>{{ getUIFriendlyNomineeType(nominee.identityType!) }}</span>
+      </dd>
+
+      <dt *ngIf="nominee.documentName === 'OTHER'" class="col-md-3"><span>Document Name</span></dt>
+      <dd *ngIf="nominee.documentName === 'OTHER'" class="col-md-3">
+        <span>{{ nominee.documentName }}</span>
+      </dd>
+
+      <dt class="col-md-3"><span>Identity Number</span></dt>
+      <dd class="col-md-3">
+        <span>{{ nominee.idNumber }}</span>
+      </dd>
+    </div>
+  </div>
+
+  <div *ngIf="nominee.guardianName" class="card card-body mb-2">
+    <div class="row align-content-between" style="min-height: 200px">
+      <div class="col-md-12 font-medium">
+        <p class="font-size-1-rem">Nominee's Guardian Information:</p>
+      </div>
+
+      <dt class="col-md-3"><span>Name</span></dt>
+      <dd class="col-md-3">
+        <span>{{ nominee.guardianName }}</span>
+      </dd>
+
+      <dt class="col-md-3"><span>Date of Birth</span></dt>
+      <dd class="col-md-3">
+        <span>{{ nominee.guardianDateOfBirth | formatMediumDate }}</span>
+      </dd>
+
+      <dt class="col-md-3"><span>Present Address</span></dt>
+      <dd class="col-md-9">
+        <span>{{ nominee.guardianPresentAddress }}</span>
+      </dd>
+
+      <dt class="col-md-3"><span>Permanent Address</span></dt>
+      <dd class="col-md-9">
+        <span>{{ nominee.guardianPermanentAddress }}</span>
+      </dd>
+
+      <dt class="col-md-3"><span>Relation</span></dt>
+      <dd class="col-md-3">
+        <span>{{ nominee.guardianRelationshipWith }}</span>
+      </dd>
+
+      <dt class="col-md-3"><span>Father Name</span></dt>
+      <dd class="col-md-3">
+        <span>{{ nominee.guardianFatherName }}</span>
+      </dd>
+
+      <dt class="col-md-3"><span>Spouse Name</span></dt>
+      <dd class="col-md-3">
+        <span>{{ nominee.guardianSpouseName }}</span>
+      </dd>
+
+      <dt class="col-md-3"><span>Identity Type</span></dt>
+      <dd class="col-md-3">
+        <span>{{ getUIFriendlyNomineeType(nominee.guardianIdentityType!) }}</span>
+      </dd>
+
+      <dt *ngIf="nominee.guardianIdentityType === 'OTHER'" class="col-md-3"><span>Document Name</span></dt>
+      <dd *ngIf="nominee.guardianIdentityType === 'OTHER'" class="col-md-3">
+        <span>{{ nominee.guardianDocumentName }}</span>
+      </dd>
+
+      <dt class="col-md-3"><span>Identity Number</span></dt>
+      <dd class="col-md-3">
+        <span>{{ nominee.guardianIdNumber }}</span>
+      </dd>
+    </div>
+  </div>
+
+  <button type="submit" (click)="previousState()" class="btn btn-info">
+    <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+  </button>
+</div>

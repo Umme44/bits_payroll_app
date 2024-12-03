@@ -1,0 +1,11 @@
+{
+  "bitsHrPayrollApp": {
+    "MaritalStatus": {
+      "null": "",
+      "SINGLE": "SINGLE",
+      "MARRIED": "MARRIED",
+      "WIDOWED": "WIDOWED",
+      "DIVORCED": "DIVORCED"
+    }
+  }
+}

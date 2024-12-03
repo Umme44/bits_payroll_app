@@ -1,0 +1,120 @@
+<ng-template #content let-modal>
+  <div class="modal-body">
+    <div *ngIf="selectedEmployeeSalary" class="row font-sm pb-3">
+      <div class="col-md-12">
+        <h5 class="fw-light pb-3">Disburse salary</h5>
+      </div>
+
+      <br />
+      <br />
+
+      <div class="col-md-4 pb-1">PIN</div>
+      <div class="col-md-8 pb-1">{{selectedEmployeeSalary.pin!}}</div>
+
+      <div class="col-md-4 pb-1">Name</div>
+      <div class="col-md-8 pb-1">{{selectedEmployeeSalary.employeeName!}}</div>
+
+      <div class="col-md-4 pb-1">Department</div>
+      <div class="col-md-8 pb-1">{{selectedEmployeeSalary.department!}}</div>
+
+      <div class="col-md-4 pb-1">Designation</div>
+      <div class="col-md-8 pb-1">{{selectedEmployeeSalary.designation!}}</div>
+
+      <div class="col-md-4 pb-1">Unit</div>
+      <div class="col-md-8 pb-1">{{selectedEmployeeSalary.unit!}}</div>
+
+      <div class="col-md-4 pb-1">Salary Month</div>
+      <div class="col-md-8 pb-1">{{selectedEmployeeSalary.month!}}, {{selectedEmployeeSalary.year!}}</div>
+    </div>
+
+    <form class="row d-flex align-items-start justify-content-between" [formGroup]="editForm">
+      <div class="mb-3 col-md-10">
+        <div class="input-group">
+          <input
+            id="field_date"
+            type="text"
+            class="form-control"
+            name="field_date"
+            ngbDatepicker
+            #dateOfBirthDp="ngbDatepicker"
+            formControlName="date"
+          />
+          <span class="input-group-append">
+            <button type="button" class="btn btn-secondary" (click)="dateOfBirthDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </span>
+        </div>
+      </div>
+
+      <div class="col-md-2 text-end">
+        <button [disabled]="editForm.invalid" type="button" (click)="modal.close()" class="btn btn-md btn-outline-dark">Save</button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<div class="mb-2">
+  <jhi-header [headerName]="'Hold Salaries'" [shouldHaveHr]="false"> </jhi-header>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="row">
+    <div class="col-md-10">
+      <jhi-search-text-box (searchEvent)="search($event)"> </jhi-search-text-box>
+    </div>
+
+    <div class="col-md-2 text-end">
+      <a class="btn btn-outline-primary" [routerLink]="'/hold-salary-disbursement'">Disbursed Salaries</a>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="holdSalaries && holdSalaries.length > 0" class="table-responsive" id="entities">
+  <table aria-describedby="page-heading" class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col" class="text-nowrap"><span>PIN</span></th>
+        <th scope="col" class="text-nowrap"><span>Name</span></th>
+        <th scope="col" class="text-nowrap"><span>Month</span></th>
+        <th scope="col" class="text-nowrap text-end"><span>Payable Gross</span></th>
+        <th scope="col" class="text-nowrap text-end"><span>Arrear</span></th>
+        <th scope="col" class="text-nowrap text-end"><span>Total Deduction</span></th>
+        <th scope="col" class="text-nowrap text-end"><span>Net Pay</span></th>
+        <th scope="col" class="text-nowrap text-end"><span></span></th>
+        <th scope="col" class="text-nowrap text-end"><span></span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let salary of holdSalaries ;trackBy: trackId">
+        <td class="text-nowrap"><a [routerLink]="['/employee-custom', salary.employeeId, 'view']">{{salary.pin}}</a></td>
+
+        <td class="text-nowrap">{{salary.employeeName}}</td>
+
+        <td class="text-nowrap">{{ salary.month }}, {{salary.year}}</td>
+        <td class="text-nowrap text-end">{{ salary.payableGrossSalary | number}}</td>
+        <td class="text-nowrap text-end">{{ salary.arrearSalary | number}}</td>
+        <td class="text-nowrap text-end">{{ salary.totalDeduction | number}}</td>
+        <td class="text-nowrap text-end">{{ salary.netPay | number}}</td>
+        <td class="text-nowrap text-end">
+          <button [routerLink]="['/', salary.id, 'monthly-salary-pay-slip']" class="btn btn-secondary btn-sm text-nowrap" type="submit">
+            Payslip
+          </button>
+        </td>
+
+        <td class="text-nowrap text-end">
+          <button
+            *ngIf="salary.id"
+            (click)="disburseSalaryModal(content, salary!)"
+            class="btn btn-success btn-sm text-nowrap"
+            type="submit"
+          >
+            Disburse
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

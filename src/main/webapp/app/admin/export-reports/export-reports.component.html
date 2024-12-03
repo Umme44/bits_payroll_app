@@ -1,0 +1,492 @@
+<div class="">
+  <div class="row">
+    <div class="col">
+      <h5 class="text-center">Data Export</h5>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Employees
+          <!-- <a class="btn btn-rounded btn-outline-success float-right" href="/export/EmployeeCommonExport/common">
+               <i class="fas fa-file-export"></i> Export</a>-->
+
+          <button (click)="export()" [disabled]="false" class="btn btn-rounded btn-outline-success float-right">
+            <fa-icon icon="eye"></fa-icon>
+            <span class="d-none d-md-inline">Export</span>
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <div class="col-md-6 mb-3">
+      <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Holidays
+          <button (click)="exportHolidays()" [disabled]="false" class="btn btn-rounded btn-outline-success float-right">
+            <fa-icon icon="eye"></fa-icon>
+            <span class="d-none d-md-inline">Export</span>
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <div class="col-md-6 mb-3">
+      <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Leave Balance
+          <input class="form-control w-25" [formControl]="leaveBalanceYearFormControl" placeholder="Year" />
+          <small [style.visibility]="leaveBalanceYearFormControl.invalid ? 'visible' : 'hidden'" class="text-danger">Year(1900-2025)</small>
+          <button
+            (click)="exportLeaveBalance()"
+            [disabled]="leaveBalanceYearFormControl.invalid"
+            class="btn btn-rounded btn-outline-success float-right"
+          >
+            <fa-icon icon="eye"></fa-icon>
+            <span class="d-none d-md-inline">Export</span>
+          </button>
+          <!--<a class="btn btn-rounded btn-outline-success float-right" href="/export/Holidays/"> Export</a>-->
+        </li>
+      </ul>
+    </div>
+
+    <div class="col-md-6 mb-3">
+      <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Employee TIN Number
+          <button (click)="exportEmployeeTin()" [disabled]="false" class="btn btn-rounded btn-outline-success float-right">
+            <fa-icon icon="eye"></fa-icon>
+            <span class="d-none d-md-inline">Export</span>
+          </button>
+          <!--<a class="btn btn-rounded btn-outline-success float-right" href="/export/Holidays/"> Export</a>-->
+        </li>
+      </ul>
+    </div>
+
+    <div class="col-md-6 mb-3">
+      <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Export Insurance Registrations
+          <button (click)="exportInsuranceRegistrations()" [disabled]="false" class="btn btn-rounded btn-outline-success float-right">
+            <fa-icon icon="eye"></fa-icon>
+            <span class="d-none d-md-inline">Export</span>
+          </button>
+          <!--<a class="btn btn-rounded btn-outline-success float-right" href="/export/Holidays/"> Export</a>-->
+        </li>
+      </ul>
+    </div>
+
+    <div class="col-md-6 mb-3">
+      <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Export Approved Insurance Registrations
+          <button
+            (click)="exportApprovedInsuranceRegistrations()"
+            [disabled]="false"
+            class="btn btn-rounded btn-outline-success float-right"
+          >
+            <fa-icon icon="eye"></fa-icon>
+            <span class="d-none d-md-inline">Export</span>
+          </button>
+          <!--<a class="btn btn-rounded btn-outline-success float-right" href="/export/Holidays/"> Export</a>-->
+        </li>
+      </ul>
+    </div>
+
+    <div class="col-md-6 mb-3">
+      <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Export Insurance Claims
+          <button (click)="exportInsuranceClaim()" [disabled]="false" class="btn btn-rounded btn-outline-success float-right">
+            <fa-icon icon="eye"></fa-icon>
+            <span class="d-none d-md-inline">Export</span>
+          </button>
+          <!--<a class="btn btn-rounded btn-outline-success float-right" href="/export/Holidays/"> Export</a>-->
+        </li>
+      </ul>
+    </div>
+
+    <div class="col-md-6 mb-3">
+      <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Extract Employee PINs
+          <button (click)="exportEmployeePins()" [disabled]="false" class="btn btn-rounded btn-outline-success float-right">
+            <fa-icon icon="eye"></fa-icon>
+            <span class="d-none d-md-inline">Export</span>
+          </button>
+          <!--<a class="btn btn-rounded btn-outline-success float-right" href="/export/Holidays/"> Export</a>-->
+        </li>
+      </ul>
+    </div>
+
+    <div class="col-md-6 mb-3">
+      <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Yearly Tax Return submission
+          <button
+            (click)="openYearlyTaxReturnSubmissionModal(yearlyTaxReturnSubmissionModal)"
+            [disabled]="false"
+            class="btn btn-rounded btn-outline-success float-right"
+          >
+            <fa-icon icon="eye"></fa-icon>
+            <span class="d-none d-md-inline">Export</span>
+          </button>
+          <!--<a class="btn btn-rounded btn-outline-success float-right" href="/export/Holidays/"> Export</a>-->
+        </li>
+      </ul>
+    </div>
+
+    <div class="col-md-6 mb-3">
+      <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Employee Reference PIN
+          <button (click)="exportReferencePins()" [disabled]="false" class="btn btn-rounded btn-outline-success float-right">
+            <fa-icon icon="eye"></fa-icon>
+            <span class="d-none d-md-inline">Export</span>
+          </button>
+          <!--<a class="btn btn-rounded btn-outline-success float-right" href="/export/Holidays/"> Export</a>-->
+        </li>
+      </ul>
+    </div>
+
+    <!--        salary export between date range-->
+
+    <div class="col-md-6 mb-3">
+      <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Salary Export Between Date Range
+          <button
+            (click)="openDateRangeSalaryModal(dateRangeSalaryModal)"
+            [disabled]="false"
+            class="btn btn-rounded btn-outline-success float-right"
+          >
+            <fa-icon icon="eye"></fa-icon>
+            <span class="d-none d-md-inline">Export</span>
+          </button>
+          <!--<a class="btn btn-rounded btn-outline-success float-right" href="/export/Holidays/"> Export</a>-->
+        </li>
+      </ul>
+    </div>
+
+    <div class="col-md-6 mb-3">
+      <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Export Monthly Attendance
+          <button
+            (click)="openMonthlyAtsExportModal(monthlyAtsExportModal)"
+            [disabled]="false"
+            class="btn btn-rounded btn-outline-success float-right"
+          >
+            <fa-icon icon="eye"></fa-icon>
+            <span class="d-none d-md-inline">Export</span>
+          </button>
+          <!--<a class="btn btn-rounded btn-outline-success float-right" href="/export/Holidays/"> Export</a>-->
+        </li>
+      </ul>
+    </div>
+
+    <div class="col-md-6 mb-3">
+      <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Export Employee Docs Detailed report
+          <button
+            (click)="openEmployeeDocsReportExportModal(employeeDocsReportExportModal)"
+            [disabled]="false"
+            class="btn btn-rounded btn-outline-success float-right"
+          >
+            <fa-icon icon="eye"></fa-icon>
+            <span class="d-none d-md-inline">Export</span>
+          </button>
+          <!--<a class="btn btn-rounded btn-outline-success float-right" href="/export/Holidays/"> Export</a>-->
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<ng-template #monthlyAtsExportModal let-modal>
+  <div class="modal-header border-0">
+    <h6 class="modal-title" id="modal-basic-title-x">Export Monthly Attendance Time Sheet Report.</h6>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form class="row" [formGroup]="monthlyAttendanceFilterForm">
+      <div class="form-group col-md-12">
+        <label class="form-control-label" for="searchText">Name or PIN</label>
+        <input type="text" class="form-control" id="searchText" name="searchText" formControlName="searchText" placeholder="Name Or PIN" />
+      </div>
+
+      <div class="form-group col-md-12">
+        <label class="form-control-label" for="departmentId">Department</label>
+        <select class="form-control w-100" formControlName="departmentId" id="departmentId" name="departmentId">
+          <option value="0">All</option>
+          <option *ngFor="let department of departments" value="{{ department.id }}">
+            {{ department.departmentName }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group col-md-12">
+        <label class="form-control-label" for="designationId">Designation</label>
+        <select class="form-control w-100" formControlName="designationId" id="designationId" name="designationId">
+          <option value="0">All</option>
+          <option *ngFor="let designation of designations" value="{{ designation.id }}">
+            {{ designation.designationName }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group col-md-12">
+        <label class="form-control-label" for="unitId">Unit</label>
+        <select class="form-control w-100" formControlName="unitId" id="unitId" name="unitId">
+          <option value="0">All</option>
+          <option *ngFor="let unit of units" value="{{ unit.id }}">
+            {{ unit.unitName }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group col-md-6">
+        <label class="form-control-label" for="field_startDate">Start Date</label>
+        <div class="input-group">
+          <input
+            id="field_startDate"
+            type="text"
+            class="form-control"
+            name="startDate"
+            ngbDatepicker
+            #startDateDp="ngbDatepicker"
+            formControlName="startDate"
+          />
+          <span class="input-group-append">
+            <button type="button" class="btn btn-secondary" (click)="startDateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group col-md-6">
+        <label class="form-control-label" for="field_startDate">End Date</label>
+        <div class="input-group">
+          <input
+            id="field_endDate"
+            type="text"
+            class="form-control"
+            name="endDate"
+            ngbDatepicker
+            #endDateDp="ngbDatepicker"
+            formControlName="endDate"
+          />
+          <span class="input-group-append">
+            <button type="button" class="btn btn-secondary" (click)="endDateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </span>
+        </div>
+      </div>
+    </form>
+
+    <div class="row">
+      <div class="col-6">
+        <button
+          [disabled]="monthlyAttendanceFilterForm.invalid"
+          type="button"
+          class="btn btn-success btn-md w-100"
+          (click)="modal.close('Save click')"
+        >
+          Export
+        </button>
+      </div>
+      <div class="col-6">
+        <button type="button" class="btn btn-danger btn-md w-100" (click)="modal.dismiss()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #yearlyTaxReturnSubmissionModal let-modal>
+  <div class="modal-header border-0">
+    <h6 class="modal-title">Yearly Tax Return Submission.</h6>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form class="row" [formGroup]="taxReturnForm">
+      <div class="form-group col-md-6">
+        <label class="form-control-label" for="startYear">Start Year</label>
+        <select class="form-control w-100" (change)="onChangeYearAndMonth()" formControlName="startYear" name="startYear">
+          <option selected disabled>-- Select start year --</option>
+          <option *ngFor="let year of years" value="{{ year }}">
+            {{ year }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group col-md-6">
+        <label class="form-control-label" for="startMonth">Start Month</label>
+        <select class="form-control w-100" (change)="onChangeYearAndMonth()" formControlName="startMonth" name="startMonth">
+          <option selected disabled>-- Select start month --</option>
+          <option *ngFor="let month of months" value="{{ month.value }}">
+            {{ month.text }}
+          </option>
+        </select>
+      </div>
+
+      <div class="col-12 my-1">
+        <span *ngIf="invalidYearAndMonth" class="text-danger font-sm">
+          {{ invalidYearAndMonthMessage }}
+        </span>
+      </div>
+
+      <div class="form-group col-md-6">
+        <label class="form-control-label" for="endYear">End Year</label>
+        <select class="form-control w-100" (change)="onChangeYearAndMonth()" formControlName="endYear" id="endYear" name="endYear">
+          <option selected disabled>-- Select start year --</option>
+          <option *ngFor="let year of years" value="{{ year }}">
+            {{ year }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group col-md-6">
+        <label class="form-control-label" for="endMonth">End Month</label>
+        <select class="form-control w-100" (change)="onChangeYearAndMonth()" formControlName="endMonth" name="endMonth">
+          <option selected disabled>-- Select start month --</option>
+          <option *ngFor="let month of months" value="{{ month.value }}">
+            {{ month.text }}
+          </option>
+        </select>
+      </div>
+    </form>
+
+    <div class="row">
+      <div class="col-6">
+        <button
+          [disabled]="taxReturnForm.invalid || invalidYearAndMonth"
+          type="button"
+          class="btn btn-success btn-md w-100"
+          (click)="modal.close('Save click')"
+        >
+          Populate
+        </button>
+      </div>
+      <div class="col-6">
+        <button type="button" class="btn btn-danger btn-md w-100" (click)="modal.dismiss()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #dateRangeSalaryModal let-modal>
+  <div class="modal-header border-0">
+    <h6 class="modal-title">Salary Export Within Date Range</h6>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form class="row" [formGroup]="taxReturnForm">
+      <div class="form-group col-md-6">
+        <label class="form-control-label required" for="startYear">Start Year</label>
+        <input class="form-control w-100" (change)="onChangeYearAndMonth()" formControlName="startYear" id="startYear" name="startYear" />
+      </div>
+
+      <div class="form-group col-md-6">
+        <label class="form-control-label required" for="startMonth">Start Month</label>
+        <select class="form-control w-100" (change)="onChangeYearAndMonth()" formControlName="startMonth" id="startMonth" name="startMonth">
+          <option selected disabled>-- Select start month --</option>
+          <option *ngFor="let month of months" value="{{ month.value }}">
+            {{ month.text }}
+          </option>
+        </select>
+      </div>
+
+      <div class="col-12 my-1">
+        <span *ngIf="invalidYearAndMonth" class="text-danger font-sm">
+          {{ invalidYearAndMonthMessage }}
+        </span>
+      </div>
+
+      <div class="form-group col-md-6">
+        <label class="form-control-label required" for="endYear">End Year</label>
+        <input class="form-control w-100" (change)="onChangeYearAndMonth()" formControlName="endYear" name="endYear" />
+      </div>
+
+      <div class="form-group col-md-6">
+        <label class="form-control-label required" for="endMonth">End Month</label>
+        <select class="form-control w-100" (change)="onChangeYearAndMonth()" formControlName="endMonth" id="endMonth" name="endMonth">
+          <option selected disabled>-- Select start month --</option>
+          <option *ngFor="let month of months" value="{{ month.value }}">
+            {{ month.text }}
+          </option>
+        </select>
+      </div>
+    </form>
+
+    <div class="row">
+      <div class="col-6">
+        <button
+          [disabled]="taxReturnForm.invalid || invalidYearAndMonth"
+          type="button"
+          class="btn btn-success btn-md w-100"
+          (click)="modal.close('Save click')"
+        >
+          Export
+        </button>
+      </div>
+      <div class="col-6">
+        <button type="button" class="btn btn-danger btn-md w-100" (click)="modal.dismiss()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #employeeDocsReportExportModal let-modal>
+  <div class="modal-header border-0">
+    <h6 class="modal-title" id="modal-basic-title">Yearly Tax Return Submission.</h6>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form class="row" [formGroup]="employeeDocReportForm">
+      <div class="form-group col-md-6">
+        <label class="form-control-label" for="year">Year</label>
+        <select class="form-control w-100" formControlName="year" id="year" name="year">
+          <option selected disabled>-- Select year --</option>
+          <option *ngFor="let year of years" value="{{ year }}">
+            {{ year }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group col-md-6">
+        <label class="form-control-label" for="month">Month</label>
+        <select class="form-control w-100" formControlName="month" id="month" name="month">
+          <option selected disabled>-- Select month --</option>
+          <option *ngFor="let month of months" value="{{ month.value }}">
+            {{ month.text }}
+          </option>
+        </select>
+      </div>
+    </form>
+
+    <div class="row">
+      <div class="col-6">
+        <button
+          [disabled]="employeeDocReportForm.invalid"
+          type="button"
+          class="btn btn-success btn-md w-100"
+          (click)="modal.close('Save click')"
+        >
+          Export
+        </button>
+      </div>
+      <div class="col-6">
+        <button type="button" class="btn btn-danger btn-md w-100" (click)="modal.dismiss()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

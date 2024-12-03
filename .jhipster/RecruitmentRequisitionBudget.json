@@ -1,0 +1,54 @@
+{
+  "changelogDate": "20231228103309",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "recruitment_requisition_budget",
+  "fields": [
+    {
+      "fieldName": "year",
+      "fieldType": "Long",
+      "fieldValidateRules": ["required", "min", "max"],
+      "fieldValidateRulesMax": "2070",
+      "fieldValidateRulesMin": "1970"
+    },
+    {
+      "fieldName": "budget",
+      "fieldType": "Long",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "remainingBudget",
+      "fieldType": "Long",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "remainingManpower",
+      "fieldType": "Long",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "RecruitmentRequisitionBudget",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "recruitmentRequisitionBudget",
+      "relationshipName": "employee",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "department",
+      "otherEntityRelationshipName": "recruitmentRequisitionBudget",
+      "relationshipName": "department",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

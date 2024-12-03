@@ -1,0 +1,9 @@
+{
+  "bitsHrPayrollApp": {
+    "AcknowledgementStatus": {
+      "null": "",
+      "SUBMITTED": "SUBMITTED",
+      "RECEIVED": "RECEIVED"
+    }
+  }
+}

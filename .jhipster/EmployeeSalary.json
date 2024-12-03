@@ -1,0 +1,304 @@
+{
+  "applications": "*",
+  "changelogDate": "20210217105803",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "employee_salary",
+  "fields": [
+    {
+      "fieldName": "month",
+      "fieldType": "Month",
+      "fieldValues": "JANUARY,FEBRUARY,MARCH,APRIL,MAY,JUNE,JULY,AUGUST,SEPTEMBER,OCTOBER,NOVEMBER,DECEMBER"
+    },
+    {
+      "fieldName": "year",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "salaryGenerationDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "createdBy",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "createdAt",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "updatedBy",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "updatedAt",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "refPin",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "pin",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "joiningDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "confirmationDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "employeeCategory",
+      "fieldType": "EmployeeCategory",
+      "fieldValues": "REGULAR_CONFIRMED_EMPLOYEE,REGULAR_PROVISIONAL_EMPLOYEE,CONTRACTUAL_EMPLOYEE,INTERN"
+    },
+    {
+      "fieldName": "unit",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "department",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "mainGrossSalary",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "mainGrossBasicSalary",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "mainGrossHouseRent",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "mainGrossMedicalAllowance",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "mainGrossConveyanceAllowance",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "absentDays",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "fractionDays",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "payableGrossSalary",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "payableGrossBasicSalary",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "payableGrossHouseRent",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "payableGrossMedicalAllowance",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "payableGrossConveyanceAllowance",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "arrearSalary",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "pfDeduction",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "taxDeduction",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "welfareFundDeduction",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "mobileBillDeduction",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "otherDeduction",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "totalDeduction",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "netPay",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "remarks",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "pfContribution",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "gfContribution",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "provisionForFestivalBonus",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "provisionForLeaveEncashment",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "isFinalized",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isDispatched",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "entertainment",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMax": "10000000",
+      "fieldValidateRulesMin": 0
+    },
+    {
+      "fieldName": "utility",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMax": "10000000",
+      "fieldValidateRulesMin": 0
+    },
+    {
+      "fieldName": "otherAddition",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "salaryAdjustment",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMax": "10000000",
+      "fieldValidateRulesMin": "-10000000"
+    },
+    {
+      "fieldName": "providentFundArrear",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMax": "10000000",
+      "fieldValidateRulesMin": 0
+    },
+    {
+      "fieldName": "allowance01",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMax": "10000000",
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "allowance02",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMax": "10000000",
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "allowance03",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMax": "10000000",
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "allowance04",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMax": "10000000",
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "allowance05",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMax": "10000000",
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "allowance06",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMax": "10000000",
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "provisionForProjectBonus",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMax": "10000000",
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "isHold",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "attendanceRegularisationStartDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "attendanceRegularisationEndDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "title",
+      "fieldType": "String",
+      "fieldValidateRules": []
+    },
+    {
+      "fieldName": "isVisibleToEmployee",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "pfArrear",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "taxCalculationSnapshot",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "EmployeeSalary",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "employeeSalary",
+      "relationshipName": "employee",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

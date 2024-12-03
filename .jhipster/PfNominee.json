@@ -1,0 +1,171 @@
+{
+  "changelogDate": "20210418033159",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "pf_nominee",
+  "fields": [
+    {
+      "fieldName": "nominationDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "fullName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "presentAddress",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "permanentAddress",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "relationship",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dateOfBirth",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "age",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "sharePercentage",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "nidNumber",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "isNidVerified",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "passportNumber",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "brnNumber",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "photo",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "guardianName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "guardianFatherOrSpouseName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "guardianDateOfBirth",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "guardianPresentAddress",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "guardianPermanentAddress",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "guardianProofOfIdentityOfLegalGuardian",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "guardianRelationshipWithNominee",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "guardianNidNumber",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "guardianBrnNumber",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "guardianIdNumber",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "isGuardianNidVerified",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isApproved",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "identityType",
+      "fieldType": "IdentityType",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "NID,PASSPORT,BIRTH_REGISTRATION,OTHER"
+    },
+    {
+      "fieldName": "idNumber",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "50",
+      "fieldValidateRulesMinlength": "0"
+    },
+    {
+      "fieldName": "documentName",
+      "fieldType": "String",
+      "fieldValidateRules": ["minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "200",
+      "fieldValidateRulesMinlength": "0"
+    },
+    {
+      "fieldName": "guardianIdentityType",
+      "fieldType": "IdentityType",
+      "fieldValues": "NID,PASSPORT,BIRTH_REGISTRATION,OTHER"
+    },
+    {
+      "fieldName": "guardianDocumentName",
+      "fieldType": "String",
+      "fieldValidateRules": ["minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "200",
+      "fieldValidateRulesMinlength": "0"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "PfNominee",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "pfAccount",
+      "otherEntityRelationshipName": "pfNominee",
+      "relationshipName": "pfAccount",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "pfNominee",
+      "relationshipName": "pfWitness",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "pfNominee",
+      "relationshipName": "approvedBy",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

@@ -1,0 +1,366 @@
+<div>
+  <jhi-header
+    [headerName]="'Arrear Pay Slip'"
+    [midHeaderName01]="'My Stuff'"
+    [midRouterLinkText01]="'/'"
+    [midHeader01hasSessionStorage]="true"
+    [midHeader01SessionStorageKey]="'keepMyStuffModalOpen'"
+    [midHeader01SessionStorageValue]="'yes'"
+    [midHeaderName02]="'Pay Slip'"
+    [midRouterLinkText02]="'/'"
+    [midHeader02hasSessionStorage]="true"
+    [midHeader02SessionStorageKey]="'keepPaySlipModalOpen'"
+    [midHeader02SessionStorageValue]="'yes'"
+    [shouldHaveHr]="false"
+  >
+  </jhi-header>
+
+  <div class="container w-50 py-2">
+    <form [formGroup]="editForm" name="editForm" role="form" class="">
+      <div class="row align-items-center">
+        <div class="col-md-3">
+          <select class="form-control hide-arrow" formControlName="year" (change)="onChangeYear($event)">
+            <option [disabled]="true" [ngValue]="null">Select Year</option>
+            <option *ngFor="let year of years" [value]="year">
+              {{ year }}
+            </option>
+          </select>
+        </div>
+
+        <div class="col-sm-4">
+          <select class="form-control hide-arrow" formControlName="title">
+            <option [disabled]="true" [ngValue]="null">Select Title</option>
+            <option *ngFor="let title of arrearTitles; let i = index" [value]="title.value">
+              {{ title.value }}
+            </option>
+          </select>
+        </div>
+
+        <div class="offset-3 col-sm-1">
+          <button
+            [disabled]="editForm.get('year')!.value == null || editForm.get('title')!.value == null"
+            (click)="onClickShowPayslipStatement()"
+            class="btn btn-success"
+          >
+            <fa-icon icon="file-alt"></fa-icon>
+          </button>
+        </div>
+        <div class="col-sm-1">
+          <div [ngbTooltip]="!employeeArrearPaySlip ? 'no payslip exists for selected type' : ''">
+            <button (click)="downloadAsPDF()" [disabled]="!employeeArrearPaySlip" class="btn btn-primary btn-md">
+              <fa-icon icon="print"></fa-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="printDivOfPaySlip">
+    <div style="margin-bottom: 20px"></div>
+    <div
+      *ngIf="loadPayslip && employeeArrearPaySlip != null"
+      class="payslip-area mx-auto"
+      [style.background]="'transparent url(' + getSalaryPayslipLetterHead() + ') no-repeat left top'"
+    >
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <table
+        class="table-emp-details"
+        style="color: #000000; font-family: Segoe UI; font-size: 12px"
+        width="100%"
+        cellspacing="0"
+        cellpadding="3"
+        border="0"
+      >
+        <tbody>
+          <tr>
+            <td valign="top" class="text-left" colspan="4">
+              <b>Arrear Payslip for {{ employeeArrearPaySlip.title }}</b>
+            </td>
+          </tr>
+          <tr>
+            <td valign="top" class="text-left" colspan="5">&nbsp;</td>
+          </tr>
+          <tr>
+            <td valign="top" class="text-left" width="10%">PIN</td>
+            <td valign="top" class="text-left" width="2%">:</td>
+            <td valign="top" class="text-left" width="35%">{{ employeeArrearPaySlip.pin }}</td>
+            <td valign="top" class="text-left" width="6%">&nbsp;</td>
+            <td valign="top" class="text-left" width="10%">Unit</td>
+            <td valign="top" class="text-left" width="2%">:</td>
+            <td valign="top" class="text-left" width="35%">{{ employeeArrearPaySlip.unitName }}</td>
+          </tr>
+          <tr>
+            <td valign="top" class="text-left">Name</td>
+            <td valign="top" class="text-left">:</td>
+            <td valign="top" class="text-left">{{ employeeArrearPaySlip.fullName }}</td>
+            <td valign="top" class="text-left" width="6%">&nbsp;</td>
+            <td valign="top" class="text-left">Dept.</td>
+            <td valign="top" class="text-left">:</td>
+            <td valign="top" class="text-left">{{ employeeArrearPaySlip.departmentName }}</td>
+          </tr>
+          <tr>
+            <td valign="top" class="text-left">Designation</td>
+            <td valign="top" class="text-left">:</td>
+            <td valign="top" class="text-left">{{ employeeArrearPaySlip.designationName }}</td>
+            <td valign="top" class="text-left" width="6%">&nbsp;</td>
+            <td valign="top" class="text-left">DoJ</td>
+            <td valign="top" class="text-left">:</td>
+            <td valign="top" class="text-left">
+              <span id="date_form">{{ employeeArrearPaySlip.joiningDate | formatMediumDate }}</span>
+            </td>
+          </tr>
+          <tr>
+            <td valign="top" class="text-left" colspan="4">&nbsp;</td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="table-payslip" width="100%" cellspacing="0" cellpadding="4" border="0">
+        <tbody>
+          <tr>
+            <td valign="bottom" class="field" style="white-space: nowrap; text-align: left; border-bottom: 1px solid #000" colspan="2">
+              <b>Addition Details</b>
+            </td>
+            <td valign="middle" class="nowrap-left">&nbsp;</td>
+            <td valign="bottom" class="field" style="white-space: nowrap; text-align: left; border-bottom: 1px solid #000" colspan="2">
+              <b>Deduction Details</b>
+            </td>
+          </tr>
+          <tr>
+            <td width="30%" valign="middle" class="nowrap-left">Basic</td>
+            <td width="17%" valign="middle" class="nowrap-right">
+              <span id="sep_bas">{{ employeeArrearPaySlip.basic | number }}</span>
+            </td>
+            <td width="6%" valign="middle" class="nowrap-left">&nbsp;</td>
+            <td width="30%" valign="middle" class="nowrap-left">Exceed Cell Bill</td>
+            <td width="17%" valign="middle" class="nowrap-right"><span id="sep_exmob">0</span></td>
+          </tr>
+          <tr>
+            <td valign="middle" class="nowrap-left">House Rent</td>
+            <td valign="middle" class="nowrap-right">
+              <span id="sep_hous">{{ employeeArrearPaySlip.houseRent | number }}</span>
+            </td>
+            <td valign="middle" class="nowrap-left">&nbsp;</td>
+            <td valign="middle" class="nowrap-left">Humanitarian Assistance Fund</td>
+            <td valign="middle" class="nowrap-right">
+              <span id="sep_wel">0</span>
+            </td>
+          </tr>
+          <tr>
+            <td valign="middle" class="nowrap-left">Medical</td>
+            <td valign="middle" class="nowrap-right">
+              <span id="sep_med">{{ employeeArrearPaySlip.medical | number }}</span>
+            </td>
+            <td valign="middle" class="nowrap-left">&nbsp;</td>
+            <td valign="middle" class="nowrap-left">Income Tax</td>
+            <td valign="middle" class="nowrap-right">
+              <span id="sep_tax">{{ employeeArrearPaySlip.taxDeduction | number }}</span>
+            </td>
+          </tr>
+          <tr>
+            <td valign="middle" class="nowrap-left">Conveyance</td>
+            <td valign="middle" class="nowrap-right">
+              <span id="sep_conv">{{ employeeArrearPaySlip.conveyance | number }}</span>
+            </td>
+            <td valign="middle" class="nowrap-left">&nbsp;</td>
+            <td valign="middle" class="nowrap-left">Others Deduct</td>
+            <td valign="middle" class="nowrap-right">
+              <span id="sep_other">{{ employeeArrearPaySlip.otherAddition | number }}</span>
+            </td>
+          </tr>
+          <tr>
+            <td valign="middle" class="nowrap-left">Entertainment</td>
+            <td valign="middle" class="nowrap-right">
+              <span id="sep_enter">0</span>
+            </td>
+            <td valign="middle" class="nowrap-left">&nbsp;</td>
+            <td valign="middle" class="nowrap-left">PF Deduct</td>
+            <td valign="middle" class="nowrap-right">
+              <span id="sep_pf">{{ employeeArrearPaySlip.arrearPfDeduction | number }}</span>
+            </td>
+          </tr>
+          <tr>
+            <td valign="middle" class="nowrap-left">Utility</td>
+            <td valign="middle" class="nowrap-right"><span id="sep_util">0</span></td>
+            <td valign="middle" class="nowrap-left">&nbsp;</td>
+            <td valign="middle" class="nowrap-left">PF Arrear</td>
+            <td valign="middle" class="nowrap-right">
+              <span id="sep_pfarr">0</span>
+            </td>
+          </tr>
+          <tr>
+            <td valign="middle" class="nowrap-left"><b>Gross Pay</b></td>
+            <td valign="middle" class="nowrap-right">
+              <b>
+                <span id="sep_gross">{{ employeeArrearPaySlip.grossPay | number }}</span>
+              </b>
+            </td>
+            <td valign="middle" class="nowrap-left">&nbsp;</td>
+            <td valign="middle" class="nowrap-left"></td>
+            <td valign="middle" class="nowrap-right"></td>
+          </tr>
+          <tr>
+            <td valign="middle" class="nowrap-left">Festival Bonus</td>
+            <td valign="middle" class="nowrap-right">
+              <span id="sep_FBon">{{ employeeArrearPaySlip.festivalBonus | number }}</span>
+            </td>
+            <td valign="middle" class="nowrap-left"></td>
+            <td valign="middle" class="nowrap-left"></td>
+            <td valign="middle" class="nowrap-right"></td>
+          </tr>
+          <tr>
+            <td valign="middle" class="nowrap-left">Living Allowance</td>
+            <td valign="middle" class="nowrap-right">
+              <span id="sep_lfa">{{ employeeArrearPaySlip.livingAllowance | number }}</span>
+            </td>
+            <td valign="middle" class="nowrap-left"></td>
+            <td valign="middle" class="nowrap-left"></td>
+            <td valign="middle" class="nowrap-right"></td>
+          </tr>
+          <tr>
+            <td valign="middle" class="nowrap-left">Other Addition</td>
+            <td valign="middle" class="nowrap-right">
+              <span id="sep_Oadd">{{ employeeArrearPaySlip.otherAddition | number }}</span>
+            </td>
+            <td valign="middle" class="nowrap-left"></td>
+            <td valign="middle" class="nowrap-left"></td>
+            <td valign="middle" class="nowrap-right"></td>
+          </tr>
+          <tr>
+            <td valign="middle" class="nowrap-left">Salary Adjustment</td>
+            <td valign="middle" class="nowrap-right">
+              {{ employeeArrearPaySlip.salaryAdjustment | number }}
+            </td>
+            <td valign="middle" class="nowrap-left"></td>
+            <td valign="middle" class="nowrap-left"></td>
+            <td valign="middle" class="nowrap-right"></td>
+          </tr>
+          <tr>
+            <td valign="middle" class="nowrap-left">Arrear</td>
+            <td valign="middle" class="nowrap-right">
+              <span id="sep_SAdj">0</span>
+            </td>
+            <td valign="middle" class="nowrap-left"></td>
+            <td valign="middle" class="nowrap-left"></td>
+            <td valign="middle" class="nowrap-right"></td>
+          </tr>
+          <tr>
+            <td valign="middle" class="nowrap-left">&nbsp;</td>
+            <td valign="middle" class="nowrap-right"></td>
+            <td valign="middle" class="nowrap-left"></td>
+            <td valign="middle" class="nowrap-left"></td>
+            <td valign="middle" class="nowrap-right"></td>
+          </tr>
+          <tr>
+            <td valign="middle" class="nowrap-left"><b>Total Addition</b></td>
+            <td valign="middle" class="nowrap-right">
+              <b>
+                <span id="sep_tadd">{{ employeeArrearPaySlip.totalAddition | number }}</span>
+              </b>
+            </td>
+            <td valign="middle" class="nowrap-left"></td>
+            <td valign="middle" class="nowrap-left">
+              <b>Total Deduct</b>
+            </td>
+            <td valign="middle" class="nowrap-right">
+              <b
+                ><span id="sep_tdedu">{{ employeeArrearPaySlip.totalDeduction | number }}</span></b
+              >
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <br /><br />
+      <table class="table-payslip table-common tableborder" width="100%" cellspacing="0" cellpadding="4" border="0">
+        <tbody>
+          <tr>
+            <th valign="middle" bgcolor="#D3D3D3" class="nowrap-center" colspan="2">
+              Net Payable : BDT <span id="sep_netp">{{ employeeArrearPaySlip.netPayable | number }}</span>
+            </th>
+          </tr>
+        </tbody>
+      </table>
+      <br /><br />
+      <table
+        class="table-bank-details table-common"
+        style="color: #000000; font-family: Segoe UI"
+        width="100%"
+        cellspacing="0"
+        cellpadding="5"
+        border="0"
+      >
+        <tbody>
+          <tr>
+            <td width="65%" valign="top" class="text-left" colspan="2">Net payment has been transferred to the following bank account.</td>
+          </tr>
+          <tr>
+            <td width="15%" valign="top" class="text-left">Bank Name</td>
+            <td width="50%" valign="top" class="text-left">: {{ employeeArrearPaySlip.bankName }}</td>
+          </tr>
+          <tr>
+            <td valign="top" class="text-left">Account Number</td>
+            <td valign="top" class="text-left">: {{ employeeArrearPaySlip.bankAccountNo }}</td>
+          </tr>
+          <tr>
+            <td valign="top" class="text-left">&nbsp;</td>
+            <td valign="top" class="text-left"></td>
+          </tr>
+          <tr>
+            <td valign="top" class="text-left">&nbsp;</td>
+            <td valign="top" class="text-left"></td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="table-payslip" width="100%" cellspacing="0" cellpadding="4" border="0">
+        <tbody>
+          <tr>
+            <th valign="middle" class="lhead" bgcolor="#D3D3D3" class="nowrap-center" colspan="1">Thank You</th>
+          </tr>
+        </tbody>
+      </table>
+      <br /><br />
+      <table
+        class="table-common"
+        style="color: #000000; font-family: Segoe UI; font-size: 12px"
+        width="100%"
+        cellspacing="0"
+        cellpadding="5"
+        border="0"
+      >
+        <tbody>
+          <tr>
+            <td width="65%" valign="top" class="text-left" colspan="2">&nbsp;</td>
+            <td width="35%" valign="top" class="text-center" rowspan="5">
+              <img border="0" width="100px" height="100px" src="../../../../content/images/Seal-blue.svg" />
+            </td>
+          </tr>
+          <tr>
+            <td valign="top" class="text-left">&nbsp;</td>
+            <td valign="top" class="text-left"></td>
+          </tr>
+          <tr>
+            <td valign="top" class="text-left"></td>
+            <td valign="top" class="text-left"></td>
+          </tr>
+          <tr>
+            <td valign="top" class="text-left"></td>
+            <td valign="top" class="text-left"></td>
+          </tr>
+          <tr>
+            <td valign="top" class="text-left"></td>
+            <td valign="top" class="text-left"></td>
+          </tr>
+          <tr>
+            <td valign="top" class="text-left" colspan="1">This is a system generated pay slip, no signature required</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

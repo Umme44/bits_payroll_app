@@ -1,0 +1,32 @@
+{
+  "bitsHrPayrollApp": {
+    "band": {
+      "home": {
+        "title": "Bands",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Band",
+        "createOrEditLabel": "Create or edit a Band",
+        "notFound": "No Bands found"
+      },
+      "created": "A new Band is created with identifier {{ param }}",
+      "updated": "A Band is updated with identifier {{ param }}",
+      "deleted": "A Band is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Band {{ id }}?"
+      },
+      "detail": {
+        "title": "Band"
+      },
+      "id": "ID",
+      "bandName": "Band Name",
+      "minSalary": "Min Salary",
+      "maxSalary": "Max Salary",
+      "welfareFund": "Welfare Fund",
+      "mobileCelling": "Mobile Celling",
+      "createdAt": "Created At",
+      "updatedAt": "Updated At",
+      "createdBy": "Created By",
+      "updatedBy": "Updated By"
+    }
+  }
+}

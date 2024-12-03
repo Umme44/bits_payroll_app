@@ -1,0 +1,67 @@
+<div>
+  <div class="mb-2">
+    <jhi-header [headerName]="'Disbursed Salaries'" [shouldHaveHr]="false"> </jhi-header>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <jhi-search-text-box (searchEvent)="search($event)"></jhi-search-text-box>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="holdSalaryDisbursements && holdSalaryDisbursements.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.holdSalaryDisbursement.date">Date</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.holdSalaryDisbursement.user">Disbursed By</span></th>
+          <th scope="col"><span>PIN</span></th>
+          <th scope="col"><span>Name</span></th>
+          <th scope="col"><span>Month</span></th>
+          <th scope="col" class="text-end"><span>Net Pay</span></th>
+          <th scope="col" class="text-end"><span>Total Deduction</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+        <tr *ngFor="let holdSalaryDisbursement of holdSalaryDisbursements; trackBy: trackId">
+          <td>{{ holdSalaryDisbursement.date | formatMediumDate }}</td>
+          <td>
+            {{ holdSalaryDisbursement.userLogin }}
+          </td>
+
+          <td>
+            {{ holdSalaryDisbursement.pin }}
+          </td>
+
+          <td>
+            {{ holdSalaryDisbursement.employeeName }}
+          </td>
+
+          <td>
+            {{ textNormalize(holdSalaryDisbursement.salaryMonth) }},
+            {{ holdSalaryDisbursement.salaryYear }}
+          </td>
+
+          <td class="text-end">
+            {{ holdSalaryDisbursement.netPay | number }}
+          </td>
+
+          <td class="text-end">
+            {{ holdSalaryDisbursement.totalDeduction | number }}
+          </td>
+
+          <td class="text-nowrap text-end">
+            <button
+              [routerLink]="['/', holdSalaryDisbursement.employeeSalaryId, 'monthly-salary-pay-slip']"
+              class="btn btn-secondary btn-sm text-nowrap"
+              type="submit"
+            >
+              Payslip
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

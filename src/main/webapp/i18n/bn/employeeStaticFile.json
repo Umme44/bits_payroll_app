@@ -1,0 +1,25 @@
+{
+  "bitsHrPayrollApp": {
+    "employeeStaticFile": {
+      "home": {
+        "title": "Employee Static Files",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Employee Static File",
+        "createOrEditLabel": "Create or edit a Employee Static File",
+        "notFound": "No Employee Static Files found"
+      },
+      "created": "A new Employee Static File is created with identifier {{ param }}",
+      "updated": "A Employee Static File is updated with identifier {{ param }}",
+      "deleted": "A Employee Static File is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Employee Static File {{ id }}?"
+      },
+      "detail": {
+        "title": "Employee Static File"
+      },
+      "id": "ID",
+      "filePath": "File Path",
+      "employee": "Employee"
+    }
+  }
+}

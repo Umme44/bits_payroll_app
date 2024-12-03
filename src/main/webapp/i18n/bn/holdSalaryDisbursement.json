@@ -1,0 +1,26 @@
+{
+  "bitsHrPayrollApp": {
+    "holdSalaryDisbursement": {
+      "home": {
+        "title": "Hold Salary Disbursements",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Hold Salary Disbursement",
+        "createOrEditLabel": "Create or edit a Hold Salary Disbursement",
+        "notFound": "No Hold Salary Disbursements found"
+      },
+      "created": "A new Hold Salary Disbursement is created with identifier {{ param }}",
+      "updated": "A Hold Salary Disbursement is updated with identifier {{ param }}",
+      "deleted": "A Hold Salary Disbursement is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Hold Salary Disbursement {{ id }}?"
+      },
+      "detail": {
+        "title": "Hold Salary Disbursement"
+      },
+      "id": "ID",
+      "date": "Date",
+      "user": "User",
+      "employeeSalary": "Employee Salary"
+    }
+  }
+}

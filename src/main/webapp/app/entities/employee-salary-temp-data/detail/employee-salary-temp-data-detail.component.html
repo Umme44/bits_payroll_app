@@ -1,0 +1,182 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="employeeSalaryTempData">
+      <h2 data-cy="employeeSalaryTempDataDetailsHeading">
+        <span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.detail.title">Employee Salary Temp Data</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ employeeSalaryTempData.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.month">Month</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.Month.' + employeeSalaryTempData.month }}">{{ employeeSalaryTempData.month }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.year">Year</span></dt>
+        <dd>
+          <span>{{ employeeSalaryTempData.year }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.mainGrossSalary">Main Gross Salary</span></dt>
+        <dd>
+          <span>{{ employeeSalaryTempData.mainGrossSalary }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.mainGrossBasicSalary">Main Gross Basic Salary</span></dt>
+        <dd>
+          <span>{{ employeeSalaryTempData.mainGrossBasicSalary }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.mainGrossHouseRent">Main Gross House Rent</span></dt>
+        <dd>
+          <span>{{ employeeSalaryTempData.mainGrossHouseRent }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.mainGrossMedicalAllowance">Main Gross Medical Allowance</span></dt>
+        <dd>
+          <span>{{ employeeSalaryTempData.mainGrossMedicalAllowance }}</span>
+        </dd>
+        <dt>
+          <span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.mainGrossConveyanceAllowance">Main Gross Conveyance Allowance</span>
+        </dt>
+        <dd>
+          <span>{{ employeeSalaryTempData.mainGrossConveyanceAllowance }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.absentDays">Absent Days</span></dt>
+        <dd>
+          <span>{{ employeeSalaryTempData.absentDays }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.fractionDays">Fraction Days</span></dt>
+        <dd>
+          <span>{{ employeeSalaryTempData.fractionDays }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.payableGrossSalary">Payable Gross Salary</span></dt>
+        <dd>
+          <span>{{ employeeSalaryTempData.payableGrossSalary }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.payableGrossBasicSalary">Payable Gross Basic Salary</span></dt>
+        <dd>
+          <span>{{ employeeSalaryTempData.payableGrossBasicSalary }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.payableGrossHouseRent">Payable Gross House Rent</span></dt>
+        <dd>
+          <span>{{ employeeSalaryTempData.payableGrossHouseRent }}</span>
+        </dd>
+        <dt>
+          <span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.payableGrossMedicalAllowance">Payable Gross Medical Allowance</span>
+        </dt>
+        <dd>
+          <span>{{ employeeSalaryTempData.payableGrossMedicalAllowance }}</span>
+        </dd>
+        <dt>
+          <span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.payableGrossConveyanceAllowance"
+            >Payable Gross Conveyance Allowance</span
+          >
+        </dt>
+        <dd>
+          <span>{{ employeeSalaryTempData.payableGrossConveyanceAllowance }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.arrearSalary">Arrear Salary</span></dt>
+        <dd>
+          <span>{{ employeeSalaryTempData.arrearSalary }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.pfDeduction">Pf Deduction</span></dt>
+        <dd>
+          <span>{{ employeeSalaryTempData.pfDeduction }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.taxDeduction">Tax Deduction</span></dt>
+        <dd>
+          <span>{{ employeeSalaryTempData.taxDeduction }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.welfareFundDeduction">Welfare Fund Deduction</span></dt>
+        <dd>
+          <span>{{ employeeSalaryTempData.welfareFundDeduction }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.mobileBillDeduction">Mobile Bill Deduction</span></dt>
+        <dd>
+          <span>{{ employeeSalaryTempData.mobileBillDeduction }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.otherDeduction">Other Deduction</span></dt>
+        <dd>
+          <span>{{ employeeSalaryTempData.otherDeduction }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.totalDeduction">Total Deduction</span></dt>
+        <dd>
+          <span>{{ employeeSalaryTempData.totalDeduction }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.netPay">Net Pay</span></dt>
+        <dd>
+          <span>{{ employeeSalaryTempData.netPay }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.remarks">Remarks</span></dt>
+        <dd>
+          <span>{{ employeeSalaryTempData.remarks }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.pfContribution">Pf Contribution</span></dt>
+        <dd>
+          <span>{{ employeeSalaryTempData.pfContribution }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.gfContribution">Gf Contribution</span></dt>
+        <dd>
+          <span>{{ employeeSalaryTempData.gfContribution }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.provisionForFestivalBonus">Provision For Festival Bonus</span></dt>
+        <dd>
+          <span>{{ employeeSalaryTempData.provisionForFestivalBonus }}</span>
+        </dd>
+        <dt>
+          <span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.provisionForLeaveEncashment">Provision For Leave Encashment</span>
+        </dt>
+        <dd>
+          <span>{{ employeeSalaryTempData.provisionForLeaveEncashment }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.provishionForProjectBonus">Provishion For Project Bonus</span></dt>
+        <dd>
+          <span>{{ employeeSalaryTempData.provishionForProjectBonus }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.livingAllowance">Living Allowance</span></dt>
+        <dd>
+          <span>{{ employeeSalaryTempData.livingAllowance }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.otherAddition">Other Addition</span></dt>
+        <dd>
+          <span>{{ employeeSalaryTempData.otherAddition }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.salaryAdjustment">Salary Adjustment</span></dt>
+        <dd>
+          <span>{{ employeeSalaryTempData.salaryAdjustment }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.providentFundArrear">Provident Fund Arrear</span></dt>
+        <dd>
+          <span>{{ employeeSalaryTempData.providentFundArrear }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.entertainment">Entertainment</span></dt>
+        <dd>
+          <span>{{ employeeSalaryTempData.entertainment }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.utility">Utility</span></dt>
+        <dd>
+          <span>{{ employeeSalaryTempData.utility }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.employee">Employee</span></dt>
+        <dd>
+          <div *ngIf="employeeSalaryTempData.employee">
+            <a [routerLink]="['/employee', employeeSalaryTempData.employee.id, 'view']">{{ employeeSalaryTempData.employee.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/employee-salary-temp-data', employeeSalaryTempData.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

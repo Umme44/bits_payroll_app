@@ -1,0 +1,57 @@
+{
+  "applications": "*",
+  "changelogDate": "20210218102756",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "salary_generator_master",
+  "fields": [
+    {
+      "fieldName": "year",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "month",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "isGenerated",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isMobileBillImported",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isPFLoanRepaymentImported",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isAttendanceImported",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isSalaryDeductionImported",
+      "fieldType": "Boolean",
+      "fieldValidateRules": []
+    },
+    {
+      "fieldName": "isFinalized",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "visibility",
+      "fieldType": "Visibility",
+      "fieldValues": "NOT_VISIBLE_TO_EMPLOYEE,VISIBLE_TO_EMPLOYEE,PARTIALLY_VISIBLE"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "SalaryGeneratorMaster",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

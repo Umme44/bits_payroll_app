@@ -1,0 +1,253 @@
+<div class="jhi-header">
+  <!--    <jhi-header [headerName]="'Nominee Form'"-->
+  <!--                [midHeaderName01]="'Gratuity Fund Nominee'"-->
+  <!--                [midRouterLinkText01]="'/nominee/gf-form'">-->
+  <!--    </jhi-header>-->
+
+  <jhi-header [headerName]="'Nominee Form'" [midHeaderName01]="'Gratuity Fund Nominee'" [midRouterLinkText01]="'/my-nominee/dashboard'">
+  </jhi-header>
+</div>
+
+<div class="print-btn-container container pe-0">
+  <div class="print-btn mb-2 text-end">
+    <button type="button" [disabled]="gfNominees && gfNominees.length < 1" (click)="print()" class="btn btn-primary">
+      <fa-icon icon="print"></fa-icon>
+      Print
+    </button>
+  </div>
+</div>
+
+<div class="pfNomineePrintDiv" *ngIf="gfNominees && gfNominees.length > 0" style="padding-bottom: 35px">
+  <div class="background-image-options" [style.background]="'url(' + getNomineeLetterHead() + ') no-repeat left top'">
+    <div class="report-border print-doc-area">
+      <div class="document-body">
+        <div class="text-start">
+          <br /><br /><br /><br /><br /><br />
+          <h5 class="mt-4 py-2 text-center fw-bold subject"><b>NOMINATION UNDER THE GRATUITY FUND</b></h5>
+          <table class="border-0 default-font" *ngIf="employeeDetails">
+            <tbody>
+              <tr>
+                <td class="w-5"><b> A.</b></td>
+                <td class="w-30 ps-0 text-start"><b>EMPLOYEE DETAILS</b></td>
+                <td class="w-65"></td>
+              </tr>
+              <tr>
+                <td class="w-5">1.</td>
+                <td class="w-20">Name</td>
+                <td class="w-75">: {{ employeeDetails.fullName }}</td>
+              </tr>
+              <tr>
+                <td class="w-5">2.</td>
+                <td class="w-20">Date of Joining</td>
+                <td class="w-75">: {{ employeeDetails.dateOfJoining | formatMediumDate }}</td>
+              </tr>
+              <tr>
+                <td class="w-5">3.</td>
+                <td class="w-20">Date of Confirmation</td>
+                <td class="w-75">: {{ employeeDetails.dateOfConfirmation | formatMediumDate }}</td>
+              </tr>
+              <tr>
+                <td class="w-5">4.</td>
+                <td class="w-20">Designation</td>
+                <td class="w-75">: {{ employeeDetails.designationName }}</td>
+              </tr>
+              <tr>
+                <td class="w-5">5.</td>
+                <td class="w-20">Band</td>
+                <td class="w-75">: {{ employeeDetails.bandName }}</td>
+              </tr>
+              <tr>
+                <td class="w-5">6.</td>
+                <td class="w-20">Father's Name</td>
+                <td class="w-75">: {{ employeeDetails.fatherName }}</td>
+              </tr>
+              <tr>
+                <td class="w-5">7.</td>
+                <td class="w-20">Mother's Name</td>
+                <td class="w-75">: {{ employeeDetails.motherName }}</td>
+              </tr>
+              <tr>
+                <td class="w-5">8.</td>
+                <td class="w-20">Spouse Name (if applicable)</td>
+                <td class="w-75">: {{ employeeDetails.spouseName }}</td>
+              </tr>
+              <tr>
+                <td class="w-5">9.</td>
+                <td class="w-15">Permanent Address</td>
+                <td class="w-80">: {{ employeeDetails.permanentAddress }}</td>
+              </tr>
+              <tr>
+                <td class="w-5">10.</td>
+                <td class="w-15">Unit &amp; Department</td>
+                <td class="w-80">: {{ employeeDetails.unitName }} - {{ employeeDetails.departmentName }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <br />
+          <p class="default-font fw-normal">
+            <span class="fw-bold">B. DECLARATION: </span> I do hereby nominate the following person(s) to receive/draw the amount/credit
+            balance of my Gratuity Fund account as may be admissible to me under the Employees' Gratuity fund rules in the event of my death
+            and declare that the said amount shall be distributed among the
+            <span class="fw-bold">NOMINEE(S)</span>
+            in the manner shows below against their names.
+          </p>
+          <table *ngIf="gfNominees && gfNominees.length > 0" class="table default-font nominee-details-border nominee-list-table">
+            <tbody>
+              <tr class="text-center nominee-details" style="font-size: 14px; color: black">
+                <td class="w-5 align-middle"><b>Photo</b></td>
+                <td class="w-15 align-middle"><b>Name</b></td>
+                <td style="min-width: 60px; max-width: 70px" class="align-middle"><b>Permanent Address</b></td>
+                <td style="min-width: 80px; max-width: 95px" class="align-middle"><b>Relationship with the Employee</b></td>
+                <td class="w-15 align-middle"><b>Photo ID No. (NID/Passport)</b></td>
+                <td class="w-7 align-middle"><b>Age</b></td>
+                <td class="w-8 align-middle"><b>Share (%)</b></td>
+              </tr>
+              <tr *ngFor="let gfNominee of gfNominees" class="text-center nominee-details">
+                <td style="vertical-align: middle">
+                  <div style="text-align: center">
+                    <a [href]="getGfNomineeImage(gfNominee.id!)" target="_blank" title="" class="photopp cboxElement">
+                      <img height="100" width="100" [src]="getGfNomineeImage(gfNominee.id!)" alt="" />
+                    </a>
+                  </div>
+                </td>
+                <td style="vertical-align: middle">{{ gfNominee.nomineeName }}</td>
+                <td style="vertical-align: middle">{{ gfNominee.permanentAddress }}</td>
+                <td style="vertical-align: middle">{{ gfNominee.relationshipWithEmployee }}</td>
+                <td style="vertical-align: middle">{{ gfNominee.idNumber }}</td>
+                <td style="vertical-align: middle">{{ gfNominee.age }}</td>
+                <td style="vertical-align: middle">{{ gfNominee.sharePercentage }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="default-font fw-normal text-justify">
+            If the <b>NOMINEE</b> is minor (below 18 years) and in the event of death of employee if the <b>NOMINEE</b> remains minor,
+            details of the authorized guardian to receive the fund
+          </p>
+          <table class="border-0 guardian-table default-font">
+            <tbody>
+              <tr class="text-start">
+                <td style="width: 6%">1.</td>
+                <td style="width: 38%">Name (Guardian of <b>NOMINEE</b>)</td>
+                <td style="width: 56%">
+                  : <span>{{ guardianInfo!.guardianName! }}</span>
+                </td>
+              </tr>
+              <tr>
+                <td>2.</td>
+                <td>Father's/Spouse Name</td>
+                <td>
+                  : <span>{{ guardianInfo!.guardianFatherName! }}</span>
+                </td>
+              </tr>
+              <tr>
+                <td>3.</td>
+                <td>Date of Birth</td>
+                <td>
+                  : <span>{{ guardianInfo.guardianDateOfBirth | formatMediumDate }}</span>
+                </td>
+              </tr>
+              <tr>
+                <td>4.</td>
+                <td>Present Address</td>
+                <td>
+                  : <span>{{ guardianInfo.guardianPresentAddress }}</span>
+                </td>
+              </tr>
+              <tr>
+                <td>5.</td>
+                <td>Permanent Address</td>
+                <td>
+                  : <span>{{ guardianInfo.guardianPermanentAddress }}</span>
+                </td>
+              </tr>
+              <tr>
+                <td>6.</td>
+                <td>Proof Identity of Legal Guardian</td>
+                <td>
+                  :
+                  <span>{{
+                    guardianInfo.guardianIdentityType === 'OTHER' ? guardianInfo.guardianDocumentName : guardianInfo.guardianIdentityType
+                  }}</span>
+                </td>
+              </tr>
+              <tr>
+                <td>7.</td>
+                <td>ID Number</td>
+                <td>
+                  : <span>{{ guardianInfo.guardianIdNumber }}</span>
+                </td>
+              </tr>
+              <tr>
+                <td>8.</td>
+                <td>Relationship with Nominee</td>
+                <td>
+                  : <span>{{ guardianInfo.guardianRelationshipWith }}</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <br />
+          <br />
+
+          <table class="tbl-signature border-0 default-font">
+            <tbody>
+              <tr class="text-start">
+                <td class="w-10 fw-bold"><u> Member </u></td>
+                <td class="w-23"></td>
+                <td class="w-10 fw-bold"><u> Witness </u></td>
+                <td class="w-23"></td>
+                <td class="w-15 fw-bold"><u> Approved by </u></td>
+                <td class="w-25"></td>
+              </tr>
+              <tr>
+                <td class="w-10">Signature</td>
+                <td class="w-23">: __________________</td>
+                <td class="w-10">Signature</td>
+                <td class="w-23">: __________________</td>
+                <td class="w-10">Signature</td>
+                <td class="w-24">: __________________</td>
+              </tr>
+              <tr>
+                <td class="w-10">Name</td>
+                <td class="w-23">:</td>
+                <td class="w-10">Name</td>
+                <td class="w-23">:</td>
+                <td class="w-12">Name</td>
+                <td class="w-22">:</td>
+              </tr>
+              <tr>
+                <td class="w-10">PIN</td>
+                <td class="w-23">:</td>
+                <td class="w-10">PIN</td>
+                <td class="w-23">:</td>
+                <td class="w-12">PIN</td>
+                <td class="w-22">:</td>
+              </tr>
+              <tr>
+                <td class="w-10">Date</td>
+                <td class="w-23">:</td>
+                <td class="w-10">Date</td>
+                <td class="w-23">:</td>
+                <td class="w-12">Date</td>
+                <td class="w-22">:</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <br /><br />
+        <table class="border-0" style="position: absolute; bottom: 30px">
+          <tbody>
+            <tr class="text-start">
+              <td class="w-60 point-5-rem">
+                <strong>CMMI</strong>Dev / 3 &nbsp;&nbsp;&nbsp; ISO<strong>27001</strong> &nbsp;&nbsp;&nbsp; ISO<strong>9001</strong>
+              </td>
+              <td class="w-25 point-5-rem">Internal Use</td>
+              <td class="w-15 text-end point-5-rem">Pg. | 1</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

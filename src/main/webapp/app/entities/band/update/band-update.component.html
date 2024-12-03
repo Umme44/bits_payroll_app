@@ -1,0 +1,223 @@
+<div>
+  <form (ngSubmit)="save()" [formGroup]="editForm" name="editForm" novalidate role="form">
+    <jhi-header
+      [headerName]="!editForm.get('id')!.value ? 'Add New Bands' : 'Edit Bands'"
+      [midHeaderName01]="'Bands'"
+      [midRouterLinkText01]="'/band'"
+      [shouldHaveHr]="false"
+    >
+    </jhi-header>
+
+    <div>
+      <jhi-alert-error></jhi-alert-error>
+
+      <div class="container-fluid card py-3">
+        <div class="mb-3">
+          <label class="form-control-label required" for="field_bandName" jhiTranslate="bitsHrPayrollApp.band.bandName">Band Name</label>
+          <input class="form-control" formControlName="bandName" id="field_bandName" name="bandName" type="text" />
+          <div *ngIf="editForm.get('bandName')!.invalid && (editForm.get('bandName')!.dirty || editForm.get('bandName')!.touched)">
+            <small
+              *ngIf="editForm.get('bandName')?.errors?.required || editForm.get('bandName')?.errors?.notOnlyWhitespace"
+              class="form-text text-danger"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              *ngIf="!editForm.get('bandName')?.errors?.notOnlyWhitespace && editForm.get('bandName')?.errors?.maxlength"
+              [translateValues]="{ max: 250 }"
+              class="form-text text-danger"
+              jhiTranslate="entity.validation.maxlength"
+            >
+              This field cannot be longer than 250 characters.
+            </small>
+          </div>
+          <div *ngIf="editForm.get('bandName')!.invalid && (editForm.get('bandName')!.dirty || editForm.get('bandName')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('bandName')?.errors?.pattern">
+              This field must be a natural text.
+            </small>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-control-label required" for="field_minSalary" jhiTranslate="bitsHrPayrollApp.band.minSalary">Min Salary</label>
+          <input
+            (ngModelChange)="checkSalary()"
+            class="form-control"
+            formControlName="minSalary"
+            id="field_minSalary"
+            min="0"
+            name="minSalary"
+            type="number"
+          />
+          <div *ngIf="editForm.get('minSalary')!.invalid && (editForm.get('minSalary')!.dirty || editForm.get('minSalary')!.touched)">
+            <small
+              *ngIf="editForm.get('minSalary')?.errors?.required"
+              class="form-text text-danger"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              *ngIf="editForm.get('minSalary')?.errors?.min"
+              [translateValues]="{ min: 0 }"
+              class="form-text text-danger"
+              jhiTranslate="entity.validation.min"
+            >
+              This field should be at least 0.
+            </small>
+            <small
+              [hidden]="!editForm.get('minSalary')?.errors?.number"
+              class="form-text text-danger"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-control-label required" for="field_maxSalary" jhiTranslate="bitsHrPayrollApp.band.maxSalary">Max Salary</label>
+          <input
+            (ngModelChange)="checkSalary()"
+            class="form-control"
+            formControlName="maxSalary"
+            id="field_maxSalary"
+            min="0"
+            name="maxSalary"
+            type="number"
+          />
+          <div *ngIf="editForm.get('maxSalary')!.invalid && (editForm.get('maxSalary')!.dirty || editForm.get('maxSalary')!.touched)">
+            <small
+              *ngIf="editForm.get('maxSalary')?.errors?.required"
+              class="form-text text-danger"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              *ngIf="editForm.get('maxSalary')?.errors?.min"
+              [translateValues]="{ min: 0 }"
+              class="form-text text-danger"
+              jhiTranslate="entity.validation.min"
+            >
+              This field should be at least 0.
+            </small>
+            <small
+              [hidden]="!editForm.get('maxSalary')?.errors?.number"
+              class="form-text text-danger"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+          <div *ngIf="editForm.get('maxSalary')!.valid && (editForm.get('maxSalary')!.dirty || editForm.get('maxSalary')!.touched)">
+            <small *ngIf="invalidSalary" class="form-text text-danger"> Minimum salary can not be greater than maximum salary. </small>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-control-label required" for="field_welfareFund">Welfare Fund</label>
+          <input
+            (ngModelChange)="checkSalary()"
+            class="form-control"
+            formControlName="welfareFund"
+            id="field_welfareFund"
+            min="0"
+            name="welfareFund"
+            type="number"
+          />
+          <div *ngIf="editForm.get('welfareFund')!.invalid && (editForm.get('welfareFund')!.dirty || editForm.get('welfareFund')!.touched)">
+            <small
+              *ngIf="editForm.get('welfareFund')?.errors?.required"
+              class="form-text text-danger"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              *ngIf="editForm.get('welfareFund')?.errors?.min"
+              [translateValues]="{ min: 0 }"
+              class="form-text text-danger"
+              jhiTranslate="entity.validation.min"
+            >
+              This field should be at least 0.
+            </small>
+            <small
+              *ngIf="editForm.get('welfareFund')?.errors?.max"
+              [translateValues]="{ max: 1000000 }"
+              class="form-text text-danger"
+              jhiTranslate="entity.validation.max"
+            >
+              This field should not be more than 100000.
+            </small>
+            <small
+              [hidden]="!editForm.get('welfareFund')?.errors?.number"
+              class="form-text text-danger"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+          <div class="mb-3">
+            <label class="form-control-label required" for="field_mobileCelling">Mobile Celling</label>
+            <input
+              class="form-control"
+              formControlName="mobileCelling"
+              id="field_mobileCelling"
+              min="0"
+              name="mobileCelling"
+              type="number"
+            />
+            <div
+              *ngIf="
+                editForm.get('mobileCelling')!.invalid && (editForm.get('mobileCelling')!.dirty || editForm.get('mobileCelling')!.touched)
+              "
+            >
+              <small
+                *ngIf="editForm.get('mobileCelling')?.errors?.required"
+                class="form-text text-danger"
+                jhiTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+              <small
+                *ngIf="editForm.get('mobileCelling')?.errors?.min"
+                [translateValues]="{ min: 0 }"
+                class="form-text text-danger"
+                jhiTranslate="entity.validation.min"
+              >
+                This field should be at least 0.
+              </small>
+              <small
+                *ngIf="editForm.get('mobileCelling')?.errors?.max"
+                [translateValues]="{ max: 1000000 }"
+                class="form-text text-danger"
+                jhiTranslate="entity.validation.max"
+              >
+                This field should not be more than 100000.
+              </small>
+              <small
+                [hidden]="!editForm.get('mobileCelling')?.errors?.number"
+                class="form-text text-danger"
+                jhiTranslate="entity.validation.number"
+              >
+                This field should be a number.
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <button (click)="previousState()" class="btn btn-secondary" id="cancel-save" type="button">
+            <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+          </button>
+
+          <button [disabled]="editForm.invalid || isSaving || invalidSalary" class="btn btn-primary" id="save-entity" type="submit">
+            <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

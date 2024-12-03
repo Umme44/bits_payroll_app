@@ -1,0 +1,305 @@
+<div class="row">
+  <jhi-header
+    [headerName]="'New Registration'"
+    [midHeaderName01]="'Insurance Registration'"
+    [midRouterLinkText01]="'/insurance-registration'"
+  >
+  </jhi-header>
+
+  <div class="col-12 m-0 p-1">
+    <p *ngIf="isInsuranceConfigurationMissing" class="insurance-config-missing">Insurance Configuration is Missing.</p>
+  </div>
+
+  <!--    List of registered persons as per the selected employee-->
+  <div class="col-12">
+    <div class="custom-card mb-2" *ngIf="previousInsuranceRegistration && previousInsuranceRegistration.length > 0">
+      <div class="table-responsive" id="entity">
+        <table aria-describedby="page-heading" class="table table-hover list-text-color">
+          <thead class="text-nowrap">
+            <tr>
+              <th scope="col"><span jhiTranslate="bitsHrPayrollApp.insuranceRegistration.insuranceStatus">Status</span></th>
+              <th scope="col">
+                <span jhiTranslate="bitsHrPayrollApp.insuranceRegistration.photo">Photo</span>
+              </th>
+              <th scope="col"><span jhiTranslate="bitsHrPayrollApp.insuranceRegistration.name">Name</span></th>
+              <th scope="col"><span jhiTranslate="bitsHrPayrollApp.insuranceRegistration.insuranceRelation">Relation</span></th>
+              <th scope="col"><span jhiTranslate="bitsHrPayrollApp.insuranceRegistration.dateOfBirth">Date of Birth</span></th>
+              <th scope="col"><span>Insurance ID</span></th>
+
+              <th class="text-end" scope="col">
+                <span>Available Balance</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let insuranceRegistration of previousInsuranceRegistration">
+              <td>
+                <span class="px-md-2" *ngIf="insuranceRegistration.insuranceStatus === 'PENDING'"> Pending </span>
+                <span class="text-success px-md-2" *ngIf="insuranceRegistration.insuranceStatus === 'APPROVED'">
+                  <fa-icon icon="check"></fa-icon>
+                </span>
+                <span class="text-danger px-md-2" *ngIf="insuranceRegistration.insuranceStatus === 'NOT_APPROVED'">
+                  <fa-icon icon="times"></fa-icon>
+                </span>
+                <span class="text-danger px-md-2" *ngIf="insuranceRegistration.insuranceStatus === 'SEPARATED'">
+                  <fa-icon icon="file-signature"></fa-icon>
+                </span>
+                <span class="text-danger px-md-2" *ngIf="insuranceRegistration.insuranceStatus === 'CANCELED'">
+                  <fa-icon icon="minus-circle"></fa-icon>
+                </span>
+              </td>
+              <td>
+                <img
+                  style="width: 40px; height: 40px; margin: 2px; background-color: #0c5460; border-radius: 50%"
+                  [src]="getRegistrationAccountImageImage(insuranceRegistration.id!)"
+                />
+              </td>
+
+              <td>
+                <span>{{ insuranceRegistration.name }}</span>
+              </td>
+
+              <td>
+                <span>{{ getInsuranceRelationName(insuranceRegistration.insuranceRelation!) }}</span>
+              </td>
+
+              <td>
+                <span>{{ insuranceRegistration.dateOfBirth | formatMediumDate }}</span>
+              </td>
+              <td>
+                <span>{{ insuranceRegistration.insuranceId }}</span>
+              </td>
+              <td class="text-end">
+                <span>{{ insuranceRegistration.availableBalance | number }}</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <div class="row">
+      <jhi-alert-error></jhi-alert-error>
+    </div>
+
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <div class="card card-body mb-3">
+        <div class="row">
+          <div *ngIf="!this.editForm.get(['id'])!.value" class="mb-3 col-4 font-sm">
+            <label class="form-control-label required" jhiTranslate="bitsHrPayrollApp.attendanceSummary.employee">Employee</label>
+
+            <ng-select
+              [items]="employees"
+              bindLabel="fullName"
+              bindValue="id"
+              [searchable]="true"
+              [clearable]="true"
+              id="field_employeeId"
+              appearance="outline"
+              (change)="getEmployeeID($event)"
+            >
+            </ng-select>
+
+            <div *ngIf="!isEmployeeEligible">
+              <small class="form-text text-danger"> Only Regular Confirmed And Contractual Employees Are Eligible. </small>
+            </div>
+
+            <div *ngIf="editForm.get('employeeId')!.invalid && (editForm.get('employeeId')!.dirty || editForm.get('employeeId')!.touched)">
+              <small
+                *ngIf="editForm.get('employeeId')?.errors?.required"
+                class="form-text text-danger"
+                jhiTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+            </div>
+          </div>
+
+          <div *ngIf="this.editForm.get(['id'])!.value" class="col-md-4">
+            <label class="form-control-label required" for="employeeName">Policy Holder Name</label>
+            <input class="form-control" readonly formControlName="employeeName" name="employeeName" id="employeeName" type="text" />
+          </div>
+
+          <div class="mb-3 col-4">
+            <label
+              class="form-control-label"
+              jhiTranslate="bitsHrPayrollApp.insuranceRegistration.insuranceRelation"
+              for="field_insuranceRelation"
+              >Insurance Relation</label
+            >
+            <select
+              class="form-control"
+              (change)="onChangeInsuranceRelation()"
+              name="insuranceRelation"
+              formControlName="insuranceRelation"
+              id="field_insuranceRelation"
+            >
+              <option [ngValue]="relation" *ngFor="let relation of relations">
+                {{ getInsuranceRelationName(relation) }}
+              </option>
+            </select>
+            <div
+              *ngIf="
+                editForm.get('insuranceRelation')!.invalid &&
+                (editForm.get('insuranceRelation')!.dirty || editForm.get('insuranceRelation')!.touched)
+              "
+            >
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('insuranceRelation')?.errors?.required"
+                jhiTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+            </div>
+          </div>
+
+          <!--                    <div *ngIf="this.editForm.get(['id'])!.value" class="col-md-4">-->
+          <!--                        <label class="form-control-label required" for="field_age"-->
+          <!--                        >Policy Holder PIN</label>-->
+          <!--                        <input class="form-control" readonly formControlName="employeeId"-->
+          <!--                               name="employeeId"-->
+          <!--                               type="number"/>-->
+          <!--                    </div>-->
+
+          <div class="mb-3 col-4">
+            <label class="form-control-label required" jhiTranslate="bitsHrPayrollApp.insuranceRegistration.name" for="field_name"
+              >Name</label
+            >
+            <input type="text" class="form-control" name="name" id="field_name" formControlName="name" />
+            <div *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
+              <small *ngIf="editForm.get('name')?.errors?.required" class="form-text text-danger" jhiTranslate="entity.validation.required">
+                This field is required.
+              </small>
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('name')?.errors?.maxlength"
+                jhiTranslate="entity.validation.maxlength"
+                [translateValues]="{ max: 250 }"
+              >
+                This field cannot be longer than 250 characters.
+              </small>
+              <small class="form-text text-danger" *ngIf="editForm.get('name')?.errors?.pattern"> This text is invalid </small>
+            </div>
+          </div>
+
+          <div class="mb-3 col-4">
+            <label
+              class="form-control-label required"
+              jhiTranslate="bitsHrPayrollApp.insuranceRegistration.dateOfBirth"
+              for="field_dateOfBirth"
+              >Date Of Birth</label
+            >
+            <div class="input-group">
+              <input
+                (ngModelChange)="calculateAge()"
+                id="field_dateOfBirth"
+                type="text"
+                class="form-control"
+                name="dateOfBirth"
+                ngbDatepicker
+                #dateOfBirthDp="ngbDatepicker"
+                [maxDate]="maxDateForDateOfBirthDP"
+                formControlName="dateOfBirth"
+              />
+              <span class="input-group-append">
+                <button type="button" class="btn btn-secondary" (click)="dateOfBirthDp.toggle()">
+                  <fa-icon icon="calendar-alt"></fa-icon>
+                </button>
+              </span>
+            </div>
+            <div
+              *ngIf="editForm.get('dateOfBirth')!.invalid && (editForm.get('dateOfBirth')!.dirty || editForm.get('dateOfBirth')!.touched)"
+            >
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('dateOfBirth')?.errors?.required"
+                jhiTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+            </div>
+          </div>
+
+          <div class="mb-3 col-md-4">
+            <label class="form-control-label required" for="field_age">Age</label>
+            <input class="form-control" readonly formControlName="age" id="field_age" name="age" type="number" />
+            <div *ngIf="isChildAgeExceedMaxLimit">
+              <small class="form-text text-danger">
+                Children Over {{ insuranceConfiguration.maxAllowedChildAge }} Years Are not Allowed to Registered!
+              </small>
+            </div>
+          </div>
+
+          <div class="mb-3 col-4" *ngIf="editForm.get(['insuranceStatus'])!.value === 'APPROVED'">
+            <label
+              class="form-control-label required"
+              jhiTranslate="bitsHrPayrollApp.insuranceRegistration.insuranceId"
+              for="field_insuranceId"
+              >Name</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              name="insuranceId"
+              id="field_insuranceId"
+              (keyup)="onChangeInsuranceCardId()"
+              formControlName="insuranceId"
+            />
+            <div *ngIf="inValidInsuranceId">
+              <span class="text-danger font-sm">This card ID is already in use. Please use a unique one.</span>
+            </div>
+          </div>
+
+          <div *ngIf="editForm.get(['insuranceRelation'])!.value !== 'SELF'" class="mb-3 col-sm-4">
+            <label
+              class="form-control-label"
+              [ngClass]="isImageRequired ? 'required' : ''"
+              jhiTranslate="bitsHrPayrollApp.insuranceRegistration.photo"
+              for="field_photo"
+              >Photo</label
+            >
+            <div>
+              <input
+                class="form-control border-0 p-0"
+                name="photo"
+                id="field_photo"
+                type="file"
+                formControlName="photo"
+                (change)="onChangeSelectImage($event)"
+              />
+            </div>
+            <div *ngIf="inValidFile">
+              <small class="form-text text-danger">
+                {{ inValidFileErrorMsg }}
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          [disabled]="
+            editForm.invalid ||
+            isSaving ||
+            inValidInsuranceId ||
+            (!editForm.get(['id'])!.value && isImageMissing) ||
+            isChildAgeExceedMaxLimit
+          "
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

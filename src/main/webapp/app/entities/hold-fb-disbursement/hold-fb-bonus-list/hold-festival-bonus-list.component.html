@@ -1,0 +1,128 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h6 class="modal-title">Disburse Festival Bonus</h6>
+    <!--        <button type="button" style="border: none" class="btn-close border-0" aria-label="Close" (click)="modal.dismiss('Cross click')"> <fa-icon icon="times"></fa-icon></button>-->
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <label class="form-control-label p-2 required" for="date"> Select Disburse Date </label>
+          <input type="date" class="form-control w-100" id="date" name="date" [formControl]="date" />
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="input-group">
+          <label class="form-control-label p-2 required" for="date"> Remarks </label>
+          <input type="text" class="form-control w-100" id="" name="remark" [formControl]="remark" />
+        </div>
+      </div>
+
+      <div class="col-12 mx-0 my-4">
+        <div class="row">
+          <div class="col-6">
+            <button
+              style="font-weight: 500"
+              [disabled]="date.value === null || remark.value === null"
+              type="button"
+              (click)="modal.close()"
+              class="btn btn-md btn-info w-100"
+            >
+              Disburse
+            </button>
+          </div>
+          <div class="col-6">
+            <button style="font-weight: 500" type="button" (click)="modal.dismiss('Cross click')" class="btn btn-md btn-danger w-100">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<div class="mb-2">
+  <jhi-header [headerName]="'Hold Festival Bonus'" [shouldHaveHr]="false"> </jhi-header>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="row">
+    <div class="col-md-8">
+      <jhi-search-text-box (searchEvent)="search($event)"></jhi-search-text-box>
+    </div>
+
+    <div class="col-md-4 text-end">
+      <a class="btn btn-outline-primary ml-auto" [routerLink]="'/hold-fb-disbursement'">Disbursed Bonuses</a>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="holdBonusList && holdBonusList.length > 0" class="table-responsive" id="entities">
+  <table aria-describedby="page-heading" class="table table-hover">
+    <thead>
+      <tr>
+        <th style="vertical-align: middle">
+          <span>
+            <input class="form-check-input" type="checkbox" [value]="-1" (change)="onChange($event)" [(ngModel)]="allSelector" />
+          </span>
+        </th>
+        <th scope="col" class="text-nowrap"><span>PIN</span></th>
+        <th scope="col" class="text-nowrap"><span>Name</span></th>
+        <th scope="col" class="text-nowrap"><span>Employee Category</span></th>
+        <th scope="col" class="text-nowrap"><span>Title</span></th>
+        <th scope="col" class="text-nowrap"><span>Festival Name</span></th>
+        <th scope="col" class="text-nowrap"><span>Festival Date</span></th>
+        <th scope="col" class="text-nowrap"><span>Bonus Disbursement Date</span></th>
+        <th scope="col" class="text-nowrap text-end"><span>Gross Salary</span></th>
+        <th scope="col" class="text-nowrap text-end"><span>Bonus Amount</span></th>
+        <th scope="col" class="text-nowrap text-end">
+          <span>
+            <button
+              (click)="disburseFBModal(content)"
+              [disabled]="listOfId.length < 1"
+              class="btn btn-success btn-sm text-nowrap"
+              type="submit"
+            >
+              Disburse
+            </button>
+          </span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let bonusDetails of holdBonusList">
+        <td>
+          <span>
+            <input
+              class="form-check-input"
+              type="checkbox"
+              [value]="bonusDetails.id"
+              [checked]="bonusDetails.isChecked"
+              (change)="onChange($event)"
+            />
+          </span>
+        </td>
+        <td class="text-nowrap">
+          <a>{{ bonusDetails.pin }}</a>
+        </td>
+        <td class="text-nowrap">{{ bonusDetails.fullName }}</td>
+        <td class="text-nowrap" jhiTranslate="{{ 'bitsHrPayrollApp.EmployeeCategory.' + bonusDetails.employeeCategory }}">
+          {{ bonusDetails.employeeCategory }}
+        </td>
+        <td class="text-nowrap">{{ bonusDetails.title }}</td>
+        <td class="text-nowrap">{{ bonusDetails.festivalName }}</td>
+        <td class="text-nowrap">{{ bonusDetails.festivalDate }}</td>
+        <td class="text-nowrap">{{ bonusDetails.bonusDisbursementDate }}</td>
+        <td class="text-nowrap text-end">{{ bonusDetails.gross }}</td>
+        <td class="text-nowrap text-end">{{ bonusDetails.bonusAmount }}</td>
+        <td class="text-nowrap text-end">
+          <button class="btn btn-secondary btn-sm text-nowrap" type="submit">Payslip</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

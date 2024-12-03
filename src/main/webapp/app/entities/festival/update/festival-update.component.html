@@ -1,0 +1,218 @@
+<jhi-header [headerName]="editForm.get('id')!.value ? 'Edit Festival' : 'New Festival'"
+            [midHeaderName01]="'Festivals'" [midRouterLinkText01]="'/festival'">
+</jhi-header>
+
+
+
+<!---- general ---->
+
+<div class="" *ngIf="pageType && pageType === 'general'">
+  <jhi-alert-error></jhi-alert-error>
+  <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+
+    <div class="card card-body">
+      <div class="row">
+        <div class="col-md-3">
+          <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.festival.title"
+                 for="field_title">Title</label>
+          <input type="text" class="form-control" name="title"
+                 formControlName="title"/>
+          <div
+            *ngIf="editForm.get('title')!.invalid && (editForm.get('title')!.dirty || editForm.get('title')!.touched)">
+            <small class="form-text text-danger"
+                   *ngIf="editForm.get('title')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+            <small class="form-text text-danger"
+                   *ngIf="editForm.get('title')?.errors?.minlength" jhiTranslate="entity.validation.minlength"
+                   [translateValues]="{ min: 3 }">
+              This field is required to be at least 3 characters.
+            </small>
+            <small class="form-text text-danger"
+                   *ngIf="editForm.get('title')?.errors?.maxlength" jhiTranslate="entity.validation.maxlength"
+                   [translateValues]="{ max: 255 }">
+              This field cannot be longer than 255 characters.
+            </small>
+            <small class="form-text text-danger"
+                   *ngIf="editForm.get('title')?.errors?.pattern">
+              This text is invalid
+            </small>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.festival.festivalName"
+                 for="field_festivalName">Festival Name</label>
+          <input type="text" class="form-control" name="festivalName" id="field_festivalName"
+                 formControlName="festivalName"/>
+          <div
+            *ngIf="editForm.get('festivalName')!.invalid && (editForm.get('festivalName')!.dirty || editForm.get('festivalName')!.touched)">
+            <small class="form-text text-danger"
+                   *ngIf="editForm.get('festivalName')?.errors?.minlength"
+                   jhiTranslate="entity.validation.minlength" [translateValues]="{ min: 0 }">
+              This field is required to be at least 0 characters.
+            </small>
+            <small class="form-text text-danger"
+                   *ngIf="editForm.get('festivalName')?.errors?.maxlength"
+                   jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 255 }">
+              This field cannot be longer than 255 characters.
+            </small>
+            <small class="form-text text-danger"
+                   *ngIf="editForm.get('festivalName')?.errors?.pattern">
+              This text is invalid
+            </small>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.festival.festivalDate"
+                 for="field_festivalDate">Festival Date</label>
+          <div class="input-group">
+            <input id="field_festivalDate" type="text" class="form-control" name="festivalDate" ngbDatepicker
+                   #festivalDateDp="ngbDatepicker" formControlName="festivalDate"/>
+            <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="festivalDateDp.toggle()"><fa-icon
+                              icon="calendar-alt"></fa-icon></button>
+                        </span>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.festival.bonusDisbursementDate"
+                 for="field_bonusDisbursementDate">Bonus Disbursement Date</label>
+          <div class="input-group">
+            <input type="text" class="form-control"
+                   name="bonusDisbursementDate"
+                   ngbDatepicker #bonusDisbursementDateDp="ngbDatepicker"
+                   formControlName="bonusDisbursementDate"/>
+            <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="bonusDisbursementDateDp.toggle()"><fa-icon
+                              icon="calendar-alt"></fa-icon></button>
+                        </span>
+          </div>
+          <div
+            *ngIf="editForm.get('bonusDisbursementDate')!.invalid && (editForm.get('bonusDisbursementDate')!.dirty || editForm.get('bonusDisbursementDate')!.touched)">
+            <small class="form-text text-danger"
+                   *ngIf="editForm.get('bonusDisbursementDate')?.errors?.required"
+                   jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.festival.religion"
+                 for="field_religion">Religion</label>
+          <select class="form-control" name="religion" formControlName="religion" id="field_religion">
+            <option value="ISLAM">{{ 'bitsHrPayrollApp.Religion.ISLAM' | translate }}</option>
+            <option value="HINDU">{{ 'bitsHrPayrollApp.Religion.HINDU' | translate }}</option>
+            <option value="BUDDHA">{{ 'bitsHrPayrollApp.Religion.BUDDHA' | translate }}</option>
+            <option value="CHRISTIAN">{{ 'bitsHrPayrollApp.Religion.CHRISTIAN' | translate }}</option>
+            <option value="OTHER">{{ 'bitsHrPayrollApp.Religion.OTHER' | translate }}</option>
+            <option value="ALL">{{ 'bitsHrPayrollApp.Religion.ALL' | translate }}</option>
+          </select>
+          <div
+            *ngIf="editForm.get('religion')!.invalid && (editForm.get('religion')!.dirty || editForm.get('religion')!.touched)">
+            <small class="form-text text-danger"
+                   *ngIf="editForm.get('religion')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+    <div class="mt-2">
+      <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+        <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+      </button>
+
+      <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+        <fa-icon icon="save"></fa-icon>&nbsp;
+        <span *ngIf="!editForm.get('id')!.value">Generate</span>
+        <span *ngIf="editForm.get('id')!.value">Re-Generate</span>
+      </button>
+    </div>
+
+  </form>
+</div>
+
+
+
+
+
+
+
+
+
+<!---- pro rata ---->
+<div class="" *ngIf="pageType && pageType === 'pro-rata'">
+  <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+
+    <jhi-alert-error></jhi-alert-error>
+    <div class="card card-body">
+      <div class="row">
+        <div class="col-md-3">
+          <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.festival.title"
+                 for="field_title">Title</label>
+          <input type="text" class="form-control" name="title" id="field_title"
+                 formControlName="title"/>
+          <div
+            *ngIf="editForm.get('title')!.invalid && (editForm.get('title')!.dirty || editForm.get('title')!.touched)">
+            <small class="form-text text-danger"
+                   *ngIf="editForm.get('title')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+            <small class="form-text text-danger"
+                   *ngIf="editForm.get('title')?.errors?.minlength" jhiTranslate="entity.validation.minlength"
+                   [translateValues]="{ min: 3 }">
+              This field is required to be at least 3 characters.
+            </small>
+            <small class="form-text text-danger"
+                   *ngIf="editForm.get('title')?.errors?.maxlength" jhiTranslate="entity.validation.maxlength"
+                   [translateValues]="{ max: 255 }">
+              This field cannot be longer than 255 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.festival.bonusDisbursementDate"
+                 for="field_bonusDisbursementDate">Bonus Disbursement Date</label>
+          <div class="input-group">
+            <input id="field_bonusDisbursementDate" type="text" class="form-control"
+                   name="bonusDisbursementDate"
+                   ngbDatepicker #bonusDisbursementDateDp="ngbDatepicker"
+                   formControlName="bonusDisbursementDate"/>
+            <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="bonusDisbursementDateDp.toggle()"><fa-icon
+                              icon="calendar-alt"></fa-icon></button>
+                        </span>
+          </div>
+          <div
+            *ngIf="editForm.get('bonusDisbursementDate')!.invalid && (editForm.get('bonusDisbursementDate')!.dirty || editForm.get('bonusDisbursementDate')!.touched)">
+            <small class="form-text text-danger"
+                   *ngIf="editForm.get('bonusDisbursementDate')?.errors?.required"
+                   jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="mt-2">
+      <button type="button" id="cancel-save2" class="btn btn-secondary" (click)="previousState()">
+        <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+      </button>
+
+      <button type="submit" id="save-entity2" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+        <fa-icon icon="save"></fa-icon>&nbsp;
+        <span *ngIf="!editForm.get('id')!.value">Generate</span>
+        <span *ngIf="editForm.get('id')!.value">Re-Generate</span>
+      </button>
+    </div>
+
+  </form>
+</div>

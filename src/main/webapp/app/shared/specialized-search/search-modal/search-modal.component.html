@@ -1,0 +1,151 @@
+<div class="modal-header">
+  <!--    <h4 class="modal-title">{{headerText}}</h4>-->
+
+  <button (click)="cancel()" aria-hidden="true" class="btn-close" data-dismiss="modal" type="button"></button>
+</div>
+
+<div class="modal-body">
+  <div class="container">
+    <div class="card m-3 p-1 ps-3" *ngIf="employeeSpecializedSearch.pin !== undefined">
+      <img class="card-img-top mt-3" [src]="getProfilePicture(employeeSpecializedSearch.pin)" alt="Card image cap" />
+      <div class="card-body ps-4">
+        <h5 class="card-title mb-2">
+          <span class="text-muted">{{ employeeSpecializedSearch.pin }}</span>
+          <a class="text-primary font-large text-decoration-none">{{ employeeSpecializedSearch.fullName }}</a>
+        </h5>
+        <h6 class="card-subtitle mb-1 text-muted text-avg">
+          {{ employeeSpecializedSearch.designationName }}
+          , {{ employeeSpecializedSearch.departmentName }}
+        </h6>
+        <table class="table table-sm table-borderless">
+          <tr>
+            <td>
+              <div class="card card-body p-2 m-1">
+                <span class="mb-0 text-muted text-nowrap text-md">
+                  Email:
+                  <a href="mailto:{{ employeeSpecializedSearch.officialEmail }}">
+                    {{ employeeSpecializedSearch.officialEmail }}
+                  </a>
+                </span>
+                <a class="badge bg-light ms-auto" (click)="copyToClipboard(employeeSpecializedSearch.officialEmail!.toString())">
+                  <img src="/content/icons/copy.svg" alt="" height="15px" width="15px" />
+                </a>
+              </div>
+            </td>
+            <td>
+              <div class="card card-body p-2 m-1">
+                <span class="mb-0 text-muted text-nowrap text-md">
+                  Work Phone:
+                  <a href="tel:{{ employeeSpecializedSearch.officialContactNo }}">{{ employeeSpecializedSearch.officialContactNo }}</a>
+                </span>
+                <a class="badge bg-light ms-auto" (click)="copyToClipboard(employeeSpecializedSearch.officialContactNo!.toString())">
+                  <img src="/content/icons/copy.svg" alt="" height="15px" width="15px" />
+                </a>
+              </div>
+            </td>
+            <td>
+              <div class="card card-body p-2 m-1">
+                <span class="mb-0 text-muted text-nowrap text-md"> WhatsApp: {{ employeeSpecializedSearch.whatsappId }} </span>
+                <a class="badge bg-light ms-auto" (click)="copyToClipboard(employeeSpecializedSearch.whatsappId!.toString())">
+                  <img src="/content/icons/copy.svg" alt="" height="15px" width="15px" />
+                </a>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="card card-body p-2 m-1">
+                <span class="mb-0 text-muted text-nowrap text-md"> Skype: {{ employeeSpecializedSearch.skypeId }} </span>
+                <a class="badge bg-light ms-auto" (click)="copyToClipboard(employeeSpecializedSearch.skypeId!.toString())">
+                  <img src="/content/icons/copy.svg" alt="" height="15px" width="15px" />
+                </a>
+              </div>
+            </td>
+            <td>
+              <div class="card card-body p-2 m-1">
+                <span class="mb-0 text-muted text-nowrap text-md" *ngIf="employeeSpecializedSearch.reportingToId !== undefined">
+                  Reports to:
+                  <a class="text-primary" (click)="loadEmployee(employeeSpecializedSearch.reportingToId)">
+                    {{ employeeSpecializedSearch.reportingToName }}
+                  </a>
+                </span>
+                <a class="badge bg-light ms-auto" (click)="copyToClipboard(employeeSpecializedSearch.reportingToName!.toString())">
+                  <img src="/content/icons/copy.svg" alt="" height="15px" width="15px" />
+                </a>
+              </div>
+            </td>
+            <td>
+              <div class="card card-body p-2 m-1">
+                <span class="mb-0 text-muted text-nowrap text-md"> Unit: {{ employeeSpecializedSearch.unitName }} </span>
+                <a class="badge bg-light ms-auto" (click)="copyToClipboard(employeeSpecializedSearch.unitName!.toString())">
+                  <img src="/content/icons/copy.svg" alt="" height="15px" width="15px" />
+                </a>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="text-muted mb-0 ms-3">Organizational Hierarchy</div>
+    <hr class="rounded ms-3 me-3 mt-1" />
+
+    <div class="container" style="max-width: 50%">
+      <div class="card ps-2 pt-2 mb-2" *ngFor="let employee of employeeSpecializedSearch.organizationalHierarchy">
+        <ng-container *ngIf="employee.pin !== undefined">
+          <img class="card-img-sub p-1" [src]="getProfilePicture(employee.pin)" alt="Card image cap" />
+        </ng-container>
+        <div class="card-body pt-1 pb-1">
+          <h5 class="card-title mb-2 text-avg">
+            <ng-container *ngIf="employee.id !== undefined">
+              <a class="text-primary" (click)="loadEmployee(employee.id)">{{ employee.fullName }}</a>
+            </ng-container>
+          </h5>
+          <h6 class="card-subtitle mb-0 text-muted text-md">{{ employee.designationName }}, {{ employee.departmentName }}</h6>
+          <a href="mailto:{{ employee.officialEmail }}" class="mb-0 fw-bold text-small text-primary">
+            {{ employee.officialEmail }}
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-muted mb-0 ms-3">
+      People Reporting to <a class="text-primary text-avg">{{ employeeSpecializedSearch.fullName }}</a>
+    </div>
+    <hr class="rounded ms-3 me-3 mt-1" />
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="p-1 col-sm-4" *ngFor="let employee of employeeSpecializedSearch.peopleReportingTo">
+          <div class="card ps-2 pt-2 mb-2" *ngIf="employee.pin !== undefined">
+            <img class="card-img-sub p-1" [src]="getProfilePicture(employee.pin)" alt="Card image cap" />
+            <div class="card-body pt-1 pb-1">
+              <h5 class="card-title mb-2 text-avg">
+                <ng-container *ngIf="employee.id !== undefined">
+                  <a class="text-primary" (click)="loadEmployee(employee.id)">{{ employee.fullName }}</a>
+                </ng-container>
+              </h5>
+              <h6 class="card-subtitle mb-1 text-muted text-md">
+                {{ employee.designationName }}
+              </h6>
+              <h6 class="card-subtitle mb-0 text-muted text-md">
+                {{ employee.departmentName }}
+              </h6>
+              <h6 class="mb-0 fw-bold text-primary text-small">
+                <a href="mailto:{{ employee.officialEmail }}">
+                  {{ employee.officialEmail }}
+                </a>
+              </h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button (click)="cancel()" class="btn btn-secondary" data-dismiss="modal" type="button">
+    <fa-icon icon="ban"></fa-icon>&nbsp;<span>Close</span>
+  </button>
+</div>

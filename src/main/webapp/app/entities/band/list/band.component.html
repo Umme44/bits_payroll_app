@@ -1,0 +1,62 @@
+<jhi-header [addButtonText]="'add new Bands'" [headerName]="'Bands'" [routerLinkText]="'/band/new'" [shouldHaveHr]="false"> </jhi-header>
+<div>
+  <jhi-alert-error></jhi-alert-error>
+  <jhi-alert></jhi-alert>
+  <div class="alert alert-warning" id="no-result" *ngIf="bands?.length === 0">
+    <span jhiTranslate="bitsHrPayrollApp.band.home.notFound">No Bands found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="bands && bands.length > 0">
+    <table class="table table-hover list-text-color" aria-describedby="page-heading">
+      <thead style="position: sticky">
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()"></tr>
+        <tr>
+          <th scope="col"><span>Band Name</span></th>
+          <th scope="col"><span>Min Salary</span></th>
+          <th scope="col"><span>Max Salary</span></th>
+          <th scope="col"><span>Welfare Fund</span></th>
+          <th scope="col"><span>Mobile Celling</span></th>
+          <th scope="col" class="text-end">
+            <button class="btn btn-info me-2 justify-content-end" (click)="load()" [disabled]="isLoading">
+              <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+              <span jhiTranslate="bitsHrPayrollApp.band.home.refreshListLabel">Refresh list</span>
+            </button>
+          </th>
+        </tr>
+      </thead>
+      <tbody
+        infinite-scroll
+        (scrolled)="loadPage(page + 1)"
+        [infiniteScrollDisabled]="page - 1 >= links['last']"
+        [infiniteScrollDistance]="0"
+      >
+        <tr *ngFor="let band of bands; trackBy: trackId" data-cy="entityTable">
+          <td>{{ band.bandName }}</td>
+          <td>{{ band.minSalary }}</td>
+          <td>{{ band.maxSalary }}</td>
+          <td>{{ band.welfareFund }}</td>
+          <td>{{ band.mobileCelling }}</td>
+
+          <td class="text-end">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/band', band.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button type="submit" [routerLink]="['/band', band.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(band)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

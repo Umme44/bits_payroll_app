@@ -1,0 +1,179 @@
+$document-width: 794px;
+
+.w-5 {
+  width: 5% !important;
+}
+.w-7 {
+  width: 7% !important;
+}
+.w-8 {
+  width: 8% !important;
+}
+.w-10 {
+  width: 10% !important;
+}
+.w-12 {
+  width: 12% !important;
+}
+.w-15 {
+  width: 15% !important;
+}
+.w-20 {
+  width: 20% !important;
+}
+.w-22 {
+  width: 22% !important;
+}
+.w-23 {
+  width: 23% !important;
+}
+.w-24 {
+  width: 24% !important;
+}
+.w-25 {
+  width: 25% !important;
+}
+.w-30 {
+  width: 30% !important;
+}
+.w-35 {
+  width: 35% !important;
+}
+.w-60 {
+  width: 60% !important;
+}
+.w-65 {
+  width: 65% !important;
+}
+.w-75 {
+  width: 75% !important;
+}
+.w-80 {
+  width: 80% !important;
+}
+
+.font-sm {
+  font-size: 0.7rem;
+}
+
+.print-btn-container {
+  width: $document-width;
+}
+
+.pfNomineePrintDiv {
+}
+
+.letter-head {
+  background: transparent url('../../../../../content/images/letter-head-pad-new.png') no-repeat left top;
+  background-size: contain;
+}
+
+.print-doc-area {
+  width: $document-width;
+  min-height: 1100px;
+  font-family: 'Segoe UI';
+  font-size: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+.document-body {
+  padding: 0px 72px;
+}
+
+.nominee-list-table {
+  border: 1px solid black;
+  cellpadding: 3;
+  cellspacing: 0;
+  border-collapse: collapse;
+  font-family: 'Segoe UI';
+  font-size: 14px;
+}
+
+table {
+  width: 100% !important;
+}
+
+.nominee-list-table td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+.table-borderless td,
+.table-borderless th {
+  border: none;
+}
+
+.point-5-rem {
+  font-size: 0.5rem !important;
+}
+
+.point-75-rem {
+  font-size: 0.75rem !important;
+}
+
+.pfNomineePrintDiv {
+  font-size: 16px;
+  font-family: 'Segoe UI';
+}
+
+.default-font {
+  font-family: 'Segoe UI';
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.3;
+}
+
+.nominee-details-border,
+.nominee-details > td {
+  border: 2px solid rgba(0, 0, 0, 0.63);
+  border-collapse: collapse;
+}
+
+.subject {
+  font-size: 1rem;
+}
+
+.guardian-table > tbody > tr > th {
+  padding: 1px;
+}
+
+.print-btn {
+  //padding-left: 60.5%;
+}
+
+.table td,
+.table th {
+  color: black;
+}
+
+@media print {
+  .pfNomineePrintDiv {
+    border: 0;
+    margin: 0;
+  }
+
+  .default-font {
+    font-size: 16px;
+  }
+
+  .letter-head {
+  }
+
+  .print-doc-area {
+    margin-left: 0;
+    border: 0;
+    min-height: 1420px;
+  }
+
+  .action-btn,
+  .total-share-percentage,
+  .print-btn-container,
+  .jhi-header {
+    display: none;
+  }
+
+  .tbl-signature {
+    margin-bottom: 0;
+  }
+}

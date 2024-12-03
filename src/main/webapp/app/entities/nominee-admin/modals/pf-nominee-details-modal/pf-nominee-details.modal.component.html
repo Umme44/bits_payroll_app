@@ -1,0 +1,100 @@
+<div class="modal-header">
+  <h4 class="modal-title">Nominee Information</h4>
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="closeModal()">&times;</button>
+</div>
+
+<div class="modal-body">
+  <table *ngIf="nominee" class="table table-borderless">
+    <tr>
+      <th>Name</th>
+      <td>: {{ nominee.fullName }}</td>
+
+      <th>Date of Birth</th>
+      <td>: {{ nominee.dateOfBirth | formatMediumDate }}</td>
+
+      <td class="" rowspan="4">
+        <img style="vertical-align: top" width="130px" height="130px" [src]="getNomineeImage(nominee.id!)" />
+      </td>
+    </tr>
+
+    <tr>
+      <th>Relation</th>
+      <td>: {{ nominee.relationship }}</td>
+
+      <th>Nominee Age</th>
+      <td>: {{ nominee.age }}</td>
+    </tr>
+
+    <tr>
+      <th>Identity Type</th>
+      <td>: {{ getUIFriendlyNomineeType(nominee.identityType!) }}</td>
+
+      <th *ngIf="nominee.identityType === 'PASSPORT'">ID Number</th>
+      <td *ngIf="nominee.identityType === 'PASSPORT'">: {{ nominee.idNumber }}</td>
+
+      <th *ngIf="nominee.identityType === 'NID'">ID Number</th>
+      <td *ngIf="nominee.identityType === 'NID'">: {{ nominee.idNumber }}</td>
+
+      <th *ngIf="nominee.identityType === 'BIRTH_REGISTRATION'">ID Number</th>
+      <td *ngIf="nominee.identityType === 'BIRTH_REGISTRATION'">: {{ nominee.idNumber }}</td>
+
+      <th *ngIf="nominee.identityType === 'OTHER'">Document Name</th>
+      <td *ngIf="nominee.identityType === 'OTHER'">: {{ nominee.documentName }}</td>
+    </tr>
+
+    <tr>
+      <th *ngIf="nominee.identityType === 'OTHER'">ID Number</th>
+      <td *ngIf="nominee.identityType === 'OTHER'">: {{ nominee.idNumber }}</td>
+      <th>Share</th>
+      <td>: {{ nominee.sharePercentage }}%</td>
+    </tr>
+
+    <tr>
+      <th>Present Address</th>
+      <td colspan="4">: {{ nominee.presentAddress }}</td>
+    </tr>
+
+    <tr>
+      <th>Permanent Address</th>
+      <td colspan="4">: {{ nominee.permanentAddress }}</td>
+    </tr>
+  </table>
+
+  <h4 class="text-nowrap mt-2 me-2" *ngIf="nominee.guardianName">Guardian Information</h4>
+  <table *ngIf="nominee.guardianName" class="table table-borderless">
+    <tr>
+      <th>Name</th>
+      <td>: {{ nominee.guardianName }}</td>
+
+      <th>Date of Birth</th>
+      <td>: {{ nominee.guardianDateOfBirth | formatMediumDate }}</td>
+
+      <th>Relation</th>
+      <td>: {{ nominee.relationship }}</td>
+    </tr>
+
+    <tr>
+      <th>Father or Spouse Name</th>
+      <td>: {{ nominee.guardianFatherOrSpouseName }}</td>
+    </tr>
+
+    <tr>
+      <th>Identity Type</th>
+      <td>: {{ getUIFriendlyNomineeType(nominee.guardianIdentityType!) }}</td>
+      <th>ID Number</th>
+      <td>: {{ nominee.guardianIdNumber }}</td>
+      <th *ngIf="nominee.guardianIdentityType === 'OTHER'">Document Name</th>
+      <td *ngIf="nominee.guardianIdentityType === 'OTHER'">: {{ nominee.guardianDocumentName }}</td>
+    </tr>
+
+    <tr>
+      <th>Present Address</th>
+      <td colspan="4">: {{ nominee.guardianPresentAddress }}</td>
+    </tr>
+
+    <tr>
+      <th>Permanent Address</th>
+      <td colspan="4">: {{ nominee.guardianPresentAddress }}</td>
+    </tr>
+  </table>
+</div>

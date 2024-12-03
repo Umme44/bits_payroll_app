@@ -1,0 +1,479 @@
+<div>
+  <jhi-header
+    [addButtonText]="'New Registration'"
+    [headerName]="'Insurance Registration'"
+    [routerLinkText]="'/insurance-registration/new'"
+    [shouldHaveHr]="false"
+  >
+  </jhi-header>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="card card-body">
+    <div class="row my-2 d-flex align-items-center">
+      <div class="col-md-3">
+        <input
+          class="form-control"
+          formControlName="searchText"
+          placeholder="Name or PIN"
+          (change)="onSearchTextChange($event)"
+          name="searchText"
+          type="text"
+        />
+        <small class="text-danger" *ngIf="isSearchTextInvalid">This text is invalid</small>
+      </div>
+
+      <div class="col-9">
+        <div class="row d-flex align-items-center">
+          <div class="form-check col-2 d-flex align-items-center">
+            <input
+              (change)="onStatusChange('ALL')"
+              [checked]="selectedStatus === 'ALL'"
+              style="vertical-align: middle"
+              class="form-check-input m-0"
+              type="radio"
+              name="flexRadioDefault0"
+              id="flexRadioDefault0"
+            />
+            <label class="form-check-label ms-2" for="flexRadioDefault0"> ALL </label>
+          </div>
+
+          <div class="form-check col-2 d-flex align-items-center">
+            <input
+              (change)="onStatusChange('APPROVED')"
+              [checked]="selectedStatus === 'APPROVED'"
+              style="vertical-align: middle"
+              class="form-check-input m-0"
+              type="radio"
+              name="flexRadioDefault1"
+              id="flexRadioDefault1"
+            />
+            <label class="form-check-label ms-2" for="flexRadioDefault1"> Approved </label>
+          </div>
+
+          <div class="form-check col-2 d-flex align-items-center">
+            <input
+              (change)="onStatusChange('PENDING')"
+              [checked]="selectedStatus === 'PENDING'"
+              style="vertical-align: middle"
+              class="form-check-input m-0"
+              type="radio"
+              name="flexRadioDefault2"
+              id="flexRadioDefault2"
+            />
+            <label class="form-check-label ms-2" for="flexRadioDefault2"> Pending </label>
+          </div>
+
+          <div class="form-check col-2 d-flex align-items-center">
+            <input
+              (change)="onStatusChange('NOT_APPROVED')"
+              [checked]="selectedStatus === 'NOT_APPROVED'"
+              style="vertical-align: middle"
+              class="form-check-input m-0"
+              type="radio"
+              name="flexRadioDefault3"
+              id="flexRadioDefault3"
+            />
+            <label class="form-check-label ms-2" for="flexRadioDefault3"> Not Approved </label>
+          </div>
+
+          <div class="form-check col-2 d-flex align-items-center">
+            <input
+              (change)="onStatusChange('EXCLUDED')"
+              [checked]="selectedStatus === 'EXCLUDED'"
+              style="vertical-align: middle"
+              class="form-check-input m-0"
+              type="radio"
+              name="flexRadioDefault4"
+              id="flexRadioDefault4"
+            />
+            <label class="form-check-label ms-2" for="flexRadioDefault4"> Excluded </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--    <div class="alert alert-warning" id="no-result" *ngIf="insuranceRegistrations?.length === 0">-->
+  <!--        <span jhiTranslate="bitsHrPayrollApp.insuranceRegistration.home.notFound">No insuranceRegistrations found</span>-->
+  <!--    </div>-->
+
+  <div class="row my-2 d-flex align-items-end" *ngIf="selectedStatus !== 'ALL'">
+    <div class="mb-3 col-md-2 text-start mb-0">
+      <div>
+        <label class="form-control-label ms-2" for="year"> Year </label>
+        <select (change)="onChangeYear($event)" class="form-control" id="year">
+          <option [value]="0" selected>All</option>
+          <option *ngFor="let year of years" [value]="year">
+            {{ year }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="mb-3 col-md-2 text-start mb-0">
+      <div *ngIf="selectedYear !== 0">
+        <label class="form-control-label ms-2" for="month"> Month </label>
+        <select (change)="onChangeMonth($event)" class="form-control" id="month">
+          <option [value]="0" selected>All</option>
+          <option *ngFor="let month of months" [value]="month.Value">
+            {{ month.Text }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="mb-3 offset-4 col-md-2 text-start mb-0">
+      <div *ngIf="selectedStatus === 'EXCLUDED'">
+        <label class="form-control-label ms-2" for="criteria"> Exclusion Category </label>
+        <select (change)="onChangeExclusionCriteria($event)" class="form-control" id="criteria">
+          <option selected value="ALL">ALL</option>
+          <option value="CANCELLED">Cancelled</option>
+          <option value="SEPARATED">Separated</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="col-md-2 text-end">
+      <button *ngIf="selectedStatus === 'PENDING'" (click)="exportInclusionList()" class="btn btn-outline-primary btn-sm mt-3">
+        <fa-icon icon="download"></fa-icon>&nbsp;<span>Export Inclusion List</span>
+      </button>
+
+      <button *ngIf="selectedStatus === 'APPROVED'" (click)="exportApprovedList()" class="btn btn-outline-primary btn-sm mt-3">
+        <fa-icon icon="download"></fa-icon>&nbsp;<span>Export Approved List</span>
+      </button>
+
+      <button
+        *ngIf="selectedStatus === 'EXCLUDED' && isCanceled === true && isSeperated === true"
+        (click)="exportExcludedList()"
+        class="btn btn-outline-primary btn-sm"
+      >
+        <fa-icon icon="download"></fa-icon>&nbsp;<span>Export All Excluded List</span>
+      </button>
+
+      <button
+        *ngIf="selectedStatus === 'EXCLUDED' && isCanceled === true && isSeperated === false"
+        (click)="exportExcludedList()"
+        class="btn btn-outline-primary btn-sm"
+      >
+        <fa-icon icon="download"></fa-icon>&nbsp;<span>Export All Canceled List</span>
+      </button>
+
+      <button
+        *ngIf="selectedStatus === 'EXCLUDED' && isCanceled === false && isSeperated === true"
+        (click)="exportExcludedList()"
+        class="btn btn-outline-primary btn-sm"
+      >
+        <fa-icon icon="download"></fa-icon>&nbsp;<span>Export All Seperated List</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="insuranceRegistrations && insuranceRegistrations.length > 0">
+    <div infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+      <div class="py-3" *ngFor="let insuranceRegistrationListForEmployee of insuranceRegistrations">
+        <!-- Employee details header for insurance registration -->
+        <div class="mb-2" style="font-size: 0.7rem">
+          <span style="font-weight: 500">PIN : </span>
+          <span>{{ insuranceRegistrationListForEmployee!.insuranceRegistrationDTOList![0].employeePin }}</span>
+          <span style="font-weight: 500; margin-left: 20px">Policy Holder's Name : </span>
+          <span>{{ insuranceRegistrationListForEmployee!.insuranceRegistrationDTOList![0].employeeName }}</span>
+        </div>
+
+        <table class="table table-hover list-text-color" aria-describedby="page-heading">
+          <thead>
+            <tr>
+              <th scope="col" width="10%"><span jhiTranslate="bitsHrPayrollApp.insuranceRegistration.insuranceStatus">Status</span></th>
+              <th scope="col" width="20%"><span>Name</span></th>
+              <th scope="col" width="8%"><span>Effective Date</span></th>
+              <th scope="col" width="8%"><span jhiTranslate="bitsHrPayrollApp.insuranceRegistration.dateOfBirth">Date Of Birth</span></th>
+              <th scope="col" width="8%"><span jhiTranslate="bitsHrPayrollApp.insuranceRegistration.insuranceRelation">Relation</span></th>
+              <th scope="col" width="10%" class="text-end"><span>Available Balance</span></th>
+              <th scope="col" width="8%" class="text-center" *ngIf="shouldEnableClaimButtonColumn()"></th>
+              <th scope="col" width="6%" class="text-center" *ngIf="shouldEnableCancelButtonColumn()"></th>
+              <th scope="col" width="8%" class="text-center" *ngIf="shouldEnableApprovalButtonsColumn()"></th>
+              <th scope="col" class="text-center" *ngIf="selectedStatus === 'EXCLUDED' || selectedStatus === 'NOT_APPROVED'">Reason</th>
+              <th scope="col" class="text-end" *ngIf="shouldEnableEditViewDeleteColumn()"></th>
+            </tr>
+          </thead>
+          <tbody
+            infinite-scroll
+            (scrolled)="loadPage(page + 1)"
+            [infiniteScrollDisabled]="page >= links['last']"
+            [infiniteScrollDistance]="0"
+          >
+            <tr *ngFor="let insuranceRegistration of insuranceRegistrationListForEmployee.insuranceRegistrationDTOList; trackBy: trackId">
+              <td>
+                <span
+                  class="px-md-2"
+                  *ngIf="insuranceRegistration.insuranceStatus === 'PENDING'"
+                  data-placement="top"
+                  data-toggle="tooltip"
+                  title="Pending"
+                >
+                  Pending
+                </span>
+                <span
+                  class="text-success px-md-2"
+                  *ngIf="insuranceRegistration.insuranceStatus === 'APPROVED'"
+                  data-placement="top"
+                  data-toggle="tooltip"
+                  title="Approved"
+                >
+                  <fa-icon icon="check"></fa-icon>
+                </span>
+                <span
+                  class="text-danger px-md-2"
+                  *ngIf="insuranceRegistration.insuranceStatus === 'NOT_APPROVED'"
+                  data-placement="top"
+                  data-toggle="tooltip"
+                  title="Not Approved"
+                >
+                  <fa-icon icon="times"></fa-icon>
+                </span>
+                <span
+                  class="text-danger px-md-2"
+                  *ngIf="insuranceRegistration.insuranceStatus === 'SEPARATED'"
+                  data-placement="top"
+                  data-toggle="tooltip"
+                  title="Seperated"
+                >
+                  <fa-icon icon="file-signature"></fa-icon>
+                </span>
+                <span
+                  class="text-danger px-md-2"
+                  *ngIf="insuranceRegistration.insuranceStatus === 'CANCELED'"
+                  data-placement="top"
+                  data-toggle="tooltip"
+                  title="Cancelled"
+                >
+                  <fa-icon icon="minus-circle"></fa-icon>
+                </span>
+              </td>
+              <td>{{ insuranceRegistration.name }}</td>
+              <td>{{ insuranceRegistration.effectiveDate | formatMediumDate }}</td>
+              <td>{{ insuranceRegistration.dateOfBirth | formatMediumDate }}</td>
+              <td>{{ getInsuranceRelationName(insuranceRegistration.insuranceRelation!) }}</td>
+              <td class="text-end">{{ insuranceRegistration.availableBalance | number }}</td>
+
+              <td *ngIf="shouldEnableClaimButtonColumn()" class="text-center">
+                <button
+                  class="insurance-claim-button btn cursor-pointer"
+                  [disabled]="insuranceRegistration.insuranceStatus !== 'APPROVED'"
+                  (click)="redirectToClaimUrl()"
+                  type="submit"
+                >
+                  Claim
+                </button>
+              </td>
+
+              <td *ngIf="shouldEnableCancelButtonColumn()" class="text-center">
+                <button
+                  class="btn btn-danger btn-sm"
+                  style="border-radius: 5px; width: 28px"
+                  (click)="cancel(insuranceCancelModal, insuranceRegistration)"
+                  data-placement="top"
+                  data-toggle="tooltip"
+                  title="Cancel Registration"
+                  type="submit"
+                >
+                  <fa-icon icon="minus-circle"></fa-icon>
+                </button>
+              </td>
+
+              <td *ngIf="shouldEnableApprovalButtonsColumn()" class="text-end">
+                <button
+                  class="btn btn-success btn-sm"
+                  style="border-radius: 5px; width: 28px"
+                  [disabled]="insuranceRegistration.insuranceStatus !== 'PENDING'"
+                  (click)="approve(insuranceApprovalModal, insuranceRegistration)"
+                  data-placement="top"
+                  data-toggle="tooltip"
+                  title="Approve"
+                  type="submit"
+                >
+                  <fa-icon [icon]="['fas', 'check']"></fa-icon>
+                </button>
+
+                <button
+                  class="btn btn-danger btn-sm"
+                  style="border-radius: 5px; width: 28px"
+                  [disabled]="insuranceRegistration.insuranceStatus !== 'PENDING'"
+                  (click)="reject(insuranceRejectionModal, insuranceRegistration)"
+                  data-placement="top"
+                  data-toggle="tooltip"
+                  title="Reject"
+                  type="submit"
+                >
+                  <fa-icon [icon]="['fas', 'times']"></fa-icon>
+                </button>
+              </td>
+
+              <td *ngIf="selectedStatus === 'EXCLUDED' || selectedStatus === 'NOT_APPROVED'" class="text-center">
+                {{ insuranceRegistration.unapprovalReason }}
+              </td>
+
+              <td *ngIf="shouldEnableEditViewDeleteColumn()" class="text-end">
+                <div>
+                  <button
+                    type="submit "
+                    [routerLink]="['/insurance-registration', insuranceRegistration.id, 'view']"
+                    data-placement="top"
+                    data-toggle="tooltip"
+                    title="View"
+                    class="insurance-registration-view-button btn p-0"
+                  >
+                    <fa-icon icon="eye"></fa-icon>
+                  </button>
+
+                  <button
+                    type="submit"
+                    [routerLink]="['/insurance-registration', insuranceRegistration.id, 'edit']"
+                    data-placement="top"
+                    data-toggle="tooltip"
+                    title="Edit"
+                    class="insurance-registration-edit-button btn p-0"
+                  >
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                  </button>
+
+                  <button data-placement="top" data-toggle="tooltip" title="Delete" class="insurance-registration-delete-button btn p-0">
+                    <fa-icon icon="trash-alt"></fa-icon>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Approve Insurance Registration-->
+<ng-template #insuranceApprovalModal let-modal>
+  <div class="modal-header border-0">
+    <h6 class="modal-title" id="modal-basic-title">Approve Insurance Registration</h6>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="font-sm row mb-3">
+      <div class="col-6">Policyholders Pin</div>
+      <div class="col-6">{{ selectedInsuranceRegistration.employeePin }}</div>
+      <div class="col-6">Policyholders Name</div>
+      <div class="col-6">{{ selectedInsuranceRegistration.employeeName }}</div>
+      <div class="col-6">Registration Name</div>
+      <div class="col-6">{{ selectedInsuranceRegistration.name }}</div>
+      <div class="col-6">Relation</div>
+      <div class="col-6">{{ getInsuranceRelationName(selectedInsuranceRegistration.insuranceRelation!) }}</div>
+    </div>
+
+    <div class="mb-3">
+      <label class="font-sm fw-bold">Insurance Card ID</label>
+      <input class="form-control" (keyup)="onChangeInsuranceCardId()" [formControl]="insuranceId" type="text" />
+      <div *ngIf="inValidInsuranceId">
+        <span class="text-danger font-sm">This card ID is already in use. Please use a unique one.</span>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-6">
+        <button
+          [disabled]="!insuranceId.value || inValidInsuranceId"
+          type="button"
+          class="btn btn-success btn-md w-100"
+          (click)="modal.close('Save click')"
+        >
+          Approve
+        </button>
+      </div>
+
+      <div class="col-6">
+        <button type="button" class="btn btn-danger btn-md w-100" (click)="modal.dismiss()">Cancel</button>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer border-0 justify-content-start"></div>
+</ng-template>
+
+<!--Reject Insurance Registration-->
+<ng-template #insuranceRejectionModal let-modal>
+  <div class="modal-header border-0">
+    <h6 class="modal-title" id="modal-basic-title2">Reject Insurance Registration</h6>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="font-sm row mb-3">
+      <div class="col-6">Policyholders Pin</div>
+      <div class="col-6">{{ selectedInsuranceRegistration.employeePin }}</div>
+      <div class="col-6">Policyholders Name</div>
+      <div class="col-6">{{ selectedInsuranceRegistration.employeeName }}</div>
+      <div class="col-6">Registration Name</div>
+      <div class="col-6">{{ selectedInsuranceRegistration.name }}</div>
+      <div class="col-6">Relation</div>
+      <div class="col-6">{{ getInsuranceRelationName(selectedInsuranceRegistration.insuranceRelation!) }}</div>
+    </div>
+
+    <div class="mb-3">
+      <label for="exampleFormControlInput2" class="font-sm fw-bold">Reason</label>
+      <input class="form-control" [formControl]="reason" id="exampleFormControlInput2" type="text" />
+    </div>
+
+    <div class="row">
+      <div class="col-6">
+        <button [disabled]="!reason.value" type="button" class="btn btn-success btn-md w-100" (click)="modal.close('Save click')">
+          Reject
+        </button>
+      </div>
+      <div class="col-6">
+        <button type="button" class="btn btn-danger btn-md w-100" (click)="modal.dismiss()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<!--Cancel Insurance Registration-->
+<ng-template #insuranceCancelModal let-modal>
+  <div class="modal-header border-0">
+    <h6 class="modal-title" id="modal-basic-title3">Cancel Insurance Registration</h6>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="font-sm row mb-3">
+      <div class="col-6">Policyholders Pin</div>
+      <div class="col-6">{{ selectedInsuranceRegistration.employeePin }}</div>
+      <div class="col-6">Policyholders Name</div>
+      <div class="col-6">{{ selectedInsuranceRegistration.employeeName }}</div>
+      <div class="col-6">Registration Name</div>
+      <div class="col-6">{{ selectedInsuranceRegistration.name }}</div>
+      <div class="col-6">Relation</div>
+      <div class="col-6">{{ getInsuranceRelationName(selectedInsuranceRegistration.insuranceRelation!) }}</div>
+      <div class="col-6">Remaining Balance</div>
+      <div class="col-6">{{ selectedInsuranceRegistration.availableBalance | number }}</div>
+    </div>
+
+    <div class="mb-3">
+      <label for="exampleFormControlInput2" class="font-sm fw-bold">Reason</label>
+      <input class="form-control" [formControl]="reason" id="exampleFormControlInput3" type="text" />
+    </div>
+
+    <div class="row">
+      <div class="col-6">
+        <button [disabled]="!reason.value" type="button" class="btn btn-success btn-md w-100" (click)="modal.close('Save click')">
+          Proceed Insurance Cancellation
+        </button>
+      </div>
+      <div class="col-6">
+        <button type="button" class="btn btn-danger btn-md w-100" (click)="modal.dismiss()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

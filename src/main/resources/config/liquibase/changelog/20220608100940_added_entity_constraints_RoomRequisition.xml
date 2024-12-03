@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity RoomRequisition.
+    -->
+    <changeSet id="20220608100940-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="created_by_id"
+                                 baseTableName="room_requisition"
+                                 constraintName="fk_room_requisition__created_by_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="updated_by_id"
+                                 baseTableName="room_requisition"
+                                 constraintName="fk_room_requisition__updated_by_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="sanctioned_by_id"
+                                 baseTableName="room_requisition"
+                                 constraintName="fk_room_requisition__sanctioned_by_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="requester_id"
+                                 baseTableName="room_requisition"
+                                 constraintName="fk_room_requisition__requester_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+
+        <addForeignKeyConstraint baseColumnNames="room_id"
+                                 baseTableName="room_requisition"
+                                 constraintName="fk_room_requisition__room_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="room"/>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,33 @@
+<div class="modal-header">
+  <h6 class="modal-title pt-1">Application Details</h6>
+  <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" (click)="closeModal()"></button>
+</div>
+
+<div class="modal-body">
+  <table *ngIf="workFromHomeApplication" class="table table-borderless border-none">
+    <tr>
+      <th class="text-nowrap">Start Date</th>
+      <td>: {{ workFromHomeApplication.startDate | formatMediumDate }}</td>
+
+      <th class="text-nowrap">End Date</th>
+      <td>: {{ workFromHomeApplication.endDate | formatMediumDate }}</td>
+
+      <th class="text-nowrap">Duration</th>
+      <td *ngIf="workFromHomeApplication.duration! > 1">: {{ workFromHomeApplication.duration }} day(s)</td>
+      <td *ngIf="workFromHomeApplication.duration! <= 1">: {{ workFromHomeApplication.duration }} day</td>
+    </tr>
+
+    <tr>
+      <th class="text-nowrap">Applied At</th>
+      <td>: {{ workFromHomeApplication.appliedAt | formatMediumDate }}</td>
+
+      <th>Status</th>
+      <td>: {{ getUiFriendlyStatus(workFromHomeApplication.status!) }}</td>
+    </tr>
+
+    <tr>
+      <th class="text-nowrap">Reason</th>
+      <td colspan="5">: {{ workFromHomeApplication.reason }}</td>
+    </tr>
+  </table>
+</div>

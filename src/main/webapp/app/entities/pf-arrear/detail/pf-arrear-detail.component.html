@@ -1,0 +1,95 @@
+<div *ngIf="pfArrear">
+  <jhi-header
+    [headerName]="'PF Arrear Details'"
+    [midHeaderName01]="'PF Arrear'"
+    [midRouterLinkText01]="'/pf-arrear'"
+    [shouldHaveHr]="false"
+  >
+  </jhi-header>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <dl class="row font-sm">
+    <dt class="col-md-2">
+      <span jhiTranslate="bitsHrPayrollApp.pfArrear.month">Month</span>
+    </dt>
+    <dd class="col-md-2">
+      <span>{{ monthNameNormalize(pfArrear.month) }}</span>
+    </dd>
+    <dt class="col-md-2"><span jhiTranslate="bitsHrPayrollApp.pfArrear.year">Year</span></dt>
+    <dd class="col-md-2">
+      <span>{{ pfArrear.year }}</span>
+    </dd>
+    <dt class="col-md-2"><span jhiTranslate="bitsHrPayrollApp.pfArrear.amount">Amount</span></dt>
+    <dd class="col-md-2">
+      <span>{{ pfArrear.amount }}</span>
+    </dd>
+    <dt class="col-md-2"><span jhiTranslate="bitsHrPayrollApp.pfArrear.remarks">Remarks</span></dt>
+    <dd class="col-md-2">
+      <span>{{ pfArrear.remarks }}</span>
+    </dd>
+    <dt class="col-md-2"><span jhiTranslate="bitsHrPayrollApp.pfArrear.employee">Employee</span></dt>
+    <dd class="col-md-2">
+      <div *ngIf="pfArrear.employeeId">
+        <a [routerLink]="['/employee-custom', pfArrear.employeeId, 'view']">{{ pfArrear.fullName }}</a>
+      </div>
+    </dd>
+  </dl>
+
+  <button type="button" [routerLink]="['/pf-arrear', pfArrear.id, 'edit']" class="btn btn-primary">
+    <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+  </button>
+</div>
+
+<!--
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="pfArrear">
+      <h2 data-cy="pfArrearDetailsHeading"><span jhiTranslate="bitsHrPayrollApp.pfArrear.detail.title">Pf Arrear</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ pfArrear.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfArrear.month">Month</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.Month.' + pfArrear.month }}">{{ pfArrear.month }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfArrear.year">Year</span></dt>
+        <dd>
+          <span>{{ pfArrear.year }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfArrear.amount">Amount</span></dt>
+        <dd>
+          <span>{{ pfArrear.amount }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfArrear.remarks">Remarks</span></dt>
+        <dd>
+          <span>{{ pfArrear.remarks }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfArrear.employee">Employee</span></dt>
+        <dd>
+          <div *ngIf="pfArrear.employee">
+            <a [routerLink]="['/employee', pfArrear.employee.id, 'view']">{{ pfArrear.employee.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/pf-arrear', pfArrear.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>
+-->

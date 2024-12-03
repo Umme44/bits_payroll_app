@@ -1,0 +1,11 @@
+id;room_name;remarks;created_at;updated_at;capacity;facilities;building_id;floor_id;room_type_id
+1;Car;Designer Dynamic Manager;2022-06-06T15:44:32;2022-06-07T10:07:58;65;../fake-data/blob/hipster.txt;1;1;1
+2;Technician CFP supply-chains;generate Guinea Steel;2022-06-07T01:10:45;2022-06-06T20:18:27;8;../fake-data/blob/hipster.txt;2;2;2
+3;copy;task-force Taiwan Unbranded;2022-06-07T07:40:07;2022-06-06T17:30:54;36;../fake-data/blob/hipster.txt;3;3;3
+4;Usability indexing Polarised;turquoise Tools Macao;2022-06-06T21:47:21;2022-06-07T08:29:00;2;../fake-data/blob/hipster.txt;4;4;4
+5;deposit blue;Croatian;2022-06-07T00:00:49;2022-06-07T10:03:27;92;../fake-data/blob/hipster.txt;5;5;5
+6;Manager Stravenue Regional;Dynamic Intuitive;2022-06-07T00:03:39;2022-06-07T09:57:17;75;../fake-data/blob/hipster.txt;6;6;6
+7;Account Rustic;Analyst Lucia;2022-06-07T07:47:08;2022-06-06T21:07:07;38;../fake-data/blob/hipster.txt;7;7;7
+8;grey Bolivia systematic;asymmetric Mayotte Home;2022-06-07T08:45:13;2022-06-07T10:30:55;78;../fake-data/blob/hipster.txt;8;8;8
+9;Micronesia value-added Plastic;payment;2022-06-07T10:33:39;2022-06-07T01:49:42;1;../fake-data/blob/hipster.txt;9;9;9
+10;Enterprise-wide USB calculating;Movies;2022-06-06T19:24:51;2022-06-07T01:25:50;30;../fake-data/blob/hipster.txt;10;10;10

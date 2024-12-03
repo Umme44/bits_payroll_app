@@ -1,0 +1,227 @@
+<jhi-header
+  [headerName]="'Procurement Requisition '"
+  [midHeaderName01]="'Approvals'"
+  [midRouterLinkText01]="'/'"
+  [midHeader01hasSessionStorage]="true"
+  [midHeader01SessionStorageKey]="'keepApprovalModalOpen'"
+  [midHeader01SessionStorageValue]="'yes'"
+>
+</jhi-header>
+
+<div class="row mb-2">
+  <div class="col-md-7">
+    <jhi-search-text-box (searchEvent)="search($event)"> </jhi-search-text-box>
+  </div>
+</div>
+
+<div class="table-responsive" id="entities" *ngIf="procReqMastersFiltered && procReqMastersFiltered.length > 0">
+  <table class="table table-hover list-text-color" aria-describedby="page-heading">
+    <thead>
+      <tr class="text-nowrap">
+        <th scope="col">
+          <input class="form-check-input" type="checkbox" name="selectAllCheckBox" (change)="selectAllCheckBox($event)" />
+        </th>
+
+        <th scope="col">Req. No.</th>
+        <th scope="col">Requested Date</th>
+
+        <th scope="col"><span>Requester</span></th>
+        <th scope="col"><span>Designation</span></th>
+        <th scope="col"><span>Department</span></th>
+        <th scope="col" class="text-end"><span>Total Approx. Price </span></th>
+        <th scope="col"><span> Report </span></th>
+
+        <th scope="col" class="text-end">
+          <div class="d-flex justify-content-end">
+            <div>
+              <ng-container *ngIf="isApprovingByDeptHead; else isNotApprovingByDeptHead">
+                <button
+                  class="btn btn-success btn-sm"
+                  [disabled]="listOfIds.length < 1"
+                  (click)="openDeptHeadApprovalModal(ctoApprovalContent)"
+                >
+                  <fa-icon [icon]="['fas', 'check']"></fa-icon> Approve
+                </button>
+              </ng-container>
+
+              <ng-template #isNotApprovingByDeptHead>
+                <button class="btn btn-success btn-sm" [disabled]="listOfIds.length < 1" (click)="approveSelected()">
+                  <fa-icon [icon]="['fas', 'check']"></fa-icon> Approve
+                </button>
+              </ng-template>
+            </div>
+          </div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let procReqMaster of procReqMastersFiltered" class="text-nowrap">
+        <td>
+          <input
+            class="form-check-input"
+            type="checkbox"
+            name="individualCheckBox"
+            (change)="selectIndividualCheckBox($event, procReqMaster.id!)"
+          />
+        </td>
+
+        <td>
+          <a class="text-decoration-underline" ngbTooltip="Click to view report" (click)="navigatePrintView(procReqMaster.id!)">{{
+            procReqMaster.requisitionNo
+          }}</a>
+        </td>
+
+        <td>
+          {{ procReqMaster.requestedDate | formatMediumDate }}
+        </td>
+
+        <td>{{ procReqMaster.requestedByPIN }} - {{ procReqMaster.requestedByFullName }}</td>
+
+        <td>
+          <span
+            *ngIf="procReqMaster.requestedByDesignationName!.length > 30; else fullDesignationTipContent"
+            [ngbTooltip]="procReqMaster.requestedByDesignationName"
+          >
+            {{ textSlicing(procReqMaster.requestedByDesignationName!) }}
+          </span>
+          <ng-template #fullDesignationTipContent>
+            <span>
+              {{ procReqMaster.requestedByDesignationName! }}
+            </span>
+          </ng-template>
+        </td>
+
+        <td>
+          <span
+            *ngIf="procReqMaster.requestedByDepartmentName!.length > 30; else fullDepartmentTipContent"
+            [ngbTooltip]="procReqMaster.requestedByDepartmentName"
+          >
+            {{ textSlicing(procReqMaster.requestedByDepartmentName!) }}
+          </span>
+          <ng-template #fullDepartmentTipContent>
+            <span>
+              {{ procReqMaster.requestedByDepartmentName! }}
+            </span>
+          </ng-template>
+        </td>
+
+        <!--            <td>-->
+        <!--                <ol>-->
+        <!--                    <li *ngFor="let procReq of procReqMaster.procReqs">-->
+        <!--                        {{procReq.itemInformationName}} ({{procReq.quantity}} {{procReq.unitOfMeasurementName}})-->
+        <!--                    </li>-->
+        <!--                </ol>-->
+        <!--            </td>-->
+
+        <td class="text-end">
+          {{ procReqMaster.totalApproximatePrice | number }}
+        </td>
+
+        <td class="text-center">
+          <button
+            type="button"
+            (click)="navigatePrintView(procReqMaster.id!)"
+            class="btn btn-outline-primary btn-sm border-radius-minimal me-1"
+          >
+            <fa-icon icon="print"></fa-icon>
+          </button>
+        </td>
+
+        <td>
+          <div class="text-end">
+            <button class="btn btn-danger btn-sm border-radius-minimal" (click)="openRejectionModal(procReqMaster.id!, rejectionContent)">
+              <fa-icon [icon]="['fas', 'times']"></fa-icon> Reject
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div
+  *ngIf="!procReqMastersFiltered || procReqMastersFiltered.length === 0"
+  style="height: 75vh"
+  class="text-center d-flex align-items-center justify-content-center"
+>
+  <img src="../../../../content/images/approval.svg" width="400px" height="400px" />
+</div>
+
+<!-- Rejection Modal (Modal will pop-up if rejection button is triggered) -->
+
+<ng-template #rejectionContent let-modal>
+  <div class="modal-header">
+    <h6 class="modal-title" id="modal-basic-title">Reject Request</h6>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="mb-3">
+        <label for="rejectionReason" class="required">Rejection Reason</label>
+        <div class="input-group">
+          <input id="rejectionReason" type="text" class="form-control" [formControl]="rejectionReason" />
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      [disabled]="rejectionReason.invalid"
+      class="btn btn-sm btn-primary border-radius-minimal"
+      (click)="modal.close('Save click')"
+    >
+      Confirm
+    </button>
+  </div>
+</ng-template>
+
+<!-- Approve by Dept.Head Modal (Modal will pop-up if approval from dept. head) -->
+
+<ng-template #ctoApprovalContent let-modal>
+  <div class="modal-header">
+    <h6 class="modal-title" id="modal-approval-title">Approve Request</h6>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="">
+        <div>
+          <label class="required">Is CTO Approval Required?</label>
+        </div>
+        <div class="custom-control custom-radio custom-control-inline">
+          <input
+            type="radio"
+            [formControl]="isCTOApprovalIsRequired"
+            id="isCTOApprovalIsRequiredYes"
+            [value]="true"
+            name="isCTOApprovalIsRequired"
+            class="custom-control-input"
+          />
+          <label class="custom-control-label pt-1" for="isCTOApprovalIsRequiredYes">Yes</label>
+        </div>
+        <div class="custom-control custom-radio custom-control-inline">
+          <input
+            type="radio"
+            [formControl]="isCTOApprovalIsRequired"
+            id="isCTOApprovalIsRequiredNo"
+            [value]="false"
+            name="isCTOApprovalIsRequired"
+            class="custom-control-input"
+          />
+          <label class="custom-control-label pt-1" for="isCTOApprovalIsRequiredNo">No</label>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      [disabled]="isCTOApprovalIsRequired.invalid"
+      class="btn btn-sm btn-primary border-radius-minimal"
+      (click)="modal.close('Save click')"
+    >
+      Confirm
+    </button>
+  </div>
+</ng-template>

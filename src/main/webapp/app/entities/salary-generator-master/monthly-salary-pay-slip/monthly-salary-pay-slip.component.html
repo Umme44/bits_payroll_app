@@ -1,0 +1,307 @@
+<jhi-header [headerName]="'Monthly Salary Pay Slip'" [shouldHaveHr]="false"> </jhi-header>
+
+<div class="container">
+  <div class="mx-auto" style="width: 880px">
+    <div class="d-flex align-items-center justify-content-end">
+      <button (click)="downloadAsPDF()" [disabled]="!employeeSalary" class="btn btn-primary btn-sm">
+        <fa-icon icon="print"></fa-icon> &nbsp;&nbsp; Print
+      </button>
+    </div>
+  </div>
+
+  <div class="printDivOfPaySlip">
+    <div style="margin-bottom: 20px"></div>
+    <div *ngIf="employeeSalary" class="payslip-area salary-payslip-bg-image mx-auto">
+      <div *ngIf="employee">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <table
+          class="table-emp-details"
+          style="color: #000000; font-family: Segoe UI; font-size: 12px"
+          width="100%"
+          cellspacing="0"
+          cellpadding="3"
+          border="0"
+        >
+          <tbody>
+            <tr>
+              <td valign="top" class="text-left" colspan="4">
+                <b>Pay Slip for the {{ employeeSalary.month }}, {{ employeeSalary.year }}</b>
+              </td>
+            </tr>
+            <tr>
+              <td valign="top" class="text-left" colspan="5">&nbsp;</td>
+            </tr>
+            <tr>
+              <td valign="top" class="text-left" width="10%">PIN</td>
+              <td valign="top" class="text-left" width="2%">:</td>
+              <td valign="top" class="text-left" width="35%">{{ employee!.pin }}</td>
+              <td valign="top" class="text-left" width="6%">&nbsp;</td>
+              <td valign="top" class="text-left" width="10%">Unit</td>
+              <td valign="top" class="text-left" width="2%">:</td>
+              <td valign="top" class="text-left" width="35%">{{ employee!.unitName }}</td>
+            </tr>
+            <tr>
+              <td valign="top" class="text-left">Name</td>
+              <td valign="top" class="text-left">:</td>
+              <td valign="top" class="text-left">{{ employee!.fullName }}</td>
+              <td valign="top" class="text-left" width="6%">&nbsp;</td>
+              <td valign="top" class="text-left">Dept.</td>
+              <td valign="top" class="text-left">:</td>
+              <td valign="top" class="text-left">{{ employee!.departmentName }}</td>
+            </tr>
+            <tr>
+              <td valign="top" class="text-left">Designation</td>
+              <td valign="top" class="text-left">:</td>
+              <td valign="top" class="text-left">{{ employee!.designationName }}</td>
+              <td valign="top" class="text-left" width="6%">&nbsp;</td>
+              <td valign="top" class="text-left">DoJ</td>
+              <td valign="top" class="text-left">:</td>
+              <td valign="top" class="text-left">
+                <span id="date_form">{{ employee!.dateOfJoining | date: 'd MMM, y' }}</span>
+              </td>
+            </tr>
+            <tr>
+              <td valign="top" class="text-left" colspan="4">&nbsp;</td>
+            </tr>
+          </tbody>
+        </table>
+        <table class="table-payslip" width="100%" cellspacing="0" cellpadding="4" border="0">
+          <tbody>
+            <tr>
+              <td valign="bottom" class="field" style="white-space: nowrap; text-align: left; border-bottom: 1px solid #000" colspan="2">
+                <b>Addition Details</b>
+              </td>
+              <td valign="middle" class="nowrap-left">&nbsp;</td>
+              <td valign="bottom" class="field" style="white-space: nowrap; text-align: left; border-bottom: 1px solid #000" colspan="2">
+                <b>Deduction Details</b>
+              </td>
+            </tr>
+            <tr>
+              <td width="30%" valign="middle" class="nowrap-left">Basic</td>
+              <td width="17%" valign="middle" class="nowrap-right">
+                <span id="sep_bas">{{ employeeSalary.payableGrossBasicSalary | number }}</span>
+              </td>
+              <td width="6%" valign="middle" class="nowrap-left">&nbsp;</td>
+              <td width="30%" valign="middle" class="nowrap-left">Exceed Cell Bill</td>
+              <td width="17%" valign="middle" class="nowrap-right">
+                <span id="sep_exmob">{{ employeeSalary.mobileBillDeduction | number }}</span>
+              </td>
+            </tr>
+            <tr>
+              <td valign="middle" class="nowrap-left">House Rent</td>
+              <td valign="middle" class="nowrap-right">
+                <span id="sep_hous">{{ employeeSalary.payableGrossHouseRent | number }}</span>
+              </td>
+              <td valign="middle" class="nowrap-left">&nbsp;</td>
+              <td valign="middle" class="nowrap-left">Humanitarian Assistance Fund</td>
+              <td valign="middle" class="nowrap-right">
+                <span id="sep_wel">{{ employeeSalary.welfareFundDeduction | number }}</span>
+              </td>
+            </tr>
+            <tr>
+              <td valign="middle" class="nowrap-left">Medical</td>
+              <td valign="middle" class="nowrap-right">
+                <span id="sep_med">{{ employeeSalary.payableGrossMedicalAllowance | number }}</span>
+              </td>
+              <td valign="middle" class="nowrap-left">&nbsp;</td>
+              <td valign="middle" class="nowrap-left">Income Tax</td>
+              <td valign="middle" class="nowrap-right">
+                <span id="sep_tax">{{ employeeSalary.taxDeduction | number }}</span>
+              </td>
+            </tr>
+            <tr>
+              <td valign="middle" class="nowrap-left">Conveyance</td>
+              <td valign="middle" class="nowrap-right">
+                <span id="sep_conv">{{ employeeSalary.payableGrossConveyanceAllowance | number }}</span>
+              </td>
+              <td valign="middle" class="nowrap-left">&nbsp;</td>
+              <td valign="middle" class="nowrap-left">Others Deduct</td>
+              <td valign="middle" class="nowrap-right">
+                <span id="sep_other">{{ employeeSalary.otherDeduction | number }}</span>
+              </td>
+            </tr>
+            <tr>
+              <td valign="middle" class="nowrap-left">Entertainment</td>
+              <td valign="middle" class="nowrap-right">
+                <span id="sep_enter">0</span>
+              </td>
+              <td valign="middle" class="nowrap-left">&nbsp;</td>
+              <td valign="middle" class="nowrap-left">PF Deduct</td>
+              <td valign="middle" class="nowrap-right">
+                <span id="sep_pf">{{ employeeSalary.pfDeduction | number }}</span>
+              </td>
+            </tr>
+            <tr>
+              <td valign="middle" class="nowrap-left">Utility</td>
+              <td valign="middle" class="nowrap-right"><span id="sep_util">0</span></td>
+              <td valign="middle" class="nowrap-left">&nbsp;</td>
+              <td valign="middle" class="nowrap-left">PF Arrear</td>
+              <td valign="middle" class="nowrap-right">
+                <span id="sep_pfarr">{{ employeeSalary.providentFundArrear | number }}</span>
+              </td>
+            </tr>
+            <tr>
+              <td valign="middle" class="nowrap-left"><b>Gross Pay</b></td>
+              <td valign="middle" class="nowrap-right">
+                <b>
+                  <span id="sep_gross">{{ employeeSalary.payableGrossSalary | number }}</span>
+                </b>
+              </td>
+              <td valign="middle" class="nowrap-left">&nbsp;</td>
+              <td valign="middle" class="nowrap-left"></td>
+              <td valign="middle" class="nowrap-right"></td>
+            </tr>
+            <tr>
+              <td valign="middle" class="nowrap-left">Festival Bonus</td>
+              <td valign="middle" class="nowrap-right">
+                <span id="sep_FBon">0</span>
+              </td>
+              <td valign="middle" class="nowrap-left"></td>
+              <td valign="middle" class="nowrap-left"></td>
+              <td valign="middle" class="nowrap-right"></td>
+            </tr>
+            <tr>
+              <td valign="middle" class="nowrap-left">Living Allowance</td>
+              <td valign="middle" class="nowrap-right">
+                <span id="sep_lfa">{{ employeeSalary.allowance01 | number }}</span>
+              </td>
+              <td valign="middle" class="nowrap-left"></td>
+              <td valign="middle" class="nowrap-left"></td>
+              <td valign="middle" class="nowrap-right"></td>
+            </tr>
+            <tr>
+              <td valign="middle" class="nowrap-left">Other Addition</td>
+              <td valign="middle" class="nowrap-right">
+                <span id="sep_Oadd">{{ employeeSalary.otherAddition | number }}</span>
+              </td>
+              <td valign="middle" class="nowrap-left"></td>
+              <td valign="middle" class="nowrap-left"></td>
+              <td valign="middle" class="nowrap-right"></td>
+            </tr>
+            <tr>
+              <td valign="middle" class="nowrap-left">Salary Adjustment</td>
+              <td valign="middle" class="nowrap-right">
+                {{ employeeSalary.salaryAdjustment | number }}
+              </td>
+              <td valign="middle" class="nowrap-left"></td>
+              <td valign="middle" class="nowrap-left"></td>
+              <td valign="middle" class="nowrap-right"></td>
+            </tr>
+            <tr>
+              <td valign="middle" class="nowrap-left">Arrear</td>
+              <td valign="middle" class="nowrap-right">
+                <span id="sep_SAdj">{{ employeeSalary.arrearSalary | number }}</span>
+              </td>
+              <td valign="middle" class="nowrap-left"></td>
+              <td valign="middle" class="nowrap-left"></td>
+              <td valign="middle" class="nowrap-right"></td>
+            </tr>
+            <tr>
+              <td valign="middle" class="nowrap-left">&nbsp;</td>
+              <td valign="middle" class="nowrap-right"></td>
+              <td valign="middle" class="nowrap-left"></td>
+              <td valign="middle" class="nowrap-left"></td>
+              <td valign="middle" class="nowrap-right"></td>
+            </tr>
+            <tr>
+              <td valign="middle" class="nowrap-left"><b>Total Addition</b></td>
+              <td valign="middle" class="nowrap-right">
+                <b>
+                  <span id="sep_tadd">{{ employeeSalary.totalAddition | number }}</span>
+                </b>
+              </td>
+              <td valign="middle" class="nowrap-left"></td>
+              <td valign="middle" class="nowrap-left">
+                <b>Total Deduct</b>
+              </td>
+              <td valign="middle" class="nowrap-right">
+                <b
+                  ><span id="sep_tdedu">{{ employeeSalary.totalDeduction | number }}</span></b
+                >
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <br /><br />
+        <table class="tableborder" class="table-payslip" width="100%" cellspacing="0" cellpadding="4" border="0">
+          <tbody>
+            <tr>
+              <th valign="middle" bgcolor="#D3D3D3" class="nowrap-center" colspan="2">
+                Net Payable : BDT <span id="sep_netp">{{ employeeSalary.netPay | number }}</span>
+              </th>
+            </tr>
+          </tbody>
+        </table>
+        <br /><br />
+        <table style="color: #000000; font-family: Segoe UI; font-size: 12px" width="100%" cellspacing="0" cellpadding="5" border="0">
+          <tbody>
+            <tr>
+              <td width="65%" valign="top" class="text-left" colspan="2">
+                Net payment has been transferred to the following bank account.
+              </td>
+            </tr>
+            <tr>
+              <td width="15%" valign="top" class="text-left">Bank Name</td>
+              <td width="50%" valign="top" class="text-left">: {{ employee.bankName }}</td>
+            </tr>
+            <tr>
+              <td valign="top" class="text-left">Account Number</td>
+              <td valign="top" class="text-left">: {{ employee.bankAccountNo }}</td>
+            </tr>
+            <tr>
+              <td valign="top" class="text-left">&nbsp;</td>
+              <td valign="top" class="text-left"></td>
+            </tr>
+            <tr>
+              <td valign="top" class="text-left">&nbsp;</td>
+              <td valign="top" class="text-left"></td>
+            </tr>
+          </tbody>
+        </table>
+        <table class="table-payslip" width="100%" cellspacing="0" cellpadding="4" border="0">
+          <tbody>
+            <tr>
+              <th valign="middle" class="lhead" bgcolor="#D3D3D3" class="nowrap-center" colspan="1">Thank You</th>
+            </tr>
+          </tbody>
+        </table>
+        <br /><br />
+        <table style="color: #000000; font-family: Segoe UI; font-size: 12px" width="100%" cellspacing="0" cellpadding="5" border="0">
+          <tbody>
+            <tr>
+              <td width="65%" valign="top" class="text-left" colspan="2">&nbsp;</td>
+              <td width="35%" valign="top" class="text-center" rowspan="5">
+                <img border="0" width="100px" height="100px" src="../../../content/images/Seal-blue.svg" />
+              </td>
+            </tr>
+            <tr>
+              <td valign="top" class="text-left">&nbsp;</td>
+              <td valign="top" class="text-left"></td>
+            </tr>
+            <tr>
+              <td valign="top" class="text-left"></td>
+              <td valign="top" class="text-left"></td>
+            </tr>
+            <tr>
+              <td valign="top" class="text-left"></td>
+              <td valign="top" class="text-left"></td>
+            </tr>
+            <tr>
+              <td valign="top" class="text-left"></td>
+              <td valign="top" class="text-left"></td>
+            </tr>
+            <tr>
+              <td valign="top" class="text-left" colspan="1">This is a system generated pay slip, no signature required</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

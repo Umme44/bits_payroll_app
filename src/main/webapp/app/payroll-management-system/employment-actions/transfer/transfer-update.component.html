@@ -1,0 +1,321 @@
+<div>
+  <form (ngSubmit)="save()" [formGroup]="editForm" name="editForm" novalidate role="form">
+    <jhi-header [headerName]="'Update transfer'" [shouldHaveHr]="false"> </jhi-header>
+
+    <div>
+      <jhi-alert-error></jhi-alert-error>
+
+      <div *ngIf="selectedEmployee !== null" class="container-fluid card py-2 mt-5">
+        <div class="card-body">
+          <div class="card-title">
+            <h2>Employee</h2>
+          </div>
+          <div class="card-text">
+            <div class="row py-2">
+              <div class="col-md-2 fw-bold">Name</div>
+              <div [textContent]="selectedEmployee?.fullName" class="col-md-4"></div>
+              <div class="col-md-2 fw-bold">Department</div>
+              <div class="col-md-4">
+                {{ selectedEmployee?.departmentName }}
+              </div>
+            </div>
+
+            <div class="row py-2">
+              <div class="col-md-2 fw-bold">Designation</div>
+              <div class="col-md-4">
+                {{ selectedEmployee?.designationName }}
+              </div>
+              <div class="col-md-2 fw-bold">Unit</div>
+              <div class="col-md-4">
+                {{ selectedEmployee?.unitName }}
+              </div>
+            </div>
+
+            <div class="row py-2">
+              <div class="col-md-2 fw-bold">Category</div>
+              <div class="col-md-4">
+                <span jhiTranslate="{{ 'bitsHrPayrollApp.EmployeeCategory.' + selectedEmployee.employeeCategory }}">{{
+                  selectedEmployee.employeeCategory
+                }}</span>
+              </div>
+              <div class="col-md-2 fw-bold">Desk Location</div>
+              <div class="col-md-4">
+                {{ selectedEmployee?.location }}
+              </div>
+            </div>
+
+            <div class="row py-2">
+              <div class="col-md-2 fw-bold">DOJ</div>
+              <div class="col-md-4">
+                {{ selectedEmployee?.dateOfJoining | formatMediumDate }}
+              </div>
+              <div class="col-md-2 fw-bold">DOC</div>
+              <div class="col-md-4">
+                {{ selectedEmployee?.dateOfConfirmation | formatMediumDate }}
+              </div>
+            </div>
+
+            <div class="row py-2">
+              <div class="col-md-2 fw-bold">Reporting to</div>
+              <div class="col-md-4">
+                {{ selectedEmployee?.reportingToName }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="selectedEmployee !== null" class="container-fluid card py-2 mt-5">
+        <div class="card-body">
+          <div class="card-title">
+            <h2>Transfer</h2>
+          </div>
+          <div class="card-text">
+            <div class="row py-2">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label
+                    class="form-control-label required"
+                    for="field_effectiveDate"
+                    jhiTranslate="bitsHrPayrollApp.employmentHistory.effectiveDate"
+                    >Effective Date</label
+                  >
+                  <div class="input-group">
+                    <input
+                      #effectiveDateDp="ngbDatepicker"
+                      (click)="effectiveDateDp.toggle()"
+                      class="form-control"
+                      formControlName="effectiveDate"
+                      id="field_effectiveDate"
+                      name="effectiveDate"
+                      ngbDatepicker
+                      type="date"
+                    />
+                    <span class="input-group-append">
+                      <button (click)="effectiveDateDp.toggle()" class="btn btn-secondary btn-sm align-self-center p-2" type="button">
+                        <fa-icon icon="calendar-alt"></fa-icon>
+                      </button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row py-2">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label
+                    class="form-control-label"
+                    for="field_previousReportingTo"
+                    jhiTranslate="bitsHrPayrollApp.employmentHistory.previousReportingTo"
+                    >Previous Reporting To</label
+                  >
+                  <select
+                    [attr.disabled]="true"
+                    class="form-control"
+                    formControlName="previousReportingToId"
+                    id="field_previousReportingTo"
+                    name="previousReportingTo"
+                  >
+                    <option [ngValue]="null"></option>
+                    <option *ngFor="let employeeOption of employees; trackBy: trackById" [ngValue]="employeeOption.id">
+                      {{ employeeOption.pin }} - {{ employeeOption.fullName }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label
+                    class="form-control-label required"
+                    jhiTranslate="bitsHrPayrollApp.employmentHistory.changedReportingTo"
+                    >Changed Reporting To</label
+                  >
+
+                  <jhi-select-employee-form
+                    [employeeIdForm]="changedReportingToForm!"
+                    [selectedId]="changedReportingToId"
+                  ></jhi-select-employee-form>
+
+                  <div
+                    *ngIf="
+                      editForm.get('changedReportingToId')!.invalid &&
+                      (editForm.get('changedReportingToId')!.dirty || editForm.get('changedReportingToId')!.touched)
+                    "
+                  >
+                    <small *ngIf="editForm.get('changedReportingToId')?.errors?.required" class="form-text text-danger">
+                      This field is required.
+                    </small>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row py-2">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label
+                    class="form-control-label"
+                    for="field_previousDepartment"
+                    jhiTranslate="bitsHrPayrollApp.employmentHistory.previousDepartment"
+                    >Previous Department</label
+                  >
+                  <select
+                    [attr.disabled]="true"
+                    class="form-control"
+                    formControlName="previousDepartmentId"
+                    id="field_previousDepartment"
+                    name="previousDepartment"
+                  >
+                    <option [ngValue]="null"></option>
+                    <option *ngFor="let departmentOption of departments; trackBy: trackById" [ngValue]="departmentOption.id">
+                      {{ departmentOption.departmentName }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label
+                    class="form-control-label required"
+                    for="field_changedDepartment"
+                    jhiTranslate="bitsHrPayrollApp.employmentHistory.changedDepartment"
+                    >Changed Department</label
+                  >
+                  <select class="form-control" formControlName="changedDepartmentId" id="field_changedDepartment" name="changedDepartment">
+                    <option [ngValue]="null"></option>
+                    <option *ngFor="let departmentOption of departments; trackBy: trackById" [ngValue]="departmentOption.id">
+                      {{ departmentOption.departmentName }}
+                    </option>
+                  </select>
+
+                  <small *ngIf="editForm.get('changedDepartmentId')?.errors?.required" class="form-text text-danger">
+                    This field is required.
+                  </small>
+                </div>
+              </div>
+            </div>
+
+            <div class="row py-2">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="form-control-label" for="field_previousUnit" jhiTranslate="bitsHrPayrollApp.employmentHistory.previousUnit"
+                    >Previous Unit</label
+                  >
+                  <select
+                    [attr.disabled]="true"
+                    class="form-control"
+                    formControlName="previousUnitId"
+                    id="field_previousUnit"
+                    name="previousUnit"
+                  >
+                    <option [ngValue]="null"></option>
+                    <option *ngFor="let unitOption of units; trackBy: trackById" [ngValue]="unitOption.id">
+                      {{ unitOption.unitName }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label
+                    class="form-control-label required"
+                    for="field_changedUnit"
+                    jhiTranslate="bitsHrPayrollApp.employmentHistory.changedUnit"
+                    >Changed Unit</label
+                  >
+                  <select class="form-control" formControlName="changedUnitId" id="field_changedUnit" name="changedUnit">
+                    <option [ngValue]="null"></option>
+                    <option *ngFor="let unitOption of units; trackBy: trackById" [ngValue]="unitOption.id">
+                      {{ unitOption.unitName }}
+                    </option>
+                  </select>
+
+                  <div
+                    *ngIf="
+                      editForm.get('changedUnitId')!.invalid &&
+                      (editForm.get('changedUnitId')!.dirty || editForm.get('changedUnitId')!.touched)
+                    "
+                  >
+                    <small *ngIf="editForm.get('changedUnitId')?.errors?.required" class="form-text text-danger">
+                      This field is required.
+                    </small>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row py-2">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="form-control-label" for="field_previousDesignation">Current Designation</label>
+                  <select
+                    [attr.disabled]="true"
+                    class="form-control"
+                    formControlName="previousDesignationId"
+                    id="field_previousDesignation"
+                    name="previousDesignation"
+                  >
+                    <option [ngValue]="null"></option>
+                    <option *ngFor="let designationOption of designations; trackBy: trackById" [ngValue]="designationOption.id">
+                      {{ designationOption.designationName }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="form-control-label required" for="field_changedDesignation">New Designation</label>
+                  <select
+                    class="form-control"
+                    formControlName="changedDesignationId"
+                    id="field_changedDesignation"
+                    name="changedDesignation"
+                  >
+                    <option [ngValue]="null"></option>
+                    <option *ngFor="let designationOption of designations; trackBy: trackById" [ngValue]="designationOption.id">
+                      {{ designationOption.designationName }}
+                    </option>
+                  </select>
+
+                  <div
+                    *ngIf="
+                      editForm.get('changedDesignationId')!.invalid &&
+                      (editForm.get('changedDesignationId')!.dirty || editForm.get('changedDesignationId')!.touched)
+                    "
+                  >
+                    <small *ngIf="editForm.get('changedDesignationId')?.errors?.required" class="form-text text-danger">
+                      This field is required.
+                    </small>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row py-2 px-2">
+              <div>
+                <button (click)="previousState()" class="btn btn-secondary" id="cancel-save" type="button">
+                  <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+
+                <button [disabled]="editForm.invalid || isSaving" class="btn btn-primary" id="save-entity" type="submit">
+                  <fa-icon icon="save"></fa-icon>&nbsp;<span> Transfer </span>
+                </button>
+              </div>
+            </div>
+
+            <!--<div>
+              <button (click)="previousState()" class="btn btn-secondary" id="cancel-save" type="button">
+                <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+              </button>
+
+              <button [disabled]="editForm.invalid || isSaving" class="btn btn-primary" id="save-entity" type="submit">
+                <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+              </button>
+            </div>-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

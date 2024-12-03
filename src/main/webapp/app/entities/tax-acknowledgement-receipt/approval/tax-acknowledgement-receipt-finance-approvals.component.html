@@ -1,0 +1,113 @@
+<jhi-header
+        [headerName]="'Tax Acknowledgement Receipt Submit'"
+        [midHeaderName01]="'Tax Acknowledgement Receipt Receive'"
+        [midRouterLinkText01]="'/tax-acknowledgement-receipt-finance/received'"
+        [shouldHaveHr]="false">
+</jhi-header>
+
+<div>
+
+    <form name="editForm" role="form" novalidate  [formGroup]="searchForm">
+        <div class="row mb-2">
+                <div class="col-md-4">
+                    <jhi-simple-select-employee-form
+                                                     [selectedFieldValue]="selectedEmployeeId"
+                                                     (onChangeEmployee)="onSearchTextChangeV2($event)"
+                                                     (keydown.backspace)="onKeydown($event)">
+                    </jhi-simple-select-employee-form>
+                </div >
+        </div>
+    </form>
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div *ngIf="taxAcknowledgementReceipts?.length === 0" class="alert alert-warning" id="no-result">
+        <span jhiTranslate="bitsHrPayrollApp.employee.home.notFound">No Tax Acknowledgement Receipt found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="taxAcknowledgementReceipts && taxAcknowledgementReceipts.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr class="text-nowrap">
+                    <th scope="col" class="w-5 batch-selection-approval">
+                        <span>
+                            <input
+                                    class="form-check-input"
+                                    type="checkbox"
+                                    [value]="-1"
+                                    [(ngModel)]="allSelector"
+                                    (change)="onChange($event)">
+                        </span>
+                    </th>
+                    <th scope="col" ><span>SL</span></th>
+                    <th scope="col"><span>PIN</span></th>
+                    <th scope="col"><span>Name</span></th>
+                    <th scope="col"><span>Designation</span></th>
+                    <th scope="col" ><span>TIN No.</span></th>
+                    <th scope="col" ><span>Acknowledgement Receipt Number</span></th>
+                    <th scope="col" ><span jhiTranslate="bitsHrPayrollApp.taxAcknowledgementReceipt.taxesCircle">Taxes Circle</span></th>
+                    <th scope="col" ><span jhiTranslate="bitsHrPayrollApp.taxAcknowledgementReceipt.taxesZone">Taxes Zone</span></th>
+                    <th scope="col" ><span>Date Of Submission</span></th>
+                    <th scope="col" ><span jhiTranslate="bitsHrPayrollApp.taxAcknowledgementReceipt.fiscalYear">Fiscal Year</span></th>
+                    <th scope="col" ><span>Status</span></th>
+                    <th scope="col"></th>
+                    <th scope="col" class="text-right">
+                        <div class="d-inline" *ngIf="taxAcknowledgementReceipts && taxAcknowledgementReceipts.length > 0">
+                            <div class="d-inline" container="body" ngbTooltip="Received">
+                                <button class="btn btn-success btn-sm"
+                                        [disabled]="approvalDTO.listOfIds!.length < 1"
+                                        (click)="approveSelected()">
+                                    <fa-icon [icon]="['fas', 'check']"></fa-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+                <tr *ngFor="let taxAcknowledgementReceipt of taxAcknowledgementReceipts ;trackBy: trackId,let i = index" class="text-nowrap">
+                    <td class="batch-selection-approval">
+                        <input
+                                class="form-check-input"
+                                type="checkbox"
+                                [value]="taxAcknowledgementReceipt.id"
+                                [checked]="taxAcknowledgementReceipt.isChecked"
+                                (change)="onChange($event)">
+                    </td>
+                    <td>{{i+1}}</td>
+                    <td>{{ taxAcknowledgementReceipt.pin }}</td>
+                    <td>{{  taxAcknowledgementReceipt.name }}</td>
+                    <td>{{ taxAcknowledgementReceipt.designation }}</td>
+
+                    <td>{{ taxAcknowledgementReceipt.tinNumber }}</td>
+                    <td>{{ taxAcknowledgementReceipt.receiptNumber }}</td>
+                    <td>{{ taxAcknowledgementReceipt.taxesCircle }}</td>
+                    <td>{{ taxAcknowledgementReceipt.taxesZone }}</td>
+                    <td>{{ taxAcknowledgementReceipt.dateOfSubmission | formatMediumDate }}</td>
+                    <td>
+                        <div *ngIf="taxAcknowledgementReceipt.fiscalYearId">
+                            {{ taxAcknowledgementReceipt.startYear }}-{{taxAcknowledgementReceipt.endYear}}
+                        </div>
+                    </td>
+                    <td>{{ getUserFriendlyUi(taxAcknowledgementReceipt) }}</td>
+
+                    <td></td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button class="btn btn-secondary btn-sm mr-4" ngbTooltip="Download"
+                                    (click)="export(taxAcknowledgementReceipt.id!)">
+                                <fa-icon icon="print"></fa-icon> PDF
+                            </button>
+
+
+                            <button type="button" class="btn btn-outline-primary" ngbTooltip="Receive"
+                                    (click)="onReceived(taxAcknowledgementReceipt.id!)">Receive
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,140 @@
+<div>
+  <jhi-header
+    [headerName]="'Recruitment Requisition Approval'"
+    [midHeaderName01]="'Approvals'"
+    [midRouterLinkText01]="'/'"
+    [midHeader01hasSessionStorage]="true"
+    [midHeader01SessionStorageKey]="'keepApprovalModalOpen'"
+    [midHeader01SessionStorageValue]="'yes'"
+    [shouldHaveHr]="false">
+  </jhi-header>
+
+
+  <div class="custom-card mb-4" *ngIf="recruitmentRequisitionBudgets && recruitmentRequisitionBudgets.length > 0">
+    <div class="row">
+      <div class="col-12">
+        <div class="table-responsive" id="budget_entities">
+          <table class="table table-striped my-0" aria-describedby="page-heading">
+            <thead>
+            <tr>
+              <th scope="col"><span>Year</span></th>
+              <th scope="col"><span>Budget</span></th>
+              <th scope="col"><span>Remaining Budget</span></th>
+              <th scope="col"><span>Remaining Manpower</span></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let recruitmentRequisitionBudget of recruitmentRequisitionBudgets ;">
+              <td>{{ recruitmentRequisitionBudget.year }}</td>
+              <td>{{ recruitmentRequisitionBudget.budget | number }}</td>
+              <td>{{ recruitmentRequisitionBudget.remainingBudget | number }}</td>
+              <td>{{ recruitmentRequisitionBudget.remainingManpower | number }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="custom-card mb-4">
+    <div class="row mb-2">
+      <div class="col-md-12">
+
+        <jhi-search-text-box
+          (searchEvent)="onSearchTextChangeV2($event)"
+          [placeHolderText]="'Search'"
+          [searchBoxSize]="'18rem'">
+        </jhi-search-text-box>
+      </div>
+
+
+    </div>
+  </div>
+  <jhi-alert-error></jhi-alert-error>
+  <jhi-alert></jhi-alert>
+</div>
+
+<div *ngIf="recruitmentRequisitionFormsFiltered && recruitmentRequisitionFormsFiltered.length > 0" >
+
+  <table aria-describedby="page-heading" class="table table-hover">
+    <thead class="list-text-color">
+    <tr>
+      <th scope="col">
+                <span>
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  [value]="-1"
+                  [(ngModel)]="allSelector"
+                  (change)="onChange($event)">
+                </span>
+      </th>
+      <th scope="col"><span>RRF Number</span></th>
+      <th scope="col"><span>Functional Designation</span></th>
+      <th scope="col"><span>Project</span></th>
+      <th scope="col"><span>Date</span></th>
+      <th scope="col" class="text-right"><span>Band</span></th>
+
+      <th scope="col" class="text-right"><span>Vacancies</span></th>
+
+      <th scope="col"><span>Requester</span></th>
+      <th scope="col">
+        <div class="d-inline col-md-1" *ngIf="recruitmentRequisitionFormsFiltered && recruitmentRequisitionFormsFiltered.length > 0">
+          <div class="d-inline" ngbTooltip="Approve" container="body">
+            <button class="btn btn-success btn-sm"
+                    [disabled]="approvalDTO!.listOfIds!.length < 1"
+                    (click)="approveSelected()">
+              <fa-icon [icon]="['fas', 'check']"></fa-icon>
+            </button>
+          </div>
+
+          <div class="d-inline" ngbTooltip="Reject" container="body">
+            <button class="btn btn-danger btn-sm"
+                    [disabled]="approvalDTO!.listOfIds!.length < 1"
+                    (click)="denySelected()">
+              <fa-icon [icon]="['fas', 'times']"></fa-icon>
+            </button>
+          </div>
+        </div>
+      </th>
+    </tr>
+    </thead>
+    <tbody class="list-text-color">
+    <tr *ngFor="let rrf of recruitmentRequisitionFormsFiltered ;trackBy: trackId">
+      <td>
+        <input
+          class="form-check-input"
+          type="checkbox"
+          [value]="rrf.id"
+          [checked]="rrf.isChecked"
+          (change)="onChange($event)">
+      </td>
+
+      <td class="text-nowrap"><a class="text-decoration-underline" (click)="navigatePrintView(rrf.id!)">{{ rrf.rrfNumber }}</a></td>
+
+
+      <td class="text-nowrap">{{ rrf.functionalDesignationName}}</td>
+      <td class="text-nowrap">
+                <span ngbTooltip="{{ (rrf.project && rrf.project!.length > 25) ? rrf.project : ''}}">
+                {{ (rrf.project && rrf.project!.length > 25) ? rrf.project!.slice(0, 25) + "..." : rrf.project }}
+                </span>
+      </td>
+      <td class="text-nowrap">{{ rrf.dateOfRequisition | formatMediumDate }}</td>
+      <td class="text-nowrap text-right">{{ rrf.bandName }}</td>
+      <td class="text-nowrap text-right font-weight-bold">{{ rrf.numberOfVacancies }}</td>
+
+      <td class="text-nowrap">
+        {{rrf.requesterPin}} - {{rrf.requesterFullName}}
+      </td>
+      <td></td>
+
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<div *ngIf="!recruitmentRequisitionFormsFiltered || recruitmentRequisitionFormsFiltered.length === 0" style="height: 75vh" class="text-center d-flex align-items-center justify-content-center">
+  <img src="../../../../content/images/requisition.svg" width="400px" height="400px">
+</div>

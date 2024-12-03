@@ -1,0 +1,78 @@
+{
+  "changelogDate": "20210418030341",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "pf_collection",
+  "fields": [
+    {
+      "fieldName": "employeeContribution",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "employerContribution",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "transactionDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "year",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "month",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "collectionType",
+      "fieldType": "PfCollectionType",
+      "fieldValues": "ARREAR,ADVANCE,CASH,MONTHLY,OPENING_BALANCE"
+    },
+    {
+      "fieldName": "employeeInterest",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMax": "10000000",
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "employerInterest",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMax": "10000000",
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "gross",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMax": "10000000",
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "basic",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMax": "10000000",
+      "fieldValidateRulesMin": "0"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "PfCollection",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "pfAccount",
+      "otherEntityRelationshipName": "pfCollection",
+      "relationshipName": "pfAccount",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

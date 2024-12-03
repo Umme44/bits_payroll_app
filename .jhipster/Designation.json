@@ -1,0 +1,24 @@
+{
+  "applications": "*",
+  "changelogDate": "20210215123430",
+  "clientRootFolder": "",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "designation",
+  "fields": [
+    {
+      "fieldName": "designationName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength", "unique"],
+      "fieldValidateRulesMaxlength": "250",
+      "fieldValidateRulesMinlength": "1"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Designation",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceImpl"
+}

@@ -1,0 +1,17 @@
+<div class="card card-body font-sm">
+  <h6>Requisition Timeline</h6>
+  <ul class="timeline">
+    <ng-container *ngFor="let timeline of timelineList">
+      <li class="timeline-item">
+        <div class="timeline-info">
+          <span class="fw-bold">{{ timeline.effectiveDate | formatMediumDate }}</span>
+        </div>
+        <div class="timeline-marker"></div>
+        <div class="timeline-content">
+          <span class="timeline-title fw-normal">{{ timeline.timelineName }}</span>
+          <small>{{ timeline.note }}</small>
+        </div>
+      </li>
+    </ng-container>
+  </ul>
+</div>

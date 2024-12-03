@@ -1,0 +1,10 @@
+{
+  "bitsHrPayrollApp": {
+    "DisbursementMethod": {
+      "null": "",
+      "BANK": "BANK",
+      "CASH": "CASH",
+      "MOBILE_BANKING": "MOBILE BANKING"
+    }
+  }
+}

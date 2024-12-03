@@ -1,0 +1,5 @@
+export const enum ArrearPaymentType {
+  INDIVIDUAL = 'INDIVIDUAL',
+
+  ALONGSIDE_MONTHLY_SALARY = 'ALONGSIDE_MONTHLY_SALARY',
+}

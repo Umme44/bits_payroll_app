@@ -1,0 +1,34 @@
+{
+  "bitsHrPayrollApp": {
+    "pfAccount": {
+      "home": {
+        "title": "Pf Accounts",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Pf Account",
+        "createOrEditLabel": "Create or edit a Pf Account",
+        "notFound": "No Pf Accounts found"
+      },
+      "created": "A new Pf Account is created with identifier {{ param }}",
+      "updated": "A Pf Account is updated with identifier {{ param }}",
+      "deleted": "A Pf Account is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Pf Account {{ id }}?"
+      },
+      "detail": {
+        "title": "Pf Account"
+      },
+      "id": "ID",
+      "pfCode": "Pf Code",
+      "membershipStartDate": "Membership Start Date",
+      "membershipEndDate": "Membership End Date",
+      "status": "Status",
+      "designationName": "Designation Name",
+      "departmentName": "Department Name",
+      "unitName": "Unit Name",
+      "accHolderName": "Acc Holder Name",
+      "pin": "Pin",
+      "dateOfJoining": "DOJ",
+      "dateOfConfirmation": "DOC"
+    }
+  }
+}

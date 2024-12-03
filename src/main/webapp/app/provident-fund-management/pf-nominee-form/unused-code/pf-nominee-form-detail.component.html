@@ -1,0 +1,257 @@
+<jhi-header [headerName]="'PF  Details'" [midHeaderName01]="'PF Nominee'" [midRouterLinkText01]="'/pf-nominee/2251/edit'"> </jhi-header>
+
+<div class="row justify-content-center">
+  <div class="col-12">
+    <div *ngIf="pfNominee">
+      <!--  nominee details-->
+      <div class="row py-3">
+        <div *ngIf="pfNominee" class="col-12" style="border: 1px solid #ccc; border-radius: 5px">
+          <div style="padding-top: 15px">
+            <p>Nominee Information:</p>
+
+            <div class="row">
+              <div class="col-2 mb-3">
+                <div class="">
+                  <img
+                    style="height: 130px; width: 130px; border-radius: 3px; padding: 3px; background-color: #9fcdff"
+                    [src]="getPfNomineeImage(pfNominee.id!)"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12">
+                <div class="row">
+                  <div class="col-4">
+                    <div class="row">
+                      <div class="col-4">
+                        <p style="font-size: 0.7rem; font-weight: bold">Name</p>
+                      </div>
+                      <div class="col-8">
+                        <p style="font-size: 0.75rem">: {{ pfNominee.fullName }}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-4">
+                    <div class="row">
+                      <div class="col-4">
+                        <p style="font-size: 0.7rem; font-weight: bold">Date of Birth</p>
+                      </div>
+                      <div class="col-8">
+                        <p style="font-size: 0.75rem">: {{ pfNominee.dateOfBirth | date }}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-4">
+                    <div class="row">
+                      <div class="col-4">
+                        <p style="font-size: 0.7rem; font-weight: bold">Nominee age</p>
+                      </div>
+                      <div class="col-8">
+                        <p style="font-size: 0.75rem">: {{ pfNominee.age }}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="row">
+                      <div class="col-4">
+                        <p style="font-size: 0.7rem; font-weight: bold">Identity Type</p>
+                      </div>
+                      <div class="col-8">
+                        <p style="font-size: 0.75rem">: {{ pfNominee.identityType! }}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div *ngIf="pfNominee.documentName === 'OTHER'" class="col-4">
+                    <div class="row">
+                      <div class="col-4">
+                        <p style="font-size: 0.7rem; font-weight: bold">Document Name</p>
+                      </div>
+                      <div class="col-8">
+                        <p style="font-size: 0.75rem">: {{ pfNominee.documentName }}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-4">
+                    <div class="row">
+                      <div class="col-4">
+                        <p style="font-size: 0.7rem; font-weight: bold">Identity number</p>
+                      </div>
+                      <div class="col-8">
+                        <p style="font-size: 0.75rem">: {{ pfNominee.idNumber }}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-4">
+                    <div class="row">
+                      <div class="col-4">
+                        <p style="font-size: 0.7rem; font-weight: bold">Relation</p>
+                      </div>
+                      <div class="col-8">
+                        <p style="font-size: 0.75rem">: {{ pfNominee.relationship }}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-8">
+                    <div class="row">
+                      <div class="col-2">
+                        <p style="font-size: 0.7rem; font-weight: bold">Present address</p>
+                      </div>
+                      <div class="col-10">
+                        <p style="font-size: 0.75rem">: {{ pfNominee.presentAddress }}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-4">
+                    <div class="row">
+                      <div class="col-4">
+                        <p style="font-size: 0.7rem; font-weight: bold">Share</p>
+                      </div>
+                      <div class="col-8">
+                        <p style="font-size: 0.75rem">: {{ pfNominee.sharePercentage }}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-8">
+                    <div class="row">
+                      <div class="col-2">
+                        <p style="font-size: 0.7rem; font-weight: bold">Permanent address</p>
+                      </div>
+                      <div class="col-10">
+                        <p style="font-size: 0.75rem">: {{ pfNominee.permanentAddress }}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Guardian Details-->
+      <div class="row py-3" *ngIf="pfNominee.guardianName">
+        <div class="col-12" style="border: 1px solid #ccc; border-radius: 5px">
+          <div style="padding-top: 15px">
+            <p>Nominee Guardian Information:</p>
+
+            <div class="row">
+              <div class="col-4">
+                <div class="row">
+                  <div class="col-4">
+                    <p style="font-size: 0.7rem; font-weight: bold">Name</p>
+                  </div>
+                  <div class="col-8">
+                    <p style="font-size: 0.75rem">: {{ pfNominee.guardianName }}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-4">
+                <div class="row">
+                  <div class="col-4">
+                    <p style="font-size: 0.7rem; font-weight: bold">Date of Birth</p>
+                  </div>
+                  <div class="col-8">
+                    <p style="font-size: 0.75rem">: {{ pfNominee.guardianDateOfBirth | date }}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-4">
+                <div class="row">
+                  <div class="col-4">
+                    <p style="font-size: 0.7rem; font-weight: bold">Relation</p>
+                  </div>
+                  <div class="col-8">
+                    <p style="font-size: 0.75rem">: {{ pfNominee.guardianRelationshipWithNominee }}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-8">
+                <div class="row">
+                  <div class="col-2">
+                    <p style="font-size: 0.7rem; font-weight: bold">Present address</p>
+                  </div>
+                  <div class="col-10">
+                    <p style="font-size: 0.75rem">: {{ pfNominee.guardianPresentAddress }}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-4">
+                <div class="row">
+                  <div class="col-4">
+                    <p style="font-size: 0.7rem; font-weight: bold">Father Or Spouse Name</p>
+                  </div>
+                  <div class="col-8">
+                    <p style="font-size: 0.75rem">: {{ pfNominee.guardianFatherOrSpouseName }}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-8">
+                <div class="row">
+                  <div class="col-2">
+                    <p style="font-size: 0.7rem; font-weight: bold">Permanent Address</p>
+                  </div>
+                  <div class="col-10">
+                    <p style="font-size: 0.75rem">: {{ pfNominee.guardianPermanentAddress }}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-4">
+                <div class="row">
+                  <div class="col-4">
+                    <p style="font-size: 0.7rem; font-weight: bold">Identity Type</p>
+                  </div>
+                  <div class="col-8">
+                    <p style="font-size: 0.75rem">: {{ pfNominee.guardianIdentityType! }}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="pfNominee.guardianIdentityType === 'OTHER'" class="col-4">
+                <div class="row">
+                  <div class="col-4">
+                    <p style="font-size: 0.7rem; font-weight: bold">Document Name</p>
+                  </div>
+                  <div class="col-8">
+                    <p style="font-size: 0.75rem">: {{ pfNominee.guardianDocumentName }}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-4">
+                <div class="row">
+                  <div class="col-4">
+                    <p style="font-size: 0.7rem; font-weight: bold">Identity Number</p>
+                  </div>
+                  <div class="col-8">
+                    <p style="font-size: 0.75rem">: {{ pfNominee.guardianIdNumber }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="submit" (click)="previousState()" class="btn btn-info">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+{
+  "bitsHrPayrollApp": {
+    "generatedSalaryHistory": {
+      "home": {
+        "title": "Generated Salary Histories",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Generated Salary History",
+        "createOrEditLabel": "Create or edit a Generated Salary History",
+        "notFound": "No Generated Salary Histories found"
+      },
+      "created": "A new Generated Salary History is created with identifier {{ param }}",
+      "updated": "A Generated Salary History is updated with identifier {{ param }}",
+      "deleted": "A Generated Salary History is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Generated Salary History {{ id }}?"
+      },
+      "detail": {
+        "title": "Generated Salary History"
+      },
+      "id": "ID",
+      "year": "Year",
+      "month": "Month",
+      "status": "Status"
+    }
+  }
+}

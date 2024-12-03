@@ -1,0 +1,11 @@
+id;start_date;end_date;override_roaster;override_flex_schedule;remarks;created_at;updated_at;reason;time_slot_id
+1;2022-09-10;2022-09-10;false;true;infrastructures;2022-09-10T17:39:34;2022-09-10T07:53:22;synergies;1
+2;2022-09-11;2022-09-11;true;true;Investor navigating Account;2022-09-11T01:23:13;2022-09-11T04:00:49;throughput;2
+3;2022-09-10;2022-09-10;true;true;Dakota productize indexing;2022-09-10T17:25:01;2022-09-11T06:28:57;24/7;3
+4;2022-09-11;2022-09-11;true;false;Reactive;2022-09-10T10:24:19;2022-09-10T09:40:39;next-generation indigo Senegal;4
+5;2022-09-10;2022-09-10;true;false;Secured;2022-09-11T04:29:35;2022-09-10T20:54:33;reboot JBOD;5
+6;2022-09-10;2022-09-10;true;true;Licensed driver attitude-oriented;2022-09-11T03:25:44;2022-09-10T19:59:17;Avon;6
+7;2022-09-11;2022-09-11;false;false;programming;2022-09-10T20:27:53;2022-09-10T19:38:10;XML Licensed;7
+8;2022-09-10;2022-09-10;true;false;red deposit;2022-09-10T21:01:22;2022-09-11T06:47:09;Bacon override;8
+9;2022-09-10;2022-09-10;true;true;Frozen Federation background;2022-09-10T18:54:30;2022-09-11T03:04:32;embrace Cambridgeshire;9
+10;2022-09-11;2022-09-10;false;false;Designer;2022-09-10T18:54:11;2022-09-10T21:41:33;user-facing hack Steel;10

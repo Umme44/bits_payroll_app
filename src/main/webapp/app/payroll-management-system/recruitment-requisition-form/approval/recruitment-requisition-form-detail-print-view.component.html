@@ -1,0 +1,324 @@
+<div>
+  <jhi-header
+    [headerName]="'Details'"
+    [midHeaderName01]="'Recruitment Requisition Forms'"
+    [midRouterLinkText01]="'/recruitment-requisition-form/user/approval'"
+    [shouldHaveHr]="false"
+  >
+  </jhi-header>
+</div>
+
+<div class="print-btn-container mb-2 container px-0">
+  <div class="text-end">
+    <button (click)="downloadAsPDF()" class="btn btn-primary">
+      <fa-icon icon="print"></fa-icon>
+      Print
+    </button>
+  </div>
+</div>
+
+<div class="printRRF">
+  <div class="bg-img print-doc-area container" *ngIf="recruitmentRequisitionForm">
+    <div class="h6 text-center">RECRUITMENT REQUISITION FORM</div>
+    <table class="table table-bordered-light">
+      <thead>
+        <tr>
+          <th colspan="3" class="text-center font-weight-bold font-italic">Recruitment Information</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <strong>Requisition Date</strong> <br />
+            {{ recruitmentRequisitionForm.dateOfRequisition | formatMediumDate }}
+          </td>
+          <td>
+            <strong>Job Title</strong> <br />
+            {{ recruitmentRequisitionForm.functionalDesignationName }}
+          </td>
+          <td>
+            <strong>Department</strong> <br />
+            {{ recruitmentRequisitionForm.departmentName }}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Band</strong> <br />
+            {{ recruitmentRequisitionForm.bandName }}
+          </td>
+
+          <td>
+            <strong>RRF Number</strong> <br />
+            {{ recruitmentRequisitionForm.rrfNumber }}
+          </td>
+
+          <td>
+            <strong>Resource Type</strong> <br />
+            <span jhiTranslate="bitsHrPayrollApp.RequisitionResourceType.{{ recruitmentRequisitionForm.resourceType }}">
+              {{ recruitmentRequisitionForm.resourceType }}
+            </span>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <strong>Reporting To</strong> <br />
+            {{ recruitmentRequisitionForm.requesterPin }} - {{ recruitmentRequisitionForm.requesterFullName }}
+          </td>
+          <td>
+            <strong>Expected Joining Date</strong> <br />
+            {{ recruitmentRequisitionForm.expectedJoiningDate | formatMediumDate }}
+          </td>
+          <td>
+            <strong>Number of Vacancy(s)</strong> <br />
+            {{ recruitmentRequisitionForm.numberOfVacancies }}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Project</strong>
+          </td>
+          <td colspan="2">
+            {{ recruitmentRequisitionForm.project }}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Employment Type</strong>
+          </td>
+          <td colspan="2">
+            <ng-container
+              *ngIf="
+                recruitmentRequisitionForm.employmentType === 'REGULAR_PROVISIONAL_EMPLOYEE' ||
+                  recruitmentRequisitionForm.employmentType === 'REGULAR_CONFIRMED_EMPLOYEE';
+                else recElse
+              "
+            >
+              <div class="diag" style=""></div>
+            </ng-container>
+            <ng-template #recElse>
+              <div class="sm-box"></div>
+            </ng-template>
+            Regular
+
+            <ng-container *ngIf="recruitmentRequisitionForm.employmentType === 'CONTRACTUAL_EMPLOYEE'; else ceElse">
+              <div class="diag"></div>
+            </ng-container>
+            <ng-template #ceElse>
+              <div class="sm-box"></div>
+            </ng-template>
+            Contractual
+
+            <ng-container *ngIf="recruitmentRequisitionForm.employmentType === 'INTERN'; else internElse">
+              <div class="diag"></div>
+            </ng-container>
+            <ng-template #internElse>
+              <div class="sm-box"></div>
+            </ng-template>
+            Intern
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <strong>Recruitment Nature</strong>
+          </td>
+          <td colspan="2">
+            <ng-container
+              *ngIf="
+                recruitmentRequisitionForm?.recruitmentNature === 'PLANNED_ADDITION' ||
+                  recruitmentRequisitionForm.recruitmentNature === 'PLANNED_ADDITION';
+                else planElse
+              "
+            >
+              <div class="diag" style=""></div>
+              <!--<div class="crossed"></div>-->
+              <!-- <img src="/content/icons/cross-box.svg" alt="" height="18px" class="pb-0">-->
+            </ng-container>
+            <ng-template #planElse>
+              <!--<input type="checkbox" name="employeeCategory"/>-->
+              <div class="sm-box"></div>
+            </ng-template>
+            Planned Addition
+
+            <ng-container *ngIf="recruitmentRequisitionForm.recruitmentNature === 'NEW_RECRUITMENT'; else ceElse">
+              <div class="diag"></div>
+              <!--<img src="/content/icons/cross-box.svg" alt="" height="18px" class="pb-0">-->
+            </ng-container>
+            <ng-template #newrecElse>
+              <!--<input type="checkbox" name="employeeCategory"/>-->
+              <div class="sm-box"></div>
+            </ng-template>
+            New Recruitment
+
+            <!--<ng-container *ngIf="recruitmentRequisitionForm.employmentType === 'REGULAR_CONFIRMED_EMPLOYEE'; else recElse">
+              <img src="/content/icons/cross-box.svg" alt="" height="18px">
+          </ng-container>
+          <ng-template #recElse>
+              <input type="checkbox" name="employeeCategory" />
+          </ng-template>Consultant-->
+
+            <ng-container *ngIf="recruitmentRequisitionForm.recruitmentNature === 'REPLACEMENT'; else replElse">
+              <div class="diag"></div>
+              <!--<img src="/content/icons/cross-box.svg" alt="" height="18px" class="pb-0">-->
+            </ng-container>
+            <ng-template #replElse>
+              <!--<input type="checkbox" name="employeeCategory"/>-->
+              <div class="sm-box"></div>
+            </ng-template>
+            Replacement
+          </td>
+        </tr>
+        <tr *ngIf="recruitmentRequisitionForm.recruitmentNature === 'REPLACEMENT'">
+          <td>
+            <strong>Employee to be Replaced</strong>
+          </td>
+          <td colspan="2">
+            {{ recruitmentRequisitionForm?.employeeToBeReplacedPin }} - {{ recruitmentRequisitionForm?.employeeToBeReplacedFullName }}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Preferred Education</strong>
+          </td>
+          <td colspan="2">
+            {{ recruitmentRequisitionForm.preferredEducationType }}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Preferred Skills</strong>
+          </td>
+          <td colspan="2">
+            {{ recruitmentRequisitionForm?.preferredSkillType }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <span style="font-family: Segoe UI">* Please Attach Job Description</span>
+
+    <table class="table table-bordered-max approval-table" data-name="rrf-details-approval-table">
+      <thead>
+        <tr>
+          <th colspan="3"><strong>APPROVAL</strong></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="text-center" style="width: 33%">
+            {{ recruitmentRequisitionForm.requesterFullName }}<br />
+            {{ recruitmentRequisitionForm.requesterDesignationName }}<br />
+            Date: {{ recruitmentRequisitionForm.requestedDate | formatMediumDate }}
+            <div class="border-bottom-1 text-center m-0"></div>
+            Requester
+          </td>
+          <td class="text-center" style="width: 33%">
+            <br />
+            <span *ngIf="recruitmentRequisitionForm.recommendationDate01">
+              {{ recruitmentRequisitionForm.recommendedBy01FullName }}<br />
+              Date: {{ recruitmentRequisitionForm.recommendationDate01 | formatMediumDate }}
+            </span>
+            <span *ngIf="!recruitmentRequisitionForm.recommendationDate01">
+              <br />
+            </span>
+            <br />
+            <!--<hr style="border: 1px solid black !important;" class="text-center m-0"/>-->
+            <div class="border-bottom-1 text-center m-0"></div>
+            Recommended by LM
+          </td>
+          <td class="text-center" style="width: 33%">
+            <br />
+            <span *ngIf="recruitmentRequisitionForm.recommendationDate02">
+              {{ recruitmentRequisitionForm.recommendedBy02FullName }}<br />
+              Date: {{ recruitmentRequisitionForm.recommendationDate02 | formatMediumDate }}
+            </span>
+            <span *ngIf="!recruitmentRequisitionForm.recommendationDate02">
+              <br />
+            </span>
+            <br />
+            <div class="border-bottom-1 text-center m-0"></div>
+            <div></div>
+            Recommended By HoD
+          </td>
+        </tr>
+        <tr>
+          <td class="text-center">
+            <span *ngIf="recruitmentRequisitionForm.recommendationDate03">
+              {{ recruitmentRequisitionForm.recommendedBy03FullName }}<br />
+              Date: {{ recruitmentRequisitionForm.recommendationDate03 | formatMediumDate }}
+            </span>
+            <span *ngIf="!recruitmentRequisitionForm.recommendationDate03">
+              <br />
+            </span>
+            <br />
+            <div class="border-bottom-1 text-center m-0"></div>
+            Recommended By CTO <small class="">(only for SDLC)</small>
+          </td>
+          <td class="text-center">
+            <span *ngIf="recruitmentRequisitionForm.recommendationDate04">
+              {{ recruitmentRequisitionForm.recommendedBy04FullName }}<br />
+              Date: {{ recruitmentRequisitionForm.recommendationDate04 | formatMediumDate }}
+            </span>
+            <span *ngIf="!recruitmentRequisitionForm.recommendationDate04">
+              <br />
+            </span>
+            <br />
+            <div class="border-bottom-1 text-center m-0"></div>
+            Vetted By HoHR
+          </td>
+          <td class="text-center">
+            <span *ngIf="recruitmentRequisitionForm.recommendationDate05">
+              {{ recruitmentRequisitionForm.recommendedBy05FullName }}<br />
+              Date: {{ recruitmentRequisitionForm.recommendationDate05 | formatMediumDate }}
+            </span>
+            <span *ngIf="!recruitmentRequisitionForm.recommendationDate05">
+              <br />
+            </span>
+            <br />
+            <div class="border-bottom-1 text-center m-0"></div>
+            Approved By CEO
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <br /><br /><br />
+
+    <table
+      class="table-common border-none"
+      style="color: #000000; font-family: Segoe UI; font-size: 12px"
+      width="100%"
+      cellspacing="0"
+      cellpadding="5"
+      border="0"
+    >
+      <tbody>
+        <tr>
+          <td width="65%" valign="top" class="text-left" colspan="2">&nbsp;</td>
+          <td width="35%" valign="top" class="text-center" rowspan="5">
+            <img border="0" width="100px" height="100px" src="../../../../content/images/Seal-blue.svg" />
+          </td>
+        </tr>
+        <tr>
+          <td valign="top" class="text-left">&nbsp;</td>
+          <td valign="top" class="text-left"></td>
+        </tr>
+        <tr>
+          <td valign="top" class="text-left"></td>
+          <td valign="top" class="text-left"></td>
+        </tr>
+        <tr>
+          <td valign="top" class="text-left"></td>
+          <td valign="top" class="text-left"></td>
+        </tr>
+        <tr>
+          <td valign="top" class="text-left"></td>
+          <td valign="top" class="text-left"></td>
+        </tr>
+        <tr>
+          <td valign="top" class="text-left" colspan="1">This is a system generated document, no signature required</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

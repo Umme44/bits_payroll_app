@@ -1,0 +1,82 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="vehicle">
+      <h2 data-cy="vehicleDetailsHeading"><span jhiTranslate="bitsHrPayrollApp.vehicle.detail.title">Vehicle</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ vehicle.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.vehicle.modelName">Model Name</span></dt>
+        <dd>
+          <span>{{ vehicle.modelName }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.vehicle.chassisNumber">Chassis Number</span></dt>
+        <dd>
+          <span>{{ vehicle.chassisNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.vehicle.registrationNumber">Registration Number</span></dt>
+        <dd>
+          <span>{{ vehicle.registrationNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.vehicle.status">Status</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.Status.' + vehicle.status }}">{{ vehicle.status }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.vehicle.capacity">Capacity</span></dt>
+        <dd>
+          <span>{{ vehicle.capacity }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.vehicle.remarks">Remarks</span></dt>
+        <dd>
+          <span>{{ vehicle.remarks }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.vehicle.createdAt">Created At</span></dt>
+        <dd>
+          <span>{{ vehicle.createdAt | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.vehicle.updatedAt">Updated At</span></dt>
+        <dd>
+          <span>{{ vehicle.updatedAt | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.vehicle.approvedAt">Approved At</span></dt>
+        <dd>
+          <span>{{ vehicle.approvedAt | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.vehicle.createdBy">Created By</span></dt>
+        <dd>
+          <span>{{ vehicle.createdBy?.login }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.vehicle.updatedBy">Updated By</span></dt>
+        <dd>
+          <span>{{ vehicle.updatedBy?.login }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.vehicle.approvedBy">Approved By</span></dt>
+        <dd>
+          <span>{{ vehicle.approvedBy?.login }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.vehicle.assignedDriver">Assigned Driver</span></dt>
+        <dd>
+          <div *ngIf="vehicle.assignedDriver">
+            <a [routerLink]="['/employee', vehicle.assignedDriver.id, 'view']">{{ vehicle.assignedDriver.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/vehicle', vehicle.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,114 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="roomRequisition">
+      <h2 data-cy="roomRequisitionDetailsHeading">
+        <span jhiTranslate="bitsHrPayrollApp.roomRequisition.detail.title">Room Requisition</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ roomRequisition.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.roomRequisition.status">Status</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.Status.' + roomRequisition.status }}">{{ roomRequisition.status }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.roomRequisition.bookingTrn">Booking Trn</span></dt>
+        <dd>
+          <span>{{ roomRequisition.bookingTrn }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.roomRequisition.createdAt">Created At</span></dt>
+        <dd>
+          <span>{{ roomRequisition.createdAt | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.roomRequisition.updatedAt">Updated At</span></dt>
+        <dd>
+          <span>{{ roomRequisition.updatedAt | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.roomRequisition.sanctionedAt">Sanctioned At</span></dt>
+        <dd>
+          <span>{{ roomRequisition.sanctionedAt | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.roomRequisition.participantList">Participant List</span></dt>
+        <dd>
+          <span>{{ roomRequisition.participantList }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.roomRequisition.rejectedReason">Rejected Reason</span></dt>
+        <dd>
+          <span>{{ roomRequisition.rejectedReason }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.roomRequisition.bookingStartDate">Booking Start Date</span></dt>
+        <dd>
+          <span>{{ roomRequisition.bookingStartDate | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.roomRequisition.bookingEndDate">Booking End Date</span></dt>
+        <dd>
+          <span>{{ roomRequisition.bookingEndDate | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.roomRequisition.startTime">Start Time</span></dt>
+        <dd>
+          <span>{{ roomRequisition.startTime }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.roomRequisition.endTime">End Time</span></dt>
+        <dd>
+          <span>{{ roomRequisition.endTime }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.roomRequisition.title">Title</span></dt>
+        <dd>
+          <span>{{ roomRequisition.title }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.roomRequisition.agenda">Agenda</span></dt>
+        <dd>
+          <span>{{ roomRequisition.agenda }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.roomRequisition.optionalParticipantList">Optional Participant List</span></dt>
+        <dd>
+          <span>{{ roomRequisition.optionalParticipantList }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.roomRequisition.isFullDay">Is Full Day</span></dt>
+        <dd>
+          <span>{{ roomRequisition.isFullDay }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.roomRequisition.createdBy">Created By</span></dt>
+        <dd>
+          <span>{{ roomRequisition.createdBy?.login }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.roomRequisition.updatedBy">Updated By</span></dt>
+        <dd>
+          <span>{{ roomRequisition.updatedBy?.login }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.roomRequisition.sanctionedBy">Sanctioned By</span></dt>
+        <dd>
+          <span>{{ roomRequisition.sanctionedBy?.login }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.roomRequisition.requester">Requester</span></dt>
+        <dd>
+          <div *ngIf="roomRequisition.requester">
+            <a [routerLink]="['/employee', roomRequisition.requester.id, 'view']">{{ roomRequisition.requester.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.roomRequisition.room">Room</span></dt>
+        <dd>
+          <div *ngIf="roomRequisition.room">
+            <a [routerLink]="['/room', roomRequisition.room.id, 'view']">{{ roomRequisition.room.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/room-requisition', roomRequisition.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+{
+  "bitsHrPayrollApp": {
+    "RelationshipWithEmployee": {
+      "null": "",
+      "PERSONAL": "PERSONAL",
+      "PROFESSIONAL": "PROFESSIONAL"
+    }
+  }
+}

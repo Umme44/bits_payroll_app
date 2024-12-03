@@ -1,0 +1,9 @@
+{
+  "bitsHrPayrollApp": {
+    "ClaimType": {
+      "null": "",
+      "HOSPITALIZATION": "Hospitalization",
+      "MATERNITY": "Maternity"
+    }
+  }
+}

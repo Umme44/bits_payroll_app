@@ -1,0 +1,22 @@
+<form (ngSubmit)="confirm()">
+  <!--
+  <div class="modal-header">
+      <h4 class="modal-title">Success Message</h4>
+
+      <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true"
+              (click)="cancel()">&times;</button>
+  </div>
+    -->
+
+  <div class="modal-body">
+    <h4>{{ text }}</h4>
+  </div>
+
+  <div class="modal-footer">
+    <!--   <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
+           <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+       </button>  -->
+
+    <button class="btn btn-success" type="submit"><fa-icon icon="check"></fa-icon>&nbsp;<span>Ok</span></button>
+  </div>
+</form>

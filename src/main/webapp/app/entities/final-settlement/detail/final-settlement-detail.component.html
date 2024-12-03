@@ -1,0 +1,625 @@
+<jhi-header
+  [headerName]="'Final Settlement Details'"
+  [midHeaderName01]="'Final Settlements'"
+  [midRouterLinkText01]="'/final-settlement'"
+  [shouldHaveHr]="false"
+>
+</jhi-header>
+
+<jhi-alert-error></jhi-alert-error>
+
+<div class="row justify-content-center">
+  <div class="col-10">
+    <div *ngIf="finalSettlement">
+      <div class="container mb-2 pe-0 print-btn-div">
+        <div class="text-end">
+          <button (click)="downloadAsPDF()" class="btn btn-primary btn-md">
+            <fa-icon icon="print"></fa-icon>
+            Print
+          </button>
+        </div>
+      </div>
+
+      <div class="container final-settlement-details printDivFinalSettlement" #pdfFinalSettlement id="pdfFinalSettlement">
+        <div class="row font-size-control">
+          <div class="col-md-10">
+            <h5 class="font-bold">{{ organizationFullName }}</h5>
+            <h6 class="font-bold">Total Final Statement Amount of Employee</h6>
+            <p>
+              <span> Date: {{ finalSettlement.finalSettlementDate | formatMediumDate }} </span>
+            </p>
+          </div>
+
+          <div class="col-md-2">
+            <img alt="Logo" src="../../../content/images/logo.svg" width="100" />
+          </div>
+        </div>
+
+        <div class="container">
+          <div class="row mb-3 p-3 border-2 font-size-control">
+            <div class="col-md-8">
+              <div class="row">
+                <span class="col-md-4 row-labels">Name of the Employee</span>
+                <span class="col-md-8 value-field">{{ finalSettlement.employeeFullName }}</span>
+              </div>
+
+              <div class="row">
+                <span class="col-md-4 row-labels">PIN</span>
+                <span class="col-md-8 value-field">{{ finalSettlement.employeePin }}</span>
+              </div>
+
+              <div class="row">
+                <span class="col-md-4 row-labels">Date of Joining</span>
+                <span class="col-md-8 value-field">{{ finalSettlement.dateOfJoining | formatMediumDate }}</span>
+              </div>
+
+              <div class="row">
+                <span class="col-md-4 row-labels">Date of Resignation</span>
+                <span class="col-md-8 value-field">{{ finalSettlement.dateOfResignation | formatMediumDate }}</span>
+              </div>
+
+              <div class="row">
+                <span class="col-md-4 row-labels">Notice Period</span>
+                <span class="col-md-8 value-field">{{ finalSettlement.noticePeriod }}</span>
+              </div>
+
+              <div class="row">
+                <span class="col-md-4 row-labels">Last Working Day</span>
+                <span class="col-md-8 value-field">{{ finalSettlement.lastWorkingDay | formatMediumDate }}</span>
+              </div>
+
+              <div class="row">
+                <span class="col-md-4 row-labels">Date of Release</span>
+                <span class="col-md-8 value-field">{{ finalSettlement.dateOfRelease | formatMediumDate }}</span>
+              </div>
+
+              <div class="row">
+                <span class="col-md-4 row-labels">Service Tenure</span>
+                <span class="col-md-8 value-field border-bottom-1">{{ finalSettlement.serviceTenure }} </span>
+              </div>
+            </div>
+
+            <div class="col-md-1"></div>
+
+            <div class="col-md-3 border border-dark font-bold align-items-center d-flex justify-content-center">
+              &nbsp; &nbsp; &nbsp; Total Payable
+              <br />
+              Amount = BDT {{ finalSettlement.totalFinalSettlementAmount | number }}
+            </div>
+          </div>
+
+          <div class="row p-2 border-2">
+            <div class="col-md-12 mb-4 border border-dark border-end-0">
+              <div class="">
+                <div class="row font-size-control">
+                  <span class="col-md-3 row-labels">Salary structure</span>
+                  <span class="col-md-6">Basic</span>
+                  <span class="col-md-3 value-field text-end border-top-0">{{ finalSettlement.mBasic | number }}</span>
+                </div>
+
+                <div class="row font-size-control">
+                  <span class="col-md-3 row-labels"></span>
+                  <span class="col-md-6">House Rent</span>
+                  <span class="col-md-3 value-field text-end">{{ finalSettlement.mHouseRent | number }}</span>
+                </div>
+
+                <div class="row font-size-control">
+                  <span class="col-md-3 row-labels"></span>
+                  <span class="col-md-6">Medical</span>
+                  <span class="col-md-3 value-field text-end">{{ finalSettlement.mMedical | number }}</span>
+                </div>
+
+                <div class="row font-size-control">
+                  <span class="col-md-3 row-labels"></span>
+                  <span class="col-md-6">Conveyance</span>
+                  <span class="col-md-3 value-field text-end">{{ finalSettlement.mConveyance | number }}</span>
+                </div>
+
+                <div class="row font-size-control">
+                  <span class="col-md-3 row-labels"></span>
+                  <span class="col-md-6">Entertainment</span>
+                  <span class="col-md-3 value-field text-end">0</span>
+                </div>
+
+                <div class="row border-bottom-1 font-size-control">
+                  <span class="col-md-3 row-labels"></span>
+                  <span class="col-md-6">Utility</span>
+                  <span class="col-md-3 value-field text-end">0</span>
+                </div>
+
+                <div class="row font-size-control">
+                  <span class="col-md-3 row-labels"></span>
+                  <span class="col-md-6 font-bold">Total Salary</span>
+                  <span class="col-md-3 value-field text-end font-bold border-top-0">{{ finalSettlement.totalSalary | number }}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-12 mb-4 border border-dark border-end-0">
+              <div class="row font-size-control">
+                <span class="col-md-3 row-labels">Salary Payable-{{ finalSettlement.salaryPayableRemarks }}</span>
+                <span class="col-md-3"></span>
+                <span class="col-md-1">Month</span>
+                <span class="col-md-2">1</span>
+                <span class="col-md-3 text-end border border-dark border-top-0">{{ finalSettlement.salaryPayable | number }}</span>
+              </div>
+
+              <div class="row font-size-control">
+                <span class="col-md-3 row-labels">Leave Encashment</span>
+                <span class="col-md-3"></span>
+                <span class="col-md-1">Days</span>
+                <span class="col-md-2">{{ finalSettlement.totalDaysForLeaveEncashment | number }}</span>
+                <span class="col-md-3 text-end border border-dark border-top-0">{{ finalSettlement.totalLeaveEncashment | number }}</span>
+              </div>
+
+              <div class="row font-size-control" *ngIf="finalSettlement.allowance01Amount && finalSettlement.allowance01Amount > 0">
+                <span class="col-md-3 row-labels">{{ finalSettlement.allowance01Name }}</span>
+                <span class="col-md-3"></span>
+                <span class="col-md-1"></span>
+                <span class="col-md-2"></span>
+                <span class="col-md-3 text-end border border-dark border-top-0">{{ finalSettlement.allowance01Amount }}</span>
+              </div>
+
+              <div class="row font-size-control" *ngIf="finalSettlement.allowance02Amount && finalSettlement.allowance02Amount > 0">
+                <span class="col-md-3 row-labels">
+                  {{ finalSettlement.allowance02Name }}
+                </span>
+                <span class="col-md-3"></span>
+                <span class="col-md-1"></span>
+                <span class="col-md-2"></span>
+                <span class="col-md-3 text-end border border-dark border-top-0">
+                  {{ finalSettlement.allowance02Amount }}
+                </span>
+              </div>
+
+              <div class="row font-size-control" *ngIf="finalSettlement.allowance03Amount && finalSettlement.allowance03Amount > 0">
+                <span class="col-md-3 row-labels">
+                  {{ finalSettlement.allowance03Name }}
+                </span>
+                <span class="col-md-3"></span>
+                <span class="col-md-1"></span>
+                <span class="col-md-2"></span>
+                <span class="col-md-3 text-end border border-dark border-top-0">
+                  {{ finalSettlement.allowance03Amount }}
+                </span>
+              </div>
+
+              <div class="row font-size-control" *ngIf="finalSettlement.allowance04Amount && finalSettlement.allowance04Amount > 0">
+                <span class="col-md-3 row-labels"> {{ finalSettlement.allowance04Name }} </span>
+                <span class="col-md-3"></span>
+                <span class="col-md-1"></span>
+                <span class="col-md-2"></span>
+                <span class="col-md-3 text-end border border-dark border-top-0"> {{ finalSettlement.allowance04Amount }}</span>
+              </div>
+
+              <div class="row font-size-control">
+                <span class="col-md-3 row-labels">Mobile Bill</span>
+                <span class="col-md-3"></span>
+                <span class="col-md-1"></span>
+                <span class="col-md-2"></span>
+                <span class="col-md-3 text-end border border-dark border-top-0 border-bottom-0">
+                  {{ finalSettlement.mobileBillInCash | number }}
+                </span>
+              </div>
+
+              <div class="row border-top-1">
+                <span class="col-md-3 row-labels">Total Gross Salary</span>
+                <span class="col-md-3"></span>
+                <span class="col-md-1"></span>
+                <span class="col-md-2"></span>
+                <span class="col-md-3 text-end font-bold border-start-1 border-end-1">
+                  {{ finalSettlement.totalGrossSalary | number }}
+                </span>
+              </div>
+            </div>
+
+            <div class="col-md-12 mb-4 border border-dark border-end-0">
+              <div>
+                <div class="row font-size-control">
+                  <span class="col-md-3 font-bold">Less: deduction for</span>
+                  <span class="col-md-4 name-fields">Notice Pay</span>
+                  <span class="col-md-1">Days</span>
+                  <span class="col-md-1">
+                    {{ finalSettlement.deductionNoticePayDays }}
+                  </span>
+                  <span class="col-md-3 value-field text-end border-top-0">
+                    {{ finalSettlement.deductionNoticePay | number }}
+                  </span>
+                </div>
+
+                <div class="row font-size-control">
+                  <span class="col-md-3"></span>
+                  <span class="col-md-5">PF Deduction</span>
+                  <span class="col-md-1"></span>
+                  <span class="col-md-3 value-field text-end">{{ finalSettlement.deductionPf | number }}</span>
+                </div>
+
+                <div class="row font-size-control">
+                  <span class="col-md-3"></span>
+                  <span class="col-md-5">HAF Deduction</span>
+                  <span class="col-md-1"></span>
+                  <span class="col-md-3 value-field text-end">{{ finalSettlement.deductionHaf | number }}</span>
+                </div>
+
+                <div class="row font-size-control">
+                  <span class="col-md-3"></span>
+                  <span class="col-md-5">Excess Phone Bill </span>
+                  <span class="col-md-1"></span>
+                  <span class="col-md-3 value-field text-end">
+                    {{ finalSettlement.deductionExcessCellBill | number }}
+                  </span>
+                </div>
+
+                <div class="row font-size-control">
+                  <span class="col-md-3"></span>
+                  <span class="col-md-4">Absent Days Adjustment</span>
+                  <span class="col-md-1">Days</span>
+                  <span class="col-md-1">
+                    {{ finalSettlement.deductionAbsentDaysAdjustmentDays }}
+                  </span>
+                  <span class="col-md-3 value-field text-end">
+                    {{ finalSettlement.deductionAbsentDaysAdjustment | number }}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-12 mt-3 border border-dark">
+              <div class="row">
+                <span class="col-md-9 font-bold">Salary Payable</span>
+                <span class="col-md-3 text-end border-start-1">
+                  {{ finalSettlement.totalSalaryPayable | number }}
+                </span>
+              </div>
+            </div>
+
+            <div class="col-md-12 mt-3 border border-dark">
+              <div class="row">
+                <span class="col-md-9 h6 font-bold">Less: AIT (Annual Income Tax)</span>
+                <span class="col-md-3 text-end border-start-1">
+                  {{ finalSettlement.deductionAnnualIncomeTax | number }}
+                </span>
+              </div>
+            </div>
+
+            <div class="col-md-12 mt-3 border border-dark">
+              <div class="row">
+                <span class="col-md-9 font-bold">Net Salary Payable</span>
+                <span class="col-md-3 text-end font-bold border-start-1">
+                  {{ finalSettlement.netSalaryPayable | number }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-3 px-2 py-3 border-2">
+            <div class="col-md-12 border border-dark">
+              <div class="row">
+                <span class="col-md-9 py-1 font-bold font-size-1-rem">Total PF Payable</span>
+                <span class="col-md-3 py-1 text-end font-bold border-start-1">
+                  <ng-container *ngIf="finalSettlement.employeeCategory === 'REGULAR_CONFIRMED_EMPLOYEE'; else notApplicablePF">
+                    {{ finalSettlement.totalPayablePf | number }}
+                  </ng-container>
+                  <ng-template #notApplicablePF> N/A </ng-template>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-3 px-2 py-3 border-2">
+            <div class="col-md-12 border border-dark">
+              <div class="row">
+                <span class="col-md-9 py-1 font-bold font-size-1-rem"> Total GF Payable </span>
+                <span class="col-md-3 py-1 text-end font-bold border-start-1">
+                  <ng-container *ngIf="finalSettlement.employeeCategory === 'REGULAR_CONFIRMED_EMPLOYEE'; else notApplicableGf">
+                    {{ finalSettlement.totalPayableGf | number }}
+                  </ng-container>
+                  <ng-template #notApplicableGf> N/A </ng-template>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-5">
+            <div class="row pt-4">
+              <div class="col-md-3 my-5 signature">
+                <span class="font-bold">Prepared by</span> <br />
+                <p>Milon Kumar Roy</p>
+              </div>
+
+              <div class="col-md-3 my-5 signature">
+                <span class="font-bold"> Recommended by </span> <br />
+                <p>Md. Tasaufur Rahman</p>
+              </div>
+
+              <div class="col-md-3 my-5 signature">
+                <span class="font-bold"> Checked by </span> <br />
+                <p>Palash Kumar Paul</p>
+              </div>
+
+              <div class="col-md-3 my-5 signature">
+                <span class="font-bold"> Recommended by </span> <br />
+                <p>Rajon Chandra Saha, FCMA</p>
+              </div>
+
+              <div class="col-md-3 my-5 signature">
+                <span class="font-bold">Vetted by</span> <br />
+                <p>Atiun Amin</p>
+              </div>
+
+              <div class="col-md-3 my-5 signature">
+                <span class="font-bold">Approved by</span> <br />
+                <p>A.K. Sabbir Mahbub</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-3">
+        <button type="submit" [routerLink]="['/final-settlement']" class="btn btn-info">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/final-settlement', finalSettlement.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+
+        <ng-container *ngIf="hasAccess()">
+          <button type="button" class="btn btn-success" [routerLink]="['/final-settlement', finalSettlement?.employeeId, 'pf-gf']">
+            PF GF Statement
+          </button>
+
+          <button type="button" class="btn btn-success" [routerLink]="['/final-settlement', finalSettlement?.employeeId, 'pf']">
+            PF Statement
+          </button>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--<div class="d-flex justify-content-center">-->
+<!--  <div class="col-8">-->
+<!--    <div *ngIf="finalSettlement">-->
+<!--      <h2 data-cy="finalSettlementDetailsHeading">-->
+<!--        <span jhiTranslate="bitsHrPayrollApp.finalSettlement.detail.title">Final Settlement</span>-->
+<!--      </h2>-->
+
+<!--      <hr />-->
+
+<!--      <jhi-alert-error></jhi-alert-error>-->
+
+<!--      <jhi-alert></jhi-alert>-->
+
+<!--      <dl class="row-md jh-entity-details">-->
+<!--        <dt><span jhiTranslate="global.field.id">ID</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.id }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.dateOfResignation">Date Of Resignation</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.dateOfResignation | formatMediumDate }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.noticePeriod">Notice Period</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.noticePeriod }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.lastWorkingDay">Last Working Day</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.lastWorkingDay | formatMediumDate }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.dateOfRelease">Date Of Release</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.dateOfRelease | formatMediumDate }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.serviceTenure">Service Tenure</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.serviceTenure }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.mBasic">M Basic</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.mBasic }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.mHouseRent">M House Rent</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.mHouseRent }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.mMedical">M Medical</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.mMedical }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.mConveyance">M Conveyance</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.mConveyance }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.salaryPayable">Salary Payable</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.salaryPayable }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.salaryPayableRemarks">Salary Payable Remarks</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.salaryPayableRemarks }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.totalDaysForLeaveEncashment">Total Days For Leave Encashment</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.totalDaysForLeaveEncashment }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.totalLeaveEncashment">Total Leave Encashment</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.totalLeaveEncashment }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.mobileBillInCash">Mobile Bill In Cash</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.mobileBillInCash }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.allowance01Name">Allowance 01 Name</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.allowance01Name }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.allowance01Amount">Allowance 01 Amount</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.allowance01Amount }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.allowance01Remarks">Allowance 01 Remarks</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.allowance01Remarks }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.allowance02Name">Allowance 02 Name</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.allowance02Name }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.allowance02Amount">Allowance 02 Amount</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.allowance02Amount }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.allowance02Remarks">Allowance 02 Remarks</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.allowance02Remarks }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.allowance03Name">Allowance 03 Name</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.allowance03Name }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.allowance03Amount">Allowance 03 Amount</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.allowance03Amount }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.allowance03Remarks">Allowance 03 Remarks</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.allowance03Remarks }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.allowance04Name">Allowance 04 Name</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.allowance04Name }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.allowance04Amount">Allowance 04 Amount</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.allowance04Amount }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.allowance04Remarks">Allowance 04 Remarks</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.allowance04Remarks }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.deductionNoticePay">Deduction Notice Pay</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.deductionNoticePay }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.deductionPf">Deduction Pf</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.deductionPf }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.deductionHaf">Deduction Haf</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.deductionHaf }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.deductionExcessCellBill">Deduction Excess Cell Bill</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.deductionExcessCellBill }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.deductionAbsentDaysAdjustment">Deduction Absent Days Adjustment</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.deductionAbsentDaysAdjustment }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.totalSalaryPayable">Total Salary Payable</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.totalSalaryPayable }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.deductionAnnualIncomeTax">Deduction Annual Income Tax</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.deductionAnnualIncomeTax }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.netSalaryPayable">Net Salary Payable</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.netSalaryPayable }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.totalPayablePf">Total Payable Pf</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.totalPayablePf }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.totalPayableGf">Total Payable Gf</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.totalPayableGf }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.totalFinalSettlementAmount">Total Final Settlement Amount</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.totalFinalSettlementAmount }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.createdAt">Created At</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.createdAt | formatMediumDate }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.updatedAt">Updated At</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.updatedAt | formatMediumDate }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.deductionNoticePayDays">Deduction Notice Pay Days</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.deductionNoticePayDays }}</span>-->
+<!--        </dd>-->
+<!--        <dt>-->
+<!--          <span jhiTranslate="bitsHrPayrollApp.finalSettlement.deductionAbsentDaysAdjustmentDays"-->
+<!--            >Deduction Absent Days Adjustment Days</span-->
+<!--          >-->
+<!--        </dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.deductionAbsentDaysAdjustmentDays }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.deductionOther">Deduction Other</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.deductionOther }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.totalSalary">Total Salary</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.totalSalary }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.totalGrossSalary">Total Gross Salary</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.totalGrossSalary }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.totalDeduction">Total Deduction</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.totalDeduction }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.finalSettlementDate">Final Settlement Date</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.finalSettlementDate | formatMediumDate }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.isFinalized">Is Finalized</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.isFinalized }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.salaryNumOfMonth">Salary Num Of Month</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.salaryNumOfMonth }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.remarks">Remarks</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.remarks }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.employee">Employee</span></dt>-->
+<!--        <dd>-->
+<!--          <div *ngIf="finalSettlement.employee">-->
+<!--            <a [routerLink]="['/employee', finalSettlement.employee.id, 'view']">{{ finalSettlement.employee.id }}</a>-->
+<!--          </div>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.createdBy">Created By</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.createdBy?.login }}</span>-->
+<!--        </dd>-->
+<!--        <dt><span jhiTranslate="bitsHrPayrollApp.finalSettlement.updatedBy">Updated By</span></dt>-->
+<!--        <dd>-->
+<!--          <span>{{ finalSettlement.updatedBy?.login }}</span>-->
+<!--        </dd>-->
+<!--      </dl>-->
+
+<!--      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">-->
+<!--        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>-->
+<!--      </button>-->
+
+<!--      <button type="button" [routerLink]="['/final-settlement', finalSettlement.id, 'edit']" class="btn btn-primary">-->
+<!--        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>-->
+<!--      </button>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->

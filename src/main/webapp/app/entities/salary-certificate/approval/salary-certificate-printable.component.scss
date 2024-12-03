@@ -1,0 +1,123 @@
+table {
+  width: 100%;
+}
+
+table,
+td,
+th {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+.container td,
+th {
+  padding: 1px 3px;
+}
+
+.container {
+  font-size: 90%;
+}
+.w-60 {
+  width: 60% !important;
+}
+
+.header-text {
+  font-size: 16px;
+  line-height: 22px;
+}
+
+.default-font {
+  font-size: 14px;
+  line-height: 18px;
+}
+
+td {
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.printDiv {
+  background-color: white;
+  min-height: 1244px;
+  max-width: 880px;
+  font-size: 13px;
+  line-height: 18px;
+  margin: 0 auto;
+}
+
+.bg-payslip {
+  background: transparent url('../../../../content/images/letter-head-pad-new.png') no-repeat left top;
+  width: 100%;
+  background-size: cover;
+  min-height: 1244px;
+  font-family: Segoe UI;
+  font-size: 12px;
+  position: relative;
+  padding: 0 60px;
+}
+
+.print-btn-container {
+  width: 880px;
+}
+
+.letter-head {
+  background: transparent url('../../../../content/images/letter-head-pad-new.png') no-repeat left top;
+  background-size: contain;
+}
+
+.print-doc-area {
+  width: 880px;
+  min-height: 1244px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Poppins', Inter, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  font-size: 14px;
+  position: relative;
+  overflow: hidden;
+}
+
+.document-body {
+  padding: 0 70px;
+  padding-bottom: 80px;
+}
+
+.printDiv {
+  font-size: 14px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Poppins', Inter, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+@media print {
+  .printDiv {
+    border: 0;
+    margin: 0;
+  }
+
+  .document-body {
+    padding-bottom: 0px;
+  }
+
+  .print-doc-area {
+    margin-left: 0;
+    border: 0;
+    min-height: 1400px;
+  }
+
+  .print-btn-container {
+    display: none;
+  }
+
+  .header-text {
+    font-size: 14pt;
+    line-height: 20pt;
+  }
+
+  .default-font {
+    font-size: 10pt;
+    line-height: 17pt;
+  }
+
+  td {
+    font-size: 10pt;
+    line-height: 17pt;
+  }
+}

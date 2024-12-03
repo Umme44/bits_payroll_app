@@ -1,0 +1,37 @@
+{
+  "bitsHrPayrollApp": {
+    "salaryCertificate": {
+      "home": {
+        "title": "Salary Certificates",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Salary Certificate",
+        "createOrEditLabel": "Create or edit a Salary Certificate",
+        "notFound": "No Salary Certificates found"
+      },
+      "created": "A new Salary Certificate is created with identifier {{ param }}",
+      "updated": "A Salary Certificate is updated with identifier {{ param }}",
+      "deleted": "A Salary Certificate is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Salary Certificate {{ id }}?"
+      },
+      "detail": {
+        "title": "Salary Certificate"
+      },
+      "id": "ID",
+      "purpose": "Purpose",
+      "remarks": "Remarks",
+      "status": "Status",
+      "createdAt": "Created At",
+      "updatedAt": "Updated At",
+      "sanctionAt": "Sanction At",
+      "month": "Month",
+      "year": "Year",
+      "referenceNumber": "Reference Number",
+      "createdBy": "Created By",
+      "updatedBy": "Updated By",
+      "sanctionBy": "Sanction By",
+      "employee": "Employee",
+      "signatoryPerson": "Signatory Person"
+    }
+  }
+}

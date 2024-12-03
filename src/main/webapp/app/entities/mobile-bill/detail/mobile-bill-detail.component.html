@@ -1,0 +1,40 @@
+<div>
+  <div *ngIf="mobileBill">
+    <jhi-header [headerName]="'Mobile Bill Details'" [shouldHaveHr]="false"> </jhi-header>
+    <jhi-alert-error></jhi-alert-error>
+
+    <div class="row mb-2">
+      <div class="col-md-2"><span jhiTranslate="bitsHrPayrollApp.mobileBill.employee">Employee</span></div>
+      <div class="col-md-2">
+        <div *ngIf="employee != null">
+          <a class="text-decoration-none" [routerLink]="['/employee-custom', mobileBill.employeeId, 'view']">
+            {{ employee.pin }} -
+            {{ employee.fullName }}
+          </a>
+        </div>
+      </div>
+      <div class="col-md-2"><span jhiTranslate="bitsHrPayrollApp.mobileBill.month">Month</span></div>
+      <div class="col-md-2">
+        <span>{{ toDate(mobileBill.year!, mobileBill.month!) }}</span>
+      </div>
+      <div class="col-md-2">
+        <span jhiTranslate="bitsHrPayrollApp.mobileBill.amount">Amount</span>
+      </div>
+      <div class="col-md-2">
+        <span>{{ mobileBill.amount }}</span>
+      </div>
+    </div>
+
+    <div class="row">
+      <div>
+        <button (click)="previousState()" class="btn btn-info" type="submit">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button [routerLink]="['/mobile-bill', mobileBill.id, 'edit']" class="btn btn-primary" type="button">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

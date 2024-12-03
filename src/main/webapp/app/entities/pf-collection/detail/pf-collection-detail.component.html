@@ -1,0 +1,241 @@
+<jhi-header
+  [headerName]="'Pf Collection Details'"
+  [midHeaderName01]="'PF Collection'"
+  [midRouterLinkText01]="'/pf-collection'"
+  [shouldHaveHr]="true"
+>
+</jhi-header>
+
+<div class="d-flex justify-content-center">
+  <div class="col-12">
+    <div *ngIf="pfCollection">
+      <!--<h2 data-cy="pfCollectionDetailsHeading"><span jhiTranslate="bitsHrPayrollApp.pfCollection.detail.title">Pf Collection</span></h2>
+
+      <hr />-->
+
+      <jhi-alert-error></jhi-alert-error>
+      <jhi-alert></jhi-alert>
+
+      <div *ngIf="pfCollection" class="font-sm card card-body">
+        <dl class="row-md jh-entity-details">
+          <div class="row">
+            <div class="col-md-3">
+              <dt>
+                <span jhiTranslate="bitsHrPayrollApp.pfCollection.pfCode">Pf Code</span>
+              </dt>
+            </div>
+            <div class="col-md-3">
+              <dd>
+                <span>{{ pfCollection.pfCode }}</span>
+              </dd>
+            </div>
+
+            <div class="col-md-3">
+              <dt>
+                <span jhiTranslate="bitsHrPayrollApp.pfCollection.accHolderName">Acc Holder Name</span>
+              </dt>
+            </div>
+            <div class="col-md-3">
+              <dd>
+                <span>{{ pfCollection.accHolderName }}</span>
+              </dd>
+            </div>
+
+            <div class="col-md-3">
+              <dt>
+                <span jhiTranslate="bitsHrPayrollApp.pfCollection.designation">Designation</span>
+              </dt>
+            </div>
+            <div class="col-md-3">
+              <dd>
+                <span>{{ pfCollection.designationName }}</span>
+              </dd>
+            </div>
+
+            <div class="col-md-3">
+              <dt>
+                <span jhiTranslate="bitsHrPayrollApp.pfCollection.department">Department</span>
+              </dt>
+            </div>
+            <div class="col-md-3">
+              <dd>
+                <span>{{ pfCollection.departmentName }}</span>
+              </dd>
+            </div>
+
+            <div class="col-md-3">
+              <dt>
+                <span jhiTranslate="bitsHrPayrollApp.pfCollection.unitName">Unit</span>
+              </dt>
+            </div>
+            <div class="col-md-3">
+              <dd>
+                <span>{{ pfCollection.unitName }}</span>
+              </dd>
+            </div>
+
+            <div class="col-md-3">
+              <dt><span jhiTranslate="bitsHrPayrollApp.pfCollection.transactionDate">Transaction Date</span></dt>
+            </div>
+            <div class="col-md-3">
+              <dd>
+                <span>{{ pfCollection.transactionDate | formatMediumDate }}</span>
+              </dd>
+            </div>
+
+            <div class="col-md-3">
+              <dt>
+                <span jhiTranslate="bitsHrPayrollApp.pfCollection.employeeContribution">Employee Contribution</span>
+              </dt>
+            </div>
+            <div class="col-md-3">
+              <dd>
+                <span>{{ pfCollection.employeeContribution }}</span>
+              </dd>
+            </div>
+
+            <div class="col-md-3">
+              <dt>
+                <span jhiTranslate="bitsHrPayrollApp.pfCollection.employerContribution">Employer Contribution</span>
+              </dt>
+            </div>
+            <div class="col-md-3">
+              <dd>
+                <span>{{ pfCollection.employerContribution }}</span>
+              </dd>
+            </div>
+
+            <div class="col-md-3">
+              <dt><span jhiTranslate="bitsHrPayrollApp.pfCollection.year">Year</span></dt>
+            </div>
+            <div class="col-md-3">
+              <dd>
+                <span>{{ pfCollection.year }}</span>
+              </dd>
+            </div>
+
+            <div class="col-md-3">
+              <dt><span jhiTranslate="bitsHrPayrollApp.pfCollection.employeeInterest">Employee Interest</span></dt>
+            </div>
+            <div class="col-md-3">
+              <dd>
+                <span>{{ pfCollection.employeeInterest }}</span>
+              </dd>
+            </div>
+
+            <div class="col-md-3">
+              <dt><span jhiTranslate="bitsHrPayrollApp.pfCollection.employerInterest">Employer Interest</span></dt>
+            </div>
+            <div class="col-md-3">
+              <dd>
+                <span>{{ pfCollection.employerInterest }}</span>
+              </dd>
+            </div>
+
+            <div class="col-md-3">
+              <dt><span jhiTranslate="bitsHrPayrollApp.pfCollection.month">Month</span></dt>
+            </div>
+            <div class="col-md-3">
+              <dd>
+                <span>{{ pfCollection.month }}</span>
+              </dd>
+            </div>
+
+            <div class="col-md-3">
+              <dt><span jhiTranslate="bitsHrPayrollApp.pfCollection.collectionType">Collection Type</span></dt>
+            </div>
+            <div class="col-md-3">
+              <dd>
+                <span jhiTranslate="{{ 'bitsHrPayrollApp.PfCollectionType.' + pfCollection.collectionType }}">{{
+                  pfCollection.collectionType
+                }}</span>
+              </dd>
+            </div>
+
+            <div class="col-md-3">
+              <dt><span jhiTranslate="bitsHrPayrollApp.pfCollection.status">Status</span></dt>
+            </div>
+            <div class="col-md-3">
+              <dd>
+                <span>{{ pfCollection.status }}</span>
+              </dd>
+            </div>
+          </div>
+        </dl>
+
+        <div class="mt-3">
+          <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+            <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+          </button>
+
+          <button type="button" [routerLink]="['/pf-collection', pfCollection.id, 'edit']" class="btn btn-primary">
+            <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+          </button>
+        </div>
+      </div>
+
+      <!--<dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ pfCollection.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfCollection.employeeContribution">Employee Contribution</span></dt>
+        <dd>
+          <span>{{ pfCollection.employeeContribution }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfCollection.employerContribution">Employer Contribution</span></dt>
+        <dd>
+          <span>{{ pfCollection.employerContribution }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfCollection.transactionDate">Transaction Date</span></dt>
+        <dd>
+          <span>{{ pfCollection.transactionDate | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfCollection.year">Year</span></dt>
+        <dd>
+          <span>{{ pfCollection.year }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfCollection.month">Month</span></dt>
+        <dd>
+          <span>{{ pfCollection.month }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfCollection.collectionType">Collection Type</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.PfCollectionType.' + pfCollection.collectionType }}">{{
+            pfCollection.collectionType
+          }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfCollection.employeeInterest">Employee Interest</span></dt>
+        <dd>
+          <span>{{ pfCollection.employeeInterest }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfCollection.employerInterest">Employer Interest</span></dt>
+        <dd>
+          <span>{{ pfCollection.employerInterest }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfCollection.gross">Gross</span></dt>
+        <dd>
+          <span>{{ pfCollection.gross }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfCollection.basic">Basic</span></dt>
+        <dd>
+          <span>{{ pfCollection.basic }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfCollection.pfAccount">Pf Account</span></dt>
+        <dd>
+          <div *ngIf="pfCollection.pfAccount">
+            <a [routerLink]="['/pf-account', pfCollection.pfAccount.id, 'view']">{{ pfCollection.pfAccount.id }}</a>
+          </div>
+        </dd>
+      </dl>-->
+
+      <!--<button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/pf-collection', pfCollection.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>-->
+    </div>
+  </div>
+</div>

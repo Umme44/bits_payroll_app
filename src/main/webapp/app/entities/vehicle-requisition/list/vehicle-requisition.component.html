@@ -1,0 +1,233 @@
+<div>
+  <h2 id="page-heading" data-cy="VehicleRequisitionHeading">
+    <span jhiTranslate="bitsHrPayrollApp.vehicleRequisition.home.title">Vehicle Requisitions</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="bitsHrPayrollApp.vehicleRequisition.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-vehicle-requisition"
+        [routerLink]="['/vehicle-requisition/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="bitsHrPayrollApp.vehicleRequisition.home.createLabel"> Create a new Vehicle Requisition </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="vehicleRequisitions?.length === 0">
+    <span jhiTranslate="bitsHrPayrollApp.vehicleRequisition.home.notFound">No Vehicle Requisitions found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="vehicleRequisitions && vehicleRequisitions.length > 0">
+    <table class="table table-hover list-text-color" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">ID</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="purpose">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.vehicleRequisition.purpose">Purpose</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="otherPassengersName">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.vehicleRequisition.otherPassengersName">Other Passengers Name</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="totalNumberOfPassengers">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.vehicleRequisition.totalNumberOfPassengers">Total Number Of Passengers</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="status">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.vehicleRequisition.status">Status</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="remarks">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.vehicleRequisition.remarks">Remarks</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="createdAt">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.vehicleRequisition.createdAt">Created At</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="updatedAt">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.vehicleRequisition.updatedAt">Updated At</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="sanctionAt">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.vehicleRequisition.sanctionAt">Sanction At</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="transactionNumber">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.vehicleRequisition.transactionNumber">Transaction Number</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="startDate">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.vehicleRequisition.startDate">Start Date</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="endDate">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.vehicleRequisition.endDate">End Date</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="startTime">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.vehicleRequisition.startTime">Start Time</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="endTime">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.vehicleRequisition.endTime">End Time</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="area">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.vehicleRequisition.area">Area</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="createdBy.login">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.vehicleRequisition.createdBy">Created By</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="updatedBy.login">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.vehicleRequisition.updatedBy">Updated By</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="approvedBy.login">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.vehicleRequisition.approvedBy">Approved By</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="requester.id">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.vehicleRequisition.requester">Requester</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="vehicle.id">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.vehicleRequisition.vehicle">Vehicle</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody
+        infinite-scroll
+        (scrolled)="loadPage(page + 1)"
+        [infiniteScrollDisabled]="page - 1 >= links['last']"
+        [infiniteScrollDistance]="0"
+      >
+        <tr *ngFor="let vehicleRequisition of vehicleRequisitions; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/vehicle-requisition', vehicleRequisition.id, 'view']">{{ vehicleRequisition.id }}</a>
+          </td>
+          <td>{{ vehicleRequisition.purpose }}</td>
+          <td>{{ vehicleRequisition.otherPassengersName }}</td>
+          <td>{{ vehicleRequisition.totalNumberOfPassengers }}</td>
+          <td jhiTranslate="{{ 'bitsHrPayrollApp.Status.' + vehicleRequisition.status }}">{{ vehicleRequisition.status }}</td>
+          <td>{{ vehicleRequisition.remarks }}</td>
+          <td>{{ vehicleRequisition.createdAt | formatMediumDatetime }}</td>
+          <td>{{ vehicleRequisition.updatedAt | formatMediumDatetime }}</td>
+          <td>{{ vehicleRequisition.sanctionAt | formatMediumDatetime }}</td>
+          <td>{{ vehicleRequisition.transactionNumber }}</td>
+          <td>{{ vehicleRequisition.startDate | formatMediumDate }}</td>
+          <td>{{ vehicleRequisition.endDate | formatMediumDate }}</td>
+          <td>{{ vehicleRequisition.startTime }}</td>
+          <td>{{ vehicleRequisition.endTime }}</td>
+          <td>{{ vehicleRequisition.area }}</td>
+          <td>
+            {{ vehicleRequisition.createdBy?.login }}
+          </td>
+          <td>
+            {{ vehicleRequisition.updatedBy?.login }}
+          </td>
+          <td>
+            {{ vehicleRequisition.approvedBy?.login }}
+          </td>
+          <td>
+            <div *ngIf="vehicleRequisition.requester">
+              <a [routerLink]="['/employee', vehicleRequisition.requester.id, 'view']">{{ vehicleRequisition.requester.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="vehicleRequisition.vehicle">
+              <a [routerLink]="['/vehicle', vehicleRequisition.vehicle.id, 'view']">{{ vehicleRequisition.vehicle.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/vehicle-requisition', vehicleRequisition.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/vehicle-requisition', vehicleRequisition.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(vehicleRequisition)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

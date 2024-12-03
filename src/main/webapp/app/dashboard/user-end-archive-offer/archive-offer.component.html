@@ -1,0 +1,41 @@
+<jhi-header
+    [headerName]="'Archive Offers'"
+    [shouldHaveHr]="false">
+</jhi-header>
+
+<div class="font-sm page-content note-has-grid">
+
+    <div *ngIf="offers && offers.length > 0"
+         class="tab-content bg-transparent">
+        <div infinite-scroll (scrolled)="loadPage(page+1)"
+             [infiniteScrollDisabled]="page >= links['last']"
+             [infiniteScrollDistance]="0"
+             id="note-full-container" class="note-has-grid row">
+            <div *ngFor="let offer of offers"
+                 class="col-md-6 pr-4 pb-4 pl-0 col-sm-12 col-12 single-note-item all-category">
+                <div class="custom-card col-active card card-body card-size pt-3 px-3 cursor-default">
+                    <span class="side-stick"></span>
+                    <div class="note-title mb-0">
+                        <div class="">
+                                <span class="h6 d-inline-block mb-1">
+                                    {{offer.title}}
+                                </span> <br/>
+                            <p class="note-date font-12 text-muted pb-1 mb-1 d-inline">{{ offer.createdAt | formatMediumDate }}</p>
+                            <br/>
+                            <br/>
+                            <div class="note-content d-inline">
+                                <span class="mb-2 text-justify note-inner-content text-muted d-block">
+                                    <img class="float-right ml-3" [src]="getOfferImage(offer.id!)" width="160"/>
+                                    {{ offer.description }}
+                                </span>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

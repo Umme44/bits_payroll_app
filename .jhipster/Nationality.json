@@ -1,0 +1,24 @@
+{
+  "applications": "*",
+  "changelogDate": "20210215123630",
+  "clientRootFolder": "",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "nationality",
+  "fields": [
+    {
+      "fieldName": "nationalityName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength", "unique"],
+      "fieldValidateRulesMaxlength": "25",
+      "fieldValidateRulesMinlength": "5"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Nationality",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceImpl"
+}

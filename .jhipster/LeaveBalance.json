@@ -1,0 +1,57 @@
+{
+  "applications": "*",
+  "changelogDate": "20210301073604",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "leave_balance",
+  "fields": [
+    {
+      "fieldName": "leaveType",
+      "fieldType": "LeaveType",
+      "fieldValues": "Mentionable_Annual_Leave,Mentionable_Casual_Leave,Non_Mentionable_Compensatory_Leave,Non_Mentionable_Pandemic_Leave,Non_Mentionable_Paternity_Leave,Non_Mentionable_Maternity_Leave,Other"
+    },
+    {
+      "fieldName": "openingBalance",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "closingBalance",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "consumedDuringYear",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "year",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "amount",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "leaveAmountType",
+      "fieldType": "LeaveAmountType",
+      "fieldValues": "Day,Year"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "LeaveBalance",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "leaveBalance",
+      "relationshipName": "employee",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

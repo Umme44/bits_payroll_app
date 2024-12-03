@@ -1,0 +1,61 @@
+<div>
+  <jhi-header
+    [headerName]="!editForm.get('id')!.value ? 'Add New Bank Branches' : 'Edit Bank Branches'"
+    [midHeaderName01]="'Bank Branches'"
+    [midRouterLinkText01]="'/bank-branch'"
+    [shouldHaveHr]="false"
+  >
+  </jhi-header>
+
+  <form (ngSubmit)="save()" [formGroup]="editForm" name="editForm" novalidate role="form">
+    <div>
+      <jhi-alert-error></jhi-alert-error>
+      <div class="container-fluid card py-2">
+        <div class="mb-3">
+          <label class="form-control-label required" for="field_branchName" jhiTranslate="bitsHrPayrollApp.bankBranch.branchName"
+            >Branch Name</label
+          >
+          <input class="form-control" formControlName="branchName" id="field_branchName" name="branchName" type="text" />
+          <div *ngIf="editForm.get('branchName')!.invalid && (editForm.get('branchName')!.dirty || editForm.get('branchName')!.touched)">
+            <small
+              *ngIf="editForm.get('branchName')?.errors?.required || editForm.get('branchName')?.errors?.notOnlyWhitespace"
+              class="form-text text-danger"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              *ngIf="!editForm.get('branchName')?.errors?.notOnlyWhitespace && editForm.get('branchName')?.errors?.minlength"
+              [translateValues]="{ min: 5 }"
+              class="form-text text-danger"
+              jhiTranslate="entity.validation.minlength"
+            >
+              This field is required to be at least 5 characters.
+            </small>
+            <small
+              *ngIf="!editForm.get('branchName')?.errors?.notOnlyWhitespace && editForm.get('branchName')?.errors?.maxlength"
+              [translateValues]="{ max: 25 }"
+              class="form-text text-danger"
+              jhiTranslate="entity.validation.maxlength"
+            >
+              This field cannot be longer than 25 characters.
+            </small>
+            <small class="form-text text-danger" *ngIf="editForm.get('branchName')?.errors?.pattern">
+              This text is invalid
+            </small>
+          </div>
+        </div>
+
+        <div>
+          <button (click)="previousState()" class="btn btn-secondary" id="cancel-save" type="button">
+            <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+          </button>
+
+          <button [disabled]="editForm.invalid || isSaving" class="btn btn-primary" id="save-entity" type="submit">
+            <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,159 @@
+<div>
+  <jhi-header
+    [headerName]="'Pro Rata Festival Bonuses'"
+    [addButtonText]="'Add New Pro Rata Festival Bonus'"
+    [routerLinkText]="'/pro-rata-festival-bonus/new'"
+    [shouldHaveHr]="false"
+  >
+  </jhi-header>
+
+  <div class="card card-body p-1">
+    <div class="row my-3 form-inline" [formGroup]="searchParamsForm">
+      <div class="col-md-4 my-4">
+        <div class="form-group">
+          <div class="col-md-12 pl-0 input-group">
+            <input id="searchText" formControlName="searchText" class="form-control" placeholder="Search by Name or PIN" type="text" />
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <label class="form-control-label mr-2" for="field_startDate">Start Date:</label>
+          <div class="input-group">
+            <input
+              #startDateDp="ngbDatepicker"
+              (change)="checkDate()"
+              class="form-control px-4"
+              formControlName="startDate"
+              id="field_startDate"
+              name="startDate"
+              ngbDatepicker
+              type="text"
+            />
+            <span class="input-group-append">
+              <button (click)="startDateDp.toggle()" class="btn btn-secondary" type="button">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="form-group">
+          <label class="form-control-label mr-2" for="field_endDate">End Date:</label>
+          <div class="input-group">
+            <input
+              #endDateDp="ngbDatepicker"
+              (change)="checkDate()"
+              class="form-control px-4"
+              formControlName="endDate"
+              id="field_endDate"
+              name="endDate"
+              ngbDatepicker
+              type="text"
+            />
+            <span class="input-group-append">
+              <button (click)="endDateDp.toggle()" class="btn btn-secondary" type="button"><fa-icon icon="calendar-alt"></fa-icon></button>
+            </span>
+          </div>
+          <div *ngIf="isInvalid">
+            <small class="form-text text-danger"> End date can't be smaller then start date. </small>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-2 pl-5 my-4">
+        <button [disabled]="isInvalid" (click)="searchOnList()" class="btn btn-primary ml-5" id="search-entity" type="submit">
+          <fa-icon icon="search"></fa-icon>&nbsp;<span>Search</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="proRataFestivalBonuses?.length === 0">
+    <span jhiTranslate="bitsHrPayrollApp.proRataFestivalBonus.home.notFound">No proRataFestivalBonuses found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="proRataFestivalBonuses && proRataFestivalBonuses.length > 0">
+    <table class="table table-striped list-text-color" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="handleNavigation()">
+          <th scope="col" jhiSortBy="id"><span> Employee </span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="date">
+            <span jhiTranslate="bitsHrPayrollApp.proRataFestivalBonus.date">Date</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="amount">
+            <span jhiTranslate="bitsHrPayrollApp.proRataFestivalBonus.amount">Amount</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="description">
+            <span jhiTranslate="bitsHrPayrollApp.proRataFestivalBonus.description">Description</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let proRataFestivalBonus of proRataFestivalBonuses; trackBy: trackId">
+          <td>
+            <a [routerLink]="['/pro-rata-festival-bonus', proRataFestivalBonus.id, 'view']"
+              >{{ proRataFestivalBonus.pin }} - {{ proRataFestivalBonus.fullName }}</a
+            >
+          </td>
+          <!--        <td>{{ dayjs(proRataFestivalBonus.date).toDate() }}</td>-->
+          <td>{{ dayjs(proRataFestivalBonus.date) | formatMediumDate }}</td>
+          <td>{{ proRataFestivalBonus.amount }}</td>
+          <td>{{ proRataFestivalBonus.description }}</td>
+
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/pro-rata-festival-bonus', proRataFestivalBonus.id, 'view']"
+                class="btn btn-info btn-sm"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/pro-rata-festival-bonus', proRataFestivalBonus.id, 'edit']"
+                class="btn btn-primary btn-sm"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(proRataFestivalBonus)" class="btn btn-danger btn-sm">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="proRataFestivalBonuses && proRataFestivalBonuses.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="row justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,546 @@
+{
+  "applications": "*",
+  "changelogDate": "20210215123930",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "employee",
+  "fields": [
+    {
+      "fieldName": "referenceId",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "pin",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique", "required"]
+    },
+    {
+      "fieldName": "picture",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "fullName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "surName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "nationalIdNo",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dateOfBirth",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "placeOfBirth",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "fatherName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "motherName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "bloodGroup",
+      "fieldType": "BloodGroup",
+      "fieldValues": "A_POSITIVE,A_NEGATIVE,B_POSITIVE,B_NEGATIVE,AB_POSITIVE,AB_NEGATIVE,O_POSITIVE,O_NEGATIVE"
+    },
+    {
+      "fieldName": "presentAddress",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "permanentAddress",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "personalContactNo",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "personalEmail",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "religion",
+      "fieldType": "Religion",
+      "fieldValues": "ISLAM,HINDU,BUDDHA,CHRISTIAN,OTHER"
+    },
+    {
+      "fieldName": "maritalStatus",
+      "fieldType": "MaritalStatus",
+      "fieldValues": "SINGLE,MARRIED,WIDOWED,DIVORCED"
+    },
+    {
+      "fieldName": "dateOfMarriage",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "spouseName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "officialEmail",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "officialContactNo",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "officePhoneExtension",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "whatsappId",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "skypeId",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "emergencyContactPersonName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "emergencyContactPersonRelationshipWithEmployee",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "emergencyContactPersonContactNumber",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "mainGrossSalary",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "employeeCategory",
+      "fieldType": "EmployeeCategory",
+      "fieldValues": "REGULAR_CONFIRMED_EMPLOYEE,REGULAR_PROVISIONAL_EMPLOYEE,CONTRACTUAL_EMPLOYEE,INTERN"
+    },
+    {
+      "fieldName": "location",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dateOfJoining",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "dateOfConfirmation",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "isProbationaryPeriodExtended",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "probationPeriodExtendedTo",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "payType",
+      "fieldType": "PayType",
+      "fieldValues": "UNPAID,MONTHLY,HOURLY"
+    },
+    {
+      "fieldName": "disbursementMethod",
+      "fieldType": "DisbursementMethod",
+      "fieldValues": "BANK,CASH,MOBILE_BANKING"
+    },
+    {
+      "fieldName": "bankName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "bankAccountNo",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "mobileCelling",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "bkashNumber",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "cardType",
+      "fieldType": "CardType",
+      "fieldValues": "DEBIT_CARD,CREDIT_CARD,PREPAID_CARD"
+    },
+    {
+      "fieldName": "cardNumber",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "tinNumber",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "passportNo",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "passportPlaceOfIssue",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "passportIssuedDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "passportExpiryDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "gender",
+      "fieldType": "Gender",
+      "fieldValues": "MALE,FEMALE,OTHER"
+    },
+    {
+      "fieldName": "welfareFundDeduction",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "employmentStatus",
+      "fieldType": "EmploymentStatus",
+      "fieldValues": "ACTIVE,HOLD,RESIGNED"
+    },
+    {
+      "fieldName": "hasDisabledChild",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isFirstTimeAitGiver",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isSalaryHold",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isFestivalBonusHold",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isPhysicallyDisabled",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isFreedomFighter",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "hasOverTime",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "probationPeriodEndDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "contractPeriodExtendedTo",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "contractPeriodEndDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "cardType02",
+      "fieldType": "CardType",
+      "fieldValues": "DEBIT_CARD,CREDIT_CARD,PREPAID_CARD"
+    },
+    {
+      "fieldName": "cardNumber02",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "cardType03",
+      "fieldType": "CardType",
+      "fieldValues": "DEBIT_CARD,CREDIT_CARD,PREPAID_CARD"
+    },
+    {
+      "fieldName": "cardNumber03",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "allowance01",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMax": "10000000",
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "allowance01EffectiveFrom",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "allowance01EffectiveTo",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "allowance02",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMax": "10000000",
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "allowance02EffectiveFrom",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "allowance02EffectiveTo",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "allowance03",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMax": "10000000",
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "allowance03EffectiveFrom",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "allowance03EffectiveTo",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "allowance04",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMax": "10000000",
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "allowance04EffectiveFrom",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "allowance04EffectiveTo",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "allowance05",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMax": "10000000",
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "allowance05EffectiveFrom",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "allowance05EffectiveTo",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "allowance06",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMax": "10000000",
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "allowance06EffectiveFrom",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "allowance06EffectiveTo",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "isTaxPaidByOrganisation",
+      "fieldType": "Boolean",
+      "fieldValidateRules": []
+    },
+    {
+      "fieldName": "createdBy",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "createdAt",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "updatedBy",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "updatedAt",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "isAllowedToGiveOnlineAttendance",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "noticePeriodInDays",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "isFixedTermContract",
+      "fieldType": "Boolean",
+      "fieldValidateRules": []
+    },
+    {
+      "fieldName": "currentInTime",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "currentOutTime",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "onlineAttendanceSanctionedAt",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "isNidVerified",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "canRaiseRrfOnBehalf",
+      "fieldType": "Boolean",
+      "fieldValidateRules": []
+    },
+    {
+      "fieldName": "taxesCircle",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "250"
+    },
+    {
+      "fieldName": "taxesZone",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "250"
+    },
+    {
+      "fieldName": "canManageTaxAcknowledgementReceipt",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isEligibleForAutomatedAttendance",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isFestivalBonusDisabled",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isCurrentlyResigned",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "floor",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "deskLocation",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "isBillableResource",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isAugmentedResource",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "lastWorkingDay",
+      "fieldType": "LocalDate"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Employee",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "location",
+      "otherEntityRelationshipName": "employee",
+      "relationshipName": "officeLocation",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "designation",
+      "otherEntityRelationshipName": "employee",
+      "relationshipName": "designation",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "department",
+      "otherEntityRelationshipName": "employee",
+      "relationshipName": "department",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "employee",
+      "relationshipName": "reportingTo",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "nationalityName",
+      "otherEntityName": "nationality",
+      "otherEntityRelationshipName": "employee",
+      "relationshipName": "nationality",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "bankBranch",
+      "otherEntityRelationshipName": "employee",
+      "relationshipName": "bankBranch",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "band",
+      "otherEntityRelationshipName": "employee",
+      "relationshipName": "band",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "unit",
+      "otherEntityRelationshipName": "employee",
+      "relationshipName": "unit",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "employee",
+      "ownerSide": true,
+      "relationshipName": "user",
+      "relationshipType": "one-to-one",
+      "useJPADerivedIdentifier": false
+    }
+  ],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

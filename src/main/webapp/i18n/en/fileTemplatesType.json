@@ -1,0 +1,10 @@
+{
+  "bitsHrPayrollApp": {
+    "FileTemplatesType": {
+      "null": "",
+      "POLICIES": "POLICIES",
+      "TEMPLATES": "TEMPLATES",
+      "FORMS": "FORMS"
+    }
+  }
+}

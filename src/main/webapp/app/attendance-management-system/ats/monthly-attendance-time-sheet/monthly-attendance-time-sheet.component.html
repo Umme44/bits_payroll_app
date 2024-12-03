@@ -1,0 +1,316 @@
+<div>
+  <jhi-header [headerName]="'Monthly Attendance Time Sheet'" [shouldHaveHr]="false"> </jhi-header>
+  <jhi-alert-error></jhi-alert-error>
+  <jhi-alert></jhi-alert>
+  <div class="alert alert-warning" id="no-result" *ngIf="monthlyAttendanceTimeSheets?.length === 0">
+    <span>No attendance history found</span>
+  </div>
+
+  <div>
+    <form class="row justify-content-start align-items-center pt-2 px-3" name="editForm" role="form" novalidate [formGroup]="editForm">
+      <div class="search-filter container-fluid" style="padding: 15px; border: 2px solid #b7b9bbba; border-radius: 5px">
+        <div class="row py-2">
+          <div class="input-group col-md-12">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Search</label>
+              </div>
+              <input
+                (change)="onChange()"
+                id="inputGroupSelect01"
+                [(ngModel)]="filters.searchText"
+                formControlName="searchText"
+                class="form-control"
+                placeholder="Search Text"
+                type="text"
+              />
+            </div>
+          </div>
+          <div class="col-md-12" *ngIf="editForm.get('searchText').errors?.pattern">
+            <small class="text-danger">This text is invalid!</small>
+          </div>
+        </div>
+
+        <div class="row py-2">
+          <div class="col-md-4">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect02">Department</label>
+              </div>
+              <select (change)="onChange()" id="inputGroupSelect02" formControlName="departmentId" class="form-select font-sm">
+                <option [value]="0" selected>All Departments</option>
+                <option *ngFor="let department of departments" [value]="department.id">
+                  {{ department.departmentName }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect03">Designation</label>
+              </div>
+              <select
+                (change)="onChange()"
+                id="inputGroupSelect03"
+                formControlName="designationId"
+                [(ngModel)]="filters.destinationId"
+                class="form-select font-sm"
+              >
+                <option [value]="0" selected>All Designations</option>
+                <option *ngFor="let designation of designations" [value]="designation.id">
+                  {{ designation.designationName }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect04">Unit</label>
+              </div>
+              <select
+                (change)="onChange()"
+                id="inputGroupSelect04"
+                formControlName="unitId"
+                [(ngModel)]="filters.unitId"
+                class="form-select font-sm"
+              >
+                <option [value]="0" selected>All Units</option>
+                <option *ngFor="let unit of units" [value]="unit.id">
+                  {{ unit.unitName }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row pt-2">
+          <div class="col-8">
+            <div class="m-0 me-2 float-start">
+              <p style="font-size: 0.7rem; margin-top: 7px; margin-bottom: 0">Showing From</p>
+            </div>
+            <div class="m-0 ms-2 float-start" style="width: 255px; display: inline-block">
+              <div class="input-group">
+                <input
+                  #startDateDp="ngbDatepicker"
+                  (dateSelect)="checkDate()"
+                  class="form-control"
+                  formControlName="startDate"
+                  name="startDate"
+                  ngbDatepicker
+                  type="text"
+                />
+                <button (click)="startDateDp.toggle()" class="btn btn-secondary" type="button">
+                  <fa-icon icon="calendar-alt"></fa-icon>
+                  <!--                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">-->
+                  <!--                    <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm2-1a1 1 0 0 0-1 1v1h14V2a1 1 0 0 0-1-1H2z"/>-->
+                  <!--                    <path d="M0 2h16v2H0V2zm0 4h16v2H0V6zm0 4h16v2H0v-2zm0 4h16v2H0v-2zm1-10v8h2V2H1zm12 0v8h2V2h-2z"/>-->
+                  <!--                  </svg>-->
+                </button>
+              </div>
+            </div>
+            <div class="m-0 ms-4 me-2 float-start">
+              <p style="font-size: 0.7rem; margin-top: 7px; margin-bottom: 0">To</p>
+            </div>
+            <div class="m-0 ms-2 float-start" style="width: 255px; display: inline-block">
+              <div class="input-group">
+                <input
+                  #endDateDp="ngbDatepicker"
+                  (dateSelect)="checkDate()"
+                  class="form-control"
+                  formControlName="endDate"
+                  name="endDate"
+                  ngbDatepicker
+                  type="text"
+                />
+                <button (click)="endDateDp.toggle()" class="btn btn-secondary" type="button">
+                  <fa-icon icon="calendar-alt"></fa-icon>
+                  <!--                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">-->
+                  <!--                    <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm2-1a1 1 0 0 0-1 1v1h14V2a1 1 0 0 0-1-1H2z"/>-->
+                  <!--                    <path d="M0 2h16v2H0V2zm0 4h16v2H0V6zm0 4h16v2H0v-2zm0 4h16v2H0v-2zm1-10v8h2V2H1zm12 0v8h2V2h-2z"/>-->
+                  <!--                  </svg>-->
+                </button>
+              </div>
+
+              <div class="m-0" style="margin-top: 8px; margin-bottom: -5px">
+                <small *ngIf="isInvalid" class="form-text text-danger">End date can't be smaller than the start date.</small>
+              </div>
+            </div>
+            <div class="m-0 float-start" style="display: inline-block">
+              <button [disabled]="isInvalid || editForm.invalid" type="submit" class="btn btn-primary mb-1 ms-4" (click)="loadFromRange()">Load</button>
+            </div>
+          </div>
+
+          <div class="col-4 text-end">
+            <button type="submit" class="btn btn-secondary mb-1 ms-4" (click)="preConfirmationRegularizeAbsent()" [disabled]="isLoading">
+              Regularize Absent days
+            </button>
+            <button type="submit" class="btn btn-success mb-1 ms-auto" (click)="loadLastThirtyDays()">Show last 30 day's status</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="container" *ngIf="isLoading">
+    <div class="loader">
+      <div class="loader--dot"></div>
+      <div class="loader--dot"></div>
+      <div class="loader--dot"></div>
+      <div class="loader--dot"></div>
+      <div class="loader--dot"></div>
+      <div class="loader--dot"></div>
+      <div class="loader--text"></div>
+    </div>
+  </div>
+
+  <div class="col-12 p-0 text-end">
+    <button
+      type="button"
+      [disabled]="selectedIdSetForATS.size < 1"
+      *ngIf="monthlyAttendanceTimeSheets && monthlyAttendanceTimeSheets.length > 0"
+      class="btn btn-primary my-2"
+      (click)="exportSelectedATSv2()"
+    >
+      <fa-icon icon="download"></fa-icon> Export in Excel
+    </button>
+  </div>
+
+  <div class="" id="entities" *ngIf="monthlyAttendanceTimeSheets && monthlyAttendanceTimeSheets.length > 0 && isLoading === false">
+    <div class="overflow-scroll">
+      <table
+        class="table table-hover table-sm text-center table-responsive d-block table-bordered list-text-color"
+        aria-describedby="page-heading"
+      >
+        <thead>
+          <tr>
+            <th style="vertical-align: bottom">
+              <span>
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  [value]="-1"
+                  (change)="selectorOnChange($event)"
+                  [(ngModel)]="allSelector"
+                />
+              </span>
+            </th>
+
+            <th scope="col"><span>PIN</span></th>
+            <th scope="col"><span>NAME</span></th>
+            <th scope="col"><span ngbTooltip="Total">T</span></th>
+            <th scope="col"><span ngbTooltip="Present">P</span></th>
+            <th scope="col"><span ngbTooltip="Leaves">L</span></th>
+            <th scope="col"><span ngbTooltip="Holidays">H</span></th>
+            <th scope="col"><span ngbTooltip="Absent">A</span></th>
+            <th *ngFor="let attendanceTimeSheetMini of monthlyAttendanceTimeSheets![0].attendanceTimeSheetMiniList">
+              <ng-template #dateTipContent>
+                {{ attendanceTimeSheetMini.date | formatDayOfTheMonth }}
+              </ng-template>
+              <span [ngbTooltip]="dateTipContent" class="text-capitalize">
+                {{ attendanceTimeSheetMini.date | formatDayOfTheMonth }}
+                <br />
+                {{ attendanceTimeSheetMini.date | formatDayOfTheWeek }}
+              </span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let monthlyAttendanceTimeSheet of monthlyAttendanceTimeSheets">
+            <td>
+              <span>
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  [value]="monthlyAttendanceTimeSheet.employeeId"
+                  [checked]="monthlyAttendanceTimeSheet.isChecked"
+                  (change)="selectorOnChange($event)"
+                />
+              </span>
+            </td>
+
+            <td class="text-center text-nowrap">{{ monthlyAttendanceTimeSheet.pin }}</td>
+            <td class="text-nowrap text-start" style="vertical-align: middle">
+              <ng-template #nameTipContent>
+                {{ monthlyAttendanceTimeSheet.name }}
+              </ng-template>
+              <span
+                style="margin-bottom: -4px"
+                [ngbTooltip]="nameTipContent"
+                class="text-capitalize d-inline-block text-truncate emp-name-text-size"
+              >
+                {{ monthlyAttendanceTimeSheet.name }}
+              </span>
+            </td>
+
+            <td class="text-nowrap text-center fw-bold" *ngIf="monthlyAttendanceTimeSheet.attendanceTimeSheetMiniList !== undefined">
+              {{ getTotalDays(monthlyAttendanceTimeSheet.attendanceTimeSheetMiniList) }}
+            </td>
+            <td class="text-nowrap text-center text-success" *ngIf="monthlyAttendanceTimeSheet.attendanceTimeSheetMiniList !== undefined">
+              {{ getPresentDays(monthlyAttendanceTimeSheet.attendanceTimeSheetMiniList) }}
+            </td>
+            <td class="text-nowrap text-center text-warning" *ngIf="monthlyAttendanceTimeSheet.attendanceTimeSheetMiniList !== undefined">
+              {{ getLeaveDays(monthlyAttendanceTimeSheet.attendanceTimeSheetMiniList) }}
+            </td>
+            <td class="text-nowrap text-center text-muted" *ngIf="monthlyAttendanceTimeSheet.attendanceTimeSheetMiniList !== undefined">
+              {{ getHolidays(monthlyAttendanceTimeSheet.attendanceTimeSheetMiniList) }}
+            </td>
+            <td
+              class="text-nowrap text-center fw-bold text-danger"
+              *ngIf="monthlyAttendanceTimeSheet.attendanceTimeSheetMiniList !== undefined"
+            >
+              {{ getAbsentDays(monthlyAttendanceTimeSheet.attendanceTimeSheetMiniList) }}
+            </td>
+
+            <td
+              *ngFor="let attendanceTimeSheetMini of monthlyAttendanceTimeSheet!.attendanceTimeSheetMiniList"
+              [ngClass]="{
+                '': attendanceTimeSheetMini.attendanceStatus == 'PRESENT',
+                'table-attendance-danger': attendanceTimeSheetMini.attendanceStatus == 'ABSENT',
+                'table-attendance-warning':
+                  attendanceTimeSheetMini.attendanceStatus == 'LATE' ||
+                  attendanceTimeSheetMini.attendanceStatus == 'NON_FULFILLED_OFFICE_HOURS',
+                'table-attendance-info': attendanceTimeSheetMini.attendanceStatus == 'GOVT_HOLIDAY',
+                'table-attendance-active': attendanceTimeSheetMini.attendanceStatus == 'WEEKLY_OFFDAY'
+              }"
+            >
+              <ng-template #tipContent>
+                <b>{{ monthlyAttendanceTimeSheet.pin }}</b> -
+                {{ monthlyAttendanceTimeSheet.name }}
+                {{ attendanceTimeSheetMini.date | formatMediumDate }}
+              </ng-template>
+
+              <span class="text-secondary" *ngIf="attendanceTimeSheetMini.attendanceStatus === 'PRESENT'" [ngbTooltip]="tipContent">
+                <!-- <fa-icon icon="check-circle"></fa-icon>-->
+                P
+              </span>
+              <span class="text-danger" *ngIf="attendanceTimeSheetMini.attendanceStatus === 'ABSENT'" [ngbTooltip]="tipContent">
+                <!-- <fa-icon icon="exclamation-circle"></fa-icon>-->
+                A
+              </span>
+              <span class="text-warning" *ngIf="attendanceTimeSheetMini.attendanceStatus === 'LEAVE'" [ngbTooltip]="tipContent">
+                <!-- <fa-icon class="icon" icon="umbrella-beach"></fa-icon>-->
+                L
+              </span>
+              <span class="text-black-50" *ngIf="attendanceTimeSheetMini.attendanceStatus === 'WEEKLY_OFFDAY'" [ngbTooltip]="tipContent">
+                <!--                        <fa-icon class="icon" icon="umbrella-beach"></fa-icon>-->
+                H
+              </span>
+              <span class="text-black-50" *ngIf="attendanceTimeSheetMini.attendanceStatus === 'GOVT_HOLIDAY'" [ngbTooltip]="tipContent">
+                <!--                        <fa-icon class="icon" icon="umbrella-beach"></fa-icon>-->
+                H
+              </span>
+              <span class="text-secondary" *ngIf="attendanceTimeSheetMini.attendanceStatus === 'MOVEMENT'" [ngbTooltip]="tipContent">
+                <!--                        <fa-icon class="icon" icon="umbrella-beach"></fa-icon>-->
+                M
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

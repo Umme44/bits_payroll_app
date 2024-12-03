@@ -1,0 +1,12 @@
+{
+  "bitsHrPayrollApp": {
+    "salaryBreakdown": {
+      "null": "",
+      "GROSS": "Gross",
+      "BASIC": "Basic",
+      "HOUSE_RENT": "House Rent",
+      "MEDICAL": "Medical",
+      "CONVEYANCE": "Conveyance"
+    }
+  }
+}

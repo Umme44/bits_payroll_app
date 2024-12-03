@@ -1,0 +1,133 @@
+<jhi-header [addButtonText]="'New Employee PIN'" [headerName]="'Employee PIN'" [routerLinkText]="'/employee-pin/new'"> </jhi-header>
+
+<jhi-alert-error></jhi-alert-error>
+
+<div>
+  <div class="row mb-3">
+    <div class="mb-3 col-md-3">
+      <label class="form-control-label">Search By Employee PIN or Name</label>
+      <input class="form-control" (keyup)="onSearchTextChange($event)" name="searchText" type="text" />
+      <small class="text-danger" *ngIf="isSearchTextInvalid == true">This field is invalid</small>
+    </div>
+
+    <div class="mb-3 col-3">
+      <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.employeePin.employeeCategory" for="field_employeeCategory"
+        >Select Employee Category</label
+      >
+      <select class="form-control" name="employeeCategory" id="field_employeeCategory" (change)="onSelectEmployeeCategory($event)">
+        <option value="ALL" selected>All Categories</option>
+        <option value="REGULAR_CONFIRMED_EMPLOYEE">Regular</option>
+        <option value="CONTRACTUAL_EMPLOYEE">{{ 'bitsHrPayrollApp.EmployeeCategory.CONTRACTUAL_EMPLOYEE' | translate }}</option>
+        <option value="INTERN">{{ 'bitsHrPayrollApp.EmployeeCategory.INTERN' | translate }}</option>
+      </select>
+    </div>
+
+    <div class="mb-3 col-md-2">
+      <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.employeePin.employeePinStatus" for="field_employeePinStatus"
+        >Employee Pin Status</label
+      >
+      <select class="form-control" name="employeePinStatus" id="field_employeePinStatus" (change)="onChangeEmployeeStatus($event)">
+        <option value="ALL" selected>All</option>
+        <option value="CREATED">{{ 'bitsHrPayrollApp.EmployeePinStatus.CREATED' | translate }}</option>
+        <option value="JOINED">{{ 'bitsHrPayrollApp.EmployeePinStatus.JOINED' | translate }}</option>
+        <option value="NOT_JOINED">{{ 'bitsHrPayrollApp.EmployeePinStatus.NOT_JOINED' | translate }}</option>
+        <option value="RESIGNED">{{ 'bitsHrPayrollApp.EmployeePinStatus.RESIGNED' | translate }}</option>
+        <option value="CONTRACT_END">{{ 'bitsHrPayrollApp.EmployeePinStatus.CONTRACT_END' | translate }}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="employeePins?.length === 0">
+    <span jhiTranslate="bitsHrPayrollApp.employeePin.home.notFound">No employeePins found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="employeePins && employeePins.length > 0">
+    <table class="table table-hover list-text-color" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.employeePin.pin">Pin</span></th>
+          <th scope="col">RRF Number</th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.employeePin.fullName">Full Name</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.employeePin.employeeCategory">Employee Category</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.employeePin.department">Department</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.employeePin.designation">Designation</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.employeePin.unit">Unit</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.employeePin.employeePinStatus">Employee Pin Status</span></th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+        <tr *ngFor="let employeePin of employeePins; trackBy: trackId">
+          <td>{{ employeePin.pin }}</td>
+          <td>{{ employeePin.rrfNumber == null ? 'Regularized' : employeePin.rrfNumber }}</td>
+          <td>{{ employeePin.fullName }}</td>
+          <td>{{ getEmployeeCategory(employeePin.employeeCategory!) }}</td>
+          <td>
+            <div *ngIf="employeePin.departmentId">
+              {{ employeePin.departmentName }}
+            </div>
+          </td>
+          <td>
+            <div *ngIf="employeePin.designationId">
+              {{ employeePin.designationName }}
+            </div>
+          </td>
+          <td>
+            <div *ngIf="employeePin.unitId">
+              {{ employeePin.unitName }}
+            </div>
+          </td>
+
+          <td jhiTranslate="{{ 'bitsHrPayrollApp.EmployeePinStatus.' + employeePin.employeePinStatus }}">
+            {{ employeePin.employeePinStatus }}
+          </td>
+
+          <td class="">
+            <button
+              *ngIf="employeePin.employeePinStatus === 'CREATED'"
+              type="submit"
+              (click)="navigateToEmployeeOnboardPage(employeePin.pin!)"
+              class="btn btn-primary"
+            >
+              Onboard
+            </button>
+          </td>
+
+          <td class="">
+            <button
+              *ngIf="employeePin.employeePinStatus === 'CREATED'"
+              type="submit"
+              (click)="declineEmployeeOnboard(employeePin.id!)"
+              class="btn btn-danger"
+            >
+              Declined
+            </button>
+          </td>
+
+          <td class="text-end">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/employee-pin', employeePin.id, 'view']" class="btn btn-info btn-sm">
+                <fa-icon icon="eye"></fa-icon>
+              </button>
+
+              <button
+                type="submit"
+                *ngIf="employeePin.employeePinStatus === 'CREATED'"
+                [routerLink]="['/employee-pin', employeePin.id, 'edit']"
+                class="btn btn-primary btn-sm"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+              </button>
+
+              <button type="submit" (click)="delete(employeePin)" class="btn btn-danger btn-sm">
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

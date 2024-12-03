@@ -1,0 +1,103 @@
+<div class="container">
+  <div class="row page-title form-header page-header">
+    <div class="col-md-6">
+      <h1>Onboarded Employees</h1>
+    </div>
+    <div class="col-md-6">
+      <button [routerLink]="['/employee/new']" class="btn btn-primary float-end jh-create-entity create-employee" id="jh-create-entity">
+        <fa-icon icon="plus"></fa-icon>
+        <span> Onboard new Employee </span>
+      </button>
+    </div>
+  </div>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div *ngIf="employees?.length === 0" class="alert alert-warning" id="no-result">
+    <span jhiTranslate="bitsHrPayrollApp.employee.home.notFound">No employees found</span>
+  </div>
+</div>
+
+<div *ngIf="employees && employees.length > 0" class="container py-2">
+  <div *ngFor="let employee of employees; trackBy: trackId" class="container-fluid card py-2 mt-5">
+    <div class="form-header info-color pe-5" style="zoom: 70%; text-align: center; max-width: 25rem">
+      <h2>{{ employee.pin }} - {{ employee.surName }}</h2>
+    </div>
+
+    <div class="card-text">
+      <div class="row py-2">
+        <div class="col-md-2 fw-bold">Name</div>
+        <div class="col-md-4">
+          {{ employee.fullName }}
+        </div>
+        <div class="col-md-2 fw-bold">Department</div>
+        <div class="col-md-4">
+          {{ employee.departmentName }}
+        </div>
+      </div>
+
+      <div class="row py-2">
+        <div class="col-md-2 fw-bold">Designation</div>
+        <div class="col-md-4">
+          {{ employee.designationName }}
+        </div>
+        <div class="col-md-2 fw-bold">Unit</div>
+        <div class="col-md-4">
+          {{ employee.unitName }}
+        </div>
+      </div>
+
+      <div class="row py-2">
+        <div class="col-md-2 fw-bold">Category</div>
+        <div class="col-md-4">
+          {{ employee.employeeCategory }}
+        </div>
+        <div class="col-md-2 fw-bold">Desk Location</div>
+        <div class="col-md-4">
+          {{ employee.location }}
+        </div>
+      </div>
+
+      <div class="row py-2">
+        <div class="col-md-2 fw-bold">DOJ</div>
+        <div class="col-md-4">
+          {{ employee.dateOfJoining | formatMediumDate }}
+        </div>
+        <div class="col-md-2 fw-bold">DOC</div>
+        <div class="col-md-4">
+          {{ employee.dateOfConfirmation | formatMediumDate }}
+        </div>
+      </div>
+
+      <div class="row py-2">
+        <div class="col-md-2 fw-bold">Reporting to</div>
+        <div class="col-md-4">
+          {{ employee.reportingToName }}
+        </div>
+      </div>
+    </div>
+
+    <div class="card-footer bg-white">
+      <div class="">
+        <button (click)="details(employee)" class="btn btn-info btn-sm" type="submit">
+          <fa-icon icon="eye"></fa-icon>
+          <span class="d-none d-md-inline">Details</span>
+        </button>
+
+        <button [routerLink]="['/employee-custom', employee.id, 'edit']" class="btn btn-primary btn-sm" type="submit">
+          <fa-icon icon="pencil-alt"></fa-icon>
+          <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+
+        <!--                employee must not be deleted , disable / final settlement feature to be added here-->
+        <!--                <button type="submit" (click)="delete(employee)"-->
+        <!--                        class="btn btn-danger btn-sm">-->
+        <!--                    <fa-icon icon="times"></fa-icon>-->
+        <!--                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Disable</span>-->
+        <!--                </button>-->
+      </div>
+    </div>
+  </div>
+</div>

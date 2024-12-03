@@ -1,0 +1,102 @@
+<div class="modal-header border-none pb-0">
+  <h6 class="modal-title" id="modal-basic-title">Flex Schedule Application Details</h6>
+  <button type="button" class="btn-close outline-none" aria-label="Close" (click)="cancel()"></button>
+</div>
+
+<div class="modal-body pt-0">
+  <div class="font-sm" *ngIf="flexScheduleApplication">
+    <table class="table table-borderless border-none">
+      <tr>
+        <th><span jhiTranslate="bitsHrPayrollApp.flexScheduleApplication.requester">Requester</span></th>
+        <td>
+          <div *ngIf="flexScheduleApplication.requesterId">
+            {{ flexScheduleApplication.pin }} - {{ flexScheduleApplication.fullName }} - {{ flexScheduleApplication.designationName }}
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <th><span jhiTranslate="bitsHrPayrollApp.flexScheduleApplication.effectiveFrom">Effective From</span></th>
+        <td>
+          <span>{{ flexScheduleApplication.effectiveFrom | formatMediumDate }}</span>
+        </td>
+
+        <th><span jhiTranslate="bitsHrPayrollApp.flexScheduleApplication.effectiveTo">Effective To</span></th>
+        <td>
+          <span>{{ flexScheduleApplication.effectiveTo | formatMediumDate }}</span>
+        </td>
+      </tr>
+
+      <tr>
+        <th><span>In Time</span></th>
+        <td>
+          <span>{{ flexScheduleApplication.inTime | formatTime }}</span>
+        </td>
+
+        <th><span>Out Time</span></th>
+        <td>
+          <span>{{ flexScheduleApplication.outTime | formatTime }}</span>
+        </td>
+      </tr>
+
+      <tr>
+        <th><span jhiTranslate="bitsHrPayrollApp.flexScheduleApplication.status">Status</span></th>
+        <td>
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.Status.' + flexScheduleApplication.status }}">{{ flexScheduleApplication.status }}</span>
+        </td>
+      </tr>
+
+      <tr>
+        <th><span jhiTranslate="bitsHrPayrollApp.flexScheduleApplication.appliedAt">Applied At</span></th>
+        <td>
+          <span>{{ flexScheduleApplication.appliedAt | formatMediumDate }}</span>
+        </td>
+
+        <th><span jhiTranslate="bitsHrPayrollApp.flexScheduleApplication.sanctionedAt">Sanctioned At</span></th>
+        <td>
+          <span>{{ flexScheduleApplication.sanctionedAt | formatMediumDate }}</span>
+        </td>
+      </tr>
+      <tr>
+        <th><span jhiTranslate="bitsHrPayrollApp.flexScheduleApplication.createdAt">Created At</span></th>
+        <td>
+          <span>{{ flexScheduleApplication.createdAt | formatMediumDate }}</span>
+        </td>
+
+        <th><span jhiTranslate="bitsHrPayrollApp.flexScheduleApplication.updatedAt">Updated At</span></th>
+        <td>
+          <span>{{ flexScheduleApplication.updatedAt | formatMediumDate }}</span>
+        </td>
+      </tr>
+
+      <tr>
+        <th><span jhiTranslate="bitsHrPayrollApp.flexScheduleApplication.sanctionedBy">Sanctioned By</span></th>
+        <td>
+          {{ flexScheduleApplication.sanctionedByLogin }}
+        </td>
+        <th><span jhiTranslate="bitsHrPayrollApp.flexScheduleApplication.appliedBy">Applied By</span></th>
+        <td>
+          {{ flexScheduleApplication.appliedByLogin }}
+        </td>
+      </tr>
+      <tr>
+        <th><span jhiTranslate="bitsHrPayrollApp.flexScheduleApplication.createdBy">Created By</span></th>
+        <td>
+          {{ flexScheduleApplication.createdByLogin }}
+        </td>
+        <th><span jhiTranslate="bitsHrPayrollApp.flexScheduleApplication.updatedBy">Updated By</span></th>
+        <td>
+          {{ flexScheduleApplication.updatedByLogin }}
+        </td>
+      </tr>
+
+      <tr>
+        <th><span jhiTranslate="bitsHrPayrollApp.flexScheduleApplication.reason">Reason</span></th>
+
+        <td colspan="3">
+          <span>{{ flexScheduleApplication.reason }}</span>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

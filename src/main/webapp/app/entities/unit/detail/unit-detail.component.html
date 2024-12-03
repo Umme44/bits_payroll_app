@@ -1,0 +1,29 @@
+<jhi-header [headerName]="'Unit Details'" [shouldHaveHr]="true"> </jhi-header>
+<div>
+  <div *ngIf="unit">
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <dl class="row-md jh-entity-details">
+      <div class="row">
+        <div class="col-md-3">
+          <dt><span jhiTranslate="bitsHrPayrollApp.unit.unitName">Unit Name</span></dt>
+        </div>
+        <div class="col-md-3">
+          <dd>
+            <span>{{ unit.unitName }}</span>
+          </dd>
+        </div>
+      </div>
+    </dl>
+
+    <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+      <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+    </button>
+
+    <button type="button" [routerLink]="['/unit', unit.id, 'edit']" class="btn btn-primary">
+      <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+    </button>
+  </div>
+</div>

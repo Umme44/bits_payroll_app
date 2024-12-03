@@ -1,0 +1,9 @@
+{
+  "bitsHrPayrollApp": {
+    "ClaimStatus": {
+      "null": "",
+      "SETTLED": "SETTLED",
+      "REGRETTED": "REGRETTED"
+    }
+  }
+}

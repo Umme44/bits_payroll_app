@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity EmploymentCertificate.
+    -->
+    <changeSet id="20221025101105-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="employee_id"
+                                 baseTableName="employment_certificate"
+                                 constraintName="fk_employment_certificate__employee_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+
+        <addForeignKeyConstraint baseColumnNames="signatory_person_id"
+                                 baseTableName="employment_certificate"
+                                 constraintName="fk_employment_certificate__signatory_person_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+
+        <addForeignKeyConstraint baseColumnNames="created_by_id"
+                                 baseTableName="employment_certificate"
+                                 constraintName="fk_employment_certificate__created_by_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="updated_by_id"
+                                 baseTableName="employment_certificate"
+                                 constraintName="fk_employment_certificate__updated_by_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="generated_by_id"
+                                 baseTableName="employment_certificate"
+                                 constraintName="fk_employment_certificate__generated_by_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+    </changeSet>
+</databaseChangeLog>

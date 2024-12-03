@@ -1,0 +1,34 @@
+{
+  "bitsHrPayrollApp": {
+    "arrearPayment": {
+      "home": {
+        "title": "Arrear Payments",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Arrear Payment",
+        "createOrEditLabel": "Create or edit a Arrear Payment",
+        "notFound": "No Arrear Payments found"
+      },
+      "created": "A new Arrear Payment is created with identifier {{ param }}",
+      "updated": "A Arrear Payment is updated with identifier {{ param }}",
+      "deleted": "A Arrear Payment is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Arrear Payment {{ id }}?"
+      },
+      "detail": {
+        "title": "Arrear Payment"
+      },
+      "id": "ID",
+      "paymentType": "Payment Type",
+      "disbursementDate": "Disbursement Date",
+      "salaryMonth": "Salary Month",
+      "salaryYear": "Salary Year",
+      "approvalStatus": "Approval Status",
+      "disbursementAmount": "Disbursement Amount",
+      "isDeleted": "Is Deleted",
+      "arrearPF": "Arrear PF",
+      "taxDeduction": "Tax Deduction",
+      "deductTaxUponPayment": "Deduct Tax Upon Payment",
+      "arrearSalaryItem": "Arrear Salary Item"
+    }
+  }
+}

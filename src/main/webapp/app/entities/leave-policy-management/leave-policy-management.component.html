@@ -1,0 +1,619 @@
+<body>
+  <div class="container">
+      <div class="row pt-5">
+        <div class="col-12">
+          <h6 class="heading" style="border: none">
+            Leave Policy Configuration
+          </h6>
+        </div>
+      </div>
+
+      <div class="card">
+        <form  class="row" [formGroup]="leavePolicyForm" (ngSubmit)="onSubmit()">
+          <form class="row">
+            <div class="col-6 form-group my-2">
+              <label class="font-sm">Policy Title</label>
+              <input
+                class="form-control"
+                type="text"
+                placeholder="Ex. policy Title.."
+              />
+            </div>
+
+            <!-- +++++++++++++++++Leave type start++++++++++++++++++++++++---->
+            <div class="col-4 form-group my-2">
+              <label class="font-sm">Leave Type</label>
+              <select class="form-control">
+                <option selected disabled>-- Select Leave Type --</option>
+                <option>Annual</option>
+                <option>Casual</option>
+                <option>Compensatory</option>
+              </select>
+            </div>
+            <!--+++++++++++++++++Leave type end++++++++++++++++++++++++-->
+
+            <!--        Policy Code start-->
+            <div class="col-2 form-group my-2">
+              <label class="font-sm">Policy Code</label>
+              <input class="form-control" type="number" placeholder="Ex. 1025" />
+            </div>
+
+            <!--        policy code end-->
+
+            <!--        DESCRIPTION START-->
+            <div class="col-12 form-group my-2">
+              <label class="font-sm">Description</label>
+
+              <textarea
+                class="form-control"
+                placeholder="Ex. Lorem Ipsum Dolor Sit.."
+                name=""
+                id=""
+                cols="30"
+                rows="3"
+              ></textarea>
+            </div>
+
+            <!--        DESCRIPTION end-->
+
+            <!--        validation start-->
+            <div class="card">
+              <div class="row">
+                <div class="col-12">
+                  <h6 class="sub-title">Validation</h6>
+                </div>
+              </div>
+              <form class="">
+                <div class="row">
+                  <div class="col-4 form-group my-2">
+                    <label class="font-sm">Gender</label>
+                    <select class="form-control">
+                      <option selected disabled>-- Select Gender --</option>
+                      <option>All</option>
+                      <option>Male</option>
+                      <option>Female</option>
+                    </select>
+                  </div>
+
+                  <div class="col-4 form-group my-2">
+                    <label class="font-sm">Marital Status</label>
+                    <select class="form-control">
+                      <option selected disabled>-- Select Marital Status --</option>
+                      <option>All</option>
+                      <option>Married</option>
+                      <option>Unmarried</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-4 form-group my-2">
+                    <label class="font-sm">Requirement for Supporting Document</label>
+                    <select
+                      class="form-control"
+                      id="requirementForSupportingDocument"
+                      [(ngModel)]="selectedRequirement"
+                      name = "mindurationforsupportingdocument"
+                    >
+                      <option selected >-- Select Option --</option>
+                      <option value="1">Not Required</option>
+                      <option value="2">Strictly Required</option>
+                      <option value="3">Duration Based</option>
+                    </select>
+                  </div>
+
+
+                  <div class="col-4 form-group my-2"  *ngIf="selectedRequirement === '3'">
+                    <label class="font-sm">
+                      Min Duration for Supporting Document in day(s)</label>
+                    <input class="form-control" id = "mindurationforsupportingdocument" type="number" placeholder="Ex. 5" />
+                  </div>
+
+
+                  <div class="col-4 form-group my-2">
+                    <label class="font-sm"
+                    >Min Duration for Prior Leave Apply in day(s)</label
+                    >
+                    <input class="form-control" type="number" placeholder="Ex. 5" />
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-4 form-group my-2">
+                    <div class="form-check" style="padding-top: 35px">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="hasLifeCycle"
+                        [(ngModel)] = "hasLifeCycleLimit"
+                        name = "lifeCycleLimitInDays"
+                      />
+                      <label class="form-check-label font-sm" for="hasLifeCycle">
+                        Has Lifecycle Limit
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="col-4 form-group my-2" id = "lifeCyclelimitInaDay">
+                    <div class="font-sm" style="padding-top: 35px" *ngIf = "hasLifeCycleLimit">
+                      <label class="form-check-label font-sm" >
+                        Life Cycle Limit In Day(s)
+                      </label>
+                      <input class="form-control" type="number" placeholder="Ex. 5" />
+                    </div>
+                  </div>
+
+                </div>
+                <div class="row">
+                  <div class="col-4 form-group my-0">
+                    <div class="form-check" style="padding-top: 25px">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="isDescriptionReqired"
+                      />
+                      <label
+                        class="form-check-label font-sm"
+                        for="isDescriptionReqired"
+                      >
+                        Is Description Required
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="col-4 form-group my-0">
+                    <div class="form-check" style="padding-top: 25px">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="isAddressOnLeaveRequired"
+                      />
+                      <label
+                        class="form-check-label font-sm"
+                        for="isAddressOnLeaveRequired"
+                      >
+                        Is Address on Leave Required
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="col-4 form-group my-0">
+                    <div class="form-check" style="padding-top: 25px">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="isPhoneNumberRequired"
+                      />
+                      <label
+                        class="form-check-label font-sm"
+                        for="isPhoneNumberRequired"
+                      >
+                        Is Phone Number on Leave Required
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-4 form-group my-0">
+                    <div class="form-check" style="padding-top: 25px">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="isConscecutiveLeave"
+                      />
+                      <label
+                        class="form-check-label font-sm"
+                        for="isConscecutiveLeave"
+                      >
+                        Is Consecutive Leave in Lifecycle
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="col-4 form-group my-0">
+                    <div class="form-check" style="padding-top: 25px">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="isBalanceCheckRequired"
+                      />
+                      <label
+                        class="form-check-label font-sm"
+                        for="isBalanceCheckRequired"
+                      >
+                        Is Balance Check Required
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="col-4 form-group my-0">
+                    <div class="form-check" style="padding-top: 25px">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="canAppliedByAnyone"
+                      />
+                      <label
+                        class="form-check-label font-sm"
+                        for="canAppliedByAnyone"
+                      >
+                        Can Applied by Employee
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <!--        validation end-->
+
+            <!--        Allocation  Criteria start-->
+
+            <div class="card">
+              <div class="row">
+                <div class="col-12">
+                  <p class="sub-title">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="hasAllocationCriteria"
+                      [(ngModel)] = "hasAllocationCriteria"
+                      name = "hasAutoAllocationFromJoining"
+                      name = "allocationType"
+                    />
+                    <label for="hasAllocationCriteria" class="allocation-label">
+                      &nbsp;&nbsp;&nbsp;Allocation Criteria</label
+                    >
+                  </p>
+                </div>
+              </div>
+              <form class="row" id="allocationCriteriaBlock" *ngIf="hasAllocationCriteria" >
+                <div class="col-4 form-group my-2">
+                  <div class="form-check" style="padding-top: 35px">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="hasAutoAllocationFromJoining"
+                    />
+                    <label
+                      class="form-check-label font-sm"
+                      for="hasAutoAllocationFromJoining"
+                    >
+                      Has Auto Allocation from Joining
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-4 form-group my-2">
+                  <label class="font-sm">Allocation Type</label>
+                  <select class="form-control" id="allocationType"
+                          [(ngModel)]="selectedCalenderYearAdvance"
+                          [(ngModel)] = "requiredAllocationFactor"
+                          name = "percalenderyearallocation"
+                          name = "allocationFactor"
+                         >
+                    <option selected disabled>-- Select allocation type --</option>
+                    <option>Calender Year Advance</option>
+                    <option>Calender Month Advance</option>
+                    <option>Per Day Fixed Factor</option>
+                  </select>
+                </div>
+
+                <div class="col-4 form-group my-2" *ngIf="selectedCalenderYearAdvance === 'Calender Year Advance' || selectedCalenderYearAdvance === 'Calender Month Advance'">
+                  <label class="font-sm">Per Calendar Year Allocation</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id = "percalenderyearallocation"
+                    name="calenderYearAdvance"
+                  />
+                </div>
+
+                <div class="col-4 form-group my-2 fixedFactorAllocation" *ngIf = "requiredAllocationFactor === 'Per Day Fixed Factor'">
+                  <div class="form-check" style="padding-top: 35px">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="allocationOnLeave"
+                    />
+                    <label class="form-check-label font-sm" for="allocationOnLeave">
+                      Has Fixed Factor Allocation on Leave Day
+                    </label>
+                  </div>
+                </div>
+
+
+                <div class="col-4 form-group my-2 fixedFactorAllocation" *ngIf = "requiredAllocationFactor === 'Per Day Fixed Factor'">
+                  <div class="form-check" style="padding-top: 35px">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="allocationOnHoliday"
+                    />
+                    <label class="form-check-label font-sm" for="allocationOnHoliday">
+                      Has Fixed Factor Allocation on Holiday
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-4 form-group my-2" id="allocationFactor" *ngIf = "requiredAllocationFactor === 'Per Day Fixed Factor'">
+                  <label class="font-sm">Allocation Factor </label>
+                  <input class="form-control" type="number" placeholder="Ex. 5" />
+                </div>
+
+
+              </form>
+            </div>
+            <!--        Allocation Criteria  end-->
+
+            <!-- Expiration Criteria start-->
+
+            <div class="card">
+              <div class="row">
+                <div class="col-12">
+                  <h6 class="sub-title">Expiration Criteria</h6>
+
+                </div>
+              </div>
+              <form class="row">
+                <div class="col-4 form-group my-2">
+                  <div class="form-check" style="padding-top: 35px">
+                    <input class="form-check-input"
+                           type="checkbox"
+                           id="hasExpiry"
+                           [(ngModel)] = "hasExpiry"
+                           name="willExpireInDaysBlock"
+                    />
+                    <label class="form-check-label font-sm" for="hasExpiry">
+                      Has Expiry
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-4 form-group my-2" id="willExpireInDaysBlock" *ngIf = "hasExpiry" >
+                  <label class="font-sm">Will Expire in Day(s)</label>
+                  <input class="form-control" type="number" placeholder="Ex. 5" />
+                </div>
+              </form>
+            </div>
+            <div class="card">
+              <div class="row">
+                <div class="col-12">
+                  <h6 class="sub-title">Auto Deduction Criteria</h6>
+                </div>
+              </div>
+              <form class="row">
+                <div class="col-4 form-group my-2">
+                  <div class="form-check" style="padding-top: 35px">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="isAutoDeductable"
+                      [(ngModel)] = "isAutoDeductible"
+                      name = "autoDeductionPriorityBlock"
+                    />
+                    <label class="form-check-label font-sm" for="isAutoDeductable">
+                      Is Auto deductible
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-4 form-group my-2" id="autoDeductionPriorityBlock"  *ngIf = "isAutoDeductible">
+                  <label class="font-sm">Auto Deduction Priority</label>
+                  <input class="form-control" type="number" placeholder="Ex. 1-100" />
+                </div>
+              </form>
+            </div>
+            <div class="card">
+              <div class="row">
+                <div class="col-12">
+                  <h6 class="sub-title">Duration Criteria</h6>
+                </div>
+              </div>
+              <form class="row">
+                <div class="col-4 form-group my-2">
+                  <div class="form-check" style="padding-top: 35px">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="isHalfdayAllowed"
+                      [(ngModel)]="isHalfDayAllowed"
+                      name = "leaveDurationStartegyBlock"
+
+                    />
+                    <label class="form-check-label font-sm" for="isHalfdayAllowed" >
+                      Is Half Day Allowed
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-4 form-group my-2" id="leaveDurationStartegyBlock" *ngIf = "isHalfDayAllowed">
+                  <label class="font-sm">Leave Duration Strategy</label>
+                  <select class="form-control">
+                    <option selected disabled>-- Select Strategy --</option>
+                    <option>Working Day</option>
+                    <option>Working Day with Sandwich Role</option>
+                    <option>Straight Date to Date Calculation</option>
+                  </select>
+                </div>
+              </form>
+            </div>
+            <div class="card">
+              <div class="row">
+                <div class="col-12">
+                  <h6 class="sub-title">Monthly Limit Criteria</h6>
+                </div>
+              </div>
+              <form class="row">
+                <div class="col-4 form-group my-2">
+                  <div class="form-check" style="padding-top: 35px" >
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="hasMonthlyMaxLimit"
+                      [(ngModel)]="hasMonthlyMaxLimit"
+                      name="hasMonthlyMaxLimitCheckbox"
+
+                    />
+                    <label class="form-check-label font-sm" for="hasMonthlyMaxLimit">
+                      Has Monthly Max Limit
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-4 form-group my-2" id="monthlyMaxLimitBlock" *ngIf="hasMonthlyMaxLimit">
+                  <label class="font-sm">Monthly Max Limit</label>
+                  <input class="form-control" type="number" placeholder="Ex. 1-100" />
+                </div>
+              </form>
+            </div>
+            <div class="card">
+              <div class="row">
+                <div class="col-12">
+                  <h6 class="sub-title">Salary Impact</h6>
+                </div>
+              </div>
+              <form class="row">
+                <div class="col-4 form-group my-2">
+                  <div class="form-check" style="padding-top: 35px">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="isPaidLeave"
+                    />
+                    <label class="form-check-label font-sm" for="isPaidLeave">
+                      Is Paid Leave
+                    </label>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+
+            <div class="card">
+              <div class="row">
+                <div class="col-12">
+                  <p class="sub-title">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="encashmentCriteria"
+                      [(ngModel)]="encashmentCriteria"
+                      name= "isEncashableEachYear"
+                      name="yearlyForwardLimitBlock"
+                      name ="isForwardable"
+                      name = "forwardingLimitOnLifetimeBlock"
+
+                    />
+                    <label for="encashmentCriteria" class = "allocation-label">
+                      &nbsp;&nbsp;&nbsp; Encashment Criteria</label
+                    >
+                  </p>
+                </div>
+              </div>
+              <form class="" id="encashmentCriteriaBlock" *ngIf = "encashmentCriteria">
+                <div class="row">
+                  <div class="col-4 form-group my-2">
+                    <div class="form-check" style="padding-top: 35px">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="isEncashableEachYear"
+                        [(ngModel)] = "isEncashableEachYear"
+                        name = "yearlyForwardLimitBlock"
+                      />
+                      <label
+                        class="form-check-label font-sm"
+                        for="isEncashableEachYear"
+                      >
+                        Is Encashable Each year
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="col-4 form-group my-2" id="yearlyForwardLimitBlock" *ngIf = "isEncashableEachYear">
+                    <label class="font-sm">Yearly Forwarding Limit</label>
+                    <input class="form-control" type="number" placeholder="Ex. 50" />
+                  </div>
+                </div>
+
+
+                <div class="row">
+                  <div class="col-4 form-group my-2">
+                    <div class="form-check" style="padding-top: 35px">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="isForwardable"
+                        [(ngModel)] = "isForwardable"
+                        name = "forwardingLimitOnLifetimeBlock"
+                      />
+                      <label class="form-check-label font-sm" for="isForwardable">
+                        Is Forwardable
+                      </label>
+                    </div>
+                  </div>
+
+
+                  <div
+                    class="col-4 form-group my-2"
+                    id="forwardingLimitOnLifetimeBlock"
+                    *ngIf = "isForwardable"
+                  >
+                    <label class="font-sm">Forwarding Limit on Lifetime</label>
+                    <input class="form-control" type="number" placeholder="Ex. 150" />
+                  </div>
+                </div>
+              </form>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

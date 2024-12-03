@@ -1,0 +1,33 @@
+//{
+//  "name": "YearMonth",
+//  "fields": [
+//    {
+//      "fieldName": "month",
+//      "fieldType": "Integer",
+//      "fieldValidateRules": ["min", "max"],
+//      "fieldValidateRulesMin": "1",
+//      "fieldValidateRulesMax": "12"
+//    },
+//    {
+//      "fieldName": "year",
+//      "fieldType": "Integer",
+//      "fieldValidateRules": ["min", "max"],
+//      "fieldValidateRulesMin": "1990",
+//      "fieldValidateRulesMax": "2099"
+//    }
+//  ],
+//  "relationships": [],
+//  "changelogDate": "20210301073304",
+//  "entityTableName": "year_month",
+//  "dto": "mapstruct",
+//  "pagination": "infinite-scroll",
+//  "service": "serviceImpl",
+//  "jpaMetamodelFiltering": false,
+//  "fluentMethods": true,
+//  "readOnly": false,
+//  "embedded": false,
+//  "clientRootFolder": "",
+//  "applications": "*",
+//  "searchEngine": false,
+//  "databaseType": "sql"
+//}

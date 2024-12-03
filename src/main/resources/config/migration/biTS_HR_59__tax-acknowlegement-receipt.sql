@@ -1,0 +1,39 @@
+-- DROP TABLE TAX_DOCUMENT
+DROP TABLE IF EXISTS TAX_DOCUMENT;
+
+-- CREATE TABLE TAX_ACKNOWLEDGEMENT_RECEIPT
+CREATE TABLE TAX_ACKNOWLEDGEMENT_RECEIPT
+(
+    ID                     BIGINT       not null,
+    TIN_NUMBER             VARCHAR(255) not null,
+    RECEIPT_NUMBER         VARCHAR(255) not null,
+    TAXES_CIRCLE           VARCHAR(255) not null,
+    TAXES_ZONE             VARCHAR(255) not null,
+    DATE_OF_SUBMISSION     DATE         not null,
+    FILE_PATH              TEXT  not null,
+    ACKNOWLEDGEMENT_STATUS VARCHAR(255) not null,
+    RECEIVED_AT            TIMESTAMP default NULL,
+    CREATED_AT             TIMESTAMP default NULL,
+    UPDATED_AT             TIMESTAMP default NULL,
+    FISCAL_YEAR_ID         BIGINT       not null,
+    EMPLOYEE_ID            BIGINT       not null,
+    RECEIVED_BY_ID         BIGINT,
+    CREATED_BY_ID          BIGINT,
+    UPDATED_BY_ID          BIGINT,
+    constraint PK_TAX_ACKNOWLEDGEMENT_RECEIPT
+        primary key (ID),
+    constraint FK_TAX_ACKNOWLEDGEMENT_RECEIPT_CREATED_BY_ID
+        foreign key (CREATED_BY_ID) references JHI_USER (ID),
+    constraint FK_TAX_ACKNOWLEDGEMENT_RECEIPT_EMPLOYEE_ID
+        foreign key (EMPLOYEE_ID) references EMPLOYEE (ID),
+    constraint FK_TAX_ACKNOWLEDGEMENT_RECEIPT_FISCAL_YEAR_ID
+        foreign key (FISCAL_YEAR_ID) references AIT_CONFIG (ID),
+    constraint FK_TAX_ACKNOWLEDGEMENT_RECEIPT_RECEIVED_BY_ID
+        foreign key (RECEIVED_BY_ID) references JHI_USER (ID),
+    constraint FK_TAX_ACKNOWLEDGEMENT_RECEIPT_UPDATED_BY_ID
+        foreign key (UPDATED_BY_ID) references JHI_USER (ID)
+);
+
+-- ADD COLUMN CAN_MANAGE_TAX_ACKNOWLEDGEMENT_RECEIPT
+ALTER TABLE EMPLOYEE
+    ADD COLUMN CAN_MANAGE_TAX_ACKNOWLEDGEMENT_RECEIPT BOOLEAN DEFAULT FALSE;

@@ -1,0 +1,99 @@
+{
+  "changelogDate": "20210418061954",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "pf_loan_application",
+  "fields": [
+    {
+      "fieldName": "installmentAmount",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "noOfInstallment",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "remarks",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "isRecommended",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "recommendationDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "isApproved",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "approvalDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "isRejected",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "rejectionReason",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "rejectionDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "disbursementDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "disbursementAmount",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "Status",
+      "fieldValues": "PENDING,APPROVED,NOT_APPROVED"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "PfLoanApplication",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "pfLoanApplication",
+      "relationshipName": "recommendedBy",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "pfLoanApplication",
+      "relationshipName": "approvedBy",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "pfLoanApplication",
+      "relationshipName": "rejectedBy",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "pfAccount",
+      "otherEntityRelationshipName": "pfLoanApplication",
+      "relationshipName": "pfAccount",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

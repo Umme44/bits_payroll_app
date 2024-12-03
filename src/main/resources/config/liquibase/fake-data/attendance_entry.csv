@@ -1,0 +1,11 @@
+id;date;in_time;in_note;out_time;out_note;status;note;punch_in_device_origin;punch_out_device_origin;is_auto_punch_out
+1;2021-03-01;2021-03-01T05:42:57;cross-media;2021-02-28T09:15:30;Oregon;NOT_APPROVED;Ohio e-markets;WEB;WEB;false
+2;2021-02-28;2021-02-28T22:57:38;virtual;2021-02-28T10:56:42;Small Steel Ball calculate;PENDING;SAS well-modulated blue;WEB;CARD;true
+3;2021-02-28;2021-02-28T10:08:32;Bike mesh;2021-02-28T19:28:18;metrics Consultant;APPROVED;Incredible;CARD;WEB;true
+4;2021-03-01;2021-03-01T04:05:05;parse Internal;2021-02-28T16:30:17;compressing Rwanda Franc;APPROVED;purple monitor;WEB;CARD;false
+5;2021-02-28;2021-03-01T05:10:33;Communications;2021-02-28T19:08:35;HTTP;PENDING;Steel;WEB;CARD;false
+6;2021-02-28;2021-02-28T09:04:45;Bahamian Dollar;2021-03-01T06:14:46;Fords;PENDING;transmit;WEB;WEB;false
+7;2021-03-01;2021-02-28T12:05:57;withdrawal;2021-02-28T08:56:23;Generic Cambridgeshire;NOT_APPROVED;online;CARD;WEB;true
+8;2021-02-28;2021-03-01T04:22:24;Auto Loan Account;2021-02-28T13:25:48;Frozen coherent applications;APPROVED;Personal Loan Account Indiana Rustic;WEB;CARD;true
+9;2021-02-28;2021-02-28T20:44:28;Licensed Plastic Car;2021-03-01T03:49:44;Health Cambridgeshire Parks;NOT_APPROVED;deliverables circuit;WEB;WEB;false
+10;2021-03-01;2021-03-01T05:21:45;disintermediate back-end Practical Fresh Cheese;2021-02-28T09:53:26;mobile;PENDING;Lek Home;CARD;WEB;true

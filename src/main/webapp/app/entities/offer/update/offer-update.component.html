@@ -1,0 +1,96 @@
+<jhi-header
+  [headerName]="!editForm.get('id')!.value ? 'Add New Offer' : 'Edit Offer'"
+  midHeaderName01="Offers"
+  [midRouterLinkText01]="'/offer'"
+  [shouldHaveHr]="false"
+>
+</jhi-header>
+
+<div class="">
+  <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+    <div class="card card-body">
+      <div class="row">
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="col-md-6">
+          <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.offer.title" for="field_title">Title</label>
+          <input type="text" class="form-control" name="title" id="field_title" formControlName="title" />
+          <div *ngIf="editForm.get('title')!.invalid && (editForm.get('title')!.dirty || editForm.get('title')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('title')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('title')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 3 }"
+            >
+              This field is required to be at least 3 characters.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('title')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 250 }"
+            >
+              This field cannot be longer than 250 characters.
+            </small>
+            <small class="form-text text-danger" *ngIf="editForm.get('title')?.errors?.pattern"> This text is invalid </small>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.offer.imagePath" for="field_imagePath">Image Path</label>
+          <br />
+          <input type="file" class="form-control-file" name="imagePath" id="field_imagePath" (change)="onChangeOfferImagePath($event)" />
+
+          <div>
+            <small class="text-danger" *ngIf="isValidFileType === false"> Only JPG file is allowed </small>
+
+            <small class="text-danger" *ngIf="isValidFileSize === false"> Max 2mb file size is allowed </small>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.offer.description" for="field_description">Description</label>
+          <textarea class="form-control" rows="3" name="description" id="field_description" formControlName="description"></textarea>
+          <div *ngIf="editForm.get('description')!.invalid && (editForm.get('description')!.dirty || editForm.get('description')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('description')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('description')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 3 }"
+            >
+              This field is required to be at least 3 characters.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('description')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 250 }"
+            >
+              This field cannot be longer than 250 characters.
+            </small>
+            <small class="form-text text-danger" *ngIf="editForm.get('description')?.errors?.pattern"> This text is invalid </small>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-md-2">
+      <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+        <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+      </button>
+
+      <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+        <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+      </button>
+    </div>
+  </form>
+</div>

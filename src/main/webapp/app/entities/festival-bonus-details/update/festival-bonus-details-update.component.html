@@ -1,0 +1,167 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-festival-bonus-details-heading"
+        data-cy="FestivalBonusDetailsCreateUpdateHeading"
+        jhiTranslate="bitsHrPayrollApp.festivalBonusDetails.home.createOrEditLabel"
+      >
+        Create or edit a Festival Bonus Details
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.festivalBonusDetails.bonusAmount" for="field_bonusAmount"
+            >Bonus Amount</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="bonusAmount"
+            id="field_bonusAmount"
+            data-cy="bonusAmount"
+            formControlName="bonusAmount"
+          />
+          <div *ngIf="editForm.get('bonusAmount')!.invalid && (editForm.get('bonusAmount')!.dirty || editForm.get('bonusAmount')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('bonusAmount')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('bonusAmount')?.errors?.min"
+              jhiTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              This field should be at least 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('bonusAmount')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.festivalBonusDetails.remarks" for="field_remarks">Remarks</label>
+          <input type="text" class="form-control" name="remarks" id="field_remarks" data-cy="remarks" formControlName="remarks" />
+          <div *ngIf="editForm.get('remarks')!.invalid && (editForm.get('remarks')!.dirty || editForm.get('remarks')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('remarks')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 0 }"
+            >
+              This field is required to be at least 0 characters.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('remarks')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 255 }"
+            >
+              This field cannot be longer than 255 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.festivalBonusDetails.isHold" for="field_isHold">Is Hold</label>
+          <input type="checkbox" class="form-check" name="isHold" id="field_isHold" data-cy="isHold" formControlName="isHold" />
+          <div *ngIf="editForm.get('isHold')!.invalid && (editForm.get('isHold')!.dirty || editForm.get('isHold')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('isHold')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.festivalBonusDetails.basic" for="field_basic">Basic</label>
+          <input type="number" class="form-control" name="basic" id="field_basic" data-cy="basic" formControlName="basic" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.festivalBonusDetails.gross" for="field_gross">Gross</label>
+          <input type="number" class="form-control" name="gross" id="field_gross" data-cy="gross" formControlName="gross" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.festivalBonusDetails.employee" for="field_employee">Employee</label>
+          <select
+            class="form-control"
+            id="field_employee"
+            data-cy="employee"
+            name="employee"
+            formControlName="employee"
+            [compareWith]="compareEmployee"
+          >
+            <option *ngIf="!editForm.get('employee')!.value" [ngValue]="null" selected></option>
+            <option [ngValue]="employeeOption" *ngFor="let employeeOption of employeesSharedCollection">{{ employeeOption.id }}</option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['employee'])!.invalid && (editForm.get(['employee'])!.dirty || editForm.get(['employee'])!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['employee'])?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.festivalBonusDetails.festival" for="field_festival">Festival</label>
+          <select
+            class="form-control"
+            id="field_festival"
+            data-cy="festival"
+            name="festival"
+            formControlName="festival"
+            [compareWith]="compareFestival"
+          >
+            <option *ngIf="!editForm.get('festival')!.value" [ngValue]="null" selected></option>
+            <option [ngValue]="festivalOption" *ngFor="let festivalOption of festivalsSharedCollection">{{ festivalOption.id }}</option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['festival'])!.invalid && (editForm.get(['festival'])!.dirty || editForm.get(['festival'])!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['festival'])?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

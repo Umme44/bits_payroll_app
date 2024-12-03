@@ -1,0 +1,26 @@
+{
+  "bitsHrPayrollApp": {
+    "calenderYear": {
+      "home": {
+        "title": "Calender Years",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Calender Year",
+        "createOrEditLabel": "Create or edit a Calender Year",
+        "notFound": "No Calender Years found"
+      },
+      "created": "A new Calender Year is created with identifier {{ param }}",
+      "updated": "A Calender Year is updated with identifier {{ param }}",
+      "deleted": "A Calender Year is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Calender Year {{ id }}?"
+      },
+      "detail": {
+        "title": "Calender Year"
+      },
+      "id": "ID",
+      "year": "Year",
+      "startDate": "Start Date",
+      "endDate": "End Date"
+    }
+  }
+}

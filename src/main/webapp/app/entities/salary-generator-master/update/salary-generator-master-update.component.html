@@ -1,0 +1,156 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-salary-generator-master-heading"
+        data-cy="SalaryGeneratorMasterCreateUpdateHeading"
+        jhiTranslate="bitsHrPayrollApp.salaryGeneratorMaster.home.createOrEditLabel"
+      >
+        Create or edit a Salary Generator Master
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.salaryGeneratorMaster.year" for="field_year">Year</label>
+          <input type="text" class="form-control" name="year" id="field_year" data-cy="year" formControlName="year" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.salaryGeneratorMaster.month" for="field_month">Month</label>
+          <input type="text" class="form-control" name="month" id="field_month" data-cy="month" formControlName="month" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.salaryGeneratorMaster.isGenerated" for="field_isGenerated"
+            >Is Generated</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isGenerated"
+            id="field_isGenerated"
+            data-cy="isGenerated"
+            formControlName="isGenerated"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="bitsHrPayrollApp.salaryGeneratorMaster.isMobileBillImported"
+            for="field_isMobileBillImported"
+            >Is Mobile Bill Imported</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isMobileBillImported"
+            id="field_isMobileBillImported"
+            data-cy="isMobileBillImported"
+            formControlName="isMobileBillImported"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="bitsHrPayrollApp.salaryGeneratorMaster.isPFLoanRepaymentImported"
+            for="field_isPFLoanRepaymentImported"
+            >Is PF Loan Repayment Imported</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isPFLoanRepaymentImported"
+            id="field_isPFLoanRepaymentImported"
+            data-cy="isPFLoanRepaymentImported"
+            formControlName="isPFLoanRepaymentImported"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="bitsHrPayrollApp.salaryGeneratorMaster.isAttendanceImported"
+            for="field_isAttendanceImported"
+            >Is Attendance Imported</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isAttendanceImported"
+            id="field_isAttendanceImported"
+            data-cy="isAttendanceImported"
+            formControlName="isAttendanceImported"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="bitsHrPayrollApp.salaryGeneratorMaster.isSalaryDeductionImported"
+            for="field_isSalaryDeductionImported"
+            >Is Salary Deduction Imported</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isSalaryDeductionImported"
+            id="field_isSalaryDeductionImported"
+            data-cy="isSalaryDeductionImported"
+            formControlName="isSalaryDeductionImported"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.salaryGeneratorMaster.isFinalized" for="field_isFinalized"
+            >Is Finalized</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isFinalized"
+            id="field_isFinalized"
+            data-cy="isFinalized"
+            formControlName="isFinalized"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.salaryGeneratorMaster.visibility" for="field_visibility"
+            >Visibility</label
+          >
+          <select class="form-control" name="visibility" formControlName="visibility" id="field_visibility" data-cy="visibility">
+            <option [ngValue]="null">{{ 'bitsHrPayrollApp.Visibility.null' | translate }}</option>
+            <option *ngFor="let visibility of visibilityValues" [value]="visibility">
+              {{ 'bitsHrPayrollApp.Visibility.' + visibility | translate }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

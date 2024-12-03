@@ -1,0 +1,40 @@
+{
+  "bitsHrPayrollApp": {
+    "pfLoanApplication": {
+      "home": {
+        "title": "Pf Loan Applications",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Pf Loan Application",
+        "createOrEditLabel": "Create or edit a Pf Loan Application",
+        "notFound": "No Pf Loan Applications found"
+      },
+      "created": "A new Pf Loan Application is created with identifier {{ param }}",
+      "updated": "A Pf Loan Application is updated with identifier {{ param }}",
+      "deleted": "A Pf Loan Application is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Pf Loan Application {{ id }}?"
+      },
+      "detail": {
+        "title": "Pf Loan Application"
+      },
+      "id": "ID",
+      "installmentAmount": "Installment Amount",
+      "noOfInstallment": "No Of Installment",
+      "remarks": "Remarks",
+      "isRecommended": "Is Recommended",
+      "recommendationDate": "Recommendation Date",
+      "isApproved": "Is Approved",
+      "approvalDate": "Approval Date",
+      "isRejected": "Is Rejected",
+      "rejectionReason": "Rejection Reason",
+      "rejectionDate": "Rejection Date",
+      "disbursementDate": "Disbursement Date",
+      "disbursementAmount": "Disbursement Amount",
+      "status": "Status",
+      "recommendedBy": "Recommended By",
+      "approvedBy": "Approved By",
+      "rejectedBy": "Rejected By",
+      "pfAccount": "Pf Account"
+    }
+  }
+}

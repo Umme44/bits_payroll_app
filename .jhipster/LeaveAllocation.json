@@ -1,0 +1,35 @@
+{
+  "changelogDate": "20210321104545",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "leave_allocation",
+  "fields": [
+    {
+      "fieldName": "year",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required", "min", "max"],
+      "fieldValidateRulesMax": "2199",
+      "fieldValidateRulesMin": "1900"
+    },
+    {
+      "fieldName": "leaveType",
+      "fieldType": "LeaveType",
+      "fieldValues": "MENTIONABLE_ANNUAL_LEAVE,MENTIONABLE_CASUAL_LEAVE,NON_MENTIONABLE_COMPENSATORY_LEAVE,NON_MENTIONABLE_PANDEMIC_LEAVE,NON_MENTIONABLE_PATERNITY_LEAVE,NON_MENTIONABLE_MATERNITY_LEAVE,OTHER"
+    },
+    {
+      "fieldName": "allocatedDays",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required", "min"],
+      "fieldValidateRulesMin": "0"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "LeaveAllocation",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

@@ -1,0 +1,312 @@
+<jhi-header [headerName]="'Employee Docs'" [shouldHaveHr]="false"> </jhi-header>
+
+<div>
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="card card-body mb-3 d-flex flex-row align-items-center justify-content-between">
+    <div class="d-flex align-items-center justify-content-start">
+      <div class="form-check d-flex align-items-center justify-content-start">
+        <input
+          [checked]="selectedCertificateType === 'NOC'"
+          (change)="onChangeCertificateType('NOC')"
+          class="form-check-input m-0"
+          type="radio"
+          name="employeeNoc"
+          id="employeeNoc"
+        />
+        <label class="form-check-label px-2" for="employeeNoc"> Employee NOC </label>
+      </div>
+      <div class="form-check d-flex align-items-center justify-content-start">
+        <input
+          [checked]="selectedCertificateType === 'EC'"
+          (change)="onChangeCertificateType('EC')"
+          class="form-check-input m-0"
+          type="radio"
+          name="employmentCertificate"
+          id="employmentCertificate"
+        />
+        <label class="form-check-label px-2" for="employmentCertificate"> Employment Certificate </label>
+      </div>
+      <div class="form-check d-flex align-items-center justify-content-start">
+        <input
+          [checked]="selectedCertificateType === 'SC'"
+          (change)="onChangeCertificateType('SC')"
+          class="form-check-input m-0"
+          type="radio"
+          name="salaryCertificate"
+          id="salaryCertificate"
+        />
+        <label class="form-check-label px-2" for="salaryCertificate"> Salary Certificate </label>
+      </div>
+    </div>
+
+    <div>
+      <button *ngIf="selectedCertificateType === 'NOC'" class="btn btn-md btn-primary" (click)="applyForEmployeeNOC()">Apply</button>
+
+      <button *ngIf="selectedCertificateType === 'EC'" class="btn btn-md btn-primary" (click)="applyForEmploymentCertificate()">
+        Apply
+      </button>
+
+      <button *ngIf="selectedCertificateType === 'SC'" class="btn btn-md btn-primary" (click)="applyForSalaryCertificate()">Apply</button>
+    </div>
+  </div>
+
+  <div class="row mb-3 d-flex align-items-center">
+    <div class="col-9">
+      <div class="row d-flex align-items-center">
+        <div class="form-check col-2 d-flex align-items-center">
+          <input
+            (change)="onStatusChange('ALL')"
+            [checked]="selectedStatus === 'ALL'"
+            style="vertical-align: middle"
+            class="form-check-input m-0"
+            type="radio"
+            name="flexRadioDefault0"
+            id="flexRadioDefault0"
+          />
+          <label class="form-check-label px-2" for="flexRadioDefault0"> ALL </label>
+        </div>
+
+        <div class="form-check col-2 d-flex align-items-center">
+          <input
+            (change)="onStatusChange('SENT_FOR_GENERATION')"
+            [checked]="selectedStatus === 'SENT_FOR_GENERATION'"
+            style="vertical-align: middle"
+            class="form-check-input m-0"
+            type="radio"
+            name="flexRadioDefault1"
+            id="flexRadioDefault1"
+          />
+          <label class="form-check-label px-2" for="flexRadioDefault1"> Pending </label>
+        </div>
+
+        <!--                <div class="form-check col-2 d-flex align-items-center">-->
+        <!--                    <input (change)="onStatusChange('REJECTED')"-->
+        <!--                           [checked]="selectedStatus === 'REJECTED'"-->
+        <!--                           style="vertical-align: middle"-->
+        <!--                           class="form-check-input m-0 "-->
+        <!--                           type="radio"-->
+        <!--                           name="flexRadioDefault3"-->
+        <!--                           id="flexRadioDefault3">-->
+        <!--                    <label  class="form-check-label ml-2" for="flexRadioDefault3">-->
+        <!--                        Rejected-->
+        <!--                    </label>-->
+        <!--                </div>-->
+
+        <div class="form-check col-2 d-flex align-items-center">
+          <input
+            (change)="onStatusChange('GENERATED')"
+            [checked]="selectedStatus === 'GENERATED'"
+            style="vertical-align: middle"
+            class="form-check-input m-0"
+            type="radio"
+            name="flexRadioDefault4"
+            id="flexRadioDefault4"
+          />
+          <label class="form-check-label px-2" for="flexRadioDefault4"> Generated </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Employee NOC Table-->
+  <div *ngIf="selectedCertificateType === 'NOC'">
+    <div class="alert alert-warning" *ngIf="employeeNOCS?.length === 0">
+      <span jhiTranslate="bitsHrPayrollApp.employeeNOC.home.notFound">No Employee NOC Found</span>
+    </div>
+
+    <div class="table-responsive" *ngIf="employeeNOCS && employeeNOCS.length > 0">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr>
+            <th scope="col"><span jhiTranslate="bitsHrPayrollApp.employeeNOC.certificateStatus">Certificate Status</span></th>
+            <th scope="col" class="text-center">
+              <span jhiTranslate="bitsHrPayrollApp.employeeNOC.isRequiredForVisa">Required for Visa</span>
+            </th>
+            <th scope="col"><span jhiTranslate="bitsHrPayrollApp.employeeNOC.passportNumber">Passport Number</span></th>
+            <th scope="col"><span jhiTranslate="bitsHrPayrollApp.employeeNOC.leaveStartDate">Leave Start Date</span></th>
+            <th scope="col"><span jhiTranslate="bitsHrPayrollApp.employeeNOC.leaveEndDate">Leave End Date</span></th>
+            <th scope="col"><span jhiTranslate="bitsHrPayrollApp.employeeNOC.purposeOfNOC">Purpose Of NOC</span></th>
+            <th scope="col"><span jhiTranslate="bitsHrPayrollApp.employeeNOC.countryToVisit">Country to visit</span></th>
+            <th scope="col"><span jhiTranslate="bitsHrPayrollApp.employeeNOC.referenceNumber">Reference Number</span></th>
+            <th scope="col"><span jhiTranslate="bitsHrPayrollApp.employeeNOC.createdAt">Applied At</span></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+
+        <tbody
+          infinite-scroll
+          (scrolled)="loadPage(page + 1)"
+          [infiniteScrollDisabled]="page >= links['last']"
+          [infiniteScrollDistance]="0"
+        >
+          <tr *ngFor="let employeeNOC of employeeNOCS; trackBy: trackNOCId">
+            <td jhiTranslate="{{ 'bitsHrPayrollApp.CertificateStatus.' + employeeNOC.certificateStatus }}">
+              {{ employeeNOC.certificateStatus }}
+            </td>
+            <td class="text-center">
+              <span *ngIf="employeeNOC.isRequiredForVisa === true">
+                <fa-icon icon="check-circle" class="text-success" style="font-size: 1rem"></fa-icon>
+              </span>
+            </td>
+            <td>{{ employeeNOC.passportNumber }}</td>
+            <td>{{ employeeNOC.leaveStartDate | formatMediumDate }}</td>
+            <td>{{ employeeNOC.leaveEndDate | formatMediumDate }}</td>
+            <td jhiTranslate="{{ 'bitsHrPayrollApp.PurposeOfNOC.' + employeeNOC.purposeOfNOC }}">{{ employeeNOC.purposeOfNOC }}</td>
+            <td>{{ employeeNOC.countryToVisit }}</td>
+            <td>{{ employeeNOC.referenceNumber }}</td>
+            <td>{{ employeeNOC.createdAt | formatMediumDate }}</td>
+
+            <td class="text-right">
+              <div class="btn-group">
+                <button type="submit" [routerLink]="['/employee-docs/employee-noc', employeeNOC.id, 'view']" class="btn btn-info btn-sm">
+                  <fa-icon icon="eye"></fa-icon>
+                </button>
+
+                <button
+                  type="submit"
+                  *ngIf="employeeNOC.certificateStatus === 'SENT_FOR_GENERATION'"
+                  [routerLink]="['/employee-docs/employee-noc', employeeNOC.id, 'edit']"
+                  class="btn btn-primary btn-sm"
+                >
+                  <fa-icon icon="pencil-alt"></fa-icon>
+                </button>
+
+                <button type="submit" (click)="deleteNOC(employeeNOC)" class="btn btn-danger btn-sm">
+                  <fa-icon icon="times"></fa-icon>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!--Employment Certificate Table-->
+  <div *ngIf="selectedCertificateType === 'EC'">
+    <div class="alert alert-warning" id="no-result" *ngIf="employmentCertificates?.length === 0">
+      <span jhiTranslate="bitsHrPayrollApp.employmentCertificate.home.notFound">No employmentCertificates found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="employmentCertificates && employmentCertificates.length > 0">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr>
+            <th scope="col"><span jhiTranslate="bitsHrPayrollApp.employmentCertificate.certificateStatus">Certificate Status</span></th>
+            <th scope="col"><span>Employee</span></th>
+            <th scope="col"><span>Department</span></th>
+            <th scope="col"><span>Designation</span></th>
+            <th scope="col" scope="col">
+              <span jhiTranslate="bitsHrPayrollApp.employmentCertificate.referenceNumber">Reference Number</span>
+            </th>
+            <th scope="col" scope="col"><span jhiTranslate="bitsHrPayrollApp.employmentCertificate.createdAt">Applied at</span></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody
+          infinite-scroll
+          (scrolled)="loadPage(page + 1)"
+          [infiniteScrollDisabled]="page >= links['last']"
+          [infiniteScrollDistance]="0"
+        >
+          <tr *ngFor="let employmentCertificate of employmentCertificates; trackBy: trackNOCId">
+            <td jhiTranslate="{{ 'bitsHrPayrollApp.CertificateStatus.' + employmentCertificate.certificateStatus }}">
+              {{ employmentCertificate.certificateStatus }}
+            </td>
+            <td>{{ employmentCertificate.employeePin }} - {{ employmentCertificate.employeeName }}</td>
+            <td>{{ employmentCertificate.departmentName }}</td>
+            <td>{{ employmentCertificate.designationName }}</td>
+            <td>{{ employmentCertificate.referenceNumber }}</td>
+            <td>{{ employmentCertificate.createdAt | formatMediumDate }}</td>
+
+            <td class="text-right">
+              <div class="btn-group">
+                <button
+                  type="submit"
+                  [routerLink]="['/employee-docs/employment-certificate', employmentCertificate.id, 'view']"
+                  class="btn btn-info btn-sm"
+                >
+                  <fa-icon icon="eye"></fa-icon>
+                </button>
+
+                <button type="submit" (click)="deleteEmploymentCertificate(employmentCertificate)" class="btn btn-danger btn-sm">
+                  <fa-icon icon="times"></fa-icon>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!--Salary Certificate Table-->
+  <div *ngIf="selectedCertificateType === 'SC'">
+    <div class="alert alert-warning" *ngIf="employmentSalaryCertificates?.length === 0">
+      <span jhiTranslate="bitsHrPayrollApp.salaryCertificate.home.notFound">No Salary Certificates found</span>
+    </div>
+
+    <div class="table-responsive" *ngIf="employmentSalaryCertificates && employmentSalaryCertificates.length > 0">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr>
+            <th scope="col"><span>Certificate Status</span></th>
+            <th scope="col"><span>Employee</span></th>
+            <th scope="col"><span>Designation</span></th>
+            <th scope="col"><span>Purpose</span></th>
+            <th scope="col"><span>Application Date</span></th>
+            <th scope="col"><span>Salary Month</span></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody
+          infinite-scroll
+          (scrolled)="loadPage(page + 1)"
+          [infiniteScrollDisabled]="page >= links['last']"
+          [infiniteScrollDistance]="0"
+        >
+          <tr *ngFor="let employmentSalaryCertificate of employmentSalaryCertificates; trackBy: trackSalaryCertificateId">
+            <td>{{ employmentSalaryCertificate.status }}</td>
+            <td>{{ employmentSalaryCertificate.pin }} - {{ employmentSalaryCertificate.employeeName }}</td>
+            <td>{{ employmentSalaryCertificate.designationName }}</td>
+            <td>{{ employmentSalaryCertificate.purpose }}</td>
+            <td>{{ employmentSalaryCertificate.createdAt | formatMediumDate }}</td>
+            <td>{{ monthNameNormaCapitalize(employmentSalaryCertificate.month) }}, {{ employmentSalaryCertificate.year }}</td>
+
+            <td class="text-right">
+              <div class="btn-group">
+                <button
+                  type="submit"
+                  [routerLink]="['/employee-docs/employee-salary-certificate', employmentSalaryCertificate.id, 'view']"
+                  class="btn btn-info btn-sm"
+                >
+                  <fa-icon icon="eye"></fa-icon>
+                </button>
+
+                <button
+                  type="submit"
+                  *ngIf="employmentSalaryCertificate.status === 'PENDING'"
+                  [routerLink]="['/employee-docs/employee-salary-certificate', employmentSalaryCertificate.id, 'edit']"
+                  class="btn btn-primary btn-sm"
+                >
+                  <fa-icon icon="pencil-alt"></fa-icon>
+                </button>
+
+                <button
+                  type="submit"
+                  (click)="deleteEmploymentSalaryCertificate(employmentSalaryCertificate)"
+                  class="btn btn-danger btn-sm"
+                >
+                  <fa-icon icon="times"></fa-icon>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

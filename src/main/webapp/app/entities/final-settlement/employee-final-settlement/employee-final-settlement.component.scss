@@ -1,0 +1,57 @@
+.nav-tabs .nav-link {
+  border: 0 solid transparent !important;
+}
+
+.nav-tabs .nav-link.active,
+.nav-tabs .nav-item.show .nav-link {
+  color: #495057;
+  background-color: #fff;
+  //border-color: #dee2e6 #dee2e6 #fff;
+}
+.card {
+  flex-direction: row;
+}
+
+.card-img-top {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Rounded border */
+hr.rounded {
+  border-top: 3px solid rgba(187, 187, 187, 0.479);
+  border-radius: 8px;
+}
+
+.table-sm td,
+.table-sm th {
+  padding: 0rem;
+}
+.table {
+  margin-bottom: 0;
+}
+
+.text-sm {
+  font-size: 0.4rem;
+}
+.text-md {
+  font-size: 0.7rem;
+}
+.text-lg {
+  font-size: 0.8rem;
+}
+.text-xl {
+  font-size: 1rem;
+}
+.all-label-height {
+  height: 36px;
+}
+.all-ng-options {
+  width: 75%;
+}

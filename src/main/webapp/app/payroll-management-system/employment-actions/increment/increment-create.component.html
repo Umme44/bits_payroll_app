@@ -1,0 +1,252 @@
+<div class="font-sm">
+  <jhi-header
+    [headerName]="'Increment'"
+    [midHeaderName01]="'Increments'"
+    [midRouterLinkText01]="'/employment-actions/increment'"
+    [shouldHaveHr]="false"
+  >
+  </jhi-header>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <form (ngSubmit)="save()" [formGroup]="editForm" name="editForm" novalidate role="form">
+    <div class="card">
+      <div class="card-body">
+        <div class="card-title">
+          <h6>Select Employee</h6>
+        </div>
+        <div class="card-text">
+          <div class="row py-2">
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label class="form-control-label required" for="" jhiTranslate="bitsHrPayrollApp.employmentHistory.employee"
+                  >Employee</label
+                >
+
+                <jhi-select-employee-form [employeeIdForm]="employeeIdForm!"></jhi-select-employee-form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="selectedEmployee !== undefined" class="card mt-3">
+      <div class="card-body">
+        <div class="card-title">
+          <h6>Selected Employee</h6>
+        </div>
+        <div class="card-text">
+          <div class="row py-2">
+            <div class="col-md-2 fw-bold">Name</div>
+            <div class="col-md-4">
+              {{ selectedEmployee.fullName }}
+            </div>
+            <div class="col-md-2 fw-bold">Department</div>
+            <div class="col-md-4">
+              {{ selectedEmployee.departmentName }}
+            </div>
+          </div>
+
+          <div class="row py-2">
+            <div class="col-md-2 fw-bold">Designation</div>
+            <div class="col-md-4">
+              {{ selectedEmployee.designationName }}
+            </div>
+            <div class="col-md-2 fw-bold">Unit</div>
+            <div class="col-md-4">
+              {{ selectedEmployee.unitName }}
+            </div>
+          </div>
+
+          <div class="row py-2">
+            <div class="col-md-2 fw-bold">Category</div>
+            <div class="col-md-4">
+              <span jhiTranslate="{{ 'bitsHrPayrollApp.EmployeeCategory.' + selectedEmployee.employeeCategory }}">{{
+                selectedEmployee.employeeCategory
+              }}</span>
+            </div>
+            <div class="col-md-2 fw-bold">Desk Location</div>
+            <div class="col-md-4">
+              {{ selectedEmployee.location }}
+            </div>
+          </div>
+
+          <div class="row py-2">
+            <div class="col-md-2 fw-bold">DoJ</div>
+            <div class="col-md-4">
+              {{ selectedEmployee.dateOfJoining | formatMediumDate }}
+            </div>
+            <div class="col-md-2 fw-bold">DoC</div>
+            <div class="col-md-4">
+              {{ selectedEmployee.dateOfConfirmation | formatMediumDate }}
+            </div>
+          </div>
+
+          <div class="row py-2">
+            <div class="col-md-2 fw-bold">Reporting To</div>
+            <div class="col-md-4">
+              {{ selectedEmployee.reportingToName }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="selectedEmployee !== undefined" class="card mt-3">
+      <div class="card-body">
+        <div class="card-title">
+          <h6>Increment</h6>
+        </div>
+        <div class="card-text">
+          <div class="row py-2">
+            <div class="col-md-6">
+              <div class="mb-3 align-items-center">
+                <label
+                  class="form-control-label required"
+                  for="field_effectiveDate"
+                  jhiTranslate="bitsHrPayrollApp.employmentHistory.effectiveDate"
+                  >Effective Date</label
+                >
+                <div class="input-group">
+                  <input
+                    #effectiveDateDp="ngbDatepicker"
+                    (click)="effectiveDateDp.toggle()"
+                    class="form-control"
+                    formControlName="effectiveDate"
+                    id="field_effectiveDate"
+                    name="effectiveDate"
+                    ngbDatepicker
+                    type="text"
+                  />
+                  <span class="input-group-append">
+                    <button (click)="effectiveDateDp.toggle()" class="btn btn-secondary btn-sm my-0 p-2" type="button">
+                      <fa-icon icon="calendar-alt"></fa-icon>
+                    </button>
+                  </span>
+                </div>
+
+                <div
+                  *ngIf="
+                    editForm.get('effectiveDate')!.invalid &&
+                    (editForm.get('effectiveDate')!.dirty || editForm.get('effectiveDate')!.touched)
+                  "
+                >
+                  <small *ngIf="editForm.get('effectiveDate')?.errors?.required" class="form-text text-danger">
+                    This field is required.
+                  </small>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row py-2">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-control-label" for="field_previousMainGrossSalary">Current Gross Salary</label>
+                <input
+                  [attr.disabled]="true"
+                  class="form-control"
+                  formControlName="previousMainGrossSalary"
+                  id="field_previousMainGrossSalary"
+                  name="previousMainGrossSalary"
+                  type="number"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-control-label required" for="field_currentMainGrossSalary">New Gross Salary</label>
+                <input
+                  class="form-control"
+                  formControlName="currentMainGrossSalary"
+                  id="field_currentMainGrossSalary"
+                  name="currentMainGrossSalary"
+                  type="number"
+                />
+              </div>
+
+              <div
+                *ngIf="
+                  editForm.get('currentMainGrossSalary')!.invalid &&
+                  (editForm.get('currentMainGrossSalary')!.dirty || editForm.get('currentMainGrossSalary')!.touched)
+                "
+              >
+                <small *ngIf="editForm.get('currentMainGrossSalary')?.errors?.required" class="form-text text-danger">
+                  This field is required.
+                </small>
+                <small
+                  *ngIf="editForm.get('currentMainGrossSalary')?.errors?.min || editForm.get('currentMainGrossSalary')?.errors?.max"
+                  class="form-text text-danger"
+                >
+                  Salary should be between 0 to 9999999.
+                </small>
+                <small
+                  *ngIf="editForm.get('currentMainGrossSalary')?.errors?.pattern && !editForm.get('currentMainGrossSalary')?.errors?.min"
+                  class="form-text text-danger"
+                >
+                  Allow only two decimal places.
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="row py-2">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-control-label" for="field_previousBand" jhiTranslate="bitsHrPayrollApp.employmentHistory.previousBand"
+                  >Previous Band</label
+                >
+                <select
+                  [attr.disabled]="true"
+                  class="form-control"
+                  formControlName="previousBandId"
+                  id="field_previousBand"
+                  name="previousBand"
+                >
+                  <option [ngValue]="null"></option>
+                  <option *ngFor="let bandOption of bands; trackBy: trackById" [ngValue]="bandOption.id">
+                    {{ bandOption.bandName }} salary range: {{ bandOption.minSalary }} to {{ bandOption.maxSalary }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label
+                  class="form-control-label required"
+                  for="field_changedBand"
+                  jhiTranslate="bitsHrPayrollApp.employmentHistory.changedBand"
+                  >Changed Band</label
+                >
+                <select class="form-control" formControlName="changedBandId" id="field_changedBand" name="changedBand">
+                  <option [ngValue]="null"></option>
+                  <option *ngFor="let bandOption of bands; trackBy: trackById" [ngValue]="bandOption.id">
+                    {{ bandOption.bandName }} salary range: {{ bandOption.minSalary }} to {{ bandOption.maxSalary }}
+                  </option>
+                </select>
+
+                <div
+                  *ngIf="
+                    editForm.get('changedBandId')!.invalid &&
+                    (editForm.get('changedBandId')!.dirty || editForm.get('changedBandId')!.touched)
+                  "
+                >
+                  <small *ngIf="editForm.get('changedBandId')?.errors?.required" class="form-text text-danger">
+                    This field is required.
+                  </small>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <button [disabled]="editForm.invalid || isSaving" class="btn btn-primary" id="save-entity" type="submit">
+              <fa-icon icon="save"></fa-icon>&nbsp;<span> Increment </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

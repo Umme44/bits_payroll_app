@@ -1,0 +1,117 @@
+<div>
+  <jhi-header
+    [addButtonText]="'Apply For Work From Home'"
+    [headerName]="'Work From Home'"
+    [midHeaderName01]="'Attendances'"
+    [midRouterLinkText01]="'/'"
+    [midHeader01hasSessionStorage]="true"
+    [midHeader01SessionStorageKey]="'keepAttendancesModalOpen'"
+    [midHeader01SessionStorageValue]="'yes'"
+    [routerLinkText]="'/user-work-from-home-application/new'"
+    [shouldHaveHr]="false"
+  >
+  </jhi-header>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="workFromHomeApplications?.length === 0">
+    <span>No Work From Home Applications found!</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="workFromHomeApplications && workFromHomeApplications.length > 0">
+    <table class="table table-hover list-text-color" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col" class="text-center">
+            <span jhiTranslate="bitsHrPayrollApp.workFromHomeApplication.status">Status</span>
+          </th>
+          <th scope="col">
+            <span jhiTranslate="bitsHrPayrollApp.workFromHomeApplication.startDate">Start Date</span>
+          </th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.workFromHomeApplication.endDate">End Date</span></th>
+          <th scope="col">
+            <span jhiTranslate="bitsHrPayrollApp.workFromHomeApplication.appliedAt">Applied At</span>
+          </th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.workFromHomeApplication.reason">Reason</span></th>
+          <th scope="col" class="text-end">
+            <span jhiTranslate="bitsHrPayrollApp.workFromHomeApplication.duration">Duration</span>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+        <tr *ngFor="let workFromHomeApplication of workFromHomeApplications; trackBy: trackId">
+          <td class="text-center">
+            <div *ngIf="workFromHomeApplication.status === 'PENDING'">Pending</div>
+            <div class="text-success" *ngIf="workFromHomeApplication.status === 'APPROVED'">
+              <fa-icon icon="check" container="body" ngbTooltip="Approved"></fa-icon>
+            </div>
+            <div *ngIf="workFromHomeApplication.status === 'NOT_APPROVED'" class="text-danger">
+              <fa-icon icon="times" container="body" ngbTooltip="Not Approved"></fa-icon>
+            </div>
+          </td>
+          <td>{{ workFromHomeApplication.startDate | formatMediumDate }}</td>
+          <td>{{ workFromHomeApplication.endDate | formatMediumDate }}</td>
+          <td>{{ workFromHomeApplication.appliedAt | formatMediumDate }}</td>
+          <td>
+            <span *ngIf="workFromHomeApplication.reason!.length > 80; else noteElse" [ngbTooltip]="workFromHomeApplication.reason">
+              {{ textSlicing(workFromHomeApplication.reason) }}
+            </span>
+            <ng-template #noteElse>
+              <span>
+                {{ workFromHomeApplication.reason }}
+              </span>
+            </ng-template>
+          </td>
+          <td class="text-end">
+            <span *ngIf="workFromHomeApplication.duration! > 1; else day">{{ workFromHomeApplication.duration }} days</span>
+            <ng-template #day
+              ><span>{{ workFromHomeApplication.duration }} day</span></ng-template
+            >
+          </td>
+
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                (click)="openWorkFromApplicationDetails(workFromHomeApplication)"
+                class="btn btn-info btn-sm px-md-3"
+                data-placement="top"
+                data-toggle="tooltip"
+                title="View"
+                type="submit"
+              >
+                <fa-icon icon="eye"></fa-icon>
+              </button>
+
+              <button
+                [disabled]="workFromHomeApplication.status === 'APPROVED' || workFromHomeApplication.status === 'NOT_APPROVED'"
+                [hidden]="workFromHomeApplication.status === 'APPROVED' || workFromHomeApplication.status === 'NOT_APPROVED'"
+                [routerLink]="['/user-work-from-home-application', workFromHomeApplication.id, 'edit']"
+                class="btn btn-primary btn-sm px-md-3"
+                data-placement="top"
+                data-toggle="tooltip"
+                title="Edit"
+                type="submit"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+              </button>
+
+              <button
+                [disabled]="workFromHomeApplication.status === 'APPROVED' || workFromHomeApplication.status === 'NOT_APPROVED'"
+                [hidden]="workFromHomeApplication.status === 'APPROVED' || workFromHomeApplication.status === 'NOT_APPROVED'"
+                (click)="delete(workFromHomeApplication)"
+                class="btn btn-danger btn-sm px-md-3"
+                data-placement="top"
+                data-toggle="tooltip"
+                title="Delete"
+                type="submit"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

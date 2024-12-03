@@ -1,0 +1,11 @@
+id;quantity;reference_file_path;item_information_id;proc_req_master_id
+1;52623;../fake-data/blob/hipster.txt;1;1
+2;63590;../fake-data/blob/hipster.txt;2;2
+3;98268;../fake-data/blob/hipster.txt;3;3
+4;16321;../fake-data/blob/hipster.txt;4;4
+5;9687;../fake-data/blob/hipster.txt;5;5
+6;31933;../fake-data/blob/hipster.txt;6;6
+7;57271;../fake-data/blob/hipster.txt;7;7
+8;19480;../fake-data/blob/hipster.txt;8;8
+9;18719;../fake-data/blob/hipster.txt;9;9
+10;9802;../fake-data/blob/hipster.txt;10;10

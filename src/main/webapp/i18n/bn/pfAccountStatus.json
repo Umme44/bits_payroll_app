@@ -1,0 +1,10 @@
+{
+  "bitsHrPayrollApp": {
+    "PfAccountStatus": {
+      "null": "",
+      "ACTIVE": "ACTIVE",
+      "INACTIVE": "INACTIVE",
+      "CLOSED": "CLOSED"
+    }
+  }
+}

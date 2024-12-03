@@ -1,0 +1,71 @@
+<jhi-header [headerName]="'Employee PIN Details'" [midHeaderName01]="'Employee PIN'" [midRouterLinkText01]="'/employee-pin'"> </jhi-header>
+
+<jhi-alert-error></jhi-alert-error>
+
+<div class="row justify-content-center">
+  <div class="col-12">
+    <div *ngIf="employeePin !== undefined && employeePin !== null">
+      <div class="card card-body">
+        <div class="row font-sm">
+          <dt class="col-sm-3"><span jhiTranslate="bitsHrPayrollApp.employeePin.pin">Pin</span></dt>
+          <dd class="col-sm-3">
+            <span>{{ employeePin.pin }}</span>
+          </dd>
+          <dt class="col-sm-3">
+            <span jhiTranslate="bitsHrPayrollApp.employeePin.recruitmentRequisitionForm">Recruitment Requisition Form</span>
+          </dt>
+          <dd class="col-sm-3">
+            <span>{{ employeePin.recruitmentRequisitionFormId === null ? 'Regularzed' : employeePin.recruitmentRequisitionFormId }}</span>
+          </dd>
+          <dt class="col-sm-3"><span jhiTranslate="bitsHrPayrollApp.employeePin.fullName">Full Name</span></dt>
+          <dd class="col-sm-3">
+            <span>{{ employeePin.fullName }}</span>
+          </dd>
+          <dt class="col-sm-3"><span jhiTranslate="bitsHrPayrollApp.employeePin.employeeCategory">Employee Category</span></dt>
+          <dd class="col-sm-3">
+            <span>{{ getEmployeeCategory(employeePin.employeeCategory!) }}</span>
+          </dd>
+          <dt class="col-sm-3"><span jhiTranslate="bitsHrPayrollApp.employeePin.employeePinStatus">Employee Pin Status</span></dt>
+          <dd class="col-sm-3">
+            <span jhiTranslate="{{ 'bitsHrPayrollApp.EmployeePinStatus.' + employeePin.employeePinStatus }}">{{
+              employeePin.employeePinStatus
+            }}</span>
+          </dd>
+          <dt class="col-sm-3"><span jhiTranslate="bitsHrPayrollApp.employeePin.department">Department</span></dt>
+          <dd class="col-sm-3">
+            <div *ngIf="employeePin.departmentId">
+              {{ employeePin.departmentName }}
+            </div>
+          </dd>
+          <dt class="col-sm-3"><span jhiTranslate="bitsHrPayrollApp.employeePin.designation">Designation</span></dt>
+          <dd class="col-sm-3">
+            <div *ngIf="employeePin.designationId">
+              {{ employeePin.designationName }}
+            </div>
+          </dd>
+          <dt class="col-sm-3"><span jhiTranslate="bitsHrPayrollApp.employeePin.unit">Unit</span></dt>
+          <dd class="col-sm-3">
+            <div *ngIf="employeePin.unitId">
+              {{ employeePin.unitName }}
+            </div>
+          </dd>
+        </div>
+
+        <div class="mt-4">
+          <button type="submit" (click)="previousState()" class="btn btn-info">
+            <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+          </button>
+
+          <button
+            type="button"
+            *ngIf="employeePin.employeePinStatus === 'CREATED'"
+            [routerLink]="['/employee-pin', employeePin.id, 'edit']"
+            class="btn btn-primary"
+          >
+            <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,115 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="bitsHrPayrollApp.pfLoanRepayment.home.title">Pf Loan Repayments</span>
+
+        <button [routerLink]="['/pf-loan-repayment/new']" class="btn btn-primary float-right jh-create-entity create-pf-loan-repayment"
+                id="jh-create-entity">
+            <fa-icon icon="plus"></fa-icon>
+            <span jhiTranslate="bitsHrPayrollApp.pfLoanRepayment.home.createLabel">
+            Create a new Pf Loan Repayment
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div *ngIf="pfLoanRepayments?.length === 0" class="alert alert-warning" id="no-result">
+        <span jhiTranslate="bitsHrPayrollApp.pfLoanRepayment.home.notFound">No pfLoanRepayments found</span>
+    </div>
+
+    <div *ngIf="pfLoanRepayments && pfLoanRepayments.length > 0" class="table-responsive" id="entities">
+        <table aria-describedby="page-heading" class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+                <th jhiSortBy="id" scope="col"><span jhiTranslate="global.field.id">ID</span>
+                    <fa-icon icon="sort"></fa-icon>
+                </th>
+                <th jhiSortBy="amount" scope="col"><span
+                    jhiTranslate="bitsHrPayrollApp.pfLoanRepayment.amount">Amount</span>
+                    <fa-icon icon="sort"></fa-icon>
+                </th>
+                <th jhiSortBy="status" scope="col"><span
+                    jhiTranslate="bitsHrPayrollApp.pfLoanRepayment.status">Status</span>
+                    <fa-icon icon="sort"></fa-icon>
+                </th>
+                <th jhiSortBy="deductionMonth" scope="col"><span
+                    jhiTranslate="bitsHrPayrollApp.pfLoanRepayment.deductionMonth">Deduction Month</span>
+                    <fa-icon icon="sort"></fa-icon>
+                </th>
+                <th jhiSortBy="deductionYear" scope="col"><span
+                    jhiTranslate="bitsHrPayrollApp.pfLoanRepayment.deductionYear">Deduction Year</span>
+                    <fa-icon icon="sort"></fa-icon>
+                </th>
+                <th jhiSortBy="deductionDate" scope="col"><span
+                    jhiTranslate="bitsHrPayrollApp.pfLoanRepayment.deductionDate">Deduction Date</span>
+                    <fa-icon icon="sort"></fa-icon>
+                </th>
+                <th jhiSortBy="pfLoanId" scope="col"><span jhiTranslate="bitsHrPayrollApp.pfLoanRepayment.pfLoan">Pf Loan</span>
+                    <fa-icon icon="sort"></fa-icon>
+                </th>
+                <th jhiSortBy="employeeId" scope="col"><span jhiTranslate="bitsHrPayrollApp.pfLoanRepayment.employee">Employee</span>
+                    <fa-icon icon="sort"></fa-icon>
+                </th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let pfLoanRepayment of pfLoanRepayments ;trackBy: trackId">
+                <td><a [routerLink]="['/pf-loan-repayment', pfLoanRepayment.id, 'view']">{{ pfLoanRepayment.id }}</a>
+                </td>
+                <td>{{ pfLoanRepayment.amount }}</td>
+                <td jhiTranslate="{{ 'bitsHrPayrollApp.PfRepaymentStatus.' + pfLoanRepayment.status }}">{{ pfLoanRepayment.status }}</td>
+                <td>{{ pfLoanRepayment.deductionMonth }}</td>
+                <td>{{ pfLoanRepayment.deductionYear }}</td>
+                <td>{{ pfLoanRepayment.deductionDate | formatMediumDate }}</td>
+                <td>
+                    <div>
+                        <a [routerLink]="['/pf-loan', pfLoanRepayment.pfLoanId , 'view']">{{ pfLoanRepayment.pfLoanId }}</a>
+                    </div>
+                </td>
+                <td>
+                    DUMMY
+                </td>
+                <td class="text-right">
+                    <div class="btn-group">
+                        <button [routerLink]="['/pf-loan-repayment', pfLoanRepayment.id, 'view']" class="btn btn-info btn-sm px-md-3" data-placement="top" data-toggle="tooltip"
+                                title="View"
+                                type="submit">
+                            <fa-icon icon="eye"></fa-icon>
+                            <!--                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>-->
+                        </button>
+
+                        <button [routerLink]="['/pf-loan-repayment', pfLoanRepayment.id, 'edit']" class="btn btn-primary btn-sm px-md-3" data-placement="top" data-toggle="tooltip"
+                                title="Edit"
+                                type="submit">
+                            <fa-icon icon="pencil-alt"></fa-icon>
+                            <!--                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>-->
+                        </button>
+
+                        <button (click)="delete(pfLoanRepayment)" class="btn btn-danger btn-sm px-md-3" data-placement="top"
+                                data-toggle="tooltip" title="Delete"
+                                type="submit">
+                            <fa-icon icon="times"></fa-icon>
+                            <!--                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>-->
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="pfLoanRepayments && pfLoanRepayments.length > 0">
+        <div class="row justify-content-center">
+          <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+        </div>
+
+        <div class="row justify-content-center">
+            <ngb-pagination (pageChange)="loadPage($event)" [(page)]="ngbPaginationPage" [boundaryLinks]="true"
+                            [collectionSize]="totalItems" [maxSize]="5" [pageSize]="itemsPerPage"
+                            [rotate]="true"></ngb-pagination>
+        </div>
+    </div>
+</div>

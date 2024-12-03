@@ -1,0 +1,7 @@
+export const enum RecruitmentNatureEnum {
+  PLANNED_ADDITION = 'PLANNED_ADDITION',
+
+  NEW_RECRUITMENT = 'NEW_RECRUITMENT',
+
+  REPLACEMENT = 'REPLACEMENT',
+}

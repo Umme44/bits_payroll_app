@@ -1,0 +1,56 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="building">
+      <h2 data-cy="buildingDetailsHeading"><span jhiTranslate="bitsHrPayrollApp.building.detail.title">Building</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ building.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.building.buildingName">Building Name</span></dt>
+        <dd>
+          <span>{{ building.buildingName }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.building.buildingLocation">Building Location</span></dt>
+        <dd>
+          <span>{{ building.buildingLocation }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.building.remarks">Remarks</span></dt>
+        <dd>
+          <span>{{ building.remarks }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.building.createdAt">Created At</span></dt>
+        <dd>
+          <span>{{ building.createdAt | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.building.updatedAt">Updated At</span></dt>
+        <dd>
+          <span>{{ building.updatedAt | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.building.createdBy">Created By</span></dt>
+        <dd>
+          <span>{{ building.createdBy?.login }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.building.updatedBy">Updated By</span></dt>
+        <dd>
+          <span>{{ building.updatedBy?.login }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/building', building.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+{
+  "bitsHrPayrollApp": {
+    "arrearSalary": {
+      "home": {
+        "title": "Arrear Salaries",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Arrear Salary",
+        "createOrEditLabel": "Create or edit a Arrear Salary",
+        "notFound": "No Arrear Salaries found"
+      },
+      "created": "A new Arrear Salary is created with identifier {{ param }}",
+      "updated": "A Arrear Salary is updated with identifier {{ param }}",
+      "deleted": "A Arrear Salary is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Arrear Salary {{ id }}?"
+      },
+      "detail": {
+        "title": "Arrear Salary"
+      },
+      "id": "ID",
+      "month": "Month",
+      "year": "Year",
+      "amount": "Amount",
+      "arrearType": "Arrear Type",
+      "employee": "Employee"
+    }
+  }
+}

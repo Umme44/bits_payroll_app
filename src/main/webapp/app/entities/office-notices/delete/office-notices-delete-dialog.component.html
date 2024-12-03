@@ -1,0 +1,28 @@
+<form *ngIf="officeNotices" name="deleteForm" (ngSubmit)="confirmDelete(officeNotices.id!)">
+  <div class="modal-header">
+    <h4 class="modal-title" data-cy="officeNoticesDeleteDialogHeading" jhiTranslate="entity.delete.title">Confirm delete operation</h4>
+
+    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" (click)="cancel()"></button>
+  </div>
+
+  <div class="modal-body">
+    <jhi-alert-error></jhi-alert-error>
+    <p
+      id="jhi-delete-officeNotices-heading"
+      jhiTranslate="bitsHrPayrollApp.officeNotices.delete.question"
+      [translateValues]="{ id: officeNotices.id }"
+    >
+      Are you sure you want to delete Office Notices {{ officeNotices.id }}?
+    </p>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
+      <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+    </button>
+
+    <button id="jhi-confirm-delete-officeNotices" data-cy="entityConfirmDeleteButton" type="submit" class="btn btn-danger">
+      <fa-icon icon="times"></fa-icon>&nbsp;<span>Delete</span>
+    </button>
+  </div>
+</form>

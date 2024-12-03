@@ -1,0 +1,37 @@
+{
+  "bitsHrPayrollApp": {
+    "flexScheduleApplication": {
+      "home": {
+        "title": "Flex Schedule Applications",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Flex Schedule Application",
+        "createOrEditLabel": "Create or edit a Flex Schedule Application",
+        "notFound": "No Flex Schedule Applications found"
+      },
+      "created": "A new Flex Schedule Application is created with identifier {{ param }}",
+      "updated": "A Flex Schedule Application is updated with identifier {{ param }}",
+      "deleted": "A Flex Schedule Application is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Flex Schedule Application {{ id }}?"
+      },
+      "detail": {
+        "title": "Flex Schedule Application"
+      },
+      "id": "ID",
+      "effectiveFrom": "Effective From",
+      "effectiveTo": "Effective To",
+      "reason": "Reason",
+      "status": "Status",
+      "sanctionedAt": "Sanctioned At",
+      "appliedAt": "Applied At",
+      "createdAt": "Created At",
+      "updatedAt": "Updated At",
+      "requester": "Requester",
+      "sanctionedBy": "Sanctioned By",
+      "appliedBy": "Applied By",
+      "createdBy": "Created By",
+      "updatedBy": "Updated By",
+      "timeSlot": "Time Slot"
+    }
+  }
+}

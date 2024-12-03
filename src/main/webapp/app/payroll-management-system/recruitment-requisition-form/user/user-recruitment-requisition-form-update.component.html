@@ -1,0 +1,458 @@
+<jhi-header
+  [headerName]="!editForm.get('id')!.value ? 'New Recruitment Requisition' : 'Edit Recruitment Requisition'"
+  [midHeaderName01]="'Recruitment Requisition Form'"
+  [midRouterLinkText01]="'/recruitment-requisition-form/user'"
+  [shouldHaveHr]="false">
+</jhi-header>
+<div class="custom-card mb-4" *ngIf="recruitmentRequisitionBudgets && recruitmentRequisitionBudgets.length > 0">
+  <div class="row">
+    <div class="col-12">
+      <div class="table-responsive" id="budget_entities">
+        <table class="table table-striped my-0" aria-describedby="page-heading">
+          <thead>
+          <tr>
+            <th scope="col"><span>Year</span></th>
+            <th scope="col"><span>Department</span></th>
+            <th scope="col" class="text-right"><span>Budget</span></th>
+            <th scope="col" class="text-right"><span>Remaining Budget</span></th>
+            <th scope="col" class="text-right"><span>Remaining Manpower</span></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let recruitmentRequisitionBudget of recruitmentRequisitionBudgets ;">
+            <td>{{ recruitmentRequisitionBudget.year }}</td>
+            <td>{{ recruitmentRequisitionBudget.departmentName }}</td>
+            <td class="text-right">{{ recruitmentRequisitionBudget.budget | number }}</td>
+            <td class="text-right">{{ recruitmentRequisitionBudget.remainingBudget | number }}</td>
+            <td class="text-right">{{ recruitmentRequisitionBudget.remainingManpower | number }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+
+  <div class="custom-card mb-2">
+    <jhi-alert-error></jhi-alert-error>
+
+    <div class="row">
+      <div class="col-md-3">
+        <div class="">
+          <label class="form-control-label required"
+                 jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.expectedJoiningDate"
+                 for="field_expectedJoiningDate">Expected Joining Date</label>
+          <div class="input-group">
+            <input #expectedJoiningDateDp="ngbDatepicker"  class="form-control"
+                   formControlName="expectedJoiningDate" id="field_expectedJoiningDate"
+                   name="expectedJoiningDate"
+                   ngbDatepicker type="text"/>
+            <span class="input-group-append">
+                                            <button (click)="expectedJoiningDateDp.toggle()" class="btn btn-secondary"
+                                                    type="button"><fa-icon
+                                              icon="calendar-alt"></fa-icon></button>
+                            </span>
+          </div>
+          <div
+            *ngIf="editForm.get('expectedJoiningDate')!.invalid && (editForm.get('expectedJoiningDate')!.dirty || editForm.get('expectedJoiningDate')!.touched)">
+            <small class="form-text text-danger"
+                   *ngIf="editForm.get('expectedJoiningDate')?.errors?.required"
+                   jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="">
+          <label class="form-control-label required"
+                 jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.project" for="field_project">Project</label>
+          <input type="text" class="form-control" name="project" id="field_project"
+                 formControlName="project"/>
+          <div *ngIf="editForm.get('project')!.invalid && (editForm.get('project')!.dirty || editForm.get('project')!.touched)">
+            <div class="font-sm text-danger"
+                   *ngIf="editForm.get('project')?.errors?.minlength"
+                   jhiTranslate="entity.validation.minlength" [translateValues]="{ min: 1 }">
+              This field is required to be at least 1 characters.
+            </div>
+            <div class="font-sm text-danger"
+                   *ngIf="editForm.get('project')?.errors?.maxlength"
+                   jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 250 }">
+              This field cannot be longer than 250 characters.
+            </div>
+            <div class="font-sm text-danger"
+                   *ngIf="editForm.get('project')?.errors?.required"
+                   jhiTranslate="entity.validation.required">
+              This field is required.
+            </div>
+            <div class="font-sm text-danger"
+                   *ngIf="editForm.get('project')?.errors?.pattern">
+              This text is invalid
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="">
+          <label class="form-control-label required"
+                 for="field_recruitmentNature">Recruitment Nature</label>
+          <select class="form-control" name="recruitmentNature" formControlName="recruitmentNature"
+                  id="field_recruitmentNature"
+                  (change)="checkIsReplacement()"
+          >
+            <option value="NEW_RECRUITMENT">New Recruitment</option>
+            <option value="REPLACEMENT">Replacement</option>
+            <option value="PLANNED_ADDITION">Planned Addition</option>
+          </select>
+          <div
+            *ngIf="editForm.get('recruitmentNature')!.invalid && (editForm.get('recruitmentNature')!.dirty || editForm.get('recruitmentNature')!.touched)">
+            <small class="form-text text-danger"
+                   *ngIf="editForm.get('recruitmentNature')?.errors?.required"
+                   jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <!--number of vacancies-->
+      <div class="col-md-3" *ngIf="!isReplacement">
+        <div class="">
+          <label class="form-control-label required"
+                 jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.numberOfVacancies"
+                 for="field_numberOfVacancies">Number Of Vacancies</label>
+          <input type="number" class="form-control" name="numberOfVacancies" id="field_numberOfVacancies"
+                 formControlName="numberOfVacancies"/>
+          <div
+            *ngIf="editForm.get('numberOfVacancies')!.invalid && (editForm.get('numberOfVacancies')!.dirty || editForm.get('numberOfVacancies')!.touched)">
+            <small class="form-text text-danger"
+                   *ngIf="editForm.get('numberOfVacancies')?.errors?.required"
+                   jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+            <small class="form-text text-danger"
+                   *ngIf="editForm.get('numberOfVacancies')?.errors?.min"
+                   jhiTranslate="entity.validation.min" [translateValues]="{ min: 1 }">
+              This field should be at least 1.
+            </small>
+            <small class="form-text text-danger"
+                   *ngIf="editForm.get('numberOfVacancies')?.errors?.max"
+                   jhiTranslate="entity.validation.max" [translateValues]="{ max: 1000 }">
+              This field cannot be more than 1000.
+            </small>
+            <small class="form-text text-danger"
+                   [hidden]="!editForm.get('numberOfVacancies')?.errors?.number"
+                   jhiTranslate="entity.validation.number">
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3" *ngIf="isReplacement">
+        <label class="form-control-label required" for="field_employeeToBeReplaced">Employee To Be Replaced</label>
+        <jhi-simple-select-employee-form id="field_employeeToBeReplaced"
+                                         [selectedFieldValue]="editForm.get('employeeToBeReplacedId')!.value"
+                                         (onChangeEmployee)="changeEmployeeToBeReplaced($event)">
+        </jhi-simple-select-employee-form>
+        <div
+          *ngIf="editForm.get('employeeToBeReplacedId')!.invalid && (editForm.get('employeeToBeReplacedId')!.dirty || editForm.get('employeeToBeReplacedId')!.touched)">
+          <small class="form-text text-danger"
+                 *ngIf="editForm.get('employeeToBeReplacedId')?.errors?.required"
+                 jhiTranslate="entity.validation.required">
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="">
+          <label class="form-control-label required"
+                 jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.employmentType"
+                 for="field_employmentType">Employment Type</label>
+          <select class="form-control" name="employmentType" formControlName="employmentType"
+                  id="field_employmentType">
+            <option value="REGULAR_CONFIRMED_EMPLOYEE">Regular</option>
+
+            <option value="CONTRACTUAL_EMPLOYEE">Contractual</option>
+
+            <option value="INTERN">Intern</option>
+          </select>
+          <div
+            *ngIf="editForm.get('employmentType')!.invalid && (editForm.get('employmentType')!.dirty || editForm.get('employmentType')!.touched)">
+            <small class="form-text text-danger"
+                   *ngIf="editForm.get('employmentType')?.errors?.required"
+                   jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="">
+          <label class="form-control-label required"
+                 jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.resourceType"
+                 for="field_resourceType">Resource Type</label>
+          <select class="form-control" name="resourceType" formControlName="resourceType"
+                  id="field_resourceType">
+            <option
+              value="BUDGET">{{ 'bitsHrPayrollApp.RequisitionResourceType.BUDGET' | translate }}</option>
+            <option
+              value="NON_BUDGET">{{ 'bitsHrPayrollApp.RequisitionResourceType.NON_BUDGET' | translate }}</option>
+          </select>
+          <div
+            *ngIf="editForm.get('resourceType')!.invalid && (editForm.get('resourceType')!.dirty || editForm.get('resourceType')!.touched)">
+            <small class="form-text text-danger"
+                   *ngIf="editForm.get('resourceType')?.errors?.required"
+                   jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="">
+          <label class="form-control-label required"
+                 jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.functionalDesignation"
+                 for="field_functionalDesignation">Functional Designation</label>
+          <select class="form-control" id="field_functionalDesignation" name="functionalDesignation"
+                  formControlName="functionalDesignationId">
+            <option *ngIf="!editForm.get('functionalDesignationId')!.value" [ngValue]="null"
+                    selected></option>
+            <option [ngValue]="designationOption.id"
+                    *ngFor="let designationOption of designations; trackBy: trackById">{{ designationOption.designationName }}</option>
+          </select>
+          <div
+            *ngIf="editForm.get('functionalDesignationId')!.invalid && (editForm.get('functionalDesignationId')!.dirty || editForm.get('functionalDesignationId')!.touched)">
+            <small class="form-text text-danger"
+                   *ngIf="editForm.get('functionalDesignationId')?.errors?.required"
+                   jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="">
+          <label class="form-control-label required"
+                 jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.band"
+                 for="field_band">Band</label>
+          <select class="form-control" id="field_band" name="band" formControlName="bandId">
+            <option [ngValue]="bandOption.key"
+                    *ngFor="let bandOption of bands; trackBy: trackById">{{ bandOption.value }}</option>
+          </select>
+          <div
+            *ngIf="editForm.get('bandId')!.invalid && (editForm.get('bandId')!.dirty || editForm.get('bandId')!.touched)">
+            <small class="form-text text-danger"
+                   *ngIf="editForm.get('bandId')?.errors?.required"
+                   jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="">
+          <label class="form-control-label required"
+                 jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.preferredEducationType"
+                 for="field_preferredEducationType">Preferred Education</label>
+          <textarea type="text" class="form-control" name="preferredEducationType"
+                    id="field_preferredEducationType"
+                    rows="4"
+                    formControlName="preferredEducationType"></textarea>
+          <div
+            *ngIf="editForm.get('preferredEducationType')!.invalid && (editForm.get('preferredEducationType')!.dirty || editForm.get('preferredEducationType')!.touched)">
+
+            <div class="font-sm text-danger"
+                   *ngIf="editForm.get('preferredEducationType')?.errors?.required"
+                   jhiTranslate="entity.validation.required">
+              This field is required.
+            </div>
+            <div class="font-sm text-danger"
+                   *ngIf="editForm.get('preferredEducationType')?.errors?.pattern">
+              This text is invalid
+            </div>
+
+            <div class="font-sm text-danger"
+                   *ngIf="editForm.get('preferredEducationType')?.errors?.minlength"
+                   jhiTranslate="entity.validation.minlength" [translateValues]="{ min: 2 }">
+              This field is required to be at least 2 characters.
+            </div>
+            <small class="form-text text-danger"
+                   *ngIf="editForm.get('preferredEducationType')?.errors?.maxlength"
+                   jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 250 }">
+              This field cannot be longer than 250 characters.
+            </small>
+          </div>
+        </div>
+      </div>
+      <!--Preferred Skills-->
+      <div class="col-md-6">
+        <div class="">
+          <label class="form-control-label required"
+                 jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionForm.preferredSkillType"
+                 for="field_preferredSkillType">Preferred Skill Type</label>
+          <textarea type="text" class="form-control" name="preferredSkillType"
+                    id="field_preferredSkillType"
+                    rows="4"
+                    formControlName="preferredSkillType" ></textarea>
+          <div
+            *ngIf="editForm.get('preferredSkillType')!.invalid && (editForm.get('preferredSkillType')!.dirty || editForm.get('preferredSkillType')!.touched)">
+            <div class="font-sm text-danger"
+                   *ngIf="editForm.get('preferredSkillType')?.errors?.minlength"
+                   jhiTranslate="entity.validation.minlength" [translateValues]="{ min: 2 }">
+              This field is required to be at least 2 characters.
+            </div>
+            <div class="font-sm text-danger"
+                   *ngIf="editForm.get('preferredSkillType')?.errors?.maxlength"
+                   jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 250 }">
+              This field cannot be longer than 250 characters.
+            </div>
+            <div class="font-sm text-danger"
+                   *ngIf="editForm.get('preferredSkillType')?.errors?.required"
+                   jhiTranslate="entity.validation.required">
+              This field is required.
+            </div>
+            <div class="font-sm text-danger"
+                   *ngIf="editForm.get('preferredSkillType')?.errors?.pattern">
+              This text is invalid
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--Special Requirement-->
+      <div class="col-md-6">
+        <div class="">
+          <label class="form-control-label"
+                 for="field_specialRequirement">Special Requirement</label>
+          <textarea type="text" class="form-control" name="specialRequirement"
+                    id="field_specialRequirement"
+                    rows="4"
+                    formControlName="specialRequirement" ></textarea>
+          <div
+            *ngIf="editForm.get('specialRequirement')!.invalid && (editForm.get('specialRequirement')!.dirty || editForm.get('specialRequirement')!.touched)">
+            <div class="font-sm text-danger"
+                   *ngIf="editForm.get('specialRequirement')?.errors?.minlength"
+                   jhiTranslate="entity.validation.minlength" [translateValues]="{ min: 2 }">
+              This field is required to be at least 2 characters.
+            </div>
+            <div class="font-sm text-danger"
+                   *ngIf="editForm.get('preferredSkillType')?.errors?.maxlength"
+                   jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 250 }">
+              This field cannot be longer than 250 characters.
+            </div>
+            <div class="font-sm text-danger"
+                   *ngIf="editForm.get('preferredSkillType')?.errors?.pattern">
+              This text is invalid
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="custom-card" [hidden]="! editForm.get('id')!.value">
+
+    <div class="row">
+      <div class="col">
+        <div class="">
+          <label class="form-control-label"
+                 for="field_recommendedBy01">Recommended By LM</label>
+          <select [attr.disabled]="true"
+                  class="form-control"
+                  id="field_recommendedBy01"
+                  name="recommendedBy01"
+                  formControlName="recommendedBy01Id">
+            <option [ngValue]="null"></option>
+            <option [ngValue]="employeeOption.id"
+                    *ngFor="let employeeOption of employees; trackBy: trackById">
+              {{employeeOption.pin}} - {{ employeeOption.fullName }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="">
+          <label class="form-control-label"
+                 for="field_recommendedBy02">Recommended By HoD</label>
+          <select [attr.disabled]="true"
+                  class="form-control"
+                  id="field_recommendedBy02"
+                  name="recommendedBy02"
+                  formControlName="recommendedBy02Id">
+            <option [ngValue]="null"></option>
+            <option [ngValue]="employeeOption.id"
+                    *ngFor="let employeeOption of employees; trackBy: trackById">
+              {{employeeOption.pin}} - {{ employeeOption.fullName }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="">
+          <label class="form-control-label"
+                 for="field_recommendedBy03">Recommended By CTO</label>
+          <select [attr.disabled]="true"
+                  class="form-control"
+                  id="field_recommendedBy03"
+                  name="recommendedBy03"
+                  formControlName="recommendedBy03Id">
+            <option [ngValue]="null"></option>
+            <option [ngValue]="employeeOption.id"
+                    *ngFor="let employeeOption of employees; trackBy: trackById">
+              {{employeeOption.pin}} - {{ employeeOption.fullName }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="">
+          <label class="form-control-label"
+                 for="field_recommendedBy04">Approved By HoHR</label>
+          <select [attr.disabled]="true"
+                  class="form-control"
+                  id="field_recommendedBy04"
+                  name="recommendedBy04"
+                  formControlName="recommendedBy04Id">
+            <option [ngValue]="null"></option>
+            <option [ngValue]="employeeOption.id"
+                    *ngFor="let employeeOption of employees; trackBy: trackById">
+              {{employeeOption.pin}} - {{ employeeOption.fullName }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="col">
+        <div class="">
+          <label class="form-control-label"
+                 for="field_recommendedBy05">Approved By CEO</label>
+          <select [attr.disabled]="true"
+                  class="form-control"
+                  id="field_recommendedBy05"
+                  name="recommendedBy04"
+                  formControlName="recommendedBy05Id">
+            <option [ngValue]="null"></option>
+            <option [ngValue]="employeeOption.id"
+                    *ngFor="let employeeOption of employees; trackBy: trackById">
+              {{employeeOption.pin}} - {{ employeeOption.fullName }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-3">
+    <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving"
+            class="btn btn-primary">
+      <fa-icon icon="save"></fa-icon>&nbsp;
+      <span *ngIf="!editForm.get('id')!.value" jhiTranslate="entity.action.save">Save</span>
+      <span *ngIf="editForm.get('id')!.value" jhiTranslate="entity.action.update">Update</span>
+    </button>
+  </div>
+</form>
+

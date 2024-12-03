@@ -1,0 +1,260 @@
+table {
+  font-family: 'Segoe UI' !important;
+  border-collapse: collapse;
+}
+
+.document-border {
+  border: 1px solid black;
+}
+
+th {
+  padding-left: 4px;
+  font-size: 0.75rem;
+}
+
+AdjustPadding {
+  padding: 0px 2px 0px 2px;
+  font-size: 0.75rem;
+}
+
+.card {
+  margin-left: 100px;
+  border: none;
+}
+
+.padding-from-outer-div {
+  padding: 0px 120px 0px 85px;
+}
+
+.header-text {
+  text-align: center;
+  font-family: Verdana;
+  font-weight: bold;
+  font-size: 0.75rem;
+}
+
+.table-outer-div {
+  border: 1px solid black;
+  padding: 5px;
+  margin: 0px 12px;
+}
+
+.table-td-format {
+  border-bottom: 1px solid black;
+  height: 5px;
+}
+
+.second-outer-table {
+  border: 1px solid black;
+  font-size: 0.75rem;
+  font-family: Segoe UI;
+  width: 100%;
+}
+
+.th-format-row {
+  text-align: left;
+  font-weight: normal;
+  padding-left: 2px;
+  border-right: 1px solid black;
+}
+
+.td-format-row {
+  text-align: right;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  font-weight: normal;
+  padding-right: 5px;
+}
+
+.td-format-row2 {
+  text-align: center;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  font-weight: normal;
+  padding-right: 5px;
+}
+
+.head-salary-th-1 {
+  border: 1px solid black;
+  margin-top: 1px;
+  width: 40%;
+}
+
+.head-salary-th-2 {
+  margin-top: 1px;
+  width: 40%;
+}
+
+.head-salary-td {
+  text-align: center;
+  border: 1px solid black;
+  width: 19%;
+}
+
+.headSalary-outer-table {
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  font-size: 0.75rem;
+  width: 100%;
+  font-family: 'Segoe UI';
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  min-width: 1000px;
+}
+
+#page-control {
+  width: 100%;
+  min-width: 400px;
+}
+
+.first-outer-table {
+  border: none;
+  width: 100%;
+}
+
+.first-outer-table-td {
+  border: 1px solid black;
+  width: 48%;
+}
+
+.inner-table-last {
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  font-size: 0.75rem;
+  width: 100%;
+}
+
+.td-last-div {
+  text-align: left;
+  font-size: 0.75rem;
+  font-family: Segoe UI;
+}
+
+.td-last-div-value {
+  text-align: right;
+  font-size: 0.75rem;
+  font-family: Segoe UI;
+  padding-right: 5px;
+}
+
+.employee-details {
+  font-size: 0.75rem;
+  width: 100%;
+  border: none;
+}
+
+.letter-head {
+  width: 985px;
+  height: 1387px;
+  margin-top: 5px;
+  //background-image: url('../../../content/images/letter-head-pad-new.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center 50px;
+}
+
+@media print {
+  .printDiv {
+    width: 80%;
+    margin-left: 100px;
+    margin-top: 65px;
+  }
+
+  .hide-in-print {
+    display: none;
+    alignment: center;
+    min-width: 400px;
+  }
+  jhi-header {
+    display: none;
+  }
+  #page-control {
+    width: 100%;
+    min-width: 400px;
+  }
+
+  .card {
+    margin-left: 10px;
+    border: none;
+  }
+
+  .document-border {
+    border: 0;
+  }
+}
+
+table.XX.table-striped > tbody > tr > td,
+table.XX {
+  color: black;
+  font-weight: bold;
+  font-size: larger;
+}
+
+table.XX.table-striped > tbody > tr:nth-child(odd) > td,
+.table-striped > tbody > tr:nth-child(odd) > th,
+body.YY {
+  background-color: #d3e6cb;
+}
+
+/* table zz*/
+table.zz > tbody > tr > td,
+tbody.aa {
+  color: blue;
+  font-weight: bold;
+}
+
+table.zz.table,
+table.zz.table-bordered > thead > tr > th {
+  border: 2px solid #000000;
+}
+
+table.zz.table-bordered > tbody > tr > th,
+table.zz.table-bordered > tfoot > tr > th,
+table.zz.table-bordered > thead > tr > td,
+table.zz.table-bordered > tbody > tr > td,
+table.zz.table-bordered > tfoot > tr > td {
+  border: 1px solid #000000;
+}
+
+/* tax challan table styles*/
+.left-heading-td {
+  font-size: 11pt;
+  font-family: Calibri, sans-serif;
+  margin: 0;
+  padding-left: 4px;
+}
+
+.table-tbody-td-p {
+  font-size: 11pt;
+  font-family: Calibri, sans-serif;
+  text-align: center;
+  margin: 0;
+}
+
+.table-data-span {
+  color: black;
+  font-size: 7.2pt;
+  font-family: Segoe UI Light, sans-serif;
+}
+
+.tax-challan-table-tbody-td {
+  height: 8.7pt;
+  padding: 0 0;
+  border-style: none solid solid none;
+  border-right-width: 0.75pt;
+  border-bottom-width: 0.75pt;
+  border-right-color: black;
+  border-bottom-color: black;
+}
+
+.tax-challan-table-tbody-td-month {
+  height: 8.7pt;
+  padding: 0 0;
+  border-width: 0.75pt;
+  border-style: solid solid solid none;
+  border-color: black;
+}

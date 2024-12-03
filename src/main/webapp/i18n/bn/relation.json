@@ -1,0 +1,10 @@
+{
+  "bitsHrPayrollApp": {
+    "Relation": {
+      "null": "",
+      "SELF": "SELF",
+      "SPOUSE": "SPOUSE",
+      "CHILD": "CHILD"
+    }
+  }
+}

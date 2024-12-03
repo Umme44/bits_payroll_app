@@ -1,0 +1,33 @@
+{
+  "bitsHrPayrollApp": {
+    "employeeDocument": {
+      "home": {
+        "title": "Employee Documents",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Employee Document",
+        "createOrEditLabel": "Create or edit a Employee Document",
+        "notFound": "No Employee Documents found"
+      },
+      "created": "A new Employee Document is created with identifier {{ param }}",
+      "updated": "A Employee Document is updated with identifier {{ param }}",
+      "deleted": "A Employee Document is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Employee Document {{ id }}?"
+      },
+      "detail": {
+        "title": "Employee Document"
+      },
+      "id": "ID",
+      "pin": "Pin",
+      "fileName": "File Name",
+      "filePath": "File Path",
+      "hasEmployeeVisibility": "Has Employee Visibility",
+      "remarks": "Remarks",
+      "createdBy": "Created By",
+      "createdAt": "Created At",
+      "updatedBy": "Updated By",
+      "updatedAt": "Updated At",
+      "fileExtension": "File Extension"
+    }
+  }
+}

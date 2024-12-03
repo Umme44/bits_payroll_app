@@ -1,0 +1,52 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="eventLog">
+      <h2 data-cy="eventLogDetailsHeading"><span jhiTranslate="bitsHrPayrollApp.eventLog.detail.title">Event Log</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ eventLog.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.eventLog.title">Title</span></dt>
+        <dd>
+          <span>{{ eventLog.title }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.eventLog.requestMethod">Request Method</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.RequestMethod.' + eventLog.requestMethod }}">{{ eventLog.requestMethod }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.eventLog.performedAt">Performed At</span></dt>
+        <dd>
+          <span>{{ eventLog.performedAt | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.eventLog.data">Data</span></dt>
+        <dd>
+          <span>{{ eventLog.data }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.eventLog.entityName">Entity Name</span></dt>
+        <dd>
+          <span>{{ eventLog.entityName }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.eventLog.performedBy">Performed By</span></dt>
+        <dd>
+          <span>{{ eventLog.performedBy?.login }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/event-log', eventLog.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

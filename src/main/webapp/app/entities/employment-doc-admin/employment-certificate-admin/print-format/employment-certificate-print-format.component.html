@@ -1,0 +1,61 @@
+<jhi-header
+  class="jhi-header"
+  [headerName]="'Employment Certificate Print Format'"
+  [midHeaderName01]="'Employee Docs'"
+  [midRouterLinkText01]="'/employee-docs-admin'"
+>
+</jhi-header>
+
+<div class="print-btn-container container pe-0">
+  <div class="print-btn mb-2 text-end">
+    <button type="button" *ngIf="employmentCertificate" (click)="print()" class="btn btn-primary">
+      <fa-icon icon="print"></fa-icon>
+      Print
+    </button>
+  </div>
+</div>
+
+<div class="employeeNocPrintDiv report-default-font" *ngIf="employmentCertificate">
+  <div class="letter-head"></div>
+  <div class="report-border print-doc-area">
+    <div class="document-body report-default-font">
+      <div class="text-start">
+        <p class="report-default-font text-start">{{ employmentCertificate.issueDate | formatMediumDate }}</p>
+        <p class="report-default-font text-start">Ref. no. BRACIT/HR/{{ employmentCertificate.referenceNumber }}</p>
+        <br />
+        <br />
+        <p class="text-center report-default-font fw-bold m-0">To Whom It May Concern</p>
+        <br />
+        <br />
+        <p class="report-default-font fw-normal text-justify">
+          This is to certify that <span class="fw-bold text-uppercase">{{ employmentCertificate.employeeName }} </span>has been working with
+          BRAC IT at {{ employmentCertificate.departmentName }} Department since
+          <span> {{ employmentCertificate.dateOfJoining | formatMediumDate }}</span
+          >. Currently {{ employmentCertificate.employeeGender === 'MALE' ? 'he' : 'she' }} is working as
+          {{ employmentCertificate.designationName }}.
+        </p>
+        <p class="report-default-font fw-normal text-justify">
+          During the working period we have found {{ employmentCertificate.employeeGender === 'MALE' ? 'him' : 'her' }} sincere, honest,
+          hardworking, technically sound and result oriented with a professional attitude.
+          {{ employmentCertificate.employeeGender === 'MALE' ? 'He' : 'She' }} is aimable in nature, and
+          {{ employmentCertificate.employeeGender === 'MALE' ? 'he' : 'she' }} works well as a part of team.
+        </p>
+        <p class="report-default-font fw-normal text-justify">
+          We take this opportunity to thank
+          <span class="text-uppercase fw-bold">{{ employmentCertificate.employeeName }}</span> for
+          {{ employmentCertificate.employeeGender === 'MALE' ? 'his' : 'her' }} contribution and wish
+          {{ employmentCertificate.employeeGender === 'MALE' ? 'him' : 'her' }} every success in future endeavors.
+        </p>
+        <p class="report-default-font fw-normal">Yours Sincerely,</p>
+        <br />
+        <br />
+        <br />
+        <br />
+        <p class="text-start fw-bold report-default-font m-0">
+          <span class="fw-bold text-uppercase">{{ employmentCertificate.signatoryPersonName }}</span>
+        </p>
+        <p class="report-default-font text-start">{{ employmentCertificate.signatoryPersonDesignation }}</p>
+      </div>
+    </div>
+  </div>
+</div>

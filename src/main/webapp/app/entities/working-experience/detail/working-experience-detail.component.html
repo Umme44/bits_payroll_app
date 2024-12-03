@@ -1,0 +1,70 @@
+<div>
+  <jhi-header [headerName]="'Working Experience Details'"> </jhi-header>
+
+  <jhi-alert-error></jhi-alert-error>
+  <div class="container-fluid p-3">
+    <div *ngIf="workingExperience">
+      <dl class="row-md font-sm jh-entity-details">
+        <div class="row">
+          <div class="col-md-2">
+            <dt><span jhiTranslate="bitsHrPayrollApp.workingExperience.employee">Employee</span></dt>
+          </div>
+          <div class="col-md-4">
+            <dd>
+              <div>
+                <a [routerLink]="['/employee-custom', workingExperience.employeeId, 'view']">
+                  {{ workingExperience.pin }} -
+                  {{ workingExperience.employeeName }}
+                </a>
+              </div>
+            </dd>
+          </div>
+          <div class="col-md-2">
+            <dt><span jhiTranslate="bitsHrPayrollApp.workingExperience.lastDesignation">Last Designation</span></dt>
+          </div>
+          <div class="col-md-4">
+            <dd>
+              <span>{{ workingExperience.lastDesignation }}</span>
+            </dd>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-2">
+            <dt><span jhiTranslate="bitsHrPayrollApp.workingExperience.organizationName">Organization Name</span></dt>
+          </div>
+          <div class="col-md-4">
+            <dd>
+              <span>{{ workingExperience.organizationName }}</span>
+            </dd>
+          </div>
+          <div class="col-md-2">
+            <dt><span jhiTranslate="bitsHrPayrollApp.workingExperience.dojOfLastOrganization">Doj Of Last Organization</span></dt>
+          </div>
+          <div class="col-md-4">
+            <dd>
+              <span>{{ workingExperience.dojOfLastOrganization | formatMediumDate }}</span>
+            </dd>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-2">
+            <dt><span jhiTranslate="bitsHrPayrollApp.workingExperience.dorOfLastOrganization">Dor Of Last Organization</span></dt>
+          </div>
+          <div class="col-md-4">
+            <dd>
+              <span>{{ workingExperience.dorOfLastOrganization | formatMediumDate }}</span>
+            </dd>
+          </div>
+        </div>
+      </dl>
+
+      <button (click)="previousState()" class="btn btn-info" type="submit">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button [routerLink]="['/working-experience', workingExperience.id, 'edit']" class="btn btn-primary" type="button">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

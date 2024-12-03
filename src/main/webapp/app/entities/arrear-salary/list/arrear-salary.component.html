@@ -1,0 +1,242 @@
+<div>
+  <!--  <h2 id="page-heading" data-cy="ArrearSalaryHeading">-->
+  <!--    <span jhiTranslate="bitsHrPayrollApp.arrearSalary.home.title">Arrear Salaries</span>-->
+
+  <!--    <div class="d-flex justify-content-end">-->
+  <!--      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">-->
+  <!--        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>-->
+  <!--        <span jhiTranslate="bitsHrPayrollApp.arrearSalary.home.refreshListLabel">Refresh list</span>-->
+  <!--      </button>-->
+
+  <!--      <button-->
+  <!--        id="jh-create-entity"-->
+  <!--        data-cy="entityCreateButton"-->
+  <!--        class="btn btn-primary jh-create-entity create-arrear-salary"-->
+  <!--        [routerLink]="['/arrear-salary/new']"-->
+  <!--      >-->
+  <!--        <fa-icon icon="plus"></fa-icon>-->
+  <!--        <span jhiTranslate="bitsHrPayrollApp.arrearSalary.home.createLabel"> Create a new Arrear Salary </span>-->
+  <!--      </button>-->
+  <!--    </div>-->
+  <!--  </h2>-->
+
+  <div>
+    <jhi-header
+      [headerName]="'Arrear Salaries'"
+      [addButtonText]="'Add New Arrear Salary'"
+      [routerLinkText]="'/arrear-salary/new'"
+      [shouldHaveHr]="false"
+    >
+    </jhi-header>
+
+    <div class="row my-3" [formGroup]="searchParamsForm">
+      <div class="col input-group">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="searchText">Search</label>
+          </div>
+          <input
+            (change)="loadPage(1)"
+            id="searchText"
+            formControlName="searchText"
+            class="form-control"
+            placeholder="Search Text"
+            type="text"
+          />
+        </div>
+      </div>
+      <div class="col-2">
+        <select (change)="loadPage(1)" class="form-control w-100" formControlName="year" id="year" name="year">
+          <option [ngValue]="0"></option>
+          <option *ngFor="let year of years" value="{{ year }}">
+            {{ year }}
+          </option>
+        </select>
+      </div>
+      <div class="col-2">
+        <select (change)="loadPage(1)" class="form-control w-100" formControlName="month" id="month" name="month">
+          <option [ngValue]="0"></option>
+          <option *ngFor="let month of months" value="{{ month.Value }}">
+            {{ month.Text }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+  </div>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="arrearSalaries?.length === 0">
+    <span jhiTranslate="bitsHrPayrollApp.arrearSalary.home.notFound">No Arrear Salaries found</span>
+  </div>
+
+  <!--  <div class="table-responsive table-entities" id="entities" *ngIf="arrearSalaries && arrearSalaries.length > 0">-->
+  <!--    <table class="table table-hover list-text-color" aria-describedby="page-heading">-->
+  <!--      <thead>-->
+  <!--        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">-->
+  <!--          <th scope="col" jhiSortBy="id">-->
+  <!--            <div class="d-flex">-->
+  <!--              <span jhiTranslate="global.field.id">ID</span>-->
+  <!--              &lt;!&ndash; <fa-icon class="p-1" icon="sort"></fa-icon> &ndash;&gt;-->
+  <!--            </div>-->
+  <!--          </th>-->
+  <!--          <th scope="col" jhiSortBy="month">-->
+  <!--            <div class="d-flex">-->
+  <!--              <span jhiTranslate="bitsHrPayrollApp.arrearSalary.month">Month</span>-->
+  <!--              &lt;!&ndash; <fa-icon class="p-1" icon="sort"></fa-icon> &ndash;&gt;-->
+  <!--            </div>-->
+  <!--          </th>-->
+  <!--          <th scope="col" jhiSortBy="year">-->
+  <!--            <div class="d-flex">-->
+  <!--              <span jhiTranslate="bitsHrPayrollApp.arrearSalary.year">Year</span>-->
+  <!--              &lt;!&ndash; <fa-icon class="p-1" icon="sort"></fa-icon> &ndash;&gt;-->
+  <!--            </div>-->
+  <!--          </th>-->
+  <!--          <th scope="col" jhiSortBy="amount">-->
+  <!--            <div class="d-flex">-->
+  <!--              <span jhiTranslate="bitsHrPayrollApp.arrearSalary.amount">Amount</span>-->
+  <!--              &lt;!&ndash; <fa-icon class="p-1" icon="sort"></fa-icon> &ndash;&gt;-->
+  <!--            </div>-->
+  <!--          </th>-->
+  <!--          <th scope="col" jhiSortBy="arrearType">-->
+  <!--            <div class="d-flex">-->
+  <!--              <span jhiTranslate="bitsHrPayrollApp.arrearSalary.arrearType">Arrear Type</span>-->
+  <!--              &lt;!&ndash; <fa-icon class="p-1" icon="sort"></fa-icon> &ndash;&gt;-->
+  <!--            </div>-->
+  <!--          </th>-->
+  <!--          <th scope="col" jhiSortBy="employee.id">-->
+  <!--            <div class="d-flex">-->
+  <!--              <span jhiTranslate="bitsHrPayrollApp.arrearSalary.employee">Employee</span>-->
+  <!--              &lt;!&ndash; <fa-icon class="p-1" icon="sort"></fa-icon> &ndash;&gt;-->
+  <!--            </div>-->
+  <!--          </th>-->
+  <!--          <th scope="col"></th>-->
+  <!--        </tr>-->
+  <!--      </thead>-->
+  <!--      <tbody>-->
+  <!--        <tr *ngFor="let arrearSalary of arrearSalaries; trackBy: trackId" data-cy="entityTable">-->
+  <!--          <td>-->
+  <!--            <a [routerLink]="['/arrear-salary', arrearSalary.id, 'view']">{{ arrearSalary.id }}</a>-->
+  <!--          </td>-->
+  <!--          <td jhiTranslate="{{ 'bitsHrPayrollApp.Month.' + arrearSalary.month }}">{{ arrearSalary.month }}</td>-->
+  <!--          <td>{{ arrearSalary.year }}</td>-->
+  <!--          <td>{{ arrearSalary.amount }}</td>-->
+  <!--          <td>{{ arrearSalary.arrearType }}</td>-->
+  <!--          <td>-->
+  <!--            <div *ngIf="arrearSalary.employee">-->
+  <!--              <a [routerLink]="['/employee', arrearSalary.employee.id, 'view']">{{ arrearSalary.employee.id }}</a>-->
+  <!--            </div>-->
+  <!--          </td>-->
+  <!--          <td class="text-end">-->
+  <!--            <div class="btn-group">-->
+  <!--              <button-->
+  <!--                type="submit"-->
+  <!--                [routerLink]="['/arrear-salary', arrearSalary.id, 'view']"-->
+  <!--                class="btn btn-info btn-sm"-->
+  <!--                data-cy="entityDetailsButton"-->
+  <!--              >-->
+  <!--                <fa-icon icon="eye"></fa-icon>-->
+  <!--                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>-->
+  <!--              </button>-->
+
+  <!--              <button-->
+  <!--                type="submit"-->
+  <!--                [routerLink]="['/arrear-salary', arrearSalary.id, 'edit']"-->
+  <!--                class="btn btn-primary btn-sm"-->
+  <!--                data-cy="entityEditButton"-->
+  <!--              >-->
+  <!--                <fa-icon icon="pencil-alt"></fa-icon>-->
+  <!--                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>-->
+  <!--              </button>-->
+
+  <!--              <button type="submit" (click)="delete(arrearSalary)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">-->
+  <!--                <fa-icon icon="times"></fa-icon>-->
+  <!--                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>-->
+  <!--              </button>-->
+  <!--            </div>-->
+  <!--          </td>-->
+  <!--        </tr>-->
+  <!--      </tbody>-->
+  <!--    </table>-->
+  <!--  </div>-->
+
+  <div class="table-responsive" id="entities" *ngIf="arrearSalaries && arrearSalaries.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="handleNavigation()">
+          <th scope="col" jhiSortBy="employeeId">
+            <span jhiTranslate="bitsHrPayrollApp.arrearSalary.employee">Employee</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="month">
+            <span jhiTranslate="bitsHrPayrollApp.arrearSalary.month">Month</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="year">
+            <span jhiTranslate="bitsHrPayrollApp.arrearSalary.year">Year</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" class="text-right" jhiSortBy="amount">
+            <span jhiTranslate="bitsHrPayrollApp.arrearSalary.amount">Amount</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="arrearType">
+            <span jhiTranslate="bitsHrPayrollApp.arrearSalary.arrearType">Arrear Type</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let arrearSalary of arrearSalaries; trackBy: trackId">
+          <td>
+            <div *ngIf="arrearSalary.employeeId">
+              <a [routerLink]="['/employee', arrearSalary.employeeId, 'view']"> {{ arrearSalary.pin }} - {{ arrearSalary.fullName }} </a>
+            </div>
+          </td>
+          <td jhiTranslate="{{ 'bitsHrPayrollApp.Month.' + arrearSalary.month }}">{{ arrearSalary.month }}, {{ arrearSalary.year }}</td>
+          <td>{{ arrearSalary.year }}</td>
+          <td class="text-right">{{ arrearSalary.amount | number }}</td>
+          <td>{{ arrearSalary.arrearType }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/arrear-salary', arrearSalary.id, 'view']" class="btn btn-info btn-sm">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button type="submit" [routerLink]="['/arrear-salary', arrearSalary.id, 'edit']" class="btn btn-primary btn-sm">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(arrearSalary)" class="btn btn-danger btn-sm">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="arrearSalaries && arrearSalaries.length > 0">
+    <div class="row justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="row justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

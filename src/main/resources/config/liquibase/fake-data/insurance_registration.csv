@@ -1,0 +1,11 @@
+id;name;date_of_birth;photo;insurance_relation;insurance_status;unapproval_reason;available_balance;updated_at;approved_at;insurance_id;created_at;employee_id;created_by_id
+1;Designer;2022-05-24;../fake-data/blob/hipster.txt;SELF;PENDING;matrices;96199;2022-05-24T22:01:28;2022-05-25T06:02:34;New Fords Communications;2022-05-24T21:20:02;1;1
+2;forecast synthesizing compelling;2022-05-24;../fake-data/blob/hipster.txt;CHILD_1;APPROVED;info-mediaries East Alley;43869;2022-05-25T07:51:29;2022-05-24T18:20:42;Card;2022-05-24T12:21:15;2;2
+3;clear-thinking Direct input;2022-05-25;../fake-data/blob/hipster.txt;SELF;NOT_APPROVED;Automotive;52774;2022-05-24T22:34:43;2022-05-25T03:21:56;magnetic generating;2022-05-24T22:22:57;3;1
+4;RAM;2022-05-24;../fake-data/blob/hipster.txt;CHILD_2;CANCELED;Rubber bypassing Tasty;41157;2022-05-24T15:07:11;2022-05-25T08:31:39;quantifying;2022-05-25T02:55:40;4;2
+5;payment;2022-05-24;../fake-data/blob/hipster.txt;SELF;PENDING;PNG;20492;2022-05-25T06:55:25;2022-05-24T12:59:46;Turnpike;2022-05-25T01:11:16;5;2
+6;Mississippi white TCP;2022-05-25;../fake-data/blob/hipster.txt;CHILD_3;PENDING;District invoice;83915;2022-05-24T19:25:17;2022-05-25T00:29:53;clicks-and-mortar;2022-05-24T19:28:42;6;1
+7;Analyst Tasty Rustic;2022-05-24;../fake-data/blob/hipster.txt;CHILD_1;APPROVED;Money Circles program;7999;2022-05-25T05:24:14;2022-05-24T13:55:42;Argentina 24/365 Kina;2022-05-25T06:39:37;7;2
+8;Rustic;2022-05-24;../fake-data/blob/hipster.txt;SPOUSE;NOT_APPROVED;Chad Synchronised redundant;163;2022-05-24T13:03:39;2022-05-24T18:43:56;cross-platform Mouse;2022-05-25T02:00:34;8;1
+9;repurpose;2022-05-25;../fake-data/blob/hipster.txt;SELF;SEPARATED;Supervisor Investor payment;6958;2022-05-25T00:03:41;2022-05-24T23:26:45;Street;2022-05-25T08:07:32;9;1
+10;group Nigeria 24/365;2022-05-24;../fake-data/blob/hipster.txt;CHILD_1;NOT_APPROVED;multi-state withdrawal Granite;84939;2022-05-24T13:13:37;2022-05-24T10:25:22;deploy Mount River;2022-05-24T11:47:54;10;1

@@ -1,0 +1,68 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="salaryGeneratorMaster">
+      <h2 data-cy="salaryGeneratorMasterDetailsHeading">
+        <span jhiTranslate="bitsHrPayrollApp.salaryGeneratorMaster.detail.title">Salary Generator Master</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ salaryGeneratorMaster.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.salaryGeneratorMaster.year">Year</span></dt>
+        <dd>
+          <span>{{ salaryGeneratorMaster.year }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.salaryGeneratorMaster.month">Month</span></dt>
+        <dd>
+          <span>{{ salaryGeneratorMaster.month }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.salaryGeneratorMaster.isGenerated">Is Generated</span></dt>
+        <dd>
+          <span>{{ salaryGeneratorMaster.isGenerated }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.salaryGeneratorMaster.isMobileBillImported">Is Mobile Bill Imported</span></dt>
+        <dd>
+          <span>{{ salaryGeneratorMaster.isMobileBillImported }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.salaryGeneratorMaster.isPFLoanRepaymentImported">Is PF Loan Repayment Imported</span></dt>
+        <dd>
+          <span>{{ salaryGeneratorMaster.isPFLoanRepaymentImported }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.salaryGeneratorMaster.isAttendanceImported">Is Attendance Imported</span></dt>
+        <dd>
+          <span>{{ salaryGeneratorMaster.isAttendanceImported }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.salaryGeneratorMaster.isSalaryDeductionImported">Is Salary Deduction Imported</span></dt>
+        <dd>
+          <span>{{ salaryGeneratorMaster.isSalaryDeductionImported }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.salaryGeneratorMaster.isFinalized">Is Finalized</span></dt>
+        <dd>
+          <span>{{ salaryGeneratorMaster.isFinalized }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.salaryGeneratorMaster.visibility">Visibility</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.Visibility.' + salaryGeneratorMaster.visibility }}">{{
+            salaryGeneratorMaster.visibility
+          }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/salary-generator-master', salaryGeneratorMaster.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

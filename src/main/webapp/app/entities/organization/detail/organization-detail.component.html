@@ -1,0 +1,134 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="organization">
+      <h2 data-cy="organizationDetailsHeading"><span jhiTranslate="bitsHrPayrollApp.organization.detail.title">Organization</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ organization.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.organization.shortName">Short Name</span></dt>
+        <dd>
+          <span>{{ organization.shortName }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.organization.fullName">Full Name</span></dt>
+        <dd>
+          <span>{{ organization.fullName }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.organization.slogan">Slogan</span></dt>
+        <dd>
+          <span>{{ organization.slogan }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.organization.domainName">Domain Name</span></dt>
+        <dd>
+          <span>{{ organization.domainName }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.organization.emailAddress">Email Address</span></dt>
+        <dd>
+          <span>{{ organization.emailAddress }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.organization.hrEmailAddress">Hr Email Address</span></dt>
+        <dd>
+          <span>{{ organization.hrEmailAddress }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.organization.noReplyEmailAddress">No Reply Email Address</span></dt>
+        <dd>
+          <span>{{ organization.noReplyEmailAddress }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.organization.contactNumber">Contact Number</span></dt>
+        <dd>
+          <span>{{ organization.contactNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.organization.financeManagerPIN">Finance Manager PIN</span></dt>
+        <dd>
+          <span>{{ organization.financeManagerPIN }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.organization.financeManagerSignature">Finance Manager Signature</span></dt>
+        <dd>
+          <span>{{ organization.financeManagerSignature }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.organization.logo">Logo</span></dt>
+        <dd>
+          <span>{{ organization.logo }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.organization.documentLetterHead">Document Letter Head</span></dt>
+        <dd>
+          <span>{{ organization.documentLetterHead }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.organization.pfStatementLetterHead">Pf Statement Letter Head</span></dt>
+        <dd>
+          <span>{{ organization.pfStatementLetterHead }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.organization.taxStatementLetterHead">Tax Statement Letter Head</span></dt>
+        <dd>
+          <span>{{ organization.taxStatementLetterHead }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.organization.nomineeLetterHead">Nominee Letter Head</span></dt>
+        <dd>
+          <span>{{ organization.nomineeLetterHead }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.organization.salaryPayslipLetterHead">Salary Payslip Letter Head</span></dt>
+        <dd>
+          <span>{{ organization.salaryPayslipLetterHead }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.organization.festivalBonusPayslipLetterHead">Festival Bonus Payslip Letter Head</span></dt>
+        <dd>
+          <span>{{ organization.festivalBonusPayslipLetterHead }}</span>
+        </dd>
+        <dt>
+          <span jhiTranslate="bitsHrPayrollApp.organization.recruitmentRequisitionLetterHead">Recruitment Requisition Letter Head</span>
+        </dt>
+        <dd>
+          <span>{{ organization.recruitmentRequisitionLetterHead }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.organization.hasOrganizationStamp">Has Organization Stamp</span></dt>
+        <dd>
+          <span>{{ organization.hasOrganizationStamp }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.organization.organizationStamp">Organization Stamp</span></dt>
+        <dd>
+          <span>{{ organization.organizationStamp }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.organization.linkedin">Linkedin</span></dt>
+        <dd>
+          <span>{{ organization.linkedin }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.organization.twitter">Twitter</span></dt>
+        <dd>
+          <span>{{ organization.twitter }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.organization.facebook">Facebook</span></dt>
+        <dd>
+          <span>{{ organization.facebook }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.organization.youtube">Youtube</span></dt>
+        <dd>
+          <span>{{ organization.youtube }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.organization.instagram">Instagram</span></dt>
+        <dd>
+          <span>{{ organization.instagram }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.organization.whatsapp">Whatsapp</span></dt>
+        <dd>
+          <span>{{ organization.whatsapp }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/organization', organization.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

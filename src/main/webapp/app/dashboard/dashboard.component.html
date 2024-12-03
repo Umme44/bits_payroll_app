@@ -1,0 +1,240 @@
+<div class="dashboard-wrapper d-flex flex-column align-content-between g-0">
+  <!-- cards -->
+  <div class="dashboard row">
+    <!--        Attendance -->
+    <div class="primary-card px-1 mt-2 col-xs-12 col-sm-12 col-md-6 col-lg-4 d-flex align-items-stretch">
+      <div class="card h-90 border-none box-shadow">
+        <div class="card-body p-3">
+          <div class="px-1 pt-2">
+            <div *ngIf="attendanceTimeSheets && attendanceTimeSheets.length > 0" class="container-fluid">
+              <div
+                *ngFor="let ats of attendanceTimeSheets; index as i"
+                class="row media text-muted py-2 mb-2 box-shadow border-none col-active cursor-pointer bg-white"
+                routerLink="/attendance-time-sheet"
+              >
+                <div class="font-sm col-md-1 col-sm-1 col-1">
+                  <fa-icon
+                    class="text-danger mt-1"
+                    icon="clock"
+                    [ngClass]="{
+                      'text-secondary': ats.attendanceStatus === 'WEEKLY_OFFDAY' || ats.attendanceStatus === 'GOVT_HOLIDAY',
+                      'text-danger': ats.attendanceStatus === 'ABSENT',
+                      'text-success': ats.attendanceStatus === 'PRESENT',
+                      'text-warning': ats.attendanceStatus === 'LATE' || ats.attendanceStatus === 'NON_FULFILLED_OFFICE_HOURS'
+                    }"
+                  >
+                  </fa-icon>
+                </div>
+
+                <ng-container *ngIf="getUIFriendlyAttendanceStatus(ats.attendanceStatus) == ''; else onlyStatus">
+                  <div class="col-md-3 col-sm-3 col-3 font-sm text-nowrap">
+                    <span class="d-block text-gray-dark">{{ ats.date | formatMediumDate }}</span>
+                  </div>
+
+                  <div class="col-md-3 col-sm-3 col-3 font-sm text-nowrap">
+                    {{ ats.inTime | formatTime }}
+                  </div>
+
+                  <div class="col-md-2 col-sm-3 col-2 font-sm text-nowrap">
+                    {{ ats.outTime | formatTime }}
+                  </div>
+
+                  <div class="col-md-2 col-sm-2 col-2 px-0 font-sm text-end">
+                    {{ ats.totalWorkingHour ? getTimeStringFromDecimalValue(ats.totalWorkingHour) + ' h' : '' }}
+                  </div>
+                </ng-container>
+
+                <ng-template #onlyStatus>
+                  <div class="col-md-3 col-sm-3 col-3 font-sm text-nowrap">
+                    <span class="d-block text-gray-dark">{{ ats.date | formatMediumDate }}</span>
+                  </div>
+
+                  <div class="col-md-5 col-sm-8 col-7 font-sm">
+                    {{ getUIFriendlyAttendanceStatus(ats.attendanceStatus) }}
+                  </div>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+          <div class="px-1 new-punch-btn-spacing">
+            <div
+              class="btn d-flex align-items-center justify-content-center new-punch-btn-clock box-shadow"
+              (click)="preValidateWebPunch()"
+              [ngClass]="{ 'new-punch-btn-clock-late': !checkInDone }"
+              [ngClass]="{ 'new-punch-btn-color-after-punch-in': checkInDone }"
+              [ngClass]="{ 'hover-disable': checkOutDone }"
+            >
+              <div class="new-punch-btn-text">
+                <div *ngIf="!checkInDone && !checkOutDone" class="text-uppercase font-medium">Punch In</div>
+
+                <div *ngIf="checkInDone || checkOutDone" class="text-uppercase font-medium">Punch Out</div>
+                <div class="" *ngIf="checkInDone && !checkOutDone">Last punch in time: {{ checkInTimeString }}</div>
+                <div class="" *ngIf="checkOutDone">Last punch out time: {{ checkOutTimeString }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--         quick links -->
+    <!--  Address Book , [Approvals] , Attendances  -->
+    <!--  Blood Group Info ,Holiday , Leave Application  -->
+    <!--  [My Stuff] , Requisition , Templates  -->
+    <div class="primary-card mt-2 col-xs-12 col-sm-12 col-md-6 col-lg-4 d-flex align-items-stretch">
+      <div class="h-100 border-none">
+        <div class="p-0">
+          <div class="dashboard row">
+            <div class="card p-1 btn color-ash col col-active mx-1 mt-0 mb-1 border-none box-shadow" routerLink="/employee-address-book">
+              <img class="svg-image-size-mid mx-auto dashboard-svg-icon" src="../../content/images/svg/address-book.svg" />
+
+              <div class="card-body p-1">
+                <div class="card-title text-center mb-0 font-sm">Address Book</div>
+              </div>
+            </div>
+
+            <div class="card p-1 btn col col-active color-ash mx-1 mt-0 mb-1 border-none box-shadow" (click)="openApprovalsModal()">
+              <img class="svg-image-size-mid mx-auto dashboard-svg-icon" src="../../content/images/svg/approval.svg" />
+
+              <div class="card-body p-1">
+                <div class="card-title text-center mb-0 font-sm">Approvals</div>
+              </div>
+            </div>
+
+            <div class="card p-1 btn color-ash col col-active mx-1 mt-0 mb-1 border-none box-shadow" (click)="openAttendanceModal()">
+              <img class="svg-image-size-mid mx-auto dashboard-svg-icon" src="../../content/images/svg/attendance.svg" />
+
+              <div class="card-body p-1">
+                <div class="card-title text-center mb-0 font-sm text-nowrap">Attendances</div>
+              </div>
+            </div>
+          </div>
+          <!------------------------------------------------------------------------------------------------------->
+          <div class="dashboard row">
+            <div class="card p-1 btn color-ash col col-active m-1 border-none box-shadow" routerLink="/blood-bank">
+              <img class="svg-image-size-mid mx-auto dashboard-svg-icon" src="../../content/images/svg/blood-group.svg" />
+
+              <div class="card-body p-1">
+                <div class="card-title text-center mb-0 font-sm text-nowrap">Blood Group Info</div>
+              </div>
+            </div>
+
+            <div class="card p-1 btn color-ash col col-active m-1 border-none box-shadow" routerLink="/holiday-calendar">
+              <img class="svg-image-size-mid mx-auto dashboard-svg-icon" src="../../content/images/svg/holiday.svg" />
+
+              <div class="card-body p-1">
+                <div class="card-title text-center mb-0 font-sm">Holidays</div>
+              </div>
+            </div>
+
+            <div
+              class="card p-1 btn color-ash col col-active m-1 border-none box-shadow"
+              routerLink="/user-leave-application-status-and-history"
+            >
+              <img class="svg-image-size-mid mx-auto dashboard-svg-icon" src="../../content/images/svg/leave-application.svg" />
+
+              <div class="card-body p-1">
+                <div class="card-title text-center mb-0 font-sm text-nowrap">Leave Applications</div>
+              </div>
+            </div>
+          </div>
+          <!------------------------------------------------------------------------------------------------------->
+          <div class="dashboard row">
+            <div class="card p-1 btn color-ash col col-active mt-1 mx-1 mb-0 border-none box-shadow" (click)="openMyStuffsModal()">
+              <img class="svg-image-size-mid mx-auto dashboard-svg-icon" src="../../content/images/svg/staff.svg" />
+
+              <div class="card-body p-1">
+                <div class="card-title text-center mb-0 font-sm">My Stuff</div>
+              </div>
+            </div>
+
+            <div class="card p-1 btn color-ash col col-active mt-1 mx-1 mb-0 border-none box-shadow" (click)="openRequisitionModal()">
+              <img class="svg-image-size-mid mx-auto dashboard-svg-icon" src="../../content/images/svg/requisition.svg" />
+
+              <div class="card-body p-1">
+                <div class="card-title text-center mb-0 font-sm">Requisition</div>
+              </div>
+            </div>
+
+            <div class="card p-1 btn color-ash col col-active mt-1 mx-1 mb-0 border-none box-shadow" routerLink="/file-templates/docs">
+              <img class="svg-image-size-mid mx-auto dashboard-svg-icon" src="../../content/images/svg/doc-file.svg" />
+
+              <div class="card-body p-1">
+                <div class="card-title text-center mb-0 font-sm">Docs</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!------------------------------------------------------------------------------------------------------------>
+
+    <!--        dummy notice board -->
+    <div class="primary-card px-1 mt-2 col-xs-12 col-sm-12 col-md-6 col-lg-4 d-flex align-items-stretch">
+      <div class="card h-100 border-none box-shadow">
+        <!--                <div class="notice-board">-->
+        <!--                    <h6>Notice Board</h6>-->
+        <!--                </div>-->
+        <div class="card-body p-3">
+          <!-------------------------------------------------------------------------------------------------->
+
+          <div class="bg-white rounded">
+            <div class="row border-bottom border-gray pb-1 mb-2 mx-1 color-muted-blue">
+              <div class="col-auto px-0">
+                <h6
+                  (click)="onClickTypeChange('notice')"
+                  [ngClass]="selectedType === 'notice' ? 'active-type' : ''"
+                  class="px-2 py-1 me-2 mb-0 cursor-pointer"
+                >
+                  Notice
+                </h6>
+              </div>
+
+              <div class="col-auto px-0">
+                <h6
+                  (click)="onClickTypeChange('offer')"
+                  [ngClass]="selectedType === 'offer' ? 'active-type' : ''"
+                  class="px-2 py-1 me-2 mb-0 cursor-pointer"
+                >
+                  Offer
+                </h6>
+              </div>
+            </div>
+            <ng-container class="loading-animation" *ngIf="selectedType === 'notice'">
+              <div *ngIf="recentOfficeNotices && recentOfficeNotices.length > 0" class="mx-1">
+                <div *ngFor="let notice of recentOfficeNotices" class="media text-muted pt-2 mb-2 box-shadow border-none col-active">
+                  <p (click)="openNoticeDetailsModal(notice)" class="media-body py-1 ps-2 pe-1 mb-2 small lh-125">
+                    <span class="d-block text-gray-dark">{{ notice.createdAt | formatMediumDate }}</span>
+                    {{ notice.title }}
+                  </p>
+                </div>
+              </div>
+
+              <small class="d-block text-end archived">
+                <a class="archive-notices" routerLink="/office-notices-archive">
+                  <fa-icon icon="arrow-right" class="color-muted-blue"></fa-icon>
+                </a>
+              </small>
+            </ng-container>
+
+            <ng-container class="loading-animation" *ngIf="selectedType === 'offer'">
+              <div *ngIf="recentOffers && recentOffers.length > 0">
+                <div *ngFor="let offer of recentOffers" class="media text-muted pt-2 mb-2 box-shadow border-none col-active">
+                  <p (click)="openOfferDetailsModal(offer)" class="media-body py-1 ps-2 pe-1 mb-2 small lh-125">
+                    <span class="d-block text-gray-dark">{{ offer.createdAt | formatMediumDate }}</span>
+                    {{ offer.title }}
+                  </p>
+                </div>
+              </div>
+
+              <small class="d-block text-end archived">
+                <a class="archive-notices" routerLink="/offer-archive">
+                  <fa-icon icon="arrow-right" class="color-muted-blue"></fa-icon>
+                </a>
+              </small>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

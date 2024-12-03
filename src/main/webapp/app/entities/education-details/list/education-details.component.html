@@ -1,0 +1,93 @@
+<div>
+  <jhi-header
+    [addButtonText]="'add new Education Details'"
+    [headerName]="'Education Details'"
+    [routerLinkText]="'/education-details/new'"
+    [shouldHaveHr]="false"
+  >
+  </jhi-header>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="educationDetails?.length === 0">
+    <span jhiTranslate="bitsHrPayrollApp.educationDetails.home.notFound">No Education Details found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="educationDetails && educationDetails.length > 0">
+    <table class="table table-hover list-text-color" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col"><span>PIN</span></th>
+          <th scope="col"><span>Name</span></th>
+          <th scope="col"><span>Department</span></th>
+          <th scope="col"><span>Unit</span></th>
+          <th scope="col"><span>Designation</span></th>
+          <th scope="col"><span>Name Of Degree</span></th>
+          <th scope="col"><span>Subject</span></th>
+          <th scope="col"><span>Institute</span></th>
+          <th scope="col"><span>Year Of Degree Completion</span></th>
+          <th scope="col" class="text-end">
+            <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+              <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+              <span jhiTranslate="bitsHrPayrollApp.educationDetails.home.refreshListLabel">Refresh list</span>
+            </button>
+          </th>
+        </tr>
+      </thead>
+      <tbody
+        infinite-scroll
+        (scrolled)="loadPage(page + 1)"
+        [infiniteScrollDisabled]="page - 1 >= links['last']"
+        [infiniteScrollDistance]="0"
+      >
+        <tr *ngFor="let educationDetails of educationDetails; trackBy: trackId" data-cy="entityTable">
+          <td>{{ educationDetails.pin }}</td>
+          <td>{{ educationDetails.employeeName }}</td>
+          <td>{{ educationDetails.departmentName }}</td>
+          <td>{{ educationDetails.unitName }}</td>
+          <td>{{ educationDetails.designationName }}</td>
+          <td>{{ educationDetails.nameOfDegree }}</td>
+          <td>{{ educationDetails.subject }}</td>
+          <td>{{ educationDetails.institute }}</td>
+          <td>{{ educationDetails.yearOfDegreeCompletion }}</td>
+
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/education-details', educationDetails.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/education-details', educationDetails.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+              </button>
+
+              <button type="submit" (click)="delete(educationDetails)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div
+  *ngIf="!educationDetails || educationDetails.length === 0"
+  style="height: 75vh"
+  class="text-center d-flex align-items-center justify-content-center"
+>
+  <img src="./content/images/approval.svg" width="400px" height="400px" />
+</div>

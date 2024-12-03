@@ -1,0 +1,43 @@
+{
+  "bitsHrPayrollApp": {
+    "roomRequisition": {
+      "home": {
+        "title": "Room Requisitions",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Room Requisition",
+        "createOrEditLabel": "Create or edit a Room Requisition",
+        "notFound": "No Room Requisitions found"
+      },
+      "created": "A new Room Requisition is created with identifier {{ param }}",
+      "updated": "A Room Requisition is updated with identifier {{ param }}",
+      "deleted": "A Room Requisition is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Room Requisition {{ id }}?"
+      },
+      "detail": {
+        "title": "Room Requisition"
+      },
+      "id": "ID",
+      "status": "Status",
+      "bookingTrn": "Booking Trn",
+      "createdAt": "Created At",
+      "updatedAt": "Updated At",
+      "sanctionedAt": "Sanctioned At",
+      "participantList": "Participant List",
+      "rejectedReason": "Rejected Reason",
+      "bookingStartDate": "Booking Start Date",
+      "bookingEndDate": "Booking End Date",
+      "startTime": "Start Time",
+      "endTime": "End Time",
+      "title": "Title",
+      "agenda": "Agenda",
+      "optionalParticipantList": "Optional Participant List",
+      "isFullDay": "Is Full Day",
+      "createdBy": "Created By",
+      "updatedBy": "Updated By",
+      "sanctionedBy": "Sanctioned By",
+      "requester": "Requester",
+      "room": "Room"
+    }
+  }
+}

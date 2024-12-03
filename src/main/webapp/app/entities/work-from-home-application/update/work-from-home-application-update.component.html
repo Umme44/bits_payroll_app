@@ -1,0 +1,186 @@
+<div>
+  <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+    <jhi-header
+      [headerName]="!editForm.get('id')!.value ? 'Apply For Work From Home' : 'Edit Work From Home'"
+      [midHeaderName01]="'Work From Home'"
+      [midRouterLinkText01]="'/work-from-home-application'"
+      [shouldHaveHr]="false"
+    >
+    </jhi-header>
+
+    <div>
+      <div class="card-body box-shadow border-none">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-control-label required" jhiTranslate="bitsHrPayrollApp.leaveApplication.employee">Employee</label>
+
+              <jhi-simple-select-employee-form
+                [selectedFieldValue]="editForm.get('employeeId')!.value"
+                [listType]="employeeSelectListType"
+                (onChangeEmployee)="changeEmployee($event)">
+              </jhi-simple-select-employee-form>
+
+              <div
+                *ngIf="editForm.get('employeeId')!.invalid && (editForm.get('employeeId')!.dirty || editForm.get('employeeId')!.touched)"
+              >
+                <small
+                  *ngIf="editForm.get('employeeId')?.errors?.required"
+                  class="form-text text-danger"
+                  jhiTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="form-control-label required" jhiTranslate="bitsHrPayrollApp.workFromHomeApplication.startDate" for="field_startDate">
+                Start Date
+              </label>
+              <div class="input-group">
+                <input
+                  id="field_startDate" type="text"
+                  class="form-control" name="startDate"
+                  ngbDatepicker #startDateDp="ngbDatepicker"
+                  formControlName="startDate"
+                  (dateSelect)="checkDateValidation($event)"
+                />
+                <span class="input-group-append">
+                  <button type="button" class="btn btn-secondary" (click)="startDateDp.toggle()">
+                    <fa-icon icon="calendar-alt"></fa-icon>
+                  </button>
+                </span>
+              </div>
+              <div *ngIf="editForm.get('startDate')!.invalid && (editForm.get('startDate')!.dirty || editForm.get('startDate')!.touched)">
+                <small
+                  class="form-text text-danger"
+                  *ngIf="editForm.get('startDate')?.errors?.required"
+                  jhiTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="form-control-label required" jhiTranslate="bitsHrPayrollApp.workFromHomeApplication.endDate" for="field_endDate">
+                End Date
+              </label>
+              <div class="input-group">
+                <input
+                  id="field_endDate"
+                  type="text"
+                  class="form-control"
+                  name="endDate"
+                  (dateSelect)="checkDateValidation($event)"
+                  ngbDatepicker #endDateDp="ngbDatepicker" formControlName="endDate"
+                />
+                <span class="input-group-append">
+                  <button type="button" class="btn btn-secondary" (click)="endDateDp.toggle()">
+                    <fa-icon icon="calendar-alt"></fa-icon>
+                  </button>
+                </span>
+              </div>
+              <div *ngIf="editForm.get('endDate')!.invalid && (editForm.get('endDate')!.dirty || editForm.get('endDate')!.touched)">
+                <small
+                  class="form-text text-danger"
+                  *ngIf="editForm.get('endDate')?.errors?.required"
+                  jhiTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+              </div>
+              <div>
+                <small class="form-text text-danger" *ngIf="isSubmitted === true"> You have already applied for the duration. </small>
+              </div>
+              <div>
+                <small class="form-text text-danger" *ngIf="isInvalid === true"> Start date can not be greater than end date. </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-control-label required" jhiTranslate="bitsHrPayrollApp.workFromHomeApplication.reason" for="field_reason">
+                Reason
+              </label>
+              <input
+                type="text"
+                class="form-control"
+                name="reason" id="field_reason"
+                formControlName="reason"
+              />
+              <div *ngIf="editForm.get('reason')!.invalid && (editForm.get('reason')!.dirty || editForm.get('reason')!.touched)">
+                <small
+                  class="form-text text-danger"
+                  *ngIf="editForm.get('reason')?.errors?.pattern"
+                >
+                  This text is invalid
+                </small>
+                <small
+                  class="form-text text-danger"
+                  *ngIf="editForm.get('reason')?.errors?.required"
+                  jhiTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+                <small
+                  class="form-text text-danger"
+                  *ngIf="editForm.get('reason')?.errors?.minlength"
+                  jhiTranslate="entity.validation.minlength"
+                  [translateValues]="{ min: 0 }"
+                >
+                  This field is required to be at least 0 characters.
+                </small>
+                <small
+                  class="form-text text-danger"
+                  *ngIf="editForm.get('reason')?.errors?.maxlength"
+                  jhiTranslate="entity.validation.maxlength"
+                  [translateValues]="{ max: 250 }"
+                >
+                  This field cannot be longer than 250 characters.
+                </small>
+
+                <small class="form-text text-danger" *ngIf="isSubmitted === true"> You have applied for this duration. </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6" [hidden]="true">
+            <div class="form-group">
+              <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.workFromHomeApplication.createdById" for="field_createdById">
+                Created By
+              </label>
+              <input
+                type="text" class="form-control"
+                name="createdById" id="field_createdById"
+                formControlName="createdById"
+              />
+            </div>
+          </div>
+
+        </div>
+        <div class="mt-3">
+          <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+            <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+          </button>
+
+          <button
+            type="submit"
+            id="save-entity"
+            [disabled]="editForm.invalid || isSaving || isSubmitted || isInvalid"
+            class="btn btn-primary"
+          >
+            <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

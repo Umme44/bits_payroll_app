@@ -1,0 +1,121 @@
+<div>
+  <jhi-header [headerName]="'Generated Salary Lock'" [shouldHaveHr]="false"> </jhi-header>
+
+  <div class="row">
+    <div [ngClass]="salaryGeneratorMasters && salaryGeneratorMasters.length > 0 ? 'col-md-11' : 'col-md-12'">
+      <div class="input-group" [hidden]="true">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="searchText">Search</label>
+        </div>
+        <input id="searchText" class="form-control" placeholder="Search Text" type="text" />
+      </div>
+    </div>
+  </div>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <!--<div *ngIf="salaryGeneratorMasters?.length === 0" class="alert alert-warning" id="no-result">
+        <span>No salary has been generated yet</span>
+    </div>-->
+</div>
+
+<div *ngIf="salaryGeneratorMasters && salaryGeneratorMasters.length > 0" class="table-responsive" id="entities">
+  <table aria-describedby="page-heading" class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">
+          <span>
+            <input class="form-check-input" type="checkbox" [value]="-1" [(ngModel)]="allSelector" (change)="onChange($event)" />
+          </span>
+        </th>
+        <th scope="col" class="text-nowrap"><span jhiTranslate="bitsHrPayrollApp.salaryGeneratorMaster.monthyear">MonthYear</span></th>
+        <th scope="col" class="text-nowrap"><span> Status</span></th>
+        <th scope="col" class="text-nowrap"><span title="Lock Status">&nbsp;</span></th>
+        <th scope="col" class="text-nowrap"><span>Mobile Bill</span></th>
+        <th scope="col" class="text-nowrap"><span>Other Deduction</span></th>
+        <th scope="col" class="text-nowrap"><span>Attendance</span></th>
+        <th scope="col" class="text-end">
+          <div class="" *ngIf="salaryGeneratorMasters && salaryGeneratorMasters.length > 0">
+            <div class="d-inline" container="body" ngbTooltip="Lock">
+              <button class="btn btn-success btn-sm" [disabled]="approvalDTO!.listOfIds!.length < 1" (click)="lockSelected()">
+                <fa-icon [icon]="['fas', 'check']"></fa-icon>
+              </button>
+            </div>
+            <div class="d-inline ps-1" container="body" ngbTooltip="Unlock">
+              <button class="btn btn-danger btn-sm" [disabled]="approvalDTO!.listOfIds!.length < 1" (click)="unlockSelected()">
+                <fa-icon [icon]="['fas', 'times']"></fa-icon>
+              </button>
+            </div>
+          </div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let salaryGeneratorMaster of salaryGeneratorMasters; trackBy: trackId">
+        <td>
+          <input
+            class="form-check-input"
+            type="checkbox"
+            [value]="salaryGeneratorMaster.id"
+            [checked]="salaryGeneratorMaster.isChecked"
+            (change)="onChange($event)"
+          />
+        </td>
+
+        <td class="text-nowrap">
+          {{ toDate(salaryGeneratorMaster.year!, salaryGeneratorMaster.month!) }}
+        </td>
+
+        <td *ngIf="salaryGeneratorMaster.isGenerated === true" class="text-nowrap">
+          <span data-placement="top" data-toggle="tooltip" style="color: limegreen" title="Generated">
+            <fa-icon icon="check-circle"></fa-icon>
+          </span>
+        </td>
+        <td *ngIf="!salaryGeneratorMaster.isGenerated === true" class="text-nowrap">
+          <span data-placement="top" data-toggle="tooltip" style="color: #ffcc00" title="Not Generated">
+            <fa-icon icon="exclamation-circle"></fa-icon
+          ></span>
+        </td>
+
+        <td>
+          <span
+            class="text-danger"
+            title="Unlocked"
+            *ngIf="salaryGeneratorMaster.isFinalized === null || salaryGeneratorMaster.isFinalized === false; else statusLocked"
+          >
+            <fa-icon icon="lock-open"></fa-icon>
+          </span>
+          <ng-template #statusLocked>
+            <span class="text-success" title="Locked">
+              <fa-icon icon="lock"></fa-icon>
+            </span>
+          </ng-template>
+        </td>
+
+        <td class="text-nowrap">
+          <div *ngIf="salaryGeneratorMaster.isMobileBillImported === true">
+            <a [routerLink]="['/mobile-bill', salaryGeneratorMaster.year, salaryGeneratorMaster.month]"><b>View</b></a>
+          </div>
+          <div *ngIf="!salaryGeneratorMaster.isMobileBillImported === true">Not Imported</div>
+        </td>
+
+        <td class="text-nowrap">
+          <div *ngIf="salaryGeneratorMaster.isSalaryDeductionImported === true">
+            <a [routerLink]="['/salary-deduction', salaryGeneratorMaster.year, salaryGeneratorMaster.month]"><b>View</b></a>
+          </div>
+          <div *ngIf="!salaryGeneratorMaster.isSalaryDeductionImported === true">Not Imported</div>
+        </td>
+
+        <td class="text-nowrap">
+          <div *ngIf="salaryGeneratorMaster.isAttendanceImported === true">
+            <a [routerLink]="['/attendance-summary', salaryGeneratorMaster.year, salaryGeneratorMaster.month]"><b>View</b></a>
+          </div>
+          <div *ngIf="!salaryGeneratorMaster.isAttendanceImported === true">Not Imported</div>
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

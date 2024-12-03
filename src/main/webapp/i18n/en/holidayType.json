@@ -1,0 +1,11 @@
+{
+  "bitsHrPayrollApp": {
+    "HolidayType": {
+      "null": "",
+      "Weekly": "Weekly",
+      "Govt": "Govt.",
+      "General": "General",
+      "Other": "Other"
+    }
+  }
+}

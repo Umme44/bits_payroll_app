@@ -1,0 +1,56 @@
+{
+  "bitsHrPayrollApp": {
+    "pfNominee": {
+      "home": {
+        "title": "Pf Nominees",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Pf Nominee",
+        "createOrEditLabel": "Create or edit a Pf Nominee",
+        "notFound": "No Pf Nominees found"
+      },
+      "created": "A new Pf Nominee is created with identifier {{ param }}",
+      "updated": "A Pf Nominee is updated with identifier {{ param }}",
+      "deleted": "A Pf Nominee is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Pf Nominee {{ id }}?"
+      },
+      "detail": {
+        "title": "Pf Nominee"
+      },
+      "id": "ID",
+      "nominationDate": "Nomination Date",
+      "fullName": "Full Name",
+      "presentAddress": "Present Address",
+      "permanentAddress": "Permanent Address",
+      "relationship": "Relationship",
+      "dateOfBirth": "Date Of Birth",
+      "age": "Age",
+      "sharePercentage": "Share Percentage",
+      "nidNumber": "Nid Number",
+      "isNidVerified": "Is Nid Verified",
+      "passportNumber": "Passport Number",
+      "brnNumber": "Brn Number",
+      "photo": "Photo",
+      "guardianName": "Guardian Name",
+      "guardianFatherOrSpouseName": "Guardian Father Or Spouse Name",
+      "guardianDateOfBirth": "Guardian Date Of Birth",
+      "guardianPresentAddress": "Guardian Present Address",
+      "guardianPermanentAddress": "Guardian Permanent Address",
+      "guardianProofOfIdentityOfLegalGuardian": "Guardian Proof Of Identity Of Legal Guardian",
+      "guardianRelationshipWithNominee": "Guardian Relationship With Nominee",
+      "guardianNidNumber": "Guardian Nid Number",
+      "guardianBrnNumber": "Guardian Brn Number",
+      "guardianIdNumber": "Guardian Id Number",
+      "isGuardianNidVerified": "Is Guardian Nid Verified",
+      "isApproved": "Is Approved",
+      "identityType": "Identity Type",
+      "idNumber": "Id Number",
+      "documentName": "Document Name",
+      "guardianIdentityType": "Guardian Identity Type",
+      "guardianDocumentName": "Guardian Document Name",
+      "pfAccount": "Pf Account",
+      "pfWitness": "Pf Witness",
+      "approvedBy": "Approved By"
+    }
+  }
+}

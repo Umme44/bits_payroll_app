@@ -1,0 +1,59 @@
+{
+  "changelogDate": "20210708130352",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "office_notices",
+  "fields": [
+    {
+      "fieldName": "title",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "250",
+      "fieldValidateRulesMinlength": "3"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "NoticeStatus",
+      "fieldValidateRules": [],
+      "fieldValues": "PUBLISHED,UNPUBLISHED,DRAFT"
+    },
+    {
+      "fieldName": "publishForm",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "publishTo",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "createdAt",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "updatedAt",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "createdBy",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "updatedBy",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "OfficeNotices",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

@@ -1,0 +1,53 @@
+{
+  "applications": "*",
+  "changelogDate": "20210215124330",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "jhi_references",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "institute",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "designation",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "relationshipWithEmployee",
+      "fieldType": "RelationshipWithEmployee",
+      "fieldValues": "PERSONAL,PROFESSIONAL"
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "contactNumber",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "References",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "references",
+      "relationshipName": "employee",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    }
+  ],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

@@ -1,0 +1,268 @@
+<div>
+  <h2 id="page-heading" data-cy="OrganizationHeading">
+    <span jhiTranslate="bitsHrPayrollApp.organization.home.title">Organizations</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="bitsHrPayrollApp.organization.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-organization"
+        [routerLink]="['/organization/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="bitsHrPayrollApp.organization.home.createLabel"> Create a new Organization </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="organizations?.length === 0">
+    <span jhiTranslate="bitsHrPayrollApp.organization.home.notFound">No Organizations found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="organizations && organizations.length > 0">
+    <table class="table table-hover list-text-color" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">ID</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="shortName">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.organization.shortName">Short Name</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="fullName">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.organization.fullName">Full Name</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="slogan">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.organization.slogan">Slogan</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="domainName">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.organization.domainName">Domain Name</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="emailAddress">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.organization.emailAddress">Email Address</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="hrEmailAddress">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.organization.hrEmailAddress">Hr Email Address</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="noReplyEmailAddress">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.organization.noReplyEmailAddress">No Reply Email Address</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="contactNumber">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.organization.contactNumber">Contact Number</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="financeManagerPIN">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.organization.financeManagerPIN">Finance Manager PIN</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="financeManagerSignature">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.organization.financeManagerSignature">Finance Manager Signature</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="logo">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.organization.logo">Logo</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="documentLetterHead">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.organization.documentLetterHead">Document Letter Head</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="pfStatementLetterHead">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.organization.pfStatementLetterHead">Pf Statement Letter Head</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="taxStatementLetterHead">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.organization.taxStatementLetterHead">Tax Statement Letter Head</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="nomineeLetterHead">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.organization.nomineeLetterHead">Nominee Letter Head</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="salaryPayslipLetterHead">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.organization.salaryPayslipLetterHead">Salary Payslip Letter Head</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="festivalBonusPayslipLetterHead">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.organization.festivalBonusPayslipLetterHead">Festival Bonus Payslip Letter Head</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="recruitmentRequisitionLetterHead">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.organization.recruitmentRequisitionLetterHead">Recruitment Requisition Letter Head</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="hasOrganizationStamp">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.organization.hasOrganizationStamp">Has Organization Stamp</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="organizationStamp">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.organization.organizationStamp">Organization Stamp</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="linkedin">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.organization.linkedin">Linkedin</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="twitter">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.organization.twitter">Twitter</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="facebook">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.organization.facebook">Facebook</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="youtube">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.organization.youtube">Youtube</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="instagram">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.organization.instagram">Instagram</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="whatsapp">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.organization.whatsapp">Whatsapp</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody
+        infinite-scroll
+        (scrolled)="loadPage(page + 1)"
+        [infiniteScrollDisabled]="page - 1 >= links['last']"
+        [infiniteScrollDistance]="0"
+      >
+        <tr *ngFor="let organization of organizations; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/organization', organization.id, 'view']">{{ organization.id }}</a>
+          </td>
+          <td>{{ organization.shortName }}</td>
+          <td>{{ organization.fullName }}</td>
+          <td>{{ organization.slogan }}</td>
+          <td>{{ organization.domainName }}</td>
+          <td>{{ organization.emailAddress }}</td>
+          <td>{{ organization.hrEmailAddress }}</td>
+          <td>{{ organization.noReplyEmailAddress }}</td>
+          <td>{{ organization.contactNumber }}</td>
+          <td>{{ organization.financeManagerPIN }}</td>
+          <td>{{ organization.financeManagerSignature }}</td>
+          <td>{{ organization.logo }}</td>
+          <td>{{ organization.documentLetterHead }}</td>
+          <td>{{ organization.pfStatementLetterHead }}</td>
+          <td>{{ organization.taxStatementLetterHead }}</td>
+          <td>{{ organization.nomineeLetterHead }}</td>
+          <td>{{ organization.salaryPayslipLetterHead }}</td>
+          <td>{{ organization.festivalBonusPayslipLetterHead }}</td>
+          <td>{{ organization.recruitmentRequisitionLetterHead }}</td>
+          <td>{{ organization.hasOrganizationStamp }}</td>
+          <td>{{ organization.organizationStamp }}</td>
+          <td>{{ organization.linkedin }}</td>
+          <td>{{ organization.twitter }}</td>
+          <td>{{ organization.facebook }}</td>
+          <td>{{ organization.youtube }}</td>
+          <td>{{ organization.instagram }}</td>
+          <td>{{ organization.whatsapp }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/organization', organization.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/organization', organization.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(organization)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

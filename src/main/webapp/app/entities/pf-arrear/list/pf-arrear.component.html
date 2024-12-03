@@ -1,0 +1,59 @@
+<div>
+  <jhi-header [addButtonText]="'New PF Arrear'" [headerName]="'PF Arrear'" [routerLinkText]="'/pf-arrear/new'" [shouldHaveHr]="false">
+  </jhi-header>
+</div>
+
+<jhi-search-text-box (searchEvent)="search($event)"> </jhi-search-text-box>
+
+<div class="mt-2">
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="table-responsive" id="entities" *ngIf="pfArrears && pfArrears.length > 0">
+    <table class="table table-hover list-text-color" aria-describedby="page-heading">
+      <thead>
+        <!-- <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">-->
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col"><span>Employee</span></th>
+          <th scope="col"><span>Month</span></th>
+          <th scope="col"><span>Year</span></th>
+          <th scope="col" class="text-end"><span>Amount</span></th>
+          <th scope="col"><span>Remarks</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+        <tr *ngFor="let pfArrear of pfArrears; trackBy: trackId">
+          <td>
+            <div *ngIf="pfArrear.employeeId">
+              <a [routerLink]="['/employee-custom', pfArrear.employeeId, 'view']"> {{ pfArrear.pin }} - {{ pfArrear.fullName }} </a>
+            </div>
+          </td>
+          <td jhiTranslate="{{ 'bitsHrPayrollApp.Month.' + pfArrear.month }}">{{ pfArrear.month }}</td>
+          <td>{{ pfArrear.year }}</td>
+          <td>{{ pfArrear.amount }}</td>
+          <td>{{ pfArrear.remarks }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/pf-arrear', pfArrear.id, 'view']" class="btn btn-info btn-sm">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button type="submit" [routerLink]="['/pf-arrear', pfArrear.id, 'edit']" class="btn btn-primary btn-sm">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(pfArrear)" class="btn btn-danger btn-sm">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

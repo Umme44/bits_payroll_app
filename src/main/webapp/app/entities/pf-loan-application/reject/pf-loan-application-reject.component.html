@@ -1,0 +1,80 @@
+<div>
+    <form name="editForm" role="form" novalidate (ngSubmit)="reject()" [formGroup]="editForm">
+        <jhi-header
+            [headerName]="'PF Loan Application Reject'"
+            [shouldHaveHr]="false">
+        </jhi-header>
+
+        <div class="card card-body">
+            <jhi-alert-error></jhi-alert-error>
+            <div class="flex-column">
+
+                <div class="row align-items-center mb-3">
+
+                    <div class="form-group col-md-3">
+                        <label class="form-control-label"
+                               jhiTranslate="bitsHrPayrollApp.pfLoanApplication.rejectionReason"
+                               for="field_rejectionReason">Rejection Reason</label>
+                        <input type="text" class="form-control" name="rejectionReason"
+                               id="field_rejectionReason"
+                               formControlName="rejectionReason"/>
+                        <div
+                            *ngIf="editForm.get('rejectionReason')!.invalid && (editForm.get('rejectionReason')!.dirty || editForm.get('rejectionReason')!.touched)">
+                            <small *ngIf="editForm.get('rejectionReason')?.errors?.required"
+                                   class="form-text text-danger"
+                                   jhiTranslate="entity.validation.required">
+                                This field is required.
+                            </small>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label class="form-control-label"
+                               jhiTranslate="bitsHrPayrollApp.pfLoanApplication.rejectionDate"
+                               for="field_rejectionDate">Rejection Date</label>
+                        <div class="input-group">
+                            <input id="field_rejectionDate" type="date" class="form-control"
+                                   name="rejectionDate"
+                                   ngbDatepicker
+                                   #rejectionDateDp="ngbDatepicker" formControlName="rejectionDate"/>
+                            <span class="input-group-append">
+                            <button [hidden]="true" type="button" class="btn btn-secondary"
+                                    (click)="rejectionDateDp.toggle()"><fa-icon
+                                icon="calendar-alt"></fa-icon></button>
+                        </span>
+                        </div>
+                        <div
+                            *ngIf="editForm.get('rejectionDate')!.invalid && (editForm.get('rejectionDate')!.dirty || editForm.get('rejectionDate')!.touched)">
+                            <small *ngIf="editForm.get('rejectionDate')?.errors?.required"
+                                   class="form-text text-danger"
+                                   jhiTranslate="entity.validation.required">
+                                This field is required.
+                            </small>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label class="form-control-label"
+                               jhiTranslate="bitsHrPayrollApp.pfLoanApplication.remarks"
+                               for="field_remarks">Remarks</label>
+                        <input type="text" class="form-control" name="remarks" id="field_remarks"
+                               formControlName="remarks"/>
+                    </div>
+
+                </div>
+
+                <button type="button" id="cancel-save" class="btn btn-secondary"
+                        (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span
+                    jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+
+                <button type="submit" class="btn btn-danger" [disabled]="editForm.invalid || isSaving">
+                    <fa-icon icon="times"></fa-icon>&nbsp;<span>Reject</span>
+                </button>
+
+            </div>
+        </div>
+    </form>
+</div>

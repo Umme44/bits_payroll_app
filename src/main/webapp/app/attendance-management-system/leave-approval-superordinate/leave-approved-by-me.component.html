@@ -1,0 +1,73 @@
+<div>
+  <jhi-header
+    [headerName]="'Approved by Me'"
+    [midHeaderName01]="'Leave Approvals'"
+    [midRouterLinkText01]="'/leave-approval-superordinate'"
+    [shouldHaveHr]="false"
+  >
+  </jhi-header>
+
+  <div class="row mb-2">
+    <div class="col-md-12">
+      <jhi-search-text-box (searchEvent)="search($event)" [placeHolderText]="'Search'" [searchBoxSize]="'18rem'"> </jhi-search-text-box>
+    </div>
+  </div>
+
+  <jhi-alert-error></jhi-alert-error>
+  <jhi-alert></jhi-alert>
+</div>
+
+<div class="table-responsive" id="entities" *ngIf="leaveApplications && leaveApplications.length > 0">
+  <table class="table table-striped list-text-color" aria-describedby="page-heading">
+    <thead>
+      <tr>
+        <th scope="col">Approved Date</th>
+
+        <th scope="col"><span>PIN</span></th>
+        <th scope="col"><span>Full Name</span></th>
+        <th scope="col"><span>Designation</span></th>
+
+        <th scope="col" class="text-start"><span>Leave</span></th>
+        <th scope="col"><span>Duration</span></th>
+        <th scope="col"><span>Type</span></th>
+        <th scope="col">Phone</th>
+      </tr>
+    </thead>
+    <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+      <tr *ngFor="let leaveApplication of leaveApplications; trackBy: trackId">
+        <td>{{ leaveApplication.sanctionedAt | formatMediumDate }}</td>
+
+        <td>
+          {{ leaveApplication.pin }}
+        </td>
+
+        <td>
+          {{ leaveApplication.fullName }}
+        </td>
+
+        <td>
+          {{ leaveApplication.designationName }}
+        </td>
+
+        <td class="text-start">{{ leaveApplication.startDate | formatTime }} - {{ leaveApplication.endDate | formatTime }}</td>
+
+        <td>
+          {{ leaveApplication.durationInDay }} <span *ngIf="leaveApplication.durationInDay! === 1">day</span
+          ><span *ngIf="leaveApplication.durationInDay! > 1">days</span>
+        </td>
+
+        <td jhiTranslate="{{ 'bitsHrPayrollApp.LeaveType.' + leaveApplication.leaveType }}">{{ leaveApplication.leaveType }}</td>
+
+        <td>{{ leaveApplication.phoneNumberOnLeave }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div
+  *ngIf="!leaveApplications || leaveApplications.length === 0"
+  style="height: 75vh"
+  class="text-center d-flex align-items-center justify-content-center"
+>
+  <img src="../../../content/images/leave-application.svg" width="400px" height="400px" />
+</div>

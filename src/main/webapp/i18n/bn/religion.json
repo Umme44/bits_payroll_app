@@ -1,0 +1,13 @@
+{
+  "bitsHrPayrollApp": {
+    "Religion": {
+      "null": "",
+      "ISLAM": "ISLAM",
+      "HINDU": "HINDU",
+      "BUDDHA": "BUDDHA",
+      "CHRISTIAN": "CHRISTIAN",
+      "OTHER": "OTHER",
+      "ALL": "ALL"
+    }
+  }
+}

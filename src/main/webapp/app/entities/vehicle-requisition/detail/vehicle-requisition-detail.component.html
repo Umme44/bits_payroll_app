@@ -1,0 +1,110 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="vehicleRequisition">
+      <h2 data-cy="vehicleRequisitionDetailsHeading">
+        <span jhiTranslate="bitsHrPayrollApp.vehicleRequisition.detail.title">Vehicle Requisition</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ vehicleRequisition.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.vehicleRequisition.purpose">Purpose</span></dt>
+        <dd>
+          <span>{{ vehicleRequisition.purpose }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.vehicleRequisition.otherPassengersName">Other Passengers Name</span></dt>
+        <dd>
+          <span>{{ vehicleRequisition.otherPassengersName }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.vehicleRequisition.totalNumberOfPassengers">Total Number Of Passengers</span></dt>
+        <dd>
+          <span>{{ vehicleRequisition.totalNumberOfPassengers }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.vehicleRequisition.status">Status</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.Status.' + vehicleRequisition.status }}">{{ vehicleRequisition.status }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.vehicleRequisition.remarks">Remarks</span></dt>
+        <dd>
+          <span>{{ vehicleRequisition.remarks }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.vehicleRequisition.createdAt">Created At</span></dt>
+        <dd>
+          <span>{{ vehicleRequisition.createdAt | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.vehicleRequisition.updatedAt">Updated At</span></dt>
+        <dd>
+          <span>{{ vehicleRequisition.updatedAt | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.vehicleRequisition.sanctionAt">Sanction At</span></dt>
+        <dd>
+          <span>{{ vehicleRequisition.sanctionAt | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.vehicleRequisition.transactionNumber">Transaction Number</span></dt>
+        <dd>
+          <span>{{ vehicleRequisition.transactionNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.vehicleRequisition.startDate">Start Date</span></dt>
+        <dd>
+          <span>{{ vehicleRequisition.startDate | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.vehicleRequisition.endDate">End Date</span></dt>
+        <dd>
+          <span>{{ vehicleRequisition.endDate | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.vehicleRequisition.startTime">Start Time</span></dt>
+        <dd>
+          <span>{{ vehicleRequisition.startTime }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.vehicleRequisition.endTime">End Time</span></dt>
+        <dd>
+          <span>{{ vehicleRequisition.endTime }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.vehicleRequisition.area">Area</span></dt>
+        <dd>
+          <span>{{ vehicleRequisition.area }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.vehicleRequisition.createdBy">Created By</span></dt>
+        <dd>
+          <span>{{ vehicleRequisition.createdBy?.login }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.vehicleRequisition.updatedBy">Updated By</span></dt>
+        <dd>
+          <span>{{ vehicleRequisition.updatedBy?.login }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.vehicleRequisition.approvedBy">Approved By</span></dt>
+        <dd>
+          <span>{{ vehicleRequisition.approvedBy?.login }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.vehicleRequisition.requester">Requester</span></dt>
+        <dd>
+          <div *ngIf="vehicleRequisition.requester">
+            <a [routerLink]="['/employee', vehicleRequisition.requester.id, 'view']">{{ vehicleRequisition.requester.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.vehicleRequisition.vehicle">Vehicle</span></dt>
+        <dd>
+          <div *ngIf="vehicleRequisition.vehicle">
+            <a [routerLink]="['/vehicle', vehicleRequisition.vehicle.id, 'view']">{{ vehicleRequisition.vehicle.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/vehicle-requisition', vehicleRequisition.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

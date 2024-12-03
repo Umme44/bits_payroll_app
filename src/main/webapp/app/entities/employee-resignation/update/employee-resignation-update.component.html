@@ -1,0 +1,288 @@
+<div class="d-flex justify-content-center">
+  <div class="col-12">
+    <form class="card card-body" name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <!-- <h2
+        id="jhi-employee-resignation-heading"
+        data-cy="EmployeeResignationCreateUpdateHeading"
+        jhiTranslate="bitsHrPayrollApp.employeeResignation.home.createOrEditLabel"
+      >
+        Create or edit a Employee Resignation
+      </h2>-->
+
+      <jhi-header [headerName]="!editForm.get('id')!.value ? 'Add New Resignations' : 'Edit Resignations'" [shouldHaveHr]="false">
+      </jhi-header>
+
+      <div class="row">
+        <jhi-alert-error></jhi-alert-error>
+
+        <!--<div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>-->
+        <!-- <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeResignation.createdAt" for="field_createdAt">Created At</label>
+          <div class="input-group">
+            <input
+              id="field_createdAt"
+              data-cy="createdAt"
+              type="text"
+              class="form-control"
+              name="createdAt"
+              ngbDatepicker
+              #createdAtDp="ngbDatepicker"
+              formControlName="createdAt"
+            />
+            <button type="button" class="btn btn-secondary" (click)="createdAtDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+        </div>-->
+        <!--<div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeResignation.updatedAt" for="field_updatedAt">Updated At</label>
+          <div class="input-group">
+            <input
+              id="field_updatedAt"
+              data-cy="updatedAt"
+              type="text"
+              class="form-control"
+              name="updatedAt"
+              ngbDatepicker
+              #updatedAtDp="ngbDatepicker"
+              formControlName="updatedAt"
+            />
+            <button type="button" class="btn btn-secondary" (click)="updatedAtDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+        </div>-->
+
+        <div class="col-md-6 mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeResignation.employee" for="field_employeeId">Employee</label>
+          <select
+            (change)="checkNoticePeriod()"
+            class="form-control"
+            id="field_employeeId"
+            data-cy="employeeId"
+            name="employeeId"
+            formControlName="employeeId"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="employeeOption.id" *ngFor="let employeeOption of employeesSharedCollection">
+              {{ employeeOption.pin }} - {{ employeeOption.fullName }} - {{ employeeOption.designationName }}
+            </option>
+          </select>
+        </div>
+
+        <div class="col-md-3 mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeResignation.resignationDate" for="field_resignationDate"
+            >Resignation Date</label
+          >
+          <div class="input-group">
+            <input
+              (ngModelChange)="checkNoticePeriod()"
+              id="field_resignationDate"
+              data-cy="resignationDate"
+              type="text"
+              class="form-control"
+              name="resignationDate"
+              ngbDatepicker
+              #resignationDateDp="ngbDatepicker"
+              formControlName="resignationDate"
+            />
+            <button type="button" class="btn btn-secondary" (click)="resignationDateDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeResignation.lastWorkingDay" for="field_lastWorkingDay"
+            >Last Working Day</label
+          >
+          <div class="input-group">
+            <input
+              (ngModelChange)="checkNoticePeriod()"
+              id="field_lastWorkingDay"
+              data-cy="lastWorkingDay"
+              type="text"
+              class="form-control"
+              name="lastWorkingDay"
+              ngbDatepicker
+              #lastWorkingDayDp="ngbDatepicker"
+              formControlName="lastWorkingDay"
+            />
+            <button type="button" class="btn btn-secondary" (click)="lastWorkingDayDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+
+          <div
+            *ngIf="
+              editForm.get('lastWorkingDay')!.invalid && (editForm.get('lastWorkingDay')!.dirty || editForm.get('lastWorkingDay')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('lastWorkingDay')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeResignation.resignationReason" for="field_resignationReason"
+            >Resignation Reason</label
+          >
+          <input
+            type="text"
+            class="form-control mx-2"
+            name="resignationReason"
+            id="field_resignationReason"
+            data-cy="resignationReason"
+            formControlName="resignationReason"
+          />
+          <div
+            *ngIf="
+              editForm.get('resignationReason')!.invalid &&
+              (editForm.get('resignationReason')!.dirty || editForm.get('resignationReason')!.touched)
+            "
+          >
+            <small class="form-text text-danger" *ngIf="editForm.get('resignationReason')?.errors?.pattern"> This text is invalid </small>
+          </div>
+        </div>
+
+        <!--<div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeResignation.approvalStatus" for="field_approvalStatus"
+            >Approval Status</label
+          >
+          <select
+            class="form-control"
+            name="approvalStatus"
+            formControlName="approvalStatus"
+            id="field_approvalStatus"
+            data-cy="approvalStatus"
+          >
+            <option [ngValue]="null">{{ 'bitsHrPayrollApp.Status.null' | translate }}</option>
+            <option *ngFor="let status of statusValues" [value]="status">{{ 'bitsHrPayrollApp.Status.' + status | translate }}</option>
+          </select>
+        </div>-->
+
+        <!--<div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeResignation.approvalComment" for="field_approvalComment"
+            >Approval Comment</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="approvalComment"
+            id="field_approvalComment"
+            data-cy="approvalComment"
+            formControlName="approvalComment"
+          />
+        </div>-->
+
+        <!--<div class="row mb-3">
+          <input
+            type="checkbox"
+            class="form-check font-sm"
+            name="isSalaryHold"
+            id="field_isSalaryHold"
+            data-cy="isSalaryHold"
+            formControlName="isSalaryHold"
+          />
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeResignation.isSalaryHold" for="field_isSalaryHold"
+            >Is Salary Hold</label
+          >
+        </div>
+
+        <div class="row mb-3">
+          <input
+            type="checkbox"
+            class="form-check font-sm"
+            name="isFestivalBonusHold"
+            id="field_isFestivalBonusHold"
+            data-cy="isFestivalBonusHold"
+            formControlName="isFestivalBonusHold"
+          />
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeResignation.isFestivalBonusHold" for="field_isFestivalBonusHold"
+            >Is Festival Bonus Hold</label
+          >
+        </div>-->
+
+        <div class="row">
+          <div class="col-md-8">
+            <div class="form-check">
+              <input class="" formControlName="isSalaryHold" id="field_isSalaryHold" name="isSalaryHold" type="checkbox" />
+              <label class="form-check-label" for="field_isSalaryHold">Mark to Hold salary</label>
+            </div>
+          </div>
+
+          <div class="col-md-4" *ngIf="isNoticePeriodCalculated">
+            <small [ngClass]="isNoticePeriodFollowed ? '' : 'text-danger'">
+              Completed Notice Period {{ calculatedNoticePeriod }} between {{ categoryBasedNoticePeriod }} days
+            </small>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-check">
+              <input
+                class=""
+                formControlName="isFestivalBonusHold"
+                id="field_isFestivalBonusHold"
+                name="isFestivalBonusHold"
+                type="checkbox"
+              />
+              <label class="form-check-label" for="field_isFestivalBonusHold">Mark to Hold Festival Bonus </label>
+            </div>
+          </div>
+        </div>
+
+        <!--<div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeResignation.createdBy" for="field_createdBy">Created By</label>
+          <select
+            class="form-control"
+            id="field_createdBy"
+            data-cy="createdBy"
+            name="createdBy"
+            formControlName="createdBy"
+            [compareWith]="compareEmployee"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="employeeOption" *ngFor="let employeeOption of employeesSharedCollection">{{ employeeOption.id }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeResignation.uodatedBy" for="field_uodatedBy">Uodated By</label>
+          <select
+            class="form-control"
+            id="field_uodatedBy"
+            data-cy="uodatedBy"
+            name="uodatedBy"
+            formControlName="uodatedBy"
+            [compareWith]="compareEmployee"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="employeeOption" *ngFor="let employeeOption of employeesSharedCollection">{{ employeeOption.id }}</option>
+          </select>
+        </div>-->
+      </div>
+
+      <div class="mt-3">
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,310 @@
+<jhi-header
+  [headerName]="!editForm.get('id')!.value ? 'Add New Tax Acknowledgement Receipt' : 'Edit Tax Acknowledgement Receipt'"
+  [midHeaderName01]="'Tax Acknowledgement Receipt Receive'"
+  [midRouterLinkText01]="'/tax-acknowledgement-receipt-finance/received'"
+  [shouldHaveHr]="false">
+</jhi-header>
+
+<div>
+  <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+
+    <div>
+
+      <div class="container-fluid card py-3">
+
+
+        <div class="row">
+
+          <!--Input Field-->
+          <div class="col-md-6">
+
+            <div>
+              <div class="form-group">
+                <label class="form-control-label required">Select Employee</label>
+
+                <jhi-simple-select-employee-form [selectedFieldValue]="editForm.get('employeeId')!.value"
+                                                 [listType]="employeeSelectListType"
+                                                 (onChangeEmployee)="changeEmployee($event)">
+                </jhi-simple-select-employee-form>
+
+                <div
+                  *ngIf="editForm.get('employeeId')!.invalid && (editForm.get('employeeId')!.dirty || editForm.get('employeeId')!.touched)">
+                  <small *ngIf="editForm.get('employeeId')?.errors?.required"
+                         class="form-text text-danger"
+                         jhiTranslate="entity.validation.required">
+                    This field is required.
+                  </small>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div class="form-group">
+                <label class="form-control-label required"
+                       jhiTranslate="bitsHrPayrollApp.taxAcknowledgementReceipt.fiscalYear"
+                       for="field_fiscalYear">Fiscal Year</label>
+                <select class="form-control" id="field_fiscalYear" name="fiscalYear"
+                        formControlName="fiscalYearId"  (change)="showAssessmentYear()">
+                  <option *ngIf="!editForm.get('fiscalYearId')!.value" [ngValue]="null" selected>Select
+                    fiscal year
+                  </option>
+                  <option [ngValue]="aitConfigOption.id"
+                          *ngFor="let aitConfigOption of aitConfigsYear;">{{aitConfigOption.range}}</option>
+                </select>
+              </div>
+              <div *ngIf="editForm.get('fiscalYearId')!.invalid && (editForm.get('fiscalYearId')!.dirty || editForm.get('fiscalYearId')!.touched)">
+                <small class="form-text text-danger"
+                       *ngIf="editForm.get('fiscalYearId')?.errors?.required"
+                       jhiTranslate="entity.validation.required">
+                  This field is required.
+                </small>
+              </div>
+            </div>
+
+            <div>
+              <div class="form-group">
+                <label class="form-control-label required" for="field_receiptNumber">Acknowledgement Receipt
+                  No.</label>
+                <input type="text" class="form-control" name="receiptNumber" id="field_receiptNumber"
+                       formControlName="receiptNumber"/>
+                <div *ngIf="editForm.get('receiptNumber')!.invalid && (editForm.get('receiptNumber')!.dirty || editForm.get('receiptNumber')!.touched)">
+                  <small class="form-text text-danger"
+                         *ngIf="editForm.get('receiptNumber')?.errors?.required"
+                         jhiTranslate="entity.validation.required">
+                    This field is required.
+                  </small>
+                  <small class="form-text text-danger"
+                         *ngIf="editForm.get('receiptNumber')?.errors?.maxlength"
+                         jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 250 }">
+                    This field cannot be longer than 250 characters.
+                  </small>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div class="form-group">
+                <label class="form-control-label required"
+                       jhiTranslate="bitsHrPayrollApp.taxAcknowledgementReceipt.dateOfSubmission"
+                       for="field_dateOfSubmission">Date Of Submission</label>
+                <span container="body" ngbTooltip="Please select the date you have submitted your tax return.">
+                                    <fa-icon class="fa-xs" icon="info-circle"></fa-icon>
+                                </span>
+                <div class="input-group">
+                  <input id="field_dateOfSubmission" type="text" class="form-control"
+                         name="dateOfSubmission" [maxDate]="maxDate" ngbDatepicker
+                         #dateOfSubmissionDp="ngbDatepicker" formControlName="dateOfSubmission"/>
+                  <span class="input-group-append">
+                                <button type="button" class="btn btn-secondary" (click)="dateOfSubmissionDp.toggle()"><fa-icon
+                                  icon="calendar-alt"></fa-icon></button>
+                            </span>
+                </div>
+                <div *ngIf="editForm.get('dateOfSubmission')!.invalid && (editForm.get('dateOfSubmission')!.dirty || editForm.get('dateOfSubmission')!.touched)">
+                  <small class="form-text text-danger"
+                         *ngIf="editForm.get('dateOfSubmission')?.errors?.required"
+                         jhiTranslate="entity.validation.required">
+                    This field is required.
+                  </small>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div class="form-group">
+                <label class="form-control-label required">Upload Tax Receipt (PDF)</label>
+                <br>
+                <input type="file" name="filePath" id="field_filePath" [ngClass]= "taxAcknowledgementId !==undefined ? 'input-hidden-text': ''"
+                       accept="application/pdf" (change)="onChangeUploadDocument($event)"/>
+                <div *ngIf="inValidFile">
+                  <small class="form-text text-danger">
+                    {{inValidFileErrorMsg}}
+                  </small>
+                </div>
+                <div *ngIf="taxAcknowledgementId !== undefined && taxAcknowledgementId !== null" class="d-inline-block">
+                  <div class="btn btn-secondary btn-sm mr-4" ngbTooltip="Download"
+                       (click)="exportReport(taxAcknowledgementId!)">
+                    <fa-icon icon="print"></fa-icon> PDF
+                  </div>
+                  <span  *ngIf="taxAcknowledgementId !== undefined && taxAcknowledgementId !== null"  class="font-sm">Uploaded file</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!--Employee Info -->
+          <div class="col-md-6">
+
+            <div>
+              <div class="form-group">
+                <label class="form-control-label" for="field_assessmentYear">Assessment Year</label>
+                <input type="text" class="form-control" name="assessmentYear" id="field_assessmentYear"
+                       formControlName="assessmentYear"/>
+              </div>
+            </div>
+
+            <div>
+              <div class="form-group">
+                <label class="form-control-label" for="field_tinNumber" [ngClass]="isTinMissing? 'required': '' ">TIN Number</label>
+                <input type="text" class="form-control" name="tinNumber" id="field_tinNumber"
+                       formControlName="tinNumber"
+                       (change)="onChangeTaxInput($event)"
+                       placeholder="Ex: 265552349998"/>
+                <div *ngIf="editForm.get('tinNumber')!.invalid && (editForm.get('tinNumber')!.dirty || editForm.get('tinNumber')!.touched)">
+                  <small class="form-text text-danger"
+                         *ngIf="editForm.get('tinNumber')?.errors?.required"
+                         jhiTranslate="entity.validation.required">
+                    This field is required.
+                  </small>
+                  <small class="form-text text-danger"
+                         *ngIf="editForm.get('tinNumber')?.errors?.minlength"
+                         jhiTranslate="entity.validation.minlength" [translateValues]="{ min: 12 }">
+                    This field is required to be at least 12 characters.
+                  </small>
+                  <small class="form-text text-danger"
+                         *ngIf="editForm.get('tinNumber')?.errors?.maxlength"
+                         jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 250 }">
+                    This field cannot be longer than 250 characters.
+                  </small>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div class="form-group">
+                <label class="form-control-label required"
+                       for="field_taxesCircle">Tax Circle</label>
+                <input type="text" class="form-control" name="taxesCircle" id="field_taxesCircle"
+                       formControlName="taxesCircle"
+                       placeholder="Ex: Circle-054 (Salary)"
+                       (change)="onChangeTaxInput($event)"/>
+                <div *ngIf="editForm.get('taxesCircle')!.invalid && (editForm.get('taxesCircle')!.dirty || editForm.get('taxesCircle')!.touched)">
+
+                  <small class="form-text text-danger"
+                         *ngIf="editForm.get('taxesCircle')?.errors?.minlength"
+                         jhiTranslate="entity.validation.minlength" [translateValues]="{ min: 3 }">
+                    This field is required to be at least 3 characters.
+                  </small>
+
+                  <small class="form-text text-danger"
+                         *ngIf="editForm.get('taxesCircle')?.errors?.required"
+                         jhiTranslate="entity.validation.required">
+                    This field is required.
+                  </small>
+                  <small class="form-text text-danger"
+                         *ngIf="editForm.get('taxesCircle')?.errors?.maxlength"
+                         jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 250 }">
+                    This field cannot be longer than 250 characters.
+                  </small>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div class="form-group">
+                <label class="form-control-label required"
+                       jhiTranslate="bitsHrPayrollApp.taxAcknowledgementReceipt.taxesZone"
+                       for="field_taxesZone">Taxes Zone</label>
+                <input type="text" class="form-control"
+                       name="taxesZone"
+                       id="field_taxesZone"
+                       formControlName="taxesZone"
+                       (change)="onChangeTaxInput($event)"
+                       placeholder="Ex: Tax Zone-03, Dhaka"/>
+                <div *ngIf="editForm.get('taxesZone')!.invalid && (editForm.get('taxesZone')!.dirty || editForm.get('taxesZone')!.touched)">
+                  <small class="form-text text-danger"
+                         *ngIf="editForm.get('taxesZone')?.errors?.minlength"
+                         jhiTranslate="entity.validation.minlength" [translateValues]="{ min: 3 }">
+                    This field is required to be at least 3 characters.
+                  </small>
+                  <small class="form-text text-danger"
+                         *ngIf="editForm.get('taxesZone')?.errors?.required"
+                         jhiTranslate="entity.validation.required">
+                    This field is required.
+                  </small>
+                  <small class="form-text text-danger"
+                         *ngIf="editForm.get('taxesZone')?.errors?.maxlength">
+                    This field cannot be longer than 250 characters.
+                  </small>
+                </div>
+              </div>
+            </div>
+
+            <div [hidden]="true">
+              <div class="form-group">
+                <label class="form-control-label" for="field_pin">PIN</label>
+                <input type="text" class="form-control" name="pin" id="field_pin"
+                       formControlName="pin"/>
+                <div *ngIf="editForm.get('pin')!.invalid && (editForm.get('pin')!.dirty || editForm.get('pin')!.touched)">
+                  <small class="form-text text-danger"
+                         *ngIf="editForm.get('pin')?.errors?.required"
+                         jhiTranslate="entity.validation.required">
+                    This field is required.
+                  </small>
+                </div>
+              </div>
+            </div>
+
+            <div [hidden]="true">
+              <div class="form-group">
+                <label class="form-control-label" for="field_name">Name</label>
+                <input type="text" class="form-control" name="name" id="field_name"
+                       formControlName="name"/>
+                <div *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
+                  <small class="form-text text-danger"
+                         *ngIf="editForm.get('name')?.errors?.required"
+                         jhiTranslate="entity.validation.required">
+                    This field is required.
+                  </small>
+                </div>
+              </div>
+            </div>
+
+            <div [hidden]="true">
+              <div class="form-group">
+                <label class="form-control-label" for="field_designation">Designation</label>
+                <input type="text" class="form-control" name="designation" id="field_designation"
+                       formControlName="designation"/>
+                <div *ngIf="editForm.get('designation')!.invalid && (editForm.get('designation')!.dirty || editForm.get('designation')!.touched)">
+                  <small class="form-text text-danger"
+                         *ngIf="editForm.get('designation')?.errors?.required"
+                         jhiTranslate="entity.validation.required">
+                    This field is required.
+                  </small>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="row">
+
+          <div class=" col-md-4 my-2">
+            <div>
+              <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+              </button>
+
+              <button *ngIf="taxAcknowledgementId ==undefined" type="submit" id="save-entity"
+                      [disabled]="editForm.invalid || isSaving || uploadFileMissing || isTinMissing || isTaxCircleMissing || isTaxZoneMissing" class="btn btn-primary">
+                <fa-icon icon="save"></fa-icon>&nbsp;
+                <span>Submit</span>
+              </button>
+
+              <button *ngIf="taxAcknowledgementId !=undefined" type="submit" id="update-entity"
+                      [disabled]="editForm.invalid || isSaving || uploadFileMissing || isTinMissing || isTaxCircleMissing || isTaxZoneMissing" class="btn btn-primary">
+                <fa-icon icon="save"></fa-icon>
+                <span>Update</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </form>
+
+</div>

@@ -1,0 +1,41 @@
+{
+  "applications": "*",
+  "changelogDate": "20210215124130",
+  "clientRootFolder": "",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "working_experience",
+  "fields": [
+    {
+      "fieldName": "lastDesignation",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "organizationName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dojOfLastOrganization",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "dorOfLastOrganization",
+      "fieldType": "LocalDate"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "WorkingExperience",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "workingExperience",
+      "relationshipName": "employee",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

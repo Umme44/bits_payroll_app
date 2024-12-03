@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity FinalSettlement.
+    -->
+    <changeSet id="20211212080916-1" author="jhipster">
+        <createTable tableName="final_settlement">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="date_of_resignation" type="date">
+                <constraints nullable="true" />
+            </column>
+            <column name="notice_period" type="integer">
+                <constraints nullable="true" />
+            </column>
+            <column name="last_working_day" type="date">
+                <constraints nullable="true" />
+            </column>
+            <column name="date_of_release" type="date">
+                <constraints nullable="true" />
+            </column>
+            <column name="service_tenure" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="m_basic" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="m_house_rent" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="m_medical" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="m_conveyance" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="salary_payable" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="salary_payable_remarks" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="total_days_for_leave_encashment" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="total_leave_encashment" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="mobile_bill_in_cash" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="allowance_01_name" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="allowance_01_amount" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="allowance_01_remarks" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="allowance_02_name" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="allowance_02_amount" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="allowance_02_remarks" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="allowance_03_name" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="allowance_03_amount" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="allowance_03_remarks" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="allowance_04_name" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="allowance_04_amount" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="allowance_04_remarks" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="deduction_notice_pay" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="deduction_pf" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="deduction_haf" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="deduction_excess_cell_bill" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="deduction_absent_days_adjustment" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="total_salary_payable" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="deduction_annual_income_tax" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="net_salary_payable" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="total_payable_pf" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="total_payable_gf" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="total_final_settlement_amount" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="created_at" type="date">
+                <constraints nullable="true" />
+            </column>
+            <column name="updated_at" type="date">
+                <constraints nullable="true" />
+            </column>
+            <column name="deduction_notice_pay_days" type="integer">
+                <constraints nullable="true" />
+            </column>
+            <column name="deduction_absent_days_adjustment_days" type="integer">
+                <constraints nullable="true" />
+            </column>
+            <column name="deduction_other" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="total_salary" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="total_gross_salary" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="total_deduction" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="final_settlement_date" type="date">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_finalized" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="salary_num_of_month" type="integer">
+                <constraints nullable="true" />
+            </column>
+            <column name="remarks" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="employee_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="created_by_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="updated_by_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+        </createTable>
+    </changeSet>
+
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+
+    <!--
+        Load sample data generated with Faker.js
+        - This data can be easily edited using a CSV editor (or even MS Excel) and
+          is located in the 'src/main/resources/config/liquibase/fake-data' directory
+        - By default this data is applied when running with the JHipster 'dev' profile.
+          This can be customized by adding or removing 'faker' in the 'spring.liquibase.contexts'
+          Spring Boot configuration key.
+    -->
+    <changeSet id="20211212080916-1-data" author="jhipster" context="faker">
+        <loadData
+                  file="config/liquibase/fake-data/final_settlement.csv"
+                  separator=";"
+                  tableName="final_settlement"
+                  usePreparedStatements="true">
+            <column name="id" type="numeric"/>
+            <column name="date_of_resignation" type="date"/>
+            <column name="notice_period" type="numeric"/>
+            <column name="last_working_day" type="date"/>
+            <column name="date_of_release" type="date"/>
+            <column name="service_tenure" type="string"/>
+            <column name="m_basic" type="numeric"/>
+            <column name="m_house_rent" type="numeric"/>
+            <column name="m_medical" type="numeric"/>
+            <column name="m_conveyance" type="numeric"/>
+            <column name="salary_payable" type="numeric"/>
+            <column name="salary_payable_remarks" type="string"/>
+            <column name="total_days_for_leave_encashment" type="numeric"/>
+            <column name="total_leave_encashment" type="numeric"/>
+            <column name="mobile_bill_in_cash" type="numeric"/>
+            <column name="allowance_01_name" type="string"/>
+            <column name="allowance_01_amount" type="numeric"/>
+            <column name="allowance_01_remarks" type="string"/>
+            <column name="allowance_02_name" type="string"/>
+            <column name="allowance_02_amount" type="numeric"/>
+            <column name="allowance_02_remarks" type="string"/>
+            <column name="allowance_03_name" type="string"/>
+            <column name="allowance_03_amount" type="numeric"/>
+            <column name="allowance_03_remarks" type="string"/>
+            <column name="allowance_04_name" type="string"/>
+            <column name="allowance_04_amount" type="numeric"/>
+            <column name="allowance_04_remarks" type="string"/>
+            <column name="deduction_notice_pay" type="numeric"/>
+            <column name="deduction_pf" type="numeric"/>
+            <column name="deduction_haf" type="numeric"/>
+            <column name="deduction_excess_cell_bill" type="numeric"/>
+            <column name="deduction_absent_days_adjustment" type="numeric"/>
+            <column name="total_salary_payable" type="numeric"/>
+            <column name="deduction_annual_income_tax" type="numeric"/>
+            <column name="net_salary_payable" type="numeric"/>
+            <column name="total_payable_pf" type="numeric"/>
+            <column name="total_payable_gf" type="numeric"/>
+            <column name="total_final_settlement_amount" type="numeric"/>
+            <column name="created_at" type="date"/>
+            <column name="updated_at" type="date"/>
+            <column name="deduction_notice_pay_days" type="numeric"/>
+            <column name="deduction_absent_days_adjustment_days" type="numeric"/>
+            <column name="deduction_other" type="numeric"/>
+            <column name="total_salary" type="numeric"/>
+            <column name="total_gross_salary" type="numeric"/>
+            <column name="total_deduction" type="numeric"/>
+            <column name="final_settlement_date" type="date"/>
+            <column name="is_finalized" type="boolean"/>
+            <column name="salary_num_of_month" type="numeric"/>
+            <column name="remarks" type="string"/>
+            <column name="employee_id" type="numeric"/>
+            <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
+        </loadData>
+    </changeSet>
+</databaseChangeLog>

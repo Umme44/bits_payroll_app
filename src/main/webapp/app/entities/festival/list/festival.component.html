@@ -1,0 +1,91 @@
+<div>
+  <jhi-header [addButtonText]="'New Festival'" [headerName]="'Festivals'" [routerLinkText]="'/festival/new'" [shouldHaveHr]="false">
+  </jhi-header>
+
+  <div class="table-responsive" id="entities" *ngIf="festivals && festivals.length > 0">
+    <table class="table table-hover list-text-color" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.festival.title">Title</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.festival.festivalName">Festival Name</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.festival.religion">Religion</span></th>
+          <th scope="col"><span>Type</span></th>
+          <th scope="col" class="text-end"><span>Head Count</span></th>
+          <th scope="col" class="text-start"><span>Bonus Disbursement Date</span></th>
+
+          <th scope="col"></th>
+          <th scope="col" class="text-end"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let festival of festivals; trackBy: trackId">
+          <td>{{ festival.title }}</td>
+
+          <td>{{ festival.festivalName }}</td>
+
+          <td jhiTranslate="{{ 'bitsHrPayrollApp.Religion.' + festival.religion }}">{{ festival.religion }}</td>
+
+          <td>{{ festival.isProRata ? 'Pro Rata' : 'General' }}</td>
+
+          <td class="text-end">{{ festival.numberOfBonus }}</td>
+
+          <td class="text-start">{{ festival.bonusDisbursementDate | formatMediumDate }}</td>
+
+          <td class="text-end">
+            <div *ngIf="!festival.isProRata; else isProRata">
+              <button class="btn btn-outline-success p-md-1" (click)="download('summary', festival)">
+                <fa-icon icon="download"></fa-icon> Summary
+              </button>
+              <button class="btn btn-outline-primary p-md-1" (click)="download('rce', festival)">
+                <fa-icon icon="download"></fa-icon> Regular Confirmed
+              </button>
+              <button class="btn btn-outline-primary p-md-1" (click)="download('ce', festival)">
+                <fa-icon icon="download"></fa-icon> Contractual
+              </button>
+            </div>
+
+            <ng-template #isProRata>
+              <button class="btn btn-outline-primary p-md-1" (click)="download('pro-rata', festival)">
+                <fa-icon icon="download"></fa-icon> Pro Rata
+              </button>
+            </ng-template>
+          </td>
+
+          <td class="text-end">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/festival', festival.id, 'view']" class="btn btn-info btn-sm px-md-3">
+                <fa-icon icon="eye"></fa-icon>
+              </button>
+
+              <button type="submit" [routerLink]="['/festival', festival.id, 'edit']" class="btn btn-primary btn-sm px-md-3">
+                <fa-icon icon="pencil-alt"></fa-icon>
+              </button>
+
+              <button type="submit" (click)="delete(festival)" class="btn btn-danger btn-sm px-md-3">
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="festivals && festivals.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

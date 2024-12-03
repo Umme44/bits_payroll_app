@@ -1,0 +1,358 @@
+<div class="container py-3">
+  <div class="row d-flex align-items-center justify-content-between">
+    <div class="col-md-3">
+      <button (click)="previousState()" class="btn btn-info">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+      <button (click)="downloadAsPDF()" class="btn btn-primary ml-2">
+        <fa-icon icon="print"></fa-icon>
+        Print
+      </button>
+    </div>
+
+    <div class="col-md-9 d-flex align-items-center justify-content-end font-medium text-right" [formGroup]="editForm">
+      <span class="pr-3">Showing From</span>
+
+      <select
+        class="form-control font-sm outline-none w-13"
+        style="padding: 3px 10px; width: 13%"
+        formControlName="startingYear"
+        (change)="onSelectMonthAndYear()"
+      >
+        <option selected disabled [ngValue]="null">-- Year --</option>
+        <option *ngFor="let year of years" [ngValue]="year">{{ year }}</option>
+      </select>
+
+      <span class="px-1"></span>
+
+      <select
+        class="form-control font-sm pr-1 outline-none"
+        style="padding: 3px 10px; width: 17%"
+        formControlName="startingMonth"
+        (change)="onSelectMonthAndYear()"
+      >
+        <option disabled [ngValue]="0">-- Month --</option>
+        <option selected [ngValue]="1">January</option>
+        <option [ngValue]="2">February</option>
+        <option [ngValue]="3">March</option>
+        <option [ngValue]="4">April</option>
+        <option [ngValue]="5">May</option>
+        <option [ngValue]="6">June</option>
+        <option [ngValue]="7">July</option>
+        <option [ngValue]="8">August</option>
+        <option [ngValue]="9">September</option>
+        <option [ngValue]="10">October</option>
+        <option [ngValue]="11">November</option>
+        <option [ngValue]="12">December</option>
+      </select>
+
+      <span class="px-3">To</span>
+
+      <select
+        class="form-control font-sm outline-none w-13"
+        style="padding: 3px 10px; width: 13%"
+        formControlName="endingYear"
+        (change)="onSelectMonthAndYear()"
+      >
+        <option selected disabled [ngValue]="null">-- Year --</option>
+        <option *ngFor="let year of years" [ngValue]="year">{{ year }}</option>
+      </select>
+
+      <span class="px-1"></span>
+
+      <select
+        class="form-control font-sm pr-1 outline-none w-17"
+        style="padding: 3px 10px; width: 17%"
+        formControlName="endingMonth"
+        (change)="onSelectMonthAndYear()"
+      >
+        <option disabled [ngValue]="0">-- Month --</option>
+        <option selected [ngValue]="1">January</option>
+        <option [ngValue]="2">February</option>
+        <option [ngValue]="3">March</option>
+        <option [ngValue]="4">April</option>
+        <option [ngValue]="5">May</option>
+        <option [ngValue]="6">June</option>
+        <option [ngValue]="7">July</option>
+        <option [ngValue]="8">August</option>
+        <option [ngValue]="9">September</option>
+        <option [ngValue]="10">October</option>
+        <option [ngValue]="11">November</option>
+        <option [ngValue]="12">December</option>
+      </select>
+
+      <span class="px-2"></span>
+
+      <button class="font-medium btn btn-outline-primary py-1 px-2" [disabled]="disableShowButton" (click)="showDetailedPfStatement()">
+        Show
+      </button>
+    </div>
+  </div>
+
+  <div class="row pt-1">
+    <div class="offset-3 col-md-9 text-right font-sm">
+      <span *ngIf="isMonthYearInvalid" class="text-danger">Starting Month, Year can not be larger than ending Month, Year.</span>
+    </div>
+  </div>
+</div>
+
+<div class="printDiv" *ngIf="pfStatement && pfStatement.yearlyPfCollection">
+  <div class="container printDiv">
+    <table class="table font-sm" style="border: none">
+      <tr>
+        <td width="22%" class="font-bold border-none" style="text-align: left !important">Name</td>
+        <td width="3%" class="border-none" style="text-align: left !important">:</td>
+        <td width="75%" class="border-none" style="text-align: left !important">{{ pfStatement.name }}</td>
+      </tr>
+      <tr>
+        <td width="22%" class="border-none font-bold" style="text-align: left !important">Date of Joining</td>
+        <td width="3%" class="border-none" style="text-align: left !important">:</td>
+        <td width="75%" class="border-none" style="text-align: left !important">{{ pfStatement.dateOfJoining | formatMediumDate }}</td>
+      </tr>
+      <tr>
+        <td width="22%" class="border-none font-bold" style="text-align: left !important">Date of Confirmation</td>
+        <td width="3%" class="border-none" style="text-align: left !important">:</td>
+        <td width="75%" class="border-none" style="text-align: left !important">{{ pfStatement.dateOfConfirmation | formatMediumDate }}</td>
+      </tr>
+    </table>
+
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Year</th>
+          <th>Month</th>
+          <th>Gross Salary</th>
+          <th>Basic</th>
+
+          <th colspan="2" width="16%">
+            <div class="row">
+              <div class="col">Contribution</div>
+            </div>
+
+            <hr style="margin: 1px 0; border-top: 1px solid #333" />
+
+            <div class="row">
+              <div class="col-6">Employee</div>
+              <div class="col-6">Employer</div>
+            </div>
+          </th>
+
+          <th colspan="2" width="16%">
+            <div class="row">
+              <div class="col">Interest</div>
+            </div>
+
+            <hr style="margin: 1px 0; border-top: 1px solid #333" />
+
+            <div class="row">
+              <div class="col-6">Employee</div>
+              <div class="col-6">Employer</div>
+            </div>
+          </th>
+
+          <th colspan="2" width="16%">
+            <div class="row">
+              <div class="col">Total</div>
+            </div>
+
+            <hr style="margin: 1px 0; border-top: 1px solid #333" />
+
+            <div class="row">
+              <div class="col-6">Contribution</div>
+              <div class="col-6">Interest</div>
+            </div>
+          </th>
+
+          <th colspan="2" width="16%">
+            <div class="row">
+              <div class="col">PF Arrear</div>
+            </div>
+
+            <hr style="margin: 1px 0; border-top: 1px solid #333" />
+
+            <div class="row">
+              <div class="col-6">Employee</div>
+              <div class="col-6">Employer</div>
+            </div>
+          </th>
+
+          <th>Remarks</th>
+        </tr>
+
+        <tr>
+          <th>Opening Balance</th>
+          <th></th>
+          <th colspan="8"></th>
+          <th colspan="2" class="text-right font-weight-bold">
+            {{ pfStatement.openingBalance | number }}
+          </th>
+          <th class="td-to-th">N/A</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let yearlyPf of pfStatement.yearlyPfCollection">
+          <ng-container *ngIf="yearlyPf.monthlyContributionList && yearlyPf.monthlyContributionList.length > 0">
+            <tr>
+              <td class="td-to-th vertical-align-middle" [attr.rowspan]="yearlyPf.monthlyContributionList.length + 1">
+                {{ yearlyPf.year }}
+              </td>
+            </tr>
+
+            <tr *ngFor="let monthlyContribution of yearlyPf.monthlyContributionList">
+              <td class="td-to-th" *ngIf="monthlyContribution.month">
+                {{ monthNameLimitTo3(monthlyContribution.month) }}
+              </td>
+              <td class="text-bold text-center">
+                {{ monthlyContribution.grossSalary | number }}
+              </td>
+              <td class="text-bold text-center">
+                {{ monthlyContribution.basic | number }}
+              </td>
+
+              <td class="text-bold text-center" width="8%">
+                {{ monthlyContribution.employeeContribution | number }}
+              </td>
+
+              <td class="text-bold text-center" width="8%">
+                {{ monthlyContribution.employerContribution | number }}
+              </td>
+
+              <td class="text-bold text-center" width="8%">
+                {{ monthlyContribution.employeeInterest | number }}
+              </td>
+
+              <td class="text-bold text-center" width="8%">
+                {{ monthlyContribution.employerInterest | number }}
+              </td>
+
+              <td class="text-bold text-center" width="8%">
+                {{ monthlyContribution.totalContribution | number }}
+              </td>
+
+              <td class="text-bold text-center" width="8%">
+                {{ monthlyContribution.totalInterest | number }}
+              </td>
+
+              <td class="text-bold text-center" width="8%">
+                {{ monthlyContribution.employeePfArrear | number }}
+              </td>
+
+              <td class="text-bold text-center" width="8%">
+                {{ monthlyContribution.employerPfArrear | number }}
+              </td>
+
+              <td class="text-bold text-center">
+                {{ monthlyContribution.remarks }}
+              </td>
+            </tr>
+
+            <tr *ngIf="yearlyPf.yearlyTotalContribution && yearlyPf.yearlyTotalInterest">
+              <td class="td-to-th" colspan="4" style="vertical-align: middle">Total Contribution of {{ yearlyPf.year }}</td>
+
+              <td class="bg-lime font-weight-bold">
+                {{ yearlyPf.yearlyTotalContribution!.totalEmployeeContributionInYear! | number }}
+              </td>
+
+              <td class="bg-lime font-weight-bold">
+                {{ yearlyPf.yearlyTotalContribution!.totalEmployerContributionInYear! | number }}
+              </td>
+
+              <td class="bg-lime font-weight-bold">
+                {{ yearlyPf.yearlyTotalInterest!.totalEmployeeInterestInYear! | number }}
+              </td>
+
+              <td class="bg-lime font-weight-bold">
+                {{ yearlyPf.yearlyTotalInterest!.totalEmployerInterestInYear! | number }}
+              </td>
+
+              <td class="bg-lime font-weight-bold">
+                {{
+                  yearlyTotalContribution(
+                    yearlyPf.yearlyTotalContribution!.totalEmployeeContributionInYear!,
+                    yearlyPf.yearlyTotalContribution!.totalEmployerContributionInYear!
+                  ) | number
+                }}
+              </td>
+
+              <td class="bg-lime font-weight-bold">
+                {{
+                  yearlyTotalContribution(
+                    yearlyPf.yearlyTotalInterest!.totalEmployeeInterestInYear!,
+                    yearlyPf.yearlyTotalInterest!.totalEmployerInterestInYear!
+                  ) | number
+                }}
+              </td>
+
+              <td class="bg-lime font-weight-bold">
+                {{ yearlyPf.yearlyTotalArrearPfDeduction!.totalEmployeeArrearPfDeduction! | number }}
+              </td>
+
+              <td class="bg-lime font-weight-bold">
+                {{ yearlyPf.yearlyTotalArrearPfDeduction!.totalEmployerArrearPfDeduction! | number }}
+              </td>
+
+              <td class="td-to-th">Contribution {{ yearlyPf.year }}</td>
+            </tr>
+          </ng-container>
+        </ng-container>
+      </tbody>
+    </table>
+
+    <div class="row" *ngIf="pfStatement.totalContribution && pfStatement.totalPfInterest && pfStatement.totalContributionWithInterests">
+      <div class="col-12">
+        <table class="table border-none mt-5" style="font-size: 0.9rem">
+          <tr>
+            <td width="40%" class="border-none" style="text-align: left !important">Total Contribution</td>
+            <td width="20%" class="border-none">{{ pfStatement.totalContribution.totalEmployeePortion | number }}</td>
+            <td width="20%" class="border-none">{{ pfStatement.totalContribution.totalEmployerPortion | number }}</td>
+            <td width="20%" class="border-none">{{ pfStatement.totalContribution.total | number }}</td>
+          </tr>
+
+          <tr>
+            <td width="40%" class="border-none" style="text-align: left !important">PF Interest</td>
+            <td width="20%" class="border-none">{{ pfStatement.totalPfInterest.totalEmployeePortion | number }}</td>
+            <td width="20%" class="border-none">{{ pfStatement.totalPfInterest.totalEmployerPortion | number }}</td>
+            <td width="20%" class="border-none">{{ pfStatement.totalPfInterest.total | number }}</td>
+          </tr>
+
+          <tr>
+            <td width="100%" class="border-none" colspan="4">
+              <hr style="margin: 0; border-top: 1px solid #333" />
+            </td>
+          </tr>
+
+          <tr>
+            <td width="40%" class="font-bold border-none" style="text-align: left !important">Total PF Contribution with Interest</td>
+            <td width="20%" class="font-bold border-none">
+              {{ pfStatement.totalContributionWithInterests.totalEmployeePortion | number }}
+            </td>
+            <td width="20%" class="font-bold border-none">
+              {{ pfStatement.totalContributionWithInterests.totalEmployerPortion | number }}
+            </td>
+            <td width="20%" class="font-bold border-none">{{ pfStatement.totalContributionWithInterests.total | number }}</td>
+          </tr>
+
+          <tr>
+            <td width="40%" class="border-none" style="text-align: left !important">Adjustment for Arrear PF</td>
+            <td width="20%" class="border-none">{{ pfStatement.adjustmentForArrearsPf?.totalEmployeePortion | number }}</td>
+            <td width="20%" class="border-none">{{ pfStatement.adjustmentForArrearsPf?.totalEmployerPortion | number }}</td>
+            <td width="20%" class="border-none">{{ pfStatement.adjustmentForArrearsPf?.total | number }}</td>
+          </tr>
+
+          <tr>
+            <td width="100%" class="border-none" colspan="4">
+              <hr style="margin: 0; border-top: 1px solid #333" />
+            </td>
+          </tr>
+
+          <tr>
+            <td width="40%" class="font-bold border-none bg-lavender" style="text-align: left !important">Net PF Payable</td>
+            <td width="20%" class="font-bold border-none bg-lavender">-</td>
+            <td width="20%" class="font-bold border-none bg-lavender">-</td>
+            <td width="20%" class="font-bold border-none bg-lavender">{{ pfStatement.netPfPayable | number }}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

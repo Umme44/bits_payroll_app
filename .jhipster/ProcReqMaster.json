@@ -1,0 +1,195 @@
+{
+  "changelogDate": "20230118070256",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "proc_req_master",
+  "fields": [
+    {
+      "fieldName": "requisitionNo",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique", "maxlength"],
+      "fieldValidateRulesMaxlength": "255"
+    },
+    {
+      "fieldName": "requestedDate",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "isCTOApprovalRequired",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "requisitionStatus",
+      "fieldType": "RequisitionStatus",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "PENDING,IN_PROGRESS,OPEN,CLOSED,PARTIALLY_CLOSED,NOT_APPROVED"
+    },
+    {
+      "fieldName": "expectedReceivedDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "reasoning",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "totalApproximatePrice",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min"],
+      "fieldValidateRulesMin": "1"
+    },
+    {
+      "fieldName": "recommendationAt01",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "recommendationAt02",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "recommendationAt03",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "recommendationAt04",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "recommendationAt05",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "nextRecommendationOrder",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "rejectedDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "rejectionReason",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "closedAt",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "createdAt",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "updatedAt",
+      "fieldType": "Instant"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "ProcReqMaster",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "department",
+      "otherEntityRelationshipName": "procReqMaster",
+      "relationshipName": "department",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "procReqMaster",
+      "relationshipName": "requestedBy",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "procReqMaster",
+      "relationshipName": "recommendedBy01",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "procReqMaster",
+      "relationshipName": "recommendedBy02",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "procReqMaster",
+      "relationshipName": "recommendedBy03",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "procReqMaster",
+      "relationshipName": "recommendedBy04",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "procReqMaster",
+      "relationshipName": "recommendedBy05",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "procReqMaster",
+      "relationshipName": "nextApprovalFrom",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "procReqMaster",
+      "relationshipName": "rejectedBy",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "procReqMaster",
+      "relationshipName": "closedBy",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "procReqMaster",
+      "ownerSide": true,
+      "relationshipName": "updatedBy",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "procReqMaster",
+      "ownerSide": true,
+      "relationshipName": "createdBy",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    },
+    {
+      "otherEntityName": "procReq",
+      "otherEntityRelationshipName": "procReqMaster",
+      "relationshipName": "procReq",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

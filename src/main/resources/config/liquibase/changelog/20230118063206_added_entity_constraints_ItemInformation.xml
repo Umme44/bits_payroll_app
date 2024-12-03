@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity ItemInformation.
+    -->
+    <changeSet id="20230118063206-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="department_id"
+                                 baseTableName="item_information"
+                                 constraintName="fk_item_information__department_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="department"/>
+
+        <addForeignKeyConstraint baseColumnNames="unit_of_measurement_id"
+                                 baseTableName="item_information"
+                                 constraintName="fk_item_information__unit_of_measurement_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="unit_of_measurement"/>
+
+        <addForeignKeyConstraint baseColumnNames="created_by_id"
+                                 baseTableName="item_information"
+                                 constraintName="fk_item_information__created_by_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="updated_by_id"
+                                 baseTableName="item_information"
+                                 constraintName="fk_item_information__updated_by_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+    </changeSet>
+</databaseChangeLog>

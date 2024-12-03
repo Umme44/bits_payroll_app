@@ -1,0 +1,79 @@
+<div class="modal-header border-none">
+  <h4 class="modal-title"></h4>
+  <!--<button type="button" class="btn-close" aria-label="Close" (click)="dismiss()"></button>-->
+  <button
+    type="button"
+    class="btn-close outline-none py-1"
+    data-dismiss="modal"
+    aria-hidden="true"
+    (click)="commonService.dismiss()"
+  ></button>
+</div>
+
+<div class="modal-body dashboard-modal">
+  <div class="container">
+    <div class="row dashboard">
+      <div
+        class="card p-1 btn color-ash col col-active mx-1 mt-0 mb-1 border-none box-shadow"
+        (click)="commonService.routerNavigation('/attendance-time-sheet')"
+      >
+        <img class="svg-image-size-mid mx-auto dashboard-svg-icon" src="../../../content/images/svg/attendance-time-sheet.svg" />
+
+        <div class="card-body pt-0 pb-2 px-0">
+          <div class="card-title text-center mb-0 font-sm">Attendance Time Sheet</div>
+        </div>
+      </div>
+      <div
+        class="card p-1 btn color-ash col col-active mx-1 mt-0 mb-1 border-none box-shadow"
+        (click)="commonService.routerNavigation('/movement-entry/apply')"
+      >
+        <img class="svg-image-size-mid mx-auto dashboard-svg-icon" src="../../../content/images/svg/movement.svg" />
+
+        <div class="card-body pt-0 pb-2 px-0">
+          <div class="card-title text-center mb-0 font-sm">Movement Entry</div>
+        </div>
+      </div>
+
+      <div
+        class="card p-1 btn color-ash col col-active mx-1 mt-0 mb-1 border-none box-shadow"
+        (click)="commonService.routerNavigation('/my-team')"
+      >
+        <img class="svg-image-size-mid mx-auto dashboard-svg-icon" src="../../../content/images/svg/team.svg" />
+
+        <div class="card-body pt-0 pb-2 px-0">
+          <div class="card-title text-center mb-0 font-sm">Team</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ------------------------------------------------------------------------------------------------------  -->
+
+    <div class="row dashboard pt-1">
+      <div
+        class="card p-1 btn color-ash col col-active mx-1 mt-0 mb-1 border-none box-shadow"
+        (click)="commonService.routerNavigation('/user-work-from-home-application')"
+      >
+        <fa-icon class="icon icon-size-mid pt-4" icon="home"></fa-icon>
+        <div class="card-body pt-0 pb-2 px-0">
+          <div class="card-title text-center mb-0 font-sm">Work From Home</div>
+        </div>
+      </div>
+
+      <div
+        class="card p-1 btn color-ash col col-active mx-1 mt-0 mb-1 border-none box-shadow"
+        (click)="commonService.routerNavigation('/user-flex-schedule-application')"
+      >
+        <img class="svg-image-size-mid mx-auto dashboard-svg-icon" src="../../../content/images/svg/flex-schedule.svg" />
+
+        <div class="card-body pt-0 pb-2 px-0">
+          <div class="card-title text-center mb-0 font-sm">Flex Schedule</div>
+        </div>
+      </div>
+
+      <div class="card p-1 col mx-1 mt-0 mb-1 border-none" style="opacity: 0"></div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer p-3 border-none">
+  <!--<button type="button" class="btn btn-sm btn-outline-dark" (click)="commonService.close()">Close</button>-->
+</div>

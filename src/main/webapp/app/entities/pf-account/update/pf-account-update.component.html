@@ -1,0 +1,866 @@
+<div>
+  <div class="col-12">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <!--       <h2
+              id="jhi-pf-account-heading"
+              data-cy="PfAccountCreateUpdateHeading"
+              jhiTranslate="bitsHrPayrollApp.pfAccount.home.createOrEditLabel"
+            >
+              Create or edit a Pf Account
+            </h2>-->
+      <jhi-header
+        [headerName]="!editForm.get('id')!.value ? 'Add New PF Account' : 'Edit PF Account'"
+        [midHeaderName01]="'PF Accounts'"
+        [midRouterLinkText01]="'/pf-account'"
+        [shouldHaveHr]="false"
+      >
+      </jhi-header>
+
+      <div class="card card-body">
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="flex-column">
+          <div class="row">
+            <div class="col-md-3">
+              <label class="form-label required" jhiTranslate="bitsHrPayrollApp.pfAccount.pfCode" for="field_pfCode">Pf Code</label>
+              <input type="text" class="form-control" name="pfCode" id="field_pfCode" data-cy="pfCode" formControlName="pfCode" />
+
+              <div *ngIf="editForm.get('pfCode')!.invalid && (editForm.get('pfCode')!.dirty || editForm.get('pfCode')!.touched)">
+                <small
+                  *ngIf="editForm.get('pfCode')?.errors?.required"
+                  class="form-text text-danger"
+                  jhiTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+                <small
+                  *ngIf="editForm.get('pfCode')?.errors?.minlength"
+                  [translateValues]="{ min: 4 }"
+                  class="form-text text-danger"
+                  jhiTranslate="entity.validation.minlength"
+                >
+                  This field is required to be at least 4 characters.
+                </small>
+                <small
+                  *ngIf="editForm.get('pfCode')?.errors?.maxlength"
+                  [translateValues]="{ max: 250 }"
+                  class="form-text text-danger"
+                  jhiTranslate="entity.validation.maxlength"
+                >
+                  This field cannot be longer than 250 characters.
+                </small>
+                <small
+                  *ngIf="editForm.get('pfCode')?.errors?.pattern"
+                  [translateValues]="{ pattern: 'PF Code' }"
+                  class="form-text text-danger"
+                  jhiTranslate="entity.validation.pattern"
+                >
+                  Please input valid PF code
+                </small>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label required" jhiTranslate="bitsHrPayrollApp.pfAccount.designationName" for="field_designationName"
+                >Designation Name</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                name="designationName"
+                id="field_designationName"
+                data-cy="designationName"
+                formControlName="designationName"
+              />
+
+              <div
+                *ngIf="
+                  editForm.get('designationName')!.invalid &&
+                  (editForm.get('designationName')!.dirty || editForm.get('designationName')!.touched)
+                "
+              >
+                <!--                                <small *ngIf="editForm.get('designationName')?.errors?.pattern"-->
+                <!--                                       [translateValues]="{ pattern: 'designation name' }"-->
+                <!--                                       class="form-text text-danger"-->
+                <!--                                       jhiTranslate="entity.validation.pattern">-->
+                <!--                                    Please input valid designation name-->
+                <!--                                </small>-->
+                <small
+                  *ngIf="editForm.get('designationName')?.errors?.required"
+                  class="form-text text-danger"
+                  jhiTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+                <small
+                  *ngIf="editForm.get('designationName')?.errors?.minlength"
+                  [translateValues]="{ min: 1 }"
+                  class="form-text text-danger"
+                  jhiTranslate="entity.validation.minlength"
+                >
+                  This field is required to be at least 1 characters.
+                </small>
+                <small
+                  *ngIf="editForm.get('designationName')?.errors?.maxlength"
+                  [translateValues]="{ max: 250 }"
+                  class="form-text text-danger"
+                  jhiTranslate="entity.validation.maxlength"
+                >
+                  This field cannot be longer than 250 characters.
+                </small>
+                <small
+                  *ngIf="editForm.get('designationName')?.errors?.pattern"
+                  class="form-text text-danger"
+                >
+                  This text is invalid
+                </small>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label required" jhiTranslate="bitsHrPayrollApp.pfAccount.departmentName" for="field_departmentName"
+                >Department Name</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                name="departmentName"
+                id="field_departmentName"
+                data-cy="departmentName"
+                formControlName="departmentName"
+              />
+
+              <div
+                *ngIf="
+                  editForm.get('departmentName')!.invalid &&
+                  (editForm.get('departmentName')!.dirty || editForm.get('departmentName')!.touched)
+                "
+              >
+                <small
+                  *ngIf="editForm.get('departmentName')?.errors?.pattern"
+                  class="form-text text-danger"
+                >
+                  This text is invalid
+                </small>
+                <small
+                  *ngIf="editForm.get('departmentName')?.errors?.required"
+                  class="form-text text-danger"
+                  jhiTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+                <small
+                  *ngIf="editForm.get('departmentName')?.errors?.minlength"
+                  [translateValues]="{ min: 1 }"
+                  class="form-text text-danger"
+                  jhiTranslate="entity.validation.minlength"
+                >
+                  This field is required to be at least 1 characters.
+                </small>
+                <small
+                  *ngIf="editForm.get('departmentName')?.errors?.maxlength"
+                  [translateValues]="{ max: 250 }"
+                  class="form-text text-danger"
+                  jhiTranslate="entity.validation.maxlength"
+                >
+                  This field cannot be longer than 250 characters.
+                </small>
+                <!--                                <small *ngIf="editForm.get('departmentName')?.errors?.pattern"-->
+                <!--                                       [translateValues]="{ pattern: 'department name' }"-->
+                <!--                                       class="form-text text-danger"-->
+                <!--                                       jhiTranslate="entity.validation.pattern">-->
+                <!--                                    Please input valid department name-->
+                <!--                                </small>-->
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label required" jhiTranslate="bitsHrPayrollApp.pfAccount.unitName" for="field_unitName">Unit Name</label>
+              <input type="text" class="form-control" name="unitName" id="field_unitName" data-cy="unitName" formControlName="unitName" />
+
+              <div *ngIf="editForm.get('unitName')!.invalid && (editForm.get('unitName')!.dirty || editForm.get('unitName')!.touched)">
+                <small
+                  *ngIf="editForm.get('unitName')?.errors?.required"
+                  class="form-text text-danger"
+                  jhiTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+                <small
+                  *ngIf="editForm.get('unitName')?.errors?.minlength"
+                  [translateValues]="{ min: 1 }"
+                  class="form-text text-danger"
+                  jhiTranslate="entity.validation.minlength"
+                >
+                  This field is required to be at least 1 characters.
+                </small>
+                <small
+                  *ngIf="editForm.get('unitName')?.errors?.maxlength"
+                  [translateValues]="{ max: 250 }"
+                  class="form-text text-danger"
+                  jhiTranslate="entity.validation.maxlength"
+                >
+                  This field cannot be longer than 250 characters.
+                </small>
+                <small
+                  *ngIf="editForm.get('unitName')?.errors?.pattern"
+                  class="form-text text-danger"
+                >
+                  This text is invalid
+                </small>
+                <!--                                <small *ngIf="editForm.get('unitName')?.errors?.pattern"-->
+                <!--                                       [translateValues]="{ pattern: 'unit name' }"-->
+                <!--                                       class="form-text text-danger"-->
+                <!--                                       jhiTranslate="entity.validation.pattern">-->
+                <!--                                    Please input valid unit name-->
+                <!--                                </small>-->
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label required" jhiTranslate="bitsHrPayrollApp.pfAccount.accHolderName" for="field_accHolderName"
+                >Acc Holder Name</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                name="accHolderName"
+                id="field_accHolderName"
+                data-cy="accHolderName"
+                formControlName="accHolderName"
+              />
+
+              <div
+                *ngIf="
+                  editForm.get('accHolderName')!.invalid && (editForm.get('accHolderName')!.dirty || editForm.get('accHolderName')!.touched)
+                "
+              >
+                <small
+                  *ngIf="editForm.get('accHolderName')?.errors?.required"
+                  class="form-text text-danger"
+                  jhiTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+                <small
+                  *ngIf="editForm.get('accHolderName')?.errors?.minlength"
+                  [translateValues]="{ min: 2 }"
+                  class="form-text text-danger"
+                  jhiTranslate="entity.validation.minlength"
+                >
+                  This field is required to be at least 2 characters.
+                </small>
+                <small
+                  *ngIf="editForm.get('accHolderName')?.errors?.maxlength"
+                  [translateValues]="{ max: 250 }"
+                  class="form-text text-danger"
+                  jhiTranslate="entity.validation.maxlength"
+                >
+                  This field cannot be longer than 250 characters.
+                </small>
+                <small
+                  *ngIf="editForm.get('accHolderName')?.errors?.pattern"
+                  [translateValues]="{ pattern: 'Acc Holder Name' }"
+                  class="form-text text-danger"
+                  jhiTranslate="entity.validation.pattern"
+                >
+                  Please input valid Acc Holder Name
+                </small>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label required" jhiTranslate="bitsHrPayrollApp.pfAccount.pin" for="field_pin">Pin</label>
+              <input type="text" class="form-control" name="pin" id="field_pin" data-cy="pin" formControlName="pin" />
+
+              <div *ngIf="editForm.get('pin')!.invalid && (editForm.get('pin')!.dirty || editForm.get('pin')!.touched)">
+                <small
+                  *ngIf="editForm.get('pin')?.errors?.required"
+                  class="form-text text-danger"
+                  jhiTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+                <small
+                  *ngIf="editForm.get('pin')?.errors?.minlength"
+                  [translateValues]="{ min: 4 }"
+                  class="form-text text-danger"
+                  jhiTranslate="entity.validation.minlength"
+                >
+                  This field is required to be at least 4 characters.
+                </small>
+                <small
+                  *ngIf="editForm.get('pin')?.errors?.maxlength"
+                  [translateValues]="{ max: 250 }"
+                  class="form-text text-danger"
+                  jhiTranslate="entity.validation.maxlength"
+                >
+                  This field cannot be longer than 250 characters.
+                </small>
+                <small
+                  *ngIf="editForm.get('pin')?.errors?.pattern"
+                  [translateValues]="{ pattern: 'PIN' }"
+                  class="form-text text-danger"
+                  jhiTranslate="entity.validation.pattern"
+                >
+                  Please input valid PIN
+                </small>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label required" jhiTranslate="bitsHrPayrollApp.pfAccount.dateOfJoining" for="field_dateOfJoining"
+                >Date Of Joining</label
+              >
+              <div class="input-group">
+                <input
+                  id="field_dateOfJoining"
+                  data-cy="dateOfJoining"
+                  type="text"
+                  class="form-control"
+                  name="dateOfJoining"
+                  ngbDatepicker
+                  #dateOfJoiningDp="ngbDatepicker"
+                  formControlName="dateOfJoining"
+                />
+                <button type="button" class="btn btn-secondary" (click)="dateOfJoiningDp.toggle()">
+                  <fa-icon icon="calendar-alt"></fa-icon>
+                </button>
+              </div>
+              <div
+                *ngIf="
+                  editForm.get('dateOfJoining')!.invalid && (editForm.get('dateOfJoining')!.dirty || editForm.get('dateOfJoining')!.touched)
+                "
+              >
+                <small
+                  *ngIf="editForm.get('dateOfJoining')?.errors?.required"
+                  class="form-text text-danger"
+                  jhiTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label required" jhiTranslate="bitsHrPayrollApp.pfAccount.dateOfConfirmation" for="field_dateOfConfirmation"
+                >Date Of Confirmation</label
+              >
+
+              <div class="input-group">
+                <input
+                  id="field_dateOfConfirmation"
+                  data-cy="dateOfConfirmation"
+                  type="text"
+                  class="form-control"
+                  name="dateOfConfirmation"
+                  ngbDatepicker
+                  #dateOfConfirmationDp="ngbDatepicker"
+                  formControlName="dateOfConfirmation"
+                />
+                <button type="button" class="btn btn-secondary" (click)="dateOfConfirmationDp.toggle()">
+                  <fa-icon icon="calendar-alt"></fa-icon>
+                </button>
+              </div>
+              <div
+                *ngIf="
+                  editForm.get('dateOfConfirmation')!.invalid &&
+                  (editForm.get('dateOfConfirmation')!.dirty || editForm.get('dateOfConfirmation')!.touched)
+                "
+              >
+                <small
+                  *ngIf="editForm.get('dateOfConfirmation')?.errors?.required"
+                  class="form-text text-danger"
+                  jhiTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <label
+                class="form-label required"
+                jhiTranslate="bitsHrPayrollApp.pfAccount.membershipStartDate"
+                for="field_membershipStartDate"
+                >Membership Start Date</label
+              >
+              <div class="input-group">
+                <input
+                  id="field_membershipStartDate"
+                  data-cy="membershipStartDate"
+                  type="text"
+                  class="form-control"
+                  name="membershipStartDate"
+                  ngbDatepicker
+                  #membershipStartDateDp="ngbDatepicker"
+                  formControlName="membershipStartDate"
+                />
+                <button type="button" class="btn btn-secondary" (click)="membershipStartDateDp.toggle()">
+                  <fa-icon icon="calendar-alt"></fa-icon>
+                </button>
+              </div>
+              <div
+                *ngIf="
+                  editForm.get('membershipStartDate')!.invalid &&
+                  (editForm.get('membershipStartDate')!.dirty || editForm.get('membershipStartDate')!.touched)
+                "
+              >
+                <small
+                  *ngIf="editForm.get('membershipStartDate')?.errors?.required"
+                  class="form-text text-danger"
+                  jhiTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label" jhiTranslate="bitsHrPayrollApp.pfAccount.membershipEndDate" for="field_membershipEndDate"
+                >Membership End Date</label
+              >
+              <div class="input-group">
+                <input
+                  id="field_membershipEndDate"
+                  data-cy="membershipEndDate"
+                  type="text"
+                  class="form-control"
+                  name="membershipEndDate"
+                  ngbDatepicker
+                  #membershipEndDateDp="ngbDatepicker"
+                  formControlName="membershipEndDate"
+                />
+                <button type="button" class="btn btn-secondary" (click)="membershipEndDateDp.toggle()">
+                  <fa-icon icon="calendar-alt"></fa-icon>
+                </button>
+              </div>
+              <div
+                *ngIf="
+                  editForm.get('membershipEndDate')!.valid &&
+                  (editForm.get('membershipEndDate')!.dirty || editForm.get('membershipEndDate')!.touched)
+                "
+              >
+                <small *ngIf="isDateInvalid && !isConflict" class="form-text text-danger">
+                  End Date can not be smaller than Start Date.
+                </small>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label required" jhiTranslate="bitsHrPayrollApp.pfAccount.status" for="field_status">Status</label>
+              <select class="form-control form-select" name="status" formControlName="status" id="field_status" data-cy="status">
+                <option [ngValue]="null">{{ 'bitsHrPayrollApp.PfAccountStatus.null' | translate }}</option>
+                <option *ngFor="let pfAccountStatus of pfAccountStatusValues" [value]="pfAccountStatus">
+                  {{ 'bitsHrPayrollApp.PfAccountStatus.' + pfAccountStatus | translate }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <!--  <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+              <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+            </button>-->
+
+          <button
+            type="submit"
+            id="save-entity"
+            data-cy="entityCreateSaveButton"
+            [disabled]="editForm.invalid || isSaving"
+            class="btn btn-primary mt-3"
+          >
+            <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+          </button>
+        </div>
+      </div>
+
+      <div>
+        <!--  <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+            <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+          </button>-->
+
+        <!--<button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>-->
+      </div>
+    </form>
+
+    <!--{{editForm.get('accHolderName')!.touched}}-->
+  </div>
+</div>
+
+<!--<div>-->
+<!--  <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">-->
+
+<!--    <jhi-header-->
+<!--      [headerName]="!editForm.get('id')!.value ? 'Add New PF Account' : 'Edit PF Account'"-->
+<!--      [midHeaderName01]="'PF Accounts'"-->
+<!--      [midRouterLinkText01]="'/pf-account'"-->
+<!--      [shouldHaveHr]="false">-->
+<!--    </jhi-header>-->
+<!--    <div class="card card-body">-->
+<!--      <jhi-alert-error></jhi-alert-error>-->
+
+<!--      <div class="flex-column ">-->
+<!--        <div class="row ">-->
+<!--          <div class="col-md-3 mb-3">-->
+<!--            <div class="mb-3 ">-->
+<!--              <label class="form-control-label required" jhiTranslate="bitsHrPayrollApp.pfAccount.pfCode"-->
+<!--                     for="field_pfCode">Pf Code</label>-->
+<!--              <input type="text" class="form-control p-2" name="pfCode" id="field_pfCode"-->
+<!--                     [attr.readonly]= "editForm.get('id')!.value ? '' : null"-->
+<!--                     formControlName="pfCode"/>-->
+<!--              <div-->
+<!--                *ngIf="editForm.get('pfCode')!.invalid && (editForm.get('pfCode')!.dirty || editForm.get('pfCode')!.touched)">-->
+
+<!--                <small *ngIf="editForm.get('pfCode')?.errors?.required"-->
+<!--                       class="form-text text-danger"-->
+<!--                       jhiTranslate="entity.validation.required">-->
+<!--                  This field is required.-->
+<!--                </small>-->
+<!--                <small *ngIf="editForm.get('pfCode')?.errors?.minlength"-->
+<!--                       [translateValues]="{ min: 4 }" class="form-text text-danger"-->
+<!--                       jhiTranslate="entity.validation.minlength">-->
+<!--                  This field is required to be at least 4 characters.-->
+<!--                </small>-->
+<!--                <small *ngIf="editForm.get('pfCode')?.errors?.maxlength"-->
+<!--                       [translateValues]="{ max: 250 }" class="form-text text-danger"-->
+<!--                       jhiTranslate="entity.validation.maxlength">-->
+<!--                  This field cannot be longer than 250 characters.-->
+<!--                </small>-->
+<!--                <small *ngIf="editForm.get('pfCode')?.errors?.pattern"-->
+<!--                       [translateValues]="{ pattern: 'PF Code' }"-->
+<!--                       class="form-text text-danger"-->
+<!--                       jhiTranslate="entity.validation.pattern">-->
+<!--                  Please input valid PF code-->
+<!--                </small>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="col-md-3 ">-->
+<!--            <div class="mb-3">-->
+<!--              <label class="form-control-label required" jhiTranslate="bitsHrPayrollApp.pfAccount.accHolderName"-->
+<!--                     for="field_accHolderName">Acc Holder Name</label>-->
+<!--              <input type="text" class="form-control p-2" name="accHolderName" id="field_accHolderName"-->
+<!--                     formControlName="accHolderName"/>-->
+<!--              <div-->
+<!--                *ngIf="editForm.get('accHolderName')!.invalid && (editForm.get('accHolderName')!.dirty || editForm.get('accHolderName')!.touched)">-->
+<!--                <small *ngIf="editForm.get('accHolderName')?.errors?.required"-->
+<!--                       class="form-text text-danger"-->
+<!--                       jhiTranslate="entity.validation.required">-->
+<!--                  This field is required.-->
+<!--                </small>-->
+<!--                <small *ngIf="editForm.get('accHolderName')?.errors?.minlength"-->
+<!--                       [translateValues]="{ min: 2 }" class="form-text text-danger"-->
+<!--                       jhiTranslate="entity.validation.minlength">-->
+<!--                  This field is required to be at least 2 characters.-->
+<!--                </small>-->
+<!--                <small *ngIf="editForm.get('accHolderName')?.errors?.maxlength"-->
+<!--                       [translateValues]="{ max: 250 }" class="form-text text-danger"-->
+<!--                       jhiTranslate="entity.validation.maxlength">-->
+<!--                  This field cannot be longer than 250 characters.-->
+<!--                </small>-->
+<!--                <small *ngIf="editForm.get('accHolderName')?.errors?.pattern"-->
+<!--                       [translateValues]="{ pattern: 'Acc Holder Name' }"-->
+<!--                       class="form-text text-danger"-->
+<!--                       jhiTranslate="entity.validation.pattern">-->
+<!--                  Please input valid Acc Holder Name-->
+<!--                </small>-->
+<!--              </div>-->
+
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="col-md-3">-->
+<!--            <div class="mb-3">-->
+<!--              <label class="form-control-label required" jhiTranslate="bitsHrPayrollApp.pfAccount.pin"-->
+<!--                     for="field_pin">Pin</label>-->
+<!--              <input type="text" class="form-control p-2" name="pin" id="field_pin"-->
+<!--                     [attr.readonly]= "editForm.get('id')!.value ? '' : null"-->
+<!--                     formControlName="pin"/>-->
+<!--              <div-->
+<!--                *ngIf="editForm.get('pin')!.invalid && (editForm.get('pin')!.dirty || editForm.get('pin')!.touched)">-->
+<!--                <small *ngIf="editForm.get('pin')?.errors?.required"-->
+<!--                       class="form-text text-danger"-->
+<!--                       jhiTranslate="entity.validation.required">-->
+<!--                  This field is required.-->
+<!--                </small>-->
+<!--                <small *ngIf="editForm.get('pin')?.errors?.minlength"-->
+<!--                       [translateValues]="{ min: 4 }" class="form-text text-danger"-->
+<!--                       jhiTranslate="entity.validation.minlength">-->
+<!--                  This field is required to be at least 4 characters.-->
+<!--                </small>-->
+<!--                <small *ngIf="editForm.get('pin')?.errors?.maxlength"-->
+<!--                       [translateValues]="{ max: 250 }" class="form-text text-danger"-->
+<!--                       jhiTranslate="entity.validation.maxlength">-->
+<!--                  This field cannot be longer than 250 characters.-->
+<!--                </small>-->
+<!--                <small *ngIf="editForm.get('pin')?.errors?.pattern"-->
+<!--                       [translateValues]="{ pattern: 'PIN' }"-->
+<!--                       class="form-text text-danger"-->
+<!--                       jhiTranslate="entity.validation.pattern">-->
+<!--                  Please input valid PIN-->
+<!--                </small>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="col-md-3 mb-4">-->
+<!--            <div class="mb-3">-->
+<!--              <label class="form-control-label required " jhiTranslate="bitsHrPayrollApp.pfAccount.designationName"-->
+<!--                     for="field_designationName">Designation Name</label>-->
+<!--              <input type="text" class="form-control p-2" name="designationName" id="field_designationName"-->
+<!--                     formControlName="designationName"/>-->
+<!--              <div-->
+<!--                *ngIf="editForm.get('designationName')!.invalid && (editForm.get('designationName')!.dirty || editForm.get('designationName')!.touched)">-->
+
+<!--                &lt;!&ndash;                                <small *ngIf="editForm.get('designationName')?.errors?.pattern"&ndash;&gt;-->
+<!--                &lt;!&ndash;                                       [translateValues]="{ pattern: 'designation name' }"&ndash;&gt;-->
+<!--                &lt;!&ndash;                                       class="form-text text-danger"&ndash;&gt;-->
+<!--                &lt;!&ndash;                                       jhiTranslate="entity.validation.pattern">&ndash;&gt;-->
+<!--                &lt;!&ndash;                                    Please input valid designation name&ndash;&gt;-->
+<!--                &lt;!&ndash;                                </small>&ndash;&gt;-->
+<!--                <small *ngIf="editForm.get('designationName')?.errors?.required"-->
+<!--                       class="form-text text-danger"-->
+<!--                       jhiTranslate="entity.validation.required">-->
+<!--                  This field is required.-->
+<!--                </small>-->
+<!--                <small *ngIf="editForm.get('designationName')?.errors?.minlength"-->
+<!--                       [translateValues]="{ min: 1 }" class="form-text text-danger"-->
+<!--                       jhiTranslate="entity.validation.minlength">-->
+<!--                  This field is required to be at least 1 characters.-->
+<!--                </small>-->
+<!--                <small *ngIf="editForm.get('designationName')?.errors?.maxlength"-->
+<!--                       [translateValues]="{ max: 250 }" class="form-text text-danger"-->
+<!--                       jhiTranslate="entity.validation.maxlength">-->
+<!--                  This field cannot be longer than 250 characters.-->
+<!--                </small>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="col-md-3 mb-3">-->
+<!--            <div class="mb-3">-->
+<!--              <label class="form-control-label required" jhiTranslate="bitsHrPayrollApp.pfAccount.departmentName"-->
+<!--                     for="field_departmentName">Department Name</label>-->
+<!--              <input type="text" class="form-control p-2" name="departmentName" id="field_departmentName"-->
+<!--                     formControlName="departmentName"/>-->
+<!--              <div-->
+<!--                *ngIf="editForm.get('departmentName')!.invalid && (editForm.get('departmentName')!.dirty || editForm.get('departmentName')!.touched)">-->
+<!--                <small *ngIf="editForm.get('departmentName')?.errors?.required"-->
+<!--                       class="form-text text-danger"-->
+<!--                       jhiTranslate="entity.validation.required">-->
+<!--                  This field is required.-->
+<!--                </small>-->
+<!--                <small *ngIf="editForm.get('departmentName')?.errors?.minlength"-->
+<!--                       [translateValues]="{ min: 1 }" class="form-text text-danger"-->
+<!--                       jhiTranslate="entity.validation.minlength">-->
+<!--                  This field is required to be at least 1 characters.-->
+<!--                </small>-->
+<!--                <small *ngIf="editForm.get('departmentName')?.errors?.maxlength"-->
+<!--                       [translateValues]="{ max: 250 }" class="form-text text-danger"-->
+<!--                       jhiTranslate="entity.validation.maxlength">-->
+<!--                  This field cannot be longer than 250 characters.-->
+<!--                </small>-->
+<!--                &lt;!&ndash;                                <small *ngIf="editForm.get('departmentName')?.errors?.pattern"&ndash;&gt;-->
+<!--                &lt;!&ndash;                                       [translateValues]="{ pattern: 'department name' }"&ndash;&gt;-->
+<!--                &lt;!&ndash;                                       class="form-text text-danger"&ndash;&gt;-->
+<!--                &lt;!&ndash;                                       jhiTranslate="entity.validation.pattern">&ndash;&gt;-->
+<!--                &lt;!&ndash;                                    Please input valid department name&ndash;&gt;-->
+<!--                &lt;!&ndash;                                </small>&ndash;&gt;-->
+<!--              </div>-->
+
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="col-md-3">-->
+<!--            <div class="mb-3">-->
+<!--              <label class="form-control-label required" jhiTranslate="bitsHrPayrollApp.pfAccount.unitName"-->
+<!--                     for="field_unitName">Unit Name</label>-->
+<!--              <input type="text" class="form-control p-2 " name="unitName" id="field_unitName"-->
+<!--                     formControlName="unitName"/>-->
+<!--              <div-->
+<!--                *ngIf="editForm.get('unitName')!.invalid && (editForm.get('unitName')!.dirty || editForm.get('unitName')!.touched)">-->
+<!--                <small *ngIf="editForm.get('unitName')?.errors?.required"-->
+<!--                       class="form-text text-danger"-->
+<!--                       jhiTranslate="entity.validation.required">-->
+<!--                  This field is required.-->
+<!--                </small>-->
+<!--                <small *ngIf="editForm.get('unitName')?.errors?.minlength"-->
+<!--                       [translateValues]="{ min: 1 }" class="form-text text-danger"-->
+<!--                       jhiTranslate="entity.validation.minlength">-->
+<!--                  This field is required to be at least 1 characters.-->
+<!--                </small>-->
+<!--                <small *ngIf="editForm.get('unitName')?.errors?.maxlength"-->
+<!--                       [translateValues]="{ max: 250 }" class="form-text text-danger"-->
+<!--                       jhiTranslate="entity.validation.maxlength">-->
+<!--                  This field cannot be longer than 250 characters.-->
+<!--                </small>-->
+<!--                &lt;!&ndash;                                <small *ngIf="editForm.get('unitName')?.errors?.pattern"&ndash;&gt;-->
+<!--                &lt;!&ndash;                                       [translateValues]="{ pattern: 'unit name' }"&ndash;&gt;-->
+<!--                &lt;!&ndash;                                       class="form-text text-danger"&ndash;&gt;-->
+<!--                &lt;!&ndash;                                       jhiTranslate="entity.validation.pattern">&ndash;&gt;-->
+<!--                &lt;!&ndash;                                    Please input valid unit name&ndash;&gt;-->
+<!--                &lt;!&ndash;                                </small>&ndash;&gt;-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+
+<!--          <div class="col-md-3">-->
+<!--            <div class="mb-3">-->
+<!--              <label class="form-control-label required"-->
+<!--                     jhiTranslate="bitsHrPayrollApp.pfAccount.dateOfJoining"-->
+<!--                     for="field_doj">Date of Joining</label>-->
+<!--              <div class="input-group">-->
+<!--                <input #dojDp="ngbDatepicker" class="form-control p-2"-->
+<!--                       formControlName="dateOfJoining" id="field_doj"-->
+<!--                       name="dateOfJoining"-->
+<!--                       ngbDatepicker type="text"/>-->
+<!--                <span class="input-group-append">-->
+<!--                                        <button (click)="dojDp.toggle()" class="btn btn-secondary btn-sm p-2 "-->
+<!--                                                type="button"><fa-icon icon="calendar-alt"></fa-icon></button>-->
+<!--                                </span>-->
+
+<!--              </div>-->
+<!--              <div-->
+<!--                *ngIf="editForm.get('dateOfJoining')!.invalid && (editForm.get('dateOfJoining')!.dirty || editForm.get('dateOfJoining')!.touched)">-->
+<!--                <small *ngIf="editForm.get('dateOfJoining')?.errors?.required"-->
+<!--                       class="form-text text-danger"-->
+<!--                       jhiTranslate="entity.validation.required">-->
+<!--                  This field is required.-->
+<!--                </small>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+
+<!--          <div class="col-md-3">-->
+<!--            <div class="mb-3">-->
+<!--              <label class="form-control-label required"-->
+<!--                     jhiTranslate="bitsHrPayrollApp.pfAccount.dateOfConfirmation"-->
+<!--                     for="field_doc">Date of Confirmation</label>-->
+<!--              <div class="input-group">-->
+<!--                <input #docDp="ngbDatepicker" class="form-control p-0"-->
+<!--                       formControlName="dateOfConfirmation" id="field_doc"-->
+<!--                       name="dateOfConfirmation"-->
+<!--                       ngbDatepicker type="text"/>-->
+<!--                <span class="input-group-append">-->
+<!--                                        <button (click)="docDp.toggle()" class="btn btn-secondary btn-sm p-2"-->
+<!--                                                type="button"><fa-icon icon="calendar-alt"></fa-icon></button>-->
+<!--                                </span>-->
+
+<!--              </div>-->
+<!--              <div-->
+<!--                *ngIf="editForm.get('dateOfConfirmation')!.invalid && (editForm.get('dateOfConfirmation')!.dirty || editForm.get('dateOfConfirmation')!.touched)">-->
+<!--                <small *ngIf="editForm.get('dateOfConfirmation')?.errors?.required"-->
+<!--                       class="form-text text-danger"-->
+<!--                       jhiTranslate="entity.validation.required">-->
+<!--                  This field is required.-->
+<!--                </small>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+
+<!--          <div class="col-md-3">-->
+<!--            <div class="mb-3">-->
+<!--              <label class="form-control-label required"-->
+<!--                     jhiTranslate="bitsHrPayrollApp.pfAccount.membershipStartDate"-->
+<!--                     for="field_membershipStartDate">Membership Start Date</label>-->
+<!--              <div class="input-group">-->
+
+<!--                &lt;!&ndash; <input id="field_membershipStartDate" type="date" class="form-control"-->
+<!--                        name="membershipStartDate" (change)="memberShipDateValidation()" ngbDatepicker #membershipStartDateDp="ngbDatepicker"-->
+<!--                        formControlName="membershipStartDate"/>&ndash;&gt;-->
+<!--                <input #membershipStartDateDp="ngbDatepicker" (ngModelChange)="memberShipDateValidation()" class="form-control "-->
+<!--                       formControlName="membershipStartDate" id="field_membershipStartDate"-->
+<!--                       name="membershipStartDate"-->
+<!--                       ngbDatepicker type="text"/>-->
+<!--                <span class="input-group-append">-->
+<!--                                        <button (click)="membershipStartDateDp.toggle()" class="btn btn-secondary btn-sm p-2"-->
+<!--                                                type="button"><fa-icon icon="calendar-alt"></fa-icon></button>-->
+<!--                                </span>-->
+
+<!--              </div>-->
+<!--              <div-->
+<!--                *ngIf="editForm.get('membershipStartDate')!.invalid && (editForm.get('membershipStartDate')!.dirty || editForm.get('membershipStartDate')!.touched)">-->
+<!--                <small *ngIf="editForm.get('membershipStartDate')?.errors?.required"-->
+<!--                       class="form-text text-danger"-->
+<!--                       jhiTranslate="entity.validation.required">-->
+<!--                  This field is required.-->
+<!--                </small>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="col-md-3 mb-3">-->
+<!--            <div class="mb-3">-->
+<!--              <label class="form-control-label"-->
+<!--                     jhiTranslate="bitsHrPayrollApp.pfAccount.membershipEndDate"-->
+<!--                     for="field_membershipEndDate">Membership End Date</label>-->
+<!--              <div class="input-group">-->
+<!--                &lt;!&ndash;    <input id="field_membershipEndDate" type="date" class="form-control"-->
+<!--                           name="membershipEndDate" (change)="memberShipDateValidation()" ngbDatepicker #membershipEndDateDp="ngbDatepicker"-->
+<!--                           formControlName="membershipEndDate"/>&ndash;&gt;-->
+<!--                <input #membershipEndDateDp="ngbDatepicker" (ngModelChange)="memberShipDateValidation()"-->
+<!--                       class="form-control "-->
+<!--                       formControlName="membershipEndDate" id="field_membershipEndDate"-->
+<!--                       name="membershipEndDate"-->
+<!--                       ngbDatepicker type="text"/>-->
+<!--                <span class="input-group-append">-->
+<!--                                        <button (click)="membershipEndDateDp.toggle()" class="btn btn-secondary btn-sm p-2"-->
+<!--                                                type="button"><fa-icon icon="calendar-alt"></fa-icon></button>-->
+<!--                                </span>-->
+<!--              </div>-->
+<!--            </div>-->
+
+<!--            <div-->
+<!--              *ngIf="editForm.get('membershipEndDate')!.valid && (editForm.get('membershipEndDate')!.dirty || editForm.get('membershipEndDate')!.touched)">-->
+<!--              <small *ngIf="isDateInvalid && !isConflict " class="form-text text-danger">-->
+<!--                End Date can not be smaller than Start Date.-->
+<!--              </small>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="col-md-3">-->
+<!--            <div class="mb-3">-->
+<!--              <label class="form-control-label required" jhiTranslate="bitsHrPayrollApp.pfAccount.status"-->
+<!--                     for="field_status">Status</label>-->
+<!--              <select class="form-control p-2 form-select" name="status" formControlName="status" id="field_status">-->
+<!--                <option-->
+<!--                  value="ACTIVE">{{ 'bitsHrPayrollApp.PfAccountStatus.ACTIVE' | translate }}</option>-->
+<!--                <option-->
+<!--                  value="INACTIVE">{{ 'bitsHrPayrollApp.PfAccountStatus.INACTIVE' | translate }}</option>-->
+<!--                <option-->
+<!--                  value="CLOSED">{{ 'bitsHrPayrollApp.PfAccountStatus.CLOSED' | translate }}</option>-->
+<!--              </select>-->
+<!--              <div-->
+<!--                *ngIf="editForm.get('status')!.invalid && (editForm.get('status')!.dirty || editForm.get('status')!.touched)">-->
+<!--                <small *ngIf="editForm.get('status')?.errors?.required"-->
+<!--                       class="form-text text-danger"-->
+<!--                       jhiTranslate="entity.validation.required">-->
+<!--                  This field is required.-->
+<!--                </small>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="col-md-3"></div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div>-->
+<!--        &lt;!&ndash;<button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">-->
+<!--            <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>-->
+<!--        </button>&ndash;&gt;-->
+
+<!--        <button [disabled]="editForm.invalid || isSaving || isDateInvalid" type="submit" id="save-entity"-->
+<!--                class="btn btn-primary mt-2">-->
+<!--          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>-->
+<!--        </button>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </form>-->
+
+<!--&lt;!&ndash;  {{editForm.getRawValue().departmentName}}&ndash;&gt;-->
+
+<!--</div>-->

@@ -1,0 +1,361 @@
+<div class="d-flex justify-content-center">
+  <div class="col-12">
+    <form class="card card-body" name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+     <!-- <h2 id="jhi-building-heading" data-cy="BuildingCreateUpdateHeading" jhiTranslate="bitsHrPayrollApp.building.home.createOrEditLabel">
+        Create or edit a Building
+      </h2>-->
+
+      <div class="row">
+        <jhi-alert-error></jhi-alert-error>
+
+     <!--   <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>--> <!--ID-->
+
+
+        <div class="col-md-4">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.building.buildingName" for="field_buildingName">Building Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="buildingName"
+            id="field_buildingName"
+            data-cy="buildingName"
+            formControlName="buildingName"
+          />
+          <div
+            *ngIf="editForm.get('buildingName')!.invalid && (editForm.get('buildingName')!.dirty || editForm.get('buildingName')!.touched)"
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('buildingName')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('buildingName')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 0 }"
+            >
+              This field is required to be at least 0 characters.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('buildingName')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 250 }"
+            >
+              This field cannot be longer than 250 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.building.buildingLocation" for="field_buildingLocation"
+          >Building Location</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="buildingLocation"
+            id="field_buildingLocation"
+            data-cy="buildingLocation"
+            formControlName="buildingLocation"
+          />
+          <div
+            *ngIf="
+              editForm.get('buildingLocation')!.invalid &&
+              (editForm.get('buildingLocation')!.dirty || editForm.get('buildingLocation')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('buildingLocation')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 0 }"
+            >
+              This field is required to be at least 0 characters.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('buildingLocation')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 250 }"
+            >
+              This field cannot be longer than 250 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.building.remarks" for="field_remarks">Remarks</label>
+          <input type="text" class="form-control" name="remarks" id="field_remarks" data-cy="remarks" formControlName="remarks" />
+          <div *ngIf="editForm.get('remarks')!.invalid && (editForm.get('remarks')!.dirty || editForm.get('remarks')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('remarks')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 0 }"
+            >
+              This field is required to be at least 0 characters.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('remarks')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 250 }"
+            >
+              This field cannot be longer than 250 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.building.createdAt" for="field_createdAt">Created At</label>
+          <div class="d-flex">
+            <input
+              id="field_createdAt"
+              data-cy="createdAt"
+              type="datetime-local"
+              class="form-control"
+              name="createdAt"
+              formControlName="createdAt"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.building.updatedAt" for="field_updatedAt">Updated At</label>
+          <div class="d-flex">
+            <input
+              id="field_updatedAt"
+              data-cy="updatedAt"
+              type="datetime-local"
+              class="form-control"
+              name="updatedAt"
+              formControlName="updatedAt"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.building.createdBy" for="field_createdBy">Created By</label>
+          <select
+            class="form-control"
+            id="field_createdBy"
+            data-cy="createdBy"
+            name="createdBy"
+            formControlName="createdBy"
+            [compareWith]="compareUser"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="userOption" *ngFor="let userOption of usersSharedCollection">{{ userOption.login }}</option>
+          </select>
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.building.updatedBy" for="field_updatedBy">Updated By</label>
+          <select
+            class="form-control"
+            id="field_updatedBy"
+            data-cy="updatedBy"
+            name="updatedBy"
+            formControlName="updatedBy"
+            [compareWith]="compareUser"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="userOption" *ngFor="let userOption of usersSharedCollection">{{ userOption.login }}</option>
+          </select>
+        </div>
+
+
+
+
+       <!-- <div class="row mb-3">
+          &lt;!&ndash;<label class="form-label" jhiTranslate="bitsHrPayrollApp.building.buildingName" for="field_buildingName">Building Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="buildingName"
+            id="field_buildingName"
+            data-cy="buildingName"
+            formControlName="buildingName"
+          />
+          <div
+            *ngIf="editForm.get('buildingName')!.invalid && (editForm.get('buildingName')!.dirty || editForm.get('buildingName')!.touched)"
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('buildingName')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('buildingName')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 0 }"
+            >
+              This field is required to be at least 0 characters.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('buildingName')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 250 }"
+            >
+              This field cannot be longer than 250 characters.
+            </small>
+          </div>&ndash;&gt;
+        </div>
+
+        <div class="row mb-3">
+          &lt;!&ndash;<label class="form-label" jhiTranslate="bitsHrPayrollApp.building.buildingLocation" for="field_buildingLocation"
+            >Building Location</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="buildingLocation"
+            id="field_buildingLocation"
+            data-cy="buildingLocation"
+            formControlName="buildingLocation"
+          />
+          <div
+            *ngIf="
+              editForm.get('buildingLocation')!.invalid &&
+              (editForm.get('buildingLocation')!.dirty || editForm.get('buildingLocation')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('buildingLocation')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 0 }"
+            >
+              This field is required to be at least 0 characters.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('buildingLocation')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 250 }"
+            >
+              This field cannot be longer than 250 characters.
+            </small>
+          </div>&ndash;&gt;
+        </div>
+
+        <div class="row mb-3">
+        &lt;!&ndash;  <label class="form-label" jhiTranslate="bitsHrPayrollApp.building.remarks" for="field_remarks">Remarks</label>
+          <input type="text" class="form-control" name="remarks" id="field_remarks" data-cy="remarks" formControlName="remarks" />
+          <div *ngIf="editForm.get('remarks')!.invalid && (editForm.get('remarks')!.dirty || editForm.get('remarks')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('remarks')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 0 }"
+            >
+              This field is required to be at least 0 characters.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('remarks')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 250 }"
+            >
+              This field cannot be longer than 250 characters.
+            </small>
+          </div>&ndash;&gt;
+        </div>
+
+        <div class="row mb-3">
+          &lt;!&ndash;<label class="form-label" jhiTranslate="bitsHrPayrollApp.building.createdAt" for="field_createdAt">Created At</label>
+          <div class="d-flex">
+            <input
+              id="field_createdAt"
+              data-cy="createdAt"
+              type="datetime-local"
+              class="form-control"
+              name="createdAt"
+              formControlName="createdAt"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>&ndash;&gt;
+        </div>
+
+        <div class="row mb-3">
+          &lt;!&ndash;<label class="form-label" jhiTranslate="bitsHrPayrollApp.building.updatedAt" for="field_updatedAt">Updated At</label>
+          <div class="d-flex">
+            <input
+              id="field_updatedAt"
+              data-cy="updatedAt"
+              type="datetime-local"
+              class="form-control"
+              name="updatedAt"
+              formControlName="updatedAt"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>&ndash;&gt;
+        </div>
+
+        <div class="row mb-3">
+        &lt;!&ndash;  <label class="form-label" jhiTranslate="bitsHrPayrollApp.building.createdBy" for="field_createdBy">Created By</label>
+          <select
+            class="form-control"
+            id="field_createdBy"
+            data-cy="createdBy"
+            name="createdBy"
+            formControlName="createdBy"
+            [compareWith]="compareUser"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="userOption" *ngFor="let userOption of usersSharedCollection">{{ userOption.login }}</option>
+          </select>&ndash;&gt;
+        </div>
+
+        <div class="row mb-3">
+          &lt;!&ndash;<label class="form-label" jhiTranslate="bitsHrPayrollApp.building.updatedBy" for="field_updatedBy">Updated By</label>
+          <select
+            class="form-control"
+            id="field_updatedBy"
+            data-cy="updatedBy"
+            name="updatedBy"
+            formControlName="updatedBy"
+            [compareWith]="compareUser"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="userOption" *ngFor="let userOption of usersSharedCollection">{{ userOption.login }}</option>
+          </select>&ndash;&gt;
+        </div>-->
+
+      </div>
+
+
+
+
+
+      <div class="mt-3">
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

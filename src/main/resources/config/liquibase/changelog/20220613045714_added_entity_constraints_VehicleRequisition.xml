@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity VehicleRequisition.
+    -->
+    <changeSet id="20220613045714-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="created_by_id"
+                                 baseTableName="vehicle_requisition"
+                                 constraintName="fk_vehicle_requisition__created_by_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="updated_by_id"
+                                 baseTableName="vehicle_requisition"
+                                 constraintName="fk_vehicle_requisition__updated_by_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="approved_by_id"
+                                 baseTableName="vehicle_requisition"
+                                 constraintName="fk_vehicle_requisition__approved_by_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="requester_id"
+                                 baseTableName="vehicle_requisition"
+                                 constraintName="fk_vehicle_requisition__requester_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+
+        <addForeignKeyConstraint baseColumnNames="vehicle_id"
+                                 baseTableName="vehicle_requisition"
+                                 constraintName="fk_vehicle_requisition__vehicle_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="vehicle"/>
+    </changeSet>
+</databaseChangeLog>

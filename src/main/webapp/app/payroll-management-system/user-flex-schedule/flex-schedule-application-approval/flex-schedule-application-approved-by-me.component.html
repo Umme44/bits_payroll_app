@@ -1,0 +1,116 @@
+<jhi-header
+  [headerName]="'Approved by Me'"
+  [midHeaderName01]="'Flex Schedule Applications'"
+  [midRouterLinkText01]="pageType === 'hr' ? '/flex-schedule-application-approval/hr' : '/flex-schedule-application-approval/lm'"
+>
+</jhi-header>
+
+<div class="card card-body mb-2" *ngIf="employees && employees.length > 0">
+  <div class="row font-sm">
+    <div class="col-md-4">
+      <label class="form-control-label">Employee Filter</label>
+      <div class="">
+        <ng-select
+          [items]="employees"
+          bindLabel="fullName"
+          bindValue="id"
+          appearance="outline"
+          [searchable]="true"
+          [clearable]="true"
+          labelForId="employeeId"
+          placeholder="Select Employee"
+          id="field_employee"
+          name="employee"
+          (change)="onChangeSelectEmployee($event)"
+        >
+        </ng-select>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="table-responsive" id="entities" *ngIf="flexScheduleApplications && flexScheduleApplications.length > 0; else noDataImage">
+  <table class="table table-hover list-text-color" aria-describedby="page-heading">
+    <thead>
+      <tr>
+        <th scope="col"><span></span></th>
+        <th scope="col"><span>Approved Date</span></th>
+        <th scope="col"><span>PIN</span></th>
+        <th scope="col"><span>Name</span></th>
+        <th scope="col"><span>Designation</span></th>
+
+        <th scope="col"><span>Flex In Time</span></th>
+        <th scope="col"><span>Flex Out Time</span></th>
+
+        <th scope="col"><span>Effective </span></th>
+        <th scope="col"><span>Duration</span></th>
+        <th scope="col"><span jhiTranslate="bitsHrPayrollApp.flexScheduleApplication.appliedAt">Applied </span></th>
+        <th scope="col"><span jhiTranslate="bitsHrPayrollApp.flexScheduleApplication.reason">Reason</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let flexScheduleApplication of flexScheduleApplications">
+        <td *ngIf="flexScheduleApplication.pin !== undefined" class="td-th-employee-img">
+          <img class="card-img-top mt-0 mb-0 me-3 ms-3" [src]="getProfilePicture(flexScheduleApplication.pin)" alt="profile Picture" />
+        </td>
+
+        <td>
+          {{ flexScheduleApplication.sanctionedAt | formatMediumDate }}
+        </td>
+
+        <td>
+          {{ flexScheduleApplication.pin }}
+        </td>
+
+        <td>
+          {{ flexScheduleApplication.fullName }}
+        </td>
+
+        <td>
+          {{ flexScheduleApplication.designationName }}
+        </td>
+
+        <td>
+          {{ flexScheduleApplication.inTime | formatTime }}
+        </td>
+
+        <td>
+          {{ flexScheduleApplication.outTime | formatTime }}
+        </td>
+
+        <td>
+          {{ flexScheduleApplication.effectiveFrom | formatMediumDate }} - {{ flexScheduleApplication.effectiveTo | formatMediumDate }}
+        </td>
+
+        <td>{{ flexScheduleApplication.durationAsDays }} days</td>
+
+        <td>{{ flexScheduleApplication.appliedAt | formatMediumDate }}</td>
+
+        <td
+          ngbTooltip="{{
+            flexScheduleApplication.reason && flexScheduleApplication.reason.length > 30 ? flexScheduleApplication.reason.slice(0, 30) : ''
+          }}"
+        >
+          {{
+            flexScheduleApplication.reason && flexScheduleApplication.reason.length > 30
+              ? flexScheduleApplication.reason.slice(0, 30)
+              : flexScheduleApplication.reason
+          }}
+        </td>
+
+        <!--            <td class="text-end">-->
+        <!--                <button type="submit" (click)="openView(flexScheduleApplication)"-->
+        <!--                        class="btn btn-info btn-sm border-radius-minimal me-1">-->
+        <!--                    <fa-icon icon="eye"></fa-icon>-->
+        <!--                </button>-->
+        <!--            </td>-->
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<ng-template #noDataImage>
+  <div style="height: 75vh" class="text-center d-flex align-items-center justify-content-center">
+    <img src="../../../../content/images/leave-application.svg" width="400px" height="400px" />
+  </div>
+</ng-template>

@@ -1,0 +1,41 @@
+{
+  "bitsHrPayrollApp": {
+    "transfer": {
+      "home": {
+        "title": "BRAC IT || Transfer",
+        "createLabel": "Create a new transfer",
+        "createOrEditLabel": "Create or edit a transfer",
+        "notFound": "No transfer found"
+      },
+      "created": "A new transfer is created",
+      "updated": "Transfer is updated",
+      "deleted": "Transfer is deleted",
+      "delete": {
+        "question": "Are you sure you want to delete?"
+      },
+      "detail": {
+        "title": "Transfer"
+      },
+      "referenceId": "Reference Id",
+      "pin": "Pin",
+      "eventType": "Event Type",
+      "effectiveDate": "Effective Date",
+      "previousMainGrossSalary": "Previous Main Gross Salary",
+      "currentMainGrossSalary": "Current Main Gross Salary",
+      "previousWorkingHour": "Previous Working Hour",
+      "changedWorkingHour": "Changed Working Hour",
+      "isModifiable": "Is Modifiable",
+      "previousDesignation": "Previous Designation",
+      "changedDesignation": "Changed Designation",
+      "previousDepartment": "Previous Department",
+      "changedDepartment": "Changed Department",
+      "previousReportingTo": "Previous Reporting To",
+      "changedReportingTo": "Changed Reporting To",
+      "employee": "Employee",
+      "previousUnit": "Previous Unit",
+      "changedUnit": "Changed Unit",
+      "previousBand": "Previous Band",
+      "changedBand": "Changed Band"
+    }
+  }
+}

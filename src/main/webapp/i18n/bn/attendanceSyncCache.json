@@ -1,0 +1,26 @@
+{
+  "bitsHrPayrollApp": {
+    "attendanceSyncCache": {
+      "home": {
+        "title": "Attendance Sync Caches",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Attendance Sync Cache",
+        "createOrEditLabel": "Create or edit a Attendance Sync Cache",
+        "notFound": "No Attendance Sync Caches found"
+      },
+      "created": "A new Attendance Sync Cache is created with identifier {{ param }}",
+      "updated": "A Attendance Sync Cache is updated with identifier {{ param }}",
+      "deleted": "A Attendance Sync Cache is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Attendance Sync Cache {{ id }}?"
+      },
+      "detail": {
+        "title": "Attendance Sync Cache"
+      },
+      "id": "ID",
+      "employeePin": "Employee Pin",
+      "timestamp": "Timestamp",
+      "terminal": "Terminal"
+    }
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "changelogDate": "20220307105703",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "arrear_payment",
+  "fields": [
+    {
+      "fieldName": "paymentType",
+      "fieldType": "ArrearPaymentType",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "INDIVIDUAL,ALONGSIDE_MONTHLY_SALARY"
+    },
+    {
+      "fieldName": "disbursementDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "salaryMonth",
+      "fieldType": "Month",
+      "fieldValues": "JANUARY,FEBRUARY,MARCH,APRIL,MAY,JUNE,JULY,AUGUST,SEPTEMBER,OCTOBER,NOVEMBER,DECEMBER"
+    },
+    {
+      "fieldName": "salaryYear",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMax": "2277",
+      "fieldValidateRulesMin": "1900"
+    },
+    {
+      "fieldName": "approvalStatus",
+      "fieldType": "Status",
+      "fieldValidateRules": [],
+      "fieldValues": "PENDING,APPROVED,NOT_APPROVED"
+    },
+    {
+      "fieldName": "disbursementAmount",
+      "fieldType": "Double",
+      "fieldValidateRules": ["required", "min", "max"],
+      "fieldValidateRulesMax": "100000000",
+      "fieldValidateRulesMin": "1"
+    },
+    {
+      "fieldName": "isDeleted",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "arrearPF",
+      "fieldType": "Double",
+      "fieldValidateRules": ["required", "min", "max"],
+      "fieldValidateRulesMax": "100000000",
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "taxDeduction",
+      "fieldType": "Double",
+      "fieldValidateRules": ["required", "min", "max"],
+      "fieldValidateRulesMax": "100000000",
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "deductTaxUponPayment",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "ArrearPayment",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "arrearSalaryItem",
+      "otherEntityRelationshipName": "arrearPayment",
+      "relationshipName": "arrearSalaryItem",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    }
+  ],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

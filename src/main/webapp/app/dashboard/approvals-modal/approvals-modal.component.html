@@ -1,0 +1,155 @@
+<div class="modal-header border-none">
+  <h4 class="modal-title"></h4>
+  <button type="button" class="btn-close py-1 outline-none" data-dismiss="modal" aria-hidden="true" (click)="dismiss()"></button>
+</div>
+
+<div class="modal-body">
+  <div class="container">
+    <div class="dashboard row">
+      <div
+        class="card p-1 btn color-ash col mx-1 mt-0 mb-1 border-none box-shadow"
+        [ngClass]="haveIAnySubordinate ? 'col-active' : 'disabled'"
+        (click)="goToApprovals('/manual-attendance-entry/lm')"
+      >
+        <span
+          style="height: 0"
+          class="h-0 ps-4"
+          *ngIf="notification && notification.pendingManualAttendanceApprovals && notification.pendingManualAttendanceApprovals > 0"
+        >
+          <span class="badge rounded-pill bg-danger text-white fw-normal ms-5 mt-2">
+            {{ notification.pendingManualAttendanceApprovals }}
+          </span>
+        </span>
+
+        <img class="svg-image-size-mid mx-auto dashboard-svg-icon" src="../../../content/images/svg/attendance-approval.svg" />
+
+        <div class="card-body pt-0 pb-2 px-0">
+          <div class="card-title text-center mb-0 font-sm">Attendance Approvals</div>
+        </div>
+      </div>
+      <div
+        class="card p-1 btn color-ash col mx-1 mt-0 mb-1 border-none box-shadow"
+        [ngClass]="haveIAnySubordinate ? 'col-active' : 'disabled'"
+        (click)="goToApprovals('/leave-approval-superordinate')"
+      >
+        <span class="h-0 ps-4" *ngIf="notification && notification.pendingLeaveApprovals && notification.pendingLeaveApprovals > 0">
+          <span class="badge rounded-pill bg-danger text-white fw-normal ms-5 mt-2">
+            {{ notification.pendingLeaveApprovals }}
+          </span>
+        </span>
+
+        <img class="svg-image-size-mid mx-auto dashboard-svg-icon" src="../../../content/images/svg/leave-approval.svg" />
+
+        <div class="card-body pt-0 pb-2 px-0">
+          <div class="card-title text-center mb-0 font-sm">Leave Approvals</div>
+        </div>
+      </div>
+      <div
+        class="card p-1 btn color-ash col mx-1 mt-0 mb-1 border-none box-shadow"
+        [ngClass]="haveIAnySubordinate ? 'col-active' : 'disabled'"
+        (click)="goToApprovals('/work-from-home-application/approvals/lm')"
+      >
+        <span
+          class="h-0 ps-4"
+          *ngIf="notification && notification.pendingWorkFromHomeApprovals && notification.pendingWorkFromHomeApprovals > 0"
+        >
+          <span class="badge rounded-pill bg-danger text-white fw-normal ms-5 mt-2">
+            {{ notification.pendingWorkFromHomeApprovals }}
+          </span>
+        </span>
+
+        <img class="svg-image-size-mid mx-auto dashboard-svg-icon" src="../../../content/images/svg/work-from-home.svg" />
+
+        <div class="card-body pt-0 pb-2 px-0">
+          <div class="card-title text-center mb-0 font-sm">Work From Home <br /></div>
+        </div>
+      </div>
+    </div>
+
+    <!------------------------------------------------------------------------------------------------------->
+    <div class="row pt-1">
+      <div
+        class="card p-1 btn color-ash col mx-1 mt-0 mb-1 border-none box-shadow"
+        [ngClass]="haveIAnySubordinate ? 'col-active' : 'disabled'"
+        (click)="goToApprovals('/flex-schedule-application-approval/lm')"
+      >
+        <span
+          class="h-0 ps-4"
+          *ngIf="notification && notification.pendingFlexScheduleApprovals && notification.pendingFlexScheduleApprovals > 0"
+        >
+          <span class="badge rounded-pill bg-danger text-white fw-normal ms-5 mt-2">
+            {{ notification.pendingFlexScheduleApprovals }}
+          </span>
+        </span>
+
+        <img class="svg-image-size-mid mx-auto dashboard-svg-icon" src="../../../content/images/svg/flex-schedule.svg" />
+
+        <div class="card-body pt-0 pb-2 px-0">
+          <div class="card-title text-center mb-0 font-sm">Flex Schedule Approvals</div>
+        </div>
+      </div>
+      <div
+        class="card p-1 btn color-ash col mx-1 mt-0 mb-1 border-none box-shadow"
+        [ngClass]="haveIAnySubordinate ? 'col-active' : 'disabled'"
+        (click)="goToApprovals('/movement-entry/approval/lm')"
+      >
+        <span
+          class="h-0 ps-4"
+          *ngIf="notification && notification.pendingMovementEntriesApprovals && notification.pendingMovementEntriesApprovals > 0"
+        >
+          <span class="badge rounded-pill bg-danger text-white fw-normal ms-5 mt-2">
+            {{ notification.pendingMovementEntriesApprovals }}
+          </span>
+        </span>
+
+        <img class="svg-image-size-mid mx-auto dashboard-svg-icon" src="../../../content/images/svg/movement.svg" />
+        <div class="card-body pt-0 pb-2 px-0">
+          <div class="card-title text-center mb-0 font-sm">Movement Approvals</div>
+        </div>
+      </div>
+      <div
+        class="card p-1 btn color-ash col mx-1 mt-0 mb-1 border-none box-shadow"
+        [ngClass]="haveIAnySubordinate ? 'col-active' : 'disabled'"
+        (click)="goToApprovals('/recruitment-requisition-form/user/approval')"
+      >
+        <span class="h-0 ps-4" *ngIf="notification && notification.pendingRRFApprovals && notification.pendingRRFApprovals > 0">
+          <span class="badge rounded-pill bg-danger text-white fw-normal ms-5 mt-2">
+            {{ notification.pendingRRFApprovals }}
+          </span>
+        </span>
+
+        <img class="svg-image-size-mid mx-auto dashboard-svg-icon" src="../../../content/images/svg/rrf-approval.svg" />
+
+        <div class="card-body pt-0 pb-2 px-0">
+          <div class="card-title text-center mb-0 font-sm">RRF Approvals</div>
+        </div>
+      </div>
+    </div>
+
+    <!------------------------------------------------------------------------------------------------------->
+    <div class="row pt-1">
+      <div
+        class="card p-1 btn color-ash col mx-1 mt-0 mb-1 border-none box-shadow"
+        [ngClass]="haveIAnySubordinate ? 'col-active' : 'disabled'"
+        (click)="goToApprovals('/procurement-requisition-user/approval')"
+      >
+        <span class="h-0 ps-4" *ngIf="notification && notification.pendingPRFApprovals > 0">
+          <span class="badge rounded-pill bg-danger text-white fw-normal ms-5 mt-2">
+            {{ notification.pendingPRFApprovals }}
+          </span>
+        </span>
+
+        <img class="svg-image-size-mid mx-auto dashboard-svg-icon" src="../../../content/images/svg/procurement-requisition.svg" />
+
+        <div class="card-body pt-0 pb-2 px-0">
+          <div class="card-title text-center mb-0 font-sm">PRF Approvals</div>
+        </div>
+      </div>
+
+      <div class="card p-1 btn color-ash col mx-1 mt-0 mb-1 border-none box-shadow" style="opacity: 0"></div>
+
+      <div class="card p-1 btn color-ash col mx-1 mt-0 mb-1 border-none box-shadow" style="opacity: 0"></div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer p-3 border-none"></div>

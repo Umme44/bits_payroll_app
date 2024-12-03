@@ -1,0 +1,188 @@
+<div>
+  <jhi-header
+    [addButtonText]="'Add New Attendance Entries'"
+    [headerName]="'Attendance Entries - Admin'"
+    [routerLinkText]="'/attendance-entry/new'"
+    [shouldHaveHr]="false">
+  </jhi-header>
+
+  <form (ngSubmit)="loadAfterSearching()" [formGroup]="searchParamsForm" name="editForm" novalidate role="form">
+    <div class="card py-3 mb-3">
+      <div class="search-filter container-fluid">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="form-control-label"
+                     jhiTranslate="bitsHrPayrollApp.leaveApplication.employee">Employee</label>
+              <jhi-select-employee-form [employeeIdForm]="employeeIdForm!"></jhi-select-employee-form>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="form-control-label"
+                     for="field_startDate"
+                     jhiTranslate="bitsHrPayrollApp.leaveApplication.startDate">Start Date</label>
+              <div class="input-group">
+                <input #startDateDp="ngbDatepicker" (ngModelChange)="checkDate()" class="form-control" formControlName="startDate"
+                       id="field_startDate" name="startDate"
+                       ngbDatepicker type="text"/>
+                <span class="input-group-append">
+                                    <button (click)="startDateDp.toggle()" class="btn btn-secondary" type="button"><fa-icon
+                                      icon="calendar-alt"></fa-icon></button>
+                                </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="form-control-label"
+                     for="field_endDate"
+                     jhiTranslate="bitsHrPayrollApp.leaveApplication.endDate">End Date</label>
+              <div class="input-group">
+                <input #endDateDp="ngbDatepicker" (ngModelChange)="checkDate()" class="form-control" formControlName="endDate"
+                       id="field_endDate" name="endDate"
+                       ngbDatepicker type="text"/>
+                <span class="input-group-append">
+                                    <button (click)="endDateDp.toggle()" class="btn btn-secondary" type="button"><fa-icon
+                                      icon="calendar-alt"></fa-icon></button>
+                                </span>
+              </div>
+              <div
+                *ngIf="isInvalid">
+                <small class="form-text text-danger">
+                  End date can't be smaller then start date.
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-2 pt-4">
+            <button [disabled]="isInvalid" class="btn btn-primary" id="search-entity"
+                    type="submit">
+              <fa-icon icon="search"></fa-icon>&nbsp;<span>Search</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <jhi-alert-error></jhi-alert-error>
+  <jhi-alert></jhi-alert>
+
+  <div *ngIf="attendanceEntries?.length === 0" class="alert alert-warning" id="no-result">
+    <span jhiTranslate="bitsHrPayrollApp.attendanceEntry.home.notFound">No attendanceEntries found</span>
+  </div>
+
+
+  <div *ngIf="attendanceEntries && attendanceEntries.length > 0" class="table-responsive" id="entities">
+    <table aria-describedby="page-heading" class="table table-hover list-text-color">
+      <thead>
+      <tr>
+        <th scope="col"><span>PIN</span></th>
+        <th scope="col"><span>Name</span></th>
+        <th scope="col"><span>Department</span></th>
+        <th scope="col"><span>Unit</span></th>
+        <th scope="col"><span>Designation</span></th>
+        <th scope="col"><span jhiTranslate="bitsHrPayrollApp.attendanceEntry.date">Date</span></th>
+        <th scope="col"><span>In</span></th>
+        <th scope="col"><span>Out</span></th>
+        <th scope="col"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let attendanceEntry of attendanceEntries ;trackBy: trackId">
+        <!--                    <td><a [routerLink]="['/attendance-entry', attendanceEntry.id, 'view']">{{ attendanceEntry.id }}</a></td>-->
+        <td>
+          <div *ngIf="attendanceEntry.employeeId !=null">
+            <a [routerLink]="['/employee-custom', attendanceEntry.employeeId , 'view']">{{attendanceEntry.pin}}</a>
+          </div>
+        </td>
+
+        <td>
+          <div *ngIf="attendanceEntry.employeeId !=null">
+            {{attendanceEntry.fullName}}
+          </div>
+        </td>
+
+        <td>
+          <div *ngIf="attendanceEntry.employeeId !=null">
+            {{attendanceEntry.departmentName!}}
+          </div>
+        </td>
+
+        <td>
+          <div *ngIf="attendanceEntry.employeeId !=null">
+            {{attendanceEntry.unitName}}
+          </div>
+        </td>
+
+        <td>
+          <div *ngIf="attendanceEntry.employeeId !=null">
+            {{attendanceEntry.designationName}}
+          </div>
+        </td>
+
+
+        <td class="text-nowrap">{{ attendanceEntry.date | formatMediumDate }}</td>
+        <td class="text-nowrap">{{ attendanceEntry.inTime | formatTime }}</td>
+        <td class="text-nowrap">{{ attendanceEntry.outTime | formatTime }}</td>
+        <td class="text-right">
+          <div class="btn-group">
+            <button [routerLink]="['/attendance-entry', attendanceEntry.id, 'view']" class="btn btn-info btn-sm px-md-3" data-placement="top" data-toggle="tooltip"
+                    title="View"
+                    type="submit">
+              <fa-icon icon="eye"></fa-icon>
+              <!--                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>-->
+            </button>
+
+            <button [routerLink]="['/attendance-entry', attendanceEntry.id, 'edit']" class="btn btn-primary btn-sm px-md-3" data-placement="top" data-toggle="tooltip"
+                    title="Edit"
+                    type="submit">
+              <fa-icon icon="pencil-alt"></fa-icon>
+              <!--                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>-->
+            </button>
+
+            <button (click)="delete(attendanceEntry)" class="btn btn-danger btn-sm px-md-3" data-placement="top"
+                    data-toggle="tooltip" title="Delete"
+                    type="submit">
+              <fa-icon icon="times"></fa-icon>
+              <!--                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>-->
+            </button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!--<div *ngIf="attendanceEntries && attendanceEntries.length > 0">
+    <div class="row justify-content-center">
+      <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+    </div>
+
+    <div class="row justify-content-center">
+      <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
+    </div>
+  </div>-->
+  <div *ngIf="attendanceEntries && attendanceEntries.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+
+
+</div>
+

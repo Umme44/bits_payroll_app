@@ -1,0 +1,45 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="fileTemplates">
+      <h2><span jhiTranslate="bitsHrPayrollApp.fileTemplates.detail.title">File Templates</span> {{ fileTemplates.id }}</h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="bitsHrPayrollApp.fileTemplates.title">Title</span></dt>
+        <dd>
+          <span>{{ fileTemplates.title }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.fileTemplates.filePath">File Path</span></dt>
+        <dd>
+          <span>{{ fileTemplates.filePath }}</span>
+        </dd>
+        <dt><span>File Category</span></dt>
+        <dt><span jhiTranslate="bitsHrPayrollApp.fileTemplates.type">Type</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.FileTemplatesType.' + fileTemplates.type }}">{{ fileTemplates.type }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.fileTemplates.accessPrivilege">Access Privilege</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.FileAccessPrevilage.' + fileTemplates.accessPrivilege }}">{{
+            fileTemplates.accessPrivilege
+          }}</span>
+        </dd>
+        <dt><span>Is Active</span></dt>
+        <dd>
+          <span>{{ fileTemplates.isActive }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/file-templates', fileTemplates.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

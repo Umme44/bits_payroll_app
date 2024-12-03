@@ -1,0 +1,107 @@
+<jhi-header
+  [headerName]="!editForm.get('id')!.value ? 'Add New Location' : 'Edit Location'"
+  midHeaderName01="Location"
+  [midRouterLinkText01]="'/location'"
+  [shouldHaveHr]="false"
+>
+</jhi-header>
+
+<div class="">
+  <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+    <div class="card card-body">
+      <div class="row">
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="col-md-6">
+          <label class="form-control-label required" jhiTranslate="bitsHrPayrollApp.location.locationType" for="field_locationType"
+            >Location Type</label
+          >
+          <select class="form-control" name="locationType" formControlName="locationType" id="field_locationType">
+            <option value="BUILDING">{{ 'bitsHrPayrollApp.LocationType.BUILDING' | translate }}</option>
+            <option value="FLOOR">{{ 'bitsHrPayrollApp.LocationType.FLOOR' | translate }}</option>
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-control-label required" jhiTranslate="bitsHrPayrollApp.location.locationName" for="field_locationName"
+            >Location Name</label
+          >
+          <input type="text" class="form-control" name="locationName" id="field_locationName" formControlName="locationName" />
+          <div
+            *ngIf="editForm.get('locationName')!.invalid && (editForm.get('locationName')!.dirty || editForm.get('locationName')!.touched)"
+          >
+            <div
+              class="text-danger"
+              *ngIf="editForm.get('locationName')?.errors?.required"
+            >
+              This field is required
+            </div>
+            <div
+              class="text-danger"
+              *ngIf="editForm.get('locationName')?.errors?.pattern"
+            >
+              This text is invalid
+            </div>
+            <div
+              class="text-danger"
+              *ngIf="editForm.get('locationName')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 250 }"
+            >
+              This field cannot be longer than 250 characters.
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-control-label required" jhiTranslate="bitsHrPayrollApp.location.locationCode" for="field_locationCode"
+            >Location Code</label
+          >
+          <input type="text" class="form-control" name="locationCode" id="field_locationCode" formControlName="locationCode" />
+          <div
+            *ngIf="editForm.get('locationCode')!.invalid && (editForm.get('locationCode')!.dirty || editForm.get('locationCode')!.touched)"
+          ><div
+            class="text-danger"
+            *ngIf="editForm.get('locationCode')?.errors?.required"
+          >
+            This field is required
+          </div>
+            <div
+              class="text-danger"
+              *ngIf="editForm.get('locationCode')?.errors?.pattern"
+            >
+              This text is invalid
+            </div>
+            <small
+              class="text-danger"
+              *ngIf="editForm.get('locationCode')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 250 }"
+            >
+              This field cannot be longer than 250 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.location.parent" for="field_parent">Parent Location</label>
+          <select class="form-control" id="field_parent" name="parent" formControlName="parentId">
+            <option [ngValue]="null">No Parent</option>
+            <option [ngValue]="locationOption.id" *ngFor="let locationOption of locations; trackBy: trackById">
+              {{ locationOption.fullLocation }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="mt-md-2">
+      <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+        <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+      </button>
+
+      <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+        <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+      </button>
+    </div>
+  </form>
+</div>

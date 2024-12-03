@@ -1,0 +1,56 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="pfLoanRepayment">
+      <h2 data-cy="pfLoanRepaymentDetailsHeading">
+        <span jhiTranslate="bitsHrPayrollApp.pfLoanRepayment.detail.title">Pf Loan Repayment</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ pfLoanRepayment.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfLoanRepayment.amount">Amount</span></dt>
+        <dd>
+          <span>{{ pfLoanRepayment.amount }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfLoanRepayment.status">Status</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.PfRepaymentStatus.' + pfLoanRepayment.status }}">{{ pfLoanRepayment.status }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfLoanRepayment.deductionMonth">Deduction Month</span></dt>
+        <dd>
+          <span>{{ pfLoanRepayment.deductionMonth }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfLoanRepayment.deductionYear">Deduction Year</span></dt>
+        <dd>
+          <span>{{ pfLoanRepayment.deductionYear }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfLoanRepayment.deductionDate">Deduction Date</span></dt>
+        <dd>
+          <span>{{ pfLoanRepayment.deductionDate | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.pfLoanRepayment.pfLoan">Pf Loan</span></dt>
+        <dd>
+          <div *ngIf="pfLoanRepayment.pfLoanId">
+            <a [routerLink]="['/pf-loan', pfLoanRepayment.pfLoanId, 'view']">{{ pfLoanRepayment.pfLoanId }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/pf-loan-repayment', pfLoanRepayment.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

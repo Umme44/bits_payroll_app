@@ -1,0 +1,35 @@
+{
+  "bitsHrPayrollApp": {
+    "insuranceClaim": {
+      "home": {
+        "title": "Insurance Claims",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Insurance Claim",
+        "createOrEditLabel": "Create or edit a Insurance Claim",
+        "notFound": "No Insurance Claims found"
+      },
+      "created": "A new Insurance Claim is created with identifier {{ param }}",
+      "updated": "A Insurance Claim is updated with identifier {{ param }}",
+      "deleted": "A Insurance Claim is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Insurance Claim {{ id }}?"
+      },
+      "detail": {
+        "title": "Insurance Claim"
+      },
+      "id": "ID",
+      "settlementDate": "Settlement Date",
+      "paymentDate": "Payment Date",
+      "regretDate": "Regret Date",
+      "regretReason": "Regret Reason",
+      "claimedAmount": "Claimed Amount",
+      "settledAmount": "Settled Amount",
+      "claimStatus": "Claim Status",
+      "createdAt": "Created At",
+      "updatedAt": "Updated At",
+      "insuranceRegistration": "Insurance Registration",
+      "createdBy": "Created By",
+      "updatedBy": "Updated By"
+    }
+  }
+}

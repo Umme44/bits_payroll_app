@@ -1,0 +1,117 @@
+<div>
+  <jhi-header
+    [addButtonText]="'Create a new Income Tax Challan'"
+    [headerName]="'Income Tax Challan'"
+    [routerLinkText]="'/income-tax-challan/new'"
+    [shouldHaveHr]="false"
+  >
+  </jhi-header>
+</div>
+<div>
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="incomeTaxChallans?.length === 0">
+    <span jhiTranslate="bitsHrPayrollApp.incomeTaxChallan.home.notFound">No Income Tax Challans found</span>
+  </div>
+
+  <div class="card card-body mb-2">
+    <div class="row">
+      <div class="col-md-4">
+        <select (change)="onChangeFiscalYear($event)" id="month" name="month" class="form-control">
+          <option [ngValue]="null" disabled selected>Select Fiscal Year</option>
+          <option [value]="aitConfigOption.id" *ngFor="let aitConfigOption of aitConfigs">
+            {{ aitConfigOption.startYear }} - {{ aitConfigOption.endYear }}
+          </option>
+        </select>
+      </div>
+      <div class="col-md-8">
+        <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+          <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+          <span jhiTranslate="bitsHrPayrollApp.incomeTaxChallan.home.refreshListLabel">Refresh list</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="incomeTaxChallans && incomeTaxChallans.length > 0">
+    <table class="table table-hover list-text-color" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="challanNo">
+            <div class="d-flex"><span>Challan No</span></div>
+          </th>
+          <th scope="col" jhiSortBy="challanDate">
+            <div class="d-flex"><span>Challan Date</span></div>
+          </th>
+          <th scope="col" jhiSortBy="month">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.incomeTaxChallan.month">Month</span>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="year">
+            <div class="d-flex"><span>Year</span></div>
+          </th>
+          <th scope="col" jhiSortBy="remarks">
+            <div class="d-flex"><span>Remarks</span></div>
+          </th>
+          <th scope="col" jhiSortBy="aitConfig.id">
+            <div class="d-flex"><span>Fiscal Year</span></div>
+          </th>
+          <th scope="col" jhiSortBy="amount">
+            <div class="d-flex"><span>Amount</span></div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody
+        infinite-scroll
+        (scrolled)="loadPage(page + 1)"
+        [infiniteScrollDisabled]="page - 1 >= links['last']"
+        [infiniteScrollDistance]="0"
+      >
+        <tr *ngFor="let incomeTaxChallan of incomeTaxChallans; trackBy: trackId" data-cy="entityTable">
+          <td>{{ incomeTaxChallan.challanNo }}</td>
+          <td>{{ incomeTaxChallan.challanDate | formatMediumDate }}</td>
+          <td jhiTranslate="{{ 'bitsHrPayrollApp.Month.' + incomeTaxChallan.month }}">{{ incomeTaxChallan.month }}</td>
+          <td>{{ incomeTaxChallan.year }}</td>
+          <td>{{ incomeTaxChallan.remarks }}</td>
+          <td>
+            <div *ngIf="incomeTaxChallan.aitConfigId">{{ incomeTaxChallan.startYear }} - {{ incomeTaxChallan.endYear }}</div>
+          </td>
+          <td class="text-end">{{ incomeTaxChallan.amount | number }}</td>
+
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/income-tax-challan', incomeTaxChallan.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/income-tax-challan', incomeTaxChallan.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(incomeTaxChallan)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

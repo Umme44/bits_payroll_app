@@ -1,0 +1,110 @@
+/* monthly-salary-pay-slip.component.scss */
+
+.font-format {
+  font-size: 0.75rem;
+  line-height: 200%;
+}
+
+.blue-grey {
+  background-color: #d3d2d3;
+}
+
+table {
+  border: 0;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.table-payslip {
+  color: #000000;
+  font-family: Segoe UI;
+  min-width: 500px;
+}
+
+.table-common,
+.table-emp-details,
+.table-payslip,
+.table-bank-details {
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.table-emp-details {
+}
+
+.nowrap-right {
+  white-space: nowrap;
+  text-align: right;
+}
+
+.nowrap-left {
+  white-space: nowrap;
+  text-align: left;
+}
+
+.nowrap-center {
+  white-space: nowrap;
+  text-align: center;
+}
+
+.salary-payslip-bg-image {
+  background: transparent url('../../../content/images/Letterhead-Pad.svg') no-repeat left top;
+}
+
+.festival-payslip-bg-image {
+  background: transparent url('../../../content/images/letter-head-pad-new.png') no-repeat left top;
+}
+
+.payslip-area {
+  width: 880px;
+  font-family: Segoe UI;
+  font-size: 12px;
+  position: relative;
+  border: 1px solid black;
+  padding: 0px 72px 0px 168px;
+}
+
+.border-1 {
+  border: 1px solid black;
+}
+
+.hide-arrow {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 1px;
+  text-overflow: '';
+}
+
+@media print {
+  .printDivOfPaySlip {
+    background-color: white;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    font-size: 16px;
+    line-height: 18px;
+    margin: 0 0 0 18px;
+  }
+  .ribbon {
+    display: none;
+  }
+
+  .payslip-area {
+    border: 0;
+    width: unset;
+    height: 100%;
+    padding: 0px 72px 0px 200px;
+  }
+
+  .table-emp-details {
+    margin-top: 60px;
+  }
+}

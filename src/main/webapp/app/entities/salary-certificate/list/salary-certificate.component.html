@@ -1,0 +1,116 @@
+<div>
+
+  <jhi-header
+    [headerName]="'Salary Certificate'"
+    [addButtonText]="'Apply For Salary Certificate'"
+    [routerLinkText]="'/salary-certificate/new'"
+    [shouldHaveHr]="false">
+  </jhi-header>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="salaryCertificates?.length === 0">
+    <span jhiTranslate="bitsHrPayrollApp.salaryCertificate.home.notFound">No Salary Certificates found</span>
+  </div>
+  <div class="row">
+    <div class="col-md-3 mb-2">
+      <input class="form-control"
+             placeholder="Name or PIN"
+             (change)="onSearchTextChange($event)"
+             name="searchText"
+             type="text"/>
+    </div>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="salaryCertificates && salaryCertificates.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col"  ><span jhiTranslate="bitsHrPayrollApp.salaryCertificate.status">Status</span> </th>
+          <th scope="col"  ><span >PIN</span> </th>
+          <th scope="col"  ><span >Name</span> </th>
+          <th scope="col"  ><span >Designation</span> </th>
+          <th scope="col"  ><span >Purpose</span> </th>
+          <th scope="col"  ><span jhiTranslate="bitsHrPayrollApp.salaryCertificate.createdAt">Application Date</span> </th>
+          <th scope="col"  ><span >Salary Month</span> </th>
+          <th scope="col" class="text-right">
+            <button type="submit"
+                    [routerLink]="['/salary-certificate/approval-hr']"
+                    class="btn btn-outline-dark btn-sm">
+              <fa-icon icon="arrow-right"></fa-icon>
+              <span class="d-none d-md-inline"> Go To Approval Page</span>
+            </button>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let salaryCertificate of salaryCertificates; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <jhi-show-status [status]="salaryCertificate!.status!">
+            </jhi-show-status>
+          </td>
+          <td>{{ salaryCertificate.pin }}</td>
+          <td>{{ salaryCertificate.employeeName }}</td>
+          <td>{{ salaryCertificate.designationName }}</td>
+          <td>{{ salaryCertificate.purpose }}</td>
+          <td>{{ salaryCertificate.createdAt | formatMediumDate }}</td>
+          <td>{{monthNameNormaCapitalize(salaryCertificate.month)}}, {{salaryCertificate.year}}</td>
+
+          <td class="text-right">
+            <div class="btn-group">
+              <!--                            <button type="submit"-->
+              <!--                                    [routerLink]="['/salary-certificate', salaryCertificate.id, 'print']"-->
+              <!--                                    class="btn btn-info btn-sm">-->
+              <!--                                <span class="d-none d-md-inline"> Print </span>-->
+              <!--                            </button>-->
+
+              <button type="submit"
+                      [hidden]="salaryCertificate.status !== 'APPROVED'"
+                      [routerLink]="['/salary-certificate', salaryCertificate.id, 'print']"
+                      class="btn btn-primary btn-sm">
+                <fa-icon icon="file-alt"></fa-icon>
+                <span class="d-none d-md-inline"> Certificate</span>
+              </button>
+
+              <button type="submit"
+                      [hidden]="salaryCertificate.status !== 'PENDING'"
+                      [routerLink]="['/salary-certificate', salaryCertificate.id, 'edit']"
+                      class="btn btn-primary btn-sm">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit"> Edit</span>
+              </button>
+
+              <button type="submit"
+                      [hidden]="salaryCertificate.status !== 'PENDING'"
+                      (click)="delete(salaryCertificate)"
+                      class="btn btn-danger btn-sm">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete"> Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="salaryCertificates && salaryCertificates.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

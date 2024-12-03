@@ -1,0 +1,144 @@
+<jhi-header
+  [headerName]="'Insurance Claims'"
+  [addButtonText]="'New Insurance Settlement'"
+  [routerLinkText]="'/insurance-claim/new'"
+  [shouldHaveHr]="false">
+</jhi-header>
+
+<div>
+  <jhi-alert-error></jhi-alert-error>
+  <!--    <div class="alert alert-warning" id="no-result" *ngIf="insuranceClaims?.length === 0">-->
+  <!--        <span jhiTranslate="bitsHrPayrollApp.insuranceClaim.home.notFound">No insuranceClaims found</span>-->
+  <!--    </div>-->
+
+  <div class="card card-body mb-2">
+    <div class="row my-2">
+      <div class="col-md-3 ">
+        <label  class="form-control-label ml-2" for="month">
+          Search Insurance Claim
+        </label>
+        <input class="form-control"
+               placeholder="Registration Name or Policy Holder PIN"
+               (change)="onSearchTextChange($event)"
+               name="searchText"
+               type="text"
+        />
+        <small class="text-danger" *ngIf="isSearchTextInvalid">This text is invalid</small>
+      </div>
+
+      <div class="form-group col-md-2 text-left mb-0">
+        <div>
+          <label  class="form-control-label ml-2" for="claimStatus">
+            Claim Status
+          </label>
+          <select (change)="onChangeStatus($event)"
+                  class="form-control"
+                  id="claimStatus">
+            <option [value]="'ALL'" selected>All</option>
+            <option [value]="'SETTLED'">Settled</option>
+            <option [value]="'REGRETTED'">Regretted</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group col-md-2 text-left mb-0">
+        <div>
+          <label  class="form-control-label ml-2" for="year">
+            Year
+          </label>
+          <select (change)="onChangeYear($event)"
+                  class="form-control"
+                  id="year">
+            <option [value]="0" selected>All</option>
+            <option *ngFor="let year of years" [value]="year">
+              {{year}}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group col-md-2 text-left mb-0">
+        <div *ngIf="selectedYear !== 0">
+          <label  class="form-control-label ml-2" for="month">
+            Month
+          </label>
+          <select (change)="onChangeMonth($event)"
+                  class="form-control"
+                  id="month">
+            <option [value]="0" selected>All</option>
+            <option *ngFor="let month of months" [value]="month.Value">
+              {{month.Text}}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="insuranceClaims && insuranceClaims.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+      <tr>
+        <th scope="col"  ><span jhiTranslate="bitsHrPayrollApp.insuranceClaim.claimStatus">Claim Status</span> </th>
+        <th scope="col"  ><span> Policy Holder</span> </th>
+        <th scope="col"  ><span> Registration Name</span> </th>
+        <th scope="col"  ><span> Relation</span> </th>
+        <th scope="col"  ><span> Insurance Card ID </span> </th>
+        <th scope="col" class="text-right">
+          <span jhiTranslate="bitsHrPayrollApp.insuranceClaim.claimedAmount">Claimed Amount</span>
+        </th>
+        <th scope="col" class="text-right" >
+          <span jhiTranslate="bitsHrPayrollApp.insuranceClaim.settledAmount">Settled Amount</span>
+        </th>
+        <th scope="col"></th>
+      </tr>
+      </thead>
+      <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+      <tr *ngFor="let insuranceClaim of insuranceClaims ;trackBy: trackId">
+        <td>
+                        <span class="text-success px-md-2" *ngIf="insuranceClaim.claimStatus === 'SETTLED'">
+                            <fa-icon icon="check"></fa-icon>
+                        </span>
+          <span class="text-danger px-md-2" *ngIf="insuranceClaim.claimStatus === 'REGRETTED'">
+                            <fa-icon icon="times"></fa-icon>
+                        </span>
+        </td>
+        <td> {{ insuranceClaim.policyHolderPin }} - {{ insuranceClaim.policyHolderName}}</td>
+        <td> {{ insuranceClaim.registrationName }}</td>
+        <td>
+
+          <span *ngIf="insuranceClaim.relation  ==='SELF'">Self</span>
+          <span *ngIf="insuranceClaim.relation  ==='SPOUSE'">Spouse</span>
+          <span *ngIf="insuranceClaim.relation  ==='CHILD_1'">Child 1</span>
+          <span *ngIf="insuranceClaim.relation  ==='CHILD_2'">Child 2</span>
+          <span *ngIf="insuranceClaim.relation  ==='CHILD_3'">Child 3</span>
+        </td>
+        <td> {{ insuranceClaim.insuranceCardId }}</td>
+        <td class="text-right">{{ insuranceClaim.claimedAmount }}</td>
+        <td class="text-right">{{ insuranceClaim.settledAmount }}</td>
+
+        <td class="text-right">
+          <div class="btn-group">
+            <button type="submit"
+                    [routerLink]="['/insurance-claim', insuranceClaim.id, 'view']"
+                    class="btn btn-info btn-sm">
+              <fa-icon icon="eye"></fa-icon>
+            </button>
+
+            <button type="submit"
+                    [routerLink]="['/insurance-claim', insuranceClaim.id, 'edit']"
+                    class="btn btn-primary btn-sm">
+              <fa-icon icon="pencil-alt"></fa-icon>
+            </button>
+
+            <button type="submit" (click)="delete(insuranceClaim)"
+                    class="btn btn-danger btn-sm">
+              <fa-icon icon="times"></fa-icon>
+            </button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

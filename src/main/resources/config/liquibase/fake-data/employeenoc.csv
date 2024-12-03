@@ -1,0 +1,11 @@
+id;passport_number;leave_start_date;leave_end_date;country_to_visit;reference_number;issue_date;created_at;updated_at;generated_at;reason;purpose_of_noc;certificate_status;is_required_for_visa;employee_id;created_by_id
+1;Mozambique Ruble Isle;2022-10-22;2022-10-22;matrix Tasty;Games SQL;2022-10-22;2022-10-22T20:34:06;2022-10-22T15:57:26;2022-10-23T08:36:20;leading-edge;MEDICAL;REJECTED;true;1;1
+2;grey Incredible Central;2022-10-22;2022-10-23;programming Cheese;Sausages Investor;2022-10-22;2022-10-22T15:28:57;2022-10-22T23:32:33;2022-10-23T02:06:54;Loan Computer bypassing;TOURISM;DOCUMENT_PROVIDED;true;2;2
+3;transmitting transition Factors;2022-10-23;2022-10-23;programming;connecting;2022-10-23;2022-10-23T00:27:09;2022-10-22T20:11:39;2022-10-22T22:08:25;array;ACADEMIC;REJECTED;true;3;2
+4;fuchsia Architect;2022-10-23;2022-10-22;Jewelery;alarm Michigan Tools;2022-10-23;2022-10-23T08:29:34;2022-10-22T17:58:44;2022-10-23T01:57:28;reboot;ACADEMIC;GENERATED;true;4;1
+5;connect;2022-10-23;2022-10-22;auxiliary Grocery;circuit Mall;2022-10-22;2022-10-22T20:47:25;2022-10-23T00:14:16;2022-10-23T08:13:26;Steel;ACADEMIC;GENERATED;true;5;2
+6;Avenue;2022-10-22;2022-10-22;transmitting alliance;Dynamic Licensed;2022-10-23;2022-10-23T05:01:10;2022-10-23T08:58:36;2022-10-23T08:53:03;invoice Account Principal;MEDICAL;SENT_FOR_GENERATION;false;6;1
+7;Fresh experiences;2022-10-22;2022-10-23;Representative cyan copy;synthesizing bandwidth Music;2022-10-23;2022-10-23T03:44:16;2022-10-23T04:50:36;2022-10-22T13:09:56;monitor Agent ivory;ACADEMIC;SENT_FOR_GENERATION;false;7;1
+8;deposit up THX;2022-10-23;2022-10-22;redefine 1080p override;interface Island cyan;2022-10-22;2022-10-22T11:08:41;2022-10-23T04:38:09;2022-10-22T23:33:38;Beauty;MEDICAL;DOCUMENT_PROVIDED;true;8;2
+9;e-commerce Account;2022-10-22;2022-10-23;bi-directional;Stream input;2022-10-22;2022-10-22T17:36:30;2022-10-23T01:12:24;2022-10-23T01:59:42;hub;MEDICAL;GENERATED;true;9;1
+10;Consultant uniform Fantastic;2022-10-23;2022-10-23;California Florida Orchestrator;Tools infomediaries;2022-10-23;2022-10-23T08:51:51;2022-10-22T11:46:07;2022-10-23T07:52:08;Consultant Helena;MEDICAL;GENERATED;true;10;2

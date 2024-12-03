@@ -1,0 +1,10 @@
+{
+  "bitsHrPayrollApp": {
+    "TaxImpact": {
+      "null": "",
+      "IMMEDIATE": "IMMEDIATE",
+      "UPON_DISBURSEMENT": "UPON_DISBURSEMENT",
+      "AFTER_DISBURSEMENT": "AFTER_DISBURSEMENT"
+    }
+  }
+}

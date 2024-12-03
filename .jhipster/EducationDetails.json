@@ -1,0 +1,41 @@
+{
+  "applications": "*",
+  "changelogDate": "20210215124030",
+  "clientRootFolder": "",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "education_details",
+  "fields": [
+    {
+      "fieldName": "nameOfDegree",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "subject",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "institute",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "yearOfDegreeCompletion",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "EducationDetails",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "educationDetails",
+      "relationshipName": "employee",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

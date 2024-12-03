@@ -1,0 +1,161 @@
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-6">
+        <div [formGroup]="employeeIdForm">
+          <ng-select
+            [(ngModel)]="selectedId"
+            [items]="employees"
+            bindLabel="fullName"
+            bindValue="id"
+            appearance="outline"
+            [searchable]="true"
+            [clearable]="true"
+            labelForId="employeeId"
+            formControlName="employeeId"
+            id="field_employee"
+            name="employee"
+          >
+          </ng-select>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <button class="btn btn-primary" (click)="load()">Load</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<jhi-alert-error></jhi-alert-error>
+
+<jhi-alert></jhi-alert>
+
+<div class="alert alert-warning" id="no-result" *ngIf="employmentHistories?.length === 0">
+  <span jhiTranslate="bitsHrPayrollApp.employmentHistory.home.notFound">No employmentHistories found</span>
+</div>
+
+<div class="body" *ngIf="employmentHistories !== undefined && employmentHistories.length > 0">
+  <div class="container-fluid">
+    <div class="row example-basic">
+      <div class="col-md-12 example-title">
+        <h2>Employment Histories</h2>
+        <p>PIN: {{ pin }}, Name: {{ employeeName }}</p>
+      </div>
+      <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2">
+        <ul class="timeline">
+          <ng-container *ngFor="let employmentHistory of employmentHistories; trackBy: trackId">
+            <li *ngIf="employmentHistory.eventType === this.promotionEventType" class="timeline-item">
+              <div class="timeline-info">
+                <span>{{ employmentHistory.effectiveDate | formatMediumDate }}</span>
+              </div>
+              <div class="timeline-marker"></div>
+              <div class="timeline-content">
+                <h3 class="timeline-title">Promotion</h3>
+                <p>
+                  Gross Salary :
+                  <span class="fw-bold">{{ employmentHistory.previousMainGrossSalary | number }} </span>
+                  to
+                  <span class="fw-bold"> {{ employmentHistory.currentMainGrossSalary | number }} </span>
+                </p>
+                <p>
+                  Designation :
+                  <span class="fw-bold">{{ employmentHistory.previousDesignationName }} </span>
+                  to
+                  <span class="fw-bold"> {{ employmentHistory.changedDesignationName }} </span>
+                  | Band :
+                  <span class="fw-bold">{{ employmentHistory.previousBandName }} </span>
+                  to
+                  <span class="fw-bold"> {{ employmentHistory.changedBandName }} </span>
+                </p>
+              </div>
+            </li>
+            <li *ngIf="employmentHistory.eventType === this.incrementEventType" class="timeline-item">
+              <div class="timeline-info">
+                <span>{{ employmentHistory.effectiveDate | formatMediumDate }}</span>
+              </div>
+              <div class="timeline-marker"></div>
+              <div class="timeline-content">
+                <h3 class="timeline-title">Increment</h3>
+                <p>
+                  Gross Salary :
+                  <span class="fw-bold">{{ employmentHistory.previousMainGrossSalary | number }} </span>
+                  to
+                  <span class="fw-bold"> {{ employmentHistory.currentMainGrossSalary | number }} </span>
+                  | Band :
+                  <span class="fw-bold">{{ employmentHistory.previousBandName }} </span>
+                  to
+                  <span class="fw-bold"> {{ employmentHistory.changedBandName }} </span>
+                </p>
+              </div>
+            </li>
+            <li *ngIf="employmentHistory.eventType === this.transferEventType" class="timeline-item">
+              <div class="timeline-info">
+                <span>{{ employmentHistory.effectiveDate | formatMediumDate }}</span>
+              </div>
+              <div class="timeline-marker"></div>
+              <div class="timeline-content">
+                <h3 class="timeline-title">Transfer</h3>
+                <p>
+                  Designation :
+                  <span class="fw-bold">{{ employmentHistory.previousDesignationName }} </span>
+                  to
+                  <span class="fw-bold"> {{ employmentHistory.changedDesignationName }} </span>
+                </p>
+                <p>
+                  Unit :
+                  <span class="fw-bold">{{ employmentHistory.previousUnitName }} </span>
+                  to
+                  <span class="fw-bold"> {{ employmentHistory.changedUnitName }} </span>
+                </p>
+                <p>
+                  Department :
+                  <span class="fw-bold">{{ employmentHistory.previousDepartmentName }} </span>
+                  to
+                  <span class="fw-bold"> {{ employmentHistory.changedDepartmentName }} </span>
+                </p>
+                <p>
+                  Reporting Manager :
+                  <span class="fw-bold">{{ employmentHistory.previousReportingToName }} </span>
+                  to
+                  <span class="fw-bold"> {{ employmentHistory.changedReportingToName }} </span>
+                </p>
+              </div>
+            </li>
+
+            <li *ngIf="employmentHistory.eventType === this.joiningEventType" class="timeline-item">
+              <div class="timeline-info">
+                <span>{{ employmentHistory.effectiveDate | formatMediumDate }}</span>
+              </div>
+              <div class="timeline-marker"></div>
+              <div class="timeline-content">
+                <h3 class="timeline-title">Joining</h3>
+                <p>
+                  Gross Salary :
+                  <span class="fw-bold">{{ employmentHistory.previousMainGrossSalary | number }} </span>
+                </p>
+              </div>
+            </li>
+            <li *ngIf="employmentHistory.eventType === this.confirmationEventType" class="timeline-item">
+              <div class="timeline-info">
+                <span>{{ employmentHistory.effectiveDate | formatMediumDate }}</span>
+              </div>
+              <div class="timeline-marker"></div>
+              <div class="timeline-content">
+                <h3 class="timeline-title">Confirmation</h3>
+              </div>
+            </li>
+            <li *ngIf="employmentHistory.eventType === this.resignationEventType" class="timeline-item">
+              <div class="timeline-info">
+                <span>{{ employmentHistory.effectiveDate | formatMediumDate }}</span>
+              </div>
+              <div class="timeline-marker"></div>
+              <div class="timeline-content">
+                <h3 class="timeline-title">Resignation</h3>
+              </div>
+            </li>
+          </ng-container>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" th:lang="${#locale.language}" lang="en">
+<head>
+    <title th:text="#{email.leave-application.created.title}">JHipster activation</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="icon" th:href="@{|${baseUrl}/favicon.ico|}" />
+</head>
+<body>
+<p>
+    Dear [[${receiver}]],
+</p>
+<p>
+    [[${applicant.fullName}]], [[${applicant.designation.designationName}]] applied for [[${application.durationInDay}]]
+    day(s) [[${application.leaveType.getValue()}]] from [[${#temporals.format(application.startDate, 'dd MMM, yyyy')}]]
+    to [[${#temporals.format(application.endDate, 'dd MMM, yyyy')}]].
+
+    <br/> In this regard request your decision to close the leave application.<br/><br/>
+
+    <span> <a th:href="@{${approveUrl}}">Approve</a> <a th:href="@{${rejectUrl}}">Reject</a> </span>
+
+    <br/> Thank you for your cooperation.</p>
+</body>
+
+<footer>
+    <h4 style="text-align: center">This is system generated email. Please do not reply this mail.</h4>
+</footer>
+</html>

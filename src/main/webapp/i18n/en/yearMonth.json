@@ -1,0 +1,23 @@
+{
+  "bitsHrPayrollApp": {
+    "yearMonth": {
+      "home": {
+        "title": "Year Months",
+        "createLabel": "Create a new Year Month",
+        "createOrEditLabel": "Create or edit a Year Month",
+        "notFound": "No Year Months found"
+      },
+      "created": "A new Year Month is created",
+      "updated": "Year Month is updated",
+      "deleted": "Year Month is deleted",
+      "delete": {
+        "question": "Are you sure you want to delete?"
+      },
+      "detail": {
+        "title": "Year Month"
+      },
+      "month": "Month",
+      "year": "Year"
+    }
+  }
+}

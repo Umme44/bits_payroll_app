@@ -1,0 +1,50 @@
+<div>
+  <jhi-header [headerName]="'Leave Summary'" [shouldHaveHr]="true"> </jhi-header>
+  <form [formGroup]="editForm" class="form-inlinexxx" name="editForm" role="form">
+    <div class="mb-3 row">
+      <label class="col-sm-1 col-form-label">Year:</label>
+      <div class="col-sm-2">
+        <select (change)="onYearSelect()" class="form-control w-100" formControlName="year" id="year" name="year">
+          <option *ngFor="let year of years" value="{{ year }}">
+            {{ year }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </form>
+
+  <div *ngIf="leaveBalanceEndUserView?.length === 0" class="alert alert-warning" id="no-result">
+    <span jhiTranslate="bitsHrPayrollApp.leaveBalance.home.notFound">No leaveBalances found</span>
+  </div>
+
+  <div *ngIf="leaveBalanceEndUserView && leaveBalanceEndUserView.length > 0" class="table-responsive">
+    <table aria-describedby="page-heading" class="table table-hover text-center">
+      <thead>
+        <tr>
+          <th scope="col"><span>Leave Type</span></th>
+          <th scope="col"><span>Carry Forwarded</span></th>
+          <th scope="col"><span>Consumed</span></th>
+          <th scope="col"><span>Allocated</span></th>
+          <th scope="col"><span>Requested</span></th>
+          <th scope="col"><span>Approved</span></th>
+          <th scope="col"><span>Cancelled</span></th>
+          <th scope="col"><span>Remaining</span></th>
+          <th scope="col"><span>Closing Balance</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let leaveBalance of leaveBalanceEndUserView; trackBy: trackId">
+          <td jhiTranslate="{{ 'bitsHrPayrollApp.LeaveType.' + leaveBalance.leaveType }}">{{ leaveBalance.leaveType }}</td>
+          <td>{{ leaveBalance.openingBalance }}</td>
+          <td>{{ leaveBalance.consumedDuringYear }}</td>
+          <td>{{ leaveBalance.amount }}</td>
+          <td>{{ leaveBalance.daysRequested }}</td>
+          <td>{{ leaveBalance.daysApproved }}</td>
+          <td>{{ leaveBalance.daysCancelled }}</td>
+          <td>{{ leaveBalance.daysRemaining }}</td>
+          <td>{{ leaveBalance.closingBalance }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

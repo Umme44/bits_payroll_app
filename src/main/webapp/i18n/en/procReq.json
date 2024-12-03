@@ -1,0 +1,27 @@
+{
+  "bitsHrPayrollApp": {
+    "procReq": {
+      "home": {
+        "title": "Proc Reqs",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Proc Req",
+        "createOrEditLabel": "Create or edit a Proc Req",
+        "notFound": "No Proc Reqs found"
+      },
+      "created": "A new Proc Req is created with identifier {{ param }}",
+      "updated": "A Proc Req is updated with identifier {{ param }}",
+      "deleted": "A Proc Req is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Proc Req {{ id }}?"
+      },
+      "detail": {
+        "title": "Proc Req"
+      },
+      "id": "ID",
+      "quantity": "Quantity",
+      "referenceFilePath": "Reference File Path",
+      "itemInformation": "Item Information",
+      "procReqMaster": "Proc Req Master"
+    }
+  }
+}

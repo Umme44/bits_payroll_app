@@ -1,0 +1,98 @@
+<ng-template #DisbursedFbDetails let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Festival Bonus Disbursement</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <div class="row p-2">
+      <div class="table-responsive">
+        <table class="table table-hover list-text-color" style="font-size: 0.7rem; border: none">
+          <tbody>
+            <tr>
+              <td class="">Employee:</td>
+              <td class="">{{ selectedFbDisbursment.employeeName }}</td>
+              <td class="">Disbursed By:</td>
+              <td class="">{{ selectedFbDisbursment.disbursedById }}</td>
+            </tr>
+            <tr>
+              <td class="">Pin :</td>
+              <td class="">{{ selectedFbDisbursment.pin }}</td>
+              <td class="">Remarks:</td>
+              <td class="">{{ selectedFbDisbursment.remarks }}</td>
+            </tr>
+            <tr>
+              <td class="">Festival Title:</td>
+              <td class="">{{ selectedFbDisbursment.festivalTitle }}</td>
+              <td class="">Disbursed At:</td>
+              <td class="">{{ selectedFbDisbursment.disbursedAt }}</td>
+            </tr>
+            <tr>
+              <td class="">Festival Name:</td>
+              <td class="">{{ selectedFbDisbursment.festivalName }}</td>
+              <td class="">Bonus Amount:</td>
+              <td class="text-start">{{ selectedFbDisbursment.bonusAmount }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-info" (click)="modal.close('Close click')">Close</button>
+  </div>
+</ng-template>
+
+<div class="mb-2">
+  <jhi-header [headerName]="'Disbursed Festival Bonus'" [shouldHaveHr]="false"> </jhi-header>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <!--    <jhi-alert></jhi-alert>-->
+  <div class="alert alert-warning" id="no-result" *ngIf="holdFbDisbursements?.length === 0">
+    <span jhiTranslate="bitsHrPayrollApp.holdFbDisbursement.home.notFound">No holdFbDisbursements found</span>
+  </div>
+
+  <div class="row">
+    <div class="col-md-10">
+      <jhi-search-text-box (searchEvent)="search($event)"></jhi-search-text-box>
+    </div>
+  </div>
+</div>
+
+<div>
+  <div class="table-responsive" id="entities" *ngIf="holdFbDisbursements && holdFbDisbursements.length > 0">
+    <table class="table table-hover list-text-color" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span>Festival Title</span></th>
+          <th scope="col"><span>Festival Name</span></th>
+          <th scope="col"><span>Employee Pin</span></th>
+          <th scope="col"><span>Employee Name</span></th>
+          <th scope="col" class="text-end"><span>Bonus Amount</span></th>
+          <th scope="col" class="text-end"><span>Disbursed At</span></th>
+
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+        <tr *ngFor="let holdFbDisbursement of holdFbDisbursements; trackBy: trackId">
+          <td>{{ holdFbDisbursement.festivalTitle }}</td>
+          <td>{{ holdFbDisbursement.festivalName }}</td>
+          <td>{{ holdFbDisbursement.pin }}</td>
+          <td>{{ holdFbDisbursement.employeeName }}</td>
+          <td class="text-end">{{ holdFbDisbursement.bonusAmount }}</td>
+          <td class="text-end">{{ holdFbDisbursement.disbursedAt | formatMediumDate }}</td>
+
+          <td class="text-end">
+            <button type="submit" (click)="openVerticallyCentered(DisbursedFbDetails, holdFbDisbursement)" class="btn btn-info btn-sm me-2">
+              <fa-icon icon="eye"></fa-icon>
+              <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+            </button>
+
+            <button class="btn btn-secondary btn-sm text-nowrap" type="submit">Payslip</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

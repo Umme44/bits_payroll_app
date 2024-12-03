@@ -1,0 +1,34 @@
+{
+  "bitsHrPayrollApp": {
+    "manualAttendanceEntry": {
+      "home": {
+        "title": "Manual Attendance Entries",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Manual Attendance Entry",
+        "createOrEditLabel": "Create or edit a Manual Attendance Entry",
+        "notFound": "No Manual Attendance Entries found"
+      },
+      "created": "A new Manual Attendance Entry is created with identifier {{ param }}",
+      "updated": "A Manual Attendance Entry is updated with identifier {{ param }}",
+      "deleted": "A Manual Attendance Entry is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Manual Attendance Entry {{ id }}?"
+      },
+      "detail": {
+        "title": "Manual Attendance Entry"
+      },
+      "id": "ID",
+      "date": "Date",
+      "inTime": "In Time",
+      "inNote": "In Note",
+      "outTime": "Out Time",
+      "outNote": "Out Note",
+      "isLineManagerApproved": "Is Line Manager Approved",
+      "isHRApproved": "Is HR Approved",
+      "isRejected": "Is Rejected",
+      "rejectionComment": "Rejection Comment",
+      "note": "Note",
+      "employee": "Employee"
+    }
+  }
+}

@@ -1,0 +1,160 @@
+<jhi-header *ngIf="pageType === 'hr'" [headerName]="'Flex Schedule Applications - Admin'" [shouldHaveHr]="false"> </jhi-header>
+
+<jhi-header
+  *ngIf="pageType === 'lm'"
+  [headerName]="'Flex Schedule Applications'"
+  [midHeaderName01]="'Approvals'"
+  [midRouterLinkText01]="'/'"
+  [midHeader01hasSessionStorage]="true"
+  [midHeader01SessionStorageKey]="'keepApprovalModalOpen'"
+  [midHeader01SessionStorageValue]="'yes'"
+>
+</jhi-header>
+
+<div class="row mb-2">
+  <div class="col-md-7">
+    <jhi-search-text-box (searchEvent)="search($event)"> </jhi-search-text-box>
+  </div>
+
+  <div class="col-md-5 text-end">
+    <button
+      type="button"
+      class="btn btn-outline-primary"
+      [routerLink]="
+        pageType === 'hr'
+          ? '/flex-schedule-application-approval/hr/approved-by-me'
+          : '/flex-schedule-application-approval/lm/approved-by-me'
+      "
+    >
+      Approved by me
+    </button>
+  </div>
+</div>
+
+<div class="table-responsive" id="entities" *ngIf="flexScheduleApplicationsFiltered && flexScheduleApplicationsFiltered.length > 0">
+  <table class="table table-hover list-text-color" aria-describedby="page-heading">
+    <thead>
+      <tr>
+        <th scope="col">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            name="flexScheduleApplicationSelectAllCheckBox"
+            (change)="selectAllCheckBox($event)"
+          />
+        </th>
+
+        <th scope="col"></th>
+
+        <th scope="col"><span>PIN</span></th>
+        <th scope="col"><span>Name</span></th>
+        <th scope="col"><span>Designation</span></th>
+
+        <th scope="col"><span>Flex Time</span></th>
+
+        <th scope="col"><span>Effective </span></th>
+        <th scope="col"><span>Duration</span></th>
+        <th scope="col"><span jhiTranslate="bitsHrPayrollApp.flexScheduleApplication.appliedAt">Applied At</span></th>
+
+        <th scope="col"><span jhiTranslate="bitsHrPayrollApp.flexScheduleApplication.reason">Reason</span></th>
+
+        <th scope="col" class="text-end">
+          <div class="">
+            <div class="d-inline" ngbTooltip="Approve">
+              <button class="btn btn-success btn-sm" [disabled]="listOfIds.length < 1" (click)="approveSelected()">
+                <fa-icon [icon]="['fas', 'check']"></fa-icon>
+              </button>
+            </div>
+            <div class="d-inline" ngbTooltip="Reject">
+              <button class="btn btn-danger btn-sm" [disabled]="listOfIds.length < 1" (click)="denySelected()">
+                <fa-icon [icon]="['fas', 'times']"></fa-icon>
+              </button>
+            </div>
+          </div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let flexScheduleApplication of flexScheduleApplicationsFiltered">
+        <td>
+          <input
+            class="form-check-input"
+            type="checkbox"
+            name="flexScheduleApplicationSelectBox"
+            (change)="selectIndividualCheckBox($event, flexScheduleApplication.id!)"
+          />
+        </td>
+
+        <td *ngIf="flexScheduleApplication.pin !== undefined" class="td-th-employee-img">
+          <img class="card-img-top mt-0 mb-0 me-3 ms-3" [src]="getProfilePicture(flexScheduleApplication.pin)" alt="profile Picture" />
+        </td>
+        <td>
+          {{ flexScheduleApplication.pin }}
+        </td>
+
+        <td>
+          {{ flexScheduleApplication.fullName }}
+        </td>
+
+        <td>
+          <span
+            *ngIf="flexScheduleApplication.designationName!.length > 25; else fullDesignationTipContent"
+            [ngbTooltip]="flexScheduleApplication.designationName"
+          >
+            {{ textSlicing(flexScheduleApplication.designationName!) }}
+          </span>
+          <ng-template #fullDesignationTipContent>
+            <span>
+              {{ flexScheduleApplication.designationName! }}
+            </span>
+          </ng-template>
+        </td>
+
+        <td>
+          {{ flexScheduleApplication.inTime | formatTime }}
+          -
+          {{ flexScheduleApplication.outTime | formatTime }}
+        </td>
+
+        <td>
+          {{ flexScheduleApplication.effectiveFrom | formatMediumDate }} - {{ flexScheduleApplication.effectiveTo | formatMediumDate }}
+        </td>
+
+        <td>{{ flexScheduleApplication.durationAsDays }} days</td>
+
+        <td>{{ flexScheduleApplication.appliedAt | formatMediumDate }}</td>
+
+        <td>
+          <span
+            ngbTooltip="{{
+              flexScheduleApplication.reason && flexScheduleApplication.reason.length > 30 ? flexScheduleApplication.reason : ''
+            }}"
+          >
+            {{
+              flexScheduleApplication.reason && flexScheduleApplication.reason.length > 30
+                ? flexScheduleApplication.reason.slice(0, 30) + '...'
+                : flexScheduleApplication.reason
+            }}
+          </span>
+        </td>
+
+        <!--            <td class="text-end">-->
+        <!--                <button type="submit" (click)="openView(flexScheduleApplication)"-->
+        <!--                        class="btn btn-info btn-sm border-radius-minimal me-1">-->
+        <!--                    <fa-icon icon="eye"></fa-icon>-->
+        <!--                </button>-->
+        <!--            </td>-->
+
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div
+  *ngIf="!flexScheduleApplicationsFiltered || flexScheduleApplicationsFiltered.length === 0"
+  style="height: 75vh"
+  class="text-center d-flex align-items-center justify-content-center"
+>
+  <img src="../../../../content/images/approval.svg" width="400px" height="400px" />
+</div>

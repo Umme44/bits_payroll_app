@@ -1,0 +1,61 @@
+{
+  "bitsHrPayrollApp": {
+    "recruitmentRequisitionForm": {
+      "home": {
+        "title": "Recruitment Requisition Forms",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Recruitment Requisition Form",
+        "createOrEditLabel": "Create or edit a Recruitment Requisition Form",
+        "notFound": "No Recruitment Requisition Forms found"
+      },
+      "created": "A new Recruitment Requisition Form is created with identifier {{ param }}",
+      "updated": "A Recruitment Requisition Form is updated with identifier {{ param }}",
+      "deleted": "A Recruitment Requisition Form is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Recruitment Requisition Form {{ id }}?"
+      },
+      "detail": {
+        "title": "Recruitment Requisition Form"
+      },
+      "id": "ID",
+      "expectedJoiningDate": "Expected Joining Date",
+      "project": "Project",
+      "numberOfVacancies": "Number Of Vacancies",
+      "employmentType": "Employment Type",
+      "resourceType": "Resource Type",
+      "rrfNumber": "Rrf Number",
+      "preferredEducationType": "Preferred Education Type",
+      "dateOfRequisition": "Date Of Requisition",
+      "requestedDate": "Requested Date",
+      "recommendationDate01": "Recommendation Date 01",
+      "recommendationDate02": "Recommendation Date 02",
+      "recommendationDate03": "Recommendation Date 03",
+      "recommendationDate04": "Recommendation Date 04",
+      "requisitionStatus": "Requisition Status",
+      "rejectedAt": "Rejected At",
+      "createdAt": "Created At",
+      "updatedAt": "Updated At",
+      "isDeleted": "Is Deleted",
+      "totalOnboard": "Total Onboard",
+      "preferredSkillType": "Preferred Skill Type",
+      "recruitmentNature": "Recruitment Nature",
+      "specialRequirement": "Special Requirement",
+      "recommendationDate05": "Recommendation Date 05",
+      "functionalDesignation": "Functional Designation",
+      "band": "Band",
+      "department": "Department",
+      "unit": "Unit",
+      "recommendedBy01": "Recommended By 01",
+      "recommendedBy02": "Recommended By 02",
+      "recommendedBy03": "Recommended By 03",
+      "recommendedBy04": "Recommended By 04",
+      "requester": "Requester",
+      "rejectedBy": "Rejected By",
+      "createdBy": "Created By",
+      "updatedBy": "Updated By",
+      "deletedBy": "Deleted By",
+      "recommendedBy05": "Recommended By 05",
+      "employeeToBeReplaced": "Employee To Be Replaced"
+    }
+  }
+}

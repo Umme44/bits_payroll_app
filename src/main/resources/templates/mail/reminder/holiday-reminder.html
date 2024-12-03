@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="en">
+<head>
+    <!--    done    -->
+    <title> Holiday Remainder </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="icon" th:href="@{|${baseUrl}/favicon.ico|}"/>
+</head>
+<body>
+<span>
+    Dear Colleague,
+</span>
+<p>
+    On the occasion of the [[${holidayName}]], BRAC IT will remain closed on [[${dateListAsString}]].
+</p>
+
+<p>
+    All special assignments/roster duties/on-call support will continue as usual upon customer requirement and
+    confirmation.
+</p>
+
+</body>
+
+<footer>
+    <h4 style="text-align: center">This is system generated email.Please do not reply.</h4>
+</footer>
+</html>
+

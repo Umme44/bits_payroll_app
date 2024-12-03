@@ -1,0 +1,235 @@
+<div class="">
+  <div class="row mb-5">
+    <div class="col">
+      <h5 class="text-center">PF Data Export</h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4 mb-2">
+      <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Monthly PF Collections
+          <button (click)="exportMonthlyPfCollection()" class="btn btn-rounded btn-outline-success float-end">
+            <fa-icon icon="file-csv"></fa-icon>
+            <span class="d-none d-md-inline">&nbsp;&nbsp;Export</span>
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <div class="col-md-4 mb-2">
+      <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          PF Collection Interests
+          <button (click)="exportPfCollectionInterest()" class="btn btn-rounded btn-outline-success float-end">
+            <fa-icon icon="file-csv"></fa-icon>
+            <span class="d-none d-md-inline">&nbsp;&nbsp;Export</span>
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <div class="col-md-4 mb-2">
+      <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          PF Opening Balance
+          <button (click)="exportPfOpeningBalance()" class="btn btn-rounded btn-outline-success float-end">
+            <fa-icon icon="file-csv"></fa-icon>
+            <span class="d-none d-md-inline">&nbsp;&nbsp;Export</span>
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <div class="col-md-4 mb-2">
+      <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Detailed PF Contribution Report
+          <button (click)="exportPfContributionDetailedCsvReport()" class="btn btn-rounded btn-outline-success float-end">
+            <fa-icon icon="file-csv"></fa-icon>
+            <span class="d-none d-md-inline">&nbsp;&nbsp;Export</span>
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <div class="col-md-4 mb-2">
+      <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Detailed PF Interest Report
+          <button (click)="exportPfInterestDetailedCsvReport()" class="btn btn-rounded btn-outline-success float-end">
+            <fa-icon icon="file-csv"></fa-icon>
+            <span class="d-none d-md-inline">&nbsp;&nbsp;Export</span>
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <!--     Section for generating pf records within date range-->
+    <div class="col-md-4 mb-2">
+      <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          PF collections between date range
+          <button (click)="dateRangePF(dateRangePFmodal)" class="btn btn-rounded btn-outline-success float-end">
+            <fa-icon icon="file-csv"></fa-icon>
+            <span class="d-none d-md-inline">&nbsp;&nbsp;Export</span>
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <div class="col-md-4 mb-2">
+      <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          PF Statement Report
+          <button (click)="exportPfStatementReport(pfStatementReportModal)" class="btn btn-rounded btn-outline-success float-end">
+            <fa-icon icon="file-csv"></fa-icon>
+            <span class="d-none d-md-inline">&nbsp;&nbsp;Export</span>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 m-3 card card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <span>Annual PF Report</span>
+        </div>
+
+        <div class="mb-3 mb-0 col-md-3">
+          <select class="form-control hide-arrow" (change)="onChangeYear($event)">
+            <option [disabled]="true" selected [ngValue]="null">Select Year</option>
+            <option *ngFor="let year of years" [value]="year">
+              {{ year }}
+            </option>
+          </select>
+        </div>
+
+        <div class="col-md-3 text-end">
+          <button
+            [disabled]="selectedYearForOverallPfAmountReport === null"
+            (click)="exportAnnualPfReport()"
+            class="btn btn-rounded btn-outline-success float-end"
+          >
+            <fa-icon icon="file-excel"></fa-icon>
+            <span class="d-none d-md-inline">Export</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #dateRangePFmodal let-modal>
+  <div class="modal-header border-0">
+    <h6 class="modal-title" id="modal-basic-title">PF Collection Report Between Date Rage.</h6>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form class="row" [formGroup]="PFReturnForm">
+      <div class="mb-3 col-md-6">
+        <label class="form-control-label required" for="startYear">Start Year</label>
+
+        <input class="form-control w-100" (change)="onChangeYearAndMonth()" formControlName="startYear" id="startYear" name="startYear" />
+      </div>
+
+      <div class="mb-3 col-md-6">
+        <label class="form-control-label required" for="startMonth">Start Month</label>
+        <select class="form-control w-100" (change)="onChangeYearAndMonth()" formControlName="startMonth" id="startMonth" name="startMonth">
+          <option selected disabled>-- Select start month --</option>
+          <option *ngFor="let month of months" value="{{ month.value }}">
+            {{ month.text }}
+          </option>
+        </select>
+      </div>
+
+      <div class="col-12 my-1">
+        <span *ngIf="invalidYearAndMonth" class="text-danger font-sm">
+          {{ invalidYearAndMonthMessage }}
+        </span>
+      </div>
+
+      <div class="mb-3 col-md-6">
+        <label class="form-control-label required" for="endYear">End Year</label>
+        <input class="form-control w-100" (change)="onChangeYearAndMonth()" formControlName="endYear" id="endYear" name="endYear" />
+      </div>
+
+      <div class="mb-3 col-md-6">
+        <label class="form-control-label required" for="endMonth">End Month</label>
+        <select class="form-control w-100" (change)="onChangeYearAndMonth()" formControlName="endMonth" id="endMonth" name="endMonth">
+          <option selected disabled>-- Select start month --</option>
+          <option *ngFor="let month of months" value="{{ month.value }}">
+            {{ month.text }}
+          </option>
+        </select>
+      </div>
+    </form>
+
+    <div class="row">
+      <div class="col-6">
+        <button
+          [disabled]="PFReturnForm.invalid || invalidYearAndMonth"
+          type="button"
+          class="btn btn-success btn-md w-100"
+          (click)="modal.close('Save click')"
+        >
+          Export
+        </button>
+      </div>
+      <div class="col-6">
+        <button type="button" class="btn btn-danger btn-md w-100" (click)="modal.dismiss()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #pfStatementReportModal let-modal>
+  <div class="modal-header border-0">
+    <h6 class="modal-title" id="modal-basic-title">PF Statement Report</h6>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form class="row" [formGroup]="pfStatementReportDateForm">
+      <div class="mb-3 col-md-12">
+        <label class="form-control-label" for="pfStatementReportDate">Date</label>
+        <div class="input-group">
+          <input
+            #pfStatementReportDateDp="ngbDatepicker"
+            class="form-control"
+            id="pfStatementReportDate"
+            name="pfStatementReportDate"
+            ngbDatepicker
+            type="text"
+          />
+
+          <span class="input-group-append">
+            <button (click)="pfStatementReportDateDp.toggle()" class="btn btn-secondary" type="button">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </span>
+        </div>
+      </div>
+    </form>
+    <div class="row">
+      <div class="col-6">
+        <button
+          [disabled]="pfStatementReportDateForm.invalid"
+          type="button"
+          class="btn btn-success btn-md w-100"
+          (click)="modal.close('Save click')"
+        >
+          Download
+        </button>
+      </div>
+      <div class="col-6">
+        <button type="button" class="btn btn-danger btn-md w-100" (click)="modal.dismiss()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

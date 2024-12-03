@@ -1,0 +1,169 @@
+<div>
+  <h2 id="page-heading" data-cy="ArrearPaymentHeading">
+    <span jhiTranslate="bitsHrPayrollApp.arrearPayment.home.title">Arrear Payments</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="bitsHrPayrollApp.arrearPayment.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-arrear-payment"
+        [routerLink]="['/arrear-payment/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="bitsHrPayrollApp.arrearPayment.home.createLabel"> Create a new Arrear Payment </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="arrearPayments?.length === 0">
+    <span jhiTranslate="bitsHrPayrollApp.arrearPayment.home.notFound">No Arrear Payments found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="arrearPayments && arrearPayments.length > 0">
+    <table class="table table-hover list-text-color" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">ID</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="paymentType">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.arrearPayment.paymentType">Payment Type</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="disbursementDate">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.arrearPayment.disbursementDate">Disbursement Date</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="salaryMonth">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.arrearPayment.salaryMonth">Salary Month</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="salaryYear">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.arrearPayment.salaryYear">Salary Year</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="approvalStatus">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.arrearPayment.approvalStatus">Approval Status</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="disbursementAmount">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.arrearPayment.disbursementAmount">Disbursement Amount</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="isDeleted">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.arrearPayment.isDeleted">Is Deleted</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="arrearPF">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.arrearPayment.arrearPF">Arrear PF</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="taxDeduction">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.arrearPayment.taxDeduction">Tax Deduction</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="deductTaxUponPayment">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.arrearPayment.deductTaxUponPayment">Deduct Tax Upon Payment</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="arrearSalaryItem.id">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.arrearPayment.arrearSalaryItem">Arrear Salary Item</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody
+        infinite-scroll
+        (scrolled)="loadPage(page + 1)"
+        [infiniteScrollDisabled]="page - 1 >= links['last']"
+        [infiniteScrollDistance]="0"
+      >
+        <tr *ngFor="let arrearPayment of arrearPayments; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/arrear-payment', arrearPayment.id, 'view']">{{ arrearPayment.id }}</a>
+          </td>
+          <td jhiTranslate="{{ 'bitsHrPayrollApp.ArrearPaymentType.' + arrearPayment.paymentType }}">{{ arrearPayment.paymentType }}</td>
+          <td>{{ arrearPayment.disbursementDate | formatMediumDate }}</td>
+          <td jhiTranslate="{{ 'bitsHrPayrollApp.Month.' + arrearPayment.salaryMonth }}">{{ arrearPayment.salaryMonth }}</td>
+          <td>{{ arrearPayment.salaryYear }}</td>
+          <td jhiTranslate="{{ 'bitsHrPayrollApp.Status.' + arrearPayment.approvalStatus }}">{{ arrearPayment.approvalStatus }}</td>
+          <td>{{ arrearPayment.disbursementAmount }}</td>
+          <td>{{ arrearPayment.isDeleted }}</td>
+          <td>{{ arrearPayment.arrearPF }}</td>
+          <td>{{ arrearPayment.taxDeduction }}</td>
+          <td>{{ arrearPayment.deductTaxUponPayment }}</td>
+          <td>
+            <div *ngIf="arrearPayment.arrearSalaryItem">
+              <a [routerLink]="['/arrear-salary-item', arrearPayment.arrearSalaryItem.id, 'view']">{{
+                arrearPayment.arrearSalaryItem.id
+              }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/arrear-payment', arrearPayment.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/arrear-payment', arrearPayment.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(arrearPayment)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

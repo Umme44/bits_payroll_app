@@ -1,0 +1,9 @@
+{
+  "bitsHrPayrollApp": {
+    "ArrearPaymentType": {
+      "null": "",
+      "INDIVIDUAL": "INDIVIDUAL",
+      "ALONGSIDE_MONTHLY_SALARY": "ALONGSIDE_MONTHLY_SALARY"
+    }
+  }
+}

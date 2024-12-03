@@ -1,0 +1,360 @@
+<div>
+  <jhi-header
+    [addButtonText]="'Generate Salary'"
+    [headerName]="'Generated Salaries'"
+    [routerLinkText]="'/salary-generation'"
+    [shouldHaveHr]="false">
+  </jhi-header>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div *ngIf="salaryGeneratorMasters?.length === 0" class="alert alert-warning" id="no-result">
+    <span>No salary has been generated yet</span>
+  </div>
+
+</div>
+
+
+<div *ngIf="salaryGeneratorMasters && salaryGeneratorMasters.length > 0" class="table-responsive" id="entities">
+  <table aria-describedby="page-heading" class="table table-hover">
+    <thead>
+    <tr>
+      <th scope="col" class="text-nowrap"><span>Status</span></th>
+      <th scope="col" class="text-nowrap"><span title="Lock Status"></span></th>
+      <th scope="col" class="text-nowrap"><span>Month, Year</span></th>
+      <th scope="col" class="text-nowrap text-center"><span>Mobile Bill</span></th>
+      <th scope="col" class="text-nowrap text-center"><span>Attendance</span></th>
+      <th scope="col" class="text-nowrap text-center"><span>Other Deduction</span></th>
+      <th scope="col" class="text-nowrap text-center"><span>Visibility</span></th>
+      <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let salaryGeneratorMaster of salaryGeneratorMasters ;trackBy: trackId">
+
+      <td  class="text-nowrap">
+                <span *ngIf="salaryGeneratorMaster.isGenerated===true"
+                      data-placement="top"
+                      data-toggle="tooltip"
+                      style="color:limegreen"
+                      title="Generated">
+                    <fa-icon icon="check-circle"></fa-icon>
+                </span>
+
+        <span *ngIf="salaryGeneratorMaster.isGenerated!==true"
+              data-placement="top"
+              data-toggle="tooltip"
+              style="color:#FFCC00"
+              title="Not Generated">
+                    <fa-icon icon="exclamation-circle"></fa-icon>
+                </span>
+      </td>
+
+      <td class="text-nowrap">
+               <span class="text-danger" title="Unlocked"
+                     *ngIf="salaryGeneratorMaster.isFinalized === null || salaryGeneratorMaster.isFinalized === false; else statusLocked">
+                   <fa-icon icon="lock-open"></fa-icon>
+               </span>
+        <ng-template #statusLocked>
+                    <span class="text-success" title="Locked">
+                        <fa-icon icon="lock"></fa-icon>
+                    </span>
+        </ng-template>
+      </td>
+
+      <td class="text-nowrap" >{{ toDate(salaryGeneratorMaster.year!, salaryGeneratorMaster.month!)  | formatMonth }}
+        , {{ salaryGeneratorMaster.year }}
+      </td>
+
+      <td class="text-nowrap text-center">
+        <div *ngIf="salaryGeneratorMaster.isMobileBillImported===true">
+          <a [routerLink]="['/mobile-bill', salaryGeneratorMaster.year, salaryGeneratorMaster.month]"><b>View</b></a>
+        </div>
+        <div *ngIf="!salaryGeneratorMaster.isMobileBillImported===true">
+          Not Imported
+        </div>
+      </td>
+
+      <td class="text-nowrap text-center">
+        <div *ngIf="salaryGeneratorMaster.isAttendanceImported===true">
+          <a [routerLink]="['/attendance-summary', salaryGeneratorMaster.year, salaryGeneratorMaster.month]"><b>View</b></a>
+        </div>
+        <div *ngIf="!salaryGeneratorMaster.isAttendanceImported===true">
+          Not Imported
+        </div>
+      </td>
+
+      <td class="text-nowrap text-center">
+        <div *ngIf="salaryGeneratorMaster.isSalaryDeductionImported===true">
+          <a [routerLink]="['/salary-deduction', salaryGeneratorMaster.year, salaryGeneratorMaster.month]"><b>View</b></a>
+        </div>
+        <div *ngIf="!salaryGeneratorMaster.isSalaryDeductionImported===true">
+          Not Imported
+        </div>
+      </td>
+
+      <td class="text-nowrap text-center">
+
+                <span class="badge rounded-pill bg-success px-2 py-1 font-sm"
+                      style="cursor: pointer"
+                      *ngIf="salaryGeneratorMaster!.visibility! === 'VISIBLE_TO_EMPLOYEE'"
+                      data-placement="top"
+                      data-toggle="tooltip" container="body"
+                      ngbTooltip="This Salary is visible to all employee. Click to change visibility status"
+                      (click)="onChangeVisibilityStatus('visible', salaryGeneratorMaster!.year!, salaryGeneratorMaster!.month!)">
+                    Visible
+                </span>
+
+        <span class="badge rounded-pill bg-secondary text-white px-2 py-1 font-sm"
+              style="cursor: pointer"
+              *ngIf="salaryGeneratorMaster!.visibility! === 'NOT_VISIBLE_TO_EMPLOYEE'"
+              data-placement="top"
+              data-toggle="tooltip" container="body"
+              ngbTooltip="This Salary is hidden from all employee. Click to change visibility status"
+              (click)="onChangeVisibilityStatus('hidden', salaryGeneratorMaster!.year!, salaryGeneratorMaster!.month!)">
+                    Hidden
+                </span>
+
+        <span class="badge rounded-pill bg-warning px-2 py-1 font-sm"
+              style="cursor: pointer"
+              *ngIf="salaryGeneratorMaster!.visibility! === 'PARTIALLY_VISIBLE'"
+              data-placement="top"
+              data-toggle="tooltip" container="body"
+              ngbTooltip="This Salary is partially visible to all employee. Click to change visibility status"
+              (click)="onChangeVisibilityStatus('partially_visible', salaryGeneratorMaster!.year!, salaryGeneratorMaster!.month!)">
+                    Partially Visible
+                </span>
+      </td>
+
+      <td class="text-end text-nowrap">
+
+        <button [disabled]="!salaryGeneratorMaster.isGenerated"
+                (click)="openSalaryReportModal(salaryReportModal, salaryGeneratorMaster!)"
+                class="btn btn-outline-primary btn-sm px-md-2">
+          <fa-icon icon="eye"></fa-icon>
+          <span class="d-none d-md-inline">Reports</span>
+        </button>
+
+        <button [disabled]="!salaryGeneratorMaster.isGenerated"
+                [routerLink]="['/employee-salary', salaryGeneratorMaster.year, salaryGeneratorMaster.month]"
+                class="btn btn-success btn-sm px-md-2">
+          <fa-icon icon="eye"></fa-icon>
+          <span class="d-none d-md-inline">View</span>
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+<ng-template #salaryReportModal let-modal>
+  <div class="modal-header border-0">
+    <h6 class="modal-title" id="modal-basic-title2">Salary Month: {{getMonthName(selectedSalaryGeneratorMaster.month!)}}, {{selectedSalaryGeneratorMaster.year!}}</h6>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body p-4">
+
+
+    <div class="font-sm row mb-1">
+      <div class="col-12">
+        <p>Salary Reports:</p>
+      </div>
+      <div class="card p-1 col btn col-active color-ash m-1 border-none box-shadow"
+           (click)="export(selectedSalaryGeneratorMaster.year!,selectedSalaryGeneratorMaster.month!,'short-summary')"
+           [attr.disabled]="!selectedSalaryGeneratorMaster.isGenerated" >
+        <fa-icon class="icon icon-size-short pt-3" icon="download"></fa-icon>
+
+        <div class="card-body pt-0 pb-2 px-0">
+          <div class="card-title text-center mb-0 font-sm">Short Report</div>
+        </div>
+      </div>
+
+      <div class="card p-1 col btn col-active color-ash m-1 border-none box-shadow"
+           (click)="export(selectedSalaryGeneratorMaster.year!,selectedSalaryGeneratorMaster.month!,'summary')"
+           [attr.disabled]="!selectedSalaryGeneratorMaster.isGenerated" >
+        <fa-icon class="icon icon-size-short pt-3" icon="download"></fa-icon>
+
+        <div class="card-body pt-0 pb-2 px-0">
+          <div class="card-title text-center mb-0 font-sm">Summary Report</div>
+        </div>
+      </div>
+
+      <div class="card p-1 col btn col-active color-ash m-1 border-none box-shadow"
+           (click)="export(selectedSalaryGeneratorMaster.year!,selectedSalaryGeneratorMaster.month!,'regular')"
+           [attr.disabled]="!selectedSalaryGeneratorMaster.isGenerated" >
+        <fa-icon class="icon icon-size-short pt-3" icon="download"></fa-icon>
+
+        <div class="card-body pt-0 pb-2 px-0">
+          <div class="card-title text-center mb-0 font-sm">Regular</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="font-sm row mb-1">
+      <div class="card p-1 col btn col-active color-ash m-1 border-none box-shadow"
+           (click)="export(selectedSalaryGeneratorMaster.year!,selectedSalaryGeneratorMaster.month!,'contractual')"
+           [attr.disabled]="!selectedSalaryGeneratorMaster.isGenerated" >
+        <fa-icon class="icon icon-size-short pt-3" icon="download"></fa-icon>
+
+        <div class="card-body pt-0 pb-2 px-0">
+          <div class="card-title text-center mb-0 font-sm">Contractual</div>
+        </div>
+      </div>
+
+      <div class="card p-1 col btn col-active color-ash m-1 border-none box-shadow"
+           (click)="export(selectedSalaryGeneratorMaster.year!,selectedSalaryGeneratorMaster.month!,'intern')"
+           [attr.disabled]="!selectedSalaryGeneratorMaster.isGenerated" >
+        <fa-icon class="icon icon-size-short pt-3" icon="download"></fa-icon>
+
+        <div class="card-body pt-0 pb-2 px-0">
+          <div class="card-title text-center mb-0 font-sm">Intern</div>
+        </div>
+      </div>
+
+      <div class="card p-1 col btn col-active color-ash m-1 border-none box-shadow"
+           (click)="export(selectedSalaryGeneratorMaster.year!,selectedSalaryGeneratorMaster.month!,'all')"
+           [attr.disabled]="!selectedSalaryGeneratorMaster.isGenerated" >
+        <fa-icon class="icon icon-size-short pt-3" icon="download"></fa-icon>
+
+        <div class="card-body pt-0 pb-2 px-0">
+          <div class="card-title text-center mb-0 font-sm">ALL</div>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="font-sm row mb-1">
+      <div class="col-12">
+        <p>Corpnet:</p>
+      </div>
+      <div class="card p-1 col btn col-active color-ash m-1 border-none box-shadow"
+           (click)="export(selectedSalaryGeneratorMaster.year!,selectedSalaryGeneratorMaster.month!,'salary-disbursement')"
+           [attr.disabled]="!selectedSalaryGeneratorMaster.isGenerated" >
+        <fa-icon class="icon icon-size-short pt-3" icon="download"></fa-icon>
+
+        <div class="card-body pt-0 pb-2 px-0">
+          <div class="card-title text-center mb-0 font-sm">Salary Disbursement</div>
+        </div>
+      </div>
+
+      <div class="card p-1 col btn col-active color-ash m-1 border-none box-shadow"
+           (click)="export(selectedSalaryGeneratorMaster.year!,selectedSalaryGeneratorMaster.month!,'living-allowance')"
+           [attr.disabled]="!selectedSalaryGeneratorMaster.isGenerated" >
+        <fa-icon class="icon icon-size-short pt-3" icon="download"></fa-icon>
+
+        <div class="card-body pt-0 pb-2 px-0">
+          <div class="card-title text-center mb-0 font-sm">Living Allowance</div>
+        </div>
+      </div>
+
+      <div class="card p-1 col btn col-active color-ash m-1 border-none box-shadow"
+           (click)="export(selectedSalaryGeneratorMaster.year!,selectedSalaryGeneratorMaster.month!,'car-allowance')"
+           [attr.disabled]="!selectedSalaryGeneratorMaster.isGenerated" >
+        <fa-icon class="icon icon-size-short pt-3" icon="download"></fa-icon>
+
+        <div class="card-body pt-0 pb-2 px-0">
+          <div class="card-title text-center mb-0 font-sm">Car Allowance</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="font-sm row mb-1">
+      <div class="card p-1 col btn col-active color-ash m-1 border-none box-shadow"
+           (click)="export(selectedSalaryGeneratorMaster.year!,selectedSalaryGeneratorMaster.month!,'company-secretary-allowance')"
+           [attr.disabled]="!selectedSalaryGeneratorMaster.isGenerated" >
+        <fa-icon class="icon icon-size-short pt-3" icon="download"></fa-icon>
+
+        <div class="card-body pt-0 pb-2 px-0">
+          <div class="card-title text-center mb-0 font-sm">Secretary Allowance</div>
+        </div>
+      </div>
+
+      <div class="card p-1 col btn col-active color-ash m-1 border-none box-shadow"
+           (click)="export(selectedSalaryGeneratorMaster.year!,selectedSalaryGeneratorMaster.month!,'house-rent-allowance')"
+           [attr.disabled]="!selectedSalaryGeneratorMaster.isGenerated" >
+        <fa-icon class="icon icon-size-short pt-3" icon="download"></fa-icon>
+
+        <div class="card-body pt-0 pb-2 px-0">
+          <div class="card-title text-center mb-0 font-sm">House Rent Allowance</div>
+        </div>
+      </div>
+
+      <div class="col m-1 p-1">
+      </div>
+    </div>
+
+    <!--        <hr>-->
+    <!--        <div class="font-sm row mb-1">-->
+    <!--            <div class="col-12">-->
+    <!--                <p>Other:</p>-->
+    <!--            </div>-->
+    <!--            <div class="card p-1 col-4 btn col-active color-ash m-1 border-none box-shadow"-->
+    <!--                 (click)="export(selectedSalaryGeneratorMaster.year!,selectedSalaryGeneratorMaster.month!,'salary-disbursement')"-->
+    <!--                 [attr.disabled]="!selectedSalaryGeneratorMaster.isGenerated" >-->
+    <!--                <fa-icon class="icon icon-size-short pt-3" icon="download"></fa-icon>-->
+    <!--                <div class="card-body pt-0 pb-2 px-0">-->
+    <!--                    <div class="card-title text-center mb-0 font-sm">Salary Disbursement</div>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--        <div class="col-12 mx-auto d-flex align-items-center justify-content-center">-->
+    <!--            <div class="btn-group">-->
+    <!--                <button (click)="export(selectedSalaryGeneratorMaster.year!,selectedSalaryGeneratorMaster.month!,'short-summary')"-->
+    <!--                        [disabled]="!selectedSalaryGeneratorMaster.isGenerated"-->
+    <!--                        class="btn btn-outline-primary btn-sm px-md-3">-->
+    <!--                    <fa-icon icon="download"></fa-icon>-->
+    <!--                    <span class="d-none d-md-inline">Short Report</span>-->
+    <!--                </button>-->
+
+    <!--                <button (click)="export(selectedSalaryGeneratorMaster.year!,selectedSalaryGeneratorMaster.month!,'summary')"-->
+    <!--                        [disabled]="!selectedSalaryGeneratorMaster.isGenerated"-->
+    <!--                        class="btn btn-outline-info btn-sm px-md-3">-->
+    <!--                    <fa-icon icon="download"></fa-icon>-->
+    <!--                    <span class="d-none d-md-inline">Summary-Report</span>-->
+    <!--                </button>-->
+
+    <!--                <button (click)="export(selectedSalaryGeneratorMaster.year!,selectedSalaryGeneratorMaster.month!,'regular')"-->
+    <!--                        [disabled]="!selectedSalaryGeneratorMaster.isGenerated"-->
+    <!--                        class="btn btn-outline-success btn-sm px-md-3">-->
+    <!--                    <fa-icon icon="download"></fa-icon>-->
+    <!--                    <span class="d-none d-md-inline">Regular</span>-->
+    <!--                </button>-->
+
+    <!--                <button (click)="export(selectedSalaryGeneratorMaster.year!,selectedSalaryGeneratorMaster.month!,'contractual')"-->
+    <!--                        [disabled]="!selectedSalaryGeneratorMaster.isGenerated"-->
+    <!--                        class="btn btn-outline-info btn-sm px-md-3">-->
+    <!--                    <fa-icon icon="download"></fa-icon>-->
+    <!--                    <span class="d-none d-md-inline">Contractual</span>-->
+    <!--                </button>-->
+
+    <!--                <button (click)="export(selectedSalaryGeneratorMaster.year!,selectedSalaryGeneratorMaster.month!,'intern')"-->
+    <!--                        [disabled]="!selectedSalaryGeneratorMaster.isGenerated"-->
+    <!--                        class="btn btn-outline-primary btn-sm px-md-3">-->
+    <!--                    <fa-icon icon="download"></fa-icon>-->
+    <!--                    <span class="d-none d-md-inline">Intern</span>-->
+    <!--                </button>-->
+
+    <!--                <button (click)="export(selectedSalaryGeneratorMaster.year!,selectedSalaryGeneratorMaster.month!,'all')"-->
+    <!--                        [disabled]="!selectedSalaryGeneratorMaster.isGenerated"-->
+    <!--                        class="btn btn-outline-dark btn-sm px-md-3">-->
+    <!--                    <fa-icon icon="download"></fa-icon>-->
+    <!--                    <span class="d-none d-md-inline">All</span>-->
+    <!--                </button>-->
+
+    <!--            </div>-->
+    <!--        </div>-->
+
+  </div>
+
+  <div class="row">
+
+  </div>
+
+</ng-template>

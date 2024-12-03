@@ -1,0 +1,68 @@
+{
+  "changelogDate": "20210701044058",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "manual_attendance_entry",
+  "fields": [
+    {
+      "fieldName": "date",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "inTime",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "inNote",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "outTime",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "outNote",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "isLineManagerApproved",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isHRApproved",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isRejected",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "rejectionComment",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "note",
+      "fieldType": "String",
+      "fieldValidateRules": ["minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "250",
+      "fieldValidateRulesMinlength": "0"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "ManualAttendanceEntry",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "fullName",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "manualAttendanceEntry",
+      "relationshipName": "employee",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

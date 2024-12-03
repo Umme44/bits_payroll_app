@@ -1,0 +1,433 @@
+<div id="page-control">
+  <div class="container">
+    <div
+      *ngIf="taxStatementModel"
+      class="document-border mx-auto letter-head"
+      [style.background-image]="'url(' + getDocumentLetterHead() + ')'"
+    >
+      <div class="padding-from-outer-div">
+        <div class="">
+          <div class="header-text">
+            <div style="height: 190px"></div>
+            CALCULATION OF TAX ON SALARIES AND PAYMENT CERTIFICATE
+          </div>
+          <div style="height: 5px; overflow: hidden"></div>
+          <div class="table-outer-div">
+            <table class="first-outer-table">
+              <tbody>
+                <tr>
+                  <td class="first-outer-table-td" valign="top">
+                    <table class="employee-details">
+                      <tbody>
+                        <tr>
+                          <td><b> Name:</b></td>
+                          <td>
+                            <b>{{ taxStatementModel.name }} </b>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>PIN:</td>
+                          <td>{{ taxStatementModel.pin }}</td>
+                        </tr>
+                        <tr>
+                          <td>Department:</td>
+                          <td>{{ taxStatementModel.department }}</td>
+                        </tr>
+                        <tr>
+                          <td>Designation:</td>
+                          <td>{{ taxStatementModel.designation }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                  <td style="width: 4%"></td>
+                  <td class="first-outer-table-td" valign="top">
+                    <table class="employee-details">
+                      <tbody style="font-weight: normal">
+                        <tr>
+                          <td>Date of Joining:</td>
+                          <td>{{ taxStatementModel.dateOfJoining | date: 'dd-MM-y' }}</td>
+                        </tr>
+                        <tr>
+                          <td>Income Year:</td>
+                          <td>{{ taxStatementModel.incomeYearStart }}-{{ taxStatementModel.incomeYearEnd }}</td>
+                        </tr>
+                        <tr>
+                          <td>Assessment Year:</td>
+                          <td>{{ taxStatementModel.assessmentYearStart }}-{{ taxStatementModel.assessmentYearEnd }}</td>
+                        </tr>
+                        <tr>
+                          <td>TIN Number:</td>
+                          <td>{{ taxStatementModel.tinNumber }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div style="height: 5px; overflow: hidden"></div>
+
+            <table class="headSalary-outer-table" *ngIf="taxStatementModel.salaryIncomes">
+              <tbody>
+                <tr>
+                  <td class="AdjustPadding" colspan="8"></td>
+                </tr>
+                <tr class="AdjustPadding">
+                  <td></td>
+                  <td></td>
+                  <td class="table-td-format">&nbsp;</td>
+                  <td></td>
+                  <td class="table-td-format">&nbsp;</td>
+                  <td></td>
+                  <td class="table-td-format">&nbsp;</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th class="head-salary-th-1">
+                    <u><b>HEADS OF SALARY INCOME</b></u>
+                  </th>
+                  <td></td>
+                  <td class="head-salary-td">Gross Salary<br />(Yearly)</td>
+                  <td></td>
+                  <td class="head-salary-td">Exemption<br />(Yearly)</td>
+                  <td></td>
+                  <td class="head-salary-td">Taxable Income<br />(Yearly)</td>
+                  <td></td>
+                </tr>
+                <tr class="AdjustPadding">
+                  <td></td>
+                  <td></td>
+                  <td class="table-td-format"></td>
+                  <td></td>
+                  <td class="table-td-format">&nbsp;</td>
+                  <td></td>
+                  <td class="table-td-format">&nbsp;</td>
+                  <td></td>
+                </tr>
+                <div></div>
+                <tr *ngFor="let headSalary of taxStatementModel.salaryIncomes">
+                  <th class="th-format-row">
+                    {{ headSalary.head }} <span *ngIf="headSalary.subHead" style="font-size: 0.6rem"> {{ headSalary.subHead }}</span>
+                  </th>
+                  <td></td>
+                  <td class="td-format-row">{{ headSalary.salary | number: '1.0-0' }}</td>
+                  <td></td>
+                  <td class="td-format-row">{{ headSalary.exemption | number: '1.0-0' }}</td>
+                  <td></td>
+                  <td class="td-format-row">{{ headSalary.taxableIncome | number: '1.0-0' }}</td>
+                  <td></td>
+                </tr>
+
+                <!-- tr> <th>LFA</th> <td class='colgap'></td> <td class='commaInDecimal'>0</td> <td class='colgap'></td> <td class='commaInDecimal'>0</td> <td class='colgap'></td> <td>0</td> <td class='colgap'></td> </tr -->
+                <tr>
+                  <th class="th-format-row" style="border-top: 1px solid black">
+                    <b>{{ taxStatementModel.totalSalaryIncome?.head }}</b>
+                  </th>
+                  <td style="border-top: 1px solid black"></td>
+                  <td class="td-format-row" style="border-top: 1px solid black">
+                    <b>{{ taxStatementModel.totalSalaryIncome?.salary | number }}</b>
+                  </td>
+                  <td></td>
+                  <td class="td-format-row" style="border-top: 1px solid black">
+                    <b>{{ taxStatementModel.totalSalaryIncome?.exemption | number }}</b>
+                  </td>
+                  <td></td>
+                  <td class="td-format-row" style="border-top: 1px solid black">
+                    <b>{{ taxStatementModel.totalSalaryIncome?.taxableIncome | number }}</b>
+                  </td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+            <div style="height: 5px; margin: 0px; overflow: hidden; padding: 0px"></div>
+
+            <table class="headSalary-outer-table" *ngIf="taxStatementModel.taxLiabilities">
+              <tbody>
+                <tr class="AdjustPadding">
+                  <td colspan="8"></td>
+                </tr>
+                <tr class="AdjustPadding">
+                  <td></td>
+                  <td></td>
+                  <td class="table-td-format"></td>
+                  <td></td>
+                  <td class="table-td-format">&nbsp;</td>
+                  <td></td>
+                  <td class="table-td-format">&nbsp;</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th class="head-salary-th-1">
+                    <u><b>CALCULATION OF TAX LIABILITY</b></u>
+                  </th>
+                  <td></td>
+                  <td class="head-salary-td">Income Slabs</td>
+                  <td></td>
+                  <td class="head-salary-td">Tax Rate</td>
+                  <td></td>
+                  <td class="head-salary-td">Yearly Tax</td>
+                  <td></td>
+                </tr>
+                <tr class="AdjustPadding">
+                  <td></td>
+                  <td></td>
+                  <td class="table-td-format">&nbsp;</td>
+                  <td></td>
+                  <td class="table-td-format">&nbsp;</td>
+                  <td></td>
+                  <td class="table-td-format">&nbsp;</td>
+                  <td></td>
+                </tr>
+                <tr *ngFor="let taxSlab of taxStatementModel.taxLiabilities">
+                  <th class="th-format-row">
+                    {{ taxSlab.head }} <span *ngIf="taxSlab.subHead">{{ taxSlab.subHead }}</span>
+                  </th>
+                  <td></td>
+                  <td class="td-format-row">{{ taxSlab.slab | number: '1.0-0' }}</td>
+                  <td></td>
+                  <td class="td-format-row">{{ taxSlab.rate | percent }}</td>
+                  <td></td>
+                  <td class="td-format-row">{{ taxSlab.tax | number: '1.0-0' }}</td>
+                  <td></td>
+                </tr>
+
+                <tr>
+                  <th class="th-format-row" style="border-top: 1px solid black">TOTAL TAX LIABILITY</th>
+                  <td style="border-top: 1px solid black"></td>
+
+                  <td class="td-format-row" style="border-top: 1px solid black">
+                    {{ taxStatementModel.summationOfIncomeSlabs | number: '1.0-0' }}
+                  </td>
+                  <td></td>
+                  <td class="td-format-row" style="border-top: 1px solid black">&nbsp;</td>
+                  <td></td>
+                  <td class="td-format-row" style="border-top: 1px solid black">{{ taxStatementModel.totalTaxLiabilities | number }}</td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+            <div style="height: 5px; overflow: hidden"></div>
+
+            <!--<table class="second-outer-table" valign="top">
+                <tbody>
+                <tr>
+                    <td style="text-align:left"><b>{{taxStatementModel.taxReportConfigurations?.reportLabels?.investmentLabelHeader}}</b></td>
+                    <td style="text-align:right;"><b>Amount</b></td>
+                    <td width="25%"></td>
+                    <td width="20%"></td>
+                </tr>
+                <tr>
+                    <td style="text-align:left;font-size: 0.75rem;">
+                        {{taxStatementModel.taxReportConfigurations?.reportLabels?.investmentLabelPf}}
+                    </td>
+                    <td style="text-align:right">{{taxStatementModel.providentFundInvestment | number}}</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td style="text-align:left;font-size: 0.75rem;">{{taxStatementModel.taxReportConfigurations?.reportLabels?.investmentLabelOther}}</td>
+                    <td style="text-align:right">{{taxStatementModel.otherInvestment | number}}</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td style="text-align:left;font-size: 0.75rem; border-top: 1px solid black"><b>{{taxStatementModel.taxReportConfigurations?.reportLabels?.investmentLabelTotal}}</b></td>
+                    <td style="text-align:right;border-top: 1px solid black">
+                        <b>{{taxStatementModel.maxAllowedInvestment | number}}</b>
+                        <hr style="border-top: 3px solid black;border-style: double;margin: 0px">
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        {{taxStatementModel.taxReportConfigurations?.reportLabels?.lessRebateLabel}}
+                    </td>
+                    <td style="text-align:right;">{{taxStatementModel.rebate | number}}</td>
+                </tr>
+                </tbody>
+            </table>-->
+
+            <table class="second-outer-table" valign="top">
+              <tbody>
+                <tr>
+                  <td style="text-align: left" width="80%">INVESTMENT</td>
+                  <td style="text-align: right; padding-right: 5px" width="20%">{{ taxStatementModel.maxAllowedInvestment | number }}</td>
+                </tr>
+                <tr>
+                  <td style="text-align: left; font-size: 0.75rem" width="80%">
+                    (20% of total taxable income or TK 100,00,000 whichever is lower)
+                  </td>
+                  <td style="text-align: right" width="20%">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td style="text-align: left">LESS-REBATE ON INVESTMENT @15%</td>
+                  <td style="text-align: right; padding-right: 5px">{{ taxStatementModel.rebate | number }}</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <table class="inner-table-last" valign="top">
+              <tbody>
+                <tr>
+                  <td class="td-last-div" width="80%">
+                    {{ taxStatementModel.taxReportConfigurations?.reportLabels?.netTaxLiabilityConsideringRebate }}
+                  </td>
+                  <td class="td-last-div-value" style="padding-right: 5px" width="20%">{{ taxStatementModel.netTaxLiability | number }}</td>
+                </tr>
+                <tr>
+                  <td class="td-last-div">
+                    {{ taxStatementModel.taxReportConfigurations?.reportLabels?.finalLabelAit }}
+                  </td>
+                  <td class="td-last-div-value">{{ taxStatementModel.lastYearAdjustment | number }}</td>
+                </tr>
+                <tr>
+                  <td class="td-last-div">
+                    {{ taxStatementModel.taxReportConfigurations?.reportLabels?.finalLabelActualTax }}
+                  </td>
+                  <td class="td-last-div-value" style="padding-right: 5px">{{ taxStatementModel.deductedAmount | number }}</td>
+                </tr>
+                <tr>
+                  <td class="td-last-div">{{ taxStatementModel.taxReportConfigurations?.reportLabels?.labelTotalPayableTax }}</td>
+                  <td class="td-last-div-value">
+                    <span class="commaInDecimal">{{ taxStatementModel.refundable | number }}</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <table cellpadding="2" cellspacing="0" style="border: 1px solid black" valign="top" width="100%">
+              <tbody>
+                <tr>
+                  <td style="text-align: left; font-size: 0.6rem; font-family: Segoe UI; font-weight: bold">
+                    {{ taxStatementModel.taxReportConfigurations?.reportLabels?.certifyText }}
+                    <br />
+
+                    <table
+                      border="0"
+                      cellspacing="0"
+                      cellpadding="0"
+                      style="border-collapse: collapse; transform: scale(1, 1); transform-origin: left top"
+                    >
+                      <tbody>
+                        <tr style="height: 8.7pt">
+                          <td style="width: 62.7pt; height: 8.7pt; padding: 0 0; border: 0.75pt solid windowtext">
+                            <p class="left-heading-td"><span class="table-data-span">Month</span></p>
+                          </td>
+                          <td
+                            *ngFor="let challan of taxStatementModel.incomeTaxChallanList"
+                            style="width: 55.6pt"
+                            class="tax-challan-table-tbody-td-month"
+                          >
+                            <p align="center" class="table-tbody-td-p">
+                              <span class="table-data-span">
+                                <span jhiTranslate="bitsHrPayrollApp.MonthSort.{{ challan.month }}">{{ challan.month }}</span>
+                                {{ challan.year }}
+                              </span>
+                            </p>
+                          </td>
+                        </tr>
+                        <tr style="height: 8.7pt">
+                          <td
+                            style="
+                              width: 62.7pt;
+                              height: 8.7pt;
+                              padding: 0 0;
+                              border-width: 0.75pt;
+                              border-style: none solid solid solid;
+                              border-color: windowtext;
+                            "
+                          >
+                            <p class="left-heading-td"><span class="table-data-span">Challan No.</span></p>
+                          </td>
+                          <td
+                            *ngFor="let challan of taxStatementModel.incomeTaxChallanList"
+                            style="width: 55.6pt"
+                            class="tax-challan-table-tbody-td"
+                          >
+                            <p align="center" class="table-tbody-td-p">
+                              <span class="table-data-span">{{ challan.challanNo }}</span>
+                            </p>
+                          </td>
+                        </tr>
+                        <tr style="height: 8.7pt">
+                          <td
+                            style="
+                              width: 62.7pt;
+                              height: 8.7pt;
+                              padding: 0 0;
+                              border-width: 0.75pt;
+                              border-style: none solid solid solid;
+                              border-color: windowtext;
+                            "
+                          >
+                            <p class="left-heading-td"><span class="table-data-span">Date</span></p>
+                          </td>
+                          <td
+                            *ngFor="let challan of taxStatementModel.incomeTaxChallanList"
+                            style="width: 55.6pt"
+                            class="tax-challan-table-tbody-td"
+                          >
+                            <p align="center" class="table-tbody-td-p">
+                              <span class="table-data-span">{{ challan.challanDate | formatMediumDate }}</span>
+                            </p>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <br />
+          <div style="text-align: left; font-family: Verdana; font-size: 0.75rem; margin: 0px 12px">
+            <table
+              border="0"
+              cellpadding="2"
+              cellspacing="0"
+              style="color: #000000; font-family: Segoe UI; font-size: 0.75rem; border: none"
+              width="100%"
+            >
+              <tbody>
+                <tr>
+                  <td colspan="2" style="text-align: left" valign="bottom" width="20%">
+                    <img border="0" height="40'" [src]="getFinanceManagerSignature()" width="100px" />
+                  </td>
+                  <td rowspan="5" style="text-align: left" valign="top" width="80%">
+                    <img border="0" height="100px" [src]="getOrganizationStamp()" width="100px" style="margin-left: 60px" />
+                  </td>
+                </tr>
+                <tr>
+                  <td style="text-align: left" valign="top" width="20%">
+                    ------------------------- <br /><b>{{ taxStatementModel.signatoryPersonName }}</b> <br />{{
+                      taxStatementModel.signatoryPersonDesignation
+                    }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <br />
+            <br />
+            <table
+              style="color: #000000; font-family: Segoe UI; font-size: 12px; border: none"
+              width="100%"
+              cellspacing="0"
+              cellpadding="2"
+              border="0"
+            >
+              <tbody>
+                <tr>
+                  <td width="100%" valign="top" style="text-align: justify">
+                    <b>Note:</b> {{ taxStatementModel.taxReportConfigurations?.reportLabels?.noteText }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

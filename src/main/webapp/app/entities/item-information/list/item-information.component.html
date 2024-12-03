@@ -1,0 +1,87 @@
+<div>
+  <jhi-header headerName="Item Information" [addButtonText]="'New Item'" [routerLinkText]="'/item-information/new'" [shouldHaveHr]="false">
+  </jhi-header>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <!--  Filter Part Starts -->
+  <div id="filter-area" class="card card-body mb-2">
+    <div class="row">
+      <div class="col-md-4">
+        <label jhiTranslate="bitsHrPayrollApp.procReqMaster.department" for="field_department">Department</label>
+        <select class="form-control form-select" id="field_department" [formControl]="departmentFormControl" (change)="reset()">
+          <option [ngValue]="null" disabled>Select Department</option>
+          <option [ngValue]="null">All</option>
+          <option [ngValue]="departmentOption.id" *ngFor="let departmentOption of departments">
+            {{ departmentOption.departmentName }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <!--  Filter Part Ends -->
+
+  <div class="" id="no-result" *ngIf="itemInformations?.length === 0">
+    <div class="d-flex justify-content-center">
+      <img style="width: 40rem" src="../../../content/images/no-data-found.png" alt="No Data Found" />
+    </div>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="itemInformations && itemInformations.length > 0">
+    <table class="table table-hover list-text-color" aria-describedby="page-heading">
+      <thead>
+        <tr class="text-nowrap">
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.itemInformation.code">Code</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.itemInformation.name">Name</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.itemInformation.specification">Specification</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.itemInformation.department">Department</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.itemInformation.unitOfMeasurement">Unit Of Measurement</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+        <tr class="text-nowrap" *ngFor="let itemInformation of itemInformations; trackBy: trackId">
+          <td>{{ itemInformation.code }}</td>
+          <td>{{ itemInformation.name }}</td>
+          <td>{{ itemInformation.specification }}</td>
+          <td>
+            <div *ngIf="itemInformation.departmentId">
+              {{ itemInformation.departmentName }}
+            </div>
+          </td>
+          <td>
+            <div *ngIf="itemInformation.unitOfMeasurementId">
+              {{ itemInformation.unitOfMeasurementName }}
+            </div>
+          </td>
+
+          <td class="text-end">
+            <div class="">
+              <button
+                type="submit"
+                [routerLink]="['/item-information', itemInformation.id, 'view']"
+                class="btn btn-info btn-sm border-radius-minimal me-1"
+              >
+                <fa-icon icon="eye"></fa-icon>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/item-information', itemInformation.id, 'edit']"
+                class="btn btn-primary btn-sm border-radius-minimal me-1"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+              </button>
+
+              <button type="submit" (click)="delete(itemInformation)" class="btn btn-danger btn-sm border-radius-minimal">
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

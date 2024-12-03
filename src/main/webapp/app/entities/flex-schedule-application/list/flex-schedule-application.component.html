@@ -1,0 +1,256 @@
+<jhi-header
+  [headerName]="'Flex Schedule Applications'"
+  [addButtonText]="'New Flex Schedule Application'"
+  [routerLinkText]="'/flex-schedule-application/new'">
+</jhi-header>
+
+
+<!--filter -->
+<form (ngSubmit)="search()" [formGroup]="editForm" name="editForm" novalidate role="form">
+  <div class="card py-3 mb-3">
+    <div class="search-filter container-fluid">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label class="form-control-label">Employee</label>
+            <jhi-select-employee-form
+              [employeeIdForm]="employeeIdForm!"
+              (onChangeEmployeeId)="search()"
+              (keydown.backspace)="search()">
+            </jhi-select-employee-form>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label class="form-control-label mt-2" for="field_startDate">Start Date (Effective)</label>
+            <div class="input-group">
+              <input
+                #startDateDp="ngbDatepicker" (dateSelect)="checkDate()"
+                (change)="checkDate()"
+                class="form-control"
+                formControlName="startDate"
+                id="field_startDate" name="startDate"
+                ngbDatepicker type="text"
+              />
+              <span class="input-group-append">
+                <button
+                  (click)="startDateDp.toggle()"
+                  class="btn btn-secondary"
+                  type="button"><fa-icon
+                  icon="calendar-alt"></fa-icon>
+                </button>
+              </span>
+            </div>
+            <div *ngIf="!editForm.get('startDate')!.value && editForm.get('endDate')!.value">
+              <small class="form-text text-danger">
+                Please select start date.
+              </small>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label class="form-control-label mt-2" for="field_endDate">End Date (Effective)</label>
+            <div class="input-group">
+              <input
+                #endDateDp="ngbDatepicker" (dateSelect)="checkDate()"
+                (change)="checkDate()"
+                class="form-control"
+                formControlName="endDate"
+                id="field_endDate" name="endDate"
+                ngbDatepicker type="text"
+              />
+              <span class="input-group-append">
+                <button
+                  (click)="endDateDp.toggle()"
+                  class="btn btn-secondary"
+                  type="button">
+                  <fa-icon icon="calendar-alt"></fa-icon>
+                </button>
+              </span>
+            </div>
+            <div *ngIf="editForm.get('startDate')!.value && editForm.get('endDate')!.value &&
+                 editForm.get('startDate')!.value > editForm.get('endDate')!.value">
+              <small class="form-text text-danger">
+                End date can't be smaller then start date.
+              </small>
+            </div>
+            <div *ngIf="editForm.get('startDate')!.value && !editForm.get('endDate')!.value">
+              <small class="form-text text-danger">
+                Please select end date.
+              </small>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label class="form-control-label mt-2" for="field_status">Status</label>
+            <select
+              class="form-control form-select"
+              formControlName="status"
+              id="field_status"
+              (change)="search()"
+              name="status">
+              <option value="">All</option>
+              <option value="APPROVED">Approved</option>
+              <option value="PENDING">Pending</option>
+              <option value="NOT_APPROVED">Not Approved</option>
+            </select>
+          </div>
+
+        </div>
+
+        <div class="col-md-4 font-sm">
+          <label class="form-control-label mt-2">Time Slots</label>
+          <ng-select
+            [items]="timeslots"
+            bindLabel="title"
+            bindValue="id"
+            appearance="outline"
+            [searchable]="true"
+            [clearable]="true"
+            labelForId="id"
+            placeholder="Select time slot"
+            id="field_timeSlot"
+            name="timeSlotIdList"
+            [multiple]="true"
+            formControlName="timeSlotIdList"
+            (change)="search()">
+          </ng-select>
+        </div>
+
+        <div class=" mt-2 d-flex justify-content-between col-md-8">
+          <div class="col-md-3 align-self-end mb-1">
+            <button (click)="resetEditForm()" type="button" class="btn btn-secondary">
+              <fa-icon icon="ban"></fa-icon> <span jhiTranslate="entity.action.reset">Reset</span>
+            </button>
+          </div>
+          <div class="col mt-1 text-end">
+            <button [disabled]="isDateInvalid || flexScheduleApplications.length === 0" type="button" class="btn btn-outline-success my-2"
+                    (click)="exportAsFlexScheduleApplicationReportData()">
+              <fa-icon icon="download"></fa-icon> Excel
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</form>
+
+
+<!--Grid View-->
+<div>
+  <div class="table-responsive" id="entities" *ngIf="flexScheduleApplications && flexScheduleApplications.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+      <tr>
+
+        <th scope="col"></th>
+
+        <th scope="col"><span>PIN</span></th>
+        <th scope="col"><span>Name</span></th>
+        <th scope="col"><span>Designation</span></th>
+        <th scope="col"><span>Flex Time</span></th>
+        <th scope="col"><span>Effective Date</span></th>
+        <th scope="col"><span>Duration</span></th>
+        <th scope="col"><span jhiTranslate="bitsHrPayrollApp.flexScheduleApplication.appliedAt">Applied At</span>
+        <th scope="col">Status</th>
+
+        <th scope="col"></th>
+      </tr>
+      </thead>
+      <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+
+      <tr *ngFor="let flexScheduleApplication of flexScheduleApplications ;trackBy: trackId">
+        <td *ngIf="flexScheduleApplication.pin!==undefined" class="td-th-employee-img">
+          <img class="card-img-top mt-0 mb-0 mr-3 ml-3" [src]="getProfilePicture(flexScheduleApplication.pin)"
+               alt="profile Picture">
+        </td>
+
+        <td>
+          {{flexScheduleApplication.pin}}
+        </td>
+
+        <td>
+                    <span *ngIf="flexScheduleApplication.fullName!.length > 25;else fullNameTipContent"
+                          [ngbTooltip]="flexScheduleApplication.fullName">
+                            {{textSlice(flexScheduleApplication.fullName!)}}
+                     </span>
+          <ng-template #fullNameTipContent>
+                        <span>
+                            {{ flexScheduleApplication.fullName!}}
+                        </span>
+          </ng-template>
+        </td>
+
+        <td>
+
+                    <span *ngIf="flexScheduleApplication.designationName!.length > 25;else fullDesignationTipContent"
+                          [ngbTooltip]="flexScheduleApplication.designationName">
+                            {{textSlice(flexScheduleApplication.designationName!)}}
+                     </span>
+          <ng-template #fullDesignationTipContent>
+                        <span>
+                            {{ flexScheduleApplication.designationName!}}
+                        </span>
+          </ng-template>
+        </td>
+
+        <td>
+          {{flexScheduleApplication.inTime| formatTime}}
+          -
+          {{flexScheduleApplication.outTime| formatTime}}
+        </td>
+
+        <td>{{ flexScheduleApplication.effectiveFrom | formatMediumDate }}
+          - {{ flexScheduleApplication.effectiveTo | formatMediumDate }}</td>
+
+        <td>
+          <span *ngIf="flexScheduleApplication.durationAsDays! > 1">{{flexScheduleApplication.durationAsDays }} days</span>
+          <span *ngIf="flexScheduleApplication.durationAsDays! === 1">{{flexScheduleApplication.durationAsDays }} day</span>
+
+        </td>
+
+        <td>{{ flexScheduleApplication.appliedAt | formatMediumDate }}</td>
+
+        <td>
+          <jhi-show-status [status]="flexScheduleApplication.status!">
+          </jhi-show-status>
+        </td>
+
+
+        <td class="text-end">
+          <div class="">
+            <button type="submit" (click)="openView(flexScheduleApplication)"
+                    class="btn btn-info btn-sm border-radius-minimal mr-1">
+              <fa-icon icon="eye"></fa-icon>
+            </button>
+
+            <button type="submit"
+                    [routerLink]="['/flex-schedule-application', flexScheduleApplication.id, 'edit']"
+                    class="btn btn-primary btn-sm border-radius-minimal mr-1">
+              <fa-icon icon="pencil-alt"></fa-icon>
+            </button>
+
+            <button type="submit" (click)="delete(flexScheduleApplication)"
+                    class="btn btn-danger btn-sm border-radius-minimal">
+              <fa-icon icon="times"></fa-icon>
+            </button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="flexScheduleApplications?.length === 0">
+    <span jhiTranslate="bitsHrPayrollApp.flexScheduleApplication.home.notFound">No flexScheduleApplications found</span>
+  </div>
+
+  <div *ngIf="!flexScheduleApplications || flexScheduleApplications.length === 0">
+    <div class="d-flex justify-content-center">
+      <img src="../../../../content/images/no-data-found.png" alt="No Data Found" width="550">
+    </div>
+  </div>
+</div>

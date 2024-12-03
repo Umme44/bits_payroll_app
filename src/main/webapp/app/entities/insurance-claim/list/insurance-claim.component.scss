@@ -1,0 +1,79 @@
+.insurance-claim-button {
+  background: #132c588f !important;
+  border: none !important;
+  color: #fff !important;
+  font-weight: 500 !important;
+  border-radius: 20px !important;
+  font-size: 0.7rem;
+  padding: 0 10px;
+}
+.insurance-claim-button:hover {
+  background: #132c58d4 !important;
+}
+.insurance-claim-button:focus {
+  outline: none;
+}
+
+.insurance-claim-view-button {
+  margin: 0 1px;
+  border: 0;
+  height: 28px;
+  width: 28px;
+  border: 1px solid #387885c7;
+  border-radius: 5px !important;
+  color: #fff;
+  background: #387885c7;
+}
+
+.insurance-claim-edit-button {
+  margin: 0 1px;
+  border: 0;
+  height: 28px;
+  width: 28px;
+  border: 1px solid #4f6b85cf;
+  border-radius: 5px !important;
+  color: #fff;
+  background: #4f6b85cf;
+}
+
+.insurance-claim-delete-button {
+  margin: 0 1px;
+  border: 0;
+  height: 28px;
+  width: 28px;
+  border: 1px solid #f25d5ade;
+  border-radius: 5px !important;
+  color: #fff;
+  background: #f25d5ade;
+}
+
+.insurance-claim-view-button:hover {
+  background: #26616cc7;
+}
+.insurance-claim-view-button:focus {
+  outline: none;
+}
+
+.insurance-claim-edit-button:hover {
+  background: #314c66cf;
+}
+.insurance-claim-edit-button:focus {
+  outline: none;
+}
+
+.insurance-claim-delete-button:enabled:hover {
+  background: #d54542de;
+}
+.insurance-claim-delete-button:focus {
+  outline: none;
+}
+
+.insurance-claim-edit-button[disabled] {
+  pointer-events: none;
+}
+.insurance-claim-view-button[disabled] {
+  pointer-events: none;
+}
+.insurance-claim-delete-button[disabled] {
+  pointer-events: none;
+}

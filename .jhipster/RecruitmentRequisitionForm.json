@@ -1,0 +1,246 @@
+{
+  "changelogDate": "20220211132757",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "recruitment_requisition_form",
+  "fields": [
+    {
+      "fieldName": "expectedJoiningDate",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "project",
+      "fieldType": "String",
+      "fieldValidateRules": ["minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "250",
+      "fieldValidateRulesMinlength": "0"
+    },
+    {
+      "fieldName": "numberOfVacancies",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required", "min", "max"],
+      "fieldValidateRulesMax": "1000",
+      "fieldValidateRulesMin": "1"
+    },
+    {
+      "fieldName": "employmentType",
+      "fieldType": "EmployeeCategory",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "REGULAR_CONFIRMED_EMPLOYEE,REGULAR_PROVISIONAL_EMPLOYEE,CONTRACTUAL_EMPLOYEE,INTERN"
+    },
+    {
+      "fieldName": "resourceType",
+      "fieldType": "RequisitionResourceType",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "BUDGET,NON_BUDGET"
+    },
+    {
+      "fieldName": "rrfNumber",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "preferredEducationType",
+      "fieldType": "String",
+      "fieldValidateRules": ["minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "250",
+      "fieldValidateRulesMinlength": "2"
+    },
+    {
+      "fieldName": "dateOfRequisition",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": []
+    },
+    {
+      "fieldName": "requestedDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "recommendationDate01",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "recommendationDate02",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "recommendationDate03",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "recommendationDate04",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "requisitionStatus",
+      "fieldType": "RequisitionStatus",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "PENDING,IN_PROGRESS,OPEN,CLOSED,PARTIALLY_CLOSED,NOT_APPROVED"
+    },
+    {
+      "fieldName": "rejectedAt",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "createdAt",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "updatedAt",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "isDeleted",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "totalOnboard",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "preferredSkillType",
+      "fieldType": "String",
+      "fieldValidateRules": ["minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "250",
+      "fieldValidateRulesMinlength": "2"
+    },
+    {
+      "fieldName": "recruitmentNature",
+      "fieldType": "RecruitmentNature",
+      "fieldValues": "PLANNED_ADDITION,NEW_RECRUITMENT,REPLACEMENT"
+    },
+    {
+      "fieldName": "specialRequirement",
+      "fieldType": "String",
+      "fieldValidateRules": ["minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "250",
+      "fieldValidateRulesMinlength": "2"
+    },
+    {
+      "fieldName": "recommendationDate05",
+      "fieldType": "LocalDate"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "RecruitmentRequisitionForm",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "designation",
+      "otherEntityRelationshipName": "recruitmentRequisitionForm",
+      "relationshipName": "functionalDesignation",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "band",
+      "otherEntityRelationshipName": "recruitmentRequisitionForm",
+      "relationshipName": "band",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "department",
+      "otherEntityRelationshipName": "recruitmentRequisitionForm",
+      "relationshipName": "department",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "unit",
+      "otherEntityRelationshipName": "recruitmentRequisitionForm",
+      "relationshipName": "unit",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "recruitmentRequisitionForm",
+      "relationshipName": "recommendedBy01",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "recruitmentRequisitionForm",
+      "relationshipName": "recommendedBy02",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "recruitmentRequisitionForm",
+      "relationshipName": "recommendedBy03",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "recruitmentRequisitionForm",
+      "relationshipName": "recommendedBy04",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "recruitmentRequisitionForm",
+      "relationshipName": "requester",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "recruitmentRequisitionForm",
+      "relationshipName": "rejectedBy",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "recruitmentRequisitionForm",
+      "ownerSide": true,
+      "relationshipName": "createdBy",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "recruitmentRequisitionForm",
+      "ownerSide": true,
+      "relationshipName": "updatedBy",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "recruitmentRequisitionForm",
+      "ownerSide": true,
+      "relationshipName": "deletedBy",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "recruitmentRequisitionForm",
+      "relationshipName": "recommendedBy05",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "recruitmentRequisitionForm",
+      "ownerSide": true,
+      "relationshipName": "employeeToBeReplaced",
+      "relationshipType": "one-to-one",
+      "useJPADerivedIdentifier": false
+    }
+  ],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

@@ -1,0 +1,128 @@
+.container-size {
+  width: 787px;
+}
+
+.table-bordered-light {
+  border: 1px solid black !important;
+}
+
+table.table-bordered-light > thead > tr > th {
+  border: 1px solid black !important;
+}
+
+table.table-bordered-light > tbody > tr > td {
+  border: 1px solid black !important;
+}
+
+.table-bordered-max {
+  border: 2px solid black !important;
+}
+
+table.table-bordered-max > thead > tr > th {
+  border: 2px solid black;
+}
+
+table.table-bordered-max > tbody > tr > td {
+  border: 2px solid black;
+}
+
+.table th,
+.table td {
+  padding: 0.5rem !important;
+}
+
+.border-bottom-1 {
+  border-bottom: 1px solid black !important;
+}
+
+[data-name='rrf-details-approval-table'] .date-cell {
+  padding-top: 25px !important;
+  padding-bottom: 10px !important;
+}
+
+$print-area-width: 970px;
+.print-btn-container {
+  width: $print-area-width;
+}
+
+.printRRF {
+}
+
+.bg-img {
+  background: transparent url('../../../../content/images/Letterhead-Pad.svg') no-repeat left top;
+}
+
+.print-doc-area {
+  border: 1px solid black;
+  width: 970px;
+  padding: 79px 28px 274px 127px;
+  height: 1391px;
+}
+
+.sm-box {
+  border: 1px solid black;
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+}
+
+.crossed {
+  background: linear-gradient(
+      to top left,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0) calc(50% - 0.8px),
+      rgba(0, 0, 0, 1) 50%,
+      rgba(0, 0, 0, 0) calc(50% + 0.8px),
+      rgba(0, 0, 0, 0) 100%
+  ),
+  linear-gradient(
+      to top right,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0) calc(50% - 0.8px),
+      rgba(0, 0, 0, 1) 50%,
+      rgba(0, 0, 0, 0) calc(50% + 0.8px),
+      rgba(0, 0, 0, 0) 100%
+  );
+}
+
+.crossed {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border: 1px solid black;
+}
+
+.diag {
+  width: 10px;
+  height: 10px;
+  border: 1px solid black;
+  display: inline-block;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><line x1='0' y1='0' x2='100' y2='100' stroke='black' vector-effect='non-scaling-stroke'/><line x1='0' y1='100' x2='100' y2='0' stroke='black' vector-effect='non-scaling-stroke'/></svg>")
+  no-repeat center center;
+}
+
+@media print {
+  .printRRF,
+  .print-doc-area {
+    border: 0;
+  }
+
+  .print-doc-area {
+    height: 122vh;
+    padding: 122px 105px 274px 172px;
+  }
+
+  jhi-header,
+  .print-btn-container {
+    display: none;
+  }
+
+  .crossed {
+    width: 15px;
+    height: 15px;
+  }
+
+  .table-common {
+    border: 0;
+  }
+}

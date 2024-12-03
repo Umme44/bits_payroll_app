@@ -1,0 +1,61 @@
+<div>
+  <jhi-header [headerName]="'Holiday Calendar'" [shouldHaveHr]="false"> </jhi-header>
+
+  <jhi-alert-error></jhi-alert-error>
+  <jhi-alert></jhi-alert>
+
+  <div *ngIf="holidays && holidays.length > 0" class="table-responsive" id="entities">
+    <table aria-describedby="page-heading" class="table table-hover">
+      <thead class="list-text-color">
+        <tr>
+          <th scope="col" class="text-nowrap">
+            <span jhiTranslate="bitsHrPayrollApp.holidays.description">Description</span>
+          </th>
+
+          <th scope="col" class="text-nowrap">
+            <span jhiTranslate="bitsHrPayrollApp.holidays.startDate">Start Date</span>
+          </th>
+          <th scope="col" class="text-nowrap">
+            <span jhiTranslate="bitsHrPayrollApp.holidays.endDate">End Date</span>
+          </th>
+
+          <th>Day(s)</th>
+
+          <th></th>
+        </tr>
+      </thead>
+      <tbody class="list-text-color">
+        <tr *ngFor="let holiday of holidays; trackBy: trackId">
+          <td>
+            <span>
+              {{ holiday.isMoonDependent == true ? '*' : '' }}
+            </span>
+            {{ holiday.description }}
+          </td>
+
+          <td>{{ holiday.startDate | formatMediumDate }}</td>
+          <td>{{ holiday.endDate | formatMediumDate }}</td>
+          <td>{{ holiday.allDayNames }}</td>
+
+          <td>
+            <span *ngIf="holiday.startDate != null">
+              <span *ngIf="holiday.endDate != null">
+                <!--{{ (-holidays.startDate.diff(holidays.endDate, 'days') + 1)}} days-->
+                {{ -holiday.startDate.diff(holiday.endDate, 'days') + 1 }}
+                {{ -holiday.startDate.diff(holiday.endDate, 'days') + 1 > 1 ? 'days' : 'day' }}
+              </span>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div>
+      <small class="color-muted-blue"> * Subject to the appearance of the Moon </small>
+    </div>
+  </div>
+
+  <div *ngIf="!holidays || holidays.length === 0" style="height: 75vh" class="text-center d-flex align-items-center justify-content-center">
+    <img src="../../../content/images/holiday.svg" width="400px" height="400px" />
+  </div>
+</div>

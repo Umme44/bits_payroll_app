@@ -1,0 +1,27 @@
+{
+  "bitsHrPayrollApp": {
+    "aitPayment": {
+      "home": {
+        "title": "Ait Payments",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Ait Payment",
+        "createOrEditLabel": "Create or edit a Ait Payment",
+        "notFound": "No Ait Payments found"
+      },
+      "created": "A new Ait Payment is created with identifier {{ param }}",
+      "updated": "A Ait Payment is updated with identifier {{ param }}",
+      "deleted": "A Ait Payment is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Ait Payment {{ id }}?"
+      },
+      "detail": {
+        "title": "Ait Payment"
+      },
+      "id": "ID",
+      "date": "Date",
+      "amount": "Amount",
+      "description": "Description",
+      "employee": "Employee"
+    }
+  }
+}

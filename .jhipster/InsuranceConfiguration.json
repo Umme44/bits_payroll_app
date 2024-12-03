@@ -1,0 +1,30 @@
+{
+  "changelogDate": "20220525075053",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "insurance_configuration",
+  "fields": [
+    {
+      "fieldName": "maxTotalClaimLimitPerYear",
+      "fieldType": "Double",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "maxAllowedChildAge",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "insuranceClaimLink",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "InsuranceConfiguration",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

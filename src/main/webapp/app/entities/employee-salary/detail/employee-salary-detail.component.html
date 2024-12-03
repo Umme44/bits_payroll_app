@@ -1,0 +1,512 @@
+<div>
+  <div *ngIf="employeeSalary">
+    <jhi-header
+      [headerName]="'Monthly Salary Details'"
+      [shouldHaveHr]="false">
+    </jhi-header>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <div class="card mt-3">
+
+      <div class="card-body">
+        <div class="card-title">
+          <h3>General</h3>
+        </div>
+
+        <div class="card-text">
+
+          <div class="row py-2">
+            <div class="col-md-2 font-weight-bold">Month</div>
+            <div class="col-md-4">
+                        <span
+                          jhiTranslate="{{ 'bitsHrPayrollApp.Month.' + employeeSalary.month }}">{{ employeeSalary.month }}</span>
+              , <span>{{ employeeSalary.year }}</span>
+            </div>
+            <div class="col-md-2 font-weight-bold">
+              Generation Date
+            </div>
+            <div class="col-md-4">
+              <span>{{ employeeSalary.salaryGenerationDate | formatMediumDate }}</span>
+            </div>
+          </div>
+          <div class="row py-2">
+            <div class="col-md-2 font-weight-bold">Absent Days</div>
+            <div class="col-md-4 ">
+              <span>{{ employeeSalary.absentDays }}</span>
+            </div>
+            <div class="col-md-2 font-weight-bold">Fraction Days</div>
+            <div class="col-md-4 ">
+              <span>{{ employeeSalary.fractionDays }}</span>
+            </div>
+          </div>
+          <div class="row py-2">
+            <div class="col-md-2 font-weight-bold">Created By</div>
+            <div class="col-md-4">
+              <span>{{ employeeSalary.createdBy }}</span>
+            </div>
+            <div class="col-md-2 font-weight-bold">
+              Created at
+            </div>
+            <div class="col-md-4">
+              <span>{{ employeeSalary.createdAt | formatMediumDate }}</span>
+            </div>
+          </div>
+
+          <div class="row py-2">
+            <div class="col-md-2 font-weight-bold">Updated By</div>
+            <div class="col-md-4">
+              <span>{{ employeeSalary.updatedBy }}</span>
+            </div>
+            <div class="col-md-2 font-weight-bold">
+              Updated at
+            </div>
+            <div class="col-md-4">
+              <span>{{ employeeSalary.updatedAt | formatMediumDate }}</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="card mt-3">
+      <div class="card-body">
+        <div class="card-title">
+          <h3>Employee</h3>
+        </div>
+        <div class="card-text">
+          <div class="row py-2">
+            <div class="col-md-2 font-weight-bold">Name</div>
+            <div class="col-md-4">
+              <span>{{ employeeSalary.employeeName }}</span>
+            </div>
+            <div class="col-md-2 font-weight-bold">Category</div>
+            <div class="col-md-4">
+                        <span
+                          jhiTranslate="{{ 'bitsHrPayrollApp.EmployeeCategory.' + employeeSalary.employeeCategory }}">{{ employeeSalary.employeeCategory }}</span>
+            </div>
+          </div>
+          <div class="row py-2">
+            <div class="col-md-2 font-weight-bold">Ref. PIN</div>
+            <div class="col-md-4">
+              <span>{{ employeeSalary.refPin }}</span>
+            </div>
+            <div class="col-md-2 font-weight-bold">
+              PIN
+            </div>
+            <div class="col-md-4">
+              <span>{{ employeeSalary.pin }}</span>
+            </div>
+          </div>
+          <div class="row py-2">
+            <div class="col-md-2 font-weight-bold">Date of joining</div>
+            <div class="col-md-4">
+              <span>{{ employeeSalary.joiningDate | formatMediumDate }}</span>
+            </div>
+            <div class="col-md-2 font-weight-bold">
+              Date of confirmation
+            </div>
+            <div class="col-md-4">
+              <span>{{ employeeSalary.confirmationDate | formatMediumDate }}</span>
+            </div>
+          </div>
+          <div class="row py-2">
+            <div class="col-md-2 font-weight-bold">Unit</div>
+            <div class="col-md-4">
+              <span>{{ employeeSalary.unit }}</span>
+            </div>
+            <div class="col-md-2 font-weight-bold">
+              Department
+            </div>
+            <div class="col-md-4">
+              <span>{{ employeeSalary.department }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mt-3">
+      <div class="card-body">
+        <div class="card-title">
+          <h3>Salary Structure</h3>
+        </div>
+        <div class="card-text">
+          <div class="row py-2">
+            <div class="col-md-2 font-weight-bold">Basic</div>
+            <div class="col-md-1 text-right">
+              <span>{{ employeeSalary.mainGrossBasicSalary | number }}</span>
+            </div>
+            <div class="col-md-3"></div>
+            <div class="col-md-2 font-weight-bold">House Rent</div>
+            <div class="col-md-1 text-right">
+              <span>{{ employeeSalary.mainGrossHouseRent | number}}</span>
+            </div>
+            <div class="col-md-3"></div>
+          </div>
+
+          <div class="row py-2">
+            <div class="col-md-2 font-weight-bold">Medical</div>
+            <div class="col-md-1 text-right">
+              <span>{{ employeeSalary.mainGrossMedicalAllowance | number }}</span>
+            </div>
+            <div class="col-md-3"></div>
+            <div class="col-md-2 font-weight-bold">Conveyance</div>
+            <div class="col-md-1 text-right">
+              <span>{{ employeeSalary.mainGrossConveyanceAllowance | number}}</span>
+            </div>
+            <div class="col-md-3"></div>
+          </div>
+
+          <hr>
+          <div class="row py-2">
+            <div class="col-md-2 font-weight-bold">Gross Salary</div>
+            <div class="col-md-1 text-right">
+              <span>{{ employeeSalary.mainGrossSalary | number}}</span>
+            </div>
+            <div class="col-md-3"></div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+    <div class="">
+      <div class="row">
+        <div class="col-md-6">
+
+          <div class="card mt-3">
+
+
+            <div class="card-body">
+              <div class="card-title">
+                <h3>Addition Details</h3>
+              </div>
+              <div class="card-text">
+                <div class="row py-2">
+                  <div class="col-md-4 font-weight-bold"> Basic</div>
+                  <div class="col-md-2 text-right">
+                    <span>{{ employeeSalary.payableGrossBasicSalary | number}}</span>
+                  </div>
+                </div>
+
+                <div class="row py-2">
+                  <div class="col-md-4 font-weight-bold"> House Rent</div>
+                  <div class="col-md-2 text-right">
+                    <span>{{ employeeSalary.payableGrossHouseRent | number }}</span>
+                  </div>
+                </div>
+
+                <div class="row py-2">
+                  <div class="col-md-4 font-weight-bold"> Medical</div>
+                  <div class="col-md-2 text-right">
+                    <span>{{ employeeSalary.payableGrossMedicalAllowance | number}}</span>
+                  </div>
+                </div>
+
+                <div class="row py-2">
+                  <div class="col-md-4 font-weight-bold"> Conveyance</div>
+                  <div class="col-md-2 text-right">
+                    <span>{{ employeeSalary.payableGrossConveyanceAllowance | number }}</span>
+                  </div>
+                </div>
+
+                <!--                                <div class="row py-2">-->
+                <!--                                    <div class="col-md-4 font-weight-bold"> Living Allowance</div>-->
+                <!--                                    <div class="col-md-2 text-right">-->
+                <!--                                        <span>{{ employeeSalary.livingAllowance | number }}</span>-->
+                <!--                                    </div>-->
+                <!--                                </div>-->
+
+                <hr>
+                <div class="row py-2">
+                  <div class="col-md-4 font-weight-bold"> Gross Salary</div>
+                  <div class="col-md-2 text-right">
+                    <span>{{ employeeSalary.payableGrossConveyanceAllowance | number}}</span>
+                  </div>
+                </div>
+                <div class="row py-2">
+                  <div class="col-md-4 font-weight-bold"> Arrear</div>
+                  <div class="col-md-2 text-right">
+                    <span>{{ employeeSalary.arrearSalary | number }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+
+        </div>
+
+        <div class="col-md-6 pr-0">
+
+
+          <div class="card mt-3">
+
+
+            <div class="card-body">
+              <div class="card-title">
+                <h3> Deduction Details</h3>
+              </div>
+              <div class="card-text">
+                <div class="row py-2">
+                  <div class="col-md-4 font-weight-bold"> Provident fund</div>
+                  <div class="col-md-2 text-right">
+                    <span>{{ employeeSalary.pfDeduction | number}}</span>
+                  </div>
+                </div>
+
+                <div class="row py-2">
+                  <div class="col-md-4 font-weight-bold"> Annual Income Tax</div>
+                  <div class="col-md-2 text-right">
+                    <span>{{ employeeSalary.taxDeduction | number}}</span>
+                  </div>
+                </div>
+
+                <div class="row py-2">
+                  <div class="col-md-4 font-weight-bold"> HAF</div>
+                  <div class="col-md-2 text-right">
+                    <span>{{ employeeSalary.welfareFundDeduction | number}}</span>
+                  </div>
+                </div>
+
+                <div class="row py-2">
+                  <div class="col-md-4 font-weight-bold"> Excess cell bill</div>
+                  <div class="col-md-2 text-right">
+                    <span>{{ employeeSalary.mobileBillDeduction | number}}</span>
+                  </div>
+                </div>
+
+                <div class="row py-2">
+                  <div class="col-md-4 font-weight-bold"> Others</div>
+                  <div class="col-md-2 text-right">
+                    <span>{{ employeeSalary.otherDeduction | number}}</span>
+                  </div>
+                </div>
+
+                <hr>
+
+                <div class="row py-2">
+                  <div class="col-md-4 font-weight-bold"> Total Deduction</div>
+                  <div class="col-md-2 text-right">
+                    <span>{{ employeeSalary.totalDeduction | number}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+
+    <div class="card mt-3">
+      <div class="card-body">
+        <div class="card-title">
+          <h3>Net payment</h3>
+        </div>
+        <div class="card-text">
+          <div class="row py-2">
+            <div class="col-md-2 font-weight-bold">Total Addition</div>
+            <div class="col-md-2 text-right">
+              <span>{{ (employeeSalary?.payableGrossSalary! + employeeSalary?.arrearSalary!)| number}}</span>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-2 font-weight-bold">
+              Total Deduction
+            </div>
+            <div class="col-md-2 text-right">
+              <span>{{ employeeSalary.totalDeduction | number}}</span>
+            </div>
+            <div class="col-md-2"></div>
+          </div>
+          <hr>
+          <div class="row py-2">
+            <div class="col-md-2 font-weight-bold">Net Pay</div>
+            <div class="col-md-2 text-right">
+              <span>{{ employeeSalary.netPay | number}}</span>
+            </div>
+          </div>
+
+          <div class="row py-2">
+            <div class="col-md-2 font-weight-bold">Remarks</div>
+            <div class="col-md-10">
+              <span>{{ employeeSalary.remarks}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div>
+      <div class="row">
+        <div class="col-md-6">
+
+          <div class="card mt-3">
+            <div class="card-body">
+              <div class="card-title">
+                <h3>Company's Contributions</h3>
+              </div>
+              <div class="card-text">
+                <div class="row py-2">
+                  <div class="col-md-4 font-weight-bold"> Provident Fund</div>
+                  <div class="col-md-2 text-right">
+                    <span>{{ employeeSalary.pfContribution | number}}</span>
+                  </div>
+                </div>
+                <div class="row py-2">
+                  <div class="col-md-4 font-weight-bold"> Gratuity Fund</div>
+                  <div class="col-md-2 text-right">
+                    <span>{{ employeeSalary.gfContribution | number}}</span>
+                  </div>
+                </div>
+                <hr class="my-0">
+                <div class="row py-2">
+                  <div class="col-md-4 font-weight-bold"> Total Contributions</div>
+                  <div class="col-md-2 text-right">
+                    <span>{{ (employeeSalary?.gfContribution! + employeeSalary?.pfContribution!) | number}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+
+          <div class="card mt-3">
+            <div class="card-body">
+              <div class="card-title">
+                <h3>Company's Provision</h3>
+              </div>
+              <div class="card-text">
+                <div class="row py-2">
+                  <div class="col-md-4 font-weight-bold"> Festival Bonus</div>
+                  <div class="col-md-2 text-right">
+                    <span>{{ employeeSalary.provisionForFestivalBonus | number }}</span>
+                  </div>
+                </div>
+                <div class="row py-2">
+                  <div class="col-md-4 font-weight-bold"> Leave Eacashment</div>
+                  <div class="col-md-2 text-right">
+                    <span>{{ employeeSalary.provisionForLeaveEncashment | number}}</span>
+                  </div>
+                </div>
+
+                <!--                                <div class="row py-2">-->
+                <!--                                    <div class="col-md-4 font-weight-bold"> Project Bonus</div>-->
+                <!--                                    <div class="col-md-2 text-right">-->
+                <!--                                        <span>{{ employeeSalary.provishionForProjectBonus | number}}</span>-->
+                <!--                                    </div>-->
+                <!--                                </div>-->
+
+                <hr class="my-0">
+                <div class="row py-2">
+                  <div class="col-md-4 font-weight-bold"> Total provision</div>
+                  <div class="col-md-2 text-right">
+                    <span>{{ (employeeSalary?.provisionForLeaveEncashment! + employeeSalary?.provisionForFestivalBonus!)| number}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+    <div class="card mt-3">
+      <div class="card-body">
+        <div class="card-title">
+          <h3>Allowances</h3>
+        </div>
+        <div class="card-text">
+          <div class="row py-2">
+            <div class="col-md-2 font-weight-bold"
+                 *ngIf="allowanceName?.allowance01Name?.length !== 0">
+              {{allowanceName?.allowance01Name}}</div>
+            <div class="col-md-4" *ngIf="allowanceName?.allowance01Name?.length !== 0">
+              <span>{{ employeeSalary.allowance01 | number }}</span>
+            </div>
+            <div class="col-md-2 font-weight-bold" *ngIf="allowanceName?.allowance02Name?.length !== 0">
+              {{allowanceName?.allowance02Name}}</div>
+            <div class="col-md-4" *ngIf="allowanceName?.allowance02Name?.length !== 0">
+              <span>{{ employeeSalary.allowance02 | number }}</span>
+            </div>
+          </div>
+
+          <div class="row py-2">
+            <div class="col-md-2 font-weight-bold"
+                 *ngIf="allowanceName?.allowance03Name?.length !== 0">
+              {{allowanceName?.allowance03Name}}</div>
+            <div class="col-md-4" *ngIf="allowanceName?.allowance03Name?.length !== 0">
+              <span>{{ employeeSalary.allowance03 | number }}</span>
+            </div>
+            <div class="col-md-2 font-weight-bold" *ngIf="allowanceName?.allowance04Name?.length !== 0">
+              {{allowanceName?.allowance04Name}}</div>
+            <div class="col-md-4" *ngIf="allowanceName?.allowance04Name?.length !== 0">
+              <span>{{ employeeSalary.allowance04 | number }}</span>
+            </div>
+          </div>
+
+          <div class="row py-2">
+            <div class="col-md-2 font-weight-bold " *ngIf="allowanceName?.allowance05Name?.length !== 0">
+              {{allowanceName?.allowance05Name}}</div>
+            <div class="col-md-4" *ngIf="allowanceName?.allowance05Name?.length !== 0">
+              <span>{{ employeeSalary.allowance05 | number }}</span>
+            </div>
+            <div class="col-md-2 font-weight-bold" *ngIf="allowanceName?.allowance06Name?.length !== 0">
+              {{allowanceName?.allowance06Name}}</div>
+            <div class="col-md-4" *ngIf="allowanceName?.allowance06Name?.length !== 0">
+              <span>{{ employeeSalary.allowance06 | number }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card mt-3">
+      <div class="card-body">
+        <div class="card-title">
+          <h3>Status</h3>
+        </div>
+        <div class="card-text">
+          <div class="row py-2">
+            <div class="col-md-2 font-weight-bold"> Finalization</div>
+            <div class="col-md-4">
+              <span>{{ employeeSalary.isFinalized }}</span>
+            </div>
+            <div class="col-md-2 font-weight-bold"> Dispatched</div>
+            <div class="col-md-4">
+              <span>{{ employeeSalary.isDispatched }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pt-3"></div>
+    <button (click)="previousState()"
+            class="btn btn-info"
+            type="submit">
+      <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+    </button>
+
+    <button [routerLink]="['/employee-salary', employeeSalary.id, 'edit']"
+            class="btn btn-primary"
+            type="button">
+      <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+    </button>
+  </div>
+</div>

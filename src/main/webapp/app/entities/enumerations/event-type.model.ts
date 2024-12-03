@@ -1,0 +1,13 @@
+export enum EventType {
+  TRANSFER = 'TRANSFER',
+
+  PROMOTION = 'PROMOTION',
+
+  INCREMENT = 'INCREMENT',
+
+  JOIN = 'JOIN',
+
+  CONFIRM = 'CONFIRM',
+
+  RESIGNATION = 'RESIGNATION',
+}

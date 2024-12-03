@@ -1,0 +1,49 @@
+{
+  "bitsHrPayrollApp": {
+    "organization": {
+      "home": {
+        "title": "Organizations",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Organization",
+        "createOrEditLabel": "Create or edit a Organization",
+        "notFound": "No Organizations found"
+      },
+      "created": "A new Organization is created with identifier {{ param }}",
+      "updated": "A Organization is updated with identifier {{ param }}",
+      "deleted": "A Organization is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Organization {{ id }}?"
+      },
+      "detail": {
+        "title": "Organization"
+      },
+      "id": "ID",
+      "shortName": "Short Name",
+      "fullName": "Full Name",
+      "slogan": "Slogan",
+      "domainName": "Domain Name",
+      "emailAddress": "Email Address",
+      "hrEmailAddress": "Hr Email Address",
+      "noReplyEmailAddress": "No Reply Email Address",
+      "contactNumber": "Contact Number",
+      "financeManagerPIN": "Finance Manager PIN",
+      "financeManagerSignature": "Finance Manager Signature",
+      "logo": "Logo",
+      "documentLetterHead": "Document Letter Head",
+      "pfStatementLetterHead": "Pf Statement Letter Head",
+      "taxStatementLetterHead": "Tax Statement Letter Head",
+      "nomineeLetterHead": "Nominee Letter Head",
+      "salaryPayslipLetterHead": "Salary Payslip Letter Head",
+      "festivalBonusPayslipLetterHead": "Festival Bonus Payslip Letter Head",
+      "recruitmentRequisitionLetterHead": "Recruitment Requisition Letter Head",
+      "hasOrganizationStamp": "Has Organization Stamp",
+      "organizationStamp": "Organization Stamp",
+      "linkedin": "Linkedin",
+      "twitter": "Twitter",
+      "facebook": "Facebook",
+      "youtube": "Youtube",
+      "instagram": "Instagram",
+      "whatsapp": "Whatsapp"
+    }
+  }
+}

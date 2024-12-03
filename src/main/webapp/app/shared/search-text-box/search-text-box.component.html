@@ -1,0 +1,30 @@
+<form class="form-inline ms-0">
+  <div id="defaultGlobalSearch" class="input-group input-group-merge">
+    <span>
+      <input
+        id="globalSearch"
+        class="form-control list-text-color pe-5"
+        type="text"
+        (selectItem)="selectedItem($event)"
+        (input)="onInput($event)"
+        [formControl]="searchTextFormControl"
+        [ngbTypeahead]="search"
+        [placeholder]="placeHolderText"
+        [maxLength]="inputMaxlength"
+        aria-label="Search"
+        autocomplete="off"
+        spellcheck="false"
+        dir="auto"
+        [style]="'width: ' + searchBoxSize"
+      />
+    </span>
+    <span class="input-group-append">
+      <span class="input-group-text magnifier">
+        <div class="btn btn-link cursor-pointer p-0" type="submit" (click)="searchOnBtnClick()">
+          <fa-icon icon="search"></fa-icon>
+        </div>
+      </span>
+    </span>
+  </div>
+  <small *ngIf="searchTextFormControl.errors?.pattern" class="text-danger">Invalid text detected!</small>
+</form>

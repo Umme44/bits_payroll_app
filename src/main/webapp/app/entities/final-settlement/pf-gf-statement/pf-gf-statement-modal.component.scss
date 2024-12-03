@@ -1,0 +1,71 @@
+.value-field {
+  border: 1px solid black;
+  display: inline-block;
+  border-bottom: 0;
+}
+
+.row-labels {
+  display: inline-block;
+  font-weight: bold;
+}
+
+.font-bold {
+  font-weight: bold;
+}
+.signature {
+  font-size: 0.975rem;
+}
+
+.signature > span {
+  display: block;
+}
+
+.full-border {
+  border: 1px solid black;
+}
+
+.border-bottom-0 {
+  border-bottom: 0 !important;
+}
+
+.border-top-0 {
+  border-top: 0 !important;
+}
+
+.border-left-0 {
+  border-left: 0 !important;
+}
+
+.border-right-0 {
+  border-right: 0 !important;
+}
+
+.border-left-1 {
+  border-left: 1px solid black;
+}
+
+.border-bottom-1 {
+  border-bottom: 1px solid black;
+}
+
+.border-right-1 {
+  border-right: 1px solid black;
+}
+
+.border-top-1 {
+  border-top: 1px solid black;
+}
+
+.nominee-details-border {
+  border: 2px solid #8b9095;
+}
+
+.bits-logo {
+  width: 7.5rem;
+}
+
+span,
+h5,
+p {
+  font-size: 85%;
+}

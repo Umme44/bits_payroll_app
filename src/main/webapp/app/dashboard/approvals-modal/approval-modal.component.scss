@@ -1,0 +1,39 @@
+.font-sm {
+  font-size: 0.7rem;
+}
+
+.color-ash {
+  color: #789d !important;
+}
+
+.col-active {
+  color: #789d;
+}
+
+.col-active:hover {
+  background-color: white;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.47);
+  color: #001155ba;
+  cursor: pointer;
+}
+
+.col-active:hover .dashboard-svg-icon {
+  filter: brightness(0) saturate(100%) invert(10%) sepia(47%) saturate(4104%) hue-rotate(220deg) brightness(88%) contrast(115%)
+    opacity(0.74);
+}
+
+.svg-image-size-mid {
+  height: 50px;
+  margin-top: 28px;
+  margin-bottom: 18px;
+}
+
+.notification-position {
+  position: relative;
+  top: -99px;
+  left: 42px;
+}
+
+.h-0 {
+  height: 0;
+}

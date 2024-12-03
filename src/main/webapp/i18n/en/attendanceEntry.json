@@ -1,0 +1,36 @@
+{
+  "bitsHrPayrollApp": {
+    "attendanceEntry": {
+      "home": {
+        "title": "Attendance Entries",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Attendance Entry",
+        "createOrEditLabel": "Create or edit a Attendance Entry",
+        "notFound": "No Attendance Entries found"
+      },
+      "created": "A new Attendance Entry is created with identifier {{ param }}",
+      "updated": "A Attendance Entry is updated with identifier {{ param }}",
+      "deleted": "A Attendance Entry is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Attendance Entry {{ id }}?"
+      },
+      "detail": {
+        "title": "Attendance Entry"
+      },
+      "id": "ID",
+      "date": "Date",
+      "inTime": "In Time",
+      "inNote": "In Note",
+      "outTime": "Out Time",
+      "outNote": "Out Note",
+      "status": "Status",
+      "note": "Note",
+      "employee": "Employee",
+      "employeeName": "Name",
+      "pin": "Pin",
+      "departmentName": "Department",
+      "unitName": "Unit",
+      "designationName": "Designation"
+    }
+  }
+}

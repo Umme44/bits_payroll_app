@@ -1,0 +1,117 @@
+<div class="row justify-content-center font-sm m-1" *ngIf="employeeDashboardAnalytics; else loader">
+  <div class="col card border-radius border-none me-2 my-2 p-3 color1">
+    <div class="row align-content-end">
+      <div class="col-7">
+        <div class="row">
+          <div class="col-12">
+            <h5 class="employee-status-title mb-3">Total</h5>
+          </div>
+
+          <div class="col-12 row" style="font-size: 0.8rem">
+            <div class="col-7 employee-number-by-category">Active</div>
+            <div class="col-4 text-end employee-number-by-category">
+              <span>{{ employeeDashboardAnalytics.totalActiveEmployee | number }}</span>
+            </div>
+          </div>
+
+          <div class="col-12 row" style="font-size: 0.8rem">
+            <div class="col-7 employee-number-by-category">Inactive</div>
+            <div class="col-4 text-end employee-number-by-category">
+              <span>{{ employeeDashboardAnalytics.totalInActiveEmployee | number }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-5 mt-5">
+        <h3 class="employee-status-total-number">{{ employeeDashboardAnalytics.totalEmployee | number }}</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="col card border-radius border-none m-2 p-3 color2">
+    <div class="row align-content-end">
+      <div class="col-7">
+        <div class="row">
+          <div class="col-12">
+            <h5 class="employee-status-title mb-3">Active</h5>
+          </div>
+
+          <div class="col-12" style="font-size: 0.8rem">
+            <div class="row">
+              <div class="col-9 employee-number-by-category">Regular Confirmed</div>
+              <div class="col-3 text-end employee-number-by-category">
+                <span>{{ employeeDashboardAnalytics.activeRegularConfirmed | number }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12" style="font-size: 0.8rem">
+            <div class="row">
+              <div class="col-9 employee-number-by-category">Regular Probational</div>
+              <div class="col-3 text-end employee-number-by-category">
+                <span>{{ employeeDashboardAnalytics.activeRegularProbation | number }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12" style="font-size: 0.8rem">
+            <div class="row">
+              <div class="col-9 employee-number-by-category">By Contract</div>
+              <div class="col-3 text-end employee-number-by-category">
+                <span>{{ employeeDashboardAnalytics.activeByContract | number }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12" style="font-size: 0.8rem">
+            <div class="row">
+              <div class="col-9 employee-number-by-category">Intern</div>
+              <div class="col-3 text-end employee-number-by-category">
+                <span>{{ employeeDashboardAnalytics.activeIntern | number }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-5 mt-5">
+        <h3 class="employee-status-total-number">{{ employeeDashboardAnalytics.totalActiveEmployee | number }}</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="col card border-radius border-none ms-2 my-2 p-3 color3">
+    <div class="row align-content-end">
+      <div class="col-7">
+        <div class="row">
+          <div class="col-12">
+            <h5 class="employee-status-title mb-3">Resigned</h5>
+          </div>
+
+          <div class="col-12 row" style="font-size: 0.8rem">
+            <div class="col-7 employee-number-by-category">Approved</div>
+            <div class="col-4 text-end employee-number-by-category">
+              <span>{{ employeeDashboardAnalytics.approvedResigned | number }}</span>
+            </div>
+          </div>
+
+          <div class="col-12 row" style="font-size: 0.8rem">
+            <div class="col-7 employee-number-by-category">Pending</div>
+            <div class="col-4 text-end employee-number-by-category">
+              <span>{{ employeeDashboardAnalytics.pendingResigned | number }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-5 mt-5">
+        <h3 class="employee-status-total-number">{{ employeeDashboardAnalytics.totalResigned | number }}</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loader>
+  <img style="height: 200px" class="w-100" src="../../../content/images/placeholder-loading-1.gif" />
+</ng-template>

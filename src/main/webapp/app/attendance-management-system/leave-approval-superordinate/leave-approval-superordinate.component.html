@@ -1,0 +1,210 @@
+<div>
+  <jhi-header
+    [headerName]="'Leave Approvals'"
+    [midHeaderName01]="'Approvals'"
+    [midRouterLinkText01]="'/'"
+    [midHeader01hasSessionStorage]="true"
+    [midHeader01SessionStorageKey]="'keepApprovalModalOpen'"
+    [midHeader01SessionStorageValue]="'yes'"
+    [shouldHaveHr]="false"
+  >
+  </jhi-header>
+
+  <div class="row mb-2">
+    <div class="col-md-7">
+      <jhi-search-text-box (searchEvent)="search($event)" [placeHolderText]="'Search'" [searchBoxSize]="'18rem'"> </jhi-search-text-box>
+      <small *ngIf="isSearchTextInvalid" class="text-danger">Invalid text detected!</small>
+    </div>
+
+    <div class="col-md-5 text-end">
+      <button type="button" class="btn btn-outline-primary" routerLink="/leave-approval-superordinate/approved-by-me">
+        Approved by Me
+      </button>
+    </div>
+  </div>
+
+  <jhi-alert-error></jhi-alert-error>
+  <jhi-alert></jhi-alert>
+
+  <!--<div *ngIf="leaveApplications?.length === 0" class="alert alert-warning" id="no-result">
+        <span jhiTranslate="bitsHrPayrollApp.leaveApplication.home.notFound">No leaveApplications found</span>
+    </div>-->
+</div>
+
+<div *ngIf="leaveApplicationsFiltered && leaveApplicationsFiltered.length > 0" class="">
+  <table aria-describedby="page-heading" class="table table-hover list-text-color">
+    <thead>
+      <tr>
+        <th scope="col">
+          <span>
+            <input class="form-check-input" type="checkbox" [value]="-1" [(ngModel)]="allSelector" (change)="onChange($event)" />
+          </span>
+        </th>
+        <th scope="col"><span>PIN</span></th>
+        <th scope="col"><span>Full Name</span></th>
+        <th scope="col"><span>Designation</span></th>
+
+        <th scope="col"><span jhiTranslate="bitsHrPayrollApp.leaveApplication.leaveType">Leave Type</span></th>
+
+        <th scope="col"><span jhiTranslate="bitsHrPayrollApp.leaveApplication.startDate">Start Date</span></th>
+        <th scope="col"><span jhiTranslate="bitsHrPayrollApp.leaveApplication.endDate">End Date</span></th>
+        <th scope="col"><span> Duration </span></th>
+        <th scope="col"><span> Reason </span></th>
+        <th scope="col" class="text-end">
+          <div class="d-inline col-md-1" *ngIf="leaveApplicationsFiltered && leaveApplicationsFiltered.length > 0">
+            <div class="d-inline" ngbTooltip="Approve">
+              <button class="btn btn-success btn-sm" [disabled]="approvalDTO!.listOfIds!.length < 1" (click)="approveSelected()">
+                <fa-icon [icon]="['fas', 'check']"></fa-icon>
+              </button>
+            </div>
+
+            <div class="d-inline" ngbTooltip="Reject">
+              <button class="btn btn-danger btn-sm" [disabled]="approvalDTO!.listOfIds!.length < 1" (click)="denySelected()">
+                <fa-icon [icon]="['fas', 'times']"></fa-icon>
+              </button>
+            </div>
+          </div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let leaveApplication of leaveApplicationsFiltered; trackBy: trackId">
+        <td>
+          <input
+            class="form-check-input"
+            type="checkbox"
+            [value]="leaveApplication.id"
+            [checked]="leaveApplication.isChecked"
+            (change)="onChange($event)"
+          />
+        </td>
+        <td>
+          {{ leaveApplication.pin }}
+        </td>
+
+        <td>
+          {{ leaveApplication.fullName }}
+        </td>
+
+        <td>
+          {{ leaveApplication.designationName }}
+        </td>
+        <td jhiTranslate="{{ 'bitsHrPayrollApp.LeaveType.' + leaveApplication.leaveType }}">{{ leaveApplication.leaveType }}</td>
+        <td>{{ leaveApplication.startDate | formatMediumDate }}</td>
+        <td>{{ leaveApplication.endDate | formatMediumDate }}</td>
+        <td>
+          {{ leaveApplication.durationInDay }} <span *ngIf="leaveApplication.durationInDay! === 1">day</span
+          ><span *ngIf="leaveApplication.durationInDay! > 1">days</span>
+        </td>
+        <td>
+          <span
+            *ngIf="leaveApplication.reason && leaveApplication.reason!.length > 30; else noteElse"
+            [ngbTooltip]="leaveApplication.reason"
+          >
+            {{ textSlicing(leaveApplication.reason) }}
+          </span>
+          <ng-template #noteElse>
+            <span>
+              {{ leaveApplication.reason }}
+            </span>
+          </ng-template>
+        </td>
+        <td>
+          <div class="text-right">
+            <button class="btn btn-success btn-sm" (click)="showApproveModal(leaveApplication, approveModal)">Approve</button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div
+  *ngIf="!leaveApplicationsFiltered || leaveApplicationsFiltered.length === 0"
+  style="height: 75vh"
+  class="text-center d-flex align-items-center justify-content-center"
+>
+  <img src="../../../content/images/leave-application.svg" width="400px" height="400px" />
+</div>
+
+<ng-template #approveModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="approve-modal-basic-title">Leave Approval</h4>
+    <button type="button" class="close outline-none" aria-label="Close" (click)="modal.dismiss('Cross click')">&times;</button>
+  </div>
+
+  <div class="modal-body">
+    <div class="card p-3">
+      <div class="row font-sm vertical-align-middle">
+        <dd class="col-md-1">Name</dd>
+        <dt class="col-md-5">
+          {{ selectedLeaveApplication?.pin }} - {{ selectedLeaveApplication?.fullName }} ({{ selectedLeaveApplication?.designationName }})
+        </dt>
+
+        <dd class="col-md-1">Leave Type</dd>
+        <dt class="col-md-5" jhiTranslate="{{ 'bitsHrPayrollApp.LeaveType.' + selectedLeaveApplication?.leaveType }}">
+          {{ selectedLeaveApplication?.leaveType }}
+        </dt>
+
+        <dd class="col-md-1">Duration</dd>
+        <dt class="col-md-5">
+          {{ selectedLeaveApplication?.durationInDay }} <span *ngIf="selectedLeaveApplication?.durationInDay! === 1">day</span
+          ><span *ngIf="selectedLeaveApplication?.durationInDay! > 1">days</span>
+
+          ({{ selectedLeaveApplication?.startDate | formatMediumDate }} - {{ selectedLeaveApplication?.endDate | formatMediumDate }})
+        </dt>
+
+        <dd class="col-md-1">Phone</dd>
+        <dt class="col-md-5">
+          {{ selectedLeaveApplication?.phoneNumberOnLeave }}
+        </dt>
+
+        <dd class="col-md-1">Reason</dd>
+        <dt class="col-md-5">
+          <div [ngbTooltip]="selectedLeaveApplication?.reason" placement="top">
+            {{ truncate(selectedLeaveApplication?.reason) }}
+          </div>
+        </dt>
+      </div>
+    </div>
+
+    <div class="mt-2">
+      <table aria-describedby="page-heading" class="table table-hover text-center list-text-color">
+        <thead>
+          <tr class="bg-light">
+            <th scope="col"><span>Type</span></th>
+            <th scope="col"><span>Total</span></th>
+            <th scope="col"><span>Requested</span></th>
+            <th scope="col"><span>Approved</span></th>
+            <th scope="col"><span>Balance</span></th>
+            <th scope="col"><span>Balance After Approve</span></th>
+          </tr>
+        </thead>
+        <tbody style="margin-top: 5px">
+          <tr
+            *ngFor="let leaveBalance of individualLeaveBalance"
+            [ngStyle]="{ 'background-color': selectedLeaveType == leaveBalance.leaveType ? 'rgba(116, 198, 135, 0.3)' : '' }"
+          >
+            <!--<ng-template [ngClass]="{'bg-primary text-white': selectedLeaveType==leaveBalance.leaveType}">-->
+            <td class="font-weight-bold" jhiTranslate="{{ 'bitsHrPayrollApp.LeaveType.' + leaveBalance.leaveType }}">
+              {{ leaveBalance.leaveType }}
+            </td>
+            <td>{{ totalLeaveCalculation(leaveBalance.openingBalance, leaveBalance.amount) }}</td>
+            <td>{{ leaveBalance.daysRequested }}</td>
+            <td>{{ leaveBalance.daysApproved }}</td>
+            <td class="font-weight-bold text-success">{{ leaveBalance.daysRemaining }}</td>
+            <td class="font-weight-bold text-primary">{{ totalLeaveAfterApprove(leaveBalance, selectedLeaveApplication) }}</td>
+            <!--</ng-template>-->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-success btn-sm w-auto" type="submit" (click)="confirmApproval(modal)">Confirm</button>
+    <button class="btn btn-danger btn-sm w-auto" type="submit" (click)="confirmRejection(modal)">Reject</button>
+
+    <button class="btn btn-secondary btn-sm w-auto" type="submit" (click)="modal.close()">Close</button>
+  </div>
+</ng-template>

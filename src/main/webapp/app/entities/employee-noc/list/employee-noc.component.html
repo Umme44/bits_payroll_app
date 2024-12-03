@@ -1,0 +1,228 @@
+<div>
+  <h2 id="page-heading" data-cy="EmployeeNOCHeading">
+    <span jhiTranslate="bitsHrPayrollApp.employeeNOC.home.title">Employee NOCS</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="bitsHrPayrollApp.employeeNOC.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-employee-noc"
+        [routerLink]="['/employee-noc/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="bitsHrPayrollApp.employeeNOC.home.createLabel"> Create a new Employee NOC </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="employeeNOCS?.length === 0">
+    <span jhiTranslate="bitsHrPayrollApp.employeeNOC.home.notFound">No Employee NOCS found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="employeeNOCS && employeeNOCS.length > 0">
+    <table class="table table-hover list-text-color" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">ID</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="passportNumber">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeNOC.passportNumber">Passport Number</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="leaveStartDate">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeNOC.leaveStartDate">Leave Start Date</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="leaveEndDate">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeNOC.leaveEndDate">Leave End Date</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="countryToVisit">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeNOC.countryToVisit">Country To Visit</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="referenceNumber">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeNOC.referenceNumber">Reference Number</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="issueDate">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeNOC.issueDate">Issue Date</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="createdAt">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeNOC.createdAt">Created At</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="updatedAt">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeNOC.updatedAt">Updated At</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="generatedAt">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeNOC.generatedAt">Generated At</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="reason">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeNOC.reason">Reason</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="purposeOfNOC">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeNOC.purposeOfNOC">Purpose Of NOC</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="certificateStatus">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeNOC.certificateStatus">Certificate Status</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="isRequiredForVisa">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeNOC.isRequiredForVisa">Is Required For Visa</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="employee.id">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeNOC.employee">Employee</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="signatoryPerson.id">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeNOC.signatoryPerson">Signatory Person</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="createdBy.login">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeNOC.createdBy">Created By</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="updatedBy.login">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeNOC.updatedBy">Updated By</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="generatedBy.login">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeNOC.generatedBy">Generated By</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody
+        infinite-scroll
+        (scrolled)="loadPage(page + 1)"
+        [infiniteScrollDisabled]="page - 1 >= links['last']"
+        [infiniteScrollDistance]="0"
+      >
+        <tr *ngFor="let employeeNOC of employeeNOCS; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/employee-noc', employeeNOC.id, 'view']">{{ employeeNOC.id }}</a>
+          </td>
+          <td>{{ employeeNOC.passportNumber }}</td>
+          <td>{{ employeeNOC.leaveStartDate | formatMediumDate }}</td>
+          <td>{{ employeeNOC.leaveEndDate | formatMediumDate }}</td>
+          <td>{{ employeeNOC.countryToVisit }}</td>
+          <td>{{ employeeNOC.referenceNumber }}</td>
+          <td>{{ employeeNOC.issueDate | formatMediumDate }}</td>
+          <td>{{ employeeNOC.createdAt | formatMediumDatetime }}</td>
+          <td>{{ employeeNOC.updatedAt | formatMediumDatetime }}</td>
+          <td>{{ employeeNOC.generatedAt | formatMediumDatetime }}</td>
+          <td>{{ employeeNOC.reason }}</td>
+          <td jhiTranslate="{{ 'bitsHrPayrollApp.PurposeOfNOC.' + employeeNOC.purposeOfNOC }}">{{ employeeNOC.purposeOfNOC }}</td>
+          <td jhiTranslate="{{ 'bitsHrPayrollApp.CertificateStatus.' + employeeNOC.certificateStatus }}">
+            {{ employeeNOC.certificateStatus }}
+          </td>
+          <td>{{ employeeNOC.isRequiredForVisa }}</td>
+          <td>
+            <div *ngIf="employeeNOC.employee">
+              <a [routerLink]="['/employee', employeeNOC.employee.id, 'view']">{{ employeeNOC.employee.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="employeeNOC.signatoryPerson">
+              <a [routerLink]="['/employee', employeeNOC.signatoryPerson.id, 'view']">{{ employeeNOC.signatoryPerson.id }}</a>
+            </div>
+          </td>
+          <td>
+            {{ employeeNOC.createdBy?.login }}
+          </td>
+          <td>
+            {{ employeeNOC.updatedBy?.login }}
+          </td>
+          <td>
+            {{ employeeNOC.generatedBy?.login }}
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/employee-noc', employeeNOC.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/employee-noc', employeeNOC.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(employeeNOC)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

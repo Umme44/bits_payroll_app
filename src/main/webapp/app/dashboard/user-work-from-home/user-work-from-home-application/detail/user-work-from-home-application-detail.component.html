@@ -1,0 +1,83 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="workFromHomeApplication">
+      <h2>
+        <span jhiTranslate="bitsHrPayrollApp.workFromHomeApplication.detail.title">Work From Home Application</span>
+        {{ workFromHomeApplication.id }}
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="bitsHrPayrollApp.workFromHomeApplication.startDate">Start Date</span></dt>
+        <dd>
+          <span>{{ workFromHomeApplication.startDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.workFromHomeApplication.endDate">End Date</span></dt>
+        <dd>
+          <span>{{ workFromHomeApplication.endDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.workFromHomeApplication.reason">Reason</span></dt>
+        <dd>
+          <span>{{ workFromHomeApplication.reason }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.workFromHomeApplication.duration">Duration</span></dt>
+        <dd>
+          <span>{{ workFromHomeApplication.duration }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.workFromHomeApplication.status">Status</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.Status.' + workFromHomeApplication.status }}">{{ workFromHomeApplication.status }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.workFromHomeApplication.appliedAt">Applied At</span></dt>
+        <dd>
+          <span>{{ workFromHomeApplication.appliedAt }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.workFromHomeApplication.updatedAt">Updated At</span></dt>
+        <dd>
+          <span>{{ workFromHomeApplication.updatedAt }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.workFromHomeApplication.createdAt">Created At</span></dt>
+        <dd>
+          <span>{{ workFromHomeApplication.createdAt }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.workFromHomeApplication.sanctionedAt">Sanctioned At</span></dt>
+        <dd>
+          <span>{{ workFromHomeApplication.sanctionedAt }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.workFromHomeApplication.appliedBy">Applied By</span></dt>
+        <dd>
+          {{ workFromHomeApplication.appliedByLogin }}
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.workFromHomeApplication.createdBy">Created By</span></dt>
+        <dd>
+          {{ workFromHomeApplication.createdByLogin }}
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.workFromHomeApplication.updatedBy">Updated By</span></dt>
+        <dd>
+          {{ workFromHomeApplication.updatedByLogin }}
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.workFromHomeApplication.sanctionedBy">Sanctioned By</span></dt>
+        <dd>
+          {{ workFromHomeApplication.sanctionedByLogin }}
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.workFromHomeApplication.employee">Employee</span></dt>
+        <dd>
+          <div *ngIf="workFromHomeApplication.employeeId">
+            <a [routerLink]="['/employee', workFromHomeApplication.employeeId, 'view']">{{ workFromHomeApplication.employeeId }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/work-from-home-application', workFromHomeApplication.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

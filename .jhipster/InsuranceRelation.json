@@ -1,0 +1,30 @@
+{
+  "changelogDate": "20220525113941",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "insurance_relation",
+  "fields": [
+    {
+      "fieldName": "relationName",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "200",
+      "fieldValidateRulesMinlength": "0"
+    },
+    {
+      "fieldName": "relation",
+      "fieldType": "Relation",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "SELF,SPOUSE,CHILD"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "InsuranceRelation",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

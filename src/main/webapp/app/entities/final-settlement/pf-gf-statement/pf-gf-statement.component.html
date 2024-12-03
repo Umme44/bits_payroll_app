@@ -1,0 +1,205 @@
+<div class="container py-3">
+  <button (click)="previousState()" class="btn btn-info">
+    <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+  </button>
+  <button (click)="downloadAsPDF()" class="btn btn-primary ms-2"><fa-icon icon="print"></fa-icon> Print</button>
+</div>
+
+<div class="container" *ngIf="pfGfStatement">
+  <div class="printDiv" id="pdfPfGfStatement">
+    <div class="row ms-2 ps-1">
+      <div class="col-md-10 ps-0">
+        <h5 class="font-bold">{{ organizationFullName }}</h5>
+        <h6 class="font-bold">Final Statement of PF & GF Amount of the Employee</h6>
+        <p>
+          <span>Date: {{ today | formatMediumDate }}</span>
+        </p>
+      </div>
+
+      <div class="col-md-2 ps-0">
+        <img alt="Logo" src="../../../content/images/logo.svg" width="100" />
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row mb-3 p-3 border-2">
+        <div class="col-md-8">
+          <div class="row">
+            <span class="col-md-4 row-labels">Name of the employee</span>
+            <span class="col-md-8 value-field">{{ pfGfStatement.name }}</span>
+          </div>
+
+          <div class="row">
+            <span class="col-md-4 row-labels">PIN</span>
+            <span class="col-md-8 value-field">{{ pfGfStatement.pin }}</span>
+          </div>
+
+          <div class="row">
+            <span class="col-md-4 row-labels">Date of Joining</span>
+            <span class="col-md-8 value-field">{{ pfGfStatement.dateOfJoining | formatMediumDate }}</span>
+          </div>
+
+          <div class="row">
+            <span class="col-md-4 row-labels">Date of Confirmation</span>
+            <span class="col-md-8 value-field">{{ pfGfStatement.dateOfConfirmation | formatMediumDate }}</span>
+          </div>
+
+          <div class="row">
+            <span class="col-md-4 row-labels">Last Working Day</span>
+            <span class="col-md-8 value-field">{{ pfGfStatement.lastWorkingDay | formatMediumDate }}</span>
+          </div>
+
+          <div class="row">
+            <span class="col-md-4 row-labels">PF Rules Effective From</span>
+            <span class="col-md-8 value-field">{{ pfGfStatement.pfRulesEffectiveFrom | formatMediumDate }}</span>
+          </div>
+
+          <div class="row">
+            <span class="col-md-4 row-labels"
+              >GF Rules Effective From
+              <span class="d-block">(BRAC Bank Joining) </span>
+            </span>
+            <span class="col-md-8 value-field">{{ pfGfStatement.gfRulesEffectiveFrom | formatMediumDate }}</span>
+          </div>
+
+          <div class="row">
+            <span class="col-md-4 row-labels">PF Entitlement Tenure</span>
+            <span class="col-md-8 value-field border-bottom-1">{{ pfGfStatement.pfEntitlementTenure }} </span>
+          </div>
+
+          <div class="row">
+            <span class="col-md-4 row-labels">GF Entitlement Tenure</span>
+            <span class="col-md-8 value-field border-bottom-1 border-top-0">{{ pfGfStatement.gfEntitlementTenure }} </span>
+          </div>
+        </div>
+
+        <div class="col-md-1"></div>
+
+        <div class="col-md-3 border border-dark font-bold align-items-center d-flex justify-content-center">
+          &nbsp; &nbsp; &nbsp; Total Payable
+          <br />
+          Amount = BDT {{ pfGfStatement.totalPayablePfAndGf | number }}
+        </div>
+      </div>
+
+      <div
+        class="row pb-0 p-2 border-2 mb-4"
+        *ngIf="
+          pfGfStatement.pfDetails &&
+          pfGfStatement.pfDetails.pfInterest &&
+          pfGfStatement.pfDetails.pfContributionList &&
+          pfGfStatement.pfDetails.pfContributionList.length > 0
+        "
+      >
+        <h5 class="font-bold">Provident Fund Details</h5>
+        <div class="col-md-12 mb-4 border border-dark border-end-0">
+          <div class="">
+            <div class="row">
+              <span class="col-md-3 row-labels"></span>
+              <span class="col-md-6">Opening balance as on 01.01.{{ pfGfStatement.pfDetails.pfContributionList[0].year }}</span>
+              <span class="col-md-3 value-field text-end border-top-0">{{ pfGfStatement.pfDetails.openingBalance }}</span>
+            </div>
+
+            <ng-container *ngFor="let pfContribution of pfGfStatement.pfDetails.pfContributionList">
+              <div class="row">
+                <span class="col-md-3 row-labels"></span>
+                <span class="col-md-6">Own Contribution ({{ pfContribution.year }})</span>
+                <span class="col-md-3 value-field text-end">{{ pfContribution.ownContribution | number }}</span>
+              </div>
+
+              <div class="row">
+                <span class="col-md-3 row-labels"></span>
+                <span class="col-md-6">Company Contribution ({{ pfContribution.year }}) </span>
+                <span class="col-md-3 value-field text-end">{{ pfContribution.companyContribution | number }}</span>
+              </div>
+            </ng-container>
+
+            <div class="row">
+              <span class="col-md-3 row-labels"></span>
+              <span class="col-md-6">Interest on Own Contribution</span>
+              <span class="col-md-3 value-field text-end">{{ pfGfStatement.pfDetails.pfInterest.ownInterest }}</span>
+            </div>
+
+            <div class="row border-bottom-1">
+              <span class="col-md-3 row-labels"></span>
+              <span class="col-md-6">Interest on Company Contribution</span>
+              <span class="col-md-3 value-field text-end">{{ pfGfStatement.pfDetails.pfInterest.companyInterest }}</span>
+            </div>
+
+            <div class="row">
+              <span class="col-md-3 row-labels"></span>
+              <div class="col-md-6">
+                <span class="font-bold">Total PF Payable</span>
+                <span class="text-sm text-muted">{{ pfGfStatement.pfDetails.remarks }}</span>
+              </div>
+              <span class="col-md-3 value-field text-end border-top-0">
+                {{ pfGfStatement.pfDetails.totalPfPayable | number }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row pb-0 p-2 border-2">
+        <h5 class="font-bold">Gratuity Fund Details</h5>
+        <div class="col-md-12 mb-4 border border-dark border-end-0">
+          <div class="">
+            <div class="row">
+              <span class="col-md-3 row-labels"></span>
+              <span class="col-md-6"> Length of service in years ({{ pfGfStatement.serviceLengthInYear }} Year/s) </span>
+              <span class="col-md-3 value-field text-end border-top-0">{{ pfGfStatement.serviceLengthInYear }}</span>
+            </div>
+
+            <div class="row border-bottom-1">
+              <span class="col-md-3 row-labels"></span>
+              <span class="col-md-6"
+                >Last Basic BDT ({{ pfGfStatement.lastBasic | number }}*1.5*{{ pfGfStatement.serviceLengthInYear }})</span
+              >
+              <span class="col-md-3 value-field text-end" *ngIf="pfGfStatement.lastBasic">{{ pfGfStatement.totalGfPayable | number }}</span>
+            </div>
+
+            <div class="row">
+              <span class="col-md-3 row-labels"></span>
+              <span class="col-md-6 font-bold">Total GF payable</span>
+              <span class="col-md-3 value-field text-end border-top-0">
+                {{ pfGfStatement.totalGfPayable | number }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row pt-4 mt-5">
+        <div class="col-md-4 my-5 signature">
+          <span class="font-bold">Prepared by</span>
+          <span>Milon Kumar Roy</span>
+          <span>HR Generalist</span>
+        </div>
+
+        <div class="col-md-4 my-5 signature">
+          <span class="font-bold"> Recommended by </span>
+          <span>Md. Tasaufur Rahman</span>
+          <span>Strategic Partner,HR</span>
+        </div>
+
+        <div class="col-md-4 my-5 signature">
+          <span class="font-bold"> Checked by</span>
+          <span>Palash Kumer Paul</span>
+          <span>Manager, F & A</span>
+        </div>
+
+        <div class="col-md-4 my-5 signature">
+          <span class="font-bold">Vetted by</span>
+          <span class="d-block">Rajon Chandra Saha, FCMA</span>
+          <span>Secretary-PF, GF & HAF Committee</span>
+        </div>
+
+        <div class="col-md-4 my-5 signature">
+          <span class="font-bold">Approved by</span>
+          <span> A.K. Sabbir Mahbub</span>
+          <span>Chairman-PF, GF & HAF Committee</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

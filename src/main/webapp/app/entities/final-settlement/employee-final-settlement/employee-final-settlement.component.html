@@ -1,0 +1,223 @@
+<div>
+  <!--    <jhi-header-->
+  <!--        [addButtonText]="'Add New Employees'"-->
+  <!--        [headerName]="'Employees'"-->
+  <!--        [routerLinkText]="'/employee-custom/new'"-->
+  <!--        [shouldHaveHr]="false">-->
+  <!--    </jhi-header>-->
+  <div class="card m-1 p-1">
+    <div class="search-filter container-fluid">
+      <div class="row my-3">
+        <div class="input-group col-md-12">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <label class="input-group-text" for="inputGroupSelect01">Search</label>
+            </div>
+            <input
+              (change)="onSearchTextChange()"
+              [(ngModel)]="filters.searchText"
+              class="form-control"
+              placeholder="Search Text"
+              type="text"
+            />
+          </div>
+          <small class="text-danger" *ngIf="isSearchTextInvalid">This text is invalid</small>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <div class="input-group-prepend d-inline-block float-start">
+            <!--            <label class="input-group-text all-label-height" style="height: 36px" for="inputGroupSelect03">Department</label>-->
+            <label class="input-group-text" for="inputGroupSelect03">Department</label>
+          </div>
+          <!--Using items input-->
+          <div class="d-inline-block float-start font-sm all-ng-options">
+            <!--            <ng-select-->
+            <!--              [items]="departments"-->
+            <!--              bindLabel="departmentName"-->
+            <!--              bindValue="id"-->
+            <!--              [searchable]="true"-->
+            <!--              [clearable]="true"-->
+            <!--              appearance="outline"-->
+            <!--              [(ngModel)]="filters.departmentId"-->
+            <!--              (change)="onDepartmentSelect()"-->
+            <!--              class="form-select"-->
+            <!--            >-->
+            <!--            </ng-select>-->
+
+            <ng-select
+              [items]="departments"
+              bindLabel="departmentName"
+              bindValue="id"
+              [searchable]="true"
+              [clearable]="true"
+              appearance="outline"
+              [(ngModel)]="filters.departmentId"
+              (change)="onDepartmentSelect()"
+            >
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="input-group-prepend d-inline-block float-start">
+            <!--            <label class="input-group-text all-label-height" for="inputGroupSelect03" style="height: 36px">Designation</label>-->
+            <label class="input-group-text" for="inputGroupSelect03">Designation</label>
+          </div>
+          <!--Using items input-->
+          <div class="d-inline-block float-start font-sm all-ng-options">
+            <ng-select
+              [items]="designations"
+              bindLabel="designationName"
+              bindValue="id"
+              [searchable]="true"
+              [clearable]="true"
+              appearance="outline"
+              [(ngModel)]="filters.destinationId"
+              (change)="onDesignationSelect()"
+            >
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="input-group-prepend d-inline-block float-start">
+            <!--            <label class="input-group-text all-label-height" style="height: 36px" for="inputGroupSelect03">Unit</label>-->
+            <label class="input-group-text" for="inputGroupSelect03">Unit</label>
+          </div>
+          <!--Using items input-->
+          <div class="d-inline-block float-start font-sm all-ng-options">
+            <ng-select
+              [items]="units"
+              bindLabel="unitName"
+              bindValue="id"
+              [searchable]="true"
+              [clearable]="true"
+              appearance="outline"
+              [(ngModel)]="filters.unitId"
+              (change)="onUnitSelect()"
+            >
+            </ng-select>
+          </div>
+        </div>
+        <!--                <div class="input-group col-md-4">
+                    <div class="input-group-prepend ">
+                        <label class="input-group-text" for="inputGroupSelect02">Department</label>
+                    </div>
+                    <select (change)="onDepartmentSelect()" [(ngModel)]="filters.departmentId" class="custom-select">
+                        <option [value]="0" selected>All Departments</option>
+                        <option *ngFor="let department of departments" [ngValue]="department.id">
+                            {{department.departmentName}}
+                        </option>
+                    </select>
+                </div>
+
+
+                <div class="input-group col-md-4">
+                    <div class="input-group-prepend ">
+                        <label class="input-group-text" for="inputGroupSelect03">Designation</label>
+                    </div>
+                    <select (change)="onDesignationSelect()" [(ngModel)]="filters.destinationId" class="custom-select">
+                        <option [value]="0" selected>All Designations</option>
+                        <option *ngFor="let designation of designations" [ngValue]="designation.id">
+                            {{designation.designationName}}
+                        </option>
+                    </select>
+                </div>
+
+
+                <div class="input-group col-md-4 ">
+                    <div class="input-group-prepend ">
+                        <label class="input-group-text" for="inputGroupSelect04">Unit</label>
+                    </div>
+                    <select (change)="onUnitSelect()" [(ngModel)]="filters.unitId" class="custom-select">
+                        <option [value]="0" selected>All Units</option>
+                        <option *ngFor="let unit of units" [ngValue]="unit.id">
+                            {{unit.unitName}}
+                        </option>
+                    </select>
+                </div>-->
+      </div>
+    </div>
+  </div>
+  <jhi-alert-error></jhi-alert-error>
+  <jhi-alert></jhi-alert>
+
+  <div *ngIf="employees?.length === 0" class="alert alert-warning" id="no-result">
+    <span jhiTranslate="bitsHrPayrollApp.finalSettlement.home.notFound">No Final Settlements found</span>
+  </div>
+
+  <ng-container *ngFor="let employee of employees">
+    <div class="card m-1 p-1" *ngIf="employee.pin !== undefined">
+      <img class="card-img-top m-2 me-3 ms-3" [src]="getProfilePicture(employee.pin)" alt="Card image cap" />
+      <div class="card-body p-1">
+        <h5 class="card-title mb-2 text-xl">
+          {{ employee.fullName }} <span class="text-muted">{{ employee.pin }}</span>
+          <span class="float-end">
+            <span class="btn-group" *ngIf="employee.id">
+              <button
+                (click)="generateFinalSettlement(employee.id)"
+                class="btn btn-outline-success btn-sm px-md-3"
+                data-placement="top"
+                data-toggle="tooltip"
+                title="generate final settlement"
+                type="submit"
+              >
+                Start Final Settlement
+                <fa-icon [icon]="['fas', 'arrow-left']"></fa-icon>
+              </button>
+            </span>
+          </span>
+        </h5>
+        <h6 class="card-subtitle mb-2 text-muted text-lg">
+          {{ employee.designationName }}, {{ employee.departmentName }}
+          <span class="badge rounded-pill bg-secondary text-white">{{ employee.unitName }}</span>
+        </h6>
+
+        <div class="card-subtitle text-muted text-md">
+          <div class="row">
+            <div class="col-sm-6 col-lg-3">
+              Category :
+              <span jhiTranslate="{{ 'bitsHrPayrollApp.EmployeeCategory.' + employee.employeeCategory }}">{{
+                employee.employeeCategory
+              }}</span>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+              Email: <a href="mailto:{{ employee.officialEmail }}">{{ employee.officialEmail }}</a>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+              Work Phone: <a href="tel:{{ employee.officialContactNo }}"> {{ employee.officialContactNo }}</a>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+              Personal: <a href="tel:{{ employee.personalContactNo }}">{{ employee.personalContactNo }}</a>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+              Emergency:
+              <a href="tel:{{ employee.emergencyContactPersonContactNumber }}">{{ employee.emergencyContactPersonContactNumber }}</a>
+            </div>
+            <div class="col-sm-6 col-lg-3">WhatsApp: {{ employee.whatsappId }}</div>
+            <div class="col-sm-6 col-lg-3">Skype: {{ employee.skypeId }}</div>
+            <div class="col-sm-6 col-lg-3">Reports to: {{ employee.reportingToName }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <!--  <div *ngIf="employees && employees.length > 0">-->
+  <!--    <div class="row justify-content-center py-2">-->
+  <!--      <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>-->
+  <!--    </div>-->
+
+  <!--    <div class="row justify-content-center">-->
+  <!--      <ngb-pagination-->
+  <!--        [collectionSize]="totalItems"-->
+  <!--        [(page)]="ngbPaginationPage"-->
+  <!--        [pageSize]="itemsPerPage"-->
+  <!--        [maxSize]="5"-->
+  <!--        [rotate]="true"-->
+  <!--        [boundaryLinks]="true"-->
+  <!--        (pageChange)="loadPage($event)"-->
+  <!--      ></ngb-pagination>-->
+  <!--    </div>-->
+  <!--  </div>-->
+</div>

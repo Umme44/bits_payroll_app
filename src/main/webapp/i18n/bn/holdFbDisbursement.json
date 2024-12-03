@@ -1,0 +1,27 @@
+{
+  "bitsHrPayrollApp": {
+    "holdFbDisbursement": {
+      "home": {
+        "title": "Hold Fb Disbursements",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Hold Fb Disbursement",
+        "createOrEditLabel": "Create or edit a Hold Fb Disbursement",
+        "notFound": "No Hold Fb Disbursements found"
+      },
+      "created": "A new Hold Fb Disbursement is created with identifier {{ param }}",
+      "updated": "A Hold Fb Disbursement is updated with identifier {{ param }}",
+      "deleted": "A Hold Fb Disbursement is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Hold Fb Disbursement {{ id }}?"
+      },
+      "detail": {
+        "title": "Hold Fb Disbursement"
+      },
+      "id": "ID",
+      "disbursedAt": "Disbursed At",
+      "remarks": "Remarks",
+      "disbursedBy": "Disbursed By",
+      "festivalBonusDetail": "Festival Bonus Detail"
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "bitsHrPayrollApp": {
+    "pfArrear": {
+      "home": {
+        "title": "Pf Arrears",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Pf Arrear",
+        "createOrEditLabel": "Create or edit a Pf Arrear",
+        "notFound": "No Pf Arrears found"
+      },
+      "created": "A new Pf Arrear is created with identifier {{ param }}",
+      "updated": "A Pf Arrear is updated with identifier {{ param }}",
+      "deleted": "A Pf Arrear is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Pf Arrear {{ id }}?"
+      },
+      "detail": {
+        "title": "Pf Arrear"
+      },
+      "id": "ID",
+      "month": "Month",
+      "year": "Year",
+      "amount": "Amount",
+      "remarks": "Remarks",
+      "employee": "Employee"
+    }
+  }
+}

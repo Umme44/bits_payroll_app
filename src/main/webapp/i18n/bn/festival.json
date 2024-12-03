@@ -1,0 +1,29 @@
+{
+  "bitsHrPayrollApp": {
+    "festival": {
+      "home": {
+        "title": "Festivals",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Festival",
+        "createOrEditLabel": "Create or edit a Festival",
+        "notFound": "No Festivals found"
+      },
+      "created": "A new Festival is created with identifier {{ param }}",
+      "updated": "A Festival is updated with identifier {{ param }}",
+      "deleted": "A Festival is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Festival {{ id }}?"
+      },
+      "detail": {
+        "title": "Festival"
+      },
+      "id": "ID",
+      "title": "Title",
+      "festivalName": "Festival Name",
+      "festivalDate": "Festival Date",
+      "bonusDisbursementDate": "Bonus Disbursement Date",
+      "religion": "Religion",
+      "isProRata": "Is Pro Rata"
+    }
+  }
+}

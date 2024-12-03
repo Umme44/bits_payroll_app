@@ -1,0 +1,83 @@
+import dayjs from 'dayjs/esm';
+import { IDepartment } from 'app/entities/department/department.model';
+import { IEmployee } from 'app/entities/employee/employee.model';
+import { IUser } from 'app/entities/user/user.model';
+import { RequisitionStatus } from 'app/entities/enumerations/requisition-status.model';
+import { IProcReq } from '../proc-req/proc-req.model';
+
+export interface IProcReqMaster {
+  id: number;
+  requisitionNo?: string | null;
+  requestedDate?: dayjs.Dayjs | null;
+  isCTOApprovalRequired?: boolean | null;
+  requisitionStatus?: RequisitionStatus | null;
+  expectedReceivedDate?: dayjs.Dayjs | null;
+  reasoning?: string | null;
+  totalApproximatePrice?: number | null;
+  recommendationAt01?: dayjs.Dayjs | null;
+  recommendationAt02?: dayjs.Dayjs | null;
+  recommendationAt03?: dayjs.Dayjs | null;
+  recommendationAt04?: dayjs.Dayjs | null;
+  recommendationAt05?: dayjs.Dayjs | null;
+  nextRecommendationOrder?: number | null;
+  rejectedDate?: dayjs.Dayjs | null;
+  rejectionReason?: string | null;
+  closedAt?: dayjs.Dayjs | null;
+  createdAt?: dayjs.Dayjs | null;
+  updatedAt?: dayjs.Dayjs | null;
+
+  /*  department?: Pick<IDepartment, 'id'> | null;
+    requestedBy?: Pick<IEmployee, 'id'> | null;
+    recommendedBy01?: Pick<IEmployee, 'id'> | null;
+    recommendedBy02?: Pick<IEmployee, 'id'> | null;
+    recommendedBy03?: Pick<IEmployee, 'id'> | null;
+    recommendedBy04?: Pick<IEmployee, 'id'> | null;
+    recommendedBy05?: Pick<IEmployee, 'id'> | null;
+    nextApprovalFrom?: Pick<IEmployee, 'id'> | null;
+    rejectedBy?: Pick<IEmployee, 'id'> | null;
+    closedBy?: Pick<IEmployee, 'id'> | null;
+    updatedBy?: Pick<IUser, 'id'> | null;
+    createdBy?: Pick<IUser, 'id'> | null;*/
+
+  departmentName?: string;
+  departmentId?: number;
+  requestedById?: number;
+  requestedByFullName?: string;
+  requestedByPIN?: string;
+  requestedByOfficialContactNo?: string;
+  requestedByDesignationName?: string;
+  requestedByDepartmentName?: string;
+  recommendedBy01FullName?: string;
+  recommendedBy01Designation?: string;
+  recommendedBy01Department?: string;
+  recommendedBy01Id?: number;
+  recommendedBy02FullName?: string;
+  recommendedBy02Designation?: string;
+  recommendedBy02Department?: string;
+  recommendedBy02Id?: number;
+  recommendedBy03FullName?: string;
+  recommendedBy03Designation?: string;
+  recommendedBy03Department?: string;
+  recommendedBy03Id?: number;
+  recommendedBy04FullName?: string;
+  recommendedBy04Designation?: string;
+  recommendedBy04Department?: string;
+  recommendedBy04Id?: number;
+  recommendedBy05FullName?: string;
+  recommendedBy05Designation?: string;
+  recommendedBy05Department?: string;
+  recommendedBy05Id?: number;
+  nextApprovalFromFullName?: string;
+  nextApprovalFromId?: number;
+  rejectedByFullName?: string;
+  rejectedById?: number;
+  closedByFullName?: string;
+  closedById?: number;
+  updatedByLogin?: string;
+  updatedById?: number;
+  createdByLogin?: string;
+  createdById?: number;
+  procReqs?: IProcReq[];
+}
+
+export type NewProcReqMaster = Omit<IProcReqMaster, 'id'> & { id: null };

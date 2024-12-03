@@ -1,0 +1,22 @@
+<jhi-header
+  [midHeaderName01]="'Employee ID Cards'"
+  [midRouterLinkText01]="'/employee-static-file/id-card-list'"
+  [headerName]="'Upload ID Card'"
+  [shouldHaveHr]="false"
+>
+</jhi-header>
+
+<div class="custom-card">
+  <div class="d-flex justify-content-center align-items-center mt-2" [formGroup]="createFrom">
+    <div>
+      <div>
+        <label for="formFileMultiple" class="form-label">Re-Upload Image</label>
+        <input (change)="onChange($event)" class="form-control-file" type="file" id="formFileMultiple" accept="image/" />
+      </div>
+      <div class="mt-2">
+        <button type="button" class="btn btn-secondary" (click)="back()">Back</button>
+        <button type="button" class="btn btn-primary" (click)="onSubmit()">Upload</button>
+      </div>
+    </div>
+  </div>
+</div>

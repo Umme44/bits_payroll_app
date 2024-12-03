@@ -1,0 +1,195 @@
+{
+  "bitsHrPayrollApp": {
+    "dashboard": {
+      "home": "BRAC IT"
+    },
+    "movementEntry": {
+      "home": {
+        "title": "BRAC IT || Movement Entry Approvals"
+      }
+    },
+    "movementEntryUser": {
+      "home": {
+        "title": "BRAC IT || Movement Entry"
+      }
+    },
+    "movementEntryAdmin": {
+      "home": {
+        "title": "BRAC IT || Movement Entry Approvals Admin"
+      }
+    },
+    "bloodBank": {
+      "home": {
+        "title": "BRAC IT || Blood Group Info"
+      }
+    },
+    "ats": {
+      "home": {
+        "title": "BRAC IT || Attendance Time Sheet"
+      }
+    },
+    "manualAttendanceEntryApproval": {
+      "home": {
+        "title": "BRAC IT || Attendance Approvals"
+      }
+    },
+    "manualAttendanceEntryUpdate": {
+      "home": {
+        "title": "BRAC IT || Attendance Entry"
+      }
+    },
+    "manualAttendanceEntryApprovalAdmin": {
+      "home": {
+        "title": "BRAC IT || Attendance Approvals Admin"
+      }
+    },
+    "manualAttendanceEntryUpdateAdmin": {
+      "home": {
+        "title": "BRAC IT || Attendance Approvals Admin"
+      }
+    },
+    "workFromHome": {
+      "home": "BRAC IT || Work From Home Approvals"
+    },
+    "workFromHomeAdmin": {
+      "home": "BRAC IT || Work From Home Approvals Admin"
+    },
+    "addressBook": {
+      "home": "BRAC IT || Address Book"
+    },
+    "userLeaveApplication": {
+      "home": {
+        "title": "BRAC IT || Leave Application"
+      }
+    },
+    "leaveApplication": {
+      "home": {
+        "title": "BRAC IT || Leave Application"
+      }
+    },
+    "salaryCertificate": {
+      "home": {
+        "title": "BRAC IT || Salary Certificate"
+      }
+    },
+    "userSalaryCertificate": {
+      "home": {
+        "title": "BRAC IT || Salary Certificate"
+      }
+    },
+    "attendance": {
+      "home": "BRAC IT || Attendance"
+    },
+    "manualAttendance": {
+      "home": "BRAC IT || Attendance"
+    },
+    "attendanceTimeSheet": {
+      "home": "BRAC IT || Attendance Time Sheet"
+    },
+    "salaryLock": {
+      "home": {
+        "title": "BRAC IT || Salary Lock"
+      }
+    },
+    "salaryHold": {
+      "home": {
+        "title": "BRAC IT || Hold Salaries"
+      }
+    },
+    "leaveApprovals": {
+      "home": {
+        "title": "BRAC IT || Leave Approvals"
+      }
+    },
+    "attendanceApprovals": {
+      "home": "BRAC IT || Attendance Approvals"
+    },
+    "userFiles": {
+      "home": "BRAC IT || Docs"
+    },
+    "holidays": {
+      "home": {
+        "title": "BRAC IT || Holidays"
+      }
+    },
+    "holidayCalendar": {
+      "home": {
+        "title": "BRAC IT || Holiday Calendar"
+      }
+    },
+    "designations": {
+      "home": "BRAC IT || Designations"
+    },
+    "bands": {
+      "home": "BRAC IT || Bands"
+    },
+    "fileManagement": {
+      "home": "BRAC IT || File Management"
+    },
+    "userFileTemplates": {
+      "home": "BRAC IT || Files"
+    },
+    "incomeTaxConfig": {
+      "home": "BRAC IT || Income Tax Config"
+    },
+    "units": {
+      "home": "BRAC IT || Units"
+    },
+    "nationalities": {
+      "home": "BRAC IT || Nationalities"
+    },
+    "paySlip": {
+      "home": "BRAC IT || Payslip"
+    },
+    "userPfStatement": {
+      "home": "BRAC IT || Provident Fund Statement"
+    },
+    "flexScheduleApproval": {
+      "home": "BRAC IT || Flex Schedule"
+    },
+    "recruitmentRequisitionForm": {
+      "home": {
+        "title": "BRAC IT || Recruitment Requisition Form"
+      }
+    },
+    "recruitmentRequisitionFormApproval": {
+      "home": {
+        "title": "BRAC IT || Recruitment Requisition Form Approval"
+      }
+    },
+    "editProfile": {
+      "home": {
+        "title": "BRAC IT || Edit Profile"
+      }
+    },
+    "officeNotices": {
+      "home": {
+        "title": "BRAC IT || Office Notice",
+        "archive": "BRAC IT || Archive Notices"
+      }
+    },
+    "payslip": {
+      "home": {
+        "monthlySalaryPayslip": "BRAC IT || Pay Slip",
+        "festivalPayslip": "BRAC IT || Festival Bonus Pay slip",
+        "arrearPayslip": "BRAC IT || Arrear Pay slip"
+      }
+    }
+  },
+  "myNomineePage": {
+    "home": {
+      "title": "BRAC IT || My Nominee"
+    }
+  },
+  "procurementRequisition": {
+    "home": {
+      "title": "BRAC IT || Procurement Requisition",
+      "approval": "BRAC IT || Procurement Requisition Approval"
+    }
+  },
+  "itemInformation": {
+    "home": {
+      "title": "BRAC IT || Item Information"
+    }
+  }
+}

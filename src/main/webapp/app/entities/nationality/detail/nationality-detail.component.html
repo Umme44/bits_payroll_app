@@ -1,0 +1,22 @@
+<jhi-header [headerName]="'Nationality Details'" [shouldHaveHr]="false"> </jhi-header>
+
+<div>
+  <div *ngIf="nationality">
+    <jhi-alert-error></jhi-alert-error>
+
+    <div class="row my-3">
+      <div class="col-md-4"><span jhiTranslate="bitsHrPayrollApp.nationality.nationalityName">Nationality Name</span></div>
+      <div class="col-md-4">
+        <span>{{ nationality.nationalityName }}</span>
+      </div>
+    </div>
+
+    <button (click)="previousState()" class="btn btn-info" type="submit">
+      <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+    </button>
+
+    <button [routerLink]="['/nationality', nationality.id, 'edit']" class="btn btn-primary" type="button">
+      <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+    </button>
+  </div>
+</div>

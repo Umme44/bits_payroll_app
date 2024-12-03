@@ -1,0 +1,110 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-insurance-configuration-heading" jhiTranslate="bitsHrPayrollApp.insuranceConfiguration.home.createOrEditLabel">
+        Create or edit a Insurance Configuration
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="mb-3" [hidden]="!editForm.get('id')!.value">
+          <label for="id" jhiTranslate="global.field.id">ID</label>
+          <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-control-label"
+            jhiTranslate="bitsHrPayrollApp.insuranceConfiguration.maxTotalClaimLimitPerYear"
+            for="field_maxTotalClaimLimitPerYear"
+            >Max Total Claim Limit Per Year</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="maxTotalClaimLimitPerYear"
+            id="field_maxTotalClaimLimitPerYear"
+            formControlName="maxTotalClaimLimitPerYear"
+          />
+          <div
+            *ngIf="
+              editForm.get('maxTotalClaimLimitPerYear')!.invalid &&
+              (editForm.get('maxTotalClaimLimitPerYear')!.dirty || editForm.get('maxTotalClaimLimitPerYear')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('maxTotalClaimLimitPerYear')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('maxTotalClaimLimitPerYear')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-control-label"
+            jhiTranslate="bitsHrPayrollApp.insuranceConfiguration.maxAllowedChildAge"
+            for="field_maxAllowedChildAge"
+            >Max Allowed Child Age</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="maxAllowedChildAge"
+            id="field_maxAllowedChildAge"
+            formControlName="maxAllowedChildAge"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-control-label"
+            jhiTranslate="bitsHrPayrollApp.insuranceConfiguration.insuranceClaimLink"
+            for="field_insuranceClaimLink"
+            >Insurance Claim Link</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="insuranceClaimLink"
+            id="field_insuranceClaimLink"
+            formControlName="insuranceClaimLink"
+          />
+          <div
+            *ngIf="
+              editForm.get('insuranceClaimLink')!.invalid &&
+              (editForm.get('insuranceClaimLink')!.dirty || editForm.get('insuranceClaimLink')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('insuranceClaimLink')?.errors?.pattern"
+            >
+              This text is invalid
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

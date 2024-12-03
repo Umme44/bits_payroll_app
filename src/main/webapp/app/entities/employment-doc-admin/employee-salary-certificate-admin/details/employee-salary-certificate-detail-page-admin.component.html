@@ -1,0 +1,83 @@
+<jhi-header
+  [headerName]="'Salary Certificate Statement'"
+  [midHeaderName01]="'Employee Docs'"
+  [midRouterLinkText01]="'/employee-docs-admin'"
+>
+</jhi-header>
+
+<div class="row justify-content-center">
+  <div class="col-12 font-sm">
+    <div class="card card-body" *ngIf="salaryCertificate">
+      <jhi-alert-error></jhi-alert-error>
+
+      <dl class="row">
+        <dt class="col-md-3"><span>Purpose</span></dt>
+        <dd class="col-md-3">
+          <span>{{ salaryCertificate?.purpose }}</span>
+        </dd>
+
+        <dt class="col-md-3" *ngIf="salaryCertificate?.remarks"><span>Remarks</span></dt>
+        <dd class="col-md-3" *ngIf="salaryCertificate?.remarks">
+          <span>{{ salaryCertificate?.remarks }}</span>
+        </dd>
+
+        <dt class="col-md-3"><span>Status</span></dt>
+        <dd class="col-md-3">
+          <span>{{ salaryCertificate?.status }}</span>
+        </dd>
+
+        <dt class="col-md-3"><span>Created At</span></dt>
+        <dd class="col-md-3">
+          <span>{{ salaryCertificate?.createdAt | formatMediumDate }}</span>
+        </dd>
+
+        <dt class="col-md-3"><span>Updated At</span></dt>
+        <dd class="col-md-3">
+          <span>{{ salaryCertificate?.updatedAt | formatMediumDate }}</span>
+        </dd>
+
+        <dt class="col-md-3" *ngIf="salaryCertificate?.sanctionAt"><span>Sanction At</span></dt>
+        <dd class="col-md-3" *ngIf="salaryCertificate?.sanctionAt">
+          <span>{{ salaryCertificate?.sanctionAt | formatMediumDate }}</span>
+        </dd>
+        <dt class="col-md-3"><span>Month</span></dt>
+        <dd class="col-md-3">
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.Month.' + salaryCertificate?.month }}">{{ salaryCertificate?.month }}</span>
+        </dd>
+        <dt class="col-md-3"><span>Year</span></dt>
+        <dd class="col-md-3">
+          <span>{{ salaryCertificate?.year }}</span>
+        </dd>
+        <dt class="col-md-3"><span>Created By</span></dt>
+        <dd class="col-md-3">
+          <span>{{ salaryCertificate?.createdByLogin }}</span>
+        </dd>
+        <dt class="col-md-3"><span>Employee</span></dt>
+        <dd class="col-md-3">
+          <div *ngIf="salaryCertificate?.employeeId">
+            {{ salaryCertificate?.employeeName }}
+          </div>
+        </dd>
+        <dt *ngIf="salaryCertificate?.status === 'APPROVED'" class="col-md-3"><span>Signatory Person</span></dt>
+        <dd *ngIf="salaryCertificate?.status === 'APPROVED'" class="col-md-3">
+          <div *ngIf="salaryCertificate?.signatoryPersonId">
+            {{ salaryCertificate?.signatoryPersonName }}
+          </div>
+        </dd>
+
+        <dt *ngIf="salaryCertificate?.status === 'APPROVED'" class="col-md-3"><span>Reference Number</span></dt>
+        <dd *ngIf="salaryCertificate?.status === 'APPROVED'" class="col-md-3">
+          <div *ngIf="salaryCertificate?.referenceNumber">
+            {{ salaryCertificate?.referenceNumber }}
+          </div>
+        </dd>
+      </dl>
+
+      <div>
+        <button type="submit" (click)="previousState()" class="btn btn-info">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

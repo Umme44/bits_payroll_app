@@ -1,0 +1,30 @@
+{
+  "changelogDate": "20210522001349",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "festival_bonus_config",
+  "fields": [
+    {
+      "fieldName": "employeeCategory",
+      "fieldType": "EmployeeCategory",
+      "fieldValidateRules": ["required", "unique"],
+      "fieldValues": "REGULAR_CONFIRMED_EMPLOYEE,REGULAR_PROVISIONAL_EMPLOYEE,CONTRACTUAL_EMPLOYEE,INTERN,CONSULTANTS,PART_TIME"
+    },
+    {
+      "fieldName": "percentageFromGross",
+      "fieldType": "Double",
+      "fieldValidateRules": ["required", "min", "max"],
+      "fieldValidateRulesMax": "5000",
+      "fieldValidateRulesMin": "0"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "FestivalBonusConfig",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

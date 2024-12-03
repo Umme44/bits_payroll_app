@@ -1,0 +1,180 @@
+<div class="d-flex justify-content-center">
+  <div class="col-12">
+    <div *ngIf="employeeResignation">
+      <jhi-header
+        [headerName]="'Employee Resignation Details'"
+        [midHeaderName01]="'Separations'"
+        [midRouterLinkText01]="'/employee-resignation'"
+        [shouldHaveHr]="false"
+      >
+      </jhi-header>
+      <!--   <h2 data-cy="employeeResignationDetailsHeading">
+        <span jhiTranslate="bitsHrPayrollApp.employeeResignation.detail.title">Employee Resignation</span>
+      </h2>
+
+      <hr />-->
+      <jhi-alert-error></jhi-alert-error>
+      <jhi-alert></jhi-alert>
+
+      <div class="card card-body fw-sm">
+        <div class="row pt-2">
+          <div class="col-md-3 fw-bold">
+            <dt><span jhiTranslate="bitsHrPayrollApp.employeeResignation.employee">Employee</span></dt>
+          </div>
+          <div class="col-md-3">
+            <dd>
+              <!--<div *ngIf="employeeResignation.name">
+                <a [routerLink]="['/employee', employeeResignation.employee.id, 'view']">{{ employeeResignation.name }}</a>
+              </div>-->
+              <div *ngIf="employeeResignation.employeeId">
+                <a [routerLink]="['/employee', employeeResignation.employeeId, 'view']">{{ employeeResignation.name }}</a>
+              </div>
+            </dd>
+          </div>
+        </div>
+
+        <div class="row pt-2">
+          <div class="col-md-3 fw-bold">
+            <dt><span jhiTranslate="bitsHrPayrollApp.employeeResignation.resignationDate">Resignation Date</span></dt>
+          </div>
+          <div class="col-md-3">
+            <dd>
+              <span>{{ employeeResignation.resignationDate | formatMediumDate }}</span>
+            </dd>
+          </div>
+          <div class="col-md-3 fw-bold">
+            <dt><span jhiTranslate="bitsHrPayrollApp.employeeResignation.approvalStatus">Approval Status</span></dt>
+          </div>
+          <div class="col-md-3">
+            <dd>
+              <span jhiTranslate="{{ 'bitsHrPayrollApp.Status.' + employeeResignation.approvalStatus }}">
+                {{ employeeResignation.approvalStatus }}
+              </span>
+            </dd>
+          </div>
+        </div>
+
+        <div class="row pt-2">
+          <div class="col-md-3 fw-bold">
+            <dt><span jhiTranslate="bitsHrPayrollApp.employeeResignation.lastWorkingDay">Last Working Day</span></dt>
+          </div>
+          <div class="col-md-3">
+            <dd>
+              <span>{{ employeeResignation.lastWorkingDay | formatMediumDate }}</span>
+            </dd>
+          </div>
+        </div>
+
+        <div class="row pt-2">
+          <div class="col-md-3 fw-bold">
+            <dt><span jhiTranslate="bitsHrPayrollApp.employeeResignation.isSalaryHold">Is Salary Hold</span></dt>
+          </div>
+          <div class="col-md-3">
+            <dd>
+              <span>{{ employeeResignation.isSalaryHold }}</span>
+            </dd>
+          </div>
+          <div class="col-md-3 fw-bold">
+            <dt><span jhiTranslate="bitsHrPayrollApp.employeeResignation.isFestivalBonusHold">Is Festival Bonus Hold</span></dt>
+          </div>
+          <div class="col-md-3">
+            <dd>
+              <span>{{ employeeResignation.isFestivalBonusHold }}</span>
+            </dd>
+          </div>
+        </div>
+
+        <div class="row pt-2">
+          <div class="col-md-3 fw-bold">
+            <dt><span jhiTranslate="bitsHrPayrollApp.employeeResignation.approvalComment">Approval Comment</span></dt>
+          </div>
+          <div class="col-md-9">
+            <dd>
+              <span>{{ employeeResignation.approvalComment }}</span>
+            </dd>
+          </div>
+        </div>
+
+        <div class="row pt-2">
+          <div class="col-md-3 fw-bold">
+            <dt><span jhiTranslate="bitsHrPayrollApp.employeeResignation.resignationReason">Resignation Reason</span></dt>
+          </div>
+          <div class="col-md-9">
+            <dd>
+              <span>{{ employeeResignation.resignationReason }}</span>
+            </dd>
+          </div>
+        </div>
+
+        <div class="row pt-2">
+          <div class="col-md-3 fw-bold">
+            <dt><span jhiTranslate="bitsHrPayrollApp.employeeResignation.createdBy">Created By</span></dt>
+          </div>
+          <div class="col-md-3 fw-bold">
+            <dd>
+              <div *ngIf="employeeResignation.createdById">
+                <a [routerLink]="['/employee', employeeResignation.createdById, 'view']">{{ employeeResignation.createdById }}</a>
+              </div>
+            </dd>
+          </div>
+          <div class="col-md-3 fw-bold">
+            <dt><span jhiTranslate="bitsHrPayrollApp.employeeResignation.createdAt">Created At</span></dt>
+          </div>
+          <div class="col-md-3">
+            <dd>
+              <span>{{ employeeResignation.createdAt | formatMediumDate }}</span>
+            </dd>
+          </div>
+        </div>
+
+        <div class="row pt-2">
+          <div class="col-md-3 fw-bold">
+            <dt><span jhiTranslate="bitsHrPayrollApp.employeeResignation.uodatedBy">Uodated By</span></dt>
+          </div>
+          <div class="col-md-3">
+            <dd>
+              <div *ngIf="employeeResignation.uodatedById">
+                <a [routerLink]="['/employee', employeeResignation.uodatedById, 'view']">{{ employeeResignation.uodatedById }}</a>
+              </div>
+            </dd>
+          </div>
+          <div class="col-md-3 fw-bold">
+            <dt><span jhiTranslate="bitsHrPayrollApp.employeeResignation.updatedAt">Updated At</span></dt>
+          </div>
+          <div class="col-md-3">
+            <dd>
+              <span>{{ employeeResignation.updatedAt | formatMediumDate }}</span>
+            </dd>
+          </div>
+        </div>
+
+        <div class="row pt-2">
+          <div class="col-md-12">
+            <button
+              *ngIf="employeeResignation.approvalStatus === 'PENDING'"
+              [routerLink]="['/employee-resignation', employeeResignation.id, 'edit']"
+              class="btn btn-primary"
+              type="button"
+            >
+              <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ employeeResignation.id }}</span>
+        </dd>
+      </dl>-->
+      <!-- <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/employee-resignation', employeeResignation.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>-->
+    </div>
+  </div>
+</div>

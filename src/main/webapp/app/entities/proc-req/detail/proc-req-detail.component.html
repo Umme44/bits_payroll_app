@@ -1,0 +1,150 @@
+<jhi-header
+  headerName="Procurement Requisition Details"
+  midHeaderName01="Procurement Requisitions"
+  midRouterLinkText01="/procurement-requisition-user"
+>
+</jhi-header>
+
+<div *ngIf="procReqMaster">
+  <jhi-alert-error></jhi-alert-error>
+
+  <!--    Master Details-->
+
+  <div class="card card-body mb-2">
+    <dl class="row details font-sm mb-0">
+      <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.procReqMaster.requisitionNo">Requisition No</span></dt>
+      <dd class="col-md-3">
+        <span>{{ procReqMaster.requisitionNo }}</span>
+      </dd>
+      <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.procReqMaster.requestedDate">Requested Date</span></dt>
+      <dd class="col-md-3">
+        <span>{{ procReqMaster.requestedDate | formatMediumDate }}</span>
+      </dd>
+      <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.procReqMaster.requisitionStatus">Requisition Status</span></dt>
+      <dd class="col-md-3">
+        <span jhiTranslate="{{ 'bitsHrPayrollApp.RequisitionStatus.' + procReqMaster.requisitionStatus }}">{{
+          procReqMaster.requisitionStatus
+        }}</span>
+      </dd>
+
+      <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.procReqMaster.department">Department</span></dt>
+      <dd class="col-md-3">
+        {{ procReqMaster.departmentName }}
+      </dd>
+    </dl>
+
+    <dl class="row font-sm details">
+      <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.procReqMaster.reasoning">Reasoning</span></dt>
+      <dd class="col-md-9">
+        {{ procReqMaster.reasoning }}
+      </dd>
+    </dl>
+  </div>
+
+  <!--    Items List-->
+
+  <h6 class="mt-3 mb-1">Items List</h6>
+
+  <div class="table-responsive" id="entities" *ngIf="procReqMaster.procReqs && procReqMaster.procReqs.length > 0">
+    <table class="table table-hover list-text-color" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.procReq.itemInformation">Item Information</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.procReq.quantity">Quantity</span></th>
+          <th scope="col"><span>Reference File</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let procReq of procReqMaster.procReqs">
+          <td>{{ procReq.itemInformationName }}</td>
+          <td>{{ procReq.quantity }} {{ procReq.unitOfMeasurementName }}</td>
+          <td>
+            <div *ngIf="procReq.referenceFilePath; else noFile">
+              <button type="button" class="btn btn-sm btn-outline-success border-radius-minimal" (click)="downloadFile(procReq.id!)">
+                <fa-icon icon="download" container="body" ngbTooltip="Download"></fa-icon>
+              </button>
+            </div>
+            <ng-template #noFile>-</ng-template>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card card-body my-3">
+    <h6>Approval Flow</h6>
+
+    <div class="row font-sm">
+      <div class="col-2">
+        <strong>{{ procReqMaster.recommendedBy01FullName }}</strong
+        ><br />
+        {{ procReqMaster.recommendedBy01Designation }} <br />
+        {{ procReqMaster.recommendedBy01Department }}
+      </div>
+
+      <div class="col-1 align-self-center">
+        <fa-icon icon="arrow-left"></fa-icon>
+      </div>
+
+      <div class="col-2" *ngIf="procReqMaster.isCTOApprovalRequired">
+        <strong> {{ procReqMaster.recommendedBy02FullName }} </strong><br />
+        {{ procReqMaster.recommendedBy03Designation }} <br />
+        {{ procReqMaster.recommendedBy01Department }}
+      </div>
+
+      <div class="col-1 align-self-center" *ngIf="procReqMaster.isCTOApprovalRequired">
+        <fa-icon icon="arrow-left"></fa-icon>
+      </div>
+
+      <div class="col-2">
+        <strong> {{ procReqMaster.recommendedBy03FullName }} </strong> <br />
+        {{ procReqMaster.recommendedBy03Designation }} <br />
+        {{ procReqMaster.recommendedBy03Department }}
+      </div>
+
+      <div class="col-1 align-self-center">
+        <fa-icon icon="arrow-left"></fa-icon>
+      </div>
+
+      <ng-container *ngIf="!procReqMaster.isCTOApprovalRequired">
+        <div class="col-2">
+          <strong> {{ procReqMaster.recommendedBy04FullName }} </strong> <br />
+          {{ procReqMaster.recommendedBy04Designation }} <br />
+          {{ procReqMaster.recommendedBy04Department }}
+        </div>
+
+        <div class="col-1 align-self-center">
+          <fa-icon icon="arrow-left"></fa-icon>
+        </div>
+
+        <div class="col-2">
+          <strong> {{ procReqMaster.recommendedBy05FullName }} </strong> <br />
+          {{ procReqMaster.recommendedBy05Designation }} <br />
+          {{ procReqMaster.recommendedBy05Department }}
+        </div>
+      </ng-container>
+    </div>
+
+    <div class="row font-sm mt-3" *ngIf="procReqMaster.isCTOApprovalRequired">
+      <div class="col-2">
+        <strong> {{ procReqMaster.recommendedBy04FullName }} </strong> <br />
+        {{ procReqMaster.recommendedBy04Designation }} <br />
+        {{ procReqMaster.recommendedBy04Department }}
+      </div>
+
+      <div class="col-1 align-self-center">
+        <fa-icon icon="arrow-left"></fa-icon>
+      </div>
+
+      <div class="col-2">
+        <strong> {{ procReqMaster.recommendedBy05FullName }} </strong> <br />
+        {{ procReqMaster.recommendedBy05Designation }} <br />
+        {{ procReqMaster.recommendedBy05Department }}
+      </div>
+    </div>
+  </div>
+
+  <div id="timeline">
+    <jhi-vertical-timeline [timelineList]="timelineList"></jhi-vertical-timeline>
+  </div>
+</div>

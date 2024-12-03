@@ -1,0 +1,59 @@
+{
+  "applications": "*",
+  "changelogDate": "20210217111813",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "attendance_summary",
+  "fields": [
+    {
+      "fieldName": "month",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "year",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "totalWorkingDays",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "totalLeaveDays",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "totalAbsentDays",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "totalFractionDays",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "attendanceRegularisationStartDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "attendanceRegularisationEndDate",
+      "fieldType": "LocalDate"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "AttendanceSummary",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "pin",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "attendanceSummary",
+      "relationshipName": "employee",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

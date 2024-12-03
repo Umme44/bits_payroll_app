@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="en">
+<head>
+    <!--    cc: hr + line manager-->
+    <title> Rejection of an Application for Flex Schedule </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="icon" th:href="@{|${baseUrl}/favicon.ico|}"/>
+</head>
+<body>
+<span>
+    Dear [[${name}]],
+</span>
+<p>
+    Your application for a flexible schedule has been rejected.
+    Please follow the regular office hour accordingly.
+    For further queries, kindly reach out to your Line Manager.
+</p>
+</body>
+
+<footer>
+    <h4 style="text-align: center">This is system generated email. Please do not reply.</h4>
+</footer>
+</html>
+

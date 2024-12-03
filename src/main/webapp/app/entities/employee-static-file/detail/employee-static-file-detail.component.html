@@ -1,0 +1,40 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="employeeStaticFile">
+      <h2 data-cy="employeeStaticFileDetailsHeading">
+        <span jhiTranslate="bitsHrPayrollApp.employeeStaticFile.detail.title">Employee Static File</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ employeeStaticFile.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employeeStaticFile.filePath">File Path</span></dt>
+        <dd>
+          <span>{{ employeeStaticFile.filePath }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.employeeStaticFile.employee">Employee</span></dt>
+        <dd>
+          <div *ngIf="employeeStaticFile.employee">
+            <a [routerLink]="['/employee', employeeStaticFile.employee.id, 'view']">{{ employeeStaticFile.employee.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/employee-static-file', employeeStaticFile.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

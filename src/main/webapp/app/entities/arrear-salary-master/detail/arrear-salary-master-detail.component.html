@@ -1,0 +1,42 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="arrearSalaryMaster">
+      <h2 data-cy="arrearSalaryMasterDetailsHeading">
+        <span jhiTranslate="bitsHrPayrollApp.arrearSalaryMaster.detail.title">Arrear Salary Master</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ arrearSalaryMaster.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.arrearSalaryMaster.title">Title</span></dt>
+        <dd>
+          <span>{{ arrearSalaryMaster.title }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.arrearSalaryMaster.isLocked">Is Locked</span></dt>
+        <dd>
+          <span>{{ arrearSalaryMaster.isLocked }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.arrearSalaryMaster.isDeleted">Is Deleted</span></dt>
+        <dd>
+          <span>{{ arrearSalaryMaster.isDeleted }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/arrear-salary-master', arrearSalaryMaster.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

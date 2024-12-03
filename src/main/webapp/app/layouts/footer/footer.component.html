@@ -1,0 +1,26 @@
+<footer class="row m-0 px-2" *ngIf="organization">
+  <div class="footer-copyright text-start w-50">
+    <span class="vertical-align-sub">
+      ©
+      <a href="http://www.bracits.com" class="footer-link" target="_blank">
+        <!--<span class="logo-img"></span>-->
+        BRAC IT </a
+      >| {{ copyWriteYear }}
+    </span>
+  </div>
+
+  <div class="social-icon d-inline-block text-end w-50">
+    <a class="text-decoration-none" target="_blank" [href]="organization.linkedin">
+      <img src="../../../content/icons/linkedin-brands.svg" />
+    </a>
+    <a class="text-decoration-none" target="_blank" [href]="organization.facebook">
+      <img src="../../../content/icons/facebook-brands.svg" />
+    </a>
+    <a class="text-decoration-none" target="_blank" [href]="organization.youtube">
+      <img src="../../../content/icons/youtube-brands.svg" />
+    </a>
+    <a class="text-decoration-none" target="_blank" [href]="organization.instagram">
+      <img src="../../../content/icons/instagram-brands.svg" />
+    </a>
+  </div>
+</footer>

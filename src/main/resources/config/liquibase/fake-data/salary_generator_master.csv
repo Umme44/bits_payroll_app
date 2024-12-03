@@ -1,0 +1,11 @@
+id;year;month;is_generated;is_mobile_bill_imported;is_pf_loan_repayment_imported;is_attendance_imported;is_salary_deduction_imported;is_finalized;visibility
+1;Developer access;Small Investment Bedfordshire;false;true;true;false;true;false;VISIBLE_TO_EMPLOYEE
+2;intelligence;Avon payment;true;false;false;true;true;true;VISIBLE_TO_EMPLOYEE
+3;Towels;payment;false;false;false;true;true;true;VISIBLE_TO_EMPLOYEE
+4;1080p Plastic;tan;false;false;false;false;false;false;PARTIALLY_VISIBLE
+5;Movies alarm compressing;Tactics Zloty;true;false;false;true;true;false;NOT_VISIBLE_TO_EMPLOYEE
+6;Checking;Toys;true;false;false;false;true;true;NOT_VISIBLE_TO_EMPLOYEE
+7;Bike Planner Refined;New;true;true;false;false;true;false;VISIBLE_TO_EMPLOYEE
+8;Nevada;Multi-channelled Principal Customer;false;false;false;true;false;false;VISIBLE_TO_EMPLOYEE
+9;24/365;Soft Intelligent;false;true;true;true;true;false;PARTIALLY_VISIBLE
+10;Bike Persevering;Developer;false;true;false;true;true;false;PARTIALLY_VISIBLE

@@ -1,0 +1,55 @@
+<div class="modal-header border-none">
+  <h4 class="modal-title"></h4>
+  <button
+    type="button"
+    class="btn-close py-1 outline-none"
+    data-dismiss="modal"
+    aria-hidden="true"
+    (click)="commonService.dismiss()"
+  ></button>
+</div>
+
+<div class="modal-body dashboard-modal">
+  <div class="container">
+    <div class="dashboard row">
+      <div
+        class="card p-1 btn color-ash col mx-1 mt-0 mb-1 border-none box-shadow"
+        [ngClass]="isEmployeeValidForGeneralNominee ? 'col-active' : 'disabled'"
+        (click)="navigateToGeneralNominee('/nominee/general-form')"
+      >
+        <img class="svg-image-size-mid mx-auto dashboard-svg-icon" src="../../../content/images/svg/general-nominee.svg" />
+
+        <div class="card-body pt-0 pb-2 px-0">
+          <div class="card-title text-center mb-0 font-sm">General Nominee</div>
+        </div>
+      </div>
+
+      <div
+        class="card p-1 btn color-ash col mx-1 mt-0 mb-1 border-none box-shadow"
+        [ngClass]="isEmployeeValidForGF ? 'col-active' : 'disabled'"
+        (click)="navigateToGfNominee('/nominee/gf-form')"
+      >
+        <img class="svg-image-size-mid mx-auto dashboard-svg-icon" src="../../../content/images/svg/gf-nominee.svg" />
+
+        <div class="card-body pt-0 pb-2 px-0">
+          <div class="card-title text-center mb-0 font-sm">GF Nominee</div>
+        </div>
+      </div>
+
+      <div
+        class="card p-1 btn color-ash col mx-1 mt-0 mb-1 border-none box-shadow"
+        [ngClass]="isEmployeeValidForPF ? 'col-active' : 'disabled'"
+        (click)="navigateToPfNominee('/provident-fund-nominee-form')"
+      >
+        <img class="svg-image-size-mid mx-auto dashboard-svg-icon" src="../../../content/images/svg/pf-nominee.svg" />
+
+        <div class="card-body pt-0 pb-2 px-0">
+          <div class="card-title text-center mb-0 font-sm">PF Nominee</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer p-3 border-none">
+  <!--<button type="button" class="btn btn-sm btn-outline-dark" (click)="commonService.close()">Close</button>-->
+</div>

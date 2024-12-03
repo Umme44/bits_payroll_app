@@ -1,0 +1,16 @@
+{
+  "bitsHrPayrollApp": {
+    "LeaveType": {
+      "null": "",
+      "MENTIONABLE_ANNUAL_LEAVE": "Annual",
+      "MENTIONABLE_CASUAL_LEAVE": "Casual",
+      "NON_MENTIONABLE_COMPENSATORY_LEAVE": "Compensatory",
+      "NON_MENTIONABLE_PANDEMIC_LEAVE": "Pandemic",
+      "NON_MENTIONABLE_PATERNITY_LEAVE": "Paternity",
+      "NON_MENTIONABLE_MATERNITY_LEAVE": "Maternity",
+      "LEAVE_WITHOUT_PAY": "Leave without pay",
+      "LEAVE_WITHOUT_PAY_SANDWICH": "Leave without pay (Sandwich)",
+      "OTHER": "Other"
+    }
+  }
+}

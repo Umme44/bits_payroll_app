@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="en">
+<head>
+<!--    todo: fix template -->
+    <title> PF Loan Repayment </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="icon" th:href="@{|${baseUrl}/favicon.ico|}"/>
+</head>
+
+<body>
+
+<span>
+    Dear [[${name}]],
+</span>
+
+<p>
+    Please be informed that, your PF loan of BDT <b> [[${amount}]]</b>
+    has been disbursed into your respective Bank Account today.
+
+    Looking forward for your acknowledgment.
+</p>
+
+</body>
+
+<footer>
+    <h4 style="text-align: center">This is system generated email. Please do not reply.</h4>
+</footer>
+</html>

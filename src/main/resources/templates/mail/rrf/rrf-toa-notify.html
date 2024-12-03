@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="en">
+<head>
+    <title> Recruitment Requisition Approval</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="icon" th:href="@{|${baseUrl}/favicon.ico|}"/>
+    <style th:insert="fragments/_common_head.html :: approval_btn"></style>
+    <style th:insert="fragments/_common_head.html :: beautify_css"></style>
+</head>
+
+<body>
+<span>
+    Dear [[${name}]],
+</span>
+<p>
+    Please be informed that, [[${employeeName}]], [[${designation}]]
+    raised a RRF (<b> [[${rrfNumber}]] </b>).
+
+    In this regard, requesting for your decision to close the application. <br/>
+
+    <div class="approval-link">
+        <a th:href="@{${actionLink}}" class="button-59">Approval</a> <br/>
+    </div>
+
+</p>
+</body>
+
+<footer>
+    <p style="text-align: center">This is a system generated email. Please do not reply.</p>
+</footer>
+</html>

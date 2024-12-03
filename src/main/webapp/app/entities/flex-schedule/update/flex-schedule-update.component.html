@@ -1,0 +1,178 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-flex-schedule-heading"
+        data-cy="FlexScheduleCreateUpdateHeading"
+        jhiTranslate="bitsHrPayrollApp.flexSchedule.home.createOrEditLabel"
+      >
+        Create or edit a Flex Schedule
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.flexSchedule.effectiveDate" for="field_effectiveDate"
+            >Effective Date</label
+          >
+          <div class="input-group">
+            <input
+              id="field_effectiveDate"
+              data-cy="effectiveDate"
+              type="text"
+              class="form-control"
+              name="effectiveDate"
+              ngbDatepicker
+              #effectiveDateDp="ngbDatepicker"
+              formControlName="effectiveDate"
+            />
+            <button type="button" class="btn btn-secondary" (click)="effectiveDateDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+          <div
+            *ngIf="
+              editForm.get('effectiveDate')!.invalid && (editForm.get('effectiveDate')!.dirty || editForm.get('effectiveDate')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('effectiveDate')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.flexSchedule.inTime" for="field_inTime">In Time</label>
+          <div class="d-flex">
+            <input
+              id="field_inTime"
+              data-cy="inTime"
+              type="datetime-local"
+              class="form-control"
+              name="inTime"
+              formControlName="inTime"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          <div *ngIf="editForm.get('inTime')!.invalid && (editForm.get('inTime')!.dirty || editForm.get('inTime')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('inTime')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('inTime')?.errors?.datetimelocal"
+              jhiTranslate="entity.validation.datetimelocal"
+            >
+              This field should be a date and time.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.flexSchedule.outTime" for="field_outTime">Out Time</label>
+          <div class="d-flex">
+            <input
+              id="field_outTime"
+              data-cy="outTime"
+              type="datetime-local"
+              class="form-control"
+              name="outTime"
+              formControlName="outTime"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          <div *ngIf="editForm.get('outTime')!.invalid && (editForm.get('outTime')!.dirty || editForm.get('outTime')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('outTime')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('outTime')?.errors?.datetimelocal"
+              jhiTranslate="entity.validation.datetimelocal"
+            >
+              This field should be a date and time.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.flexSchedule.employee" for="field_employee">Employee</label>
+          <select
+            class="form-control"
+            id="field_employee"
+            data-cy="employee"
+            name="employee"
+            formControlName="employee"
+            [compareWith]="compareEmployee"
+          >
+            <option *ngIf="!editForm.get('employee')!.value" [ngValue]="null" selected></option>
+            <option [ngValue]="employeeOption" *ngFor="let employeeOption of employeesSharedCollection">{{ employeeOption.id }}</option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['employee'])!.invalid && (editForm.get(['employee'])!.dirty || editForm.get(['employee'])!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['employee'])?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.flexSchedule.createdBy" for="field_createdBy">Created By</label>
+          <select
+            class="form-control"
+            id="field_createdBy"
+            data-cy="createdBy"
+            name="createdBy"
+            formControlName="createdBy"
+            [compareWith]="compareUser"
+          >
+            <option *ngIf="!editForm.get('createdBy')!.value" [ngValue]="null" selected></option>
+            <option [ngValue]="userOption" *ngFor="let userOption of usersSharedCollection">{{ userOption.login }}</option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['createdBy'])!.invalid && (editForm.get(['createdBy'])!.dirty || editForm.get(['createdBy'])!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['createdBy'])?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

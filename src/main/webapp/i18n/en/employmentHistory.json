@@ -1,0 +1,44 @@
+{
+  "bitsHrPayrollApp": {
+    "employmentHistory": {
+      "home": {
+        "title": "Employment Histories",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Employment History",
+        "createOrEditLabel": "Create or edit a Employment History",
+        "notFound": "No Employment Histories found",
+        "titleTransfer": "Transfer"
+      },
+      "created": "A new Employment History is created with identifier {{ param }}",
+      "updated": "A Employment History is updated with identifier {{ param }}",
+      "deleted": "A Employment History is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Employment History {{ id }}?"
+      },
+      "detail": {
+        "title": "Employment History"
+      },
+      "id": "ID",
+      "referenceId": "Reference Id",
+      "pin": "Pin",
+      "eventType": "Event Type",
+      "effectiveDate": "Effective Date",
+      "previousMainGrossSalary": "Previous Main Gross Salary",
+      "currentMainGrossSalary": "Current Main Gross Salary",
+      "previousWorkingHour": "Previous Working Hour",
+      "changedWorkingHour": "Changed Working Hour",
+      "isModifiable": "Is Modifiable",
+      "previousDesignation": "Previous Designation",
+      "changedDesignation": "Changed Designation",
+      "previousDepartment": "Previous Department",
+      "changedDepartment": "Changed Department",
+      "previousReportingTo": "Previous Reporting To",
+      "changedReportingTo": "Changed Reporting To",
+      "employee": "Employee",
+      "previousUnit": "Previous Unit",
+      "changedUnit": "Changed Unit",
+      "previousBand": "Previous Band",
+      "changedBand": "Changed Band"
+    }
+  }
+}

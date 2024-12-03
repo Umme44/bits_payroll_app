@@ -1,0 +1,33 @@
+<div>
+  <jhi-header
+    [headerName]="'Designation Details'"
+    [midHeaderName01]="'Designation'"
+    [midRouterLinkText01]="'/designation'"
+    [shouldHaveHr]="false"
+  >
+  </jhi-header>
+
+  <div *ngIf="designation">
+    <jhi-alert-error></jhi-alert-error>
+    <jhi-alert></jhi-alert>
+
+    <div class="rom mb-2">
+      <div class="col-md-4">
+        <ul class="list-group">
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <span jhiTranslate="bitsHrPayrollApp.designation.designationName">Designation Name</span>
+            <span class="badge bg-primary">{{ designation.designationName }}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+      <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+    </button>
+
+    <button type="button" [routerLink]="['/designation', designation.id, 'edit']" class="btn btn-primary">
+      <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+    </button>
+  </div>
+</div>

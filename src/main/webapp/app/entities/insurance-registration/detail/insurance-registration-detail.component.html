@@ -1,0 +1,77 @@
+<jhi-header
+  [headerName]="'Registration Detail'"
+  [midHeaderName01]="'Insurance Registration'"
+  [midRouterLinkText01]="'/insurance-registration'"
+>
+</jhi-header>
+
+<div class="row justify-content-center">
+  <div class="col-12">
+    <jhi-alert-error></jhi-alert-error>
+
+    <div *ngIf="insuranceRegistration" class="card card-body mb-4">
+      <dl class="row font-sm mb-0">
+        <dt class="col-md-3"><span>Policy Holder PIN</span></dt>
+        <dd class="col-md-3">
+          <span>{{ insuranceRegistration.employeePin }}</span>
+        </dd>
+
+        <dt class="col-md-3"><span>Policy Holder Name</span></dt>
+        <dd class="col-md-3">
+          <span>{{ insuranceRegistration.employeeName }}</span>
+        </dd>
+
+        <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.insuranceRegistration.name">Name</span></dt>
+        <dd class="col-md-3">
+          <span>{{ insuranceRegistration.name }}</span>
+        </dd>
+
+        <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.insuranceRegistration.insuranceRelation">Relation</span></dt>
+        <dd class="col-md-3">
+          <span>{{ getInsuranceRelation(insuranceRegistration.insuranceRelation!) }}</span>
+        </dd>
+
+        <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.insuranceRegistration.dateOfBirth">Date Of Birth</span></dt>
+        <dd class="col-md-3">
+          <span>{{ insuranceRegistration.dateOfBirth | formatMediumDate }}</span>
+        </dd>
+
+        <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.insuranceRegistration.insuranceStatus">Status</span></dt>
+        <dd class="col-md-3">
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.InsuranceStatus.' + insuranceRegistration.insuranceStatus }}">{{
+            insuranceRegistration.insuranceStatus
+          }}</span>
+        </dd>
+
+        <dt *ngIf="insuranceRegistration.insuranceStatus === 'APPROVED'" class="col-md-3">
+          <span jhiTranslate="bitsHrPayrollApp.insuranceRegistration.insuranceId">Insurance Id</span>
+        </dt>
+        <dd *ngIf="insuranceRegistration.insuranceStatus === 'APPROVED'" class="col-md-3">
+          <span>{{ insuranceRegistration.insuranceId }}</span>
+        </dd>
+
+        <dt
+          *ngIf="insuranceRegistration.insuranceStatus === 'NOT_APPROVED' || insuranceRegistration.insuranceStatus === 'CANCELED'"
+          class="col-md-3"
+        >
+          <span jhiTranslate="bitsHrPayrollApp.insuranceRegistration.unapprovalReason">Reason</span>
+        </dt>
+        <dd
+          *ngIf="insuranceRegistration.insuranceStatus === 'NOT_APPROVED' || insuranceRegistration.insuranceStatus === 'CANCELED'"
+          class="col-md-3"
+        >
+          <span>{{ insuranceRegistration.unapprovalReason }}</span>
+        </dd>
+      </dl>
+    </div>
+    <button type="submit" (click)="previousState()" class="btn btn-info">
+      <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+    </button>
+
+    <!--        <button type="button"-->
+    <!--                [routerLink]="['/insurance-registration', insuranceRegistration!.id!, 'edit']"-->
+    <!--                class="btn btn-primary">-->
+    <!--            <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>-->
+    <!--        </button>-->
+  </div>
+</div>

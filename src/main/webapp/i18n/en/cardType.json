@@ -1,0 +1,10 @@
+{
+  "bitsHrPayrollApp": {
+    "CardType": {
+      "null": "",
+      "DEBIT_CARD": "DEBIT CARD",
+      "CREDIT_CARD": "CREDIT CARD",
+      "PREPAID_CARD": "PREPAID CARD"
+    }
+  }
+}

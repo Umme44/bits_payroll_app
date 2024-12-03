@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="en">
+<head>
+    <!--    done    -->
+    <title> Nominee Update </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="icon" th:href="@{|${baseUrl}/favicon.ico|}"/>
+</head>
+<body>
+<span>
+    Dear HR,
+</span>
+<p>
+    [[${employeeName}]], PIN: [[${pin}]] has updated his [[${nomineeType}]] nominee information on [[${date}]].
+</p>
+</body>
+
+<footer>
+    <h4 style="text-align: center">This is a system generated email. Please do not reply.</h4>
+</footer>
+</html>

@@ -1,0 +1,55 @@
+<div class="modal-header border-0">
+    <h6 class="modal-title">Tax Acknowledgement Information</h6>
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+            (click)="closeModal()">&times;
+    </button>
+</div>
+<div class="modal-body board-0">
+
+
+    <table *ngIf="taxAcknowledgementReceipt" class="table table-borderless border-none">
+
+        <tr>
+
+            <th class="text-nowrap">PIN</th>
+            <td class="text-nowrap">: {{taxAcknowledgementReceipt.pin}}</td>
+
+            <th class="text-nowrap">Name</th>
+            <td class="text-nowrap">: {{taxAcknowledgementReceipt.name }}</td>
+
+            <th class="text-nowrap">Designation</th>
+            <td class="text-nowrap">: {{taxAcknowledgementReceipt.designation }}</td>
+
+
+        </tr>
+
+        <tr>
+
+            <th class="text-nowrap">TIN No</th>
+            <td class="text-nowrap">: {{taxAcknowledgementReceipt.tinNumber}}</td>
+
+            <th class="text-nowrap">Receipt Number</th>
+            <td class="text-nowrap">: {{taxAcknowledgementReceipt.receiptNumber}}</td>
+
+            <th class="text-nowrap">Tax Circle</th>
+            <td class="text-nowrap">: {{taxAcknowledgementReceipt.taxesCircle}}</td>
+
+        </tr>
+
+        <tr>
+
+            <th class="text-nowrap">Tax Zone</th>
+            <td class="text-nowrap">: {{taxAcknowledgementReceipt.taxesZone}}</td>
+
+            <th class="text-nowrap">Date of Submission</th>
+            <td class="text-nowrap">: {{taxAcknowledgementReceipt.dateOfSubmission | formatMediumDate }}</td>
+
+            <th class="text-nowrap">Status</th>
+            <td class="text-nowrap">: {{getUserFriendlyUi(taxAcknowledgementReceipt.acknowledgementStatus!)}}</td>
+
+        </tr>
+
+    </table>
+
+
+</div>

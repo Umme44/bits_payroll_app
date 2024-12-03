@@ -1,0 +1,41 @@
+{
+  "bitsHrPayrollApp": {
+    "pfCollection": {
+      "home": {
+        "title": "Pf Collections",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Pf Collection",
+        "createOrEditLabel": "Create or edit a Pf Collection",
+        "notFound": "No Pf Collections found"
+      },
+      "created": "A new Pf Collection is created with identifier {{ param }}",
+      "updated": "A Pf Collection is updated with identifier {{ param }}",
+      "deleted": "A Pf Collection is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Pf Collection {{ id }}?"
+      },
+      "detail": {
+        "title": "Pf Collection"
+      },
+      "id": "ID",
+      "employeeContribution": "Employee Contribution",
+      "employerContribution": "Employer Contribution",
+      "transactionDate": "Transaction Date",
+      "year": "Year",
+      "month": "Month",
+      "collectionType": "Collection Type",
+      "employeeInterest": "Employee Interest",
+      "employerInterest": "Employer Interest",
+      "gross": "Gross",
+      "basic": "Basic",
+      "pfAccount": "Pf Account",
+
+      "pfCode": "PF Code",
+      "accHolderName" : "Acc Holder Name",
+      "designation" : "Designation",
+      "department" : "Department",
+      "unitName" : "Unit",
+      "status" : "Status"
+    }
+  }
+}

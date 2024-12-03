@@ -1,0 +1,160 @@
+<div class="modal-header">
+  <h6 class="modal-jhiTranslate">
+    {{ editForm.get('id')!.value ? 'Update Requisition Item' : 'Requisition for New Item' }}
+  </h6>
+  <button type="button" class="close py-1 outline-none" data-dismiss="modal" aria-hidden="true" (click)="dismiss()">&times;</button>
+</div>
+
+<div class="modal-body">
+  <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+    <div class="row p-2">
+      <div class="col-md-6 mb-3">
+        <label for="item_selection" class="required">Item</label>
+        <ng-select
+          class="font-sm"
+          [items]="itemInformation"
+          bindLabel="name"
+          bindValue="id"
+          formControlName="itemInformationId"
+          labelForId="item_selection"
+          placeholder="Select Item"
+        >
+          <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+            <div>
+              <h6 class="card-title">{{ item.code }} - {{ item.name }}</h6>
+              <p class="card-text">
+                <!--                  <img height="50" width="50" [src]="item.avatar"/>-->
+                {{ item.specification }}
+              </p>
+            </div>
+          </ng-template>
+        </ng-select>
+
+        <div
+          *ngIf="
+            editForm.get('itemInformationId')!.invalid &&
+            (editForm.get('itemInformationId')!.dirty || editForm.get('itemInformationId')!.touched)
+          "
+        >
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get('itemInformationId')?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+        <div *ngIf="editForm.get('itemInformationId')!.valid && isItemAlreadySelected" class="font-sm">
+          <small class="form-text text-danger"> Item has already selected. Please update the following item. </small>
+        </div>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label class="form-label required" for="field_quantity">Quantity ({{ unitOfMeasurement }})</label>
+        <input type="number" class="form-control" name="quantity" id="field_quantity" formControlName="quantity" />
+        <div *ngIf="editForm.get('quantity')!.invalid && (editForm.get('quantity')!.dirty || editForm.get('quantity')!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get('quantity')?.errors?.required" jhiTranslate="entity.validation.required">
+            This field is required.
+          </small>
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get('quantity')?.errors?.min"
+            jhiTranslate="entity.validation.min"
+            [translateValues]="{ min: 1 }"
+          >
+            This field should be at least 1.
+          </small>
+          <small class="form-text text-danger" [hidden]="!editForm.get('quantity')?.errors?.number" jhiTranslate="entity.validation.number">
+            This field should be a number.
+          </small>
+        </div>
+      </div>
+
+      <!--    <div class="col-md-4 mb-3">-->
+      <!--      <label class="form-label" jhiTranslate="bitsHrPayrollApp.procReq.referenceFilePath" for="field_referenceFilePath">Reference File Path</label>-->
+      <!--      <textarea class="form-control" name="referenceFilePath" id="field_referenceFilePath"-->
+      <!--                formControlName="referenceFilePath"></textarea>-->
+      <!--    </div>-->
+
+      <div class="col-md-4 mb-3 mt-3">
+        <div *ngIf="!editForm.get('referenceFileData')!.value; else reUploadBtn">
+          <label for="field_referenceFile">Upload Reference (PDF/JPG)</label>
+
+          <input
+            type="file"
+            class="form-control-file"
+            accept=".pdf,.jpeg,.jpg"
+            id="field_referenceFile"
+            (change)="setFileData($event, 'referenceFileData', false)"
+          />
+
+          <input
+            type="hidden"
+            class="form-control"
+            name="referenceFileData"
+            id="field_referenceFileData"
+            formControlName="referenceFileData"
+          />
+          <input
+            type="hidden"
+            class="form-control"
+            name="referenceFileDataContentType"
+            id="field_referenceFileDataContentType"
+            formControlName="referenceFileDataContentType"
+          />
+        </div>
+
+        <!--                    <div *ngIf="editForm.get('referenceFileData')!.value" class="form-text text-danger clearfix">-->
+        <!--                        <a class="pull-left" (click)="openFile(editForm.get('referenceFileDataContentType')!.value, editForm.get('referenceFileData')!.value)" jhiTranslate="entity.action.open">open</a><br>-->
+        <!--                        <span class="pull-left">{{ editForm.get('referenceFileDataContentType')!.value }}, {{ byteSize(editForm.get('referenceFileData')!.value) }}</span>-->
+        <!--                        <button type="button" (click)="editForm.patchValue({referenceFileData: null});editForm.patchValue({referenceFileDataContentType: null});"-->
+        <!--                                class="btn btn-secondary btn-xs pull-end">-->
+        <!--                            <fa-icon icon="times"></fa-icon>-->
+        <!--                        </button>-->
+        <!--                    </div>-->
+
+        <div *ngIf="inValidFile">
+          <small class="form-text text-danger">
+            {{ inValidFileErrorMsg }}
+          </small>
+        </div>
+      </div>
+      <ng-template #reUploadBtn>
+        <!--                    <button type="button" class="btn btn-link me-3">Show Image</button>-->
+        <button
+          type="button"
+          class="btn btn-link"
+          (click)="editForm.patchValue({ referenceFileData: null }); editForm.patchValue({ referenceFileDataContentType: null })"
+          (click)="clickOnReUpload()"
+        >
+          <fa-icon icon="redo"></fa-icon> Re-Upload
+        </button>
+      </ng-template>
+    </div>
+
+    <!--            <div class="col-md-12 mb-3">-->
+    <!--                <label class="form-control-label" for="field_referenceFileData">Reference File</label>-->
+    <!--                <div>-->
+    <!--                    <div *ngIf="editForm.get('referenceFileData')!.value" class="form-text text-danger clearfix">-->
+    <!--                        <a class="pull-left" (click)="openFile(editForm.get('referenceFileDataContentType')!.value, editForm.get('referenceFileData')!.value)" jhiTranslate="entity.action.open">open</a><br>-->
+    <!--                        <span class="pull-left">{{ editForm.get('referenceFileDataContentType')!.value }}, {{ byteSize(editForm.get('referenceFileData')!.value) }}</span>-->
+    <!--                        <button type="button" (click)="editForm.patchValue({referenceFileData: null});editForm.patchValue({referenceFileDataContentType: null});"-->
+    <!--                                class="btn btn-secondary btn-xs pull-end">-->
+    <!--                            <fa-icon icon="times"></fa-icon>-->
+    <!--                        </button>-->
+    <!--                    </div>-->
+    <!--                    <input type="file" id="file_referenceFileData" (change)="setFileData($event, 'referenceFileData', false)" jhiTranslate="entity.action.addblob"/>-->
+    <!--                </div>-->
+    <!--                <input type="hidden" class="form-control" name="referenceFileData" id="field_referenceFileData"-->
+    <!--                       formControlName="referenceFileData"/>-->
+    <!--                <input type="hidden" class="form-control" name="referenceFileDataContentType" id="field_referenceFileDataContentType"-->
+    <!--                       formControlName="referenceFileDataContentType" />-->
+    <!--            </div>-->
+
+    <div>
+      <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving || isItemAlreadySelected" class="btn btn-primary">
+        <span jhiTranslate="entity.action.add">Add</span>
+      </button>
+    </div>
+  </form>
+</div>

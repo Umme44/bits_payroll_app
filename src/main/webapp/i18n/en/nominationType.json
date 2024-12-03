@@ -1,0 +1,9 @@
+{
+  "bitsHrPayrollApp": {
+    "NominationType": {
+      "null": "",
+      "GRATUITY_FUND": "GRATUITY_FUND",
+      "GENERAL": "GENERAL"
+    }
+  }
+}

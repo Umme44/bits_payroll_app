@@ -1,0 +1,139 @@
+<div>
+  <jhi-header [headerName]="'Address Book'" [shouldHaveHr]="false"> </jhi-header>
+
+  <div class="mb-2">
+    <div class="search-filter container-fluid">
+      <div class="row">
+        <form class="form-inline ps-0 ms-0">
+          <div id="defaultGlobalSearch" class="input-group input-group-merge">
+            <span>
+              <input
+                class=""
+                type=""
+                aria-label="Search"
+                autocomplete="off"
+                spellcheck="false"
+                tabindex="-1"
+                style="
+                  position: absolute;
+                  top: 0px;
+                  left: 0px;
+                  border-color: transparent;
+                  box-shadow: none;
+                  opacity: 1;
+                  background: none 0% 0% / auto repeat scroll padding-box padding-box rgb(255, 255, 255);
+                "
+                dir="ltr"
+              />
+              <input
+                (change)="onSearchTextChangeV2($event)"
+                (selectItem)="selectedItem($event)"
+                (input)="onChangeInput($event)"
+                [ngbTypeahead]="search"
+                [maxLength]="50"
+                id="globalSearch"
+                class="form-control search-input-box"
+                type="text"
+                [formControl]="searchTextFormControl"
+                placeholder="Search"
+                aria-label="Search"
+                autocomplete="off"
+                spellcheck="false"
+                dir="auto"
+              />
+              <pre
+                aria-hidden="true"
+                style="
+                  position: absolute;
+                  visibility: hidden;
+                  white-space: pre;
+                  font-size: 16px;
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: 400;
+                  word-spacing: 0px;
+                  letter-spacing: 0px;
+                  text-indent: 0px;
+                  text-rendering: auto;
+                  text-transform: none;
+                "
+              ></pre>
+            </span>
+            <span class="input-group-append" *ngIf="!searchTextFormControl.invalid">
+              <span class="input-group-text" style="background-color: #ffffff0f; border: 0; position: relative; left: -40px">
+                <button class="btn btn-icon p-0" type="submit">
+                  <fa-icon icon="search"></fa-icon>
+                </button>
+              </span>
+            </span>
+          </div>
+          <div class="text-danger" *ngIf="searchTextFormControl.invalid">Invalid character!</div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <jhi-alert-error></jhi-alert-error>
+  <jhi-alert></jhi-alert>
+  <div *ngIf="employees && employees.length > 0" class="table-responsive text-start" id="entities">
+    <table
+      aria-describedby="page-heading"
+      data-name="employee-address-book-table"
+      aria-describedby="page-heading"
+      class="table table-hover"
+    >
+      <thead>
+        <tr>
+          <th scope="col" class="w-5"></th>
+          <th scope="col" class="w-5"><span>PIN</span></th>
+          <th scope="col" class="w-25">Name</th>
+          <th scope="col" class="w-20">Designation</th>
+          <th scope="col" class="w-20">Unit</th>
+          <th scope="col" class="w-15">Email</th>
+          <th scope="col" class="w-10">Work Phone</th>
+        </tr>
+      </thead>
+      <tbody
+        class="list-text-color"
+        infinite-scroll
+        (scrolled)="loadPage(page + 1)"
+        [infiniteScrollDisabled]="page >= links['last']"
+        [infiniteScrollDistance]="0"
+      >
+        <tr *ngFor="let employee of employees; trackBy: trackId">
+          <td
+            *ngIf="employee.pin !== undefined"
+            class="w-5 td-th-employee-img cursor-pointer"
+            (click)="openEmployeeDetailsModal(employee.id!)"
+          >
+            <span placement="top" container="body" ngbTooltip="Click to Open Details">
+              <img class="card-img-top" [src]="getProfilePicture(employee.pin)" alt="Picture" />
+            </span>
+          </td>
+          <td class="w-5 cursor-pointer" (click)="openEmployeeDetailsModal(employee.id!)">
+            <span placement="top" container="body" ngbTooltip="Click to Open Details">
+              {{ employee.pin }}
+            </span>
+          </td>
+          <td class="w-25 text-nowrap">
+            <span placement="top" container="body" ngbTooltip="Click to Open Details">
+              <a (click)="openEmployeeDetailsModal(employee.id!)" class="">
+                {{ employeeService.normalizeEmployeeName(employee.fullName) }}
+              </a>
+            </span>
+          </td>
+          <td class="w-20 text-nowrap">{{ employee.designationName }}</td>
+          <td class="w-20 text-nowrap">{{ employee.unitName }}</td>
+          <td class="w-15 text-nowrap" (click)="copyToClipboard(employee.officialEmail!)">
+            <span placement="top" container="body" container="body" ngbTooltip="Click to copy E-Mail">{{ employee.officialEmail }}</span>
+          </td>
+          <td class="w-10" (click)="copyToClipboard(employee.officialContactNo!)">
+            <span placement="top" ngbTooltip="Click to copy Contact Number">
+              {{ employee.officialContactNo }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

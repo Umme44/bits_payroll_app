@@ -1,0 +1,135 @@
+{
+  "applications": "*",
+  "changelogDate": "20210215124430",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "employment_history",
+  "fields": [
+    {
+      "fieldName": "referenceId",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "pin",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "eventType",
+      "fieldType": "EventType",
+      "fieldValues": "TRANSFER,PROMOTION,INCREMENT,JOIN,CONFIRM,RESIGNATION"
+    },
+    {
+      "fieldName": "effectiveDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "previousMainGrossSalary",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "currentMainGrossSalary",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "previousWorkingHour",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "changedWorkingHour",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "isModifiable",
+      "fieldType": "Boolean",
+      "fieldValidateRules": []
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "EmploymentHistory",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "designation",
+      "otherEntityRelationshipName": "employmentHistory",
+      "relationshipName": "previousDesignation",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "designation",
+      "otherEntityRelationshipName": "employmentHistory",
+      "relationshipName": "changedDesignation",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "department",
+      "otherEntityRelationshipName": "employmentHistory",
+      "relationshipName": "previousDepartment",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "department",
+      "otherEntityRelationshipName": "employmentHistory",
+      "relationshipName": "changedDepartment",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "employmentHistory",
+      "relationshipName": "previousReportingTo",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "employmentHistory",
+      "relationshipName": "changedReportingTo",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "employmentHistory",
+      "relationshipName": "employee",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "unit",
+      "otherEntityRelationshipName": "employmentHistory",
+      "relationshipName": "previousUnit",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "unit",
+      "otherEntityRelationshipName": "employmentHistory",
+      "relationshipName": "changedUnit",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "band",
+      "otherEntityRelationshipName": "employmentHistory",
+      "relationshipName": "previousBand",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "band",
+      "otherEntityRelationshipName": "employmentHistory",
+      "relationshipName": "changedBand",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

@@ -1,0 +1,100 @@
+<jhi-header [headerName]="!editForm.get('id')!.value ? 'Apply For New Salary Certificate': 'Update Salary Certificate Application'"
+            [midHeaderName01]="'Salary Certificate'"
+            [midRouterLinkText01]="'/salary-certificate'">
+</jhi-header>
+
+<div class="row justify-content-center">
+  <div class="col-12">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <div class="card card-body">
+        <div class="row mb-3">
+          <jhi-alert-error></jhi-alert-error>
+          <input type="hidden" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+
+          <div class="col-md-4">
+            <div class="form-group mb-3">
+              <label class="form-label required" jhiTranslate="bitsHrPayrollApp.salaryCertificate.employee" for="field_employee">Employee</label>
+              <jhi-simple-select-employee-form id="field_employee"
+                                               [selectedFieldValue]="editForm.get('employeeId')!.value"
+                                               (onChangeEmployee)="changeEmployee($event)">
+              </jhi-simple-select-employee-form>
+              <div *ngIf="editForm.get(['employeeId'])!.invalid && (editForm.get(['employeeId'])!.dirty || editForm.get(['employeeId'])!.touched)">
+                <small
+                  class="form-text text-danger"
+                  *ngIf="editForm.get(['employeeId'])?.errors?.required"
+                  jhiTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="form-group mb-3">
+              <label class="form-label required" jhiTranslate="bitsHrPayrollApp.salaryCertificate.purpose" for="field_purpose">Purpose</label>
+              <input type="text" class="form-control" name="purpose" id="field_purpose" data-cy="purpose" formControlName="purpose" />
+              <div *ngIf="editForm.get('purpose')!.invalid && (editForm.get('purpose')!.dirty || editForm.get('purpose')!.touched)">
+                <small
+                  class="form-text text-danger"
+                  *ngIf="editForm.get('purpose')?.errors?.required"
+                  jhiTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+                <small
+                  class="form-text text-danger"
+                  *ngIf="editForm.get('purpose')?.errors?.minlength"
+                  jhiTranslate="entity.validation.minlength"
+                  [translateValues]="{ min: 3 }"
+                >
+                  This field is required to be at least 3 characters.
+                </small>
+                <small
+                  class="form-text text-danger"
+                  *ngIf="editForm.get('purpose')?.errors?.maxlength"
+                  jhiTranslate="entity.validation.maxlength"
+                  [translateValues]="{ max: 250 }"
+                >
+                  This field cannot be longer than 250 characters.
+                </small>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="form-control-label required" for="field_employeeSalary">Salary Month</label>
+              <select
+                #field_employeeSalary
+                class="form-control"
+                id="field_employeeSalary"
+                name="employeeSalary"
+                (change)="onChangeEmployeeSalary($event)"
+                [disabled]="!isEmployeeSelected"
+              >
+                <option [ngValue]="null"></option>
+                <option value="{{employeeSalaryOption.id}}" *ngFor="let employeeSalaryOption of employeesalaries; trackBy: trackById">
+                  {{ employeeSalaryOption.month }}, {{ employeeSalaryOption.year }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div>
+          <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+            <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+          </button>
+
+          <button
+            type="submit"
+            id="save-entity"
+            data-cy="entityCreateSaveButton"
+            [disabled]="editForm.invalid || isSaving"
+            class="btn btn-primary"
+          >
+            <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

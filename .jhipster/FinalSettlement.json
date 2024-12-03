@@ -1,0 +1,238 @@
+{
+  "changelogDate": "20211212080916",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "final_settlement",
+  "fields": [
+    {
+      "fieldName": "dateOfResignation",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "noticePeriod",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "lastWorkingDay",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "dateOfRelease",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "serviceTenure",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "mBasic",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "mHouseRent",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "mMedical",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "mConveyance",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "salaryPayable",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "salaryPayableRemarks",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "totalDaysForLeaveEncashment",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "totalLeaveEncashment",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "mobileBillInCash",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "allowance01Name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "allowance01Amount",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "allowance01Remarks",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "allowance02Name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "allowance02Amount",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "allowance02Remarks",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "allowance03Name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "allowance03Amount",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "allowance03Remarks",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "allowance04Name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "allowance04Amount",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "allowance04Remarks",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "deductionNoticePay",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "deductionPf",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "deductionHaf",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "deductionExcessCellBill",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "deductionAbsentDaysAdjustment",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "totalSalaryPayable",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "deductionAnnualIncomeTax",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "netSalaryPayable",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "totalPayablePf",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "totalPayableGf",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "totalFinalSettlementAmount",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "createdAt",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "updatedAt",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "deductionNoticePayDays",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "deductionAbsentDaysAdjustmentDays",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "deductionOther",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "totalSalary",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "totalGrossSalary",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "totalDeduction",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "finalSettlementDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "isFinalized",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "salaryNumOfMonth",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "remarks",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "FinalSettlement",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "finalSettlement",
+      "relationshipName": "employee",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    },
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "finalSettlement",
+      "ownerSide": true,
+      "relationshipName": "createdBy",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "finalSettlement",
+      "ownerSide": true,
+      "relationshipName": "updatedBy",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

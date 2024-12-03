@@ -1,0 +1,302 @@
+<div>
+  <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+
+    <jhi-header
+      [headerName]="!editForm.get('id')!.value ? 'Create PF Loan Application': 'Edit PF Loan Application'"
+      [shouldHaveHr]="false">
+    </jhi-header>
+
+    <div class="card card-body my-2 pb-1 font-size-small-08rem" *ngIf="pfLoanApplicationEligible">
+      <div>
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <dl class="row-md jh-entity-details">
+          <div class="row">
+
+            <div class="col-md-2">
+              <dt>
+                <span>Employee Category</span>
+              </dt>
+            </div>
+            <div class="col-md-2">
+              <dd *ngIf="pfLoanApplicationEligible!.employeeCategory">
+                                 <span [ngClass]="{'text-danger': pfLoanApplicationEligible.regularConfirmedEmployee === false}">
+                                     {{ userReadableEmployeeCategory(pfLoanApplicationEligible!.employeeCategory) }}
+                                  </span>
+              </dd>
+            </div>
+
+            <div class="col-md-2">
+              <dt>
+                <span>Any Repaying PF Loan</span>
+              </dt>
+            </div>
+            <div class="col-md-2">
+              <dd>
+                                <span [ngClass]="pfLoanApplicationEligible.anyOpenRepayingPfLoan === true ? 'text-danger': ''">
+                                    {{ booleanToYesNo(pfLoanApplicationEligible.anyOpenRepayingPfLoan) }}
+                                </span>
+              </dd>
+            </div>
+
+            <div class="col-md-2">
+              <dt>
+                <span>Service Tenure</span>
+              </dt>
+            </div>
+            <div class="col-md-2">
+              <dd>
+                                <span [ngClass]="pfLoanApplicationEligible.pfAccountMatured === true ? '': 'text-danger'">
+                                    {{ pfLoanApplicationEligible.serviceTenure }}
+                                </span>
+              </dd>
+            </div>
+
+            <div class="col-md-2">
+              <dt>
+                <span>PF Account Matured</span>
+              </dt>
+            </div>
+            <div class="col-md-2">
+              <dd>
+                                <span [ngClass]="pfLoanApplicationEligible.pfAccountMatured === true ? '': 'text-danger'">
+                                    {{ booleanToYesNo(pfLoanApplicationEligible.pfAccountMatured) }}
+                                </span>
+              </dd>
+            </div>
+
+            <div class="col-md-2">
+              <dt>
+                <span>Loan Eligible Amount</span>
+              </dt>
+            </div>
+            <div class="col-md-2">
+              <dd>
+                <span>{{ pfLoanApplicationEligible.pfLoanEligibleAmount | number}}</span>
+              </dd>
+            </div>
+
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="card card-body">
+      <jhi-alert-error></jhi-alert-error>
+
+      <div class="flex-column">
+        <div class="row align-items-center">
+
+          <div class="form-group col-md-6 py-3">
+            <label class="form-control-label required"
+                   for="field_pfAccount">PF Account</label>
+
+            <ng-select
+              [(ngModel)]="pfAccountSelect"
+              (ngModelChange)="changePfAccount($event)"
+              [items]="pfAccounts"
+              bindLabel="accHolderName"
+              bindValue="id"
+              appearance="outline"
+              [searchable]="true"
+              [clearable]="true"
+              labelForId="pfAccountId"
+              formControlName="pfAccountId"
+              id="field_pfAccount"
+              name="pfAccount">
+
+            </ng-select>
+
+            <!--<select [ngModel]="pfAccountSelect" (ngModelChange)="changePfAccount($event)" class="form-control" id="field_pfAccount" name="pfAccount"
+                    formControlName="pfAccountId">
+                <option [ngValue]="null"></option>
+                <option [ngValue]="pfAccountOption.id"
+                        *ngFor="let pfAccountOption of pfAccounts; trackBy: trackById">
+                    {{ pfAccountOption.pfCode }} - {{pfAccountOption.accHolderName}} - {{pfAccountOption.pin}} - {{pfAccountOption.designationName}} - {{pfAccountOption.status}}
+                </option>
+            </select>-->
+            <div
+              *ngIf="editForm.get('pfAccountId')!.invalid && (editForm.get('pfAccountId')!.dirty || editForm.get('pfAccountId')!.touched)">
+              <small *ngIf="editForm.get('pfAccountId')?.errors?.required"
+                     class="form-text text-danger"
+                     jhiTranslate="entity.validation.required">
+                This field is required.
+              </small>
+            </div>
+          </div>
+
+          <div class="form-group col-md-6"></div>
+
+          <ng-container *ngIf="pfLoanApplicationEligible && pfLoanApplicationEligible.pfAccountMatured === true">
+            <div class="form-group col-md-3">
+              <label class="form-control-label"
+                     jhiTranslate="bitsHrPayrollApp.pfLoanApplication.disbursementAmount"
+                     for="field_disbursementAmount">Disbursement Amount</label>  <span class="text-danger">*</span>
+              <input type="number" class="form-control" name="disbursementAmount"
+                     id="field_disbursementAmount"
+                     formControlName="disbursementAmount" (change)="installmentAmountCalculation()" />
+              <div
+                *ngIf="editForm.get('disbursementAmount')!.invalid && (editForm.get('disbursementAmount')!.dirty || editForm.get('disbursementAmount')!.touched)">
+                <small *ngIf="editForm.get('disbursementAmount')?.errors?.required"
+                       class="form-text text-danger"
+                       jhiTranslate="entity.validation.required">
+                  This field is required.
+                </small>
+                <small [hidden]="!editForm.get('disbursementAmount')?.errors?.number"
+                       class="form-text text-danger"
+                       jhiTranslate="entity.validation.number">
+                  This field should be a number.
+                </small>
+                <small *ngIf="editForm.get('disbursementAmount')?.errors?.min"
+                       [translateValues]="{ min: 1 }" class="form-text text-danger"
+                       jhiTranslate="entity.validation.min">
+                  This field should be at least 1.
+                </small>
+                <small *ngIf="editForm.get('disbursementAmount')?.errors?.max"
+                       class="form-text text-danger">
+                  Eligible amount limit has been exceeded
+                </small>
+              </div>
+            </div>
+
+            <div class="form-group col-md-3">
+              <label class="form-control-label"
+                     jhiTranslate="bitsHrPayrollApp.pfLoanApplication.disbursementDate"
+                     for="field_disbursementDate">Disbursement Date</label>
+              <div class="input-group">
+                <input id="field_disbursementDate" type="date" class="form-control" name="disbursementDate"
+                       ngbDatepicker #disbursementDateDp="ngbDatepicker"
+                       formControlName="disbursementDate"/>
+                <span class="input-group-append">
+                            <!--<button type="button" class="btn btn-secondary" (click)="disbursementDateDp.toggle()"><fa-icon
+                                icon="calendar-alt"></fa-icon></button>-->
+                        </span>
+              </div>
+            </div>
+
+            <div class="form-group col-md-3">
+              <label class="form-control-label"
+                     jhiTranslate="bitsHrPayrollApp.pfLoanApplication.noOfInstallment"
+                     for="field_noOfInstallment">No Of Installment</label>  <span class="text-danger">*</span>
+              <input type="number" class="form-control" name="noOfInstallment" id="field_noOfInstallment"
+                     formControlName="noOfInstallment" (change)="installmentAmountCalculation()" />
+              <div
+                *ngIf="editForm.get('noOfInstallment')!.invalid && (editForm.get('noOfInstallment')!.dirty || editForm.get('noOfInstallment')!.touched)">
+                <small *ngIf="editForm.get('noOfInstallment')?.errors?.required"
+                       class="form-text text-danger"
+                       jhiTranslate="entity.validation.required">
+                  This field is required.
+                </small>
+                <small *ngIf="editForm.get('noOfInstallment')?.errors?.min"
+                       [translateValues]="{ min: 1 }" class="form-text text-danger"
+                       jhiTranslate="entity.validation.min">
+                  This field should be at least 1.
+                </small>
+                <small *ngIf="editForm.get('noOfInstallment')?.errors?.max"
+                       [translateValues]="{ max:24 }" class="form-text text-danger"
+                       jhiTranslate="entity.validation.max">
+                  Maximum 24 installment is allowed
+                </small>
+              </div>
+            </div>
+
+            <div class="form-group col-md-3">
+              <label class="form-control-label"
+                     jhiTranslate="bitsHrPayrollApp.pfLoanApplication.installmentAmount"
+                     for="field_installmentAmount">Installment Amount</label>  <span class="text-danger">*</span>
+              <input readonly type="number" class="form-control" name="installmentAmount" id="field_installmentAmount"
+                     formControlName="installmentAmount"/>
+              <div
+                *ngIf="editForm.get('installmentAmount')!.invalid && (editForm.get('installmentAmount')!.dirty || editForm.get('installmentAmount')!.touched)">
+                <small *ngIf="editForm.get('installmentAmount')?.errors?.required"
+                       class="form-text text-danger"
+                       jhiTranslate="entity.validation.required">
+                  This field is required.
+                </small>
+                <small *ngIf="editForm.get('installmentAmount')?.errors?.min"
+                       [translateValues]="{ min: 1 }" class="form-text text-danger"
+                       jhiTranslate="entity.validation.min">
+                  This field should be at least 1.
+                </small>
+              </div>
+            </div>
+
+            <div class="form-group col-md-12">
+              <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.pfLoanApplication.remarks"
+                     for="field_remarks">Remarks</label>
+              <input type="text" class="form-control" name="remarks" id="field_remarks"
+                     formControlName="remarks"/>
+            </div>
+
+            <div class="form-check col-md-12 py-3">
+              <input type="checkbox" class="form-check-input" data-cy="isRecommended" formControlName="isRecommended"
+                     name="isRecommended" id="field_isRecommended"
+                     formControlName="isRecommended" (change)="isRecommendedChange($event)"/>
+              <label class="form-control-label"
+                     jhiTranslate="bitsHrPayrollApp.pfLoanApplication.isRecommended"
+                     for="field_isRecommended">Is Recommended</label>
+            </div>
+
+            <ng-container *ngIf="isRecommendedChecked && isRecommendedChecked === true">
+              <div class="form-group col-md-6">
+                <label class="form-control-label"
+                       jhiTranslate="bitsHrPayrollApp.pfLoanApplication.recommendedBy"
+                       for="field_recommendedBy">Recommended By</label>
+
+                <ng-select
+                  [items]="employees"
+                  bindLabel="fullName"
+                  bindValue="id"
+                  appearance="outline"
+                  [searchable]="true"
+                  [clearable]="true"
+                  labelForId="field_recommendedBy"
+                  formControlName="recommendedById"
+                  id="field_recommendedBy"
+                  name="recommendedById">
+
+                </ng-select>
+
+                <!-- <select class="form-control" id="field_recommendedBy" name="recommendedBy"
+                         formControlName="recommendedById">
+                     <option [ngValue]="null"></option>
+                     <option [ngValue]="employeeOption.id"
+                             *ngFor="let employeeOption of employees; trackBy: trackById">{{ employeeOption.pin }} - {{employeeOption.fullName}} - {{employeeOption.designationName}}</option>
+                 </select>-->
+              </div>
+
+              <div class="form-group col-md-3">
+                <label class="form-control-label"
+                       jhiTranslate="bitsHrPayrollApp.pfLoanApplication.recommendationDate"
+                       for="field_recommendationDate">Recommendation Date</label>
+                <div class="input-group">
+                  <input id="field_recommendationDate" type="date" class="form-control"
+                         name="recommendationDate"
+                         ngbDatepicker #recommendationDateDp="ngbDatepicker"
+                         formControlName="recommendationDate"/>
+                  <span class="input-group-append">
+                            <!--<button type="button" class="btn btn-secondary" (click)="recommendationDateDp.toggle()"><fa-icon
+                                icon="calendar-alt"></fa-icon></button>-->
+                        </span>
+                </div>
+              </div>
+            </ng-container>
+
+          </ng-container>
+        </div>
+      </div>
+
+      <div *ngIf="pfLoanApplicationEligible && pfLoanApplicationEligible.pfAccountMatured === true" class="mt-3">
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving"
+                class="btn btn-primary">
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

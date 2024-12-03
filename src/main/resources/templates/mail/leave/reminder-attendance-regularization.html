@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="en">
+<head>
+    <title> Leave Approval </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="icon" th:href="@{|${baseUrl}/favicon.ico|}"/>
+</head>
+<body>
+<span>
+    Dear [[${name}]],
+</span>
+
+<p>
+    As per your attendance record, you are [[${daysInWord}]] days
+    ( [[${absentDateListAsText}]] ) absent this month.
+</p>
+
+<p>
+    Please apply for leave immediately within the 22nd of the month.
+</p>
+
+</body>
+
+<footer>
+    <h4 style="text-align: center">This is system generated email. Please do not reply.</h4>
+</footer>
+</html>
+
+
+
+
+

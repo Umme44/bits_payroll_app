@@ -1,0 +1,421 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-employee-noc-heading"
+        data-cy="EmployeeNOCCreateUpdateHeading"
+        jhiTranslate="bitsHrPayrollApp.employeeNOC.home.createOrEditLabel"
+      >
+        Create or edit a Employee NOC
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeNOC.passportNumber" for="field_passportNumber"
+            >Passport Number</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="passportNumber"
+            id="field_passportNumber"
+            data-cy="passportNumber"
+            formControlName="passportNumber"
+          />
+          <div
+            *ngIf="
+              editForm.get('passportNumber')!.invalid && (editForm.get('passportNumber')!.dirty || editForm.get('passportNumber')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('passportNumber')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeNOC.leaveStartDate" for="field_leaveStartDate"
+            >Leave Start Date</label
+          >
+          <div class="input-group">
+            <input
+              id="field_leaveStartDate"
+              data-cy="leaveStartDate"
+              type="text"
+              class="form-control"
+              name="leaveStartDate"
+              ngbDatepicker
+              #leaveStartDateDp="ngbDatepicker"
+              formControlName="leaveStartDate"
+            />
+            <button type="button" class="btn btn-secondary" (click)="leaveStartDateDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+          <div
+            *ngIf="
+              editForm.get('leaveStartDate')!.invalid && (editForm.get('leaveStartDate')!.dirty || editForm.get('leaveStartDate')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('leaveStartDate')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeNOC.leaveEndDate" for="field_leaveEndDate">Leave End Date</label>
+          <div class="input-group">
+            <input
+              id="field_leaveEndDate"
+              data-cy="leaveEndDate"
+              type="text"
+              class="form-control"
+              name="leaveEndDate"
+              ngbDatepicker
+              #leaveEndDateDp="ngbDatepicker"
+              formControlName="leaveEndDate"
+            />
+            <button type="button" class="btn btn-secondary" (click)="leaveEndDateDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+          <div
+            *ngIf="editForm.get('leaveEndDate')!.invalid && (editForm.get('leaveEndDate')!.dirty || editForm.get('leaveEndDate')!.touched)"
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('leaveEndDate')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeNOC.countryToVisit" for="field_countryToVisit"
+            >Country To Visit</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="countryToVisit"
+            id="field_countryToVisit"
+            data-cy="countryToVisit"
+            formControlName="countryToVisit"
+          />
+          <div
+            *ngIf="
+              editForm.get('countryToVisit')!.invalid && (editForm.get('countryToVisit')!.dirty || editForm.get('countryToVisit')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('countryToVisit')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeNOC.referenceNumber" for="field_referenceNumber"
+            >Reference Number</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="referenceNumber"
+            id="field_referenceNumber"
+            data-cy="referenceNumber"
+            formControlName="referenceNumber"
+          />
+          <div
+            *ngIf="
+              editForm.get('referenceNumber')!.invalid &&
+              (editForm.get('referenceNumber')!.dirty || editForm.get('referenceNumber')!.touched)
+            "
+          ></div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeNOC.issueDate" for="field_issueDate">Issue Date</label>
+          <div class="input-group">
+            <input
+              id="field_issueDate"
+              data-cy="issueDate"
+              type="text"
+              class="form-control"
+              name="issueDate"
+              ngbDatepicker
+              #issueDateDp="ngbDatepicker"
+              formControlName="issueDate"
+            />
+            <button type="button" class="btn btn-secondary" (click)="issueDateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeNOC.createdAt" for="field_createdAt">Created At</label>
+          <div class="d-flex">
+            <input
+              id="field_createdAt"
+              data-cy="createdAt"
+              type="datetime-local"
+              class="form-control"
+              name="createdAt"
+              formControlName="createdAt"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          <div *ngIf="editForm.get('createdAt')!.invalid && (editForm.get('createdAt')!.dirty || editForm.get('createdAt')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('createdAt')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('createdAt')?.errors?.datetimelocal"
+              jhiTranslate="entity.validation.datetimelocal"
+            >
+              This field should be a date and time.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeNOC.updatedAt" for="field_updatedAt">Updated At</label>
+          <div class="d-flex">
+            <input
+              id="field_updatedAt"
+              data-cy="updatedAt"
+              type="datetime-local"
+              class="form-control"
+              name="updatedAt"
+              formControlName="updatedAt"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeNOC.generatedAt" for="field_generatedAt">Generated At</label>
+          <div class="d-flex">
+            <input
+              id="field_generatedAt"
+              data-cy="generatedAt"
+              type="datetime-local"
+              class="form-control"
+              name="generatedAt"
+              formControlName="generatedAt"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeNOC.reason" for="field_reason">Reason</label>
+          <input type="text" class="form-control" name="reason" id="field_reason" data-cy="reason" formControlName="reason" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeNOC.purposeOfNOC" for="field_purposeOfNOC">Purpose Of NOC</label>
+          <select class="form-control" name="purposeOfNOC" formControlName="purposeOfNOC" id="field_purposeOfNOC" data-cy="purposeOfNOC">
+            <option [ngValue]="null">{{ 'bitsHrPayrollApp.PurposeOfNOC.null' | translate }}</option>
+            <option *ngFor="let purposeOfNOC of purposeOfNOCValues" [value]="purposeOfNOC">
+              {{ 'bitsHrPayrollApp.PurposeOfNOC.' + purposeOfNOC | translate }}
+            </option>
+          </select>
+          <div
+            *ngIf="editForm.get('purposeOfNOC')!.invalid && (editForm.get('purposeOfNOC')!.dirty || editForm.get('purposeOfNOC')!.touched)"
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('purposeOfNOC')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeNOC.certificateStatus" for="field_certificateStatus"
+            >Certificate Status</label
+          >
+          <select
+            class="form-control"
+            name="certificateStatus"
+            formControlName="certificateStatus"
+            id="field_certificateStatus"
+            data-cy="certificateStatus"
+          >
+            <option [ngValue]="null">{{ 'bitsHrPayrollApp.CertificateStatus.null' | translate }}</option>
+            <option *ngFor="let certificateStatus of certificateStatusValues" [value]="certificateStatus">
+              {{ 'bitsHrPayrollApp.CertificateStatus.' + certificateStatus | translate }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              editForm.get('certificateStatus')!.invalid &&
+              (editForm.get('certificateStatus')!.dirty || editForm.get('certificateStatus')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('certificateStatus')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeNOC.isRequiredForVisa" for="field_isRequiredForVisa"
+            >Is Required For Visa</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isRequiredForVisa"
+            id="field_isRequiredForVisa"
+            data-cy="isRequiredForVisa"
+            formControlName="isRequiredForVisa"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeNOC.employee" for="field_employee">Employee</label>
+          <select
+            class="form-control"
+            id="field_employee"
+            data-cy="employee"
+            name="employee"
+            formControlName="employee"
+            [compareWith]="compareEmployee"
+          >
+            <option *ngIf="!editForm.get('employee')!.value" [ngValue]="null" selected></option>
+            <option [ngValue]="employeeOption" *ngFor="let employeeOption of employeesSharedCollection">{{ employeeOption.id }}</option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['employee'])!.invalid && (editForm.get(['employee'])!.dirty || editForm.get(['employee'])!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['employee'])?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeNOC.signatoryPerson" for="field_signatoryPerson"
+            >Signatory Person</label
+          >
+          <select
+            class="form-control"
+            id="field_signatoryPerson"
+            data-cy="signatoryPerson"
+            name="signatoryPerson"
+            formControlName="signatoryPerson"
+            [compareWith]="compareEmployee"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="employeeOption" *ngFor="let employeeOption of employeesSharedCollection">{{ employeeOption.id }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeNOC.createdBy" for="field_createdBy">Created By</label>
+          <select
+            class="form-control"
+            id="field_createdBy"
+            data-cy="createdBy"
+            name="createdBy"
+            formControlName="createdBy"
+            [compareWith]="compareUser"
+          >
+            <option *ngIf="!editForm.get('createdBy')!.value" [ngValue]="null" selected></option>
+            <option [ngValue]="userOption" *ngFor="let userOption of usersSharedCollection">{{ userOption.login }}</option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['createdBy'])!.invalid && (editForm.get(['createdBy'])!.dirty || editForm.get(['createdBy'])!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['createdBy'])?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeNOC.updatedBy" for="field_updatedBy">Updated By</label>
+          <select
+            class="form-control"
+            id="field_updatedBy"
+            data-cy="updatedBy"
+            name="updatedBy"
+            formControlName="updatedBy"
+            [compareWith]="compareUser"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="userOption" *ngFor="let userOption of usersSharedCollection">{{ userOption.login }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.employeeNOC.generatedBy" for="field_generatedBy">Generated By</label>
+          <select
+            class="form-control"
+            id="field_generatedBy"
+            data-cy="generatedBy"
+            name="generatedBy"
+            formControlName="generatedBy"
+            [compareWith]="compareUser"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="userOption" *ngFor="let userOption of usersSharedCollection">{{ userOption.login }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

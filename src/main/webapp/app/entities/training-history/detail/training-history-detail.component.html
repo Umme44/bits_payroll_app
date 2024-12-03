@@ -1,0 +1,59 @@
+<div>
+  <jhi-header [headerName]="'Training History'"> </jhi-header>
+
+  <jhi-alert-error></jhi-alert-error>
+  <div class="font-sm">
+    <div *ngIf="trainingHistory">
+      <dl class="row-md jh-entity-details">
+        <div class="row">
+          <div class="col-md-2">
+            <dt><span jhiTranslate="bitsHrPayrollApp.trainingHistory.trainingName">Training Name</span></dt>
+          </div>
+          <div class="col-md-4">
+            <dd>
+              <span>{{ trainingHistory.trainingName }}</span>
+            </dd>
+          </div>
+          <div class="col-md-2">
+            <dt><span jhiTranslate="bitsHrPayrollApp.trainingHistory.coordinatedBy">Coordinated By</span></dt>
+          </div>
+          <div class="col-md-4">
+            <dd>
+              <span>{{ trainingHistory.coordinatedBy }}</span>
+            </dd>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-2">
+            <dt><span jhiTranslate="bitsHrPayrollApp.trainingHistory.dateOfCompletion">Date Of Completion</span></dt>
+          </div>
+          <div class="col-md-4">
+            <dd>
+              <span>{{ trainingHistory.dateOfCompletion | formatMediumDate }}</span>
+            </dd>
+          </div>
+          <div class="col-md-2">
+            <dt><span jhiTranslate="bitsHrPayrollApp.trainingHistory.employee">Employee</span></dt>
+          </div>
+          <div class="col-md-4">
+            <dd>
+              <div *ngIf="trainingHistory.employeeId">
+                <a [routerLink]="['/employee-custom', trainingHistory.employeeId, 'view']"
+                  >{{ trainingHistory.employeeName }} - {{ trainingHistory.pin }}</a
+                >
+              </div>
+            </dd>
+          </div>
+        </div>
+      </dl>
+
+      <button (click)="previousState()" class="btn btn-info" type="submit">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button [routerLink]="['/training-history', trainingHistory.id, 'edit']" class="btn btn-primary" type="button">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

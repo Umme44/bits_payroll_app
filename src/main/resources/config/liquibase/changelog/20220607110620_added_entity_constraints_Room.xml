@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity Room.
+    -->
+    <changeSet id="20220607110620-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="created_by_id"
+                                 baseTableName="room"
+                                 constraintName="fk_room__created_by_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="updated_by_id"
+                                 baseTableName="room"
+                                 constraintName="fk_room__updated_by_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="building_id"
+                                 baseTableName="room"
+                                 constraintName="fk_room__building_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="building"/>
+
+        <addForeignKeyConstraint baseColumnNames="floor_id"
+                                 baseTableName="room"
+                                 constraintName="fk_room__floor_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="floor"/>
+
+        <addForeignKeyConstraint baseColumnNames="room_type_id"
+                                 baseTableName="room"
+                                 constraintName="fk_room__room_type_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="room_type"/>
+    </changeSet>
+</databaseChangeLog>

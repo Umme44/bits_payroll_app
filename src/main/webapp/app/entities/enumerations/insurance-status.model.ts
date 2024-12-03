@@ -1,0 +1,11 @@
+export enum InsuranceStatus {
+  PENDING = 'PENDING',
+
+  APPROVED = 'APPROVED',
+
+  NOT_APPROVED = 'NOT_APPROVED',
+
+  CANCELED = 'CANCELED',
+
+  SEPARATED = 'SEPARATED',
+}

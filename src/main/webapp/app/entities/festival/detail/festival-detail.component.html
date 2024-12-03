@@ -1,0 +1,56 @@
+<jhi-header [headerName]="'Festival Details'"
+            [midHeaderName01]="'Festivals'" [midRouterLinkText01]="'/festival'">
+</jhi-header>
+
+
+<div *ngIf="festival">
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <div class="card card-body">
+    <div class="row font-sm">
+      <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.festival.title">Title</span></dt>
+      <dd class="col-md-3">
+        <span>{{ festival.title }}</span>
+      </dd>
+      <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.festival.festivalName">Festival Name</span></dt>
+      <dd class="col-md-3">
+        <span>{{ festival.festivalName }}</span>
+      </dd>
+      <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.festival.festivalDate">Festival Date</span></dt>
+      <dd class="col-md-3">
+        <span>{{ festival.festivalDate | formatMediumDate }}</span>
+      </dd>
+      <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.festival.bonusDisbursementDate">Bonus Disbursement Date</span></dt>
+      <dd class="col-md-3">
+        <span>{{ festival.bonusDisbursementDate | formatMediumDate }}</span>
+      </dd>
+      <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.festival.religion">Religion</span></dt>
+      <dd class="col-md-3">
+                <span
+                  jhiTranslate="{{ 'bitsHrPayrollApp.Religion.' + festival.religion }}">{{ festival.religion }}</span>
+      </dd>
+      <dt class="col-md-3"><span>Type</span></dt>
+      <dd class="col-md-3">
+        <span>{{ festival.isProRata ? 'Pro Rata' : 'General' }}</span>
+      </dd>
+    </div>
+  </div>
+
+  <!--<button type="submit"
+          (click)="previousState()"
+          class="btn btn-info">
+      <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+  </button>
+
+  <button type="button"
+          [routerLink]="['/festival', festival.id, 'edit']"
+          class="btn btn-primary">
+      <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+  </button>-->
+
+
+
+  <jhi-festival-bonus-details-list [festivalId]="festival.id!"></jhi-festival-bonus-details-list>
+</div>
+

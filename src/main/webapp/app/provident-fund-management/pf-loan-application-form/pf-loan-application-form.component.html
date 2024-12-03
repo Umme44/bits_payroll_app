@@ -1,0 +1,127 @@
+<div>
+  <jhi-header
+    [addButtonText]="'Apply PF Loan'"
+    [headerName]="'PF Loan Application'"
+    [routerLinkText]="'/pf/pf-loan-application-form/new'"
+    [shouldHaveHr]="false"
+  >
+  </jhi-header>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="table-responsive" id="entities" *ngIf="pfLoanApplications && pfLoanApplications.length > 0">
+    <table class="table table-hover list-text-color" aria-describedby="page-heading">
+      <thead class="text-nowrap">
+        <tr>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.pfLoanApplication.pfCode">Pf Account</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.pfLoanApplication.accHolderName">Acc Holder Name</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.pfLoanApplication.designationName">Designation</span></th>
+          <th class="text-start" scope="col" jhiSortBy="installmentAmount">
+            <span jhiTranslate="bitsHrPayrollApp.pfLoanApplication.installmentAmount">Installment Amount</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th class="text-end" scope="col" jhiSortBy="noOfInstallment">
+            <span jhiTranslate="bitsHrPayrollApp.pfLoanApplication.noOfInstallment">No Of Installment</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="status">
+            <span jhiTranslate="bitsHrPayrollApp.pfLoanApplication.status">Status</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="disbursementDate">
+            <span>Start Date</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th class="text-end" scope="col" jhiSortBy="disbursementAmount">
+            <span>Loan Amount</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pfLoanApplication of pfLoanApplications; trackBy: trackId">
+          <td>{{ pfLoanApplication.pfCode }}</td>
+          <td>{{ pfLoanApplication.accHolderName }}</td>
+          <td>{{ pfLoanApplication.designationName }}</td>
+          <td class="text-end">{{ pfLoanApplication.installmentAmount | number }}</td>
+          <td class="text-end">{{ pfLoanApplication.noOfInstallment }}</td>
+          <td jhiTranslate="{{ 'bitsHrPayrollApp.Status.' + pfLoanApplication.status }}">{{ pfLoanApplication.status }}</td>
+          <td>{{ pfLoanApplication.disbursementDate | formatMediumDate }}</td>
+          <td class="text-end">{{ pfLoanApplication.disbursementAmount | number }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                *ngIf="false"
+                type="submit"
+                [routerLink]="['/pf/pf-loan-application-form', pfLoanApplication.id, 'approved']"
+                class="btn btn-info btn-sm px-md-3"
+                data-placement="top"
+                data-toggle="tooltip"
+                title="Approved View"
+              >
+                <fa-icon icon="eye"></fa-icon>
+              </button>
+              <ng-container>
+                <button
+                  type="submit"
+                  [routerLink]="['/pf/pf-loan-application-form', pfLoanApplication.id, 'view']"
+                  class="btn btn-info btn-sm px-md-3"
+                  data-placement="top"
+                  data-toggle="tooltip"
+                  title="View"
+                >
+                  <fa-icon icon="eye"></fa-icon>
+                </button>
+
+                <button
+                  *ngIf="pfLoanApplication.status === 'PENDING'"
+                  type="submit"
+                  [routerLink]="['/pf/pf-loan-application-form', pfLoanApplication.id, 'edit']"
+                  class="btn btn-primary btn-sm px-md-3"
+                  data-placement="top"
+                  data-toggle="tooltip"
+                  title="Edit"
+                >
+                  <fa-icon icon="pencil-alt"></fa-icon>
+                </button>
+
+                <button
+                  *ngIf="pfLoanApplication.status === 'PENDING'"
+                  type="submit"
+                  (click)="delete(pfLoanApplication)"
+                  class="btn btn-danger btn-sm px-md-3"
+                  data-placement="top"
+                  data-toggle="tooltip"
+                  title="Delete"
+                >
+                  <fa-icon icon="times"></fa-icon>
+                </button>
+              </ng-container>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="pfLoanApplications && pfLoanApplications.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

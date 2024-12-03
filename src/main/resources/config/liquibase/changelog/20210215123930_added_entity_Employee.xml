@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity Employee.
+    -->
+    <changeSet id="20210215123930-1" author="jhipster">
+        <createTable tableName="employee">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="reference_id" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="pin" type="varchar(255)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_employee__pin" />
+            </column>
+            <column name="picture" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="full_name" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="sur_name" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="national_id_no" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="date_of_birth" type="date">
+                <constraints nullable="true" />
+            </column>
+            <column name="place_of_birth" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="father_name" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="mother_name" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="blood_group" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="present_address" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="permanent_address" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="personal_contact_no" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="personal_email" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="religion" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="marital_status" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="date_of_marriage" type="date">
+                <constraints nullable="true" />
+            </column>
+            <column name="spouse_name" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="official_email" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="official_contact_no" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="office_phone_extension" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="whatsapp_id" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="skype_id" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="emergency_contact_person_name" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="emergency_contact_person_relationship_with_employee" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="emergency_contact_person_contact_number" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="main_gross_salary" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="employee_category" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="location" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="date_of_joining" type="date">
+                <constraints nullable="true" />
+            </column>
+            <column name="date_of_confirmation" type="date">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_probationary_period_extended" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="probation_period_extended_to" type="date">
+                <constraints nullable="true" />
+            </column>
+            <column name="pay_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="disbursement_method" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="bank_name" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="bank_account_no" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="mobile_celling" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="bkash_number" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="card_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="card_number" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="tin_number" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="passport_no" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="passport_place_of_issue" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="passport_issued_date" type="date">
+                <constraints nullable="true" />
+            </column>
+            <column name="passport_expiry_date" type="date">
+                <constraints nullable="true" />
+            </column>
+            <column name="gender" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="welfare_fund_deduction" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="employment_status" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="has_disabled_child" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_first_time_ait_giver" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_salary_hold" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_festival_bonus_hold" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_physically_disabled" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_freedom_fighter" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="has_over_time" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="probation_period_end_date" type="date">
+                <constraints nullable="true" />
+            </column>
+            <column name="contract_period_extended_to" type="date">
+                <constraints nullable="true" />
+            </column>
+            <column name="contract_period_end_date" type="date">
+                <constraints nullable="true" />
+            </column>
+            <column name="card_type_02" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="card_number_02" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="card_type_03" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="card_number_03" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="allowance_01" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="allowance_01_effective_from" type="date">
+                <constraints nullable="true" />
+            </column>
+            <column name="allowance_01_effective_to" type="date">
+                <constraints nullable="true" />
+            </column>
+            <column name="allowance_02" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="allowance_02_effective_from" type="date">
+                <constraints nullable="true" />
+            </column>
+            <column name="allowance_02_effective_to" type="date">
+                <constraints nullable="true" />
+            </column>
+            <column name="allowance_03" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="allowance_03_effective_from" type="date">
+                <constraints nullable="true" />
+            </column>
+            <column name="allowance_03_effective_to" type="date">
+                <constraints nullable="true" />
+            </column>
+            <column name="allowance_04" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="allowance_04_effective_from" type="date">
+                <constraints nullable="true" />
+            </column>
+            <column name="allowance_04_effective_to" type="date">
+                <constraints nullable="true" />
+            </column>
+            <column name="allowance_05" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="allowance_05_effective_from" type="date">
+                <constraints nullable="true" />
+            </column>
+            <column name="allowance_05_effective_to" type="date">
+                <constraints nullable="true" />
+            </column>
+            <column name="allowance_06" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="allowance_06_effective_from" type="date">
+                <constraints nullable="true" />
+            </column>
+            <column name="allowance_06_effective_to" type="date">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_tax_paid_by_organisation" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="created_by" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="created_at" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="updated_by" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="updated_at" type="date">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_allowed_to_give_online_attendance" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="notice_period_in_days" type="integer">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_fixed_term_contract" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="current_in_time" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="current_out_time" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="online_attendance_sanctioned_at" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_nid_verified" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="can_raise_rrf_on_behalf" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="taxes_circle" type="varchar(250)">
+                <constraints nullable="true" />
+            </column>
+            <column name="taxes_zone" type="varchar(250)">
+                <constraints nullable="true" />
+            </column>
+            <column name="can_manage_tax_acknowledgement_receipt" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_eligible_for_automated_attendance" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_festival_bonus_disabled" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_currently_resigned" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="floor" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="desk_location" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_billable_resource" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_augmented_resource" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="last_working_day" type="date">
+                <constraints nullable="true" />
+            </column>
+            <column name="office_location_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="designation_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="department_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="reporting_to_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="nationality_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="bank_branch_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="band_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="unit_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_employee__user_id" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+        </createTable>
+        <dropDefaultValue tableName="employee" columnName="created_at" columnDataType="${datetimeType}"/>
+        <dropDefaultValue tableName="employee" columnName="current_in_time" columnDataType="${datetimeType}"/>
+        <dropDefaultValue tableName="employee" columnName="current_out_time" columnDataType="${datetimeType}"/>
+        <dropDefaultValue tableName="employee" columnName="online_attendance_sanctioned_at" columnDataType="${datetimeType}"/>
+    </changeSet>
+
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+
+    <!--
+        Load sample data generated with Faker.js
+        - This data can be easily edited using a CSV editor (or even MS Excel) and
+          is located in the 'src/main/resources/config/liquibase/fake-data' directory
+        - By default this data is applied when running with the JHipster 'dev' profile.
+          This can be customized by adding or removing 'faker' in the 'spring.liquibase.contexts'
+          Spring Boot configuration key.
+    -->
+    <changeSet id="20210215123930-1-data" author="jhipster" context="faker">
+        <loadData
+                  file="config/liquibase/fake-data/employee.csv"
+                  separator=";"
+                  tableName="employee"
+                  usePreparedStatements="true">
+            <column name="id" type="numeric"/>
+            <column name="reference_id" type="string"/>
+            <column name="pin" type="string"/>
+            <column name="picture" type="string"/>
+            <column name="full_name" type="string"/>
+            <column name="sur_name" type="string"/>
+            <column name="national_id_no" type="string"/>
+            <column name="date_of_birth" type="date"/>
+            <column name="place_of_birth" type="string"/>
+            <column name="father_name" type="string"/>
+            <column name="mother_name" type="string"/>
+            <column name="blood_group" type="string"/>
+            <column name="present_address" type="string"/>
+            <column name="permanent_address" type="string"/>
+            <column name="personal_contact_no" type="string"/>
+            <column name="personal_email" type="string"/>
+            <column name="religion" type="string"/>
+            <column name="marital_status" type="string"/>
+            <column name="date_of_marriage" type="date"/>
+            <column name="spouse_name" type="string"/>
+            <column name="official_email" type="string"/>
+            <column name="official_contact_no" type="string"/>
+            <column name="office_phone_extension" type="string"/>
+            <column name="whatsapp_id" type="string"/>
+            <column name="skype_id" type="string"/>
+            <column name="emergency_contact_person_name" type="string"/>
+            <column name="emergency_contact_person_relationship_with_employee" type="string"/>
+            <column name="emergency_contact_person_contact_number" type="string"/>
+            <column name="main_gross_salary" type="numeric"/>
+            <column name="employee_category" type="string"/>
+            <column name="location" type="string"/>
+            <column name="date_of_joining" type="date"/>
+            <column name="date_of_confirmation" type="date"/>
+            <column name="is_probationary_period_extended" type="boolean"/>
+            <column name="probation_period_extended_to" type="date"/>
+            <column name="pay_type" type="string"/>
+            <column name="disbursement_method" type="string"/>
+            <column name="bank_name" type="string"/>
+            <column name="bank_account_no" type="string"/>
+            <column name="mobile_celling" type="numeric"/>
+            <column name="bkash_number" type="string"/>
+            <column name="card_type" type="string"/>
+            <column name="card_number" type="string"/>
+            <column name="tin_number" type="string"/>
+            <column name="passport_no" type="string"/>
+            <column name="passport_place_of_issue" type="string"/>
+            <column name="passport_issued_date" type="date"/>
+            <column name="passport_expiry_date" type="date"/>
+            <column name="gender" type="string"/>
+            <column name="welfare_fund_deduction" type="numeric"/>
+            <column name="employment_status" type="string"/>
+            <column name="has_disabled_child" type="boolean"/>
+            <column name="is_first_time_ait_giver" type="boolean"/>
+            <column name="is_salary_hold" type="boolean"/>
+            <column name="is_festival_bonus_hold" type="boolean"/>
+            <column name="is_physically_disabled" type="boolean"/>
+            <column name="is_freedom_fighter" type="boolean"/>
+            <column name="has_over_time" type="boolean"/>
+            <column name="probation_period_end_date" type="date"/>
+            <column name="contract_period_extended_to" type="date"/>
+            <column name="contract_period_end_date" type="date"/>
+            <column name="card_type_02" type="string"/>
+            <column name="card_number_02" type="string"/>
+            <column name="card_type_03" type="string"/>
+            <column name="card_number_03" type="string"/>
+            <column name="allowance_01" type="numeric"/>
+            <column name="allowance_01_effective_from" type="date"/>
+            <column name="allowance_01_effective_to" type="date"/>
+            <column name="allowance_02" type="numeric"/>
+            <column name="allowance_02_effective_from" type="date"/>
+            <column name="allowance_02_effective_to" type="date"/>
+            <column name="allowance_03" type="numeric"/>
+            <column name="allowance_03_effective_from" type="date"/>
+            <column name="allowance_03_effective_to" type="date"/>
+            <column name="allowance_04" type="numeric"/>
+            <column name="allowance_04_effective_from" type="date"/>
+            <column name="allowance_04_effective_to" type="date"/>
+            <column name="allowance_05" type="numeric"/>
+            <column name="allowance_05_effective_from" type="date"/>
+            <column name="allowance_05_effective_to" type="date"/>
+            <column name="allowance_06" type="numeric"/>
+            <column name="allowance_06_effective_from" type="date"/>
+            <column name="allowance_06_effective_to" type="date"/>
+            <column name="is_tax_paid_by_organisation" type="boolean"/>
+            <column name="created_by" type="string"/>
+            <column name="created_at" type="date"/>
+            <column name="updated_by" type="string"/>
+            <column name="updated_at" type="date"/>
+            <column name="is_allowed_to_give_online_attendance" type="boolean"/>
+            <column name="notice_period_in_days" type="numeric"/>
+            <column name="is_fixed_term_contract" type="boolean"/>
+            <column name="current_in_time" type="date"/>
+            <column name="current_out_time" type="date"/>
+            <column name="online_attendance_sanctioned_at" type="date"/>
+            <column name="is_nid_verified" type="boolean"/>
+            <column name="can_raise_rrf_on_behalf" type="boolean"/>
+            <column name="taxes_circle" type="string"/>
+            <column name="taxes_zone" type="string"/>
+            <column name="can_manage_tax_acknowledgement_receipt" type="boolean"/>
+            <column name="is_eligible_for_automated_attendance" type="boolean"/>
+            <column name="is_festival_bonus_disabled" type="boolean"/>
+            <column name="is_currently_resigned" type="boolean"/>
+            <column name="floor" type="string"/>
+            <column name="desk_location" type="string"/>
+            <column name="is_billable_resource" type="boolean"/>
+            <column name="is_augmented_resource" type="boolean"/>
+            <column name="last_working_day" type="date"/>
+            <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
+        </loadData>
+    </changeSet>
+</databaseChangeLog>

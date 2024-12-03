@@ -1,0 +1,10 @@
+{
+  "bitsHrPayrollApp": {
+    "NoticeStatus": {
+      "null": "",
+      "PUBLISHED": "PUBLISHED",
+      "UNPUBLISHED": "UNPUBLISHED",
+      "DRAFT": "DRAFT"
+    }
+  }
+}

@@ -1,0 +1,67 @@
+<div class="modal-header row">
+  <div class="col-md-9">Leave Applications for Regularizing</div>
+  <div class="col-md-2">
+    <button (click)="export('summary')" class="btn btn-outline-primary" data-dismiss="modal" type="button">
+      <fa-icon icon="download"></fa-icon>&nbsp;<span>Download</span>
+    </button>
+  </div>
+</div>
+
+<div class="container modal-body">
+  <div *ngIf="leaveApplications?.length === 0" class="alert alert-warning" id="no-result">
+    <span jhiTranslate="bitsHrPayrollApp.leaveApplication.home.notFound">No leaveApplications found</span>
+  </div>
+
+  <div *ngIf="leaveApplications && leaveApplications.length > 0">
+    <table aria-describedby="page-heading" class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col"><span>PIN</span></th>
+          <th scope="col"><span>Name</span></th>
+          <th scope="col"><span>Designation</span></th>
+
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.leaveApplication.leaveType">Leave Type</span></th>
+
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.leaveApplication.startDate">Start Date</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.leaveApplication.endDate">End Date</span></th>
+          <th scope="col"><span> Duration </span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let leaveApplication of leaveApplications; trackBy: trackId">
+          <td>
+            <div *ngIf="leaveApplication.employeeId != null">
+              {{ leaveApplication.pin }}
+            </div>
+          </td>
+
+          <td>
+            <div>
+              {{ this.leaveApplication.fullName! }}
+            </div>
+          </td>
+
+          <td>
+            <div>
+              {{ this.leaveApplication.designationName }}
+            </div>
+          </td>
+          <td jhiTranslate="{{ 'bitsHrPayrollApp.LeaveType.' + leaveApplication.leaveType }}">{{ leaveApplication.leaveType }}</td>
+          <td>{{ leaveApplication!.startDate | formatMediumDate }}</td>
+          <td>{{ leaveApplication!.endDate | formatMediumDate }}</td>
+          <td>{{ leaveApplication!.durationInDay }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button (click)="leaveRegularize()" [disabled]="noLeaveApplications" class="btn btn-primary" data-dismiss="modal" type="button">
+    <fa-icon icon="spinner"></fa-icon>&nbsp;<span>Regularize</span>
+  </button>
+  <button (click)="cancel()" class="btn btn-secondary" data-dismiss="modal" type="button">
+    <fa-icon icon="ban"></fa-icon>&nbsp;<span>Close</span>
+  </button>
+</div>

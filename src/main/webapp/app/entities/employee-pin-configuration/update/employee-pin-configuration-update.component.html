@@ -1,0 +1,131 @@
+<jhi-header
+  [headerName]="editForm.get(['id'])!.value ? 'Update PIN Configuration' : 'Create PIN Configuration'"
+  [midHeaderName01]="'PIN Configuration'"
+  [midRouterLinkText01]="'/employee-pin-configuration'"
+>
+</jhi-header>
+
+<div class="row justify-content-center">
+  <!--    <jhi-alert-error></jhi-alert-error>-->
+
+  <div class="col-12">
+    <form class="card card-body" name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <div class="row">
+        <div class="mb-3 col-md-4">
+          <label
+            class="form-control-label"
+            jhiTranslate="bitsHrPayrollApp.employeePinConfiguration.employeeCategory"
+            for="field_employeeCategory"
+            >Employee Category</label
+          >
+          <select
+            (change)="onChangeEmployeeCategory()"
+            class="form-control"
+            name="employeeCategory"
+            formControlName="employeeCategory"
+            id="field_employeeCategory"
+          >
+            <option value="REGULAR_CONFIRMED_EMPLOYEE">Regular</option>
+            <option value="CONTRACTUAL_EMPLOYEE">By Contract</option>
+            <option value="INTERN">Intern</option>
+          </select>
+          <div
+            *ngIf="
+              editForm.get('employeeCategory')!.invalid &&
+              (editForm.get('employeeCategory')!.dirty || editForm.get('employeeCategory')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('employeeCategory')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="mb-3 col-md-4">
+          <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.employeePinConfiguration.sequenceStart" for="field_sequenceStart"
+            >Sequence Start</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="sequenceStart"
+            id="field_sequenceStart"
+            (input)="onChangePinSequence()"
+            formControlName="sequenceStart"
+          />
+          <div
+            *ngIf="
+              editForm.get('sequenceStart')!.invalid && (editForm.get('sequenceStart')!.dirty || editForm.get('sequenceStart')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('sequenceStart')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+
+            <small *ngIf="editForm.get('sequenceStart')?.errors?.pattern" class="form-text text-danger">
+              Special characters are not allowed.
+            </small>
+          </div>
+
+          <div *ngIf="pinSequenceIsUnique === false">
+            <small class="form-text text-danger"> This PIN sequence is overlapping with other PIN configurations. </small>
+          </div>
+
+          <div *ngIf="invalidPinSequence === true">
+            <small class="form-text text-danger"> Invalid Pin Sequence. </small>
+          </div>
+        </div>
+
+        <div class="mb-3 col-md-4">
+          <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.employeePinConfiguration.sequenceEnd" for="field_sequenceEnd"
+            >Sequence End</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="sequenceEnd"
+            id="field_sequenceEnd"
+            (input)="onChangePinSequence()"
+            formControlName="sequenceEnd"
+          />
+          <div *ngIf="editForm.get('sequenceEnd')!.invalid && (editForm.get('sequenceEnd')!.dirty || editForm.get('sequenceEnd')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('sequenceEnd')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+
+            <small *ngIf="editForm.get('sequenceEnd')?.errors?.pattern" class="form-text text-danger">
+              Special characters are not allowed.
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          [disabled]="editForm.invalid || isSaving || !pinSequenceIsUnique || invalidPinSequence"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,137 @@
+<div>
+  <form (ngSubmit)="save()" [formGroup]="editForm" name="editForm" novalidate role="form">
+    <div class="">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label
+              class="form-control-label required"
+              for="field_nameOfDegree"
+              jhiTranslate="bitsHrPayrollApp.educationDetails.nameOfDegree"
+              >Name Of Degree</label
+            >
+            <input class="form-control" formControlName="nameOfDegree" id="field_nameOfDegree" name="nameOfDegree" type="text" />
+            <div
+              *ngIf="
+                editForm.get('nameOfDegree')!.invalid && (editForm.get('nameOfDegree')!.dirty || editForm.get('nameOfDegree')!.touched)
+              "
+            >
+              <small
+                *ngIf="editForm.get('nameOfDegree')?.errors?.required || editForm.get('nameOfDegree')?.errors?.notOnlyWhitespace"
+                class="form-text text-danger"
+                jhiTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+              <small *ngIf="editForm.get('nameOfDegree')?.errors?.maxlength" class="form-text text-danger">
+                This field cannot be longer than 255 characters.
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label class="form-control-label required" for="field_subject" jhiTranslate="bitsHrPayrollApp.educationDetails.subject"
+              >Subject</label
+            >
+            <input class="form-control" formControlName="subject" id="field_subject" name="subject" type="text" />
+            <div *ngIf="editForm.get('subject')!.invalid && (editForm.get('subject')!.dirty || editForm.get('subject')!.touched)">
+              <small
+                *ngIf="editForm.get('subject')?.errors?.required || editForm.get('subject')?.errors?.notOnlyWhitespace"
+                class="form-text text-danger"
+                jhiTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+              <small *ngIf="editForm.get('subject')?.errors?.maxlength" class="form-text text-danger">
+                This field cannot be longer than 255 characters.
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label class="form-control-label required" for="field_institute" jhiTranslate="bitsHrPayrollApp.educationDetails.institute"
+              >Institute</label
+            >
+            <input class="form-control" formControlName="institute" id="field_institute" name="institute" type="text" />
+            <div *ngIf="editForm.get('institute')!.invalid && (editForm.get('institute')!.dirty || editForm.get('institute')!.touched)">
+              <small
+                *ngIf="editForm.get('institute')?.errors?.required || editForm.get('institute')?.errors?.notOnlyWhitespace"
+                class="form-text text-danger"
+                jhiTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+              <small *ngIf="editForm.get('institute')?.errors?.maxlength" class="form-text text-danger">
+                This field cannot be longer than 255 characters.
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label
+              class="form-control-label required"
+              for="field_yearOfDegreeCompletion"
+              jhiTranslate="bitsHrPayrollApp.educationDetails.yearOfDegreeCompletion"
+              >Year Of Degree Completion</label
+            >
+            <input
+              class="form-control"
+              formControlName="yearOfDegreeCompletion"
+              id="field_yearOfDegreeCompletion"
+              name="yearOfDegreeCompletion"
+              type="number"
+            />
+            <div
+              *ngIf="
+                editForm.get('yearOfDegreeCompletion')!.invalid &&
+                (editForm.get('yearOfDegreeCompletion')!.dirty || editForm.get('yearOfDegreeCompletion')!.touched)
+              "
+            >
+              <small
+                *ngIf="editForm.get('yearOfDegreeCompletion')?.errors?.required"
+                class="form-text text-danger"
+                jhiTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+              <small
+                *ngIf="editForm.get('yearOfDegreeCompletion')?.errors?.min"
+                [translateValues]="{ min: 1900 }"
+                class="form-text text-danger"
+                jhiTranslate="entity.validation.min"
+              >
+                This field should be at least 1900.
+              </small>
+              <small
+                *ngIf="editForm.get('yearOfDegreeCompletion')?.errors?.max"
+                [translateValues]="{ max: 2100 }"
+                class="form-text text-danger"
+                jhiTranslate="entity.validation.max"
+              >
+                This field cannot be more than 2100.
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-2">
+        <button (click)="clear()" class="btn btn-danger" id="cancel-save" type="button">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Clear</span>
+        </button>
+
+        <button [disabled]="editForm.invalid || isSaving" class="btn btn-primary" id="save-entity" type="submit">
+          <fa-icon icon="save"></fa-icon>&nbsp;
+          <span *ngIf="!editForm.get('id')!.value">Save</span>
+          <span *ngIf="editForm.get('id')!.value">Update</span>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

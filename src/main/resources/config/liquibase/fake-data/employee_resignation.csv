@@ -1,0 +1,11 @@
+id;created_at;updated_at;resignation_date;approval_status;approval_comment;is_salary_hold;is_festival_bonus_hold;resignation_reason;last_working_day
+1;2021-05-16;2021-05-16;2021-05-16;APPROVED;THX;false;true;cross-platform Borders payment;2021-05-16
+2;2021-05-17;2021-05-16;2021-05-17;NOT_APPROVED;middleware;false;true;interfaces;2021-05-17
+3;2021-05-16;2021-05-17;2021-05-16;NOT_APPROVED;Liberia;true;true;Handcrafted;2021-05-16
+4;2021-05-17;2021-05-17;2021-05-16;NOT_APPROVED;microchip;true;false;Palladium action-items scalable;2021-05-16
+5;2021-05-16;2021-05-16;2021-05-16;APPROVED;hack deliverables;true;false;cross-platform customer indigo;2021-05-17
+6;2021-05-16;2021-05-16;2021-05-16;NOT_APPROVED;Factors;true;true;Island Account;2021-05-17
+7;2021-05-16;2021-05-16;2021-05-17;NOT_APPROVED;1080p Computers yellow;true;false;cross-platform Movies Jewelery;2021-05-17
+8;2021-05-16;2021-05-16;2021-05-17;NOT_APPROVED;Refined Gloves Intelligent;true;true;success Account New;2021-05-17
+9;2021-05-16;2021-05-17;2021-05-16;PENDING;EXE;true;true;SSL transmit;2021-05-17
+10;2021-05-16;2021-05-17;2021-05-17;PENDING;Indiana Intelligent;false;false;architecture invoice best-of-breed;2021-05-16

@@ -1,0 +1,63 @@
+<div>
+  <div *ngIf="band">
+    <jhi-header [headerName]="'Band Details'" [shouldHaveHr]="false"> </jhi-header>
+
+    <jhi-alert-error></jhi-alert-error>
+    <div class="container-fluid py-3">
+      <dl class="row-md jh-entity-details">
+        <div class="row">
+          <div class="col-md-2">
+            <dt><span jhiTranslate="bitsHrPayrollApp.band.bandName">Band Name</span></dt>
+          </div>
+          <div class="col-md-2">
+            <dd>
+              <span>{{ band.bandName }}</span>
+            </dd>
+          </div>
+          <div class="col-md-2">
+            <dt><span jhiTranslate="bitsHrPayrollApp.band.minSalary">Min Salary</span></dt>
+          </div>
+          <div class="col-md-2">
+            <dd>
+              <span>{{ band.minSalary }}</span>
+            </dd>
+          </div>
+          <div class="col-md-2">
+            <dt><span jhiTranslate="bitsHrPayrollApp.band.maxSalary">Max Salary</span></dt>
+          </div>
+          <div class="col-md-2">
+            <dd>
+              <span>{{ band.maxSalary }}</span>
+            </dd>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-2">
+            <dt><span jhiTranslate="bitsHrPayrollApp.band.welfareFund">Welfare Fund</span></dt>
+          </div>
+          <div class="col-md-2">
+            <dd>
+              <span>{{ band.welfareFund }}</span>
+            </dd>
+          </div>
+          <div class="col-md-2">
+            <dt><span jhiTranslate="bitsHrPayrollApp.band.mobileCelling">Mobile Celling</span></dt>
+          </div>
+          <div class="col-md-2">
+            <dd>
+              <span>{{ band.mobileCelling }}</span>
+            </dd>
+          </div>
+        </div>
+      </dl>
+
+      <button (click)="previousState()" class="btn btn-info" type="submit">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button [routerLink]="['/band', band.id, 'edit']" class="btn btn-primary" type="button">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

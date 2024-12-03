@@ -1,0 +1,109 @@
+<div>
+  <jhi-header [addButtonText]="'add new Holidays'" [headerName]="'Holidays'" [routerLinkText]="'/holidays/new'" [shouldHaveHr]="false">
+  </jhi-header>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+</div>
+
+<div class="card mb-3">
+  <div class="row px-5 pt-2 pb-3">
+    <div class="col-md-6">
+      <div class="form-group">
+        <label class="form-control-label">Select Year</label>
+        <jhi-select-year
+          [showWithPlaceHolder]="false"
+          [startFromCurrentYear]="true"
+          [countOfLastYears]="10"
+          (selectYearEventEmitter)="loadAllOfAYear($event)"
+        >
+        </jhi-select-year>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="holidays && holidays.length > 0" class="table-responsive" id="entities">
+  <table aria-describedby="page-heading" class="table table-hover list-text-color">
+    <thead>
+      <tr>
+        <th scope="col"><span jhiTranslate="bitsHrPayrollApp.holidays.holidayType">Holiday Type</span></th>
+        <th scope="col"><span jhiTranslate="bitsHrPayrollApp.holidays.description">Description</span></th>
+        <th scope="col"><span jhiTranslate="bitsHrPayrollApp.holidays.startDate">Start Date</span></th>
+        <th scope="col"><span jhiTranslate="bitsHrPayrollApp.holidays.endDate">End Date</span></th>
+        <th scope="col"><span>Durations</span></th>
+        <th scope="col"><span jhiTranslate="bitsHrPayrollApp.holidays.isMoonDependent">Is Moon Dependent</span></th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let holiday of holidays; trackBy: trackId">
+        <td jhiTranslate="{{ 'bitsHrPayrollApp.HolidayType.' + holiday.holidayType }}">{{ holiday.holidayType }}</td>
+        <td>
+          <span>
+            {{ holiday.isMoonDependent && holiday.isMoonDependent === true ? '*' : '' }}
+          </span>
+          {{ holiday.description }}
+        </td>
+        <td>{{ holiday.startDate | formatMediumDate }}</td>
+        <td>{{ holiday.endDate | formatMediumDate }}</td>
+        <td>
+          <span *ngIf="holiday.startDate != null">
+            <span *ngIf="holiday.endDate != null">
+              {{ -holiday.startDate.diff(holiday.endDate, 'days') + 1 }}
+              {{ -holiday.startDate.diff(holiday.endDate, 'days') + 1 > 1 ? 'days' : 'day' }}
+            </span>
+          </span>
+        </td>
+
+        <td>{{ holiday.isMoonDependent ? 'Yes' : 'No' }}</td>
+
+        <td class="text-end">
+          <div class="btn-group">
+            <button
+              [routerLink]="['/holidays', holiday.id, 'view']"
+              class="btn btn-info btn-sm px-md-3"
+              data-placement="top"
+              data-toggle="tooltip"
+              title="View"
+              type="submit"
+            >
+              <fa-icon icon="eye"></fa-icon>
+            </button>
+
+            <button
+              [routerLink]="['/holidays', holiday.id, 'edit']"
+              class="btn btn-primary btn-sm px-md-3"
+              data-placement="top"
+              data-toggle="tooltip"
+              title="Edit"
+              type="submit"
+            >
+              <fa-icon icon="pencil-alt"></fa-icon>
+            </button>
+
+            <button
+              (click)="delete(holiday)"
+              class="btn btn-danger btn-sm px-md-3"
+              data-placement="top"
+              data-toggle="tooltip"
+              title="Delete"
+              type="submit"
+            >
+              <fa-icon icon="times"></fa-icon>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div>
+    <small class="color-muted-blue"> * Subject to the appearance of the Moon </small>
+  </div>
+
+  <div *ngIf="!holidays || holidays.length === 0" style="height: 75vh" class="text-center d-flex align-items-center justify-content-center">
+    <img src="../../../content/images/holiday.svg" width="400px" height="400px" />
+  </div>
+</div>

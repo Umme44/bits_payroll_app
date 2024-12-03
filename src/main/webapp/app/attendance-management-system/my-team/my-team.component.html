@@ -1,0 +1,190 @@
+<div>
+  <jhi-header
+    [headerName]="'My Team'"
+    [shouldHaveHr]="false"
+    [midHeaderName01]="'Attendances'"
+    [midRouterLinkText01]="'/'"
+    [midHeader01hasSessionStorage]="true"
+    [midHeader01SessionStorageKey]="'keepAttendancesModalOpen'"
+    [midHeader01SessionStorageValue]="'yes'"
+  >
+  </jhi-header>
+  <jhi-alert-error></jhi-alert-error>
+  <jhi-alert></jhi-alert>
+
+  <div class="mb-2">
+    <div class="row">
+      <!--style="width: 37.5%"-->
+      <div class="col-md-4 me-md-5 col-sm-12">
+        <jhi-search-text-box [placeHolderText]="'Search'" [searchBoxSize]="'18rem'" (searchEvent)="onSearchTextChangeV2($event)">
+        </jhi-search-text-box>
+      </div>
+
+      <!--style="width: 62.5%"-->
+      <div *ngIf="myTeamFiltered && myTeamFiltered.length > 0" class="col-md-6 col-sm-12 my-sm-2 my-md-0">
+        <table class="table-sm text-center border-0">
+          <tbody>
+            <tr>
+              <td class="text-danger w-4-point-5 table-attendance-danger">A</td>
+              <td class="legend-text">Absent</td>
+
+              <td class="text-black-50 w-4-point-5 table-attendance-active">H</td>
+              <td class="legend-text">Holiday</td>
+
+              <td class="text-secondary w-4-point-5 table-attendance-warning">Lt</td>
+              <td class="legend-text">Late</td>
+
+              <td class="text-warning w-4-point-5 table-attendance-active">L</td>
+              <td class="legend-text">Leave</td>
+
+              <td class="w-4-point-5 table-attendance-success">M</td>
+              <td class="legend-text">Movement</td>
+
+              <td class="text-secondary w-4-point-5 table-attendance-warning">NF</td>
+              <td class="legend-text">NFOH</td>
+
+              <td class="w-4-point-5 table-attendance-success">P</td>
+              <td class="legend-text">Present</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="" id="entities2" *ngIf="myTeamFiltered && myTeamFiltered.length > 0; else showVectorImage">
+    <table
+      class="table table-hover table-sm text-center table-bordered list-text-color"
+      aria-describedby="page-heading"
+      data-name="my-team-table"
+    >
+      <thead class="list-text-color">
+        <tr>
+          <th scope="col"><span>PIN</span></th>
+          <th scope="col" class="td-th-employee-name text-start">
+            <span>NAME</span>
+          </th>
+          <th *ngFor="let attendanceTimeSheetMini of myTeam![0].attendances">
+            <ng-template #dateTipContent>
+              {{ attendanceTimeSheetMini.date | formatMediumDate }}
+            </ng-template>
+            <span [ngbTooltip]="dateTipContent" class="text-capitalize">
+              {{ attendanceTimeSheetMini.date | formatDayOfTheMonth }}
+              <br />
+              {{ attendanceTimeSheetMini.date | formatDayOfTheWeek }}
+            </span>
+          </th>
+        </tr>
+      </thead>
+      <tbody class="list-text-color">
+        <tr *ngFor="let team of myTeamFiltered">
+          <td class="legend-text text-center text-nowrap">{{ team.employee!.pin }}</td>
+          <td (click)="navigateMyTeamAts(team!.employee!.id!)" class="w-30 text-nowrap text-start hyper-link">
+            <!-- <ng-template #nameTipContent>
+                         {{ team.employee!.fullName }}
+                     </ng-template>-->
+            <span>
+              {{ normalizeEmployeeName(team.employee!.fullName) }}
+            </span>
+          </td>
+
+          <td
+            *ngFor="let attendanceTimeSheetMini of team.attendances"
+            class="w-4-point-5"
+            [ngClass]="{
+              'table-attendance-success':
+                attendanceTimeSheetMini.attendanceStatus == 'PRESENT' ||
+                attendanceTimeSheetMini.attendanceStatus == 'MOVEMENT' ||
+                attendanceTimeSheetMini.attendanceStatus === 'PRESENT_WEEKLY_OFFDAY' ||
+                attendanceTimeSheetMini.attendanceStatus === 'PRESENT_GOVT_HOLIDAY',
+              'table-attendance-danger': attendanceTimeSheetMini.attendanceStatus == 'ABSENT',
+              'table-attendance-warning':
+                attendanceTimeSheetMini.attendanceStatus == 'LATE' ||
+                attendanceTimeSheetMini.attendanceStatus == 'NON_FULFILLED_OFFICE_HOURS',
+              'table-attendance-info': attendanceTimeSheetMini.attendanceStatus == 'GOVT_HOLIDAY',
+              'table-attendance-active': attendanceTimeSheetMini.attendanceStatus == 'WEEKLY_OFFDAY'
+            }"
+          >
+            <ng-template #tipContentPresent>
+              <b>{{ attendanceTimeSheetMini.inTime | formatTime }} - {{ attendanceTimeSheetMini.outTime | formatTime }}</b>
+              <!--{{attendanceTimeSheetMini.date | formatMediumDate }}-->
+            </ng-template>
+
+            <ng-template #tipContentLate>
+              <b>{{ attendanceTimeSheetMini.inTime | formatTime }} - {{ attendanceTimeSheetMini.outTime | formatTime }}</b> <br />
+              Late {{ attendanceTimeSheetMini.lateDuration }}h
+            </ng-template>
+
+            <ng-template #tipContentNFOH>
+              <b>{{ attendanceTimeSheetMini.inTime | formatTime }} - {{ attendanceTimeSheetMini.outTime | formatTime }}</b> <br />
+            </ng-template>
+
+            <span class="text-secondary" *ngIf="attendanceTimeSheetMini.attendanceStatus === 'PRESENT'" [ngbTooltip]="tipContentPresent">
+              P
+            </span>
+
+            <span
+              class="text-secondary"
+              *ngIf="attendanceTimeSheetMini.attendanceStatus === 'PRESENT_WEEKLY_OFFDAY'"
+              [ngbTooltip]="tipContentPresent"
+            >
+              <!-- <fa-icon icon="check-circle"></fa-icon>-->
+              P
+            </span>
+
+            <span
+              class="text-secondary"
+              *ngIf="attendanceTimeSheetMini.attendanceStatus === 'PRESENT_GOVT_HOLIDAY'"
+              [ngbTooltip]="tipContentPresent"
+            >
+              <!-- <fa-icon icon="check-circle"></fa-icon>-->
+              P
+            </span>
+
+            <span
+              class="text-secondary"
+              *ngIf="attendanceTimeSheetMini.attendanceStatus === 'NON_FULFILLED_OFFICE_HOURS'"
+              [ngbTooltip]="tipContentNFOH"
+            >
+              NF
+            </span>
+
+            <span class="text-secondary" *ngIf="attendanceTimeSheetMini.attendanceStatus === 'LATE'" [ngbTooltip]="tipContentLate">
+              Lt
+            </span>
+            <span class="text-danger" *ngIf="attendanceTimeSheetMini.attendanceStatus === 'ABSENT'" ngbTooltip="Absent"> A </span>
+            <span
+              class="text-warning"
+              *ngIf="
+                attendanceTimeSheetMini.attendanceStatus === 'MENTIONABLE_ANNUAL_LEAVE' ||
+                attendanceTimeSheetMini.attendanceStatus === 'MENTIONABLE_CASUAL_LEAVE' ||
+                attendanceTimeSheetMini.attendanceStatus === 'NON_MENTIONABLE_COMPENSATORY_LEAVE' ||
+                attendanceTimeSheetMini.attendanceStatus === 'NON_MENTIONABLE_PANDEMIC_LEAVE' ||
+                attendanceTimeSheetMini.attendanceStatus === 'NON_MENTIONABLE_PATERNITY_LEAVE' ||
+                attendanceTimeSheetMini.attendanceStatus === 'NON_MENTIONABLE_MATERNITY_LEAVE' ||
+                attendanceTimeSheetMini.attendanceStatus === 'LEAVE' ||
+                attendanceTimeSheetMini.attendanceStatus === 'LEAVE_WITHOUT_PAY' ||
+                attendanceTimeSheetMini.attendanceStatus === 'LEAVE_WITHOUT_PAY_SANDWICH'
+              "
+              ngbTooltip="Leave"
+            >
+              L
+            </span>
+            <span class="text-black-50" *ngIf="attendanceTimeSheetMini.attendanceStatus === 'WEEKLY_OFFDAY'" ngbTooltip="Holiday"> H </span>
+            <span class="text-black-50" *ngIf="attendanceTimeSheetMini.attendanceStatus === 'GOVT_HOLIDAY'" ngbTooltip="Govt. Holiday">
+              H
+            </span>
+            <span class="text-black-50" *ngIf="attendanceTimeSheetMini.attendanceStatus === 'MOVEMENT'" ngbTooltip="Movement"> M </span>
+            <span class="text-black-50" *ngIf="attendanceTimeSheetMini.attendanceStatus === null"> - </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ng-template #showVectorImage class="empty-team-list">
+    <div class="empty-list-vector-image mt-5">
+      <img src="../../../content/images/svg/team_collaboration.svg" />
+    </div>
+  </ng-template>
+</div>

@@ -1,0 +1,354 @@
+<div>
+  <h2 id="page-heading" data-cy="EmployeeSalaryTempDataHeading">
+    <span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.home.title">Employee Salary Temp Data</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-employee-salary-temp-data"
+        [routerLink]="['/employee-salary-temp-data/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.home.createLabel"> Create a new Employee Salary Temp Data </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="employeeSalaryTempData?.length === 0">
+    <span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.home.notFound">No Employee Salary Temp Data found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="employeeSalaryTempData && employeeSalaryTempData.length > 0">
+    <table class="table table-hover list-text-color" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">ID</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="month">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.month">Month</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="year">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.year">Year</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="mainGrossSalary">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.mainGrossSalary">Main Gross Salary</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="mainGrossBasicSalary">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.mainGrossBasicSalary">Main Gross Basic Salary</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="mainGrossHouseRent">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.mainGrossHouseRent">Main Gross House Rent</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="mainGrossMedicalAllowance">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.mainGrossMedicalAllowance">Main Gross Medical Allowance</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="mainGrossConveyanceAllowance">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.mainGrossConveyanceAllowance"
+                >Main Gross Conveyance Allowance</span
+              >
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="absentDays">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.absentDays">Absent Days</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="fractionDays">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.fractionDays">Fraction Days</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="payableGrossSalary">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.payableGrossSalary">Payable Gross Salary</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="payableGrossBasicSalary">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.payableGrossBasicSalary">Payable Gross Basic Salary</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="payableGrossHouseRent">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.payableGrossHouseRent">Payable Gross House Rent</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="payableGrossMedicalAllowance">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.payableGrossMedicalAllowance"
+                >Payable Gross Medical Allowance</span
+              >
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="payableGrossConveyanceAllowance">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.payableGrossConveyanceAllowance"
+                >Payable Gross Conveyance Allowance</span
+              >
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="arrearSalary">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.arrearSalary">Arrear Salary</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="pfDeduction">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.pfDeduction">Pf Deduction</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="taxDeduction">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.taxDeduction">Tax Deduction</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="welfareFundDeduction">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.welfareFundDeduction">Welfare Fund Deduction</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="mobileBillDeduction">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.mobileBillDeduction">Mobile Bill Deduction</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="otherDeduction">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.otherDeduction">Other Deduction</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="totalDeduction">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.totalDeduction">Total Deduction</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="netPay">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.netPay">Net Pay</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="remarks">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.remarks">Remarks</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="pfContribution">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.pfContribution">Pf Contribution</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="gfContribution">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.gfContribution">Gf Contribution</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="provisionForFestivalBonus">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.provisionForFestivalBonus">Provision For Festival Bonus</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="provisionForLeaveEncashment">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.provisionForLeaveEncashment">Provision For Leave Encashment</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="provishionForProjectBonus">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.provishionForProjectBonus">Provishion For Project Bonus</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="livingAllowance">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.livingAllowance">Living Allowance</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="otherAddition">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.otherAddition">Other Addition</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="salaryAdjustment">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.salaryAdjustment">Salary Adjustment</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="providentFundArrear">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.providentFundArrear">Provident Fund Arrear</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="entertainment">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.entertainment">Entertainment</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="utility">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.utility">Utility</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="employee.id">
+            <div class="d-flex">
+              <span jhiTranslate="bitsHrPayrollApp.employeeSalaryTempData.employee">Employee</span>
+              <!-- <fa-icon class="p-1" icon="sort"></fa-icon> -->
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let employeeSalaryTempData of employeeSalaryTempData; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/employee-salary-temp-data', employeeSalaryTempData.id, 'view']">{{ employeeSalaryTempData.id }}</a>
+          </td>
+          <td jhiTranslate="{{ 'bitsHrPayrollApp.Month.' + employeeSalaryTempData.month }}">{{ employeeSalaryTempData.month }}</td>
+          <td>{{ employeeSalaryTempData.year }}</td>
+          <td>{{ employeeSalaryTempData.mainGrossSalary }}</td>
+          <td>{{ employeeSalaryTempData.mainGrossBasicSalary }}</td>
+          <td>{{ employeeSalaryTempData.mainGrossHouseRent }}</td>
+          <td>{{ employeeSalaryTempData.mainGrossMedicalAllowance }}</td>
+          <td>{{ employeeSalaryTempData.mainGrossConveyanceAllowance }}</td>
+          <td>{{ employeeSalaryTempData.absentDays }}</td>
+          <td>{{ employeeSalaryTempData.fractionDays }}</td>
+          <td>{{ employeeSalaryTempData.payableGrossSalary }}</td>
+          <td>{{ employeeSalaryTempData.payableGrossBasicSalary }}</td>
+          <td>{{ employeeSalaryTempData.payableGrossHouseRent }}</td>
+          <td>{{ employeeSalaryTempData.payableGrossMedicalAllowance }}</td>
+          <td>{{ employeeSalaryTempData.payableGrossConveyanceAllowance }}</td>
+          <td>{{ employeeSalaryTempData.arrearSalary }}</td>
+          <td>{{ employeeSalaryTempData.pfDeduction }}</td>
+          <td>{{ employeeSalaryTempData.taxDeduction }}</td>
+          <td>{{ employeeSalaryTempData.welfareFundDeduction }}</td>
+          <td>{{ employeeSalaryTempData.mobileBillDeduction }}</td>
+          <td>{{ employeeSalaryTempData.otherDeduction }}</td>
+          <td>{{ employeeSalaryTempData.totalDeduction }}</td>
+          <td>{{ employeeSalaryTempData.netPay }}</td>
+          <td>{{ employeeSalaryTempData.remarks }}</td>
+          <td>{{ employeeSalaryTempData.pfContribution }}</td>
+          <td>{{ employeeSalaryTempData.gfContribution }}</td>
+          <td>{{ employeeSalaryTempData.provisionForFestivalBonus }}</td>
+          <td>{{ employeeSalaryTempData.provisionForLeaveEncashment }}</td>
+          <td>{{ employeeSalaryTempData.provishionForProjectBonus }}</td>
+          <td>{{ employeeSalaryTempData.livingAllowance }}</td>
+          <td>{{ employeeSalaryTempData.otherAddition }}</td>
+          <td>{{ employeeSalaryTempData.salaryAdjustment }}</td>
+          <td>{{ employeeSalaryTempData.providentFundArrear }}</td>
+          <td>{{ employeeSalaryTempData.entertainment }}</td>
+          <td>{{ employeeSalaryTempData.utility }}</td>
+          <td>
+            <div *ngIf="employeeSalaryTempData.employee">
+              <a [routerLink]="['/employee', employeeSalaryTempData.employee.id, 'view']">{{ employeeSalaryTempData.employee.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/employee-salary-temp-data', employeeSalaryTempData.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/employee-salary-temp-data', employeeSalaryTempData.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(employeeSalaryTempData)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="employeeSalaryTempData && employeeSalaryTempData.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

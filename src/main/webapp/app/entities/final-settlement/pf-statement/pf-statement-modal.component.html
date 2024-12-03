@@ -1,0 +1,164 @@
+<div class="modal-header">
+  <button (click)="downloadAsPDF()" class="btn btn-primary btn-md"><fa-icon icon="print"></fa-icon> Print</button>
+</div>
+
+<div
+  class="modal-body"
+  #pdfPfStatement
+  id="pdfPfStatement"
+  *ngIf="pfStatement && pfStatement.yearlyPfCollection && pfStatement.yearlyPfCollection.length > 0"
+>
+  <div class="container printDiv">
+    <div class="row">
+      <span class="col-md-2 font-bold">Name</span>
+      <span class="col-md-1">:</span>
+      <span class="col-md-2">{{ pfStatement.name }}</span>
+    </div>
+
+    <div class="row">
+      <span class="col-md-2 font-bold">Date of Joining</span>
+      <span class="col-md-1">:</span>
+      <span class="col-md-2">{{ pfStatement.dateOfJoining | date: 'd-MMM-y' }}</span>
+    </div>
+
+    <div class="row">
+      <span class="col-md-2 font-bold">Date of Confirmation</span>
+      <span class="col-md-1">:</span>
+      <span class="col-md-2">{{ pfStatement.dateOfConfirmation | date: 'd-MMM-y' }}</span>
+    </div>
+
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Year</th>
+          <th>Month</th>
+          <th>Gross Salary</th>
+          <th>Basic</th>
+          <th>Employee Contribution</th>
+          <th>Employer Contribution</th>
+          <th>Total Contribution</th>
+          <th>Remarks</th>
+        </tr>
+
+        <tr>
+          <th>Opening Balance</th>
+          <th></th>
+          <th colspan="4"></th>
+          <th class="text-end fw-bold">
+            {{ pfStatement.openingBalance | number }}
+          </th>
+          <th class="td-to-th">N/A</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let yearlyPf of pfStatement.yearlyPfCollection">
+          <ng-container *ngIf="yearlyPf.monthlyContributionList && yearlyPf.monthlyContributionList.length > 0">
+            <tr>
+              <td
+                style="border-bottom: 1px solid black !important"
+                class="td-to-th vertical-align-middle"
+                [attr.rowspan]="yearlyPf.monthlyContributionList.length + 1"
+              >
+                {{ yearlyPf.year }}
+              </td>
+            </tr>
+
+            <tr *ngFor="let monthlyContribution of yearlyPf.monthlyContributionList">
+              <td class="td-to-th" *ngIf="monthlyContribution.month">
+                {{ monthNameLimitTo3(monthlyContribution.month) }}
+              </td>
+              <td class="text-bold text-center">
+                {{ monthlyContribution.grossSalary | number }}
+              </td>
+              <td class="text-bold text-center">
+                {{ monthlyContribution.basic | number }}
+              </td>
+              <td class="text-bold text-center">
+                {{ monthlyContribution.employeeContribution | number }}
+              </td>
+              <td class="text-bold text-center">
+                {{ monthlyContribution.employerContribution | number }}
+              </td>
+              <td class="text-bold text-center">
+                {{ monthlyContribution.totalContribution | number }}
+              </td>
+              <td class="text-bold text-center">
+                {{ monthlyContribution.remarks }}
+              </td>
+            </tr>
+
+            <tr
+              *ngIf="
+                yearlyPf.yearlyTotalContribution &&
+                yearlyPf.yearlyTotalContribution.totalEmployeeContributionInYear &&
+                yearlyPf.yearlyTotalContribution.totalEmployerContributionInYear
+              "
+            >
+              <td class="td-to-th" colspan="4" style="vertical-align: middle">Total Contribution of {{ yearlyPf.year }}</td>
+              <td class="bg-lime fw-bold">
+                {{ yearlyPf.yearlyTotalContribution.totalEmployeeContributionInYear | number }}
+              </td>
+              <td class="bg-lime fw-bold">
+                {{ yearlyPf.yearlyTotalContribution.totalEmployerContributionInYear | number }}
+              </td>
+              <td class="bg-lime fw-bold">
+                {{
+                  yearlyTotalContribution(
+                    yearlyPf.yearlyTotalContribution.totalEmployeeContributionInYear,
+                    yearlyPf.yearlyTotalContribution.totalEmployerContributionInYear
+                  ) | number
+                }}
+              </td>
+              <td class="td-to-th">Contribution {{ yearlyPf.year }}</td>
+            </tr>
+          </ng-container>
+        </ng-container>
+      </tbody>
+    </table>
+
+    <div class="row" *ngIf="pfStatement.totalContribution && pfStatement.totalPfInterest && pfStatement.totalContributionWithInterests">
+      <div class="p-5 col-md-10">
+        <div class="row">
+          <span class="col-md-5">Total Contribution</span>
+          <span class="col-md-2">{{ pfStatement.totalContribution.totalEmployeePortion | number }}</span>
+          <span class="col-md-2">{{ pfStatement.totalContribution.totalEmployerPortion | number }}</span>
+          <span class="col-md-2">{{ pfStatement.totalContribution.total | number }}</span>
+        </div>
+
+        <div class="row">
+          <span class="col-md-5 border-bottom-1 px-0 ms-3">PF Interest</span>
+          <span class="col-md-2 border-bottom-1 px-0">{{ pfStatement.totalPfInterest.totalEmployeePortion | number }}</span>
+          <span class="col-md-2 border-bottom-1 px-0">{{ pfStatement.totalPfInterest.totalEmployerPortion | number }}</span>
+          <span class="col-md-2 border-bottom-1 px-0">{{ pfStatement.totalPfInterest.total | number }}</span>
+        </div>
+
+        <div class="row font-bold">
+          <span class="col-md-5">Total PF Contribution with Interest</span>
+          <span class="col-md-2">{{ pfStatement.totalContributionWithInterests.totalEmployeePortion | number }}</span>
+          <span class="col-md-2"> {{ pfStatement.totalContributionWithInterests.totalEmployerPortion | number }}</span>
+          <span class="col-md-2">{{ pfStatement.totalContributionWithInterests.total | number }}</span>
+        </div>
+
+        <div class="row">
+          <span class="col-md-5 border-bottom-1 px-0 ms-3">Adjustment for Arrear PF</span>
+          <span class="col-md-2 border-bottom-1 px-0">-</span>
+          <span class="col-md-2 border-bottom-1 px-0">-</span>
+          <span class="col-md-2 border-bottom-1 px-0">{{ pfStatement.adjustmentForArrearsPf | number }}</span>
+        </div>
+
+        <div class="row font-bold">
+          <span class="col-md-5 bg-lavender px-0 ms-3">Net PF Payable</span>
+          <span class="col-md-2 px-0 bg-lavender">-</span>
+          <span class="col-md-2 bg-lavender px-0">-</span>
+          <span class="col-md-2 bg-lavender px-0">{{ pfStatement.netPfPayable | number }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button (click)="cancel()" class="btn btn-secondary" data-dismiss="modal" type="button">
+    <fa-icon icon="ban"></fa-icon>&nbsp;<span>Close</span>
+  </button>
+</div>

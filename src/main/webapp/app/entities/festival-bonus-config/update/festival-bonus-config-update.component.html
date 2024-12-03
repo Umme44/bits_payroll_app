@@ -1,0 +1,88 @@
+<jhi-header
+  [headerName]="editForm.get('id')!.value ? 'Edit Festival Bonus Config' : 'New Festival Bonus Config'"
+  [midHeaderName01]="'Festival Bonus Configs'" [midRouterLinkText01]="'/festival-bonus-config'">
+</jhi-header>
+
+<div class="d-flex justify-content-center">
+  <div class="col-12">
+    <form class="card card-body" name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+
+      <div class="row">
+        <jhi-alert-error></jhi-alert-error>
+
+      <!--  <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>-->
+
+        <div class="col-md-6 mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.festivalBonusConfig.employeeCategory" for="field_employeeCategory">
+            Employee Category
+          </label>
+          <select
+            class="form-control form-select"
+            name="employeeCategory"
+            formControlName="employeeCategory"
+            id="field_employeeCategory"
+            data-cy="employeeCategory">
+
+            <option [ngValue]="null">{{ 'bitsHrPayrollApp.EmployeeCategory.null' | translate }}</option>
+            <option *ngFor="let employeeCategory of employeeCategoryValues" [value]="employeeCategory">
+              {{ 'bitsHrPayrollApp.EmployeeCategory.' + employeeCategory | translate }}
+            </option>
+          </select>
+          <div *ngIf="editForm.get('employeeCategory')!.invalid &&(editForm.get('employeeCategory')!.dirty || editForm.get('employeeCategory')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('employeeCategory')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.festivalBonusConfig.percentageFromGross" for="field_percentageFromGross">
+            Percentage From Gross
+          </label>
+          <input
+            type="number"
+            class="form-control"
+            name="percentageFromGross"
+            id="field_percentageFromGross"
+            data-cy="percentageFromGross"
+            formControlName="percentageFromGross"
+          />
+          <div *ngIf="editForm.get('percentageFromGross')!.invalid &&(editForm.get('percentageFromGross')!.dirty || editForm.get('percentageFromGross')!.touched)">
+              <small class="form-text text-danger" *ngIf="editForm.get('percentageFromGross')?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+              </small>
+              <small class="form-text text-danger" *ngIf="editForm.get('percentageFromGross')?.errors?.min" jhiTranslate="entity.validation.min" [translateValues]="{ min: 0 }">
+                This field should be at least 0.
+              </small>
+              <small class="form-text text-danger" *ngIf="editForm.get('percentageFromGross')?.errors?.max" jhiTranslate="entity.validation.max" [translateValues]="{ max: 5000 }">
+                This field cannot be more than 5000.
+              </small>
+              <small class="form-text text-danger" [hidden]="!editForm.get('percentageFromGross')?.errors?.number" jhiTranslate="entity.validation.number">
+                This field should be a number.
+              </small>
+          </div>
+        </div>
+      </div>
+
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

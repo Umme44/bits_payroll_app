@@ -1,0 +1,130 @@
+<div>
+    <jhi-header
+        [headerName]="'Salary Certificate Approvals'"
+        [shouldHaveHr]="false">
+    </jhi-header>
+
+
+    <div class="row">
+        <div [ngClass]="salaryCertificateApplications && salaryCertificateApplications.length > 0 ? 'col-md-11' : 'col-md-12'">
+            <div class="input-group" [hidden]="true">
+                <div class="input-group-prepend">
+                    <label class="input-group-text">Search</label>
+                </div>
+                <input class="form-control" (ngModelChange)="search()" id="searchText" [formControl]="searchText"
+                       placeholder="Search Text" type="text"/>
+            </div>
+        </div>
+        <div class="col-md-1 mb-2" *ngIf="salaryCertificateApplications && salaryCertificateApplications.length > 0">
+            <span ngbTooltip="Approve Selected">
+            <button class="btn btn-success btn-sm"
+                    [disabled]="approvalDTO!.listOfIds!.length < 1"
+                    (click)="approveSelected(employeeSalaryCertificateApprovalModal)">
+                <fa-icon [icon]="['fas', 'check']"></fa-icon>
+            </button>
+                </span>
+
+            <button class="btn btn-danger btn-sm" ngbTooltip="Reject Selected"
+                    [disabled]="approvalDTO!.listOfIds!.length < 1"
+                    (click)="rejectSelected()">
+                <fa-icon icon="times"></fa-icon>
+            </button>
+        </div>
+    </div>
+
+    <jhi-alert-error></jhi-alert-error>
+    <jhi-alert></jhi-alert>
+
+    <!--<div *ngIf="salaryCertificateApplications?.length === 0" class="alert alert-warning">
+        <span>No Salary Certificate Application Found</span>
+    </div>-->
+
+</div>
+
+<div *ngIf="salaryCertificateApplications && salaryCertificateApplications.length > 0">
+
+    <table aria-describedby="page-heading" class="table table-hover list-text-color">
+        <thead>
+        <tr>
+            <th scope="col">
+                <span>
+                    <input
+                        class="form-check-input"
+                        type="checkbox"
+                        [value]="-1"
+                        [(ngModel)]="allSelector"
+                        (change)="onChange($event)">
+                </span>
+            </th>
+            <th>Name</th>
+            <th>PIN</th>
+            <th>Designation</th>
+            <th>Purpose</th>
+            <th>Application Date</th>
+            <th>Salary Month</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let salaryCertificate of salaryCertificateApplications">
+                <td>
+                    <input
+                        class="form-check-input"
+                        type="checkbox"
+                        [value]="salaryCertificate.id"
+                        [checked]="salaryCertificate.isChecked"
+                        (change)="onChange($event)">
+                </td>
+                <td>{{salaryCertificate.employeeName}}</td>
+                <td>{{salaryCertificate.pin}}</td>
+                <td>{{salaryCertificate.designationName}}</td>
+                <td>{{salaryCertificate.purpose}}</td>
+                <td>{{salaryCertificate.createdAt | formatMediumDate }}</td>
+                <td>{{monthNameNormaCapitalize(salaryCertificate.month)}}, {{salaryCertificate.year}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<ng-template #employeeSalaryCertificateApprovalModal let-modal>
+    <div class="modal-header border-0">
+        <h6 class="modal-title" id="modal-basic-title2">Approve Employee Salary Certificate</h6>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+
+        <div [formGroup]="salaryCertificateApprovalForm" name="editForm">
+
+            <div class="form-group ">
+                <label class="font-sm font-weight-bold required">Signatory Person</label>
+                <div class="font-sm" >
+                    <ng-select [items]="listOfSignatoryPersons"
+                               bindLabel="fullName"
+                               bindValue="id"
+                               [searchable]="true"
+                               [clearable]="true"
+                               appearance="outline"
+                               id="field_signatoryPersonId2"
+                               formControlName="signatoryPersonId"
+                               placeholder="Select Signatory Person"
+                    >
+                    </ng-select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <button [disabled]="salaryCertificateApprovalForm.invalid" (click)="modal.close('Save click')"  class="btn btn-success btn-md w-100">Approve</button>
+            </div>
+
+            <div class="col-6">
+                <button type="button" class="btn btn-danger btn-md w-100" (click)="modal.dismiss()">Cancel</button>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer border-0 justify-content-start">
+    </div>
+</ng-template>

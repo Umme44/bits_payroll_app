@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity SpecialShiftTiming.
+    -->
+    <changeSet id="20220911071538-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="time_slot_id"
+                                 baseTableName="special_shift_timing"
+                                 constraintName="fk_special_shift_timing__time_slot_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="time_slot"/>
+
+        <addForeignKeyConstraint baseColumnNames="created_by_id"
+                                 baseTableName="special_shift_timing"
+                                 constraintName="fk_special_shift_timing__created_by_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="updated_by_id"
+                                 baseTableName="special_shift_timing"
+                                 constraintName="fk_special_shift_timing__updated_by_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+    </changeSet>
+</databaseChangeLog>

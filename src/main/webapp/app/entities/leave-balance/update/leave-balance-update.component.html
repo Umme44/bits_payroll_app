@@ -1,0 +1,449 @@
+<div>
+  <jhi-header
+    [headerName]="!editForm.get('id')!.value ? 'Add New Leave Balances' : 'Edit  Leave Balances'"
+    [midHeaderName01]="'Leave Balances- Admin'"
+    [midRouterLinkText01]="'/leave-balance'"
+    [shouldHaveHr]="false"
+  >
+  </jhi-header>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <form (ngSubmit)="save()" [formGroup]="editForm" name="editForm" novalidate role="form">
+    <div class="card card-body">
+      <div class="row">
+        <div class="col-md-5">
+          <div class="mb-3">
+            <label class="form-control-label required" for="field_employee" jhiTranslate="bitsHrPayrollApp.leaveBalance.employee"
+              >Employee</label
+            >
+
+            <!--<jhi-select-employee-form [employeeIdForm]="employeeIdForm!"></jhi-select-employee-form>-->
+            <jhi-simple-select-employee-form
+              id="field_employee"
+              [selectedFieldValue]="editForm.get('employeeId')!.value"
+              (onChangeEmployee)="patchSelectedEmployee($event)"
+            ></jhi-simple-select-employee-form>
+
+            <div *ngIf="editForm.get('employeeId')!.invalid && (editForm.get('employeeId')!.dirty || editForm.get('employeeId')!.touched)">
+              <small
+                *ngIf="editForm.get('employeeId')?.errors?.required"
+                class="form-text text-danger"
+                jhiTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label class="form-control-label required" for="field_leaveType" jhiTranslate="bitsHrPayrollApp.leaveBalance.leaveType"
+              >Leave Type</label
+            >
+            <select
+              (change)="onChangeLeaveType($event)"
+              class="form-control form-select"
+              formControlName="leaveType"
+              id="field_leaveType"
+              name="leaveType"
+            >
+              <option value="MENTIONABLE_ANNUAL_LEAVE">{{ 'bitsHrPayrollApp.LeaveType.MENTIONABLE_ANNUAL_LEAVE' | translate }}</option>
+              <option value="MENTIONABLE_CASUAL_LEAVE">{{ 'bitsHrPayrollApp.LeaveType.MENTIONABLE_CASUAL_LEAVE' | translate }}</option>
+              <option value="NON_MENTIONABLE_COMPENSATORY_LEAVE">
+                {{ 'bitsHrPayrollApp.LeaveType.NON_MENTIONABLE_COMPENSATORY_LEAVE' | translate }}
+              </option>
+              <option value="NON_MENTIONABLE_PANDEMIC_LEAVE">
+                {{ 'bitsHrPayrollApp.LeaveType.NON_MENTIONABLE_PANDEMIC_LEAVE' | translate }}
+              </option>
+              <option value="NON_MENTIONABLE_PATERNITY_LEAVE">
+                {{ 'bitsHrPayrollApp.LeaveType.NON_MENTIONABLE_PATERNITY_LEAVE' | translate }}
+              </option>
+              <option value="NON_MENTIONABLE_MATERNITY_LEAVE">
+                {{ 'bitsHrPayrollApp.LeaveType.NON_MENTIONABLE_MATERNITY_LEAVE' | translate }}
+              </option>
+              <option value="OTHER">{{ 'bitsHrPayrollApp.LeaveType.OTHER' | translate }}</option>
+            </select>
+            <div *ngIf="editForm.get('leaveType')!.invalid && (editForm.get('leaveType')!.dirty || editForm.get('leaveType')!.touched)">
+              <small
+                *ngIf="editForm.get('leaveType')?.errors?.required"
+                class="form-text text-danger"
+                jhiTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="mb-3">
+            <label class="form-control-label required" for="field_year" jhiTranslate="bitsHrPayrollApp.leaveBalance.year">Year</label>
+            <select class="form-control form-select w-100" formControlName="year" id="field_year" name="year">
+              <option *ngFor="let year of years" value="{{ year }}">
+                {{ year }}
+              </option>
+            </select>
+            <!-- <input class="form-control" formControlName="year" id="field_year" name="year"
+                    type="number"/>-->
+            <div *ngIf="editForm.get('year')!.invalid && (editForm.get('year')!.dirty || editForm.get('year')!.touched)">
+              <small *ngIf="editForm.get('year')?.errors?.required" class="form-text text-danger" jhiTranslate="entity.validation.required">
+                This field is required.
+              </small>
+              <small
+                *ngIf="editForm.get('year')?.errors?.min"
+                [translateValues]="{ min: 1900 }"
+                class="form-text text-danger"
+                jhiTranslate="entity.validation.min"
+              >
+                This field should be at least 1900.
+              </small>
+              <small
+                *ngIf="editForm.get('year')?.errors?.max"
+                [translateValues]="{ max: 2199 }"
+                class="form-text text-danger"
+                jhiTranslate="entity.validation.max"
+              >
+                This field cannot be more than 2199
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-5">
+          <div class="mb-3">
+            <label
+              class="form-control-label required"
+              for="field_leaveAmountType"
+              jhiTranslate="bitsHrPayrollApp.leaveBalance.leaveAmountType"
+              >Leave Amount Type</label
+            >
+            <select class="form-control form-select" formControlName="leaveAmountType" id="field_leaveAmountType" name="leaveAmountType">
+              <option value="Day">{{ 'bitsHrPayrollApp.LeaveAmountType.Day' | translate }}</option>
+              <option value="Year">Service Year</option>
+            </select>
+            <div
+              *ngIf="
+                editForm.get('leaveAmountType')!.invalid &&
+                (editForm.get('leaveAmountType')!.dirty || editForm.get('leaveAmountType')!.touched)
+              "
+            >
+              <small
+                *ngIf="editForm.get('leaveAmountType')?.errors?.required"
+                class="form-text text-danger"
+                jhiTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label class="form-control-label required">Opening Balance(Carry Forwarded)</label>
+            <input class="form-control" formControlName="openingBalance" id="field_openingBalance" name="openingBalance" type="number" />
+            <div
+              *ngIf="
+                editForm.get('openingBalance')!.invalid &&
+                (editForm.get('openingBalance')!.dirty || editForm.get('openingBalance')!.touched)
+              "
+            >
+              <small
+                *ngIf="editForm.get('openingBalance')?.errors?.required"
+                class="form-text text-danger"
+                jhiTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+              <small
+                *ngIf="editForm.get('openingBalance')?.errors?.min"
+                [translateValues]="{ min: 0 }"
+                class="form-text text-danger"
+                jhiTranslate="entity.validation.min"
+              >
+                This field should be at least 0.
+              </small>
+              <small
+                *ngIf="editForm.get('openingBalance')?.errors?.max"
+                [translateValues]="{ max: 366 }"
+                class="form-text text-danger"
+                jhiTranslate="entity.validation.max"
+              >
+                This field cannot be more than 366.
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <!--  <div class="col-md-4">
+              <div class="mb-3">
+                  <label class="form-control-label required"
+                         jhiTranslate="bitsHrPayrollApp.leaveBalance.closingBalance"
+                         for="field_closingBalance">Closing Balance</label>
+                  <input type="number" class="form-control" name="closingBalance" id="field_closingBalance"
+                         formControlName="closingBalance"/>
+                  <div
+                      *ngIf="editForm.get('closingBalance')!.invalid && (editForm.get('closingBalance')!.dirty || editForm.get('closingBalance')!.touched)">
+                      <small class="form-text text-danger"
+                             *ngIf="editForm.get('closingBalance')?.errors?.required"
+                             jhiTranslate="entity.validation.required">
+                          This field is required.
+                      </small>
+                  </div>
+              </div>
+          </div> -->
+        <!--                        <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-control-label required"
+                                        >Consumed During This Year</label>
+                                        <input class="form-control" formControlName="consumedDuringYear" id="field_consumedDuringYear"
+                                               name="consumedDuringYear"
+                                               type="number"/>
+                                        <div
+                                            *ngIf="editForm.get('consumedDuringYear')!.invalid && (editForm.get('consumedDuringYear')!.dirty || editForm.get('consumedDuringYear')!.touched)">
+                                            <small *ngIf="editForm.get('consumedDuringYear')?.errors?.required"
+                                                   class="form-text text-danger"
+                                                   jhiTranslate="entity.validation.required">
+                                                This field is required.
+                                            </small>
+                                            <small *ngIf="editForm.get('consumedDuringYear')?.errors?.min"
+                                                   [translateValues]="{ min: 0 }"
+                                                   class="form-text text-danger" jhiTranslate="entity.validation.min">
+                                                This field should be at least 0.
+                                            </small>
+                                            <small *ngIf="editForm.get('consumedDuringYear')?.errors?.max"
+                                                   [translateValues]="{ max: 400 }"
+                                                   class="form-text text-danger" jhiTranslate="entity.validation.max">
+                                                This field cannot be more than 400.
+                                            </small>
+                                        </div>
+                                    </div>-->
+
+        <div class="col-md-3">
+          <div class="mb-3">
+            <label class="form-control-label required" for="field_amount">Allocated / Earned for this year</label>
+            <input class="form-control" formControlName="amount" id="field_amount" name="amount" type="number" />
+            <div *ngIf="editForm.get('amount')!.invalid && (editForm.get('amount')!.dirty || editForm.get('amount')!.touched)">
+              <small
+                *ngIf="editForm.get('amount')?.errors?.required"
+                class="form-text text-danger"
+                jhiTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+              <small
+                *ngIf="editForm.get('amount')?.errors?.min"
+                [translateValues]="{ min: 0 }"
+                class="form-text text-danger"
+                jhiTranslate="entity.validation.min"
+              >
+                This field should be at least 0.
+              </small>
+              <small
+                *ngIf="editForm.get('amount')?.errors?.max"
+                [translateValues]="{ max: 400 }"
+                class="form-text text-danger"
+                jhiTranslate="entity.validation.max"
+              >
+                This field cannot be more than 400.
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-3">
+        <button (click)="previousState()" class="btn btn-secondary" id="cancel-save" type="button">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button [disabled]="editForm.invalid || isSaving" class="btn btn-primary" id="save-entity" type="submit">
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!--
+<div class="d-flex justify-content-center">
+  <div class="col-12">
+
+    <jhi-header
+      [headerName]="!editForm.get('id')!.value ? 'Add New Leave Balances' : 'Edit  Leave Balances'"
+      [midHeaderName01]="'Leave Balances- Admin'"
+      [midRouterLinkText01]="'/leave-balance'"
+      [shouldHaveHr]="false">
+    </jhi-header>
+
+    <form class="card card-body" name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <div class="row">
+
+
+        <div class="col-md-5 mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.leaveBalance.employee" for="field_employee">Employee</label>
+
+          <jhi-simple-select-employee-form
+            id="field_employee"
+            [selectedFieldValue]="editForm.get('employeeId')!.value"
+            (onChangeEmployee)="patchSelectedEmployee($event)"
+          ></jhi-simple-select-employee-form>
+        </div>
+
+
+
+        <div class="col-md-4 mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.leaveBalance.leaveType" for="field_leaveType">Leave Type</label>
+          <select
+            (change)="onChangeLeaveType($event)"
+            class="form-control"
+            name="leaveType"
+            formControlName="leaveType"
+            id="field_leaveType"
+            [disabled]="editForm.get('id')!.value!==null"
+            data-cy="leaveType" >
+            <option [ngValue]="null">{{ 'bitsHrPayrollApp.LeaveType.null' | translate }}</option>
+            <option *ngFor="let leaveType of leaveTypeValues" [value]="leaveType">
+              {{ 'bitsHrPayrollApp.LeaveType.' + leaveType | translate }}
+            </option>
+          </select>
+          <div
+            *ngIf="editForm.get('leaveType')!.invalid && (editForm.get('leaveType')!.dirty || editForm.get('leaveType')!.touched)">
+            <small *ngIf="editForm.get('leaveType')?.errors?.required"
+                   class="form-text text-danger"
+                   jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+
+          <div class="mb-3">
+            <label class="form-control-label required" for="field_year"
+                   jhiTranslate="bitsHrPayrollApp.leaveBalance.year">Year</label>
+            <select class="form-control w-100 form-select" formControlName="year"
+                    id="field_year" name="year">
+              <option *ngFor="let year of years" value="{{ year }}">
+                {{ year }}
+              </option>
+            </select>
+
+            <div
+              *ngIf="editForm.get('year')!.invalid && (editForm.get('year')!.dirty || editForm.get('year')!.touched)">
+              <small *ngIf="editForm.get('year')?.errors?.required"
+                     class="form-text text-danger"
+                     jhiTranslate="entity.validation.required">
+                This field is required.
+              </small>
+              <small *ngIf="editForm.get('year')?.errors?.min"
+                     [translateValues]="{ min: 1900 }" class="form-text text-danger"
+                     jhiTranslate="entity.validation.min">
+                This field should be at least 1900.
+              </small>
+              <small *ngIf="editForm.get('year')?.errors?.max"
+                     [translateValues]="{ max: 2199 }" class="form-text text-danger"
+                     jhiTranslate="entity.validation.max">
+                This field cannot be more than 2199
+              </small>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-5 mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.leaveBalance.leaveAmountType" for="field_leaveAmountType"
+          >Leave Amount Type</label
+          >
+          <select
+            class="form-control"
+            name="leaveAmountType"
+            formControlName="leaveAmountType"
+            id="field_leaveAmountType"
+            data-cy="leaveAmountType"
+          >
+            <option [ngValue]="null">{{ 'bitsHrPayrollApp.LeaveAmountType.null' | translate }}</option>
+            <option *ngFor="let leaveAmountType of leaveAmountTypeValues" [value]="leaveAmountType">
+              {{ 'bitsHrPayrollApp.LeaveAmountType.' + leaveAmountType | translate }}
+            </option>
+          </select>
+        </div>
+
+
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label class="form-control-label required mb-2"
+            >Opening Balance(Carry Forwarded)</label>
+            <input class="form-control" formControlName="openingBalance" id="field_openingBalance" name="openingBalance"
+                   type="number"/>
+            <div
+              *ngIf="editForm.get('openingBalance')!.invalid && (editForm.get('openingBalance')!.dirty || editForm.get('openingBalance')!.touched)">
+              <small *ngIf="editForm.get('openingBalance')?.errors?.required"
+                     class="form-text text-danger"
+                     jhiTranslate="entity.validation.required">
+                This field is required.
+              </small>
+              <small *ngIf="editForm.get('openingBalance')?.errors?.min"
+                     [translateValues]="{ min: 0 }"
+                     class="form-text text-danger" jhiTranslate="entity.validation.min">
+                This field should be at least 0.
+              </small>
+              <small *ngIf="editForm.get('openingBalance')?.errors?.max"
+                     [translateValues]="{ max: 366 }"
+                     class="form-text text-danger" jhiTranslate="entity.validation.max">
+                This field cannot be more than 366.
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="mb-3">
+            <label class="form-control-label required mb-2"
+                   for="field_amount">Allocated / Earned for this year</label>
+            <input class="form-control" formControlName="amount" id="field_amount" name="amount"
+                   type="number"/>
+            <div
+              *ngIf="editForm.get('amount')!.invalid && (editForm.get('amount')!.dirty || editForm.get('amount')!.touched)">
+              <small *ngIf="editForm.get('amount')?.errors?.required"
+                     class="form-text text-danger"
+                     jhiTranslate="entity.validation.required">
+                This field is required.
+              </small>
+              <small *ngIf="editForm.get('amount')?.errors?.min"
+                     [translateValues]="{ min: 0 }" class="form-text text-danger"
+                     jhiTranslate="entity.validation.min">
+                This field should be at least 0.
+              </small>
+              <small *ngIf="editForm.get('amount')?.errors?.max"
+                     [translateValues]="{ max: 400 }" class="form-text text-danger"
+                     jhiTranslate="entity.validation.max">
+                This field cannot be more than 400.
+              </small>
+            </div>
+          </div>
+        </div>
+
+
+        <div>
+          <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+            <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+          </button>
+
+          <button
+            type="submit"
+            id="save-entity"
+            data-cy="entityCreateSaveButton"
+            [disabled]="editForm.invalid || isSaving"
+            class="btn btn-primary"
+          >
+            <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+-->

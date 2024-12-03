@@ -1,0 +1,12 @@
+{
+  "bitsHrPayrollApp": {
+    "EmployeePinStatus": {
+      "null": "",
+      "CREATED": "Created",
+      "JOINED": "Joined",
+      "NOT_JOINED": "Not Joined",
+      "RESIGNED": "Resigned",
+      "CONTRACT_END": "Contract End"
+    }
+  }
+}

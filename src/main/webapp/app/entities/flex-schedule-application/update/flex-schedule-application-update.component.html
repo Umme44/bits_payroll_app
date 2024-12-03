@@ -1,0 +1,178 @@
+<jhi-header
+  [headerName]="editForm.get('id')!.value ? 'Update Application' : 'New Flex Schedule Application'"
+  midHeaderName01="Flex Schedule Applications"
+  midRouterLinkText01="/flex-schedule-application"
+>
+</jhi-header>
+
+<div class="font-sm">
+  <div class="">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <div class="card card-body">
+        <div class="row">
+          <div class="col-md-4 form-group mt-3">
+            <label class="form-control-label required mb-2" for="field_employee">Select Employee</label>
+            <jhi-simple-select-employee-form
+              id="field_employee"
+              [selectedFieldValue]="editForm.get('requesterId')!.value"
+              (onChangeEmployee)="changeEmployee($event)"
+            >
+            </jhi-simple-select-employee-form>
+
+            <div
+              *ngIf="editForm.get('requesterId')!.invalid && (editForm.get('requesterId')!.dirty || editForm.get('requesterId')!.touched)"
+            >
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('requesterId')?.errors?.required"
+                jhiTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+            </div>
+          </div>
+
+          <div class="col-md-4 form-group mt-3">
+            <label class="form-control-label required mb-2" for="field_timeSlot">Select Time</label>
+            <select class="form-control lh-lg" id="field_timeSlot" name="timeSlot" formControlName="timeSlotId">
+              <option *ngIf="!editForm.get('timeSlotId')!.value" [ngValue]="null" selected></option>
+              <option [ngValue]="timeSlotOption.id" *ngFor="let timeSlotOption of timeslots; trackBy: trackById">
+                {{ timeSlotOption.inTime | formatTime }} - {{ timeSlotOption.outTime | formatTime }} ({{ timeSlotOption.title }})
+              </option>
+            </select>
+
+            <div *ngIf="editForm.get('timeSlotId')!.invalid && (editForm.get('timeSlotId')!.dirty || editForm.get('timeSlotId')!.touched)">
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('timeSlotId')?.errors?.required"
+                jhiTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+            </div>
+          </div>
+
+          <div class="col-md-4 form-group mt-3">
+            <label
+              class="form-control-label required mb-2"
+              jhiTranslate="bitsHrPayrollApp.flexScheduleApplication.effectiveFrom"
+              for="field_effectiveFrom"
+              >Effective From</label
+            >
+            <div class="input-group">
+              <input
+                id="field_effectiveFrom"
+                type="text"
+                class="lh-lg form-control"
+                name="effectiveFrom"
+                ngbDatepicker
+                #effectiveFromDp="ngbDatepicker"
+                formControlName="effectiveFrom"
+                (dateSelect)="checkEffectiveDate()"
+                [minDate]="editForm.get('id')!.value ? dayjsToNgbDateStruct(editForm.get('effectiveFrom')!.value) : effectiveFromMinDate"
+              />
+              <span class="input-group-append">
+                <button type="button" class="lh-lg btn btn-secondary" (click)="effectiveFromDp.toggle()">
+                  <fa-icon icon="calendar-alt"></fa-icon>
+                </button>
+              </span>
+            </div>
+            <div
+              *ngIf="
+                editForm.get('effectiveFrom')!.invalid && (editForm.get('effectiveFrom')!.dirty || editForm.get('effectiveFrom')!.touched)
+              "
+            >
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('effectiveFrom')?.errors?.required"
+                jhiTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+            </div>
+          </div>
+
+          <div class="col-md-4 form-group mt-3">
+            <label
+              class="form-control-label required mb-2"
+              jhiTranslate="bitsHrPayrollApp.flexScheduleApplication.effectiveTo"
+              for="field_effectiveTo"
+              >Effective To</label
+            >
+            <div class="input-group">
+              <input
+                id="field_effectiveTo"
+                type="text"
+                class="form-control lh-lg"
+                name="effectiveTo"
+                ngbDatepicker
+                [minDate]="editForm.get('id')!.value ? dayjsToNgbDateStruct(editForm.get('effectiveTo')!.value) : effectiveToMinDate"
+                (dateSelect)="checkEffectiveDate()"
+                #effectiveToDp="ngbDatepicker"
+                formControlName="effectiveTo"
+              />
+              <span class="input-group-append">
+                <button type="button" class="btn btn-secondary lh-lg" (click)="effectiveToDp.toggle()">
+                  <fa-icon icon="calendar-alt"></fa-icon>
+                </button>
+              </span>
+            </div>
+            <div
+              *ngIf="editForm.get('effectiveTo')!.invalid && (editForm.get('effectiveTo')!.dirty || editForm.get('effectiveTo')!.touched)"
+            >
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('effectiveTo')?.errors?.required"
+                jhiTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+            </div>
+
+            <small class="text-danger">
+              {{ effectiveDateErrorMsg }}
+            </small>
+          </div>
+          <div class="col-md-8 lh-sm form-group mt-3">
+            <label class="form-control-label mb-2" jhiTranslate="bitsHrPayrollApp.flexScheduleApplication.reason" for="field_reason">
+              Reason
+            </label>
+            <textarea class="form-control lh-sm" name="reason" id="field_reason" formControlName="reason"> </textarea>
+            <div *ngIf="editForm.get('reason')!.invalid && (editForm.get('reason')!.dirty || editForm.get('reason')!.touched)">
+              <small class="form-text text-danger" *ngIf="editForm.get('reason')?.errors?.pattern"> This text is invalid. </small>
+            </div>
+          </div>
+        </div>
+        <!--<div class="mt-3 col-md-3">
+          <button
+            type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving || effectiveDateErrorMsg.length != 0"
+            class="btn btn-primary">
+            <fa-icon icon="save"></fa-icon>&nbsp;
+            <span jhiTranslate="entity.action.update" *ngIf="editForm.get('id')!.value; else applyText">Update</span>
+            <ng-template #applyText>
+              <span jhiTranslate="entity.action.apply">Apply</span>
+            </ng-template>
+          </button>
+        </div>-->
+        <div class="mt-3">
+          <button (click)="previousState()" class="btn btn-secondary me-2" id="cancel-save" type="button">
+            <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+          </button>
+
+          <button
+            type="submit"
+            id="save-entity"
+            [disabled]="editForm.invalid || isSaving || effectiveDateErrorMsg.length != 0"
+            class="btn btn-primary"
+          >
+            <fa-icon icon="save"></fa-icon>&nbsp;
+            <span jhiTranslate="entity.action.update" *ngIf="editForm.get('id')!.value; else applyText">Update</span>
+            <ng-template #applyText>
+              <span jhiTranslate="entity.action.apply">Apply</span>
+            </ng-template>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

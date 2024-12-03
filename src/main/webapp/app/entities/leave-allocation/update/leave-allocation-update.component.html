@@ -1,0 +1,121 @@
+<div>
+  <jhi-header [headerName]="!editForm.get('id')!.value ? 'Add new Leave Allocations' : 'Edit Leave Allocations'" [shouldHaveHr]="false">
+  </jhi-header>
+  <jhi-alert-error></jhi-alert-error>
+
+  <form (ngSubmit)="save()" [formGroup]="editForm" name="editForm" novalidate role="form">
+    <div class="container-fluid card p-5 font-sm">
+      <div class="mb-3">
+        <label class="form-control-label required" for="field_year" jhiTranslate="bitsHrPayrollApp.leaveAllocation.year">Year</label>
+        <input class="form-control" formControlName="year" id="field_year" name="year" type="number" />
+        <div *ngIf="editForm.get('year')!.invalid && (editForm.get('year')!.dirty || editForm.get('year')!.touched)">
+          <small *ngIf="editForm.get('year')?.errors?.required" class="form-text text-danger" jhiTranslate="entity.validation.required">
+            This field is required.
+          </small>
+          <small
+            *ngIf="editForm.get('year')?.errors?.min"
+            [translateValues]="{ min: 1900 }"
+            class="form-text text-danger"
+            jhiTranslate="entity.validation.min"
+          >
+            This field should be at least 1900.
+          </small>
+          <small
+            *ngIf="editForm.get('year')?.errors?.max"
+            [translateValues]="{ max: 2199 }"
+            class="form-text text-danger"
+            jhiTranslate="entity.validation.max"
+          >
+            This field cannot be more than 2199.
+          </small>
+          <small [hidden]="!editForm.get('year')?.errors?.number" class="form-text text-danger" jhiTranslate="entity.validation.number">
+            This field should be a number.
+          </small>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-control-label required" for="field_leaveType" jhiTranslate="bitsHrPayrollApp.leaveAllocation.leaveType"
+          >Leave Type</label
+        >
+        <select class="form-control form-select" formControlName="leaveType" id="field_leaveType" name="leaveType">
+          <option value="MENTIONABLE_ANNUAL_LEAVE">{{ 'bitsHrPayrollApp.LeaveType.MENTIONABLE_ANNUAL_LEAVE' | translate }}</option>
+          <option value="MENTIONABLE_CASUAL_LEAVE">{{ 'bitsHrPayrollApp.LeaveType.MENTIONABLE_CASUAL_LEAVE' | translate }}</option>
+          <option value="NON_MENTIONABLE_COMPENSATORY_LEAVE">
+            {{ 'bitsHrPayrollApp.LeaveType.NON_MENTIONABLE_COMPENSATORY_LEAVE' | translate }}
+          </option>
+          <option value="NON_MENTIONABLE_PANDEMIC_LEAVE">
+            {{ 'bitsHrPayrollApp.LeaveType.NON_MENTIONABLE_PANDEMIC_LEAVE' | translate }}
+          </option>
+          <option value="NON_MENTIONABLE_PATERNITY_LEAVE">
+            {{ 'bitsHrPayrollApp.LeaveType.NON_MENTIONABLE_PATERNITY_LEAVE' | translate }}
+          </option>
+          <option value="NON_MENTIONABLE_MATERNITY_LEAVE">
+            {{ 'bitsHrPayrollApp.LeaveType.NON_MENTIONABLE_MATERNITY_LEAVE' | translate }}
+          </option>
+          <option value="OTHER">{{ 'bitsHrPayrollApp.LeaveType.OTHER' | translate }}</option>
+        </select>
+        <div *ngIf="editForm.get('leaveType')!.invalid && (editForm.get('leaveType')!.dirty || editForm.get('leaveType')!.touched)">
+          <small
+            *ngIf="editForm.get('leaveType')?.errors?.required"
+            class="form-text text-danger"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-control-label required" for="field_allocatedDays" jhiTranslate="bitsHrPayrollApp.leaveAllocation.allocatedDays"
+          >Allocated Days</label
+        >
+        <input class="form-control" formControlName="allocatedDays" id="field_allocatedDays" name="allocatedDays" type="number" />
+        <div
+          *ngIf="editForm.get('allocatedDays')!.invalid && (editForm.get('allocatedDays')!.dirty || editForm.get('allocatedDays')!.touched)"
+        >
+          <small
+            *ngIf="editForm.get('allocatedDays')?.errors?.required"
+            class="form-text text-danger"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+          <small
+            *ngIf="editForm.get('allocatedDays')?.errors?.min"
+            [translateValues]="{ min: 0 }"
+            class="form-text text-danger"
+            jhiTranslate="entity.validation.min"
+          >
+            This field should be at least 0.
+          </small>
+          <small
+          *ngIf="editForm.get('allocatedDays')?.errors?.max"
+          [translateValues]="{ max: 365 }"
+          class="form-text text-danger"
+          jhiTranslate="entity.validation.max"
+          >
+              This field should be less than 366.
+          </small>
+          <small
+            [hidden]="!editForm.get('allocatedDays')?.errors?.number"
+            class="form-text text-danger"
+            jhiTranslate="entity.validation.number"
+          >
+            This field should be a number.
+          </small>
+        </div>
+      </div>
+      <div class="mt-3">
+        <button (click)="previousState()" class="btn btn-secondary" id="cancel-save" type="button">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button [disabled]="editForm.invalid || isSaving" class="btn btn-primary" id="save-entity" type="submit">
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </div>
+    <jhi-alert-error></jhi-alert-error>
+  </form>
+</div>

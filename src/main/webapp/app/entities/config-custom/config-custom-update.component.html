@@ -1,0 +1,206 @@
+<jhi-header headerName="Configuration"> </jhi-header>
+
+<div class="row">
+  <div class="card mb-3" style="width: 100%">
+    <div class="card-body mt-2">
+      <div class="card-text align-baseline">
+        <div class="row align-items-center">
+          <div class="col ms-3">Employee Leave Application (On/Off)</div>
+          <div class="col-md-2 text-end">
+            <div class="custom-control form-switch">
+              <input
+                type="checkbox"
+                [checked]="isLeaveApplicationEnabled"
+                (change)="changeFlagOfUserLeaveApplication()"
+                class="form-check-input" role="switch"
+                id="leaveApplicationToggle"
+              />
+              <label class="custom-control-label" for="leaveApplicationToggle"></label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="card mb-3" style="width: 100%">
+    <div class="card-body mt-2">
+      <div class="card-text align-baseline">
+        <div class="row">
+          <div class="col ms-3">Maximum Allowed Previous Days for Changing Attendance Status</div>
+          <div class="col-md-2">
+            <input
+              type="number"
+              class="form-control"
+              [formControl]="maxDaysForChangeAttendanceStatusFormControl"
+              min="1"
+              id="max-allowed-previous-days-for-change-attendance-status"
+            />
+            <small class="text-danger" *ngIf="maxDaysForChangeAttendanceStatusFormControl.value < 1"> Minimum value is 1 </small>
+          </div>
+          <div class="col-md-1">
+            <button
+              type="button"
+              [disabled]="maxDaysForChangeAttendanceStatusFormControl.value < 1"
+              class="btn btn-secondary"
+              (click)="changeMaxAllowedDaysChangeAttendanceStatus()"
+            >
+              Save
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="card mb-3" style="width: 100%">
+    <div class="card-body mt-2">
+      <div class="card-text align-baseline">
+        <div class="row">
+          <div class="col ms-3">Maximum Days for Attendance Data Load</div>
+          <div class="col-md-2">
+            <input
+              type="number"
+              class="form-control"
+              [formControl]="maxDaysForAttendanceDataLoadFormControl"
+              min="1"
+              id="max-allowed-days-for-attendance-data-load"
+            />
+            <small class="text-danger" *ngIf="maxDaysForAttendanceDataLoadFormControl.value < 30"> Minimum value is 30 </small>
+          </div>
+          <div class="col-md-1">
+            <button
+              type="button"
+              [disabled]="maxDaysForAttendanceDataLoadFormControl.value < 30"
+              class="btn btn-secondary"
+              (click)="changeMaxDaysForAttendanceDataLoad()"
+            >
+              Save
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="card mb-3" style="width: 100%">
+    <div class="card-body mt-2">
+      <div class="card-text align-baseline">
+        <div class="row align-items-center">
+          <div class="col ms-3">Enable Income Tax Statement Visibility</div>
+          <div class="col-md-2 text-end">
+            <div class="custom-control form-switch">
+              <input
+                type="checkbox"
+                [checked]="isIncomeTaxStatementVisibilityOn"
+                (change)="changeFlagOfIncomeTaxStatementVisibility()"
+                class="form-check-input" role="switch"
+                id="incomeTaxStatementVisibilityToggle"
+              />
+              <label class="custom-control-label" for="incomeTaxStatementVisibilityToggle"></label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="card mb-3" style="width: 100%">
+    <div class="card-body mt-2">
+      <div class="card-text align-baseline">
+        <div class="row align-items-center">
+          <div class="col ms-3">Recruitment Requisition Form (On/Off)</div>
+          <div class="col-md-2 text-end">
+            <div class="custom-control form-switch">
+              <input
+                [checked]="isRRFEnabled"
+                (change)="changeFlagOfRRF()"
+                id="rrfToggle"
+                class="form-check-input"
+                type="checkbox"
+                role="switch"
+              />
+              <label class="custom-control-label" for="rrfToggle"></label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="card  mb-3" style="width: 100%">
+    <div class="card-body mt-2">
+      <div class="card-text align-baseline">
+        <div class="row align-items-center">
+          <div class="col ms-3">General Nominee NID Verification (On/Off)</div>
+          <div class="col-md-2 text-end">
+            <div class="custom-control form-switch">
+              <input type="checkbox" [checked]="isNomineeNIDVerificationEnabled"
+                     (change)="changeFlagOfNomineeNIDVerification()" class="form-check-input"
+                     role="switch"
+                     id="nomineeNidVerificationToggle">
+              <label class="custom-control-label" for="nomineeNidVerificationToggle"></label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="card  mb-3" style="width: 100%">
+    <div class="card-body mt-2">
+      <div class="card-text align-baseline">
+        <div class="row align-items-center">
+          <div class="col ms-3">
+            Provident Fund Nominee NID Verification (On/Off)
+          </div>
+          <div class="col-md-2 text-end">
+            <div class="custom-control form-switch">
+              <input type="checkbox" [checked]="isPFNomineeNIDVerificationEnabled"
+                     (change)="changeFlagOfPFNomineeNIDVerification()" class="form-check-input"
+                     role="switch"
+                     id="PFnomineeNidVerificationToggle">
+              <label class="custom-control-label" for="PFnomineeNidVerificationToggle"></label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="card  mb-3" style="width: 100%">
+    <div class="card-body mt-2">
+      <div class="card-text align-baseline">
+        <div class="row align-items-center">
+          <div class="col ms-3">
+            Gratuity Fund Nominee NID Verification (On/Off)
+          </div>
+          <div class="col-md-2 text-end">
+            <div class="custom-control form-switch">
+              <input type="checkbox" [checked]="GFisNomineeNIDVerificationEnabled"
+                     (change)="changeFlagOfGFNomineeNIDVerification()" class="form-check-input"
+                     role="switch"
+                     id="GFnomineeNidVerificationToggle">
+              <label class="custom-control-label" for="GFnomineeNidVerificationToggle"></label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

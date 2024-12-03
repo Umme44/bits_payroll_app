@@ -1,0 +1,24 @@
+<div class="">
+
+  <div *ngIf="showWithPlaceHolder">
+    <select (change)="onChangeYear($event)" [formControl]="selectYearFormControl" aria-label="Default select example"
+            class="form-control form-select">
+      <option [ngValue]="null" [selected]="true">All</option>
+      <option *ngFor="let year of years" value="{{ year }}">
+        {{ year }}
+      </option>
+    </select>
+  </div>
+
+  <div *ngIf="!showWithPlaceHolder">
+    <select (change)="onChangeYear($event)" [formControl]="selectYearFormControl" aria-label="Default select example"
+            class="form-control form-select">
+      <option *ngFor="let year of years" value="{{ year }}">
+        {{ year }}
+      </option>
+    </select>
+  </div>
+
+</div>
+
+

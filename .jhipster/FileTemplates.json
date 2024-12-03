@@ -1,0 +1,44 @@
+{
+  "changelogDate": "20211220103902",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "file_templates",
+  "fields": [
+    {
+      "fieldName": "title",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "250",
+      "fieldValidateRulesMinlength": "2"
+    },
+    {
+      "fieldName": "filePath",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "type",
+      "fieldType": "FileTemplatesType",
+      "fieldValues": "POLICIES,TEMPLATES,FORMS"
+    },
+    {
+      "fieldName": "accessPrivilege",
+      "fieldType": "FileAccessPrevilage",
+      "fieldValues": "GENERAL,MANAGEMENT"
+    },
+    {
+      "fieldName": "isActive",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "FileTemplates",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

@@ -1,0 +1,81 @@
+<jhi-header
+  [headerName]="'Insurance Claim Details'"
+  [midHeaderName01]="'Insurance Claim'"
+  [midRouterLinkText01]="'/insurance-claim'"
+  [shouldHaveHr]="false">
+</jhi-header>
+<div class="row justify-content-center">
+  <div class="col-12">
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <div *ngIf="insuranceClaim" class="card card-body mb-2">
+
+      <dl class="row font-sm">
+
+        <dt class="col-md-3"><span>Policy holder PIN</span></dt>
+        <dd class="col-md-3">
+          <span>{{ insuranceClaim.policyHolderPin }}</span>
+        </dd>
+
+        <dt class="col-md-3"><span >Policy holder Name</span></dt>
+        <dd class="col-md-3">
+          <span>{{ insuranceClaim.policyHolderName }}</span>
+        </dd>
+
+        <dt class="col-md-3"><span >Registration Name</span></dt>
+        <dd class="col-md-3">
+          <span>{{ insuranceClaim.registrationName }}</span>
+        </dd>
+
+        <dt class="col-md-3"><span >Relation</span></dt>
+        <dd class="col-md-3">
+          <span >{{ getInsuranceRelation(insuranceClaim.relation!) }}</span>
+        </dd>
+
+        <dt *ngIf="insuranceClaim.claimStatus === 'SETTLED'" class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.insuranceClaim.settlementDate">Settlement Date</span></dt>
+        <dd *ngIf="insuranceClaim.claimStatus === 'SETTLED'" class="col-md-3">
+          <span>{{ insuranceClaim.settlementDate | formatMediumDate }}</span>
+        </dd>
+        <dt *ngIf="insuranceClaim.claimStatus === 'SETTLED'" class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.insuranceClaim.paymentDate">Payment Date</span></dt>
+        <dd *ngIf="insuranceClaim.claimStatus === 'SETTLED'" class="col-md-3">
+          <span>{{ insuranceClaim.paymentDate | formatMediumDate }}</span>
+        </dd>
+        <dt *ngIf="insuranceClaim.claimStatus !== 'SETTLED'" class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.insuranceClaim.regretDate">Regret Date</span></dt>
+        <dd *ngIf="insuranceClaim.claimStatus !== 'SETTLED'" class="col-md-3">
+          <span>{{ insuranceClaim.regretDate | formatMediumDate }}</span>
+        </dd>
+        <dt *ngIf="insuranceClaim.claimStatus !== 'SETTLED'" class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.insuranceClaim.regretReason">Regret Reason</span></dt>
+        <dd *ngIf="insuranceClaim.claimStatus !== 'SETTLED'" class="col-md-3">
+          <span>{{ insuranceClaim.regretReason }}</span>
+        </dd>
+        <dt *ngIf="insuranceClaim.claimStatus === 'SETTLED'" class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.insuranceClaim.claimedAmount">Claimed Amount</span></dt>
+        <dd *ngIf="insuranceClaim.claimStatus === 'SETTLED'" class="col-md-3">
+          <span>{{ insuranceClaim.claimedAmount | number }}</span>
+        </dd>
+        <dt *ngIf="insuranceClaim.claimStatus === 'SETTLED'" class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.insuranceClaim.settledAmount">Settled Amount</span></dt>
+        <dd *ngIf="insuranceClaim.claimStatus === 'SETTLED'" class="col-md-3">
+          <span>{{ insuranceClaim.settledAmount | number }}</span>
+        </dd>
+        <dt class="col-md-3"><span jhiTranslate="bitsHrPayrollApp.insuranceClaim.claimStatus">Claim Status</span></dt>
+        <dd class="col-md-3">
+          <span jhiTranslate="{{ 'bitsHrPayrollApp.ClaimStatus.' + insuranceClaim.claimStatus }}">{{ insuranceClaim.claimStatus }}</span>
+        </dd>
+      </dl>
+    </div>
+
+    <div>
+      <button type="submit"
+              (click)="previousState()"
+              class="btn btn-info">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button"
+              [routerLink]="['/insurance-claim', insuranceClaim!.id!, 'edit']"
+              class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

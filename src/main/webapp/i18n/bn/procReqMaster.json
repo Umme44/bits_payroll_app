@@ -1,0 +1,54 @@
+{
+  "bitsHrPayrollApp": {
+    "procReqMaster": {
+      "home": {
+        "title": "Proc Req Masters",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Proc Req Master",
+        "createOrEditLabel": "Create or edit a Proc Req Master",
+        "notFound": "No Proc Req Masters found"
+      },
+      "created": "A new Proc Req Master is created with identifier {{ param }}",
+      "updated": "A Proc Req Master is updated with identifier {{ param }}",
+      "deleted": "A Proc Req Master is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Proc Req Master {{ id }}?"
+      },
+      "detail": {
+        "title": "Proc Req Master"
+      },
+      "id": "ID",
+      "requisitionNo": "Requisition No",
+      "requestedDate": "Requested Date",
+      "isCTOApprovalRequired": "Is CTO Approval Required",
+      "requisitionStatus": "Requisition Status",
+      "expectedReceivedDate": "Expected Received Date",
+      "reasoning": "Reasoning",
+      "totalApproximatePrice": "Total Approximate Price",
+      "recommendationAt01": "Recommendation At 01",
+      "recommendationAt02": "Recommendation At 02",
+      "recommendationAt03": "Recommendation At 03",
+      "recommendationAt04": "Recommendation At 04",
+      "recommendationAt05": "Recommendation At 05",
+      "nextRecommendationOrder": "Next Recommendation Order",
+      "rejectedDate": "Rejected Date",
+      "rejectionReason": "Rejection Reason",
+      "closedAt": "Closed At",
+      "createdAt": "Created At",
+      "updatedAt": "Updated At",
+      "department": "Department",
+      "requestedBy": "Requested By",
+      "recommendedBy01": "Recommended By 01",
+      "recommendedBy02": "Recommended By 02",
+      "recommendedBy03": "Recommended By 03",
+      "recommendedBy04": "Recommended By 04",
+      "recommendedBy05": "Recommended By 05",
+      "nextApprovalFrom": "Next Approval From",
+      "rejectedBy": "Rejected By",
+      "closedBy": "Closed By",
+      "updatedBy": "Updated By",
+      "createdBy": "Created By",
+      "procReq": "Proc Req"
+    }
+  }
+}

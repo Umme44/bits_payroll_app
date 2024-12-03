@@ -1,0 +1,62 @@
+{
+  "changelogDate": "20210418021854",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "pf_account",
+  "fields": [
+    {
+      "fieldName": "pfCode",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "membershipStartDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "membershipEndDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "PfAccountStatus",
+      "fieldValues": "ACTIVE,INACTIVE,CLOSED"
+    },
+    {
+      "fieldName": "designationName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "departmentName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "unitName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "accHolderName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "pin",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dateOfJoining",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "dateOfConfirmation",
+      "fieldType": "LocalDate"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "PfAccount",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

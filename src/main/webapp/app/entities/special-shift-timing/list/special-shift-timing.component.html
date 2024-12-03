@@ -1,0 +1,104 @@
+<jhi-header
+  [addButtonText]="'Add Special Shift Timing'"
+  [headerName]="'Special Shift Timings'"
+  [routerLinkText]="'/special-shift-timing/new'"
+  [shouldHaveHr]="false"
+>
+</jhi-header>
+
+<div>
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="table-responsive" id="entities" *ngIf="specialShiftTimings && specialShiftTimings.length > 0">
+    <table class="table table-hover list-text-color" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span>Effective Date</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.specialShiftTiming.timeSlot">Time Slot</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.specialShiftTiming.overrideRoaster">Override Roaster</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.specialShiftTiming.overrideFlexSchedule">Override Flex Schedule</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.specialShiftTiming.reason">Reason</span></th>
+          <th scope="col"><span jhiTranslate="bitsHrPayrollApp.specialShiftTiming.remarks">Remarks</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+        <tr *ngFor="let specialShiftTiming of specialShiftTimings; trackBy: trackId">
+          <td>{{ specialShiftTiming.startDate | formatMediumDate }} - {{ specialShiftTiming.endDate | formatMediumDate }}</td>
+          <td>
+            <div *ngIf="specialShiftTiming.timeSlotId">
+              <span>
+                {{ specialShiftTiming.inTime | formatTime }} - {{ specialShiftTiming.outTime | formatTime }} ({{
+                  specialShiftTiming.timeSlotTitle
+                }})
+              </span>
+            </div>
+          </td>
+          <td>
+            <div class="text-success" *ngIf="specialShiftTiming.overrideRoaster === true">
+              <fa-icon icon="check"></fa-icon>
+            </div>
+            <div *ngIf="specialShiftTiming.overrideRoaster === false" class="text-danger">
+              <fa-icon icon="times"></fa-icon>
+            </div>
+          </td>
+
+          <td>
+            <div class="text-success" *ngIf="specialShiftTiming.overrideFlexSchedule === true">
+              <fa-icon icon="check"></fa-icon>
+            </div>
+            <div *ngIf="specialShiftTiming.overrideFlexSchedule === false" class="text-danger">
+              <fa-icon icon="times"></fa-icon>
+            </div>
+          </td>
+
+          <td>
+            <span
+              *ngIf="specialShiftTiming.reason && specialShiftTiming.reason!.length > 30; else noteElse" container="body"
+              [ngbTooltip]="specialShiftTiming.reason"
+            >
+              {{ textSlicing(specialShiftTiming.reason) }}
+            </span>
+            <ng-template #noteElse>
+              <span>
+                {{ specialShiftTiming.reason }}
+              </span>
+            </ng-template>
+          </td>
+
+          <td>
+            <span
+              *ngIf="specialShiftTiming.remarks && specialShiftTiming.remarks!.length > 30; else noteRemarksElse" container="body"
+              [ngbTooltip]="specialShiftTiming.remarks"
+            >
+              {{ textSlicing(specialShiftTiming.remarks) }}
+            </span>
+            <ng-template #noteRemarksElse>
+              <span>
+                {{ specialShiftTiming.remarks }}
+              </span>
+            </ng-template>
+          </td>
+
+          <td class="text-end">
+            <div class="">
+              <button type="submit" (click)="openView(specialShiftTiming)" class="btn btn-info btn-sm">
+                <fa-icon icon="eye"></fa-icon>
+              </button>
+
+              <button type="submit" [routerLink]="['/special-shift-timing', specialShiftTiming.id, 'edit']" class="btn btn-primary btn-sm">
+                <fa-icon icon="pencil-alt"></fa-icon>
+              </button>
+
+              <button type="submit" (click)="delete(specialShiftTiming)" class="btn btn-danger btn-sm">
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

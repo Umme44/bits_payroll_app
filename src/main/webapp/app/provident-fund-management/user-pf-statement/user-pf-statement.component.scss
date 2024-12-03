@@ -1,0 +1,126 @@
+/* pf-statement.component.scss */
+
+$document-width: 880px;
+$document-height: 1244px;
+
+small {
+  font-weight: 600;
+}
+
+.printDivOfUserPfStatement {
+  padding: 0px 78px 0px 96px;
+}
+
+.letter-head {
+  //background: transparent url(../../../content/images/letter-head-pad-new.png) no-repeat;
+  background-size: cover;
+}
+
+.print-btn-container {
+  width: $document-width;
+}
+
+.container-of-statement {
+  width: $document-width;
+  height: $document-height;
+  font-family: Segoe UI;
+  font-size: 12px;
+  position: relative;
+  /*padding: 14px*/
+}
+
+.report-title {
+  width: 100%;
+  font-family: Calibri;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.report-subject {
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+table th,
+table td {
+  line-height: 1.4;
+}
+
+.border-1 {
+  border: 1px solid black;
+}
+
+.letter-head-spacing {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.account-manager-info {
+  width: 100%;
+  font-family: Calibri;
+  text-align: left;
+  font-size: 16px;
+  font-weight: normal;
+}
+
+.letter-head-spacing {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.printFont {
+  font-family: 'Segoe UI';
+  font-weight: 400;
+}
+
+@media print {
+  .container-of-statement {
+    width: 989px;
+    height: 1400px;
+    background-size: contain;
+  }
+
+  .print-btn-container,
+  jhi-header,
+  .print-btn-div {
+    display: none;
+  }
+
+  .account-manager-info {
+    font-size: 20px;
+  }
+
+  .report-title {
+    font-size: 22px;
+  }
+
+  .printFont {
+    font-size: 16px;
+  }
+
+  .report-subject {
+    font-size: 21px;
+  }
+
+  .ribbon {
+    display: none;
+  }
+
+  .footer-copyright {
+    display: none;
+  }
+
+  .border-1 {
+    border: 0;
+  }
+
+  .col-md-7 {
+    width: 58.33333333%;
+  }
+  .col-md-4 {
+    width: 33.33333333%;
+  }
+}

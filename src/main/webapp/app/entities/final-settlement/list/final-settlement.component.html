@@ -1,0 +1,607 @@
+<div>
+  <jhi-header
+    [addButtonText]="'Initiate Final Settlement'"
+    [headerName]="'Final Settlement'"
+    [routerLinkText]="'/final-settlement/employee-select'"
+    [shouldHaveHr]="false"
+  >
+  </jhi-header>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="finalSettlements?.length === 0">
+    <span jhiTranslate="bitsHrPayrollApp.finalSettlement.home.notFound">No FinalSettlements found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="finalSettlements && finalSettlements.length > 0">
+    <table class="table table-hover list-text-color" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col" class="" jhiSortBy="employeePin">
+            <span jhiTranslate="bitsHrPayrollApp.employee.pin">PIN</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" class="" jhiSortBy="employeeFullName">
+            <span jhiTranslate="bitsHrPayrollApp.employee.fullName">Name</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" class="text-end" jhiSortBy="finalSettlementDate">
+            <span jhiTranslate="bitsHrPayrollApp.finalSettlement.finalSettlementDate">Final Settlement Date</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" class="text-end" jhiSortBy="netSalaryPayable">
+            <span>Net</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" class="text-end" jhiSortBy="totalPayablePf">
+            <span>PF</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" class="text-end" jhiSortBy="totalPayableGf">
+            <span>GF</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" class="text-end" jhiSortBy="totalFinalSettlementAmount">
+            <span jhiTranslate="bitsHrPayrollApp.finalSettlement.totalFinalSettlementAmount">Total</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let finalSettlement of finalSettlements; trackBy: trackId">
+          <td class="">{{ finalSettlement.employeePin }}</td>
+          <td class="">{{ finalSettlement.employeeFullName }}</td>
+          <td class="text-end">{{ finalSettlement.finalSettlementDate | formatMediumDate }}</td>
+          <td class="text-end">{{ finalSettlement.netSalaryPayable | number }}</td>
+          <td class="text-end">{{ finalSettlement.totalPayablePf | number }}</td>
+          <td class="text-end">{{ finalSettlement.totalPayableGf | number }}</td>
+          <td class="text-end">{{ finalSettlement.totalFinalSettlementAmount | number }}</td>
+
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                *ngIf="finalSettlement && finalSettlement.employeeId"
+                type="submit"
+                (click)="generateFinalSettlement(finalSettlement.employeeId)"
+                class="btn btn-primary btn-sm px-md-3"
+                data-placement="top"
+                data-toggle="tooltip"
+                title="Regenerate"
+              >
+                <fa-icon icon="sync"></fa-icon>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/final-settlement', finalSettlement.id, 'view']"
+                class="btn btn-info btn-sm px-md-3"
+                data-placement="top"
+                data-toggle="tooltip"
+                title="View"
+              >
+                <fa-icon icon="eye"></fa-icon>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/final-settlement', finalSettlement.id, 'edit']"
+                class="btn btn-primary btn-sm px-md-3"
+                data-placement="top"
+                data-toggle="tooltip"
+                title="Edit"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+              </button>
+
+              <button
+                type="submit"
+                (click)="delete(finalSettlement)"
+                class="btn btn-danger btn-sm px-md-3"
+                data-placement="top"
+                data-toggle="tooltip"
+                title="Delete"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!--  <div *ngIf="finalSettlements && finalSettlements.length > 0">-->
+  <!--    <div class="row justify-content-center">-->
+  <!--      <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>-->
+  <!--    </div>-->
+
+  <!--    <div class="row justify-content-center">-->
+  <!--      <ngb-pagination-->
+  <!--        [collectionSize]="totalItems"-->
+  <!--        [(page)]="ngbPaginationPage"-->
+  <!--        [pageSize]="itemsPerPage"-->
+  <!--        [maxSize]="5"-->
+  <!--        [rotate]="true"-->
+  <!--        [boundaryLinks]="true"-->
+  <!--        (pageChange)="loadPage($event)"-->
+  <!--      ></ngb-pagination>-->
+  <!--    </div>-->
+  <!--  </div>-->
+</div>
+
+<!--<div>-->
+<!--  <h2 id="page-heading" data-cy="FinalSettlementHeading">-->
+<!--    <span jhiTranslate="bitsHrPayrollApp.finalSettlement.home.title">Final Settlements</span>-->
+
+<!--    <div class="d-flex justify-content-end">-->
+<!--      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">-->
+<!--        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>-->
+<!--        <span jhiTranslate="bitsHrPayrollApp.finalSettlement.home.refreshListLabel">Refresh list</span>-->
+<!--      </button>-->
+
+<!--      <button-->
+<!--        id="jh-create-entity"-->
+<!--        data-cy="entityCreateButton"-->
+<!--        class="btn btn-primary jh-create-entity create-final-settlement"-->
+<!--        [routerLink]="['/final-settlement/new']"-->
+<!--      >-->
+<!--        <fa-icon icon="plus"></fa-icon>-->
+<!--        <span jhiTranslate="bitsHrPayrollApp.finalSettlement.home.createLabel"> Create a new Final Settlement </span>-->
+<!--      </button>-->
+<!--    </div>-->
+<!--  </h2>-->
+
+<!--  <jhi-alert-error></jhi-alert-error>-->
+
+<!--  <jhi-alert></jhi-alert>-->
+
+<!--  <div class="alert alert-warning" id="no-result" *ngIf="finalSettlements?.length === 0">-->
+<!--    <span jhiTranslate="bitsHrPayrollApp.finalSettlement.home.notFound">No Final Settlements found</span>-->
+<!--  </div>-->
+
+<!--  <div class="table-responsive table-entities" id="entities" *ngIf="finalSettlements && finalSettlements.length > 0">-->
+<!--    <table class="table table-hover list-text-color" aria-describedby="page-heading">-->
+<!--      <thead>-->
+<!--        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">-->
+<!--          <th scope="col" jhiSortBy="id">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="global.field.id">ID</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="dateOfResignation">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.dateOfResignation">Date Of Resignation</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="noticePeriod">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.noticePeriod">Notice Period</span>-->
+<!--             <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="lastWorkingDay">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.lastWorkingDay">Last Working Day</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="dateOfRelease">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.dateOfRelease">Date Of Release</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="serviceTenure">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.serviceTenure">Service Tenure</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="mBasic">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.mBasic">M Basic</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="mHouseRent">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.mHouseRent">M House Rent</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="mMedical">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.mMedical">M Medical</span>-->
+<!--             <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="mConveyance">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.mConveyance">M Conveyance</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="salaryPayable">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.salaryPayable">Salary Payable</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="salaryPayableRemarks">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.salaryPayableRemarks">Salary Payable Remarks</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="totalDaysForLeaveEncashment">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.totalDaysForLeaveEncashment">Total Days For Leave Encashment</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="totalLeaveEncashment">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.totalLeaveEncashment">Total Leave Encashment</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="mobileBillInCash">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.mobileBillInCash">Mobile Bill In Cash</span>-->
+<!--                 <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="allowance01Name">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.allowance01Name">Allowance 01 Name</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="allowance01Amount">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.allowance01Amount">Allowance 01 Amount</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="allowance01Remarks">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.allowance01Remarks">Allowance 01 Remarks</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="allowance02Name">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.allowance02Name">Allowance 02 Name</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="allowance02Amount">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.allowance02Amount">Allowance 02 Amount</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="allowance02Remarks">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.allowance02Remarks">Allowance 02 Remarks</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="allowance03Name">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.allowance03Name">Allowance 03 Name</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="allowance03Amount">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.allowance03Amount">Allowance 03 Amount</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="allowance03Remarks">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.allowance03Remarks">Allowance 03 Remarks</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="allowance04Name">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.allowance04Name">Allowance 04 Name</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="allowance04Amount">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.allowance04Amount">Allowance 04 Amount</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="allowance04Remarks">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.allowance04Remarks">Allowance 04 Remarks</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="deductionNoticePay">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.deductionNoticePay">Deduction Notice Pay</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="deductionPf">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.deductionPf">Deduction Pf</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="deductionHaf">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.deductionHaf">Deduction Haf</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="deductionExcessCellBill">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.deductionExcessCellBill">Deduction Excess Cell Bill</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="deductionAbsentDaysAdjustment">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.deductionAbsentDaysAdjustment">Deduction Absent Days Adjustment</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="totalSalaryPayable">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.totalSalaryPayable">Total Salary Payable</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="deductionAnnualIncomeTax">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.deductionAnnualIncomeTax">Deduction Annual Income Tax</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="netSalaryPayable">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.netSalaryPayable">Net Salary Payable</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="totalPayablePf">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.totalPayablePf">Total Payable Pf</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="totalPayableGf">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.totalPayableGf">Total Payable Gf</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="totalFinalSettlementAmount">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.totalFinalSettlementAmount">Total Final Settlement Amount</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="createdAt">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.createdAt">Created At</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="updatedAt">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.updatedAt">Updated At</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="deductionNoticePayDays">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.deductionNoticePayDays">Deduction Notice Pay Days</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="deductionAbsentDaysAdjustmentDays">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.deductionAbsentDaysAdjustmentDays"-->
+<!--                >Deduction Absent Days Adjustment Days</span-->
+<!--              >-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="deductionOther">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.deductionOther">Deduction Other</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="totalSalary">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.totalSalary">Total Salary</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="totalGrossSalary">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.totalGrossSalary">Total Gross Salary</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="totalDeduction">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.totalDeduction">Total Deduction</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="finalSettlementDate">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.finalSettlementDate">Final Settlement Date</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="isFinalized">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.isFinalized">Is Finalized</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="salaryNumOfMonth">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.salaryNumOfMonth">Salary Num Of Month</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="remarks">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.remarks">Remarks</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="employee.id">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.employee">Employee</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="createdBy.login">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.createdBy">Created By</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="updatedBy.login">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.finalSettlement.updatedBy">Updated By</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col"></th>-->
+<!--        </tr>-->
+<!--      </thead>-->
+<!--      <tbody>-->
+<!--        <tr *ngFor="let finalSettlement of finalSettlements; trackBy: trackId" data-cy="entityTable">-->
+<!--          <td>-->
+<!--            <a [routerLink]="['/final-settlement', finalSettlement.id, 'view']">{{ finalSettlement.id }}</a>-->
+<!--          </td>-->
+<!--          <td>{{ finalSettlement.dateOfResignation | formatMediumDate }}</td>-->
+<!--          <td>{{ finalSettlement.noticePeriod }}</td>-->
+<!--          <td>{{ finalSettlement.lastWorkingDay | formatMediumDate }}</td>-->
+<!--          <td>{{ finalSettlement.dateOfRelease | formatMediumDate }}</td>-->
+<!--          <td>{{ finalSettlement.serviceTenure }}</td>-->
+<!--          <td>{{ finalSettlement.mBasic }}</td>-->
+<!--          <td>{{ finalSettlement.mHouseRent }}</td>-->
+<!--          <td>{{ finalSettlement.mMedical }}</td>-->
+<!--          <td>{{ finalSettlement.mConveyance }}</td>-->
+<!--          <td>{{ finalSettlement.salaryPayable }}</td>-->
+<!--          <td>{{ finalSettlement.salaryPayableRemarks }}</td>-->
+<!--          <td>{{ finalSettlement.totalDaysForLeaveEncashment }}</td>-->
+<!--          <td>{{ finalSettlement.totalLeaveEncashment }}</td>-->
+<!--          <td>{{ finalSettlement.mobileBillInCash }}</td>-->
+<!--          <td>{{ finalSettlement.allowance01Name }}</td>-->
+<!--          <td>{{ finalSettlement.allowance01Amount }}</td>-->
+<!--          <td>{{ finalSettlement.allowance01Remarks }}</td>-->
+<!--          <td>{{ finalSettlement.allowance02Name }}</td>-->
+<!--          <td>{{ finalSettlement.allowance02Amount }}</td>-->
+<!--          <td>{{ finalSettlement.allowance02Remarks }}</td>-->
+<!--          <td>{{ finalSettlement.allowance03Name }}</td>-->
+<!--          <td>{{ finalSettlement.allowance03Amount }}</td>-->
+<!--          <td>{{ finalSettlement.allowance03Remarks }}</td>-->
+<!--          <td>{{ finalSettlement.allowance04Name }}</td>-->
+<!--          <td>{{ finalSettlement.allowance04Amount }}</td>-->
+<!--          <td>{{ finalSettlement.allowance04Remarks }}</td>-->
+<!--          <td>{{ finalSettlement.deductionNoticePay }}</td>-->
+<!--          <td>{{ finalSettlement.deductionPf }}</td>-->
+<!--          <td>{{ finalSettlement.deductionHaf }}</td>-->
+<!--          <td>{{ finalSettlement.deductionExcessCellBill }}</td>-->
+<!--          <td>{{ finalSettlement.deductionAbsentDaysAdjustment }}</td>-->
+<!--          <td>{{ finalSettlement.totalSalaryPayable }}</td>-->
+<!--          <td>{{ finalSettlement.deductionAnnualIncomeTax }}</td>-->
+<!--          <td>{{ finalSettlement.netSalaryPayable }}</td>-->
+<!--          <td>{{ finalSettlement.totalPayablePf }}</td>-->
+<!--          <td>{{ finalSettlement.totalPayableGf }}</td>-->
+<!--          <td>{{ finalSettlement.totalFinalSettlementAmount }}</td>-->
+<!--          <td>{{ finalSettlement.createdAt | formatMediumDate }}</td>-->
+<!--          <td>{{ finalSettlement.updatedAt | formatMediumDate }}</td>-->
+<!--          <td>{{ finalSettlement.deductionNoticePayDays }}</td>-->
+<!--          <td>{{ finalSettlement.deductionAbsentDaysAdjustmentDays }}</td>-->
+<!--          <td>{{ finalSettlement.deductionOther }}</td>-->
+<!--          <td>{{ finalSettlement.totalSalary }}</td>-->
+<!--          <td>{{ finalSettlement.totalGrossSalary }}</td>-->
+<!--          <td>{{ finalSettlement.totalDeduction }}</td>-->
+<!--          <td>{{ finalSettlement.finalSettlementDate | formatMediumDate }}</td>-->
+<!--          <td>{{ finalSettlement.isFinalized }}</td>-->
+<!--          <td>{{ finalSettlement.salaryNumOfMonth }}</td>-->
+<!--          <td>{{ finalSettlement.remarks }}</td>-->
+<!--          <td>-->
+<!--            <div *ngIf="finalSettlement.employee">-->
+<!--              <a [routerLink]="['/employee', finalSettlement.employee.id, 'view']">{{ finalSettlement.employee.id }}</a>-->
+<!--            </div>-->
+<!--          </td>-->
+<!--          <td>-->
+<!--            {{ finalSettlement.createdBy?.login }}-->
+<!--          </td>-->
+<!--          <td>-->
+<!--            {{ finalSettlement.updatedBy?.login }}-->
+<!--          </td>-->
+<!--          <td class="text-end">-->
+<!--            <div class="btn-group">-->
+<!--              <button-->
+<!--                type="submit"-->
+<!--                [routerLink]="['/final-settlement', finalSettlement.id, 'view']"-->
+<!--                class="btn btn-info btn-sm"-->
+<!--                data-cy="entityDetailsButton"-->
+<!--              >-->
+<!--                <fa-icon icon="eye"></fa-icon>-->
+<!--                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>-->
+<!--              </button>-->
+
+<!--              <button-->
+<!--                type="submit"-->
+<!--                [routerLink]="['/final-settlement', finalSettlement.id, 'edit']"-->
+<!--                class="btn btn-primary btn-sm"-->
+<!--                data-cy="entityEditButton"-->
+<!--              >-->
+<!--                <fa-icon icon="pencil-alt"></fa-icon>-->
+<!--                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>-->
+<!--              </button>-->
+
+<!--              <button type="submit" (click)="delete(finalSettlement)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">-->
+<!--                <fa-icon icon="times"></fa-icon>-->
+<!--                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>-->
+<!--              </button>-->
+<!--            </div>-->
+<!--          </td>-->
+<!--        </tr>-->
+<!--      </tbody>-->
+<!--    </table>-->
+<!--  </div>-->
+
+<!--  <div *ngIf="finalSettlements && finalSettlements.length > 0">-->
+<!--    <div class="d-flex justify-content-center">-->
+<!--      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>-->
+<!--    </div>-->
+
+<!--    <div class="d-flex justify-content-center">-->
+<!--      <ngb-pagination-->
+<!--        [collectionSize]="totalItems"-->
+<!--        [page]="page"-->
+<!--        [pageSize]="itemsPerPage"-->
+<!--        [maxSize]="5"-->
+<!--        [rotate]="true"-->
+<!--        [boundaryLinks]="true"-->
+<!--        (pageChange)="navigateToPage($event)"-->
+<!--      ></ngb-pagination>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->

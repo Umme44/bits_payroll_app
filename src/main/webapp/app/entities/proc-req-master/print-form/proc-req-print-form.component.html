@@ -1,0 +1,168 @@
+<div>
+  <jhi-header
+    [headerName]="'Report'"
+    [midHeaderName01]="'Procurement Requisitions'"
+    [midRouterLinkText01]="getMidHeaderRoute()"
+    [shouldHaveHr]="false"
+  >
+  </jhi-header>
+</div>
+
+<div class="print-btn-container mb-2 mx-auto pe-0">
+  <div class="text-end">
+    <button (click)="downloadAsPDF()" class="btn btn-primary">
+      <fa-icon icon="print"></fa-icon>
+      Print
+    </button>
+  </div>
+</div>
+
+<div
+  *ngIf="procReqMaster"
+  class="print-doc-container mx-auto"
+  [style.background]="'transparent url(' + getRecruitmentRequisitionLetterHead() + ') no-repeat left top'"
+>
+  <div id="requisition-fields" class="mb-2">
+    <table class="prf-report-table">
+      <tr>
+        <td><h6>PROCUREMENT REQUISITION FORM</h6></td>
+        <td class="text-end"><span class="pe-1">Date:</span> {{ procReqMaster.requestedDate | formatMediumDate }}</td>
+      </tr>
+    </table>
+
+    <table class="prf-report-table requester-table">
+      <tr>
+        <td style="width: 15%">Request by</td>
+        <td style="width: 35%">: {{ procReqMaster.requestedByFullName }}</td>
+        <td style="width: 15%">PIN</td>
+        <td style="width: 35%">: {{ procReqMaster.requestedByPIN }}</td>
+      </tr>
+
+      <tr>
+        <td>Beneficiary</td>
+        <td>: BRAC IT Services Limited</td>
+        <td>Cell</td>
+        <td>: {{ procReqMaster.requestedByOfficialContactNo }}</td>
+      </tr>
+
+      <tr>
+        <td>Designation</td>
+        <td>: {{ procReqMaster.requestedByDesignationName }}</td>
+        <td>Dept.</td>
+        <td>: {{ procReqMaster.requestedByDepartmentName }}</td>
+      </tr>
+
+      <tr>
+        <td>Purpose</td>
+        <td>: Official</td>
+        <td>Req. No</td>
+        <td>: {{ procReqMaster.requisitionNo }}</td>
+      </tr>
+    </table>
+  </div>
+
+  <div id="item-description" class="mb-2">
+    <div class="row">
+      <p class="fw-bold">ITEM DESCRIPTION</p>
+    </div>
+
+    <table id="item-list" class="item-table mb-4">
+      <thead>
+        <tr class="">
+          <th scope="col" style="width: 5%">Sl.</th>
+          <th scope="col" style="width: 15%">Item Name</th>
+          <th scope="col" style="width: 70%">Specification</th>
+          <th scope="col" style="width: 10%">Quantity</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let procReq of procReqMaster.procReqs; index as serialNo">
+          <td>{{ serialNo + 1 }}</td>
+          <td>{{ procReq.itemInformationName }}</td>
+          <td>{{ procReq.itemInformationSpecification }}</td>
+          <td>{{ procReq.quantity }} {{ procReq.unitOfMeasurementName }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table id="requisition-reason-amount-expected-date" class="item-table">
+      <thead>
+        <tr class="">
+          <th scope="col">Reasoning</th>
+          <th scope="col">Amount (approx.)</th>
+          <th scope="col">Expected Receive Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ procReqMaster.reasoning }}</td>
+          <td>BDT {{ procReqMaster.totalApproximatePrice | number }}</td>
+          <td>{{ procReqMaster.expectedReceivedDate | formatMediumDate }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="approval-section">
+    <div class="row fw-normal">
+      <div class="col-3">
+        <div class="my-3 fw-bold">Initiated by,</div>
+        <div class="text-nowrap">{{ procReqMaster.requestedByFullName }}</div>
+        <div class="text-nowrap">{{ procReqMaster.requestedByDesignationName }}</div>
+        <div class="text-nowrap">{{ procReqMaster.requestedByDepartmentName }}</div>
+      </div>
+
+      <div class="col-3">
+        <ng-container *ngIf="procReqMaster.recommendationAt01">
+          <div class="my-3 fw-bold">Reviewed by,</div>
+          <div class="text-nowrap">{{ procReqMaster.recommendedBy01FullName }}</div>
+          <div class="text-nowrap">{{ procReqMaster.recommendedBy01Designation }}</div>
+          <div class="text-nowrap">{{ procReqMaster.recommendedBy01Department }}</div>
+          <div class="text-nowrap">{{ procReqMaster.recommendationAt01 | formatMediumDate }}</div>
+        </ng-container>
+      </div>
+
+      <div class="col-3" *ngIf="procReqMaster.isCTOApprovalRequired">
+        <ng-container *ngIf="procReqMaster.recommendationAt02">
+          <div class="my-3 fw-bold">Vetted by,</div>
+          <div class="text-nowrap">{{ procReqMaster.recommendedBy02FullName }}</div>
+          <div class="text-nowrap">{{ procReqMaster.recommendedBy02Designation }}</div>
+          <div class="text-nowrap">{{ procReqMaster.recommendedBy02Department }}</div>
+          <div class="text-nowrap">{{ procReqMaster.recommendationAt02 | formatMediumDate }}</div>
+        </ng-container>
+      </div>
+
+      <div class="col-3">
+        <ng-container *ngIf="procReqMaster.recommendationAt03">
+          <div class="my-3 fw-bold">Approved by,</div>
+          <div class="text-nowrap">{{ procReqMaster.recommendedBy03FullName }}</div>
+          <div class="text-nowrap">{{ procReqMaster.recommendedBy03Designation }}</div>
+          <div class="text-nowrap">{{ procReqMaster.recommendedBy03Department }}</div>
+          <div class="text-nowrap">{{ procReqMaster.recommendationAt03 | formatMediumDate }}</div>
+        </ng-container>
+      </div>
+
+      <div class="col-3">
+        <ng-container *ngIf="procReqMaster.recommendationAt04">
+          <div class="my-3 fw-bold">Approved by,</div>
+          <div class="text-nowrap">{{ procReqMaster.recommendedBy04FullName }}</div>
+          <div class="text-nowrap">{{ procReqMaster.recommendedBy04Designation }}</div>
+          <div class="text-nowrap">{{ procReqMaster.recommendedBy04Department }}</div>
+          <div class="text-nowrap">{{ procReqMaster.recommendationAt04 | formatMediumDate }}</div>
+        </ng-container>
+      </div>
+
+      <div class="col-3">
+        <ng-container *ngIf="procReqMaster.recommendationAt05">
+          <div class="my-3 fw-bold">Approved by,</div>
+          <div class="text-nowrap">{{ procReqMaster.recommendedBy05FullName }}</div>
+          <div class="text-nowrap">{{ procReqMaster.recommendedBy05Designation }}</div>
+          <div class="text-nowrap">{{ procReqMaster.recommendedBy05Department }}</div>
+          <div class="text-nowrap">{{ procReqMaster.recommendationAt05 | formatMediumDate }}</div>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="mt-4 text-end">Internal Use</div>
+  </div>
+</div>

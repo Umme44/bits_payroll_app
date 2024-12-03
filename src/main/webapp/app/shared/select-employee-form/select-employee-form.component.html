@@ -1,0 +1,25 @@
+<div class="font-sm" [formGroup]="employeeIdForm">
+  <ng-select
+    [(ngModel)]="selectedId"
+    [items]="employees"
+    bindLabel="fullName"
+    bindValue="id"
+    appearance="outline"
+    [searchable]="true"
+    [clearable]="true"
+    labelForId="employeeId"
+    formControlName="employeeId"
+    placeholder="Select Employee"
+    id="field_employee"
+    name="employee"
+    (change)="onChangeSelectEmployee($event)"
+  >
+  </ng-select>
+</div>
+
+<!--[(ngModel)]="selectedEmployee"-->
+<!--<ng-option *ngFor="let employee of employees;trackBy: trackById"-->
+<!--           [value]="employee.id"-->
+<!--           ngDropdownItem>-->
+<!--    {{ employee.pin }} - {{ employee.fullName }} - {{ employee.designationName }}-->
+<!--</ng-option>-->

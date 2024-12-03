@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="en">
+<head>
+    <title>Procurement Requisition Approval</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="icon" th:href="@{|${baseUrl}/favicon.ico|}"/>
+    <style th:insert="fragments/_common_head.html :: beautify_css"></style>
+</head>
+<body>
+<span>
+    Dear [[${requesterName}]],
+</span>
+<p>
+    Please be informed that your raised Req. No:(<b>[[${prfNumber}]] </b>) has been declined by [[${rejectedByName}]], [[${rejectedByDesignation}]] due to [[${rejectionReason}]].
+</p>
+</body>
+
+<footer th:insert="fragments/_common_footer.html :: system_generated_email"></footer>
+
+</html>

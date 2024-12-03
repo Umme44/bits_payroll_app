@@ -1,0 +1,24 @@
+{
+  "applications": "*",
+  "changelogDate": "20210215123830",
+  "clientRootFolder": "",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "bank_branch",
+  "fields": [
+    {
+      "fieldName": "branchName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength", "unique"],
+      "fieldValidateRulesMaxlength": "25",
+      "fieldValidateRulesMinlength": "5"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "BankBranch",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceImpl"
+}

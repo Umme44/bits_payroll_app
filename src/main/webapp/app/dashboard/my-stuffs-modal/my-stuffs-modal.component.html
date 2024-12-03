@@ -1,0 +1,81 @@
+<div class="modal-header border-none">
+  <h4 class="modal-title"></h4>
+  <button
+    type="button"
+    class="btn-close py-1 outline-none"
+    data-dismiss="modal"
+    aria-hidden="true"
+    (click)="commonService.dismiss()"
+  ></button>
+</div>
+
+<div class="modal-body dashboard-modal">
+  <div class="container">
+    <div class="dashboard row mb-1">
+      <div class="card p-1 btn color-ash col col-active mx-1 mt-0 mb-1 border-none box-shadow" (click)="openMyPaySlipModal()">
+        <img class="svg-image-size-mid mx-auto dashboard-svg-icon" src="../../../content/images/svg/payslip.svg" />
+
+        <div class="card-body pt-0 pb-2 px-0">
+          <div class="card-title text-center mb-0 font-sm">Pay Slip</div>
+        </div>
+      </div>
+
+      <div
+        class="card p-1 btn color-ash col col-active mx-1 mt-0 mb-1 border-none box-shadow"
+        (click)="goToNomineeDashboard('/my-nominee/dashboard')"
+      >
+        <img class="svg-image-size-mid mx-auto dashboard-svg-icon" src="../../../content/images/svg/Nominee.svg" />
+
+        <div class="card-body pt-0 pb-2 px-0">
+          <div class="card-title text-center mb-0 font-sm">Nominee</div>
+        </div>
+      </div>
+
+      <div
+        class="card p-1 btn color-ash col col-active mx-1 mt-0 mb-1 border-none box-shadow"
+        (click)="commonService.routerNavigation('/my-id-card')"
+      >
+        <img class="svg-image-size-mid mx-auto dashboard-svg-icon" src="../../../content/images/svg/ID%20card.svg" />
+
+        <div class="card-body pt-0 pb-2 px-0">
+          <div class="card-title text-center mb-0 font-sm">ID Card</div>
+        </div>
+      </div>
+    </div>
+
+    <!------------------------------------------------------------------------------------------------------->
+
+    <div class="dashboard row">
+      <div class="card p-1 btn color-ash col col-active mx-1 mt-0 mb-1 border-none box-shadow" (click)="openMyHierarchyModal()">
+        <img class="svg-image-size-mid mx-auto dashboard-svg-icon" src="../../../content/images/svg/Hierarchy.svg" />
+
+        <div class="card-body pt-0 pb-2 px-0">
+          <div class="card-title text-center mb-0 font-sm">My Hierarchy</div>
+        </div>
+      </div>
+
+      <div class="card p-1 btn color-ash col col-active mx-1 mt-0 mb-1 border-none box-shadow" (click)="openMyStatementModal()">
+        <img class="svg-image-size-mid mx-auto dashboard-svg-icon" src="../../../content/images/svg/Statement.svg" />
+
+        <div class="card-body pt-0 pb-2 px-0">
+          <div class="card-title text-center mb-0 font-sm">Statement</div>
+        </div>
+      </div>
+
+      <div
+        class="card p-1 btn color-ash col mx-1 mt-0 mb-1 border-none box-shadow"
+        [ngClass]="isEmployeeEligible ? 'col-active' : 'disabled'"
+        (click)="goToInsuranceProfile('/insurance-profile')"
+      >
+        <img class="svg-image-size-mid mx-auto dashboard-svg-icon" src="../../../content/images/svg/Insurence.svg" />
+
+        <div class="card-body pt-0 pb-2 px-0">
+          <div class="card-title text-center mb-0 font-sm">Insurance</div>
+        </div>
+      </div>
+    </div>
+
+    <!------------------------------------------------------------------------------------------------------->
+  </div>
+</div>
+<div class="modal-footer p-3 border-none"></div>

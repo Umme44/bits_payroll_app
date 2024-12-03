@@ -1,0 +1,14 @@
+<div class="modal-header">
+    <h4 class="modal-title">Tax Calculations</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="close()"></button>
+</div>
+<div class="modal-body">
+     <div [innerHTML]="text">
+
+     </div>
+</div>
+<div class="modal-footer">
+    <button (click)="close()" class="btn btn-secondary" data-dismiss="modal" type="button">
+        <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">close</span>
+    </button>
+</div>

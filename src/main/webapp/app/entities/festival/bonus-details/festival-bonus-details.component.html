@@ -1,0 +1,121 @@
+<div class="mt-3 ps-1 card-body">
+  <h6>Bonus Details</h6>
+
+  <jhi-search-text-box (searchEvent)="search($event)" class="d-inline-block mb-2"></jhi-search-text-box>
+
+  <div class="table-responsive" id="entities" *ngIf="festivalBonusDetails && festivalBonusDetails.length > 0">
+    <table class="table table-hover list-text-color" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col" class="text-nowrap"><span>PIN</span></th>
+          <th scope="col" class="text-nowrap"><span>Name</span></th>
+          <th scope="col" class="text-nowrap"><span>Designation</span></th>
+          <th scope="col" class="text-nowrap"><span>Date Of Joining</span></th>
+          <th scope="col" class="text-nowrap">
+            <span
+              >Confirmation Date / <br />
+              Contract End Date</span
+            >
+          </th>
+          <th scope="col" class="text-nowrap"><span>Employee Category</span></th>
+
+          <th scope="col" class="text-end text-nowrap"><span>Gross Salary</span></th>
+
+          <th scope="col" class="text-end text-nowrap">
+            <span jhiTranslate="bitsHrPayrollApp.festivalBonusDetails.bonusAmount">Bonus Amount</span>
+          </th>
+          <th>Status</th>
+          <th scope="col" class="text-center">Remarks</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          [class.holdFbDetail]="festivalBonusDetail.isHold === true"
+          *ngFor="let festivalBonusDetail of festivalBonusDetails; trackBy: trackId"
+        >
+          <td class="text-nowrap">{{ festivalBonusDetail.pin }}</td>
+
+          <td class="text-nowrap">
+            <div *ngIf="festivalBonusDetail.employeeId">
+              {{ festivalBonusDetail.fullName }}
+            </div>
+          </td>
+
+          <td class="text-nowrap">{{ festivalBonusDetail.designationName }}</td>
+
+          <td class="text-nowrap">{{ festivalBonusDetail.doj | formatMediumDate }}</td>
+          <td class="text-nowrap">
+            {{
+              festivalBonusDetail.doc
+                ? (festivalBonusDetail.doc | formatMediumDate)
+                : (festivalBonusDetail.contractPeriodEndDate | formatMediumDate)
+            }}
+          </td>
+          <td class="text-nowrap" jhiTranslate="{{ 'bitsHrPayrollApp.EmployeeCategory.' + festivalBonusDetail.employeeCategory }}">
+            {{ festivalBonusDetail.employeeCategory }}
+          </td>
+
+          <td class="text-end text-nowrap">{{ festivalBonusDetail.gross }}</td>
+
+          <td class="text-end text-nowrap">{{ festivalBonusDetail.bonusAmount }}</td>
+          <td class="text-nowrap text-center">
+            <span *ngIf="!festivalBonusDetail.isHold == true" class="text-nowrap">
+              <span data-placement="top" data-toggle="tooltip" style="color: limegreen" title="Not Hold">
+                <fa-icon icon="check-circle"></fa-icon>
+              </span>
+            </span>
+            <span *ngIf="festivalBonusDetail.isHold == true" class="text-nowrap">
+              <span data-placement="top" data-toggle="tooltip" style="color: #ff0000" title="Hold">
+                <fa-icon icon="exclamation-circle"></fa-icon
+              ></span>
+            </span>
+          </td>
+          <td class="text-center text-nowrap">{{ festivalBonusDetail.remarks }}</td>
+
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                *ngIf="festivalBonusDetail.isHold === false"
+                (click)="holdFestivalBonus(festivalBonusDetail)"
+                type="submit"
+                style="width: 80px"
+                class="btn btn-primary btn-sm px-md-3"
+              >
+                Hold
+              </button>
+              <button
+                *ngIf="festivalBonusDetail.isHold === true"
+                (click)="unHoldFestivalBonus(festivalBonusDetail)"
+                type="submit"
+                style="width: 80px"
+                class="btn btn-primary btn-sm px-md-3"
+              >
+                Unhold
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/festival-bonus-details', festivalBonusDetail.id, 'view']"
+                class="btn btn-info btn-sm px-md-3"
+              >
+                <fa-icon icon="eye"></fa-icon>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/festival-bonus-details', festivalBonusDetail.id, 'edit']"
+                class="btn btn-primary btn-sm px-md-3"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+              </button>
+
+              <button type="submit" (click)="delete(festivalBonusDetail)" class="btn btn-danger btn-sm px-md-3">
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

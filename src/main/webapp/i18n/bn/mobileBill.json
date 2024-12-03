@@ -1,0 +1,27 @@
+{
+  "bitsHrPayrollApp": {
+    "mobileBill": {
+      "home": {
+        "title": "Mobile Bills",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Mobile Bill",
+        "createOrEditLabel": "Create or edit a Mobile Bill",
+        "notFound": "No Mobile Bills found"
+      },
+      "created": "A new Mobile Bill is created with identifier {{ param }}",
+      "updated": "A Mobile Bill is updated with identifier {{ param }}",
+      "deleted": "A Mobile Bill is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Mobile Bill {{ id }}?"
+      },
+      "detail": {
+        "title": "Mobile Bill"
+      },
+      "id": "ID",
+      "month": "Month",
+      "amount": "Amount",
+      "year": "Year",
+      "employee": "Employee"
+    }
+  }
+}

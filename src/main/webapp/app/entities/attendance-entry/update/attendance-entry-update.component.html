@@ -1,0 +1,194 @@
+<div>
+  <form (ngSubmit)="save()" [formGroup]="editForm" name="editForm" novalidate role="form">
+    <jhi-header
+      [headerName]="!editForm.get('id')!.value ? 'Add New Attendance Entries' : 'Edit Attendance Entries'"
+      [midHeaderName01]="'Attendance Entries - Admin'"
+      [midRouterLinkText01]="'/attendance-entry'"
+      [shouldHaveHr]="false"
+    >
+    </jhi-header>
+
+    <div>
+      <jhi-alert-error></jhi-alert-error>
+      <div class="container-fluid card py-3">
+        <div class="row my-2">
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label class="form-control-label required" for="field_employee" jhiTranslate="bitsHrPayrollApp.attendanceEntry.employee"
+                >Employee</label
+              >
+
+              <jhi-simple-select-employee-form
+                id="field_employee"
+                (onChangeEmployee)="patchSelectedEmployeeId($event)"
+                [selectedFieldValue]="editForm.get('employeeId')!.value"
+              ></jhi-simple-select-employee-form>
+
+              <div
+                *ngIf="editForm.get('employeeId')!.invalid && (editForm.get('employeeId')!.dirty || editForm.get('employeeId')!.touched)"
+              >
+                <small
+                  *ngIf="editForm.get('employeeId')?.errors?.required"
+                  class="form-text text-danger"
+                  jhiTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="mb-3 align-items-center">
+              <label class="form-control-label required" for="field_date" jhiTranslate="bitsHrPayrollApp.attendanceEntry.date">Date</label>
+              <div class="input-group">
+                <input
+                  #dateDp="ngbDatepicker"
+                  (click)="dateDp.toggle()"
+                  class="form-control"
+                  formControlName="date"
+                  id="field_date"
+                  name="date"
+                  (dateSelect)="checkForAttendance()"
+                  ngbDatepicker
+                  type="text"
+                />
+                <span class="input-group-append">
+                  <button type="button" class="btn btn-secondary" (click)="dateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+                  <!--<button (click)="dateDp.toggle()" class="btn btn-secondary btn-sm mt-0"
+                          type="button">
+                      <fa-icon icon="calendar-alt"></fa-icon>
+                  </button>-->
+                </span>
+              </div>
+              <div *ngIf="editForm.get('date')!.invalid && (editForm.get('date')!.dirty || editForm.get('date')!.touched)">
+                <small
+                  *ngIf="editForm.get('date')?.errors?.required"
+                  class="form-text text-danger"
+                  jhiTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row my-2">
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label class="form-control-label required" for="field_inTime" jhiTranslate="bitsHrPayrollApp.attendanceEntry.inTime"
+                >In Time</label
+              >
+              <div class="d-flex">
+                <input
+                  (ngModelChange)="checkTime()"
+                  class="form-control"
+                  formControlName="inTime"
+                  id="field_inTime"
+                  name="inTime"
+                  placeholder="YYYY-MM-DD HH:mm"
+                  type="time"
+                />
+              </div>
+              <div *ngIf="editForm.get('inTime')!.invalid && (editForm.get('inTime')!.dirty || editForm.get('inTime')!.touched)">
+                <small
+                  *ngIf="editForm.get('inTime')?.errors?.required"
+                  class="form-text text-danger"
+                  jhiTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="mb-3">
+              <label class="form-control-label" for="field_inNote" jhiTranslate="bitsHrPayrollApp.attendanceEntry.inNote">In Note</label>
+              <input class="form-control" formControlName="inNote" id="field_inNote" name="inNote" type="text" />
+            </div>
+            <div *ngIf="editForm.get('inNote')!.invalid && (editForm.get('inNote')!.dirty || editForm.get('inNote')!.touched)">
+              <small *ngIf="editForm.get('inNote')?.errors?.maxlength" class="form-text text-danger">
+                This field cannot be longer than 255 characters.
+              </small>
+            </div>
+            <div
+              *ngIf="editForm.get('inNote')!.invalid && (editForm.get('inNote')!.dirty || editForm.get('inNote')!.touched)"
+            >
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('inNote')?.errors?.pattern"
+              >
+                This text is invalid
+              </small>
+            </div>
+          </div>
+        </div>
+        <div class="row my-2">
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label class="form-control-label required" for="field_outTime" jhiTranslate="bitsHrPayrollApp.attendanceEntry.outTime"
+                >Out Time</label
+              >
+              <div class="d-flex">
+                <input
+                  (ngModelChange)="checkTime()"
+                  class="form-control"
+                  formControlName="outTime"
+                  id="field_outTime"
+                  name="outTime"
+                  placeholder="YYYY-MM-DD HH:mm"
+                  type="time"
+                />
+              </div>
+
+              <div *ngIf="editForm.get('outTime')!.invalid && (editForm.get('outTime')!.dirty || editForm.get('outTime')!.touched)">
+                <small
+                  *ngIf="editForm.get('outTime')?.errors?.required"
+                  class="form-text text-danger"
+                  jhiTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+              </div>
+              <div *ngIf="isInvalid">
+                <small class="form-text text-danger"> In time can not be greater than out time. </small>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="mb-3">
+              <label class="form-control-label" for="field_outNote" jhiTranslate="bitsHrPayrollApp.attendanceEntry.outNote">Out Note</label>
+              <input class="form-control" formControlName="outNote" id="field_outNote" name="outNote" type="text" />
+            </div>
+
+            <div *ngIf="editForm.get('outNote')!.invalid && (editForm.get('outNote')!.dirty || editForm.get('outNote')!.touched)">
+              <small *ngIf="editForm.get('outNote')?.errors?.maxlength" class="form-text text-danger">
+                This field cannot be longer than 255 characters.
+              </small>
+            </div>
+            <div
+              *ngIf="editForm.get('outNote')!.invalid && (editForm.get('outNote')!.dirty || editForm.get('outNote')!.touched)"
+            >
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('outNote')?.errors?.pattern"
+              >
+                This text is invalid
+              </small>
+            </div>
+          </div>
+        </div>
+        <div class="row my-2">
+          <div>
+            <button (click)="previousState()" class="btn btn-secondary" id="cancel-save" type="button">
+              <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+            </button>
+
+            <button [disabled]="editForm.invalid || isSaving || isInvalid" class="btn btn-primary" id="save-entity" type="submit">
+              <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

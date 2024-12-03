@@ -1,0 +1,1100 @@
+<div class="container">
+  <div class="row" *ngIf="false">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body mt-2">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Employees Master Import</div>
+            <div class="col">
+              <a class="btn btn-outline-primary" href="api-open/employees/employees-master-xlsx-upload-format/" target="_blank">
+                Download file format</a
+              >
+            </div>
+            <div class="col">
+              <input (change)="handleFileInput($event)" class="form-control-file" id="file_employee_master_import" type="file" />
+            </div>
+            <div class="col">
+              <button
+                (click)="importXlsx('employee_master')"
+                [disabled]="!uploadReady || importingEmployeeMaster"
+                class="btn btn-primary float-end ms-2"
+              >
+                <fa-icon [spin]="importingEmployeeMaster" icon="sync"></fa-icon>&nbsp;<span>{{ employeeMasterImportBtnTxt }}</span>
+              </button>
+              <button [hidden]="!employeeSuccessMaster" [routerLink]="['/employee-custom']" class="btn btn-success float-end ms-2">
+                View
+              </button>
+              <span [hidden]="!errorOnEmployeeMasterImport" class="badge bg-danger float-end ms-2">Bad Data Format</span>
+              <span [hidden]="!employeeSuccessMaster" class="badge bg-success float-end ms-2"> Success </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--     employee legacy import-->
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body mt-2">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Employees Legacy Import</div>
+            <div class="col">
+              <a class="btn btn-outline-primary" href="api-open/employees/employees-legacy-xlsx-upload-format/" target="_blank">
+                Download file format</a
+              >
+            </div>
+            <div class="col">
+              <input (change)="handleEmployeeFileInput($event)" class="form-control-file" id="file_employee_common_import" type="file" />
+            </div>
+            <div class="col">
+              <button (click)="importXlsx('employee_common')" [disabled]="!employeeUploadReady" class="btn btn-primary float-end">
+                <fa-icon [spin]="importingEmployeeLegacy" icon="sync"></fa-icon>&nbsp;
+                {{ employeeLegacyImportBtnTxt }}
+              </button>
+              <button [hidden]="!employeeLegacyImportSuccess" [routerLink]="['/employee-custom']" class="btn btn-success float-end ms-2">
+                View
+              </button>
+              <span [hidden]="!errorOnEmployeeLegacyImport" class="badge bg-danger float-end ms-2">Bad Data Format</span>
+              <span [hidden]="!employeeLegacyImportSuccess" class="badge bg-success float-end ms-2"> Success </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--   import allowance -->
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body mt-2">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Employees Allowance Import</div>
+            <div class="col">
+              <a class="btn btn-outline-primary" href="api-open/employees/allowance-import-format/" target="_blank">
+                Download file format</a
+              >
+            </div>
+            <div class="col">
+              <input (change)="handleAllowanceFileInput($event)" class="form-control-file" id="file_allowance_import" type="file" />
+            </div>
+            <div class="col">
+              <button (click)="importXlsx('employee_allowance')" [disabled]="!allowanceUploadReady" class="btn btn-primary float-end">
+                <fa-icon [spin]="importingAllowance" icon="sync"></fa-icon>&nbsp;
+                {{ allowanceImportBtnTxt }}
+              </button>
+              <button [hidden]="!allowanceImportSuccess" [routerLink]="['/employee-custom']" class="btn btn-success float-end ms-2">
+                View
+              </button>
+              <span [hidden]="!errorOnAllowanceImport" class="badge bg-danger float-end ms-2">Bad Data Format</span>
+              <span [hidden]="!allowanceImportSuccess" class="badge bg-success float-end ms-2"> Success </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--   import employee location -->
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body mt-2">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Employees Location Import</div>
+            <div class="col">
+              <a class="btn btn-outline-primary" href="api-open/employees/employee-location-import-format/" target="_blank">
+                Download file format</a
+              >
+            </div>
+            <div class="col">
+              <input (change)="handleLocationFileInput($event)" class="form-control-file" id="file_location_import" type="file" />
+            </div>
+            <div class="col">
+              <button (click)="importXlsx('employee_locations')" [disabled]="!locationUploadReady" class="btn btn-primary float-end">
+                <fa-icon [spin]="importingLocation" icon="sync"></fa-icon>&nbsp;
+                {{ locationImportBtnTxt }}
+              </button>
+              <button [hidden]="!locationImportSuccess" [routerLink]="['/location']" class="btn btn-success float-right ml-2">View</button>
+              <span [hidden]="!errorOnLocationImport" class="badge badge-danger float-right ml-2">Bad Data Format</span>
+              <span [hidden]="!locationImportSuccess" class="badge badge-success float-right ml-2"> Success </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--   import bank details -->
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body mt-2">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Employees Bank Details Import</div>
+            <div class="col">
+              <a class="btn btn-outline-primary" href="api-open/employees/bank-details-import-format/" target="_blank">
+                Download file format</a
+              >
+            </div>
+            <div class="col">
+              <input (change)="handleBankDetailsFileInput($event)" class="form-control-file" id="file_bank_details_import" type="file" />
+            </div>
+            <div class="col">
+              <button (click)="importXlsx('employee_bank_details')" [disabled]="!bankDetailsUploadReady" class="btn btn-primary float-end">
+                <fa-icon [spin]="importingBankDetails" icon="sync"></fa-icon>&nbsp;
+                {{ bankDetailsImportBtnTxt }}
+              </button>
+              <button [hidden]="!bankDetailsImportSuccess" [routerLink]="['/employee-custom']" class="btn btn-success float-end ms-2">
+                View
+              </button>
+              <span [hidden]="!errorOnBankDetailsImport" class="badge bg-danger float-end ms-2">Bad Data Format</span>
+              <span [hidden]="!bankDetailsImportSuccess" class="badge bg-success float-end ms-2"> Success </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body mt-2">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Import Holidays</div>
+            <div class="col">
+              <a class="btn btn-outline-primary" href="api-open/holidays/holidays-xlsx-upload-format/" target="_blank"
+                >Download file format</a
+              >
+            </div>
+            <div class="col">
+              <input (change)="handleHolidaysFileInput($event)" class="form-control-file" id="file_holidays_import" type="file" />
+            </div>
+            <div class="col">
+              <button
+                (click)="importXlsx('holidays')"
+                [disabled]="!holidaysUploadReady || importingHolidays"
+                class="btn btn-primary float-end"
+              >
+                <fa-icon [spin]="importingHolidays" icon="sync"></fa-icon>&nbsp;<span>{{ holidaysImportBtnTxt }}</span>
+              </button>
+              <button [hidden]="!holidaysSuccess" [routerLink]="['/holidays']" class="btn btn-success float-end ms-2">View</button>
+              <span [hidden]="!errorOnHolidaysImport" class="badge bg-danger float-end ms-2">Bad Data Format</span>
+              <span [hidden]="!holidaysSuccess" class="badge bg-success float-end ms-2"> Success </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body mt-2">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Import Leave Balance</div>
+            <div class="col">
+              <a class="btn btn-outline-primary" href="api-open/leave-balance/leave-balance-xlsx-upload-format/" target="_blank">
+                Download file format</a
+              >
+            </div>
+            <div class="col">
+              <input (change)="handleLeaveBalanceFileInput($event)" class="form-control-file" id="file_leave_balance_import" type="file" />
+            </div>
+            <div class="col">
+              <button
+                (click)="importXlsx('leave-balance')"
+                [disabled]="!leaveBalanceUploadReady || importingLeaveBalance"
+                class="btn btn-primary float-end"
+              >
+                <fa-icon [spin]="importingLeaveBalance" icon="sync"></fa-icon>&nbsp;<span>{{ leaveBalanceImportBtnTxt }}</span>
+              </button>
+              <button [hidden]="!leavebalanceSuccess" [routerLink]="['/leave-balance']" class="btn btn-success float-end ms-2">View</button>
+              <span [hidden]="!errorOnLeaveBalanceImport" class="badge bg-danger float-end ms-2">Bad Data Format</span>
+              <span [hidden]="!leavebalanceSuccess" class="badge bg-success float-end ms-2"> Success </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body mt-2">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Leave Applications</div>
+            <div class="col">
+              <a class="btn btn-outline-primary" href="api-open/leave-application/leave-application-xlsx-upload-format/" target="_blank">
+                Download file format</a
+              >
+            </div>
+            <div class="col">
+              <input
+                (change)="handleLeaveApplicationsFileInput($event)"
+                class="form-control-file"
+                id="file_leave_application_import"
+                type="file"
+              />
+            </div>
+            <div class="col">
+              <button
+                (click)="importXlsx('leave-application')"
+                [disabled]="!leaveApplicationsUploadReady || importingLeaveApplication"
+                class="btn btn-primary float-end"
+              >
+                <fa-icon [spin]="importingLeaveApplication" icon="sync"> </fa-icon>&nbsp;
+                <span>{{ leaveApplicationImportBtnTxt }}</span>
+              </button>
+
+              <button [hidden]="!leaveApplicationSuccess" [routerLink]="['/leave-application']" class="btn btn-success float-end ms-2">
+                View
+              </button>
+              <span [hidden]="!errorOnLeaveApplicationImport" class="badge bg-danger float-end ms-2">Bad Data Format</span>
+              <span [hidden]="!leaveApplicationSuccess" class="badge bg-success float-end ms-2"> Success </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body mt-2">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Attendance</div>
+            <div class="col">
+              <a class="btn btn-outline-primary" href="api-open/attendance-entry/attendance-entry-xlsx-upload-format" target="_blank">
+                Download file format</a
+              >
+            </div>
+            <div class="col">
+              <input (change)="handleAttendanceFileInput($event)" class="form-control-file" id="file_attendance_entry_import" type="file" />
+            </div>
+            <div class="col">
+              <button
+                (click)="importXlsx('attendance')"
+                [disabled]="!attendanceUploadReady || importingAttendance"
+                class="btn btn-primary float-end"
+              >
+                <fa-icon [spin]="importingAttendance" icon="sync"> </fa-icon>&nbsp;
+                <span>{{ attendanceImportBtnTxt }}</span>
+              </button>
+
+              <button [hidden]="!attendanceSuccess" [routerLink]="['/attendance-entry']" class="btn btn-success float-end ms-2">
+                View
+              </button>
+              <span [hidden]="!errorOnAttendanceImport" class="badge bg-danger float-end ms-2">Bad Data Format</span>
+              <span [hidden]="!attendanceImportSuccess" class="badge bg-success float-end ms-2"> Success </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body mt-2">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Nominee</div>
+            <div class="col">
+              <a class="btn btn-outline-primary" href="api-open/import-format/nominee" target="_blank"> Download file format</a>
+            </div>
+            <div class="col">
+              <input (change)="handleNomineesFileInput($event)" class="form-control-file" id="file_nominee_import" type="file" />
+            </div>
+            <div class="col">
+              <button
+                (click)="importXlsx('nominee')"
+                [disabled]="!nomineeUploadReady || importingNominee"
+                class="btn btn-primary float-end"
+              >
+                <fa-icon [spin]="importingNominee" icon="sync"> </fa-icon>&nbsp;
+                <span>{{ nomineeImportBtnTxt }}</span>
+              </button>
+
+              <button [hidden]="!nomineeSuccess" (click)="selectNomineeInfo()" class="btn btn-success float-end ms-2">View</button>
+              <span [hidden]="!errorOnNomineeImport" class="badge bg-danger float-end ms-2">Bad Data Format</span>
+              <span [hidden]="!nomineeImportSuccess" class="badge bg-success float-end ms-2"> Success </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body mt-2">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Living Allowance-LFA</div>
+            <div class="col">
+              <a class="btn btn-outline-primary" href="api-open/import-format/living-allowance" target="_blank"> Download file format</a>
+            </div>
+            <div class="col">
+              <input (change)="handleLivingAllowanceFileInput($event)" class="form-control-file" id="file_LFA_import" type="file" />
+            </div>
+            <div class="col">
+              <button
+                (click)="importXlsx('livingAllowance')"
+                [disabled]="!livingAllowanceUploadReady || importingLivingAllowance"
+                class="btn btn-primary float-end"
+              >
+                <fa-icon [spin]="importingLivingAllowance" icon="sync"> </fa-icon>&nbsp;
+                <span>{{ livingAllowanceImportBtnTxt }}</span>
+              </button>
+
+              <button [hidden]="!livingAllowanceSuccess" [routerLink]="['/salary-generator-master']" class="btn btn-success float-end ms-2">
+                View
+              </button>
+              <span [hidden]="!errorOnLivingAllowanceImport" class="badge bg-danger float-end ms-2">Bad Data Format</span>
+              <span [hidden]="!livingAllowanceImportSuccess" class="badge bg-success float-end ms-2"> Success </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body mt-2">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Movement Entry</div>
+            <div class="col">
+              <a class="btn btn-outline-primary" href="api-open/import-format/movement-entry" target="_blank"> Download file format</a>
+            </div>
+            <div class="col">
+              <input
+                (change)="handleMovementEntryFileInput($event)"
+                class="form-control-file"
+                id="file_movement_entry_import"
+                type="file"
+              />
+            </div>
+            <div class="col">
+              <button
+                (click)="importXlsx('movement-entry')"
+                [disabled]="!movementUploadReady || importingMovementEntry"
+                class="btn btn-primary float-end"
+              >
+                <fa-icon [spin]="importingMovementEntry" icon="sync"> </fa-icon>&nbsp;
+                <span>{{ movementEntryImportBtnTxt }}</span>
+              </button>
+
+              <button [hidden]="!movementEntrySuccess" [routerLink]="['/movement-entry']" class="btn btn-success float-end ms-2">
+                View
+              </button>
+              <span [hidden]="!errorOnMovementEntryImport" class="badge bg-danger float-end ms-2">Bad Data Format</span>
+              <span [hidden]="!movementEntryImportSuccess" class="badge bg-success float-end ms-2"> Success </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body mt-2">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Import Employee TIN Number</div>
+            <div class="col">
+              <a class="btn btn-outline-primary" href="api-open/employees/employees-tin-number-upload-format/" target="_blank">
+                Download file format</a
+              >
+            </div>
+            <div class="col">
+              <input (change)="handleTinFileInput($event)" class="form-control-file" id="file_tin_import" type="file" />
+            </div>
+            <div class="col">
+              <button (click)="importXlsx('tin')" [disabled]="!tinUploadReady || importingTin" class="btn btn-primary float-end">
+                <fa-icon [spin]="importingTin" icon="sync"> </fa-icon>&nbsp;
+                <span>{{ tinImportBtnTxt }}</span>
+              </button>
+
+              <button [hidden]="!tinSuccess" [routerLink]="['/employee-custom']" class="btn btn-success float-end ms-2">View</button>
+              <span [hidden]="!errorOnTinImport" class="badge bg-danger float-end ms-2">Bad Data Format</span>
+              <span [hidden]="!tinImportSuccess" class="badge bg-success float-end ms-2"> Success </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body mt-2">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Recruitment Requisition</div>
+            <div class="col">
+              <a class="btn btn-outline-primary" href="api-open/import-format/rrf" target="_blank"> Download file format</a>
+            </div>
+            <div class="col">
+              <input (change)="handleRrfFileInput($event)" class="form-control-file" id="file_rrf_import" type="file" />
+            </div>
+            <div class="col">
+              <button (click)="importXlsx('rrf')" [disabled]="!rrfUploadReady || importingRrf" class="btn btn-primary float-end">
+                <fa-icon [spin]="importingRrf" icon="sync"> </fa-icon>&nbsp;
+                <span>{{ rrfImportBtnTxt }}</span>
+              </button>
+
+              <button [hidden]="!rrfSuccess" [routerLink]="['/recruitment-requisition-form']" class="btn btn-success float-end ms-2">
+                View
+              </button>
+              <span [hidden]="!errorOnRrfImport" class="badge bg-danger float-end ms-2">Bad Data Format</span>
+              <span [hidden]="!rrfImportSuccess" class="badge bg-success float-end ms-2"> Success </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body mt-2">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3 text-nowrap">
+              Import Flex Schedule Applications <br />
+              <small class="badge bg-primary">(new)</small>
+            </div>
+            <div class="col">
+              <a class="btn btn-outline-primary" href="/api-open/employees/flex-schedule-format" target="_blank">Download file format</a>
+            </div>
+            <div class="col">
+              <input (change)="handleFlexScheduleFileInput($event)" class="form-control-file" id="file_flex_schedule_import" type="file" />
+            </div>
+            <div class="col">
+              <button
+                (click)="importXlsx('flex')"
+                [disabled]="!flexScheduleUploadReady || importingFlexSchedule"
+                class="btn btn-primary float-end"
+              >
+                <fa-icon [spin]="importingFlexSchedule" icon="sync"></fa-icon>&nbsp;<span>{{ flexScheduleImportBtnTxt }}</span>
+              </button>
+              <button
+                [hidden]="!flexScheduleImportSuccess"
+                [routerLink]="['/flex-schedule-application']"
+                class="btn btn-success float-end ms-2"
+              >
+                View
+              </button>
+              <span [hidden]="!errorOnflexScheduleImport" class="badge bg-danger float-end ms-2">Bad Data Format</span>
+              <span [hidden]="!flexScheduleImportSuccess" class="badge bg-success float-end ms-2"> Success </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body mt-2">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Employee Leave Application (On/Off)</div>
+            <div class="col-md-2 text-end">
+              <div class="custom-control form-switch">
+                <input
+                  type="checkbox"
+                  [checked]="isLeaveApplicationEnabled"
+                  (change)="changeFlag()"
+                  class="custom-control-input"
+                  id="leaveApplicationToggle"
+                />
+                <label class="custom-control-label" for="leaveApplicationToggle"></label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body mt-2">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Employee PIN</div>
+            <div class="col">
+              <a class="btn btn-outline-primary" href="api-open/import-format/employee-pin" target="_blank"> Download file format</a>
+            </div>
+            <div class="col">
+              <input (change)="handleEmployeePinInput($event)" class="form-control-file" id="file_employee_pin_import" type="file" />
+            </div>
+            <div class="col">
+              <button
+                (click)="importXlsx('employee-pin')"
+                [disabled]="!employeePinUploadReady || importingEmployeePin"
+                class="btn btn-primary float-end"
+              >
+                <fa-icon [spin]="importingEmployeePin" icon="sync"> </fa-icon>&nbsp;
+                <span>{{ employeePinImportBtnTxt }}</span>
+              </button>
+
+              <button [hidden]="!employeePinSuccess" [routerLink]="['/employee-pin']" class="btn btn-success float-end ms-2">View</button>
+              <span [hidden]="!errorOnEmployeePinImport" class="badge bg-danger float-end ms-2">Bad Data Format</span>
+              <span [hidden]="!employeePinImportSuccess" class="badge bg-success float-end ms-2"> Success </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body mt-2">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Employee Reference PIN</div>
+            <div class="col">
+              <a class="btn btn-outline-primary" href="api-open/employee-pin/employee-pin-import-format" target="_blank">
+                Download file format</a
+              >
+            </div>
+            <div class="col">
+              <input
+                (change)="handleEmployeeReferencePinInput($event)"
+                class="form-control-file"
+                id="file_employee_reference_pin_import"
+                type="file"
+              />
+            </div>
+            <div class="col">
+              <button
+                (click)="importXlsx('employee-reference-pin')"
+                [disabled]="!employeeReferencePinUploadReady || importingEmployeeReferencePin"
+                class="btn btn-primary float-end"
+              >
+                <fa-icon [spin]="importingEmployeeReferencePin" icon="sync"> </fa-icon>&nbsp;
+                <span>{{ employeeReferencePinImportBtnTxt }}</span>
+              </button>
+
+              <button [hidden]="!employeeReferencePinSuccess" [routerLink]="['/employee-pin']" class="btn btn-success float-end ms-2">
+                View
+              </button>
+              <span [hidden]="!errorOnEmployeeReferencePinImport" class="badge bg-danger float-end ms-2">Bad Data Format</span>
+              <span [hidden]="!employeeReferencePinImportSuccess" class="badge bg-success float-end ms-2"> Success </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--    <div class="row">-->
+  <!--        <div class="card  mb-3" style="width: 100%">-->
+  <!--            <div class="card-body mt-2">-->
+  <!--                <div class="card-text align-baseline">-->
+  <!--                    <div class="row align-items-center">-->
+  <!--                        <div class="col ms-3">-->
+  <!--                            Insurance Claim-->
+  <!--                        </div>-->
+  <!--                        <div class="col">-->
+  <!--                            <a class="btn btn-outline-primary"-->
+  <!--                               href="api-open/nominee/nominee-import-format"-->
+  <!--                               target="_blank"> Download file format</a>-->
+  <!--                        </div>-->
+  <!--                        <div class="col">-->
+  <!--                            <input (change)="handleInsuranceClaimFileInput($event)" class="form-control-file "-->
+  <!--                                   id="file_insurance_claim_import"-->
+  <!--                                   type="file">-->
+  <!--                        </div>-->
+  <!--                        <div class="col">-->
+  <!--                            <button (click)="importXlsx('insurance-claim')"-->
+  <!--                                    [disabled]="!insuranceClaimUploadReady || importingInsurance"-->
+  <!--                                    class="btn btn-primary float-end">-->
+  <!--                                <fa-icon [spin]="importingInsuranceClaim"-->
+  <!--                                         icon="sync">-->
+  <!--                                </fa-icon>&nbsp;-->
+  <!--                                <span>{{insuranceClaimImportBtnTxt}}</span>-->
+  <!--                            </button>-->
+
+  <!--                            <button [hidden]="!insuranceClaimSuccess" [routerLink]="['/insurance-claim']"-->
+  <!--                                    class="btn btn-success  float-end ms-2">-->
+  <!--                                View-->
+  <!--                            </button>-->
+  <!--                            <span [hidden]="!errorOnInsuranceClaimImport" class="badge bg-danger float-end ms-2">Bad Data Format</span>-->
+  <!--                            <span [hidden]="!insuranceClaimImportSuccess" class="badge bg-success  float-end ms-2">-->
+  <!--                                Success-->
+  <!--                            </span>-->
+  <!--                        </div>-->
+  <!--                    </div>-->
+  <!--                </div>-->
+  <!--            </div>-->
+  <!--        </div>-->
+  <!--    </div>-->
+
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body mt-2">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Sync Profile Pictures</div>
+            <div class="col-md-2">
+              <button (click)="syncImages(true)" [disabled]="forceSyncingImages || syncingImages" class="btn btn-primary float-end">
+                <fa-icon [spin]="forceSyncingImages" icon="sync"></fa-icon>&nbsp;<span>Force Sync</span>
+              </button>
+            </div>
+            <div class="col-md-1">
+              <button (click)="syncImages(false)" [disabled]="forceSyncingImages || syncingImages" class="btn btn-primary float-end">
+                <fa-icon [spin]="syncingImages" icon="sync"></fa-icon>&nbsp;<span>Sync</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body mt-2">
+        <div class="card-text align-baseline">
+          <jhi-import-nominee-image class="row align-items-center"></jhi-import-nominee-image>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body mt-2">
+        <div class="card-text align-baseline">
+          <jhi-import-insurance-image class="row align-items-center"></jhi-import-insurance-image>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 mt-4 px-0 pb-2 mb-3" style="border-bottom: 2px solid #ddd">Insurance</div>
+  </div>
+
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body mt-2">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Insurance Claim</div>
+            <div class="col">
+              <a class="btn btn-outline-primary" href="api-open/import-format/insurance-claim" target="_blank"> Download file format</a>
+            </div>
+            <div class="col">
+              <input
+                (change)="handleInsuranceClaimFileInput($event)"
+                class="form-control-file"
+                id="file_insurance_claim_import"
+                type="file"
+              />
+            </div>
+            <div class="col">
+              <button
+                (click)="importXlsx('insurance-claim')"
+                [disabled]="!insuranceClaimUploadReady || importingInsuranceClaim"
+                class="btn btn-primary float-end"
+              >
+                <fa-icon [spin]="importingInsuranceClaim" icon="sync"> </fa-icon>&nbsp;
+                <span>{{ insuranceClaimImportBtnTxt }}</span>
+              </button>
+
+              <button [hidden]="!insuranceClaimSuccess" [routerLink]="['/insurance-claim']" class="btn btn-success float-end ms-2">
+                View
+              </button>
+              <span [hidden]="!errorOnInsuranceClaimImport" class="badge bg-danger float-end ms-2">Bad Data Format</span>
+              <span [hidden]="!insuranceClaimImportSuccess" class="badge bg-success float-end ms-2"> Success </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body mt-2">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Previous Insurance Registration</div>
+            <div class="col">
+              <a class="btn btn-outline-primary" href="api-open/import-format/previous-insurance-registration" target="_blank">
+                Download file format</a
+              >
+            </div>
+            <div class="col">
+              <input (change)="handleInsuranceFileInput($event)" class="form-control-file" id="file_insurance_import" type="file" />
+            </div>
+            <div class="col">
+              <button
+                (click)="importXlsx('previous-insurance-registrations')"
+                [disabled]="!previousInsuranceUploadReady || importingPreviousInsurance"
+                class="btn btn-primary float-end"
+              >
+                <fa-icon [spin]="importingPreviousInsurance" icon="sync"> </fa-icon>&nbsp;
+                <span>{{ previousInsuranceImportBtnTxt }}</span>
+              </button>
+
+              <button
+                [hidden]="!previousInsuranceSuccess"
+                [routerLink]="['/insurance-registration']"
+                class="btn btn-success float-end ms-2"
+              >
+                View
+              </button>
+              <span [hidden]="!errorOnPreviousInsuranceImport" class="badge bg-danger float-end ms-2">Bad Data Format</span>
+              <span [hidden]="!previousInsuranceImportSuccess" class="badge bg-success float-end ms-2"> Success </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body mt-2">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Previous Insurance Claim</div>
+            <div class="col">
+              <a class="btn btn-outline-primary" href="api-open/import-format/previous-insurance-claim" target="_blank">
+                Download file format</a
+              >
+            </div>
+            <div class="col">
+              <input
+                (change)="handlePreviousInsuranceClaimFileInput($event)"
+                class="form-control-file"
+                id="file_previous_insurance_claim_import"
+                type="file"
+              />
+            </div>
+            <div class="col">
+              <button
+                (click)="importXlsx('previous-insurance-claim')"
+                [disabled]="!previousInsuranceClaimUploadReady || importingPreviousInsuranceClaim"
+                class="btn btn-primary float-end"
+              >
+                <fa-icon [spin]="importingPreviousInsuranceClaim" icon="sync"> </fa-icon>&nbsp;
+                <span>{{ previousInsuranceClaimImportBtnTxt }}</span>
+              </button>
+
+              <button [hidden]="!previousInsuranceClaimSuccess" [routerLink]="['/insurance-claim']" class="btn btn-success float-end ms-2">
+                View
+              </button>
+              <span [hidden]="!errorOnPreviousInsuranceClaimImport" class="badge bg-danger float-end ms-2">Bad Data Format</span>
+              <span [hidden]="!previousInsuranceClaimImportSuccess" class="badge bg-success float-end ms-2"> Success </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body mt-2">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Approved Insurance Registration</div>
+            <div class="col">
+              <a class="btn btn-outline-primary" href="api-open/import-format/approved-insurance-registrations" target="_blank">
+                Download file format</a
+              >
+            </div>
+            <div class="col">
+              <input
+                (change)="handleApprovedInsuranceRegistrationFileInput($event)"
+                class="form-control-file"
+                id="file_approved_insurance_registration_import"
+                type="file"
+              />
+            </div>
+            <div class="col">
+              <button
+                (click)="importXlsx('approved-insurance-registration')"
+                [disabled]="!approvedInsuranceRegistrationUploadReady || importingApprovedInsuranceRegistration"
+                class="btn btn-primary float-end"
+              >
+                <fa-icon [spin]="importingApprovedInsuranceRegistration" icon="sync"> </fa-icon>&nbsp;
+                <span>{{ approvedInsuranceRegistrationImportBtnTxt }}</span>
+              </button>
+
+              <button
+                [hidden]="!approvedInsuranceRegistrationSuccess"
+                [routerLink]="['/insurance-registration']"
+                class="btn btn-success float-end ms-2"
+              >
+                View
+              </button>
+              <span [hidden]="!errorOnApprovedInsuranceRegistrationImport" class="badge bg-danger float-end ms-2">Bad Data Format</span>
+              <span [hidden]="!approvedInsuranceRegistrationSuccess" class="badge bg-success float-end ms-2"> Success </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body mt-2">
+        <div class="card-text align-baseline">
+          <jhi-import-nominee-image class="row align-items-center"></jhi-import-nominee-image>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body mt-2">
+        <div class="card-text align-baseline">
+          <jhi-import-insurance-image class="row align-items-center"></jhi-import-insurance-image>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body mt-2">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Send Sample Email</div>
+            <div class="col-md-2">
+              <button (click)="sendSampleEmail()" [disabled]="false" class="btn btn-primary float-end">
+                <fa-icon [spin]="syncingImages" icon="sync"></fa-icon>&nbsp;<span>Send Sample Email</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body mt-2">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Request for Zero Hour Scheduler</div>
+            <div class="col-md-2">
+              <button (click)="requestZeroHourScheduler()" [disabled]="false" class="btn btn-primary float-end">
+                <fa-icon [spin]="syncingImages" icon="sync"></fa-icon>&nbsp;<span>Request</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body mt-2">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Request for Morning Scheduler</div>
+            <div class="col-md-2">
+              <button (click)="requestMorningScheduler()" [disabled]="false" class="btn btn-primary float-end">
+                <fa-icon [spin]="syncingImages" icon="sync"></fa-icon>&nbsp;<span>Request</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--    delete insurance data-->
+  <div class="row" [hidden]="true">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body mt-2">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Delete Insurance Data</div>
+            <div class="col-md-2">
+              <button (click)="requestToDeleteInsuranceRegistrationData()" [disabled]="false" class="btn btn-danger float-end">
+                <fa-icon [spin]="deletingData" icon="sync"></fa-icon>&nbsp;<span>Delete</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--    delete PF nominee data-->
+  <div class="row" [hidden]="true">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body mt-2">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Delete Provident Fund Nominee Data</div>
+            <div class="col-md-2">
+              <button (click)="requestToDeletePfNomineeData()" [disabled]="false" class="btn btn-danger float-end">
+                <fa-icon [spin]="deletingData" icon="sync"></fa-icon>&nbsp;<span>Delete</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--    Delete GF nominee data-->
+  <div class="row" [hidden]="true">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body mt-2">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Delete Gratuity Fund Nominee Data</div>
+            <div class="col-md-2">
+              <button (click)="requestToDeleteGfNomineeData()" [disabled]="false" class="btn btn-danger float-end">
+                <fa-icon [spin]="deletingData" icon="sync"></fa-icon>&nbsp;<span>Delete</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--    Delete general nominee date-->
+  <div class="row" [hidden]="true">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body mt-2">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Delete General Nominee Data</div>
+            <div class="col-md-2">
+              <button (click)="requestToDeleteGeneralNomineeData()" [disabled]="false" class="btn btn-danger float-end">
+                <fa-icon [spin]="deletingData" icon="sync"></fa-icon>&nbsp;<span>Delete</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body mt-2">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Run Insurance Scheduled Service</div>
+            <div class="col-md-2">
+              <button (click)="runScheduledInsuranceService()" [disabled]="false" class="btn btn-danger float-end">
+                <fa-icon [spin]="deletingData" icon="sync"></fa-icon>&nbsp;<span>Run</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body mt-2">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Reset Insurance Balance</div>
+            <div class="col-md-2">
+              <button (click)="resetInsuranceBalance()" [disabled]="false" class="btn btn-danger float-end">
+                <fa-icon [spin]="deletingData" icon="sync"></fa-icon>&nbsp;<span>Run</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body mt-2">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Run Employee PIN Scheduler</div>
+            <div class="col-md-2">
+              <button (click)="runEmployeePinScheduler()" [disabled]="false" class="btn btn-danger float-end">
+                <fa-icon [spin]="deletingData" icon="sync"></fa-icon>&nbsp;<span>Run</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--    Change RRF status from Closed to open -->
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body mt-2">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Change RRF status from Closed to open.</div>
+            <div class="col-md-2">
+              <button (click)="requestToChangeRRFStatusFromClosedToOpen()" [disabled]="false" class="btn btn-primary float-end">
+                <fa-icon [spin]="deletingData" icon="sync"></fa-icon>&nbsp;<span>Change</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--  trim employee pin  -->
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body mt-2">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Trim Employee PIN</div>
+            <div class="col-md-3 text-end">
+              <button (click)="trimPIN('employee')" class="btn btn-primary ms-1"><span>Employee</span></button>
+              <button (click)="trimPIN('employee-salary')" class="btn btn-primary"><span>Employee Salary</span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body mt-2">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Fix Employee Multiple Joining History</div>
+            <div class="col-md-3 text-end">
+              <button (click)="fixMultipleJoiningHistory()" class="btn btn-primary"><span>Fix</span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

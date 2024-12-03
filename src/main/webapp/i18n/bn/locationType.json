@@ -1,0 +1,9 @@
+{
+  "bitsHrPayrollApp": {
+    "LocationType": {
+      "null": "",
+      "BUILDING": "BUILDING",
+      "FLOOR": "FLOOR"
+    }
+  }
+}

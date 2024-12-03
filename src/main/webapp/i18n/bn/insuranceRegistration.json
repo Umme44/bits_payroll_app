@@ -1,0 +1,38 @@
+{
+  "bitsHrPayrollApp": {
+    "insuranceRegistration": {
+      "home": {
+        "title": "Insurance Registrations",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Insurance Registration",
+        "createOrEditLabel": "Create or edit a Insurance Registration",
+        "notFound": "No Insurance Registrations found"
+      },
+      "created": "A new Insurance Registration is created with identifier {{ param }}",
+      "updated": "A Insurance Registration is updated with identifier {{ param }}",
+      "deleted": "A Insurance Registration is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Insurance Registration {{ id }}?"
+      },
+      "detail": {
+        "title": "Insurance Registration"
+      },
+      "id": "ID",
+      "name": "Name",
+      "dateOfBirth": "Date Of Birth",
+      "photo": "Photo",
+      "insuranceRelation": "Insurance Relation",
+      "insuranceStatus": "Insurance Status",
+      "unapprovalReason": "Unapproval Reason",
+      "availableBalance": "Available Balance",
+      "updatedAt": "Updated At",
+      "approvedAt": "Approved At",
+      "insuranceId": "Insurance Id",
+      "createdAt": "Created At",
+      "employee": "Employee",
+      "approvedBy": "Approved By",
+      "updatedBy": "Updated By",
+      "createdBy": "Created By"
+    }
+  }
+}

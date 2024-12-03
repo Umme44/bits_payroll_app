@@ -1,0 +1,93 @@
+<div>
+  <jhi-header
+    [addButtonText]="'New Recruitment Requisition Budget'"
+    [headerName]="'Recruitment Requisition Budget'"
+    [routerLinkText]="'/recruitment-requisition-budget/new'"
+    [shouldHaveHr]="false"
+  >
+  </jhi-header>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="recruitmentRequisitionBudgets?.length === 0">
+    <span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionBudget.home.notFound">No recruitmentRequisitionBudgets found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="recruitmentRequisitionBudgets && recruitmentRequisitionBudgets.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending">
+          <th scope="col" jhiSortBy="employeeId"><span>Employee</span></th>
+          <th scope="col" jhiSortBy="departmentId"><span>Department</span></th>
+          <th scope="col" jhiSortBy="year" style="text-align: right">
+            <span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionBudget.year">Year</span>
+          </th>
+          <th scope="col" jhiSortBy="budget" style="text-align: right">
+            <span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionBudget.budget">Budget</span>
+          </th>
+          <th scope="col" jhiSortBy="remainingBudget" style="text-align: right">
+            <span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionBudget.remainingBudget">Remaining Budget</span>
+          </th>
+          <th scope="col" jhiSortBy="remainingManpower" style="text-align: right">
+            <span jhiTranslate="bitsHrPayrollApp.recruitmentRequisitionBudget.remainingManpower">Remaining Manpower</span>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let recruitmentRequisitionBudget of recruitmentRequisitionBudgets; trackBy: trackId">
+          <td>
+            <div *ngIf="recruitmentRequisitionBudget.employeeId">
+              {{ recruitmentRequisitionBudget.employeePin }} - {{ recruitmentRequisitionBudget.employeeFullName }}
+            </div>
+          </td>
+          <td>
+            <div *ngIf="recruitmentRequisitionBudget.departmentId">
+              {{ recruitmentRequisitionBudget.departmentName }}
+            </div>
+          </td>
+          <td style="text-align: right">{{ recruitmentRequisitionBudget.year }}</td>
+          <td style="text-align: right">{{ recruitmentRequisitionBudget.budget | number }}</td>
+          <td style="text-align: right">{{ recruitmentRequisitionBudget.remainingBudget | number }}</td>
+          <td style="text-align: right">{{ recruitmentRequisitionBudget.remainingManpower | number }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/recruitment-requisition-budget', recruitmentRequisitionBudget.id, 'edit']"
+                class="btn btn-primary btn-sm"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(recruitmentRequisitionBudget)" class="btn btn-danger btn-sm">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="recruitmentRequisitionBudgets && recruitmentRequisitionBudgets.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

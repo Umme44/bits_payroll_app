@@ -1,0 +1,1001 @@
+<div class="">
+
+  <jhi-header
+    [headerName]="!editForm.get('id')!.value ? 'Add New Employee Salary' : 'Edit Employee Salary'"
+    [shouldHaveHr]="false">
+  </jhi-header>
+
+  <div>
+    <form (ngSubmit)="save()" [formGroup]="editForm" name="editForm" novalidate role="form">
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class=" card card-body mt-3">
+
+          <div class=" theme-color-font ">
+            <h4>General</h4>
+          </div>
+
+          <div class="row">
+
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label" for="field_month"
+                       jhiTranslate="bitsHrPayrollApp.employeeSalary.month">Month</label>
+                <select [attr.disabled]="!true" class="form-control" formControlName="month"
+                        id="field_month"
+                        name="month">
+                  <option value="JANUARY">{{ 'bitsHrPayrollApp.Month.JANUARY' | translate }}</option>
+                  <option
+                    value="FEBRUARY">{{ 'bitsHrPayrollApp.Month.FEBRUARY' | translate }}</option>
+                  <option value="MARCH">{{ 'bitsHrPayrollApp.Month.MARCH' | translate }}</option>
+                  <option value="APRIL">{{ 'bitsHrPayrollApp.Month.APRIL' | translate }}</option>
+                  <option value="MAY">{{ 'bitsHrPayrollApp.Month.MAY' | translate }}</option>
+                  <option value="JUNE">{{ 'bitsHrPayrollApp.Month.JUNE' | translate }}</option>
+                  <option value="JULY">{{ 'bitsHrPayrollApp.Month.JULY' | translate }}</option>
+                  <option value="AUGUST">{{ 'bitsHrPayrollApp.Month.AUGUST' | translate }}</option>
+                  <option
+                    value="SEPTEMBER">{{ 'bitsHrPayrollApp.Month.SEPTEMBER' | translate }}</option>
+                  <option value="OCTOBER">{{ 'bitsHrPayrollApp.Month.OCTOBER' | translate }}</option>
+                  <option
+                    value="NOVEMBER">{{ 'bitsHrPayrollApp.Month.NOVEMBER' | translate }}</option>
+                  <option
+                    value="DECEMBER">{{ 'bitsHrPayrollApp.Month.DECEMBER' | translate }}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label" for="field_year"
+                       jhiTranslate="bitsHrPayrollApp.employeeSalary.year">Year</label>
+                <input class="form-control" formControlName="year" id="field_year" name="year"
+                       readonly type="number"/>
+              </div>
+
+            </div>
+
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label"
+                       for="field_absentDays"
+                       jhiTranslate="bitsHrPayrollApp.employeeSalary.absentDays">Absent
+                  Days</label>
+                <input class="form-control" formControlName="absentDays" id="field_absentDays"
+                       name="absentDays"
+                       readonly
+                       type="number"/>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label"
+                       for="field_fractionDays"
+                       jhiTranslate="bitsHrPayrollApp.employeeSalary.fractionDays">Fraction
+                  Days</label>
+                <input class="form-control" formControlName="fractionDays"
+                       id="field_fractionDays" name="fractionDays"
+                       readonly
+                       type="number"/>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class=" card card-body mt-3">
+
+          <div class=" theme-color-font pr-5">
+            <h4>Employee</h4>
+          </div>
+
+          <div class="row">
+
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="form-control-label"
+                       for="field_employee"
+                       jhiTranslate="bitsHrPayrollApp.employeeSalary.employee">Employee</label>
+                <select [attr.disabled]="true" class="form-control" formControlName="employeeId"
+                        id="field_employee" name="employee">
+                  <option [ngValue]="null"></option>
+                  <option *ngFor="let employeeOption of employees; trackBy: trackById"
+                          [ngValue]="employeeOption.id">{{ employeeOption.pin }}
+                    - {{employeeOption.fullName}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="form-control-label" for="field_pin"
+                       jhiTranslate="bitsHrPayrollApp.employeeSalary.pin">Pin</label>
+                <input class="form-control" formControlName="pin" id="field_pin" name="pin" readonly
+                       type="text"/>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="form-control-label" for="field_refPin"
+                       jhiTranslate="bitsHrPayrollApp.employeeSalary.refPin">Ref Pin</label>
+                <input class="form-control" formControlName="refPin" id="field_refPin" name="refPin"
+                       readonly
+                       type="text"/>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="form-control-label"
+                       for="field_joiningDate"
+                       jhiTranslate="bitsHrPayrollApp.employeeSalary.joiningDate">Joining Date</label>
+                <div class="input-group">
+                  <input #joiningDateDp="ngbDatepicker" class="form-control"
+                         formControlName="joiningDate" id="field_joiningDate"
+                         name="joiningDate"
+                         ngbDatepicker
+                         readonly type="text"/>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="form-control-label"
+                       for="field_confirmationDate"
+                       jhiTranslate="bitsHrPayrollApp.employeeSalary.confirmationDate">Confirmation
+                  Date</label>
+                <div class="input-group">
+                  <input #confirmationDateDp="ngbDatepicker" class="form-control"
+                         formControlName="confirmationDate"
+                         id="field_confirmationDate"
+                         name="confirmationDate"
+                         ngbDatepicker readonly
+                         type="text"/>
+
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="form-control-label"
+                       for="field_employeeCategory"
+                       jhiTranslate="bitsHrPayrollApp.employeeSalary.employeeCategory">Employee
+                  Category</label>
+                <select [attr.disabled]="true" class="form-control" formControlName="employeeCategory"
+                        id="field_employeeCategory"
+                        name="employeeCategory">
+                  <option
+                    value="REGULAR_CONFIRMED_EMPLOYEE">{{ 'bitsHrPayrollApp.EmployeeCategory.REGULAR_CONFIRMED_EMPLOYEE' | translate }}</option>
+                  <option
+                    value="REGULAR_PROVISIONAL_EMPLOYEE">{{ 'bitsHrPayrollApp.EmployeeCategory.REGULAR_PROVISIONAL_EMPLOYEE' | translate }}</option>
+                  <option
+                    value="CONTRACTUAL_EMPLOYEE">{{ 'bitsHrPayrollApp.EmployeeCategory.CONTRACTUAL_EMPLOYEE' | translate }}</option>
+                  <option
+                    value="INTERN">{{ 'bitsHrPayrollApp.EmployeeCategory.INTERN' | translate }}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="form-control-label" for="field_unit"
+                       jhiTranslate="bitsHrPayrollApp.employeeSalary.unit">Unit</label>
+                <input class="form-control" formControlName="unit" id="field_unit" name="unit" readonly
+                       type="text"/>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="form-control-label"
+                       for="field_department"
+                       jhiTranslate="bitsHrPayrollApp.employeeSalary.department">Department</label>
+                <input class="form-control" formControlName="department" id="field_department"
+                       name="department" readonly
+                       type="text"/>
+              </div>
+            </div>
+            <div class="col-md-4"></div>
+          </div>
+        </div>
+
+        <div class=" card card-body mt-3">
+
+          <div class=" theme-color-font pr-5">
+            <h4>Salary Structure</h4>
+          </div>
+
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label"
+                       for="field_mainGrossBasicSalary"
+                       jhiTranslate="bitsHrPayrollApp.employeeSalary.mainGrossBasicSalary">Main Gross
+                  Basic Salary</label>
+                <input class="form-control" formControlName="mainGrossBasicSalary"
+                       id="field_mainGrossBasicSalary" name="mainGrossBasicSalary"
+                       readonly
+                       type="number"/>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label"
+                       for="field_mainGrossHouseRent"
+                       jhiTranslate="bitsHrPayrollApp.employeeSalary.mainGrossHouseRent">Main Gross
+                  House Rent</label>
+                <input class="form-control" formControlName="mainGrossHouseRent"
+                       id="field_mainGrossHouseRent"
+                       name="mainGrossHouseRent"
+                       readonly
+                       type="number"/>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label"
+                       for="field_mainGrossMedicalAllowance"
+                       jhiTranslate="bitsHrPayrollApp.employeeSalary.mainGrossMedicalAllowance">Main
+                  Gross Medical Allowance</label>
+                <input class="form-control" formControlName="mainGrossMedicalAllowance"
+                       id="field_mainGrossMedicalAllowance" name="mainGrossMedicalAllowance"
+                       readonly
+                       type="number"/>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label"
+                       for="field_mainGrossConveyanceAllowance"
+                       jhiTranslate="bitsHrPayrollApp.employeeSalary.mainGrossConveyanceAllowance">Main
+                  Gross Conveyance Allowance</label>
+                <input class="form-control" formControlName="mainGrossConveyanceAllowance"
+                       id="field_mainGrossConveyanceAllowance"
+                       name="mainGrossConveyanceAllowance" readonly
+                       type="number"/>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label class="form-control-label"
+                       for="field_mainGrossSalary"
+                       jhiTranslate="bitsHrPayrollApp.employeeSalary.mainGrossSalary">Main Gross
+                  Salary</label>
+                <input class="form-control" formControlName="mainGrossSalary" id="field_mainGrossSalary"
+                       name="mainGrossSalary" readonly
+                       type="number"/>
+              </div>
+            </div>
+
+
+          </div>
+
+        </div>
+
+
+        <div class="row">
+
+
+          <div class="col-md-6">
+
+
+            <div class=" card card-body mt-3">
+
+              <div class=" theme-color-font pr-5">
+                <h4>Addition Details</h4>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label required"
+                           for="field_payableGrossBasicSalary"
+                           jhiTranslate="bitsHrPayrollApp.employeeSalary.payableGrossBasicSalary">Payable
+                      Gross Basic Salary</label>
+                    <input (change)="loadPayableGrossSalary()" class="form-control"
+                           formControlName="payableGrossBasicSalary"
+                           id="field_payableGrossBasicSalary"
+                           name="payableGrossBasicSalary"
+                           type="number"/>
+                  </div>
+
+                  <div
+                    *ngIf="editForm.get('payableGrossBasicSalary')!.invalid && (editForm.get('payableGrossBasicSalary')!.dirty || editForm.get('payableGrossBasicSalary')!.touched)">
+                    <small *ngIf="editForm.get('payableGrossBasicSalary')?.errors?.required"
+                           class="form-text text-danger">
+                      This field is required.
+                    </small>
+                    <small
+                      *ngIf="editForm.get('payableGrossBasicSalary')?.errors?.min || editForm.get('payableGrossBasicSalary')?.errors?.max"
+                      class="form-text text-danger">
+                      amount should be between 0 to 9999999.
+                    </small>
+                    <small
+                      *ngIf="editForm.get('payableGrossBasicSalary')?.errors?.pattern && !editForm.get('payableGrossBasicSalary')?.errors?.min"
+                      class="form-text text-danger">
+                      No decimal places allowed.
+                    </small>
+                  </div>
+
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label required"
+                           for="field_payableGrossHouseRent"
+                           jhiTranslate="bitsHrPayrollApp.employeeSalary.payableGrossHouseRent">Payable
+                      Gross House Rent</label>
+                    <input (change)="loadPayableGrossSalary()" class="form-control"
+                           formControlName="payableGrossHouseRent"
+                           id="field_payableGrossHouseRent"
+                           name="payableGrossHouseRent"
+                           type="number"/>
+                  </div>
+                  <div
+                    *ngIf="editForm.get('payableGrossHouseRent')!.invalid && (editForm.get('payableGrossHouseRent')!.dirty || editForm.get('payableGrossHouseRent')!.touched)">
+                    <small *ngIf="editForm.get('payableGrossHouseRent')?.errors?.required"
+                           class="form-text text-danger">
+                      This field is required.
+                    </small>
+                    <small
+                      *ngIf="editForm.get('payableGrossHouseRent')?.errors?.min || editForm.get('payableGrossHouseRent')?.errors?.max"
+                      class="form-text text-danger">
+                      amount should be between 0 to 9999999.
+                    </small>
+                    <small
+                      *ngIf="editForm.get('payableGrossHouseRent')?.errors?.pattern && !editForm.get('payableGrossHouseRent')?.errors?.min"
+                      class="form-text text-danger">
+                      No decimal places allowed.
+                    </small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label required"
+                           for="field_payableGrossMedicalAllowance"
+                           jhiTranslate="bitsHrPayrollApp.employeeSalary.payableGrossMedicalAllowance">Payable
+                      Gross Medical
+                      Allowance</label>
+                    <input (change)="loadPayableGrossSalary()" class="form-control"
+                           formControlName="payableGrossMedicalAllowance"
+                           id="field_payableGrossMedicalAllowance"
+                           name="payableGrossMedicalAllowance"
+                           type="number"/>
+                  </div>
+                  <div
+                    *ngIf="editForm.get('payableGrossMedicalAllowance')!.invalid && (editForm.get('payableGrossMedicalAllowance')!.dirty || editForm.get('payableGrossMedicalAllowance')!.touched)">
+                    <small *ngIf="editForm.get('payableGrossMedicalAllowance')?.errors?.required"
+                           class="form-text text-danger">
+                      This field is required.
+                    </small>
+                    <small
+                      *ngIf="editForm.get('payableGrossMedicalAllowance')?.errors?.min || editForm.get('payableGrossMedicalAllowance')?.errors?.max"
+                      class="form-text text-danger">
+                      amount should be between 0 to 9999999.
+                    </small>
+                    <small
+                      *ngIf="editForm.get('payableGrossMedicalAllowance')?.errors?.pattern && !editForm.get('payableGrossMedicalAllowance')?.errors?.min"
+                      class="form-text text-danger">
+                      No decimal places allowed.
+                    </small>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label required"
+                           for="field_payableGrossConveyanceAllowance"
+                           jhiTranslate="bitsHrPayrollApp.employeeSalary.payableGrossConveyanceAllowance">Payable
+                      Gross Conveyance
+                      Allowance</label>
+                    <input (change)="loadPayableGrossSalary()" class="form-control"
+                           formControlName="payableGrossConveyanceAllowance"
+                           id="field_payableGrossConveyanceAllowance"
+                           name="payableGrossConveyanceAllowance"
+                           type="number"/>
+                  </div>
+                  <div
+                    *ngIf="editForm.get('payableGrossConveyanceAllowance')!.invalid && (editForm.get('payableGrossConveyanceAllowance')!.dirty || editForm.get('payableGrossConveyanceAllowance')!.touched)">
+                    <small *ngIf="editForm.get('payableGrossConveyanceAllowance')?.errors?.required"
+                           class="form-text text-danger">
+                      This field is required.
+                    </small>
+                    <small
+                      *ngIf="editForm.get('payableGrossConveyanceAllowance')?.errors?.min || editForm.get('payableGrossConveyanceAllowance')?.errors?.max"
+                      class="form-text text-danger">
+                      amount should be between 0 to 9999999.
+                    </small>
+                    <small
+                      *ngIf="editForm.get('payableGrossConveyanceAllowance')?.errors?.pattern && !editForm.get('payableGrossConveyanceAllowance')?.errors?.min"
+                      class="form-text text-danger">
+                      No decimal places allowed.
+                    </small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="form-control-label"
+                           for="field_arrearSalary"
+                           jhiTranslate="bitsHrPayrollApp.employeeSalary.arrearSalary">Arrear
+                      Salary</label>
+                    <input class="form-control" formControlName="arrearSalary"
+                           id="field_arrearSalary" name="arrearSalary"
+                           type="number"/>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+          <div class="col-md-6">
+
+
+            <div class=" card card-body mt-3">
+              <div class=" theme-color-font pr-5">
+                <h4>Deductions</h4>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label"
+                           for="field_pfDeduction"
+                           jhiTranslate="bitsHrPayrollApp.employeeSalary.pfDeduction">Pf
+                      Deduction</label>
+                    <input (change)="loadTotalDeduction()" class="form-control"
+                           formControlName="pfDeduction"
+                           id="field_pfDeduction"
+                           name="pfDeduction"
+                           type="number"/>
+                  </div>
+                  <div
+                    *ngIf="editForm.get('pfDeduction')!.invalid && (editForm.get('pfDeduction')!.dirty || editForm.get('pfDeduction')!.touched)">
+                    <small
+                      *ngIf="editForm.get('pfDeduction')?.errors?.min || editForm.get('pfDeduction')?.errors?.max"
+                      class="form-text text-danger">
+                      amount should be between 0 to 9999999.
+                    </small>
+                    <small
+                      *ngIf="editForm.get('pfDeduction')?.errors?.pattern && !editForm.get('pfDeduction')?.errors?.min"
+                      class="form-text text-danger">
+                      No decimal places allowed.
+                    </small>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label"
+                           for="field_taxDeduction"
+                           jhiTranslate="bitsHrPayrollApp.employeeSalary.taxDeduction">Tax
+                      Deduction</label>
+                    <input (change)="loadTotalDeduction()" class="form-control"
+                           formControlName="taxDeduction"
+                           id="field_taxDeduction"
+                           name="taxDeduction"
+                           type="number"/>
+                  </div>
+                  <div
+                    *ngIf="editForm.get('taxDeduction')!.invalid && (editForm.get('taxDeduction')!.dirty || editForm.get('taxDeduction')!.touched)">
+                    <small
+                      *ngIf="editForm.get('taxDeduction')?.errors?.min || editForm.get('taxDeduction')?.errors?.max"
+                      class="form-text text-danger">
+                      amount should be between 0 to 9999999.
+                    </small>
+                    <small
+                      *ngIf="editForm.get('taxDeduction')?.errors?.pattern && !editForm.get('taxDeduction')?.errors?.min"
+                      class="form-text text-danger">
+                      No decimal places allowed.
+                    </small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label"
+                           for="field_welfareFundDeduction"
+                           jhiTranslate="bitsHrPayrollApp.employeeSalary.welfareFundDeduction">HAF
+                      Deduction</label>
+                    <input (change)="loadTotalDeduction()" class="form-control"
+                           formControlName="welfareFundDeduction"
+                           id="field_welfareFundDeduction"
+                           name="welfareFundDeduction"
+                           type="number"/>
+                  </div>
+                  <div
+                    *ngIf="editForm.get('welfareFundDeduction')!.invalid && (editForm.get('welfareFundDeduction')!.dirty || editForm.get('welfareFundDeduction')!.touched)">
+                    <small
+                      *ngIf="editForm.get('welfareFundDeduction')?.errors?.min || editForm.get('welfareFundDeduction')?.errors?.max"
+                      class="form-text text-danger">
+                      amount should be between 0 to 9999999.
+                    </small>
+                    <small
+                      *ngIf="editForm.get('welfareFundDeduction')?.errors?.pattern && !editForm.get('welfareFundDeduction')?.errors?.min"
+                      class="form-text text-danger">
+                      No decimal places allowed.
+                    </small>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label"
+                           for="field_mobileBillDeduction"
+                           jhiTranslate="bitsHrPayrollApp.employeeSalary.mobileBillDeduction">Mobile
+                      Bill Deduction</label>
+                    <input (change)="loadTotalDeduction()" class="form-control"
+                           formControlName="mobileBillDeduction"
+                           id="field_mobileBillDeduction"
+                           name="mobileBillDeduction"
+                           type="number"/>
+                  </div>
+                  <div
+                    *ngIf="editForm.get('mobileBillDeduction')!.invalid && (editForm.get('mobileBillDeduction')!.dirty || editForm.get('mobileBillDeduction')!.touched)">
+                    <small
+                      *ngIf="editForm.get('mobileBillDeduction')?.errors?.min || editForm.get('mobileBillDeduction')?.errors?.max"
+                      class="form-text text-danger">
+                      amount should be between 0 to 9999999.
+                    </small>
+                    <small
+                      *ngIf="editForm.get('mobileBillDeduction')?.errors?.pattern && !editForm.get('mobileBillDeduction')?.errors?.min"
+                      class="form-text text-danger">
+                      No decimal places allowed.
+                    </small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label"
+                           for="field_otherDeduction"
+                           jhiTranslate="bitsHrPayrollApp.employeeSalary.otherDeduction">Other
+                      Deduction</label>
+                    <input (change)="loadTotalDeduction()" class="form-control"
+                           formControlName="otherDeduction"
+                           id="field_otherDeduction"
+                           name="otherDeduction"
+                           type="number"/>
+                  </div>
+                  <div
+                    *ngIf="editForm.get('otherDeduction')!.invalid && (editForm.get('otherDeduction')!.dirty || editForm.get('otherDeduction')!.touched)">
+                    <small
+                      *ngIf="editForm.get('otherDeduction')?.errors?.min || editForm.get('otherDeduction')?.errors?.max"
+                      class="form-text text-danger">
+                      amount should be between 0 to 9999999.
+                    </small>
+                    <small
+                      *ngIf="editForm.get('otherDeduction')?.errors?.pattern && !editForm.get('otherDeduction')?.errors?.min"
+                      class="form-text text-danger">
+                      No decimal places allowed.
+                    </small>
+                  </div>
+                </div>
+                <div class="col-md-6">
+
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+
+        </div>
+
+
+        <div class=" card card-body mt-3">
+          <div class=" theme-color-font pr-5">
+            <h4>Net payment</h4>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="form-control-label"
+                       for="field_payableGrossSalary"
+                       jhiTranslate="bitsHrPayrollApp.employeeSalary.payableGrossSalary">Payable Gross
+                  Salary</label>
+                <input class="form-control" formControlName="payableGrossSalary"
+                       id="field_payableGrossSalary"
+                       name="payableGrossSalary"
+                       readonly
+                       type="number"/>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="form-control-label"
+                       for="field_totalDeduction"
+                       jhiTranslate="bitsHrPayrollApp.employeeSalary.totalDeduction">Total
+                  Deduction</label>
+                <input class="form-control" formControlName="totalDeduction" id="field_totalDeduction"
+                       name="totalDeduction" readonly
+                       type="number"/>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="form-control-label" for="field_netPay"
+                       jhiTranslate="bitsHrPayrollApp.employeeSalary.netPay">Net Pay</label>
+                <input class="form-control" formControlName="netPay" id="field_netPay" name="netPay"
+                       readonly
+                       type="number"/>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-2">
+              <div class="form-group">
+                <label class="form-control-label" for="field_salaryAdjustment"
+                       jhiTranslate="bitsHrPayrollApp.employeeSalary.salaryAdjustment">Salary
+                  Adjustment</label>
+                <input class="form-control" formControlName="salaryAdjustment"
+                       id="field_salaryAdjustment" name="salaryAdjustment"
+                       type="number"/>
+
+                <div
+                  *ngIf="editForm.get('salaryAdjustment')!.invalid && (editForm.get('salaryAdjustment')!.dirty || editForm.get('salaryAdjustment')!.touched)">
+                  <small
+                    *ngIf="editForm.get('salaryAdjustment')?.errors?.min || editForm.get('salaryAdjustment')?.errors?.max"
+                    class="form-text text-danger">
+                    amount should be between -1,00,00,000 to 1,00,00,000.
+                  </small>
+                  <small
+                    *ngIf="editForm.get('salaryAdjustment')?.errors?.pattern && !editForm.get('salaryAdjustment')?.errors?.min"
+                    class="form-text text-danger">
+                    No decimal places allowed.
+                  </small>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-10">
+              <div class="form-group">
+                <label class="form-control-label" for="field_remarks"
+                       jhiTranslate="bitsHrPayrollApp.employeeSalary.remarks">Remarks</label>
+                <input class="form-control" formControlName="remarks" id="field_remarks" name="remarks"
+                       type="text"/>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class=" card card-body mt-3">
+          <div class="theme-color-font pr-5">
+            <h4>Allowances</h4>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group" *ngIf="allowanceName?.allowance01Name?.length !== 0">
+                <label class="form-control-label text-nowrap"
+                       for="field_allowance01">{{allowanceName?.allowance01Name}}</label>
+                <input type="number" class="form-control" name="allowance01" id="field_allowance01"
+                       formControlName="allowance01"/>
+                <div
+                  *ngIf="editForm.get('allowance01')!.invalid && (editForm.get('allowance01')!.dirty || editForm.get('allowance01')!.touched)">
+                  <small class="form-text text-danger"
+                         *ngIf="editForm.get('allowance01')?.errors?.min"
+                         jhiTranslate="entity.validation.min" [translateValues]="{ min: 0 }">
+                    This field should be at least 0.
+                  </small>
+                  <small class="form-text text-danger"
+                         *ngIf="editForm.get('allowance01')?.errors?.max"
+                         jhiTranslate="entity.validation.max" [translateValues]="{ max: 10000000 }">
+                    This field cannot be more than 10000000.
+                  </small>
+                  <small class="form-text text-danger"
+                         [hidden]="!editForm.get('allowance01')?.errors?.number"
+                         jhiTranslate="entity.validation.number">
+                    This field should be a number.
+                  </small>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group" *ngIf="allowanceName?.allowance02Name?.length !== 0">
+                <label class="form-control-label text-nowrap"
+                       for="field_allowance02">{{allowanceName?.allowance02Name}}</label>
+                <input type="number" class="form-control" name="allowance02" id="field_allowance02"
+                       formControlName="allowance02"/>
+                <div
+                  *ngIf="editForm.get('allowance02')!.invalid && (editForm.get('allowance02')!.dirty || editForm.get('allowance02')!.touched)">
+                  <small class="form-text text-danger"
+                         *ngIf="editForm.get('allowance02')?.errors?.min"
+                         jhiTranslate="entity.validation.min" [translateValues]="{ min: 0 }">
+                    This field should be at least 0.
+                  </small>
+                  <small class="form-text text-danger"
+                         *ngIf="editForm.get('allowance02')?.errors?.max"
+                         jhiTranslate="entity.validation.max" [translateValues]="{ max: 10000000 }">
+                    This field cannot be more than 10000000.
+                  </small>
+                  <small class="form-text text-danger"
+                         [hidden]="!editForm.get('allowance02')?.errors?.number"
+                         jhiTranslate="entity.validation.number">
+                    This field should be a number.
+                  </small>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group" *ngIf="allowanceName?.allowance03Name?.length !== 0">
+                <label class="form-control-label text-nowrap"
+                       for="field_allowance03">{{allowanceName?.allowance03Name}}</label>
+                <input type="number" class="form-control" name="allowance03" id="field_allowance03"
+                       formControlName="allowance03"/>
+                <div
+                  *ngIf="editForm.get('allowance03')!.invalid && (editForm.get('allowance03')!.dirty || editForm.get('allowance03')!.touched)">
+                  <small class="form-text text-danger"
+                         *ngIf="editForm.get('allowance03')?.errors?.min"
+                         jhiTranslate="entity.validation.min" [translateValues]="{ min: 0 }">
+                    This field should be at least 0.
+                  </small>
+                  <small class="form-text text-danger"
+                         *ngIf="editForm.get('allowance03')?.errors?.max"
+                         jhiTranslate="entity.validation.max" [translateValues]="{ max: 10000000 }">
+                    This field cannot be more than 10000000.
+                  </small>
+                  <small class="form-text text-danger"
+                         [hidden]="!editForm.get('allowance03')?.errors?.number"
+                         jhiTranslate="entity.validation.number">
+                    This field should be a number.
+                  </small>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group" *ngIf="allowanceName?.allowance04Name?.length !== 0">
+                <label class="form-control-label text-nowrap"
+                       for="field_allowance04"> {{allowanceName?.allowance04Name}}</label>
+                <input type="number" class="form-control" name="allowance04" id="field_allowance04"
+                       formControlName="allowance04"/>
+                <div
+                  *ngIf="editForm.get('allowance04')!.invalid && (editForm.get('allowance04')!.dirty || editForm.get('allowance04')!.touched)">
+                  <small class="form-text text-danger"
+                         *ngIf="editForm.get('allowance04')?.errors?.min"
+                         jhiTranslate="entity.validation.min" [translateValues]="{ min: 0 }">
+                    This field should be at least 0.
+                  </small>
+                  <small class="form-text text-danger"
+                         *ngIf="editForm.get('allowance04')?.errors?.max"
+                         jhiTranslate="entity.validation.max" [translateValues]="{ max: 10000000 }">
+                    This field cannot be more than 10000000.
+                  </small>
+                  <small class="form-text text-danger"
+                         [hidden]="!editForm.get('allowance04')?.errors?.number"
+                         jhiTranslate="entity.validation.number">
+                    This field should be a number.
+                  </small>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group" *ngIf="allowanceName?.allowance05Name?.length !== 0">
+                <label class="form-control-label text-nowrap"
+                       for="field_allowance05">{{allowanceName?.allowance05Name}}</label>
+                <input type="number" class="form-control" name="allowance05" id="field_allowance05"
+                       formControlName="allowance05"/>
+                <div
+                  *ngIf="editForm.get('allowance05')!.invalid && (editForm.get('allowance05')!.dirty || editForm.get('allowance05')!.touched)">
+                  <small class="form-text text-danger"
+                         *ngIf="editForm.get('allowance05')?.errors?.min"
+                         jhiTranslate="entity.validation.min" [translateValues]="{ min: 0 }">
+                    This field should be at least 0.
+                  </small>
+                  <small class="form-text text-danger"
+                         *ngIf="editForm.get('allowance05')?.errors?.max"
+                         jhiTranslate="entity.validation.max" [translateValues]="{ max: 10000000 }">
+                    This field cannot be more than 10000000.
+                  </small>
+                  <small class="form-text text-danger"
+                         [hidden]="!editForm.get('allowance05')?.errors?.number"
+                         jhiTranslate="entity.validation.number">
+                    This field should be a number.
+                  </small>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group" *ngIf="allowanceName?.allowance06Name?.length !== 0">
+                <label class="form-control-label text-nowrap"
+                       for="field_allowance06">{{allowanceName?.allowance06Name}}</label>
+                <input type="number" class="form-control" name="allowance06" id="field_allowance06"
+                       formControlName="allowance06"/>
+                <div
+                  *ngIf="editForm.get('allowance06')!.invalid && (editForm.get('allowance06')!.dirty || editForm.get('allowance06')!.touched)">
+                  <small class="form-text text-danger"
+                         *ngIf="editForm.get('allowance06')?.errors?.min"
+                         jhiTranslate="entity.validation.min" [translateValues]="{ min: 0 }">
+                    This field should be at least 0.
+                  </small>
+                  <small class="form-text text-danger"
+                         *ngIf="editForm.get('allowance06')?.errors?.max"
+                         jhiTranslate="entity.validation.max" [translateValues]="{ max: 10000000 }">
+                    This field cannot be more than 10000000.
+                  </small>
+                  <small class="form-text text-danger"
+                         [hidden]="!editForm.get('allowance06')?.errors?.number"
+                         jhiTranslate="entity.validation.number">
+                    This field should be a number.
+                  </small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class=" card card-body mt-3">
+              <div class="theme-color-font pr-5">
+                <h4>Company's Contributions</h4>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label"
+                           for="field_pfContribution"
+                           jhiTranslate="bitsHrPayrollApp.employeeSalary.pfContribution">PF
+                      Contribution</label>
+                    <input class="form-control" formControlName="pfContribution"
+                           id="field_pfContribution"
+                           name="pfContribution"
+                           type="number"/>
+                  </div>
+                  <div
+                    *ngIf="editForm.get('pfContribution')!.invalid && (editForm.get('pfContribution')!.dirty || editForm.get('pfContribution')!.touched)">
+                    <small
+                      *ngIf="editForm.get('pfContribution')?.errors?.min || editForm.get('pfContribution')?.errors?.max"
+                      class="form-text text-danger">
+                      amount should be between 0 to 9999999.
+                    </small>
+                    <small
+                      *ngIf="editForm.get('pfContribution')?.errors?.pattern && !editForm.get('pfContribution')?.errors?.min"
+                      class="form-text text-danger">
+                      No decimal places allowed.
+                    </small>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label"
+                           for="field_gfContribution"
+                           jhiTranslate="bitsHrPayrollApp.employeeSalary.gfContribution">GF
+                      Contribution</label>
+                    <input class="form-control" formControlName="gfContribution"
+                           id="field_gfContribution"
+                           name="gfContribution"
+                           type="number"/>
+                  </div>
+                  <div
+                    *ngIf="editForm.get('gfContribution')!.invalid && (editForm.get('gfContribution')!.dirty || editForm.get('gfContribution')!.touched)">
+                    <small
+                      *ngIf="editForm.get('gfContribution')?.errors?.min || editForm.get('gfContribution')?.errors?.max"
+                      class="form-text text-danger">
+                      amount should be between 0 to 9999999.
+                    </small>
+                    <small
+                      *ngIf="editForm.get('gfContribution')?.errors?.pattern && !editForm.get('gfContribution')?.errors?.min"
+                      class="form-text text-danger">
+                      No decimal places allowed.
+                    </small>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class=" card card-body mt-3">
+              <div class=" theme-color-font pr-5">
+                <h4>Company's Provision</h4>
+              </div>
+
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="form-control-label"
+                           for="field_provisionForFestivalBonus">Festival Bonus</label>
+                    <input class="form-control" formControlName="provisionForFestivalBonus"
+                           id="field_provisionForFestivalBonus"
+                           name="provisionForFestivalBonus"
+                           type="number"/>
+                  </div>
+                  <div
+                    *ngIf="editForm.get('provisionForFestivalBonus')!.invalid && (editForm.get('provisionForFestivalBonus')!.dirty || editForm.get('provisionForFestivalBonus')!.touched)">
+                    <small
+                      *ngIf="editForm.get('provisionForFestivalBonus')?.errors?.min || editForm.get('provisionForFestivalBonus')?.errors?.max"
+                      class="form-text text-danger">
+                      amount should be between 0 to 9999999.
+                    </small>
+                    <small
+                      *ngIf="editForm.get('provisionForFestivalBonus')?.errors?.pattern && !editForm.get('provisionForFestivalBonus')?.errors?.min"
+                      class="form-text text-danger">
+                      No decimal places allowed.
+                    </small>
+                  </div>
+                </div>
+                <div class="col-md-4">
+
+                  <div class="form-group">
+                    <label class="form-control-label"
+                           for="field_provisionForLeaveEncashment">Leave Encashment</label>
+                    <input class="form-control" formControlName="provisionForLeaveEncashment"
+                           id="field_provisionForLeaveEncashment"
+                           name="provisionForLeaveEncashment"
+                           type="number"/>
+                  </div>
+                  <div
+                    *ngIf="editForm.get('provisionForLeaveEncashment')!.invalid && (editForm.get('provisionForLeaveEncashment')!.dirty || editForm.get('provisionForLeaveEncashment')!.touched)">
+                    <small
+                      *ngIf="editForm.get('provisionForLeaveEncashment')?.errors?.min || editForm.get('provisionForLeaveEncashment')?.errors?.max"
+                      class="form-text text-danger">
+                      amount should be between 0 to 9999999.
+                    </small>
+                    <small
+                      *ngIf="editForm.get('provisionForLeaveEncashment')?.errors?.pattern && !editForm.get('provisionForLeaveEncashment')?.errors?.min"
+                      class="form-text text-danger">
+                      No decimal places allowed.
+                    </small>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="form-control-label"
+                           for="field_provisionForProjectBonus">Project Bonus</label>
+                    <input class="form-control" formControlName="provisionForProjectBonus"
+                           id="field_provisionForProjectBonus"
+                           name="provisionForProjectBonus"
+                           type="number"/>
+                  </div>
+                  <div
+                    *ngIf="editForm.get('provisionForProjectBonus')!.invalid && (editForm.get('provisionForProjectBonus')!.dirty || editForm.get('provisionForProjectBonus')!.touched)">
+                    <small
+                      *ngIf="editForm.get('provisionForProjectBonus')?.errors?.min || editForm.get('provisionForProjectBonus')?.errors?.max"
+                      class="form-text text-danger">
+                      amount should be between 0 to 9999999.
+                    </small>
+                    <small
+                      *ngIf="editForm.get('provisionForProjectBonus')?.errors?.pattern && !editForm.get('provisionForProjectBonus')?.errors?.min"
+                      class="form-text text-danger">
+                      No decimal places allowed.
+                    </small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="mt-3">
+        <button (click)="previousState()" class="btn btn-secondary" id="cancel-save" type="button">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button [disabled]="editForm.invalid || isSaving" class="btn btn-primary" id="save-entity"
+                type="submit">
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

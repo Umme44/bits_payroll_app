@@ -1,0 +1,33 @@
+{
+  "bitsHrPayrollApp": {
+    "salaryGeneratorMaster": {
+      "home": {
+        "title": "Salary Generator Masters",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Salary Generator Master",
+        "createOrEditLabel": "Create or edit a Salary Generator Master",
+        "notFound": "No Salary Generator Masters found"
+      },
+      "created": "A new Salary Generator Master is created with identifier {{ param }}",
+      "updated": "A Salary Generator Master is updated with identifier {{ param }}",
+      "deleted": "A Salary Generator Master is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Salary Generator Master {{ id }}?"
+      },
+      "detail": {
+        "title": "Salary Generator Master"
+      },
+      "id": "ID",
+      "year": "Year",
+      "month": "Month",
+      "monthyear": "Month,Year",
+      "isGenerated": "Is Generated",
+      "isMobileBillImported": "Is Mobile Bill Imported",
+      "isPFLoanRepaymentImported": "Is PF Loan Repayment Imported",
+      "isAttendanceImported": "Is Attendance Imported",
+      "isSalaryDeductionImported": "Is Salary Deduction Imported",
+      "isFinalized": "Is Finalized",
+      "visibility": "Visibility"
+    }
+  }
+}

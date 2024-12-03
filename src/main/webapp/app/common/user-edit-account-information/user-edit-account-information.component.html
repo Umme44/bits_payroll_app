@@ -1,0 +1,425 @@
+<div>
+    <jhi-header
+        [headerName]="'Edit Profile'">
+    </jhi-header>
+    <div>
+        <form (ngSubmit)="save()" [formGroup]="editForm" name="editForm" novalidate role="form">
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <div class="card card-body">
+                <div class="info-color">
+
+                </div>
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div class="row">
+
+                            <!--Profile PIN, FullName, DesignationName, DepartmentName-->
+                            <div class="col-md-6">
+                                <div class="">
+                                    <label class="form-control-label">PIN: </label>
+                                    <small *ngIf="employee">{{employee.pin}}</small>
+                                </div>
+
+                                <div class="">
+                                    <label class="form-control-label">Name: </label>
+                                    <small *ngIf="employee">{{employee.fullName}}</small>
+                                </div>
+
+                                <div class="">
+                                    <label class="form-control-label">Designation: </label>
+                                    <small *ngIf="employee">{{employee.designationName}}</small>
+                                </div>
+
+                                <div class="">
+                                    <label class="form-control-label">Department: </label>
+                                    <small *ngIf="employee">{{employee.departmentName}}</small>
+                                </div>
+                            </div>
+
+                            <!--Profile UnitName, BandName, ReportingTo-->
+                            <div class="col-md-6">
+
+                                <div class="">
+                                    <label class="form-control-label">Unit: </label>
+                                    <small *ngIf="employee">{{employee.unitName}}</small>
+                                </div>
+
+                                <div class="">
+                                    <label class="form-control-label">Band: </label>
+                                    <small *ngIf="employee">{{employee.bandName}}</small>
+                                </div>
+
+                                <div class="">
+                                    <label class="form-control-label">Reporting To: </label>
+                                    <small *ngIf="employee">{{employee.reportingToName}}</small>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="profile-image-position">
+                            <img [src]="imgSrc" alt="Employee Picture" class="img-thumbnail"
+                                 height="165" width="183">
+                            <!-- <button type="button" class="profile-picture-overlay" (click)="fileInput.click()" accept=".png,.jpg">
+                                <span>Upload</span>
+                                <input #fileInput type="file" (change)="onFileInput($event)" style="display:none;"/>
+                            </button> -->
+                            <!--<button (click)="syncImage()" [disabled]="syncingImage"
+                                    class="profile-picture-overlay sync-btn">
+                                <fa-icon [spin]="syncingImage" icon="sync"></fa-icon>&nbsp;<span>Sync</span>
+                            </button>-->
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="">
+                            <label class="form-control-label required"
+                                   for="field_presentAddress">Present Address</label>
+                            <input class="form-control" formControlName="presentAddress" id="field_presentAddress" name="presentAddress"
+                                   type="text"/>
+                            <div
+                                *ngIf="editForm.get('presentAddress')!.invalid && (editForm.get('presentAddress')!.dirty || editForm.get('presentAddress')!.touched)">
+                                <small
+                                    *ngIf="editForm.get('presentAddress')?.errors?.pattern"
+                                    class="form-text text-danger">
+                                    This text is invalid
+                                </small>
+                                <small
+                                    *ngIf="editForm.get('presentAddress')?.errors?.required"
+                                    class="form-text text-danger"
+                                    jhiTranslate="entity.validation.required">
+                                    This field is required.
+                                </small>
+                                <small
+                                    *ngIf="editForm.get('presentAddress')?.errors?.maxlength"
+                                    [translateValues]="{ max: 250 }"
+                                    class="form-text text-danger"
+                                    jhiTranslate="entity.validation.maxlength">
+                                    This field cannot be longer than 250 characters.
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-1"></div>
+
+
+                    <div class="col-md-6">
+                        <div class="">
+                            <label class="form-control-label required"
+                                   for="field_permanentAddress">Permanent Address</label>
+                            <input class="form-control" formControlName="permanentAddress" id="field_permanentAddress" name="permanentAddress"
+                                   type="text"/>
+                            <div
+                                *ngIf="editForm.get('permanentAddress')!.invalid &&(editForm.get('permanentAddress')!.dirty || editForm.get('permanentAddress')!.touched)">
+                                <small
+                                    *ngIf="editForm.get('permanentAddress')?.errors?.pattern"
+                                    class="form-text text-danger">
+                                    This text is invalid
+                                </small>
+                                <small
+                                    *ngIf="editForm.get('permanentAddress')?.errors?.required"
+                                    class="form-text text-danger"
+                                    jhiTranslate="entity.validation.required">
+                                    This field is required.
+                                </small>
+                                <small
+                                    *ngIf="editForm.get('permanentAddress')?.errors?.maxlength"
+                                    [translateValues]="{ max: 250 }"
+                                    class="form-text text-danger"
+                                    jhiTranslate="entity.validation.maxlength">
+                                    This field cannot be longer than 250 characters.
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4"></div>
+                    <!--<div [ngClass]="editForm.get(['maritalStatus'])!.value==='MARRIED' ? 'col-md-3' : 'col-md-7'"></div>-->
+
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-3">
+                        <div class="">
+                            <label class="form-control-label"
+                                   for="field_personalContactNo">Contact Number</label>
+                            <input class="form-control" formControlName="personalContactNo" id="field_personalContactNo"
+                                   name="personalContactNo"
+                                   type="text"/>
+
+                            <div
+                                *ngIf="editForm.get('personalContactNo')!.invalid && (editForm.get('personalContactNo')!.dirty || editForm.get('personalContactNo')!.touched)">
+                                <small
+                                    *ngIf="editForm.get('personalContactNo')?.errors?.pattern"
+                                    [translateValues]="{ pattern: 'Personal Contact No' }"
+                                    class="form-text text-danger"
+                                    jhiTranslate="entity.validation.pattern">
+                                    please input any valid phone number.
+                                </small>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-3">
+                        <!--                        Whatsapp Id-->
+                        <div class="">
+                            <label class="form-control-label"
+                                   for="field_whatsappId">WhatsApp</label>
+                            <input class="form-control" formControlName="whatsappId" id="field_whatsappId" name="whatsappId"
+                                   type="text"/>
+                            <div
+                                *ngIf="editForm.get('whatsappId')!.invalid && (editForm.get('whatsappId')!.dirty || editForm.get('whatsappId')!.touched)">
+                                <small
+                                    *ngIf="editForm.get('whatsappId')?.errors?.maxlength"
+                                    [translateValues]="{ max: 250 }"
+                                    class="form-text text-danger"
+                                    jhiTranslate="entity.validation.maxlength">
+                                    This field cannot be longer than 250 characters.
+                                </small>
+                                <small
+                                    *ngIf="editForm.get('whatsappId')?.errors?.pattern"
+                                    class="form-text text-danger">
+                                    This text is invalid
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-control-label" for="field_personalEmail">Email</label>
+                        <input class="form-control" formControlName="personalEmail" id="field_personalEmail" name="personalEmail"
+                               placeholder="name@mail.com"
+                               type="text"/>
+                        <div
+                            *ngIf="editForm.get('personalEmail')!.invalid && (editForm.get('personalEmail')!.dirty || editForm.get('personalEmail')!.touched)">
+                            <small
+                                *ngIf="editForm.get('personalEmail')?.errors?.pattern"
+                                [translateValues]="{ pattern: 'Personal Email' }"
+                                class="form-text text-danger"
+                                jhiTranslate="entity.validation.pattern">
+                                please provide proper email address.
+                            </small>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="">
+                            <label class="form-control-label" for="field_skypeId">Skype</label>
+                            <input class="form-control" formControlName="skypeId" id="field_skypeId" name="skypeId"
+                                   type="text"/>
+                            <div
+                                *ngIf="editForm.get('skypeId')!.invalid && (editForm.get('skypeId')!.dirty || editForm.get('skypeId')!.touched)">
+                                <small
+                                    *ngIf="editForm.get('skypeId')?.errors?.maxlength"
+                                    [translateValues]="{ max: 250 }"
+                                    class="form-text text-danger"
+                                    jhiTranslate="entity.validation.maxlength"
+                                >
+                                    This field cannot be longer than 250 characters.
+                                </small>
+                                <small
+                                    *ngIf="editForm.get('skypeId')?.errors?.pattern"
+                                    class="form-text text-danger">
+                                    This text is invalid
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="">
+                            <label class="form-control-label required"
+                                   for="field_maritalStatus">Marital Status</label>
+                            <select class="form-control" formControlName="maritalStatus" id="field_maritalStatus"
+                                    name="maritalStatus">
+                                <option
+                                    value="SINGLE">{{ 'bitsHrPayrollApp.MaritalStatus.SINGLE' | translate }}</option>
+                                <option
+                                    value="MARRIED">{{ 'bitsHrPayrollApp.MaritalStatus.MARRIED' | translate }}</option>
+                                <!--<option
+                                    value="WIDOWED">{{ 'bitsHrPayrollApp.MaritalStatus.WIDOWED' | translate }}</option>
+                                <option
+                                    value="DIVORCED">{{ 'bitsHrPayrollApp.MaritalStatus.DIVORCED' | translate }}</option>-->
+                            </select>
+                            <div
+                                *ngIf="editForm.get('maritalStatus')!.invalid && (editForm.get('maritalStatus')!.dirty || editForm.get('maritalStatus')!.touched)">
+                                <small
+                                    *ngIf="editForm.get('maritalStatus')?.errors?.required"
+                                    class="form-text text-danger"
+                                    jhiTranslate="entity.validation.required">
+                                    This field is required.
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="editForm.get(['maritalStatus'])!.value === 'MARRIED'" class="col-md-3">
+                        <div class="">
+                            <label class="form-control-label"
+                                   for="field_dateOfMarriage"
+                                   jhiTranslate="bitsHrPayrollApp.employee.dateOfMarriage">Date Of Marriage</label>
+                            <div class="input-group align-items-center">
+                                <input #dateOfMarriageDp="ngbDatepicker" class="form-control"
+                                       formControlName="dateOfMarriage"
+                                       id="field_dateOfMarriage"
+                                       name="dateOfMarriage"
+                                       ngbDatepicker pattern=""
+                                       type="text"/>
+                                <span class="input-group-append">
+                                    <button (click)="dateOfMarriageDp.toggle()" class="btn btn-secondary btn-sm" type="button"><fa-icon
+                                        icon="calendar-alt"></fa-icon></button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="editForm.get(['maritalStatus'])!.value === 'MARRIED'" class="col-md-3">
+                        <div class="">
+                            <label class="form-control-label" for="field_spouseName"
+                                   jhiTranslate="bitsHrPayrollApp.employee.spouseName">Spouse Name</label>
+                            <input class="form-control" formControlName="spouseName" id="field_spouseName" name="spouseName"
+                                   type="text"/>
+                            <div
+                                *ngIf="editForm.get('spouseName')!.invalid && (editForm.get('spouseName')!.dirty || editForm.get('spouseName')!.touched)">
+                                <small
+                                    *ngIf="editForm.get('spouseName')?.errors?.maxlength"
+                                    [translateValues]="{ max: 250 }"
+                                    class="form-text text-danger"
+                                    jhiTranslate="entity.validation.maxlength">
+                                    This field cannot be longer than 250 characters.
+                                </small>
+                                <small
+                                    *ngIf="editForm.get('spouseName')?.errors?.pattern"
+                                    class="form-text text-danger">
+                                    This text is invalid
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="editForm.get(['maritalStatus'])!.value !== 'MARRIED'" class="col-md-6"></div>
+                    <div class="col-md-3"></div>
+
+
+                    <div class="col-md-3">
+                        <div class="">
+                            <label class="form-control-label required"
+                                   for="field_emergencyContactPersonName">Emergency Contact Name</label>
+                            <input class="form-control" formControlName="emergencyContactPersonName" id="field_emergencyContactPersonName"
+                                   name="emergencyContactPersonName"
+                                   type="text"/>
+                            <div
+                                *ngIf="editForm.get('emergencyContactPersonName')!.invalid &&(editForm.get('emergencyContactPersonName')!.dirty || editForm.get('emergencyContactPersonName')!.touched)">
+                                <small
+                                    *ngIf="editForm.get('emergencyContactPersonName')?.errors?.required"
+                                    class="form-text text-danger"
+                                    jhiTranslate="entity.validation.required">
+                                    This field is required.
+                                </small>
+                                <small
+                                    *ngIf="editForm.get('emergencyContactPersonName')?.errors?.pattern"
+                                    class="form-text text-danger">
+                                    This text is invalid
+                                </small>
+                                <small
+                                    *ngIf="editForm.get('emergencyContactPersonName')?.errors?.maxlength"
+                                    [translateValues]="{ max: 250 }"
+                                    class="form-text text-danger"
+                                    jhiTranslate="entity.validation.maxlength">
+                                    This field cannot be longer than 250 characters.
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="">
+                            <label class="form-control-label"
+                                   for="field_emergencyContactPersonRelationshipWithEmployee">
+                                Relationship</label>
+                            <input class="form-control" formControlName="emergencyContactPersonRelationshipWithEmployee"
+                                   id="field_emergencyContactPersonRelationshipWithEmployee"
+                                   name="emergencyContactPersonRelationshipWithEmployee"
+                                   type="text"/>
+                            <div
+                                *ngIf="editForm.get('emergencyContactPersonRelationshipWithEmployee')!.invalid &&(editForm.get('emergencyContactPersonRelationshipWithEmployee')!.dirty ||editForm.get('emergencyContactPersonRelationshipWithEmployee')!.touched)">
+                                <small
+                                    *ngIf="editForm.get('emergencyContactPersonRelationshipWithEmployee')?.errors?.maxlength"
+                                    [translateValues]="{ max: 250 }"
+                                    class="form-text text-danger"
+                                    jhiTranslate="entity.validation.maxlength">
+                                    This field cannot be longer than 250 characters.
+                                </small>
+                              <small
+                                *ngIf="editForm.get('emergencyContactPersonRelationshipWithEmployee')?.errors?.pattern"
+                                class="form-text text-danger">
+                                This text is invalid
+                              </small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="">
+                            <label class="form-control-label"
+
+                                   for="field_emergencyContactPersonContactNumber">
+                                Emergency Person Contact Number
+                            </label>
+                            <input class="form-control" formControlName="emergencyContactPersonContactNumber" id="field_emergencyContactPersonContactNumber"
+                                   name="emergencyContactPersonContactNumber"
+                                   type="text"/>
+                            <div
+                                *ngIf="editForm.get('emergencyContactPersonContactNumber')!.invalid &&(editForm.get('emergencyContactPersonContactNumber')!.dirty || editForm.get('emergencyContactPersonContactNumber')!.touched)">
+                                <small
+                                    *ngIf="editForm.get('emergencyContactPersonContactNumber')?.errors?.pattern"
+                                    [translateValues]="{ pattern: 'Emergency Contact Number' }"
+                                    class="form-text text-danger"
+                                    jhiTranslate="entity.validation.pattern">
+                                    please input valid phone number.
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+           <!-- <div class="row mt-1">
+
+                <div class="col-md-6">
+                    <div class="card card-body">
+
+                        <div class="info-color">
+                            <span class="font-sm theme-color-font">Personal</span>
+                        </div>
+
+                        <div class="row">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+
+                    <div class="card card-body">
+                        <div class="info-color">
+                            <span class="font-sm theme-color-font">Emergency</span>
+                        </div>
+                        <div class="row">
+
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+
+
+            <div class="mt-2">
+               <!-- <button (click)="previousState()" class="btn btn-secondary" id="cancel-save" type="button">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>-->
+
+                <button [disabled]="editForm.invalid || isSaving" class="btn btn-primary" id="save-entity"
+                        type="submit">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span>Update</span>
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>

@@ -1,0 +1,303 @@
+<div>
+  <jhi-header [headerName]="'Individual Arrear Salaries'" [shouldHaveHr]="false"> </jhi-header>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <!--<div class="alert alert-warning" id="no-result" *ngIf="individualArrearSalaries?.length === 0">
+      <span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.home.notFound">No individualArrearSalaries found</span>
+  </div>-->
+
+  <div class="row m-0">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body mt-2">
+        <div class="card-text align-baseline">
+          <div class="row row align-items-center">
+            <div class="col ms-3">Individual Arrear Salary Import</div>
+            <div class="col">
+              <a class="btn btn-outline-primary" href="api-open/individual-arrear-salary-import-format/" target="_blank">
+                Download file format</a
+              >
+            </div>
+            <div class="col">
+              <input (change)="handleFileInput($event)" class="form-control-file" id="file_employee_master_import" type="file" />
+            </div>
+            <div class="col">
+              <button
+                (click)="importXlsx('individual_arrear')"
+                [disabled]="!uploadReady || importingIndividualArrearData"
+                class="btn btn-primary float-end ms-2"
+              >
+                <fa-icon [spin]="importingIndividualArrearData" icon="sync"></fa-icon>&nbsp;<span>{{
+                  individualSalaryDataImportBtnTxt
+                }}</span>
+              </button>
+              <ng-container *ngIf="importedFileTitle !== undefined">
+                <button
+                  [hidden]="!successIndividualArrearData"
+                  [routerLink]="['/individual-arrear-salary/title', importedFileTitle, 'view']"
+                  class="btn btn-success float-end ms-2"
+                >
+                  View
+                </button>
+              </ng-container>
+              <span [hidden]="!errorOnIndividualArrearDataImport" class="badge bg-danger float-end ms-2">Bad Data Format</span>
+              <span [hidden]="!successIndividualArrearData" class="badge bg-success float-end ms-2"> Success </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="individualArrearSalaryGroupData && individualArrearSalaryGroupData.length > 0">
+    <table class="table table-hover list-text-color" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col">Title</th>
+          <th scope="col">Effective Date</th>
+          <th scope="col">Effective From</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of individualArrearSalaryGroupData">
+          <td>{{ data.title }}</td>
+          <td>{{ data.effectiveDate | formatMediumDate }}</td>
+          <td>{{ data.effectiveFrom }}</td>
+
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/individual-arrear-salary/title', data.title, 'view']"
+                class="btn btn-info btn-sm px-md-3"
+              >
+                <fa-icon icon="arrow-left"></fa-icon>
+              </button>
+
+              <button type="submit" class="btn btn-outline-primary" (click)="export(data.title)">
+                <fa-icon icon="download"></fa-icon>
+              </button>
+
+              <!-- <button type="submit"
+                     [routerLink]="['/individual-arrear-salary', individualArrearSalary.id, 'edit']"
+                     class="btn btn-primary btn-sm">
+                 <fa-icon icon="pencil-alt"></fa-icon>
+                 <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+             </button>-->
+
+              <button type="submit" (click)="delete(data.title)" class="btn btn-danger btn-sm px-md-3">
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!--<div>-->
+<!--  <h2 id="page-heading" data-cy="IndividualArrearSalaryHeading">-->
+<!--    <span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.home.title">Individual Arrear Salaries</span>-->
+
+<!--    <div class="d-flex justify-content-end">-->
+<!--      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">-->
+<!--        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>-->
+<!--        <span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.home.refreshListLabel">Refresh list</span>-->
+<!--      </button>-->
+
+<!--      <button-->
+<!--        id="jh-create-entity"-->
+<!--        data-cy="entityCreateButton"-->
+<!--        class="btn btn-primary jh-create-entity create-individual-arrear-salary"-->
+<!--        [routerLink]="['/individual-arrear-salary/new']"-->
+<!--      >-->
+<!--        <fa-icon icon="plus"></fa-icon>-->
+<!--        <span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.home.createLabel"> Create a new Individual Arrear Salary </span>-->
+<!--      </button>-->
+<!--    </div>-->
+<!--  </h2>-->
+
+<!--  <jhi-alert-error></jhi-alert-error>-->
+
+<!--  <jhi-alert></jhi-alert>-->
+
+<!--  <div class="alert alert-warning" id="no-result" *ngIf="individualArrearSalaries?.length === 0">-->
+<!--    <span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.home.notFound">No Individual Arrear Salaries found</span>-->
+<!--  </div>-->
+
+<!--  <div class="table-responsive table-entities" id="entities" *ngIf="individualArrearSalaries && individualArrearSalaries.length > 0">-->
+<!--    <table class="table table-hover list-text-color" aria-describedby="page-heading">-->
+<!--      <thead>-->
+<!--        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">-->
+<!--          <th scope="col" jhiSortBy="id">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="global.field.id">ID</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="effectiveDate">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.effectiveDate">Effective Date</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="existingBand">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.existingBand">Existing Band</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="newBand">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.newBand">New Band</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="existingGross">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.existingGross">Existing Gross</span>-->
+<!--             <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="newGross">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.newGross">New Gross</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="increment">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.increment">Increment</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="arrearSalary">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.arrearSalary">Arrear Salary</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="arrearPfDeduction">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.arrearPfDeduction">Arrear Pf Deduction</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="taxDeduction">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.taxDeduction">Tax Deduction</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="netPay">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.netPay">Net Pay</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="pfContribution">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.pfContribution">Pf Contribution</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="title">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.title">Title</span>-->
+<!--             <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="titleEffectiveFrom">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.titleEffectiveFrom">Title Effective From</span>-->
+<!--             <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="arrearRemarks">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.arrearRemarks">Arrear Remarks</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="festivalBonus">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.festivalBonus">Festival Bonus</span>-->
+<!--            <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col" jhiSortBy="employee.id">-->
+<!--            <div class="d-flex">-->
+<!--              <span jhiTranslate="bitsHrPayrollApp.individualArrearSalary.employee">Employee</span>-->
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon> -->
+<!--            </div>-->
+<!--          </th>-->
+<!--          <th scope="col"></th>-->
+<!--        </tr>-->
+<!--      </thead>-->
+<!--      <tbody-->
+<!--        infinite-scroll-->
+<!--        (scrolled)="loadPage(page + 1)"-->
+<!--        [infiniteScrollDisabled]="page - 1 >= links['last']"-->
+<!--        [infiniteScrollDistance]="0"-->
+<!--      >-->
+<!--        <tr *ngFor="let individualArrearSalary of individualArrearSalaries; trackBy: trackId" data-cy="entityTable">-->
+<!--          <td>-->
+<!--            <a [routerLink]="['/individual-arrear-salary', individualArrearSalary.id, 'view']">{{ individualArrearSalary.id }}</a>-->
+<!--          </td>-->
+<!--          <td>{{ individualArrearSalary.effectiveDate | formatMediumDate }}</td>-->
+<!--          <td>{{ individualArrearSalary.existingBand }}</td>-->
+<!--          <td>{{ individualArrearSalary.newBand }}</td>-->
+<!--          <td>{{ individualArrearSalary.existingGross }}</td>-->
+<!--          <td>{{ individualArrearSalary.newGross }}</td>-->
+<!--          <td>{{ individualArrearSalary.increment }}</td>-->
+<!--          <td>{{ individualArrearSalary.arrearSalary }}</td>-->
+<!--          <td>{{ individualArrearSalary.arrearPfDeduction }}</td>-->
+<!--          <td>{{ individualArrearSalary.taxDeduction }}</td>-->
+<!--          <td>{{ individualArrearSalary.netPay }}</td>-->
+<!--          <td>{{ individualArrearSalary.pfContribution }}</td>-->
+<!--          <td>{{ individualArrearSalary.title }}</td>-->
+<!--          <td>{{ individualArrearSalary.titleEffectiveFrom }}</td>-->
+<!--          <td>{{ individualArrearSalary.arrearRemarks }}</td>-->
+<!--          <td>{{ individualArrearSalary.festivalBonus }}</td>-->
+<!--          <td>-->
+<!--            <div *ngIf="individualArrearSalary.employee">-->
+<!--              <a [routerLink]="['/employee', individualArrearSalary.employee.id, 'view']">{{ individualArrearSalary.employee.id }}</a>-->
+<!--            </div>-->
+<!--          </td>-->
+<!--          <td class="text-end">-->
+<!--            <div class="btn-group">-->
+<!--              <button-->
+<!--                type="submit"-->
+<!--                [routerLink]="['/individual-arrear-salary', individualArrearSalary.id, 'view']"-->
+<!--                class="btn btn-info btn-sm"-->
+<!--                data-cy="entityDetailsButton"-->
+<!--              >-->
+<!--                <fa-icon icon="eye"></fa-icon>-->
+<!--                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>-->
+<!--              </button>-->
+
+<!--              <button-->
+<!--                type="submit"-->
+<!--                [routerLink]="['/individual-arrear-salary', individualArrearSalary.id, 'edit']"-->
+<!--                class="btn btn-primary btn-sm"-->
+<!--                data-cy="entityEditButton"-->
+<!--              >-->
+<!--                <fa-icon icon="pencil-alt"></fa-icon>-->
+<!--                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>-->
+<!--              </button>-->
+
+<!--              <button type="submit" (click)="delete(individualArrearSalary)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">-->
+<!--                <fa-icon icon="times"></fa-icon>-->
+<!--                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>-->
+<!--              </button>-->
+<!--            </div>-->
+<!--          </td>-->
+<!--        </tr>-->
+<!--      </tbody>-->
+<!--    </table>-->
+<!--  </div>-->
+<!--</div>-->

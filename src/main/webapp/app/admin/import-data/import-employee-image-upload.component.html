@@ -1,0 +1,30 @@
+<jhi-header
+  [midHeaderName01]="'Employee Images'"
+  [midRouterLinkText01]="'/import-data/import-employee-image'"
+  [headerName]="'Upload Image'"
+  [shouldHaveHr]="false"
+>
+</jhi-header>
+
+<div class="custom-card">
+  <div class="d-flex justify-content-center align-items-center mt-2">
+    <div>
+      <label for="formFileMultiple" class="form-label">Upload images</label>
+      <input
+        (change)="onChange($event)"
+        class="form-control-file"
+        type="file"
+        id="formFileMultiple"
+        multiple=""
+        accept="image/"
+        style="height: 40px"
+      />
+
+      <button type="button" class="btn btn-secondary" (click)="back()">Back</button>
+      <button type="button" class="btn btn-primary" (click)="onSubmit()">Upload</button>
+      <!--<button type="button" class="btn btn-primary mt-2" (click)="onClear($event)">Back</button>-->
+    </div>
+
+    <span class="text-danger">{{ fileValidationMessage }}</span>
+  </div>
+</div>

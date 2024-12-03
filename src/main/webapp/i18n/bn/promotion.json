@@ -1,0 +1,41 @@
+{
+  "bitsHrPayrollApp": {
+    "promotion": {
+      "home": {
+        "title": "BRAC IT || Promotion",
+        "createLabel": "Create a new promotion",
+        "createOrEditLabel": "Create or edit a promotion",
+        "notFound": "No promotion found"
+      },
+      "created": "A new promotion is created",
+      "updated": "Promotion is updated",
+      "deleted": "Promotion is deleted",
+      "delete": {
+        "question": "Are you sure you want to delete?"
+      },
+      "detail": {
+        "title": "Promotion"
+      },
+      "referenceId": "Reference Id",
+      "pin": "Pin",
+      "eventType": "Event Type",
+      "effectiveDate": "Effective Date",
+      "previousMainGrossSalary": "Previous Main Gross Salary",
+      "currentMainGrossSalary": "Current Main Gross Salary",
+      "previousWorkingHour": "Previous Working Hour",
+      "changedWorkingHour": "Changed Working Hour",
+      "isModifiable": "Is Modifiable",
+      "previousDesignation": "Previous Designation",
+      "changedDesignation": "Changed Designation",
+      "previousDepartment": "Previous Department",
+      "changedDepartment": "Changed Department",
+      "previousReportingTo": "Previous Reporting To",
+      "changedReportingTo": "Changed Reporting To",
+      "employee": "Employee",
+      "previousUnit": "Previous Unit",
+      "changedUnit": "Changed Unit",
+      "previousBand": "Previous Band",
+      "changedBand": "Changed Band"
+    }
+  }
+}

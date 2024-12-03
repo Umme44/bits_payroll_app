@@ -1,0 +1,68 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="arrearSalaryItem">
+      <h2 data-cy="arrearSalaryItemDetailsHeading">
+        <span jhiTranslate="bitsHrPayrollApp.arrearSalaryItem.detail.title">Arrear Salary Item</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ arrearSalaryItem.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.arrearSalaryItem.title">Title</span></dt>
+        <dd>
+          <span>{{ arrearSalaryItem.title }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.arrearSalaryItem.arrearAmount">Arrear Amount</span></dt>
+        <dd>
+          <span>{{ arrearSalaryItem.arrearAmount }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.arrearSalaryItem.hasPfArrearDeduction">Has Pf Arrear Deduction</span></dt>
+        <dd>
+          <span>{{ arrearSalaryItem.hasPfArrearDeduction }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.arrearSalaryItem.pfArrearDeduction">Pf Arrear Deduction</span></dt>
+        <dd>
+          <span>{{ arrearSalaryItem.pfArrearDeduction }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.arrearSalaryItem.isFestivalBonus">Is Festival Bonus</span></dt>
+        <dd>
+          <span>{{ arrearSalaryItem.isFestivalBonus }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.arrearSalaryItem.isDeleted">Is Deleted</span></dt>
+        <dd>
+          <span>{{ arrearSalaryItem.isDeleted }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.arrearSalaryItem.arrearSalaryMaster">Arrear Salary Master</span></dt>
+        <dd>
+          <div *ngIf="arrearSalaryItem.arrearSalaryMaster">
+            <a [routerLink]="['/arrear-salary-master', arrearSalaryItem.arrearSalaryMaster.id, 'view']">{{
+              arrearSalaryItem.arrearSalaryMaster.id
+            }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.arrearSalaryItem.employee">Employee</span></dt>
+        <dd>
+          <div *ngIf="arrearSalaryItem.employee">
+            <a [routerLink]="['/employee', arrearSalaryItem.employee.id, 'view']">{{ arrearSalaryItem.employee.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/arrear-salary-item', arrearSalaryItem.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

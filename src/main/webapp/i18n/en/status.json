@@ -1,0 +1,10 @@
+{
+  "bitsHrPayrollApp": {
+    "Status": {
+      "null": "",
+      "PENDING": "Pending",
+      "APPROVED": "Approved",
+      "NOT_APPROVED": "Not Approved"
+    }
+  }
+}

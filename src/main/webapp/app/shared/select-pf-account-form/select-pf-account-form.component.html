@@ -1,0 +1,17 @@
+<div [formGroup]="pfAccountIdForm">
+    <ng-select
+        [(ngModel)]="selectedId"
+        [items]="pfAccounts"
+        bindLabel="accHolderName"
+        bindValue="id"
+        appearance="outline"
+        [searchable]="true"
+        [clearable]="true"
+        labelForId="pfAccountId"
+        formControlName="pfAccountId"
+        id="field_pfAccount"
+        name="pfAccount">
+
+    </ng-select>
+
+</div>

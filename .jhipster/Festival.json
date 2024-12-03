@@ -1,0 +1,51 @@
+{
+  "changelogDate": "20210521215105",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "festival",
+  "fields": [
+    {
+      "fieldName": "title",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "255",
+      "fieldValidateRulesMinlength": "3"
+    },
+    {
+      "fieldName": "festivalName",
+      "fieldType": "String",
+      "fieldValidateRules": ["minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "255",
+      "fieldValidateRulesMinlength": "0"
+    },
+    {
+      "fieldName": "festivalDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "bonusDisbursementDate",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "religion",
+      "fieldType": "Religion",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "ISLAM,HINDU,BUDDHA,CHRISTIAN,OTHER,ALL"
+    },
+    {
+      "fieldName": "isProRata",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Festival",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

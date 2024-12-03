@@ -1,0 +1,350 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-arrear-payment-heading"
+        data-cy="ArrearPaymentCreateUpdateHeading"
+        jhiTranslate="bitsHrPayrollApp.arrearPayment.home.createOrEditLabel"
+      >
+        Create or edit a Arrear Payment
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.arrearPayment.paymentType" for="field_paymentType">Payment Type</label>
+          <select class="form-control" name="paymentType" formControlName="paymentType" id="field_paymentType" data-cy="paymentType">
+            <option [ngValue]="null">{{ 'bitsHrPayrollApp.ArrearPaymentType.null' | translate }}</option>
+            <option *ngFor="let arrearPaymentType of arrearPaymentTypeValues" [value]="arrearPaymentType">
+              {{ 'bitsHrPayrollApp.ArrearPaymentType.' + arrearPaymentType | translate }}
+            </option>
+          </select>
+          <div *ngIf="editForm.get('paymentType')!.invalid && (editForm.get('paymentType')!.dirty || editForm.get('paymentType')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('paymentType')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.arrearPayment.disbursementDate" for="field_disbursementDate"
+            >Disbursement Date</label
+          >
+          <div class="input-group">
+            <input
+              id="field_disbursementDate"
+              data-cy="disbursementDate"
+              type="text"
+              class="form-control"
+              name="disbursementDate"
+              ngbDatepicker
+              #disbursementDateDp="ngbDatepicker"
+              formControlName="disbursementDate"
+            />
+            <button type="button" class="btn btn-secondary" (click)="disbursementDateDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.arrearPayment.salaryMonth" for="field_salaryMonth">Salary Month</label>
+          <select class="form-control" name="salaryMonth" formControlName="salaryMonth" id="field_salaryMonth" data-cy="salaryMonth">
+            <option [ngValue]="null">{{ 'bitsHrPayrollApp.Month.null' | translate }}</option>
+            <option *ngFor="let month of monthValues" [value]="month">{{ 'bitsHrPayrollApp.Month.' + month | translate }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.arrearPayment.salaryYear" for="field_salaryYear">Salary Year</label>
+          <input
+            type="number"
+            class="form-control"
+            name="salaryYear"
+            id="field_salaryYear"
+            data-cy="salaryYear"
+            formControlName="salaryYear"
+          />
+          <div *ngIf="editForm.get('salaryYear')!.invalid && (editForm.get('salaryYear')!.dirty || editForm.get('salaryYear')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('salaryYear')?.errors?.min"
+              jhiTranslate="entity.validation.min"
+              [translateValues]="{ min: 1900 }"
+            >
+              This field should be at least 1900.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('salaryYear')?.errors?.max"
+              jhiTranslate="entity.validation.max"
+              [translateValues]="{ max: 2277 }"
+            >
+              This field cannot be more than 2277.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('salaryYear')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.arrearPayment.approvalStatus" for="field_approvalStatus"
+            >Approval Status</label
+          >
+          <select
+            class="form-control"
+            name="approvalStatus"
+            formControlName="approvalStatus"
+            id="field_approvalStatus"
+            data-cy="approvalStatus"
+          >
+            <option [ngValue]="null">{{ 'bitsHrPayrollApp.Status.null' | translate }}</option>
+            <option *ngFor="let status of statusValues" [value]="status">{{ 'bitsHrPayrollApp.Status.' + status | translate }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.arrearPayment.disbursementAmount" for="field_disbursementAmount"
+            >Disbursement Amount</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="disbursementAmount"
+            id="field_disbursementAmount"
+            data-cy="disbursementAmount"
+            formControlName="disbursementAmount"
+          />
+          <div
+            *ngIf="
+              editForm.get('disbursementAmount')!.invalid &&
+              (editForm.get('disbursementAmount')!.dirty || editForm.get('disbursementAmount')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('disbursementAmount')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('disbursementAmount')?.errors?.min"
+              jhiTranslate="entity.validation.min"
+              [translateValues]="{ min: 1 }"
+            >
+              This field should be at least 1.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('disbursementAmount')?.errors?.max"
+              jhiTranslate="entity.validation.max"
+              [translateValues]="{ max: 100000000 }"
+            >
+              This field cannot be more than 100000000.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('disbursementAmount')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.arrearPayment.isDeleted" for="field_isDeleted">Is Deleted</label>
+          <input type="checkbox" class="form-check" name="isDeleted" id="field_isDeleted" data-cy="isDeleted" formControlName="isDeleted" />
+          <div *ngIf="editForm.get('isDeleted')!.invalid && (editForm.get('isDeleted')!.dirty || editForm.get('isDeleted')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('isDeleted')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.arrearPayment.arrearPF" for="field_arrearPF">Arrear PF</label>
+          <input type="number" class="form-control" name="arrearPF" id="field_arrearPF" data-cy="arrearPF" formControlName="arrearPF" />
+          <div *ngIf="editForm.get('arrearPF')!.invalid && (editForm.get('arrearPF')!.dirty || editForm.get('arrearPF')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('arrearPF')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('arrearPF')?.errors?.min"
+              jhiTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              This field should be at least 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('arrearPF')?.errors?.max"
+              jhiTranslate="entity.validation.max"
+              [translateValues]="{ max: 100000000 }"
+            >
+              This field cannot be more than 100000000.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('arrearPF')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.arrearPayment.taxDeduction" for="field_taxDeduction"
+            >Tax Deduction</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="taxDeduction"
+            id="field_taxDeduction"
+            data-cy="taxDeduction"
+            formControlName="taxDeduction"
+          />
+          <div
+            *ngIf="editForm.get('taxDeduction')!.invalid && (editForm.get('taxDeduction')!.dirty || editForm.get('taxDeduction')!.touched)"
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('taxDeduction')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('taxDeduction')?.errors?.min"
+              jhiTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              This field should be at least 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('taxDeduction')?.errors?.max"
+              jhiTranslate="entity.validation.max"
+              [translateValues]="{ max: 100000000 }"
+            >
+              This field cannot be more than 100000000.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('taxDeduction')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.arrearPayment.deductTaxUponPayment" for="field_deductTaxUponPayment"
+            >Deduct Tax Upon Payment</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="deductTaxUponPayment"
+            id="field_deductTaxUponPayment"
+            data-cy="deductTaxUponPayment"
+            formControlName="deductTaxUponPayment"
+          />
+          <div
+            *ngIf="
+              editForm.get('deductTaxUponPayment')!.invalid &&
+              (editForm.get('deductTaxUponPayment')!.dirty || editForm.get('deductTaxUponPayment')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('deductTaxUponPayment')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="bitsHrPayrollApp.arrearPayment.arrearSalaryItem" for="field_arrearSalaryItem"
+            >Arrear Salary Item</label
+          >
+          <select
+            class="form-control"
+            id="field_arrearSalaryItem"
+            data-cy="arrearSalaryItem"
+            name="arrearSalaryItem"
+            formControlName="arrearSalaryItem"
+            [compareWith]="compareArrearSalaryItem"
+          >
+            <option *ngIf="!editForm.get('arrearSalaryItem')!.value" [ngValue]="null" selected></option>
+            <option [ngValue]="arrearSalaryItemOption" *ngFor="let arrearSalaryItemOption of arrearSalaryItemsSharedCollection">
+              {{ arrearSalaryItemOption.id }}
+            </option>
+          </select>
+        </div>
+        <div
+          *ngIf="
+            editForm.get(['arrearSalaryItem'])!.invalid &&
+            (editForm.get(['arrearSalaryItem'])!.dirty || editForm.get(['arrearSalaryItem'])!.touched)
+          "
+        >
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['arrearSalaryItem'])?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

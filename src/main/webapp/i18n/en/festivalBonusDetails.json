@@ -1,0 +1,30 @@
+{
+  "bitsHrPayrollApp": {
+    "festivalBonusDetails": {
+      "home": {
+        "title": "Festival Bonus Details",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Festival Bonus Details",
+        "createOrEditLabel": "Create or edit a Festival Bonus Details",
+        "notFound": "No Festival Bonus Details found"
+      },
+      "created": "A new Festival Bonus Details is created with identifier {{ param }}",
+      "updated": "A Festival Bonus Details is updated with identifier {{ param }}",
+      "deleted": "A Festival Bonus Details is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Festival Bonus Details {{ id }}?"
+      },
+      "detail": {
+        "title": "Festival Bonus Details"
+      },
+      "id": "ID",
+      "bonusAmount": "Bonus Amount",
+      "remarks": "Remarks",
+      "isHold": "Is Hold",
+      "basic": "Basic",
+      "gross": "Gross",
+      "employee": "Employee",
+      "festival": "Festival"
+    }
+  }
+}

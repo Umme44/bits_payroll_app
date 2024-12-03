@@ -1,0 +1,45 @@
+{
+  "changelogDate": "20230118083528",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "proc_req",
+  "fields": [
+    {
+      "fieldName": "quantity",
+      "fieldType": "Double",
+      "fieldValidateRules": ["required", "min"],
+      "fieldValidateRulesMin": "1"
+    },
+    {
+      "fieldName": "referenceFilePath",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "ProcReq",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "itemInformation",
+      "otherEntityRelationshipName": "procReq",
+      "relationshipName": "itemInformation",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    },
+    {
+      "otherEntityField": "requisitionNo",
+      "otherEntityName": "procReqMaster",
+      "otherEntityRelationshipName": "procReq",
+      "relationshipName": "procReqMaster",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    }
+  ],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

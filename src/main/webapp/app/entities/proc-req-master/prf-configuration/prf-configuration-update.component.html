@@ -1,0 +1,106 @@
+<jhi-header headerName="Procurement Requisition Configuration"> </jhi-header>
+
+<div class="row mb-3 border">
+  <div class="card col p-3">
+    <div class="row">
+      <div class="col ms-3">
+        <label class="font-size-1-rem" for="prf-officer-pin">Procurement Officer PIN</label>
+      </div>
+      <div class="col-md-4">
+        <jhi-simple-select-employee-form
+          id="field_employee"
+          [selectedFieldValue]="prfOfficerPinFormControl.value"
+          [selectFieldName]="'pin'"
+          (onChangeEmployee)="changePRFOfficerPin($event)"
+        >
+        </jhi-simple-select-employee-form>
+
+        <small class="text-danger" *ngIf="prfOfficerPinFormControl?.errors?.required"> This field is required. </small>
+      </div>
+      <div class="col-md-1">
+        <button type="button" [disabled]="prfOfficerPinFormControl.invalid" class="btn btn-secondary" (click)="updatePRFOfficerPIN()">
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mb-3 border">
+  <div class="card col p-3">
+    <div class="row">
+      <div class="col ms-3">
+        <label class="font-size-1-rem" for="prf-approval-flow">
+          Approval Flow <br />
+          <small>Suggested Pattern <strong> (Technical-1703,Operation-1603,Finance-1376,CEO-1600) </strong></small>
+        </label>
+      </div>
+      <div class="col-md-4">
+        <input type="text" class="form-control" [formControl]="procurementApprovalFlow" id="prf-approval-flow" />
+        <small class="text-danger" *ngIf="procurementApprovalFlow?.errors?.required"> This field is required. </small>
+      </div>
+      <div class="col-md-1">
+        <button type="button" [disabled]="procurementApprovalFlow.invalid" class="btn btn-secondary" (click)="updatePRFApprovalFlow()">
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mb-3 border">
+  <div class="card col p-3">
+    <div class="row">
+      <div class="col ms-3">
+        <label class="font-size-1-rem" for="prf-contact">Emergency Contact No.</label>
+      </div>
+      <div class="col-md-2">
+        <input type="text" class="form-control" [formControl]="prfTeamContactNoFormControl" id="prf-contact" />
+        <small class="text-danger" *ngIf="prfTeamContactNoFormControl?.errors?.required"> This field is required. </small>
+        <small class="text-danger" *ngIf="prfTeamContactNoFormControl?.errors?.pattern"> Please input valid phone number. </small>
+      </div>
+      <div class="col-md-1">
+        <button
+          type="button"
+          [disabled]="prfTeamContactNoFormControl.invalid"
+          class="btn btn-secondary"
+          (click)="updatePRFTeamContactNumber()"
+        >
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mb-3 border">
+  <div class="card col p-3">
+    <div class="row">
+      <div class="col ms-3">
+        <label class="font-size-1-rem" for="prf-max-approx-amount">Total maximum allowed approximate amount (BDT) </label>
+      </div>
+      <div class="col-md-2">
+        <input
+          type="number"
+          class="form-control"
+          [formControl]="prfMaxTotalApproximateAmountFormControl"
+          min="1"
+          id="prf-max-approx-amount"
+        />
+
+        <small class="text-danger" *ngIf="prfMaxTotalApproximateAmountFormControl?.errors?.required"> This field is required. </small>
+        <small class="text-danger" *ngIf="prfMaxTotalApproximateAmountFormControl?.errors?.min"> Minimum value is 1. </small>
+      </div>
+      <div class="col-md-1">
+        <button
+          type="button"
+          [disabled]="prfMaxTotalApproximateAmountFormControl.invalid"
+          class="btn btn-secondary"
+          (click)="updatePRFMaxApproxAmount()"
+        >
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,72 @@
+{
+  "changelogDate": "20221031094254",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "employee_pin_configuration",
+  "fields": [
+    {
+      "fieldName": "employeeCategory",
+      "fieldType": "EmployeeCategory",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "REGULAR_CONFIRMED_EMPLOYEE,REGULAR_PROVISIONAL_EMPLOYEE,CONTRACTUAL_EMPLOYEE,INTERN,CONSULTANTS,PART_TIME"
+    },
+    {
+      "fieldName": "sequenceStart",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "sequenceEnd",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "lastSequence",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "hasFullFilled",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "createdAt",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "updatedAt",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "lastCreatedPin",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "EmployeePinConfiguration",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "employeePinConfiguration",
+      "ownerSide": true,
+      "relationshipName": "createdBy",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    },
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "employeePinConfiguration",
+      "ownerSide": true,
+      "relationshipName": "updatedBy",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

@@ -1,0 +1,579 @@
+<div>
+  <div class="row page-title form-header">
+    <h1 *ngIf="isViewByYearMonth" class="text-center comp-page-title">
+      <div *ngIf="employeeSalaries && employeeSalaries.length > 0">
+        Salary of
+        <span
+          jhiTranslate="{{ 'bitsHrPayrollApp.Month.' + employeeSalaries[0].month}}">{{employeeSalaries[0].month}}</span> {{employeeSalaries[0].year}}
+      </div>
+    </h1>
+  </div>
+
+  <div class="row my-3" [formGroup]="searchParamsForm">
+    <div class="input-group col-md-12">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="searchText">Search</label>
+        </div>
+        <input (change)="loadPage(1)" id="searchText" formControlName="searchText" class="form-control"
+               placeholder="Search Text" type="text">
+      </div>
+    </div>
+  </div>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div *ngIf="employeeSalaries?.length === 0" class="alert alert-warning" id="no-result">
+    <span jhiTranslate="bitsHrPayrollApp.employeeSalary.home.notFound">No employeeSalaries found</span>
+  </div>
+</div>
+
+<div *ngIf="employeeSalaries && employeeSalaries.length > 0">
+
+  <div class="table-responsive" id="entities">
+    <table aria-describedby="page-heading" class="table table-bordered table-hover">
+      <thead>
+      <tr>
+        <th *ngIf="!isViewByYearMonth" scope="col" class="salary">
+          Salary of
+        </th>
+        <th scope="col" class="pin"><span
+          jhiTranslate="bitsHrPayrollApp.employeeSalary.pin">Pin</span></th>
+        <th scope="col" class="name"><span>Name </span></th>
+
+        <th scope="col" class="text-nowrap"><span>Status </span></th>
+
+        <th scope="col" class="join-date"><span>Joining Date</span>
+        </th>
+        <th scope="col" class="confirmation-date"><span class="text-nowrap">Confirmation Date</span> <span
+          class="text-nowrap">/ Contract End Date</span></th>
+        <th scope="col"><span class="text-nowrap"
+                              jhiTranslate="bitsHrPayrollApp.employeeSalary.employeeCategory">Employee Category</span>
+        </th>
+        <th scope="col"><span class="text-nowrap">Designation</span></th>
+        <th scope="col"><span class="text-nowrap"
+                              jhiTranslate="bitsHrPayrollApp.employeeSalary.unit">Unit</span></th>
+        <th scope="col"><span class="text-nowrap"
+                              jhiTranslate="bitsHrPayrollApp.employeeSalary.department">Department</span></th>
+        <th scope="col" class="text-nowrap"><span> Employment Status </span></th>
+
+        <th class="main-gross-salary">
+          <div class="row ">
+            <div class="col text-center font-weight-bold">
+                            <span
+                              jhiTranslate="bitsHrPayrollApp.employeeSalary.mainGrossSalary">Main Gross Salary</span>
+            </div>
+          </div>
+          <div class="row">
+            <hr class="py-0 my-0 main-gross-salary-hr">
+          </div>
+          <div class="row">
+            <div class="col text-right">
+              <span class="badge badge-pill badge-secondary">Basic</span>
+            </div>
+            <div class="col text-right">
+              <span class="badge badge-pill badge-secondary">House Rent</span>
+            </div>
+            <div class="col text-right"><span class="badge badge-pill badge-secondary">Medical</span>
+            </div>
+            <div class="col text-right"><span class="badge badge-pill badge-secondary">Conveyance</span>
+            </div>
+
+          </div>
+        </th>
+
+
+        <th class="text-center absent-days" scope="col"><span
+          jhiTranslate="bitsHrPayrollApp.employeeSalary.absentDays">Absent Days</span></th>
+        <th class="text-center fraction-days" scope="col"><span
+          jhiTranslate="bitsHrPayrollApp.employeeSalary.fractionDays">Fraction Days</span>
+        </th>
+
+        <th class=" main-gross-salary">
+          <div class="row">
+            <div class="col text-center font-weight-bold">
+                            <span
+                              jhiTranslate="bitsHrPayrollApp.employeeSalary.payableGrossSalary">Payable Gross Salary</span>
+            </div>
+          </div>
+          <div class="row">
+            <hr class="py-0 my-0 main-gross-salary-hr">
+          </div>
+          <div class="row">
+            <div class="col text-right"><span class="badge badge-pill badge-secondary">Basic</span>
+            </div>
+            <div class="col text-right"><span class="badge badge-pill badge-secondary">House Rent</span>
+            </div>
+            <div class="col text-right"><span class="badge badge-pill badge-secondary">Medical</span>
+            </div>
+            <div class="col text-right"><span class="badge badge-pill badge-secondary">Conveyance</span>
+            </div>
+
+          </div>
+        </th>
+
+
+        <th class="text-center arrear-salary" scope="col"><span
+          jhiTranslate="bitsHrPayrollApp.employeeSalary.arrearSalary">Arrear Salary</span>
+        </th>
+
+        <th class="rgba-red-slight total-deduction">
+          <div class="row">
+            <div class="col text-center font-weight-bold">
+              <span jhiTranslate="bitsHrPayrollApp.employeeSalary.totalDeduction">Total Deduction</span>
+            </div>
+          </div>
+          <div class="row">
+            <hr class="py-0 my-0 total-deduction-hr">
+          </div>
+          <div class="row">
+            <div class="col text-right"><span
+              class="badge badge-pill badge-secondary">PF Contribution</span></div>
+            <div class="col text-right"><span class="badge badge-pill badge-secondary"
+                                              jhiTranslate="bitsHrPayrollApp.employeeSalary.taxDeduction">Tax Deduction</span>
+            </div>
+            <div class="col text-right"><span class="badge badge-pill badge-secondary">HAF</span>
+            </div>
+            <div class="col text-right"><span class="badge badge-pill badge-secondary"
+                                              jhiTranslate="bitsHrPayrollApp.employeeSalary.mobileBillDeduction">Mobile Bill Deduction</span>
+            </div>
+            <div class="col text-right"><span class="badge badge-pill badge-secondary"
+                                              jhiTranslate="bitsHrPayrollApp.employeeSalary.otherDeduction">Other Deduction</span>
+            </div>
+          </div>
+        </th>
+
+
+        <th class="text-center font-weight-bold align-baseline net-pay" scope="col">
+          <span> Salary Adjustment </span>
+        </th>
+
+        <th class="text-center font-weight-bold align-baseline net-pay" scope="col">
+          <span jhiTranslate="bitsHrPayrollApp.employeeSalary.netPay">Net Pay</span>
+        </th>
+
+        <th class="rgba-blue-grey-slight total-company-contributions">
+          <div class="row">
+            <div class="col text-center">
+              <span>Total company's contributions</span>
+            </div>
+          </div>
+          <div class="row">
+            <hr class="py-0 my-0 total-company-contributions-hr">
+          </div>
+          <div class="row">
+            <div class="col text-right"><span class="badge badge-pill badge-secondary"
+                                              jhiTranslate="bitsHrPayrollApp.employeeSalary.pfContribution">PF Contribution</span>
+            </div>
+            <div class="col text-right"><span class="badge badge-pill badge-secondary"
+                                              jhiTranslate="bitsHrPayrollApp.employeeSalary.gfContribution">GF Contribution</span>
+            </div>
+
+          </div>
+        </th>
+
+
+        <th class="rgba-orange-slight total-company-provision">
+          <div class="row">
+            <div class="col text-center">
+              <span>Total company's Provision</span>
+            </div>
+          </div>
+          <div class="row">
+            <hr class="py-0 my-0 total-company-provision-hr">
+          </div>
+          <div class="row">
+            <div class="col text-right">
+              <span class="badge badge-pill badge-secondary">Festival Bonus</span>
+            </div>
+            <div class="col text-right">
+              <span class="badge badge-pill badge-secondary">Leave Encashment</span>
+            </div>
+            <div class="col text-right">
+              <span class="badge badge-pill badge-secondary">Project Bonus</span>
+            </div>
+          </div>
+        </th>
+        <th scope="col" *ngIf="allowanceName?.allowance01Name?.length !== 0"><span
+          class="text-nowrap">{{allowanceName?.allowance01Name}}</span></th>
+        <th scope="col" *ngIf="allowanceName?.allowance02Name?.length !== 0"><span
+          class="text-nowrap">{{allowanceName?.allowance02Name}}</span></th>
+        <th scope="col" *ngIf="allowanceName?.allowance03Name?.length !== 0"><span
+          class="text-nowrap">{{allowanceName?.allowance03Name}}</span></th>
+        <th scope="col" *ngIf="allowanceName?.allowance04Name?.length !== 0"><span
+          class="text-nowrap">{{allowanceName?.allowance04Name}}</span></th>
+        <th scope="col" *ngIf="allowanceName?.allowance05Name?.length !== 0"><span
+          class="text-nowrap">{{allowanceName?.allowance05Name}}</span></th>
+        <th scope="col" *ngIf="allowanceName?.allowance06Name?.length !== 0"><span
+          class="text-nowrap">{{allowanceName?.allowance06Name}}</span></th>
+
+        <th scope="col" >
+          <span class="text-nowrap">Visibility</span>
+        </th>
+
+
+        <th [ngStyle]="{'min-width': (employeeSalaries[0].isFinalized!==true) ? '18rem' : '10.5rem'}"
+            scope="col"
+            class="employeeSalaries"
+        ></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr [class.holdSalary]="employeeSalary.isHold==true" *ngFor="let employeeSalary of employeeSalaries ;trackBy: trackId"
+          style="vertical-align: middle"
+          [ngClass]="{'table-warning' : employeeSalary.employmentStatus !== 'ACTIVE'}"
+          container="body"
+          ngbTooltip="{{ getEmployeeInfoAsTooltip(employeeSalary.employeeName, employeeSalary.pin) }}">
+
+        <td *ngIf="!isViewByYearMonth" class="employeeSalary-month">
+                    <span
+                      jhiTranslate="{{ 'bitsHrPayrollApp.Month.' + employeeSalary.month }}">{{ employeeSalary.month }}</span>
+          , {{ employeeSalary.year }}
+        </td>
+        <td>{{ employeeSalary.pin }}</td>
+        <td class="text-nowrap">{{ employeeSalary.employeeName }}</td>
+
+        <td class="text-nowrap text-center">
+                    <span *ngIf="!employeeSalary.isHold===true" class="text-nowrap">
+                    <span data-placement="top" data-toggle="tooltip" style="color:limegreen" title="Not Hold">
+                        <fa-icon icon="check-circle"></fa-icon> </span>
+                    </span>
+          <span *ngIf="employeeSalary.isHold===true" class="text-nowrap">
+                    <span data-placement="top" data-toggle="tooltip" style="color: #ff0000;" title="Hold">
+                        <fa-icon icon="exclamation-circle"></fa-icon></span>
+                    </span>
+        </td>
+
+        <td class="join-date text-nowrap">{{ employeeSalary.joiningDate | formatMediumDate }}</td>
+        <td class="text-nowrap">{{ employeeSalary.confirmationDate | formatMediumDate }}</td>
+        <td class="text-nowrap"
+            *ngIf="employeeSalary.employeeCategory">{{ userFriendlyEmployeeCategory(employeeSalary.employeeCategory) }}</td>
+        <td class="text-nowrap">{{ employeeSalary.designation }}</td>
+        <td class="text-nowrap">{{ employeeSalary.unit }}</td>
+        <td class="text-nowrap">{{ employeeSalary.department }}</td>
+        <td class="text-nowrap text-center">
+                    <span
+                      jhiTranslate="{{ 'bitsHrPayrollApp.EmploymentStatus.' + employeeSalary.employmentStatus }}">{{ employeeSalary.employmentStatus }}</span>
+        </td>
+
+        <td class="gross-salary-value">
+
+          <div>
+            <div class="row">
+              <div
+                class="col text-center font-weight-bold right-aligned"> {{ employeeSalary.mainGrossSalary | number }}</div>
+            </div>
+            <div class="row">
+              <hr class="py-0 my-0 main-gross-salary-hr-value">
+            </div>
+            <div class="row">
+              <div class="col text-right">{{ employeeSalary.mainGrossBasicSalary | number  }}</div>
+              <div class="col text-right"> {{ employeeSalary.mainGrossHouseRent | number  }}</div>
+              <div class="col text-right">{{ employeeSalary.mainGrossMedicalAllowance | number  }}</div>
+              <div
+                class="col text-right">{{ employeeSalary.mainGrossConveyanceAllowance  | number }}</div>
+            </div>
+          </div>
+
+        </td>
+
+        <td class="text-right">{{ employeeSalary.absentDays }}</td>
+        <td class="text-right">{{ employeeSalary.fractionDays }}</td>
+
+        <td class="payableGrossSalary-value">
+          <ng-template #content>
+            <div *ngFor="let fraction of getBreakdown(employeeSalary.id!)">
+              {{ fraction.startDate! | formatMediumDate }}-{{ fraction.endDate! | formatMediumDate }}
+              : {{ (fraction.daysBetween! * fraction.perDayMainGross!).toFixed(2) }}<br/>
+            </div>
+          </ng-template>
+
+          <div [ngbPopover]="content" popoverTitle="Salary Breakdown" triggers="mouseenter:mouseleave">
+            <div class="row">
+              <div
+                class="col text-center font-weight-bold"> {{ employeeSalary.payableGrossSalary | number  }}</div>
+            </div>
+            <div class="row">
+              <hr class="py-0 my-0 payableGrossSalary-value-hr">
+            </div>
+            <div class="row">
+              <div class="col text-right">{{ employeeSalary.payableGrossBasicSalary | number  }}</div>
+              <div class="col text-right"> {{ employeeSalary.payableGrossHouseRent | number  }}</div>
+              <div class="col text-right">{{ employeeSalary.payableGrossMedicalAllowance | number }}</div>
+              <div
+                class="col text-right">{{ employeeSalary.payableGrossConveyanceAllowance | number  }}</div>
+            </div>
+          </div>
+        </td>
+
+
+        <td class="text-right">{{ employeeSalary.arrearSalary | number }}</td>
+        <!--                <td class="text-right">{{ employeeSalary.livingAllowance | number }}</td>-->
+
+        <td class="totalDeduction-value">
+          <div class="row">
+            <div
+              class="col text-center font-weight-bold">{{ employeeSalary.totalDeduction | number  }}</div>
+          </div>
+          <div class="row">
+            <hr class="py-0 my-0 total-deduction-hr ">
+          </div>
+          <div class="row">
+            <div class="col text-right">{{ employeeSalary.pfDeduction | number }}</div>
+            <div class="col text-right font-weight-bold"
+                 [routerLink]="['/employee-salary', employeeSalary.id, 'edit']">
+              {{ employeeSalary.taxDeduction | number }}</div>
+            <div class="col text-right">{{ employeeSalary.welfareFundDeduction | number }}</div>
+            <div class="col text-right">{{ employeeSalary.mobileBillDeduction | number }}</div>
+            <div class="col text-right">{{ employeeSalary.otherDeduction | number }}</div>
+          </div>
+        </td>
+
+        <td class="font-weight-bold text-right">{{ employeeSalary.salaryAdjustment | number }}</td>
+
+        <td class="font-weight-bold text-right">{{ employeeSalary.netPay | number }}</td>
+
+        <td class="pr-3 pfContribution-value">
+          <div class="row">
+            <div class="col text-center">
+              {{(employeeSalary?.pfContribution! + employeeSalary?.gfContribution!) | number }}
+            </div>
+          </div>
+          <div class="row">
+            <hr class="py-0 my-0 pfContribution-value-hr">
+          </div>
+          <div class="row">
+            <div class="col text-right">{{ employeeSalary.pfContribution | number }}</div>
+            <div class="col text-right">{{ employeeSalary.gfContribution | number }}</div>
+
+          </div>
+        </td>
+
+
+        <td>
+          <div class="row">
+            <div class="col text-center font-weight-bold">
+              <span>{{(employeeSalary?.provisionForFestivalBonus! + employeeSalary?.provisionForLeaveEncashment!)| number }}</span>
+            </div>
+          </div>
+          <div class="row">
+            <hr class="py-0 my-0 provisionForFestivalBonus-value-hr">
+          </div>
+          <div class="row">
+            <div class="col text-right">{{ employeeSalary.provisionForFestivalBonus | number }}</div>
+            <div class="col text-right">{{ employeeSalary.provisionForLeaveEncashment | number }}</div>
+            <div class="col text-right">{{ employeeSalary.provisionForProjectBonus | number }}</div>
+          </div>
+        </td>
+        <td class="text-right"
+            *ngIf="allowanceName?.allowance01Name?.length !== 0">{{ employeeSalary.allowance01 | number }}</td>
+        <td class="text-right"
+            *ngIf="allowanceName?.allowance02Name?.length !== 0">{{ employeeSalary.allowance02 | number }}</td>
+        <td class="text-right"
+            *ngIf="allowanceName?.allowance03Name?.length !== 0">{{ employeeSalary.allowance03 | number }}</td>
+        <td class="text-right"
+            *ngIf="allowanceName?.allowance04Name?.length !== 0">{{ employeeSalary.allowance04 | number }}</td>
+        <td class="text-right"
+            *ngIf="allowanceName?.allowance05Name?.length !== 0">{{ employeeSalary.allowance05 | number }}</td>
+        <td class="text-right"
+            *ngIf="allowanceName?.allowance06Name?.length !== 0">{{ employeeSalary.allowance06 | number }}</td>
+
+        <td scope="col" class="text-center">
+                    <span *ngIf="!employeeSalary.isVisibleToEmployee"
+                          (click)="makeSalaryVisibleToEmployee(employeeSalary!.employeeId!, employeeSalary!.year!, employeeSalary!.month!)"
+                          class="h5 text-secondary cursor-pointer" data-placement="top"
+                          data-toggle="tooltip"
+                          container="body"
+                          ngbTooltip="Salary is hidden">
+                        <fa-icon icon="toggle-off"></fa-icon>
+                    </span>
+
+          <span *ngIf="employeeSalary.isVisibleToEmployee"
+                (click)="makeSalaryHiddenFromEmployee(employeeSalary!.employeeId!, employeeSalary!.year!, employeeSalary!.month!)"
+                class="h5 text-success cursor-pointer" data-placement="top"
+                data-toggle="tooltip"
+                container="body"
+                ngbTooltip="Salary is visible">
+                        <fa-icon icon="toggle-on"></fa-icon>
+                    </span>
+        </td>
+
+        <td class="text-right">
+
+          <div class="btn-group">
+            <button *ngIf="!employeeSalary.isHold==true" (click)="holdEmployeeSalary(employeeSalary)" type="submit" style="width: 80px" class="btn btn-primary btn-sm px-md-3">
+              Hold
+            </button>
+            <button *ngIf="employeeSalary.isHold==true" (click)="unHoldEmployeeSalary(employeeSalary)" type="submit" style="width: 80px" class="btn btn-primary btn-sm px-md-3">
+              Unhold
+            </button>
+
+            <button *ngIf="employeeSalary.employeeCategory !== 'INTERN'"
+                    (click)="taxCalcModal(employeeSalary)"
+                    class="btn btn-secondary btn-sm text-nowrap"
+                    type="submit">
+              <span class="d-none d-md-inline">tax-calc</span>
+            </button>
+
+            <button *ngIf="employeeSalary.employeeCategory !== 'INTERN'"
+                    (click)="navigateToSalaryPayslip(employeeSalary)"
+                    class="btn btn-secondary btn-sm text-nowrap"
+                    type="submit">
+              pay-slip
+            </button>
+
+            <button [routerLink]="['/employee-salary', employeeSalary.id, 'view']"
+                    class="btn btn-info btn-sm text-nowrap"
+                    type="submit">
+              <fa-icon icon="eye"></fa-icon>
+              <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+            </button>
+
+            <button *ngIf="employeeSalary.isFinalized!==true"
+                    (click)="salaryLockAlert()"
+                    [disabled]="isSalaryLocked"
+                    [routerLink]="['/employee-salary', employeeSalary.id, 'edit']"
+                    class="btn btn-primary btn-sm text-nowrap"
+                    type="submit">
+              <fa-icon icon="pencil-alt"></fa-icon>
+              <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+
+            <button (click)="delete(employeeSalary)" [hidden]="isSalaryLocked" *ngIf="employeeSalary.isFinalized!==true"
+                    class="btn btn-danger btn-sm text-nowrap"
+                    type="submit">
+              <fa-icon icon="times"></fa-icon>
+              <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+            </button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<!--<div *ngIf="employeeSalaries && employeeSalaries.length > 0">
+  <div class="row justify-content-center">
+    <jhi-item-count [itemsPerPage]="itemsPerPage" [page]="page" [total]="totalItems"></jhi-item-count>
+  </div>
+
+  <div class="row justify-content-center">
+    <ngb-pagination (pageChange)="loadPage($event)" [(page)]="ngbPaginationPage" [boundaryLinks]="true"
+                    [collectionSize]="totalItems" [maxSize]="5" [pageSize]="itemsPerPage"
+                    [rotate]="true"></ngb-pagination>
+  </div>
+</div>-->
+
+<div *ngIf="employeeSalaries && employeeSalaries.length > 0">
+  <div class="d-flex justify-content-center">
+    <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+  </div>
+
+  <div class="d-flex justify-content-center">
+    <ngb-pagination
+      [collectionSize]="totalItems"
+      [page]="page"
+      [pageSize]="itemsPerPage"
+      [maxSize]="5"
+      [rotate]="true"
+      [boundaryLinks]="true"
+      (pageChange)="loadPage($event)"
+    ></ngb-pagination>
+  </div>
+</div>
+
+
+<div *ngIf="isViewByYearMonth" class="container text-center py-3 px-3 my-2">
+  <div *ngIf="employeeSalaries && employeeSalaries.length > 0">
+    <button [hidden]="true" (click)="finalize()" class="btn btn-success"
+            type="submit">
+                <span class="d-none d-md-inline">
+                    Batch Finalize salary of {{employeeSalaries[0].month }}, {{ employeeSalaries[0].year }} </span>
+
+    </button>
+    <div *ngIf="isSalaryLocked && isSalaryLocked === true">
+      The Salary of {{employeeSalaries[0].month }}, {{ employeeSalaries[0].year }} is locked
+    </div>
+  </div>
+</div>
+
+<h1 *ngIf="isViewByYearMonth && !isSingleEmployeeSalary" class="container text-center py-3 px-3 my-2">
+  <div class="btn-group">
+    <button (click)="export(year.toLocaleString(),month.toLocaleString(),'short-summary')"
+            class="btn btn-outline-primary btn-sm">
+      <fa-icon icon="download"></fa-icon>
+      <span class="d-none d-md-inline">Short Summary Report</span>
+    </button>
+    <button (click)="export(year.toLocaleString(),month.toLocaleString(),'summary')"
+            class="btn btn-outline-primary btn-sm">
+      <fa-icon icon="download"></fa-icon>
+      <span class="d-none d-md-inline">Summary-Report</span>
+    </button>
+
+    <button (click)="export(year.toLocaleString(),month.toLocaleString(),'regular')"
+            class="btn btn-outline-success btn-sm">
+      <fa-icon icon="download"></fa-icon>
+      <span class="d-none d-md-inline">Regular</span>
+    </button>
+
+    <button (click)="export(year.toLocaleString(),month.toLocaleString(),'contractual')"
+            class="btn btn-outline-info btn-sm">
+      <fa-icon icon="download"></fa-icon>
+      <span class="d-none d-md-inline">Contractual</span>
+    </button>
+
+    <button (click)="export(year.toLocaleString(),month.toLocaleString(),'intern')"
+            class="btn btn-outline-warning btn-sm">
+      <fa-icon icon="download"></fa-icon>
+      <span class="d-none d-md-inline">Intern</span>
+    </button>
+
+    <button (click)="export(year.toLocaleString(),month.toLocaleString(),'all')"
+            class="btn btn-outline-secondary btn-sm">
+      <fa-icon icon="download"></fa-icon>
+      <span class="d-none d-md-inline">All</span>
+    </button>
+
+  </div>
+</h1>
+
+<h1 *ngIf="isViewByYearMonth && !isSingleEmployeeSalary" class="container text-center py-3 px-3 my-2">
+  <div class="btn-group">
+    <button (click)="export(year.toLocaleString(),month.toLocaleString(),'salary-disbursement')"
+            class="btn btn-outline-primary btn-sm">
+      <fa-icon icon="download"></fa-icon>
+      <span class="d-none d-md-inline">Salary Disbursement</span>
+    </button>
+    <button (click)="export(year.toLocaleString(),month.toLocaleString(),'living-allowance')"
+            class="btn btn-outline-primary btn-sm">
+      <fa-icon icon="download"></fa-icon>
+      <span class="d-none d-md-inline">Living Allowance</span>
+    </button>
+
+    <button (click)="export(year.toLocaleString(),month.toLocaleString(),'car-allowance')"
+            class="btn btn-outline-success btn-sm">
+      <fa-icon icon="download"></fa-icon>
+      <span class="d-none d-md-inline">Car Allowance</span>
+    </button>
+
+    <button (click)="export(year.toLocaleString(),month.toLocaleString(),'company-secretary-allowance')"
+            class="btn btn-outline-info btn-sm">
+      <fa-icon icon="download"></fa-icon>
+      <span class="d-none d-md-inline">Company Secretary Allowance</span>
+    </button>
+
+    <button (click)="export(year.toLocaleString(),month.toLocaleString(),'house-rent-allowance')"
+            class="btn btn-outline-warning btn-sm">
+      <fa-icon icon="download"></fa-icon>
+      <span class="d-none d-md-inline">House Rent Allowance</span>
+    </button>
+  </div>
+</h1>
+
+
+
+

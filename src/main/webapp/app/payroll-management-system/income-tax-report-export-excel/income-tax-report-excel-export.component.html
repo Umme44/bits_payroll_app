@@ -1,0 +1,36 @@
+<jhi-header [headerName]="'Export Income Tax Report'"> </jhi-header>
+
+<div class="row">
+  <div class="col-9 mx-auto">
+    <div class="card card-body">
+      <form class="" name="editForm" role="form">
+        <div class="row">
+          <div class="col-12"></div>
+        </div>
+        <div class="row font-sm align-items-center h-100">
+          <div class="col-md-6 text-start">
+            <h6 class="ps-2 m-0">Export Income Tax Report</h6>
+          </div>
+          <div class="col-md-4 text-start">
+            <select (change)="onYearSelect($event)" class="form-control" id="year" name="year">
+              <option [ngValue]="null" selected disabled>Select Year</option>
+              <option *ngFor="let year of dropDownMenus" value="{{ year.id }}">
+                {{ year.range }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-2 text-end">
+            <button
+              [disabled]="selectedAitConfigId == null || selectedAitConfigId == undefined"
+              (click)="exportIncomeTaxReportsInExcel()"
+              class="btn btn-primary btn-md"
+            >
+              <fa-icon icon="print"></fa-icon>
+              Download
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

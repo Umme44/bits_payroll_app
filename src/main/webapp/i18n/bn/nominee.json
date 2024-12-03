@@ -1,0 +1,55 @@
+{
+  "bitsHrPayrollApp": {
+    "nominee": {
+      "home": {
+        "title": "Nominees",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Nominee",
+        "createOrEditLabel": "Create or edit a Nominee",
+        "notFound": "No Nominees found"
+      },
+      "created": "A new Nominee is created with identifier {{ param }}",
+      "updated": "A Nominee is updated with identifier {{ param }}",
+      "deleted": "A Nominee is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Nominee {{ id }}?"
+      },
+      "detail": {
+        "title": "Nominee"
+      },
+      "id": "ID",
+      "nomineeName": "Nominee Name",
+      "presentAddress": "Present Address",
+      "relationshipWithEmployee": "Relationship With Employee",
+      "dateOfBirth": "Date Of Birth",
+      "age": "Age",
+      "sharePercentage": "Share Percentage",
+      "imagePath": "Image Path",
+      "status": "Status",
+      "guardianName": "Guardian Name",
+      "guardianFatherName": "Guardian Father Name",
+      "guardianSpouseName": "Guardian Spouse Name",
+      "guardianDateOfBirth": "Guardian Date Of Birth",
+      "guardianPresentAddress": "Guardian Present Address",
+      "guardianDocumentName": "Guardian Document Name",
+      "guardianRelationshipWith": "Guardian Relationship With",
+      "guardianImagePath": "Guardian Image Path",
+      "isLocked": "Is Locked",
+      "nominationDate": "Nomination Date",
+      "permanentAddress": "Permanent Address",
+      "guardianPermanentAddress": "Guardian Permanent Address",
+      "nomineeType": "Nominee Type",
+      "identityType": "Identity Type",
+      "documentName": "Document Name",
+      "idNumber": "Id Number",
+      "isNidVerified": "Is Nid Verified",
+      "guardianIdentityType": "Guardian Identity Type",
+      "guardianIdNumber": "Guardian Id Number",
+      "isGuardianNidVerified": "Is Guardian Nid Verified",
+      "employee": "Employee",
+      "approvedBy": "Approved By",
+      "witness": "Witness",
+      "member": "Member"
+    }
+  }
+}

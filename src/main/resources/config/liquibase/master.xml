@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <property name="now" value="now()" dbms="h2"/>
+    <property name="floatType" value="float4" dbms="h2"/>
+    <property name="uuidType" value="uuid" dbms="h2"/>
+    <property name="datetimeType" value="datetime" dbms="h2"/>
+    <property name="clobType" value="longvarchar" dbms="h2"/>
+    <property name="blobType" value="blob" dbms="h2"/>
+    <property name="now" value="current_timestamp" dbms="postgresql"/>
+    <property name="floatType" value="float4" dbms="postgresql"/>
+    <property name="clobType" value="longvarchar" dbms="postgresql"/>
+    <property name="blobType" value="bytea" dbms="postgresql"/>
+    <property name="uuidType" value="uuid" dbms="postgresql"/>
+    <property name="datetimeType" value="datetime" dbms="postgresql"/>
+
+    <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210215123430_added_entity_Designation.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210215123630_added_entity_Nationality.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210215123830_added_entity_BankBranch.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230118042624_added_entity_UnitOfMeasurement.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220512143430_added_entity_TimeSlot.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220606073229_added_entity_Building.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220606120249_added_entity_Floor.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220605151100_added_entity_RoomType.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220607110620_added_entity_Room.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210302094715_added_entity_Unit.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210215123730_added_entity_Band.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210215123530_added_entity_Department.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210215123930_added_entity_Employee.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220307092609_added_entity_ArrearSalaryMaster.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220307101557_added_entity_ArrearSalaryItem.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210301073704_added_entity_Attendance.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210301073204_added_entity_AttendanceEntry.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210217111813_added_entity_AttendanceSummary.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210215124030_added_entity_EducationDetails.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221023102342_added_entity_EmployeeNOC.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220831124642_added_entity_EmployeePin.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221031094254_added_entity_EmployeePinConfiguration.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210517101049_added_entity_EmployeeResignation.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210217105803_added_entity_EmployeeSalary.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210905051314_added_entity_EmployeeSalaryTempData.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220417084544_added_entity_EmployeeStaticFile.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221025101105_added_entity_EmploymentCertificate.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210215124430_added_entity_EmploymentHistory.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220419081141_added_entity_EventLog.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210521215105_added_entity_Festival.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210522023842_added_entity_FestivalBonusDetails.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211212080916_added_entity_FinalSettlement.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220308091421_added_entity_FlexSchedule.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220823135929_added_entity_FlexScheduleApplication.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220411061448_added_entity_HoldFbDisbursement.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220303130114_added_entity_HoldSalaryDisbursement.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210428061217_added_entity_AitConfig.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210823122504_added_entity_AitPayment.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220519130437_added_entity_IncomeTaxChallan.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220525092857_added_entity_InsuranceRegistration.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220525122404_added_entity_InsuranceClaim.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210418021854_added_entity_PfAccount.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210418030341_added_entity_PfCollection.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210418061954_added_entity_PfLoanApplication.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210217111913_added_entity_PfLoan.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210217112013_added_entity_PfLoanRepayment.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210418033159_added_entity_PfNominee.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230118063206_added_entity_ItemInformation.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230118083528_added_entity_ProcReq.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230118070256_added_entity_ProcReqMaster.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210823135140_added_entity_ProRataFestivalBonus.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220211132757_added_entity_RecruitmentRequisitionForm.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210215124330_added_entity_References.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211228055018_added_entity_DeductionType.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220124094733_added_entity_SalaryCertificate.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211228062949_added_entity_SalaryDeduction.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220911071538_added_entity_SpecialShiftTiming.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220913100135_added_entity_TaxAcknowledgementReceipt.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210215124230_added_entity_TrainingHistory.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220612140025_added_entity_Vehicle.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220613045714_added_entity_VehicleRequisition.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220411040802_added_entity_UserFeedback.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220622103039_added_entity_Area.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220307105703_added_entity_ArrearPayment.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210921045024_added_entity_ArrearSalary.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210610092105_added_entity_AttendanceSyncCache.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210927081506_added_entity_Config.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210521224701_added_entity_CalenderYear.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210522001349_added_entity_FestivalBonusConfig.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211220103902_added_entity_FileTemplates.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210301073404_added_entity_Holidays.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210301073604_added_entity_LeaveBalance.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220809065458_added_entity_WorkFromHomeApplication.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220313072133_added_entity_IndividualArrearSalary.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210215124130_added_entity_WorkingExperience.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220222133513_added_entity_PfArrear.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210321104545_added_entity_LeaveAllocation.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210217112113_added_entity_MobileBill.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210218102756_added_entity_SalaryGeneratorMaster.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220405070319_added_entity_Offer.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210708130352_added_entity_OfficeNotices.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220127084502_added_entity_MovementEntry.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220608100940_added_entity_RoomRequisition.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210301073504_added_entity_LeaveApplication.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221011093603_added_entity_Organization.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220525075053_added_entity_InsuranceConfiguration.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210701044058_added_entity_ManualAttendanceEntry.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220525113941_added_entity_InsuranceRelation.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220424054602_added_entity_Nominee.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20231108101302_added_entity_Location.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20231126103818_added_entity_FailedLoginAttempt.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20231207065449_added_entity_EmployeeDocument.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20231228103309_added_entity_RecruitmentRequisitionBudget.xml" relativeToChangelogFile="false"/>
+    <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="config/liquibase/changelog/20230118042624_added_entity_constraints_UnitOfMeasurement.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220606073229_added_entity_constraints_Building.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220606120249_added_entity_constraints_Floor.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220605151100_added_entity_constraints_RoomType.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220607110620_added_entity_constraints_Room.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210215123730_added_entity_constraints_Band.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210215123930_added_entity_constraints_Employee.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210215123530_added_entity_constraints_Department.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220307101557_added_entity_constraints_ArrearSalaryItem.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210301073704_added_entity_constraints_Attendance.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210301073204_added_entity_constraints_AttendanceEntry.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210217111813_added_entity_constraints_AttendanceSummary.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210215124030_added_entity_constraints_EducationDetails.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221023102342_added_entity_constraints_EmployeeNOC.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220831124642_added_entity_constraints_EmployeePin.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221031094254_added_entity_constraints_EmployeePinConfiguration.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210517101049_added_entity_constraints_EmployeeResignation.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210217105803_added_entity_constraints_EmployeeSalary.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210905051314_added_entity_constraints_EmployeeSalaryTempData.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220417084544_added_entity_constraints_EmployeeStaticFile.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221025101105_added_entity_constraints_EmploymentCertificate.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210215124430_added_entity_constraints_EmploymentHistory.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220419081141_added_entity_constraints_EventLog.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210522023842_added_entity_constraints_FestivalBonusDetails.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211212080916_added_entity_constraints_FinalSettlement.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220308091421_added_entity_constraints_FlexSchedule.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220823135929_added_entity_constraints_FlexScheduleApplication.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220411061448_added_entity_constraints_HoldFbDisbursement.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220303130114_added_entity_constraints_HoldSalaryDisbursement.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210823122504_added_entity_constraints_AitPayment.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220519130437_added_entity_constraints_IncomeTaxChallan.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220525092857_added_entity_constraints_InsuranceRegistration.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220525122404_added_entity_constraints_InsuranceClaim.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210418030341_added_entity_constraints_PfCollection.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210418061954_added_entity_constraints_PfLoanApplication.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210217111913_added_entity_constraints_PfLoan.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210217112013_added_entity_constraints_PfLoanRepayment.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210418033159_added_entity_constraints_PfNominee.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230118063206_added_entity_constraints_ItemInformation.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230118083528_added_entity_constraints_ProcReq.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230118070256_added_entity_constraints_ProcReqMaster.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210823135140_added_entity_constraints_ProRataFestivalBonus.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220211132757_added_entity_constraints_RecruitmentRequisitionForm.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210215124330_added_entity_constraints_References.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220124094733_added_entity_constraints_SalaryCertificate.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211228062949_added_entity_constraints_SalaryDeduction.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220911071538_added_entity_constraints_SpecialShiftTiming.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220913100135_added_entity_constraints_TaxAcknowledgementReceipt.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210215124230_added_entity_constraints_TrainingHistory.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220612140025_added_entity_constraints_Vehicle.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220613045714_added_entity_constraints_VehicleRequisition.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220411040802_added_entity_constraints_UserFeedback.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220307105703_added_entity_constraints_ArrearPayment.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210921045024_added_entity_constraints_ArrearSalary.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210301073604_added_entity_constraints_LeaveBalance.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220809065458_added_entity_constraints_WorkFromHomeApplication.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220313072133_added_entity_constraints_IndividualArrearSalary.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210215124130_added_entity_constraints_WorkingExperience.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220222133513_added_entity_constraints_PfArrear.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210217112113_added_entity_constraints_MobileBill.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220127084502_added_entity_constraints_MovementEntry.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220608100940_added_entity_constraints_RoomRequisition.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210301073504_added_entity_constraints_LeaveApplication.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210701044058_added_entity_constraints_ManualAttendanceEntry.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220424054602_added_entity_constraints_Nominee.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20231108101302_added_entity_constraints_Location.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20231228103309_added_entity_constraints_RecruitmentRequisitionBudget.xml" relativeToChangelogFile="false"/>
+    <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
+    <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
+</databaseChangeLog>

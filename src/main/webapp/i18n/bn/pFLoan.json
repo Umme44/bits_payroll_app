@@ -1,0 +1,35 @@
+{
+  "bitsHrPayrollApp": {
+    "pfLoan": {
+      "home": {
+        "title": "Pf Loans",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Pf Loan",
+        "createOrEditLabel": "Create or edit a Pf Loan",
+        "notFound": "No Pf Loans found"
+      },
+      "created": "A new Pf Loan is created with identifier {{ param }}",
+      "updated": "A Pf Loan is updated with identifier {{ param }}",
+      "deleted": "A Pf Loan is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Pf Loan {{ id }}?"
+      },
+      "detail": {
+        "title": "Pf Loan"
+      },
+      "id": "ID",
+      "disbursementAmount": "Disbursement Amount",
+      "disbursementDate": "Disbursement Date",
+      "bankName": "Bank Name",
+      "bankBranch": "Bank Branch",
+      "bankAccountNumber": "Bank Account Number",
+      "chequeNumber": "Cheque Number",
+      "instalmentNumber": "Instalment Number",
+      "installmentAmount": "Installment Amount",
+      "instalmentStartFrom": "Instalment Start From",
+      "status": "Status",
+      "pfLoanApplication": "Pf Loan Application",
+      "pfAccount": "Pf Account"
+    }
+  }
+}

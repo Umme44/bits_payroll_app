@@ -1,0 +1,99 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="holdFbDisbursement">
+      <h2><span jhiTranslate="bitsHrPayrollApp.holdFbDisbursement.detail.title">Hold Fb Disbursement</span> {{ holdFbDisbursement.id }}</h2>
+
+      <hr>
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="bitsHrPayrollApp.holdFbDisbursement.disbursedAt">Disbursed At</span></dt>
+        <dd>
+          <span>{{ holdFbDisbursement.disbursedAt }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.holdFbDisbursement.remarks">Remarks</span></dt>
+        <dd>
+          <span>{{ holdFbDisbursement.remarks }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.holdFbDisbursement.disbursedBy">Disbursed By</span></dt>
+        <dd>
+          {{ holdFbDisbursement.disbursedById }}
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.holdFbDisbursement.festivalBonusDetail">Festival Bonus Detail</span></dt>
+        <dd>
+          <div *ngIf="holdFbDisbursement.festivalBonusDetailId">
+            <a [routerLink]="['/festival-bonus-details', holdFbDisbursement.festivalBonusDetailId, 'view']">{{ holdFbDisbursement.festivalBonusDetailId }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit"
+              (click)="previousState()"
+              class="btn btn-info">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button"
+              [routerLink]="['/hold-fb-disbursement', holdFbDisbursement.id, 'edit']"
+              class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+
+
+<!--
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="holdFbDisbursement">
+      <h2 data-cy="holdFbDisbursementDetailsHeading">
+        <span jhiTranslate="bitsHrPayrollApp.holdFbDisbursement.detail.title">Hold Fb Disbursement</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ holdFbDisbursement.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.holdFbDisbursement.disbursedAt">Disbursed At</span></dt>
+        <dd>
+          <span>{{ holdFbDisbursement.disbursedAt | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.holdFbDisbursement.remarks">Remarks</span></dt>
+        <dd>
+          <span>{{ holdFbDisbursement.remarks }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.holdFbDisbursement.disbursedBy">Disbursed By</span></dt>
+        <dd>
+          <span>{{ holdFbDisbursement.disbursedBy?.login }}</span>
+        </dd>
+        <dt><span jhiTranslate="bitsHrPayrollApp.holdFbDisbursement.festivalBonusDetail">Festival Bonus Detail</span></dt>
+        <dd>
+          <div *ngIf="holdFbDisbursement.festivalBonusDetail">
+            <a [routerLink]="['/festival-bonus-details', holdFbDisbursement.festivalBonusDetail.id, 'view']">{{
+              holdFbDisbursement.festivalBonusDetail.id
+            }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/hold-fb-disbursement', holdFbDisbursement.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>
+-->

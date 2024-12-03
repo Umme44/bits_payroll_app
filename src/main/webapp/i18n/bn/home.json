@@ -1,0 +1,10 @@
+{
+  "home": {
+    "title": "BRAC IT",
+    "subtitle": "This is your homepage",
+    "logged": {
+      "message": "You are logged in as user \"{{username}}\"."
+    },
+    "github": "GitHub"
+  }
+}

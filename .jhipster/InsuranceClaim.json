@@ -1,0 +1,80 @@
+{
+  "changelogDate": "20220525122404",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "insurance_claim",
+  "fields": [
+    {
+      "fieldName": "settlementDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "paymentDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "regretDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "regretReason",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "claimedAmount",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "settledAmount",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "claimStatus",
+      "fieldType": "ClaimStatus",
+      "fieldValues": "SETTLED,REGRETTED"
+    },
+    {
+      "fieldName": "createdAt",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "updatedAt",
+      "fieldType": "Instant"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "InsuranceClaim",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "insuranceRegistration",
+      "otherEntityRelationshipName": "insuranceClaim",
+      "relationshipName": "insuranceRegistration",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    },
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "insuranceClaim",
+      "ownerSide": true,
+      "relationshipName": "createdBy",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": []
+    },
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "insuranceClaim",
+      "ownerSide": true,
+      "relationshipName": "updatedBy",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

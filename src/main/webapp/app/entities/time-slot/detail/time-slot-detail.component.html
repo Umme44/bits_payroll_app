@@ -1,0 +1,83 @@
+<div>
+  <div *ngIf="timeSlot" class="font-size-small-08rem">
+    <jhi-header [headerName]="'Time Slot Details'" [midHeaderName01]="'Time Slots'" [midRouterLinkText01]="'/time-slot'"> </jhi-header>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <dl class="row-md jh-entity-details">
+      <div class="row font-sm">
+        <div class="col-md-2">
+          <dt>
+            <span jhiTranslate="bitsHrPayrollApp.timeSlot.detail.title">Tittle</span>
+          </dt>
+        </div>
+        <div class="col-md-2">
+          <dd>
+            <span>{{ timeSlot.title }}</span>
+          </dd>
+        </div>
+
+        <div class="col-md-2">
+          <dt>
+            <span jhiTranslate="bitsHrPayrollApp.timeSlot.inTime">In Time</span>
+          </dt>
+        </div>
+        <div class="col-md-2">
+          <dd>
+            <span>{{ timeSlot.inTime | formatTime }}</span>
+          </dd>
+        </div>
+
+        <div class="col-md-2">
+          <dt>
+            <span jhiTranslate="bitsHrPayrollApp.timeSlot.outTime">Out Time</span>
+          </dt>
+        </div>
+        <div class="col-md-2">
+          <dd>
+            <span>{{ timeSlot.outTime | formatTime }}</span>
+          </dd>
+        </div>
+
+        <div class="col-md-2">
+          <dt><span jhiTranslate="bitsHrPayrollApp.timeSlot.isApplicableByEmployee">Is Applicable By Employee</span></dt>
+        </div>
+
+        <div class="col-md-2">
+          <dd>
+            <span>{{ timeSlot.isApplicableByEmployee }}</span>
+          </dd>
+        </div>
+
+        <div class="col-md-2">
+          <dt><span jhiTranslate="bitsHrPayrollApp.timeSlot.isDefaultShift">Is Default Shift</span></dt>
+        </div>
+
+        <div class="col-md-4">
+          <dd>
+            <span>{{ timeSlot.isDefaultShift }}</span>
+          </dd>
+        </div>
+
+        <div class="col-md-4"></div>
+
+        <div class="col-md-2">
+          <dt><span>WeekEnds</span></dt>
+        </div>
+
+        <div class="col-md-6">
+          <dd>
+            <span>{{ timeSlot.weekEnds }}</span>
+          </dd>
+        </div>
+      </div>
+    </dl>
+    <button type="submit" (click)="previousState()" class="btn btn-info">
+      <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+    </button>
+
+    <button type="button" [routerLink]="['/time-slot', timeSlot.id, 'edit']" class="btn btn-primary">
+      <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+    </button>
+  </div>
+</div>

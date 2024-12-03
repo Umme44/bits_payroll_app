@@ -1,0 +1,10 @@
+{
+  "bitsHrPayrollApp": {
+    "EmploymentStatus": {
+      "null": "",
+      "ACTIVE": "ACTIVE",
+      "HOLD": "HOLD",
+      "RESIGNED": "RESIGNED"
+    }
+  }
+}

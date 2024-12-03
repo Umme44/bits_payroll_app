@@ -1,0 +1,66 @@
+{
+  "changelogDate": "20231108101302",
+  "clientRootFolder": "",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "location",
+  "fields": [
+    {
+      "fieldName": "locationType",
+      "fieldType": "LocationType",
+      "fieldValues": "BUILDING,FLOOR"
+    },
+    {
+      "fieldName": "locationName",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "250"
+    },
+    {
+      "fieldName": "hasParent",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isLastChild",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "createdAt",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "updateAt",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "createdById",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "updatedById",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "locationCode",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "250"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Location",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "location",
+      "otherEntityRelationshipName": "location",
+      "relationshipName": "parent",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": false,
+  "service": "serviceImpl"
+}

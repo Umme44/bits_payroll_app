@@ -1,0 +1,29 @@
+{
+  "bitsHrPayrollApp": {
+    "recruitmentRequisitionBudget": {
+      "home": {
+        "title": "Recruitment Requisition Budgets",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Recruitment Requisition Budget",
+        "createOrEditLabel": "Create or edit a Recruitment Requisition Budget",
+        "notFound": "No Recruitment Requisition Budgets found"
+      },
+      "created": "A new Recruitment Requisition Budget is created with identifier {{ param }}",
+      "updated": "A Recruitment Requisition Budget is updated with identifier {{ param }}",
+      "deleted": "A Recruitment Requisition Budget is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Recruitment Requisition Budget {{ id }}?"
+      },
+      "detail": {
+        "title": "Recruitment Requisition Budget"
+      },
+      "id": "ID",
+      "year": "Year",
+      "budget": "Budget",
+      "remainingBudget": "Remaining Budget",
+      "remainingManpower": "Remaining Manpower",
+      "employee": "Employee",
+      "department": "Department"
+    }
+  }
+}

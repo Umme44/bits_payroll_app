@@ -1,0 +1,115 @@
+<jhi-header
+  [headerName]="'Increment Details'"
+  [midHeaderName01]="'Increments'"
+  [midRouterLinkText01]="'/employment-actions/increment'"
+  [shouldHaveHr]="false"
+>
+</jhi-header>
+
+<jhi-alert-error></jhi-alert-error>
+
+<div *ngIf="employmentHistory" class="font-sm">
+  <div class="container-fluid card py-2 mt-5">
+    <div class="card-body">
+      <div class="card-title">
+        <h5>Employee</h5>
+      </div>
+      <div class="card-text">
+        <div class="row py-2">
+          <div class="col-md-2 fw-bold">Name</div>
+          <div [textContent]="employmentHistory.fullName" class="col-md-4"></div>
+          <div class="col-md-2 fw-bold">Department</div>
+          <div class="col-md-4">
+            {{ employmentHistory.currentDepartmentName }}
+          </div>
+        </div>
+
+        <div class="row py-2">
+          <div class="col-md-2 fw-bold">Designation</div>
+          <div class="col-md-4">
+            {{ employmentHistory.currentDesignationName }}
+          </div>
+          <div class="col-md-2 fw-bold">Unit</div>
+          <div class="col-md-4">
+            {{ employmentHistory.currentUnitName }}
+          </div>
+        </div>
+
+        <div class="row py-2">
+          <div class="col-md-2 fw-bold">Category</div>
+          <div class="col-md-4">
+            <span jhiTranslate="{{ 'bitsHrPayrollApp.EmployeeCategory.' + employmentHistory.employeeCategory }}">{{
+              employmentHistory.employeeCategory
+            }}</span>
+          </div>
+          <div class="col-md-2 fw-bold">Desk Location</div>
+          <div class="col-md-4">
+            {{ employmentHistory.location }}
+          </div>
+        </div>
+
+        <div class="row py-2">
+          <div class="col-md-2 fw-bold">DoJ</div>
+          <div class="col-md-4">
+            {{ employmentHistory.dateOfJoining | formatMediumDate }}
+          </div>
+          <div class="col-md-2 fw-bold">DoC</div>
+          <div class="col-md-4">
+            {{ employmentHistory.dateOfConfirmation | formatMediumDate }}
+          </div>
+        </div>
+
+        <div class="row py-2">
+          <div class="col-md-2 fw-bold">Reporting To</div>
+          <div class="col-md-4">{{ employmentHistory.currentReportingToPIN }} - {{ employmentHistory.currentReportingToName }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid card py-2 mt-5">
+    <div class="card-body">
+      <div class="card-title">
+        <h5>Increment Details</h5>
+      </div>
+      <div class="card-text">
+        <div class="row py-2">
+          <div class="col-md-3 fw-bold">Effective Date</div>
+          <div class="col-md-3">
+            <span>{{ employmentHistory.effectiveDate | formatMediumDate }}</span>
+          </div>
+        </div>
+
+        <div class="row py-2">
+          <div class="col-md-3 fw-bold">Previous Gross Salary</div>
+          <div class="col-md-3">
+            {{ employmentHistory.previousMainGrossSalary | number }}
+          </div>
+
+          <div class="col-md-3 fw-bold">Changed Gross Salary</div>
+          <div class="col-md-3">
+            {{ employmentHistory.currentMainGrossSalary | number }}
+          </div>
+        </div>
+
+        <div class="row py-2">
+          <div class="col-md-3 fw-bold">Previous Band</div>
+          <div class="col-md-3">
+            {{ employmentHistory.previousBandName }}
+          </div>
+
+          <div class="col-md-3 fw-bold">Changed Band</div>
+          <div class="col-md-3">
+            {{ employmentHistory.changedBandName }}
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-2">
+        <button [routerLink]="['/employment-actions/increment', employmentHistory.id, 'edit']" class="btn btn-primary" type="button">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

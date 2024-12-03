@@ -1,0 +1,65 @@
+<div class="">
+  <jhi-header
+    [headerName]="!editForm.get('id')!.value ? 'Create New Measurement Unit' : 'Update Measurement Unit'"
+    [midHeaderName01]="'Measurement Units'"
+    [midRouterLinkText01]="'/unit-of-measurement'"
+  >
+  </jhi-header>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <div class="card card-body border">
+    <form class="card card-body" name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <div class="row">
+        <div class="col-md-6 form-group">
+          <label class="form-control-label required" jhiTranslate="bitsHrPayrollApp.unitOfMeasurement.name" for="field_name">Name</label>
+          <input type="text" class="form-control" name="name" id="field_name" formControlName="name" (input)="checkNameIsUnique()" />
+          <div *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched); else isNameValid">
+            <small class="form-text text-danger" *ngIf="editForm.get('name')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('name')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 255 }"
+            >
+              This field cannot be longer than 255 characters.
+            </small>
+          </div>
+          <ng-template #isNameValid>
+            <div>
+              <small class="form-text text-danger" *ngIf="!isNameUnique"> Name has already taken. Please write different one. </small>
+            </div>
+          </ng-template>
+        </div>
+
+        <div class="col-md-6 form-group">
+          <label class="form-control-label" jhiTranslate="bitsHrPayrollApp.unitOfMeasurement.remarks" for="field_remarks">Remarks</label>
+          <input type="text" class="form-control" name="remarks" id="field_remarks" formControlName="remarks" />
+          <div *ngIf="editForm.get('remarks')!.invalid && (editForm.get('remarks')!.dirty || editForm.get('remarks')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('remarks')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 255 }"
+            >
+              This field cannot be longer than 255 characters.
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-3">
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving || !isNameUnique" class="btn btn-primary">
+          <fa-icon icon="save"></fa-icon>&nbsp;
+          <span [jhiTranslate]="editForm.get('id')!.value ? 'entity.action.update' : 'entity.action.save'">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

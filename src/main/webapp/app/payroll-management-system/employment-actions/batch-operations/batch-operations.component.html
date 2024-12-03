@@ -1,0 +1,462 @@
+<div>
+  <div class="row">
+    <jhi-header [headerName]="'Batch Operation'" [shouldHaveHr]="false"> </jhi-header>
+  </div>
+
+  <!--    promotion   -->
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body p-3">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Batch Promotion</div>
+            <div class="col">
+              <a class="btn btn-outline-success" href="api-open/batch-promotion-xlsx-upload-format/" target="_blank">
+                Download file format</a
+              >
+            </div>
+            <div class="col">
+              <input (change)="handleFileInput($event)" class="form-control-file" id="file_employee_master_import" type="file" />
+            </div>
+            <div class="col">
+              <button (click)="importXlsx('batch_promotion')" [disabled]="!uploadReady" class="btn btn-primary float-end ms-2">
+                {{ batchPromotionsImportBtnTxt }}
+              </button>
+              <button
+                [hidden]="!batchPromotionsImportSuccess"
+                [routerLink]="['/employment-actions/promotion']"
+                class="btn btn-success float-end ms-2"
+              >
+                View
+              </button>
+              <span [hidden]="!errorOnBatchPromotionsImport" class="badge bg-danger float-end ms-2">Bad Data Format</span>
+              <span [hidden]="!batchPromotionsImportSuccess" class="badge bg-success float-end ms-2"> Success </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--    work from home application   -->
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body p-3">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Batch Work From Home Application</div>
+            <div class="col">
+              <a class="btn btn-outline-success" href="api-open/batch-work-from-home-application-xlsx-upload-format/" target="_blank">
+                Download file format</a
+              >
+            </div>
+            <div class="col">
+              <input
+                (change)="handleWorkFromHomeApplicationFileInput($event)"
+                class="form-control-file"
+                id="file_work_from_home_application_import"
+                type="file"
+              />
+            </div>
+            <div class="col">
+              <button
+                (click)="importXlsx('work_from_home')"
+                [disabled]="!workFromHomeApplicationFileToUpload"
+                class="btn btn-primary float-end ms-2"
+              >
+                {{ batchWorkFromHomeApplicationImportBtnTxt }}
+              </button>
+              <button
+                [hidden]="!batchWorkFromHomeApplicationImportSuccess"
+                [routerLink]="['/work-from-home-application']"
+                class="btn btn-success float-end ml-2"
+              >
+                View
+              </button>
+              <span [hidden]="!errorOnBatchWorkFromHomeApplicationImport" class="badge badge-danger float-right ml-2">Bad Data Format</span>
+              <span [hidden]="!batchWorkFromHomeApplicationImportSuccess" class="badge badge-success float-right ml-2"> Success </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--    increment   -->
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body p-3">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Batch Increment</div>
+            <div class="col">
+              <a class="btn btn-outline-success" href="api-open/batch-increment-xlsx-upload-format/" target="_blank">
+                Download file format</a
+              >
+            </div>
+            <div class="col">
+              <input (change)="handleFileInput($event)" class="form-control-file" id="file_employee_common_import" type="file" />
+            </div>
+            <div class="col">
+              <button (click)="importXlsx('batch_increment')" [disabled]="!uploadReady" class="btn btn-primary float-end">
+                {{ incrementImportBtnTxt }}
+              </button>
+              <button
+                [hidden]="!incrementImportSuccess"
+                [routerLink]="['/employment-actions/increment']"
+                class="btn btn-success float-end ms-2 mx-2"
+              >
+                View
+              </button>
+              <span [hidden]="!errorOnIncrementImport" class="badge bg-danger float-end ms-2">Bad Data Format</span>
+              <span [hidden]="!incrementImportSuccess" class="badge bg-success float-end ms-2"> Success </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--    transfer    -->
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body p-3">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Batch Transfer</div>
+            <div class="col">
+              <a class="btn btn-outline-success" href="api-open/batch-transfer-xlsx-upload-format/" target="_blank">
+                Download file format</a
+              >
+            </div>
+            <div class="col">
+              <input (change)="handleFileInput($event)" class="form-control-file" id="file_holidays_import" type="file" />
+            </div>
+            <div class="col">
+              <button (click)="importXlsx('batch_transfer')" [disabled]="!uploadReady" class="btn btn-primary float-end">
+                {{ transferImportBtnTxt }}
+              </button>
+              <button
+                [hidden]="!transferImportSuccess"
+                [routerLink]="['/employment-actions/transfer']"
+                class="btn btn-success float-end ms-2 mx-2"
+              >
+                View
+              </button>
+              <span [hidden]="!errorOnTransferImport" class="badge bg-danger float-end ms-2">Bad Data Format</span>
+              <span [hidden]="!transferImportSuccess" class="badge bg-success float-end ms-2"> Success </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--    arrear salary   -->
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body mt-2">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Batch Arrear Salary</div>
+            <div class="col">
+              <a class="btn btn-outline-success" href="api-open/batch-arrear-xlsx-upload-format/" target="_blank"> Download file format</a>
+            </div>
+            <div class="col">
+              <input (change)="handleFileInput($event)" class="form-control-file" id="file_arrear_import" type="file" />
+            </div>
+            <div class="col">
+              <button (click)="importXlsx('batch_arrear')" [disabled]="!uploadReady" class="btn btn-primary float-end">
+                {{ arrearImportBtnTxt }}
+              </button>
+              <button [hidden]="!arrearImportSuccess" [routerLink]="['/arrear-salary']" class="btn btn-success float-end ms-2 mx-2">
+                View
+              </button>
+              <span [hidden]="!errorOnArrearImport" class="badge bg-danger float-end ms-2">Bad Data Format</span>
+              <span [hidden]="!arrearImportSuccess" class="badge bg-success float-end ms-2"> Success </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--   Income Tax Challan   -->
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body mt-2">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Income Tax Challan</div>
+            <div class="col">
+              <a class="btn btn-outline-success" href="api-open/tax-challan-xlsx-upload-format/" target="_blank"> Download file format</a>
+            </div>
+            <div class="col">
+              <input (change)="handleFileInput($event)" class="form-control-file" id="file_tax_challan_import" type="file" />
+            </div>
+            <div class="col">
+              <button (click)="importXlsx('tax_challan')" [disabled]="!uploadReady" class="btn btn-primary float-end">
+                {{ taxChallanImportBtnTxt }}
+              </button>
+              <button
+                [hidden]="!taxChallanImportSuccess"
+                [routerLink]="['/income-tax-challan']"
+                class="btn btn-success float-end ms-2 mx-2"
+              >
+                View
+              </button>
+              <span [hidden]="!errorOnTaxChallanImport" class="badge bg-danger float-end ms-2"> Bad Data Format </span>
+              <span [hidden]="!taxChallanImportSuccess" class="badge bg-success float-end ms-2"> Success </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--    DDU   -->
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body p-3">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Batch Update <small> (Designation, Department, Unit, Line Manager) </small></div>
+            <div class="col">
+              <a class="btn btn-outline-success" href="api-open/employees/ddu-import-format" target="_blank"> Download file format</a>
+            </div>
+            <div class="col">
+              <input (change)="handleFileInput($event)" class="form-control-file" id="file_ddu_import" type="file" />
+            </div>
+            <div class="col">
+              <button (click)="importXlsx('batch_ddu')" [disabled]="!uploadReady" class="btn btn-primary float-end">
+                {{ dduImportBtnTxt }}
+              </button>
+              <button [hidden]="!arrearImportSuccess" [routerLink]="['/employee-custom']" class="btn btn-success float-end ms-2 mx-2">
+                View
+              </button>
+              <span [hidden]="!errorOnDduImport" class="badge bg-danger float-end ms-2">Bad Data Format</span>
+              <span [hidden]="!dduImportSuccess" class="badge bg-success float-end ms-2"> Success </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--  Garbage Attendance Cleaner  -->
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body p-3">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Clean Garbage Attendance <small> (s/l, pin, date) </small></div>
+            <div class="col">
+              <a class="btn btn-outline-success" href="api-open/employees/garbage-attendance-format" target="_blank">
+                Download file format</a
+              >
+            </div>
+            <div class="col">
+              <input (change)="handleFileInput($event)" class="form-control-file" id="file_attendance_garbage_import" type="file" />
+            </div>
+            <div class="col">
+              <button (click)="importXlsx('garbage-atten')" [disabled]="!uploadReady" class="btn btn-primary float-end">
+                {{ garbageAttendanceImportBtnTxt }}
+              </button>
+              <span [hidden]="!errorOnGarbageAttendanceImport" class="badge bg-danger float-end ms-2">Bad Data Format</span>
+              <span [hidden]="!garbageAttendanceImportSuccess" class="badge bg-success float-end ms-2"> Success </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Flex Schedule import service ( Once in a lifetime )  -->
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body p-3">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Import Flex Schedule <small> (s/l, pin, effective-date, in-time, out-time) </small></div>
+            <div class="col">
+              <a class="btn btn-outline-success" href="api-open/employees/flex-schedule-format" target="_blank"> Download file format</a>
+            </div>
+            <div class="col">
+              <input (change)="handleFileInput($event)" class="form-control-file" id="file_flex_schedule_import" type="file" />
+            </div>
+            <div class="col">
+              <button (click)="importXlsx('flex-schedule')" [disabled]="!uploadReady" class="btn btn-primary float-end">
+                {{ flexScheduleImportBtnTxt }}
+              </button>
+              <button [hidden]="!flexScheduleImportSuccess" [routerLink]="['/flex-schedule']" class="btn btn-success float-end ms-2 mx-2">
+                View
+              </button>
+
+              <span [hidden]="!errorOnFlexScheduleImport" class="badge bg-danger float-end ms-2"> Bad Data Format </span>
+
+              <span [hidden]="!flexScheduleImportSuccess" class="badge bg-success float-end ms-2"> Success </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Festival Bonus import service -->
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body p-3">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Import Festival Bonus</div>
+            <div class="col">
+              <a class="btn btn-outline-success" href="api-open/employees/festival-bonus-import-format" target="_blank">
+                Download file format</a
+              >
+            </div>
+            <div class="col">
+              <input (change)="handleFileInput($event)" class="form-control-file" id="file_festival_bonus_import" type="file" />
+            </div>
+            <div class="col">
+              <button (click)="importXlsx('festival-bonus')" [disabled]="!uploadReady" class="btn btn-primary float-end">
+                {{ festivalBonusImportBtnTxt }}
+              </button>
+              <button [hidden]="!festivalBonusImportSuccess" [routerLink]="['/festival']" class="btn btn-success float-end ms-2 mx-2">
+                View
+              </button>
+
+              <span [hidden]="!errorOnFestivalBonusImport" class="badge bg-danger float-end ms-2"> Bad Data Format </span>
+
+              <span [hidden]="!festivalBonusImportSuccess" class="badge bg-success float-end ms-2"> Success </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Employee Documents Batch upload service -->
+  <div class="row">
+    <div class="card mb-3" style="width: 100%">
+      <div class="card-body p-3">
+        <div class="card-text align-baseline">
+          <div class="row align-items-center">
+            <div class="col ms-3">Import Employee Documents</div>
+            <div class="col">
+              <a class="btn btn-outline-success" href="api-open/employees/employee-documents-batch-import-format" target="_blank">
+                Download file format</a
+              >
+            </div>
+            <div class="col">
+              <a class="btn btn-outline-success" href="api-open/employees/employee-documents-batch-zip-import-format" target="_blank">
+                Download zip format</a
+              >
+            </div>
+            <div class="col">
+              <button (click)="importEmployeeDocument(employeeDocumentModal)" class="btn btn-primary float-end ms-2">Import</button>
+
+              <span [hidden]="!errorOnEmployeeDocumentXlsxImport" class="badge bg-danger float-end ms-2"> Bad Data Format </span>
+
+              <span [hidden]="!employeeDocumentXlsxImportSuccess" class="badge bg-success float-end ms-2"> Success </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Billable Augmented external API data Batch upload service -->
+<div class="row">
+  <div class="card mb-3" style="width: 100%">
+    <div class="card-body p-3">
+      <div class="card-text align-baseline">
+        <div class="row align-items-center">
+          <div class="col ms-3">Batch Update <small>(billable, augmented) </small></div>
+          <div class="col">
+            <a class="btn btn-outline-success" href="api-open/import-format/billable-augmented-data-format" target="_blank">
+              Download file format</a
+            >
+          </div>
+          <div class="col">
+            <input
+              (change)="handleBillableAugmentedDataXlsxFileInput($event)"
+              class="form-control-file"
+              id="file_pm_dashboard_data_import"
+              type="file"
+            />
+          </div>
+          <div class="col">
+            <button
+              (click)="importXlsx('billable-augmented-api')"
+              [disabled]="!billableAugmentedDataImportUploadReady"
+              class="btn btn-primary float-end"
+            >
+              {{ billableAugmentedDataImportBtnTxt }}
+            </button>
+            <button
+              [hidden]="!billableAugmentedDataImportSuccess"
+              [routerLink]="['/employee-custom']"
+              class="btn btn-success float-end ml-2 mx-2"
+            >
+              View
+            </button>
+
+            <span [hidden]="!errorOnBillableAugmentedDataImport" class="badge badge-danger float-right ml-2"> Bad Data Format </span>
+
+            <span [hidden]="!billableAugmentedDataImportSuccess" class="badge badge-success float-right ml-2"> Success </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #employeeDocumentModal let-modal>
+  <!--<form *ngIf="designation" name="deleteForm" (ngSubmit)="confirmDelete(designation.id!)">-->
+  <form (ngSubmit)="import()">
+    <div class="modal-header">
+      <h4 class="modal-title" data-cy="designationDeleteDialogHeading">Employee Documents Batch Import</h4>
+      <button aria-label="Close" data-dismiss="modal" class="btn-close" type="button" (click)="dismiss()">
+        <span aria-hidden="true"></span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <jhi-alert-error></jhi-alert-error>
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <label class="form-label">Zip</label>
+            <input
+              class="form-control"
+              (change)="handleEmployeeDocumentsFileInput($event)"
+              id="file_employee_document_import"
+              type="file"
+            />
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group">
+            <label class="form-label">Excel</label>
+            <input
+              class="form-control"
+              (change)="handleEmployeeDocumentsExcelFileInput($event)"
+              id="file_employee_document_excel_import"
+              type="file"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal" (click)="cancel()">
+        <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+      </button>
+
+      <button type="submit" class="btn btn-sm btn-primary" [disabled]="disableEmployeeDocumentUploadBtn()">
+        <fa-icon icon="upload"></fa-icon>&nbsp;Import
+      </button>
+    </div>
+  </form>
+</ng-template>

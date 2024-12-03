@@ -1,0 +1,807 @@
+@import 'bootstrap-variables';
+@import '~bootstrap/scss/functions';
+@import '~bootswatch/dist/simplex/variables';
+@import '~bootstrap/scss/variables';
+@import '~@ng-select/ng-select/themes/default.theme.css';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/* ==============================================================
+Bootstrap tweaks
+===============================================================*/
+
+.dropdown .dropdown-menu .dropdown-item:hover {
+  /* fallback for old browsers */
+  background: #3998ed;
+
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-linear-gradient(to right, rgba(57, 152, 237, 0.8), rgba(40, 186, 235, 0.8));
+
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(to right, rgba(57, 152, 237, 0.8), rgba(40, 186, 235, 0.8));
+
+  background-position-x: initial !important;
+  background-position-y: initial !important;
+  background-size: initial !important;
+  background-repeat-x: initial !important;
+  background-repeat-y: initial !important;
+  background-attachment: initial !important;
+  background-origin: initial !important;
+  background-clip: initial !important;
+  background-color: initial !important;
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+  /* fallback for old browsers */
+  background: #3998ed;
+
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-linear-gradient(to right, rgba(57, 152, 237, 0.8), rgba(40, 186, 235, 0.8));
+
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(to right, rgba(57, 152, 237, 0.8), rgba(40, 186, 235, 0.8));
+  background-position-x: initial !important;
+  background-position-y: initial !important;
+  background-size: initial !important;
+  background-repeat-x: initial !important;
+  background-repeat-y: initial !important;
+  background-attachment: initial !important;
+  background-origin: initial !important;
+  background-clip: initial !important;
+  background-color: initial !important;
+  color: white !important;
+}
+
+.navbar.navbar-light .breadcrumb .nav-item .nav-link,
+.navbar.navbar-light .navbar-nav .nav-item .nav-link {
+  color: #000000d9;
+  transition: 0.35s;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+}
+.navbar.navbar-light .breadcrumb .nav-item.active > .nav-link,
+.navbar.navbar-light .navbar-nav .nav-item.active > .nav-link {
+  border-bottom: 2px solid mediumslateblue;
+  background-color: white !important;
+}
+
+.table.table-hover tbody tr:hover {
+  background-color: #eceff1;
+}
+.table {
+  font-family: -apple-system, BlinkMacSystemFont, 'Poppins', Inter, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  font-size: 0.7rem;
+  font-weight: 400;
+}
+table {
+  font-family: -apple-system, BlinkMacSystemFont, 'Poppins', Inter, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  font-size: 0.7rem;
+  font-weight: 400;
+  border-collapse: collapse;
+  border: 1px solid #eee;
+
+  th,
+  td {
+    border-collapse: collapse;
+  }
+
+  th {
+    &.last {
+      border-right: none;
+    }
+  }
+}
+.table thead th {
+  vertical-align: bottom;
+  // border-bottom: 2px solid #293b5f;
+}
+.table th,
+.table td {
+  padding: 0.5rem !important;
+  vertical-align: baseline;
+}
+
+.days-table {
+  border: 0px !important;
+}
+.page-title {
+  font-family: -apple-system, BlinkMacSystemFont, 'Poppins', Inter, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  font-size: 2rem;
+  font-weight: 400;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+#page-heading {
+  margin-bottom: 2rem;
+}
+
+body,
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 300;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Poppins', Inter, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+a:hover {
+  /* make sure browsers use the pointer cursor for anchors, even with no href */
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  color: $dropdown-link-hover-color;
+}
+
+/* ==========================================================================
+Browser Upgrade Prompt
+========================================================================== */
+.browserupgrade {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
+
+/* ==========================================================================
+Generic styles
+========================================================================== */
+
+/* other generic styles */
+
+.jh-card {
+  padding-left: 0px;
+  padding-right: 0px;
+  margin-top: 20px;
+  margin-left: 25px;
+  margin-right: 25px;
+  margin-bottom: 25px;
+  border: none;
+  min-height: 75vh;
+}
+
+.error {
+  color: white;
+  background-color: red;
+}
+
+.pad {
+  padding: 10px;
+}
+
+.w-40 {
+  width: 40% !important;
+}
+
+.w-60 {
+  width: 60% !important;
+}
+
+.break {
+  white-space: normal;
+  word-break: break-all;
+}
+
+.readonly {
+  background-color: #eee;
+  opacity: 1;
+}
+
+.footer {
+  border-top: 1px solid rgba(116, 116, 116, 0.89);
+  padding: 0;
+}
+
+.hand,
+[jhisortby] {
+  cursor: pointer;
+}
+
+/* ==========================================================================
+Custom alerts for notification
+========================================================================== */
+.alerts {
+  .alert {
+    text-overflow: ellipsis;
+
+    pre {
+      background: none;
+      border: none;
+      font: inherit;
+      color: inherit;
+      padding: 0;
+      margin: 0;
+    }
+
+    .popover pre {
+      font-size: 10px;
+    }
+  }
+
+  .jhi-toast {
+    position: fixed;
+    width: 100%;
+
+    &.left {
+      left: 5px;
+    }
+
+    &.right {
+      right: 5px;
+    }
+
+    &.top {
+      top: 55px;
+    }
+
+    &.bottom {
+      bottom: 55px;
+    }
+  }
+}
+
+@media screen and (min-width: 480px) {
+  .alerts .jhi-toast {
+    width: 50%;
+  }
+}
+
+/* ==========================================================================
+entity detail page css
+========================================================================== */
+.row.jh-entity-details > {
+  dd {
+    margin-bottom: 15px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .row.jh-entity-details > {
+    dt {
+      margin-bottom: 15px;
+    }
+
+    dd {
+      border-bottom: 1px solid #eee;
+      padding-left: 180px;
+      margin-left: 0;
+    }
+  }
+}
+
+/* ==========================================================================
+ui bootstrap tweaks
+========================================================================== */
+.nav,
+.pagination,
+.carousel,
+.panel-title a {
+  cursor: pointer;
+}
+
+.thread-dump-modal-lock {
+  max-width: 450px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* jhipster-needle-scss-add-main JHipster will add new css style */
+
+/* user defined styles */
+.required:after {
+  content: ' *';
+  color: red;
+}
+
+.ng-select .ng-clear-wrapper {
+  display: none !important;
+}
+
+.navbar.navbar-dark .navbar-nav .nav-item .nav-link {
+  color: #293b5f;
+}
+
+.navbar.navbar-dark .navbar-nav .nav-item .nav-link :focus,
+.navbar.navbar-dark .navbar-nav .nav-item .nav-link :focus {
+  color: #47597e;
+}
+
+.navbar.navbar-dark .breadcrumb .nav-item .nav-link:hover,
+.navbar.navbar-dark .navbar-nav .nav-item .nav-link:hover {
+  color: #47597e;
+}
+
+.page-header {
+  background-color: white;
+  color: rgb(242, 93, 90);
+  text-align: left;
+}
+
+.row.page-title.form-header.page-header {
+  border-bottom: 1px solid #eeeeee;
+  color: rgb(51, 51, 51);
+}
+
+.row.page-title.form-header.page-header h1 {
+  text-align: left;
+  padding: 0;
+}
+
+.page-header {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  margin-bottom: 30px;
+}
+
+.title-color {
+  color: rgb(242, 93, 90);
+}
+
+.info-color {
+  color: #8bd0e8;
+}
+
+.timer {
+  background-color: rgba(134, 129, 107, 0.5);
+  color: #ffffff;
+}
+
+.btn-login {
+  background-color: #3e8acc;
+}
+
+.comp-page-title {
+  // theme color
+  color: #293b5f;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  padding-top: 8px;
+}
+
+.theme-color-font {
+  color: #293b5f;
+}
+
+.logo-color-brac-it {
+  color: #092c58;
+}
+
+.profile-picture-img {
+  display: block;
+  height: 210px;
+  width: 175px;
+  object-fit: cover;
+}
+
+.profile-picture-overlay {
+  /*position: absolute;*/
+  bottom: 0;
+  height: 30px;
+  width: 175px;
+  opacity: 0.2;
+  transition: 0.5s ease;
+  background-color: black;
+  color: #ffffff;
+}
+
+.profile-picture-overlay:hover {
+  opacity: 0.9;
+}
+
+.btn-sm {
+  font-size: 0.7rem;
+}
+
+.font-sm {
+  font-size: 0.7rem;
+}
+
+.font-size-1-rem {
+  font-size: 1rem;
+}
+
+.font-size-small-08rem {
+  font-size: 0.8rem;
+}
+
+label,
+input,
+button,
+a {
+  font-size: 0.7rem;
+}
+
+.form-control,
+.btn,
+.input-group-text,
+.custom-select {
+  font-size: 0.7rem;
+}
+
+.input-group > .input-group-append > .btn,
+.input-group > .input-group-append > .input-group-text,
+.input-group > .input-group-prepend:not(:first-child) > .btn,
+.input-group > .input-group-prepend:not(:first-child) > .input-group-text,
+.input-group > .input-group-prepend:first-child > .btn:not(:first-child),
+.input-group > .input-group-prepend:first-child > .input-group-text:not(:first-child) {
+  font-size: 0.7rem;
+}
+
+.nav-tabs {
+  border-bottom: 0;
+}
+
+.nav-tabs {
+  --bs-nav-tabs-border-width: 1px;
+  --bs-nav-tabs-border-color: #dee2e6;
+  --bs-nav-tabs-border-radius: 0.375rem;
+  --bs-nav-tabs-link-hover-border-color: #e9ecef #e9ecef #dee2e6;
+  --bs-nav-tabs-link-active-color: #495057;
+  --bs-nav-tabs-link-active-bg: #fff;
+  --bs-nav-tabs-link-active-border-color: #dee2e6 #dee2e6 #fff;
+  border-bottom: var(--bs-nav-tabs-border-width) solid var(--bs-nav-tabs-border-color);
+}
+
+$siz: 8;
+.spinner {
+  position: absolute;
+  border: 1px solid transparent;
+  left: 50%;
+  top: 30%;
+  border-radius: 100%;
+  box-shadow: -50px 0 0 $siz + px #aef, -25px 25px 0 $siz + px #fea, 0px 50px 0 $siz + px #afa, 25px 25px 0 $siz + px #faf,
+    50px 0 0 $siz + px #aaa, 25px -25px 0 $siz + px #dda, 0px -50px 0 $siz + px #dfa, -25px -25px 0 $siz + px #99a;
+  animation: myanim 0.4s ease-in-out infinite;
+}
+
+@keyframes myanim {
+  100% {
+    box-shadow: -25px 25px 0 $siz + px #fea, 0px 50px 0 $siz + px #afa, 25px 25px 0 $siz + px #faf, 50px 0 0 $siz + px #aaa,
+      25px -25px 0 $siz + px #dda, 0px -50px 0 $siz + px #dfa, -25px -25px 0 $siz + px #99a, -50px 0 0 $siz + px #aef;
+  }
+}
+
+.badge-danger-lite {
+  background-color: #da2a3bb5;
+}
+
+.card-img-top {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+}
+
+.td-th-of-card-img-top {
+  width: 30px !important;
+  padding-top: 2px !important;
+  padding-bottom: 0 !important;
+}
+
+[data-name='employee-details-table'] .td-th-employee-img {
+  width: 30px !important;
+  padding-top: 2px !important;
+  padding-bottom: 0 !important;
+}
+
+.batch-selection-approval {
+  width: 30px !important;
+}
+
+.btn-rounded {
+  border-radius: 100px;
+}
+
+.btn-success {
+  color: #fff !important;
+}
+
+.btn-info {
+  color: #fff !important;
+}
+
+.btn-danger {
+  color: #fff !important;
+}
+
+.card {
+  border: none !important;
+  box-shadow: 0 0.2rem 1rem 1px #00000012 !important;
+  border-radius: 0.15rem !important;
+}
+
+.ng-select .ng-arrow-wrapper {
+  display: none;
+}
+
+.alerts .alert {
+  text-overflow: ellipsis;
+  background-color: #132c5812;
+  border: none;
+  color: #132c58c4;
+  padding: 6px;
+  font-size: 0.7rem;
+}
+
+.alert-warning {
+  text-overflow: ellipsis;
+  background-color: #132c5812;
+  border: none;
+  color: #132c58c4;
+  padding: 6px;
+  font-size: 0.7rem;
+}
+
+.alert-dismissible .btn-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: -2;
+  padding: 0.9rem 1rem;
+  //padding-top: 0.9rem;
+  //padding-right: 1rem;
+  //padding-bottom: 0.9rem;
+  //padding-left: 1rem;
+}
+
+@page {
+  size: auto !important;
+}
+
+.font-small {
+  font-size: 0.7rem;
+}
+
+.font-sm,
+small {
+  font-size: 0.7rem;
+}
+
+.swal2-confirm {
+  min-width: 95px;
+}
+
+.font-small {
+  font-size: 0.7rem;
+}
+
+.box-shadow {
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
+}
+
+.border-none {
+  border: none !important;
+}
+
+.card-body {
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  min-height: 1px;
+  padding: 1.25rem;
+}
+
+.custom-card {
+  @extend .card-body;
+  @extend .border-none;
+  @extend .box-shadow;
+}
+
+.report-border {
+  border: 1px solid black;
+}
+
+.cursor-default {
+  cursor: default !important;
+}
+
+/* bootstrap modal close button outline remove */
+.modal-header > button.close,
+.outline-none {
+  outline: none !important;
+}
+
+.list-text-color {
+  color: #132c58ba;
+}
+
+.color-muted-blue {
+  color: #132c58ba;
+}
+
+.d-flex {
+  display: -ms-flexbox !important;
+  display: flex !important;
+}
+
+.align-items-center {
+  -ms-flex-align: center !important;
+  align-items: center !important;
+}
+
+.justify-content-center {
+  -ms-flex-pack: center !important;
+  justify-content: center !important;
+}
+
+.empty-list-vector-image {
+  @extend .d-flex;
+  @extend .align-items-center;
+  @extend .justify-content-center;
+}
+
+.empty-list-vector-image > img {
+  width: 75vh;
+}
+
+.border-radius-minimal {
+  border-radius: 3px;
+}
+
+/* ==========================================================================
+Action button CSS start
+========================================================================== */
+
+.action-button {
+  margin: 0 1px;
+  height: 28px;
+  width: 28px;
+  border-radius: 5px !important;
+  color: #fff;
+  cursor: pointer;
+}
+
+.action-button:focus {
+  outline: none;
+}
+
+.view-button {
+  border: 1px solid #387885c7;
+  background: #387885c7;
+}
+
+.view-button:hover {
+  background: #26616cc7;
+}
+
+.edit-button {
+  border: 1px solid #4f6b85cf;
+  background: #4f6b85cf;
+}
+
+.edit-button:hover {
+  background: #314c66cf;
+}
+
+.delete-button {
+  border: 1px solid #f25d5ade;
+  background: #f25d5ade;
+}
+
+.delete-button:enabled:hover {
+  background: #d54542de;
+}
+
+.hide-drop-down-arrow {
+  -webkit-appearance: none;
+}
+
+.list-style-type-none {
+  list-style-type: none;
+}
+
+.border-radius-minimal {
+  border-radius: 3px;
+}
+.modal-title {
+  font-size: 1rem;
+}
+
+.hide-drop-down-arrow {
+  -webkit-appearance: none;
+}
+
+/* ==========================================================================
+Action button CSS end
+========================================================================== */
+
+.text-decoration-underline {
+  text-decoration: underline !important;
+}
+
+.details > dd::before,
+.details > div::before {
+  content: ':';
+}
+
+.ng-select .ng-select-container {
+  min-height: 31px !important;
+  border-radius: 1px !important;
+}
+
+.ng-select.ng-select-single .ng-select-container {
+  height: 31px !important;
+  border-radius: 1px !important;
+}
+
+/*@media print {
+  .navbar {
+    display: none;
+    border-width: 0 !important;
+  }
+  .navbar-toggle {
+    display: none;
+  }
+}*/
+
+@media print {
+  .printDiv {
+    background-color: white;
+    height: 99%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 15px;
+    font-size: 12px;
+    line-height: 18px;
+    page-break-after: avoid;
+    page-break-before: avoid;
+  }
+  .ribbon {
+    display: none;
+  }
+
+  .footer-copyright {
+    display: none;
+  }
+
+  @page {
+    size: auto !important;
+    margin: 0;
+  }
+
+  .container-fluid,
+  .jh-card {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+@media print {
+  .report-border {
+    border: none;
+  }
+
+  .table td {
+    background-color: transparent !important;
+  }
+
+  body {
+    zoom: 80%;
+  }
+}
+
+.nowrap-end {
+  white-space: nowrap;
+  text-align: right;
+}
+
+// ************* CUSTOM CSS *************
+a {
+  text-decoration: none;
+}
+a:hover,
+a:focus,
+a:active {
+  text-decoration: underline;
+}
